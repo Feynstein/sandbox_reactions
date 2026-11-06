@@ -48,10 +48,11 @@ const NS: usize = N_SPECIES;
 /// Hydrogen's slot in §1.5's order, and the neutron fraction's.
 const ID_H: usize = 0;
 const ID_N: usize = 9;
-/// The step's ceiling (§0.5 [M0-TJ4] (6), [M0-D37]): Newton passes, and CG rounds over all of them. A heating front
-/// through cold gas moves about a cell a pass: sun_disk's steps 340–347 need 17–37 passes on the GPU, 20–41
-/// at this module's tolerances (an f64 model on the GPU's own systems, M0-D37).
-pub const MAX_PASSES: usize = 64;
+/// The step's ceiling (§0.5 [M0-TJ4] (6), [M0-D37], [M0-D159]): Newton passes, and CG rounds over all of them. A heating
+/// front through cold gas moves about a cell a pass: sun_disk's steps 340–347 need 17–37 passes on the GPU, 20–41
+/// at this module's tolerances (an f64 model on the GPU's own systems, M0-D37); the Massive disk's step 930, just after its
+/// supernova, an iron shell at T_floor inside hot gas, 97 passes here and 94 on the GPU (M0-D159).
+pub const MAX_PASSES: usize = 128;
 pub const MAX_ROUNDS: usize = 4096;
 /// The twin's stopping rules (§0.5 [M0-TJ4] (3), (4)): the passes' heat and per-cell change, each solve's two measures.
 pub const NEWTON_HEAT: f64 = 1e-12;

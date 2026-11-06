@@ -1,0 +1,11 @@
+    Finished `release` profile [optimized] target(s) in 4.78s
+6390692149ce
+verify1 exit 0 wall 129.93 s; warnings 0
+SR-HEADLESS DONE steps=6840 sim_time=38.874768 until=met
+ignition 273 3.971 {'by': 'fuel', 'mass_sb': 6673.802}
+core_collapse 897 7.684 {'mass_sb': 6669.392}
+supernova 913 7.758 {'mass_sb': 6669.487}
+ending 6840 38.875 {'held_t': 17.344, 'hold_t': 17.297, 'mass_sb': 4310.544, 'stage': 'neutron_star'}
+wall_s 128.783311237
+s_2500 = sr-p128 life
+ 10:24:02 up 9 days,  3:26,  6 users,  load average: 1.13, 1.46, 1.53

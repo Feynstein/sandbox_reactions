@@ -389,3 +389,12 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   −1.14 (K8, not tuned) (measured by M0-T131 on the RTX 4090, reports/nfe_cost.md: the bound is reachable, q −0.0092 reads 14.93,
   but lies in a shallow collapse and breaks life 01's neutron star; the lead at M0-T131, 2026-11-05: «Keep −1.14, BLOCKED
   (Recommended)», then «well do your recommendation»).
+- Contract §5.2 G-FIT's «no bound gas (½|u|² + ε_th + φ < 0) comes within 16 cells of an edge of the default world» — superseded by
+  contract §0.5 [M0-T99a]: no bound gas denser than Σ = 10⁻² within 16 cells of an edge, a fainter bound halo allowed (measured by
+  M0-T99a on the RTX 4090, reports/lives.md § Tuning — the mass ladder: the Massive's bound edge halo peaks at Σ 7.6 × 10⁻³, its
+  bound gas at Σ ≥ 10⁻² ≥ 30 cells from an edge, and no physics.json lever in its bounds empties the halo; the lead at M0-T99a,
+  2026-11-06: «Reword G-FIT (Recommended)», «Density floor 10⁻² (Recommended)»).
+- Contract §0.5 [M0-D37]'s «the ceiling is 64 passes or 4,096 rounds in one step, on the GPU and the twin» — superseded by contract §0.5
+  [M0-D159]: 128 passes or 4,096 rounds, every tolerance unchanged (measured by M0-D159 on the RTX 4090, tasks/M0-D159.md: the Massive
+  disk's step 930 needs 97 passes on the f64 twin and 94 on the GPU from the same P5 start; at 128 the life ends with no warning; the
+  lead at M0-D159, 2026-11-06: «128 passes (Recommended)»).

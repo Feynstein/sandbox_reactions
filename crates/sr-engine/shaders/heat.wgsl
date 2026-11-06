@@ -239,7 +239,7 @@ fn heat_cells(@builtin(global_invocation_id) id: vec3<u32>) {
 // f32's ε of u alone leaves b − A x ~20× the u-measure's bound, so every pass ran a round and the passes never ended (64 on
 // heat_spot's first step, the twin 8). On the linear law the second pass
 // is the check: its residual is recomputed from the solved u, so a recursive residual that drifted from the true one is
-// solved again, not committed. The ceiling (64 passes, 4,096 rounds; §0.5 [M0-D37]) commits the last iterate's F by limited
+// solved again, not committed. The ceiling (128 passes, 4,096 rounds; §0.5 [M0-D37], [M0-D159]) commits the last iterate's F by limited
 // fluxes (§0.5 [M0-D89], below), and so does a step whose sums leave f32's range (§0.5 [M0-D93]): a thin cell beside
 // vacuum at T ~ 10⁷ holds u ~ 10²⁶, so Σ c u² and the rounds' γ and η overflow, the method would stop as solved at round 0
 // pass after pass and the Newton test read the unmoved iterate as converged — a pass bound, γ, η or a measure that is not
@@ -355,7 +355,8 @@ struct Parity {
 const SOLVE_TOL: f32 = 1.0e-5;
 const NEWTON_HEAT: f32 = 1.0e-6;
 const NEWTON_CELL: f32 = 1.0e-3;
-const MAX_PASSES: u32 = 64u;
+// The twin's MAX_PASSES (sr_physics::reference::heat; step/heat.rs sizes SLOTS from it): 128 since M0-D159.
+const MAX_PASSES: u32 = 128u;
 const MAX_ROUNDS: u32 = 4096u;
 const TILE: u32 = 16u;
 // A gas cell whose heat term c_i is at most this share of its faces' Σ_f D_f is heat-free (`free_at`).

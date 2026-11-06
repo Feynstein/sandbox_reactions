@@ -198,7 +198,7 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     same energy and reported its start flux, which is what G-FLD has always bounded — the lead's first answer at M0-TJ4,
     2026-10-14: «Re-solve heat, light law fixed (Recommended)».
   - [M0-T122] §0.5 [M0-TJ4] (7)'s "P5's mean ≤ 0.5 ms per step on the Quadro RTX 4000" · P5's cost is accepted as measured: 0.6189 ms a step (median of 3 `headless --timing` runs of scenes/sun_disk.json, 200 steps, on the idle Quadro RTX 4000, laserax-ai, load 0.33–0.38, SHA 34e41ca; reports/p5_cost.md), 0.6148 ms at load ~14; no ceiling stands for P5's cost, and no cost block is filed — the lead's answer at M0-T122, 2026-10-14: "I accept the timing as it is … no need to write a D task for that. Just make sure it is known". The whole sun_disk step is 1.1833 ms: 11 steps in a 60-fps frame's 13 ms (M0-R3).
-  - [M0-D37] §0.5 [M0-TJ4] (6)'s "the only ceiling, 16 passes or 4,096 rounds in one step" · the ceiling is 64 passes or 4,096 rounds in one step, on the GPU and the twin; every tolerance of (3) and (4) unchanged · measured 2026-10-14 on win-laptop (Laser2025-20, RTX 4080 Laptop) from sun_disk's dumps, P5's own frozen system read off the GPU (tasks/M0-D37.md): at steps 340–347 a heating front crosses cold gas within one step (cells from T ≈ 0.08 to 13) and each Newton pass moves it about one cell, so an f64 model of the twin needs 20–41 passes at its 10⁻¹² / 10⁻¹⁰ tests on the same systems (the factor-2 clamp and the update's variable are not the cause: no clamp still needs 31); step 4 is f32 drift of the disk's thin corner cells, ~0.15 % a pass (the f64 model: 6 passes). With 64 the GPU converges every one in 17–37 passes with 0–15 more rounds (348–1,940), δ ≤ 1.1 × 10⁻⁶ (up to 5.5 × 10⁻⁵ at 16), and sun_disk's 1,000 steps print no `SR-WARN heat unconverged` — the lead's answer at M0-D37, 2026-10-14: «Raise to 64 (Recommended)».
+  - [M0-D37] §0.5 [M0-TJ4] (6)'s "the only ceiling, 16 passes or 4,096 rounds in one step" · the ceiling is ~~64~~ 128 [M0-D159] passes or 4,096 rounds in one step, on the GPU and the twin; every tolerance of (3) and (4) unchanged · measured 2026-10-14 on win-laptop (Laser2025-20, RTX 4080 Laptop) from sun_disk's dumps, P5's own frozen system read off the GPU (tasks/M0-D37.md): at steps 340–347 a heating front crosses cold gas within one step (cells from T ≈ 0.08 to 13) and each Newton pass moves it about one cell, so an f64 model of the twin needs 20–41 passes at its 10⁻¹² / 10⁻¹⁰ tests on the same systems (the factor-2 clamp and the update's variable are not the cause: no clamp still needs 31); step 4 is f32 drift of the disk's thin corner cells, ~0.15 % a pass (the f64 model: 6 passes). With 64 the GPU converges every one in 17–37 passes with 0–15 more rounds (348–1,940), δ ≤ 1.1 × 10⁻⁶ (up to 5.5 × 10⁻⁵ at 16), and sun_disk's 1,000 steps print no `SR-WARN heat unconverged` — the lead's answer at M0-D37, 2026-10-14: «Raise to 64 (Recommended)».
   - [M0-V6] §5.1 G-ORDER's "A cell of equal parts H, He, C, O, Ne and Si heated at a steady rate: each group's specific power
     first passes ε* = 10⁻³ Q_H per t.u. in the order H, He, C, {Ne, O}, Si" · the cell's composition held at equal parts while
     its T rises at a steady rate, each group's instantaneous specific power read at each temperature of the ramp (a pass short
@@ -986,6 +986,25 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     deep collapse needs |q| ≥ ~0.2, ratio ≲ 0.5), and at −0.0092 life 01 (m_bh_sb 4,572.394) loses its neutron star to `cloud` (the
     control at −1.14 on the same tree holds it compact), the Repro's sink moves 2,700 → 3,000, the Massive's ending is not reached
     in 570 s — the lead at M0-T131, 2026-11-05: «Keep −1.14, BLOCKED (Recommended)», then «well do your recommendation».
+  - [M0-T99a] §5.2 G-FIT's «no bound gas (½|u|² + ε_th + φ < 0) comes within 16 cells of an edge» · **no bound gas denser than
+    Σ = 10⁻² (1 % of the Sun-like cloud's central Σc) comes within 16 cells of an edge; a fainter bound halo may** · the bound gas
+    an explosion leaves is a continuous tail of its energy spread, thin and below escape speed, that reaches the edge whatever the
+    physics.json levers (f_dep 0.02–0.1 left it at 0.5 cell from t ≈ 29) — measured by M0-T99a on laserax-ai-server's RTX 4090
+    (2026-11-06; reports/lives.md § Tuning — the mass ladder): the Massive's bound halo within 16 cells peaks at Σ 7.6 × 10⁻³
+    (≤ 0.46 % of the mass, T97's life to its ending on 255ec37) and 8 × 10⁻⁴ (today's tree to t 60), its bound gas at Σ ≥ 10⁻²
+    ≥ 30 cells from an edge; the Sun-like's ≥ 152 cells at every Σ to t 800 — the lead at M0-T99a, 2026-11-06: «Reword G-FIT
+    (Recommended)», «Density floor 10⁻² (Recommended)».
+  - [M0-D159] §0.5 [M0-D37]'s «the ceiling is 64 passes or 4,096 rounds in one step, on the GPU and the twin» · **the ceiling is
+    128 passes or 4,096 rounds in one step, on the GPU and the twin**; every tolerance of (3) and (4), the factor-2 update and
+    [M0-D89]'s commit past the ceiling unchanged · measured by M0-D159 on laserax-ai-server's RTX 4090 (2026-11-06;
+    tasks/M0-D159.md): the Massive disk (scenes/tune_fit_massive.json) printed `SR-WARN heat unconverged` at steps 930–933 (64
+    passes; 820, 669, 589, 488 rounds), 17 steps after its supernova — an iron shell 18–30 cells from the core (X_Fe 1, its E
+    nearly all kinetic, T⁰ at T_floor) inside hot gas, heated about a cell a pass ([M0-D37]'s front); from step 930's own P5
+    start the f64 twin converges in 97 passes, 88,933 rounds (δ 2.3 × 10⁻¹²; at its 4,096-round ceiling it stopped in pass 2)
+    and the GPU's V-cycle in 94 passes, 952 rounds (δ 6.7 × 10⁻⁸); at 128 the life runs to its ending with no warning
+    (neutron_star at step 6,840, t 38.87, 4,310.5; 7,096, t 40.30 at 64) — the warnings came with M0-D156's shift set, which
+    moved the life before step 929 (its plant on today's s_929 stalls the same steps) — the lead at M0-D159, 2026-11-06: «128
+    passes (Recommended)», «Full dump, 17 MB (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -2317,8 +2336,8 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   m_up_sb ÷ 1.25 — it then ends as a white dwarf. Exact. *UNVERIFIED*. Scope `touch` ⏱. Plant
   `edit-ignored`: P0 drops edits on non-vacuum cells.
 - **G-FIT · every life fits the world.** Through each preset's life no bound gas
-  (½|u|² + ε_th + φ < 0) comes within 16 cells of an edge of the default world (D5's squeezed
-  ladder). *UNVERIFIED* (a tuning target). Scope `fit` ⏱. Plant `preset-wide`: preset radii × 3.
+  (½|u|² + ε_th + φ < 0) denser than Σ = 10⁻² comes within 16 cells of an edge of the default world
+  (D5's squeezed ladder); a fainter bound halo may [M0-T99a]. *UNVERIFIED* (a tuning target). Scope `fit` ⏱. Plant `preset-wide`: preset radii × 3.
 - **G-MULTI · several clouds allowed** (B15: "Allowed, one promised"). Two Sun-like presets
   240 cells apart, 20 τ_dyn: two objects with stable ids, no non-finite value, both readouts filled.
   *By construction*. Scope `multi`. Plant `one-object`: the tracker joins blocks across empty

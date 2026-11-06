@@ -1600,6 +1600,38 @@ mod stiff {
         assert!(warned.is_empty(), "P5 reached its ceiling: {warned:?}");
     }
 
+    /// M0-D159 on the GPU: scenes/massive_930.bin — the Massive disk's dump at step 930 (scenes/tune_fit_massive.json, the
+    /// 15-Sun cloud as a disk, run from step 0 on the RTX 4090, binary 6238e3db; its supernova at step 913) — run on by
+    /// `headless --load-dump` through steps 930–933, every pass of the life on and P5 on its default V-cycle; none prints
+    /// `SR-WARN heat unconverged`. At §0.5 [M0-D37]'s 64 passes all four did (passes 64; rounds 820, 669, 589, 488): an iron
+    /// shell 18–30 cells from the core (X_Fe 1, its E nearly all kinetic, T⁰ at T_floor) inside hot gas is heated about a cell
+    /// a pass — step 930 converges in 94 passes, 952 rounds on the GPU, and the f64 twin from the same P5 start in 97 passes,
+    /// 88,933 rounds — so the ceiling is 128 passes since M0-D159 (§0.5 [M0-D159]).
+    #[test]
+    fn gpu_the_massive_disks_steps_930_to_933_end_their_newton_passes_below_the_ceiling() {
+        let dir = std::env::temp_dir().join(format!("sr-heat-d159-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        let file = dir.join("s_930.bin");
+        std::fs::copy(scenes_dir().join("massive_930.bin"), &file).unwrap();
+        let scene = scenes_dir().join("tune_fit_massive.json");
+        let out = dir.join("out");
+        let mut args: Vec<String> = ["--scene", &scene.display().to_string(), "--load-dump", &file.display().to_string(), "--steps", "4", "--out", &out.display().to_string()]
+            .iter()
+            .map(|s| s.to_string())
+            .collect();
+        if let Some(adapter) = std::env::var("SR_TEST_ADAPTER").ok().filter(|s| !s.trim().is_empty()) {
+            args.extend(["--adapter".to_string(), adapter]);
+        }
+        let (code, lines) = sr_engine::headless::run_captured(&args);
+        let _ = std::fs::remove_dir_all(&dir);
+        assert_eq!(code, 0, "headless {args:?}");
+        assert!(lines.iter().any(|l| l.starts_with("SR-HEADLESS DONE steps=4 ")), "the run ended steps 930–933: {lines:?}");
+        let warned: Vec<&String> = lines.iter().filter(|l| l.starts_with("SR-WARN heat unconverged")).collect();
+        println!("SR-STIFF GPU massive_930.bin, steps 930–933: {} heat-unconverged warnings", warned.len());
+        assert!(warned.is_empty(), "P5 reached its ceiling: {warned:?}");
+    }
+
     /// M0-D93 on the GPU: the cut's thin hot cell holds u = a_r T⁴ past √f32::MAX, so P5's round sums (γ, η) are not finite;
     /// the step ends unconverged (§0.5 [M0-D93]) and commits by limited fluxes, held to M0-D89's bounds — where the method
     /// stopped as solved at round 0 in every pass, the Newton test read 17 passes as converged and (5)'s closure booked

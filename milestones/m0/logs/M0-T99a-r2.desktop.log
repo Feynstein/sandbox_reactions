@@ -1,0 +1,36 @@
+== 2026-11-06T09:02:33-05:00 desktop[window] · task M0-T99a-r2 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-11-06T09:02:33-05:00 desktop[launcher] · task M0-T99a-r2 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[window] · exit=1 · 0.36 s
+game-xvfb: died before ready, exit 6 (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T99a-r2.launch.game-xvfb.log)
+game-xvfb: pid 2381019 not signalled - gone; its X server :99, pid 2381018 stopped
+game-xvfb: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T99a-r2.launch.game-xvfb.log
+services: 1, ready: 0, failures: 1
+FAIL game-xvfb: died before ready, exit 6 (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T99a-r2.launch.game-xvfb.log)
+=== NO-GO: launch.py smoke game-xvfb did not end GO ===
+
+== 2026-11-06T09:02:33-05:00 desktop[race] · task M0-T99a-r2 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[launcher] · exit=1 · 0.61 s
+game-xvfb: died before ready, exit 6 (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/launcher.launch.game-xvfb.log)
+services: 1, ready: 0
+FAIL game-xvfb: died before ready, exit 6 (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/launcher.launch.game-xvfb.log)
+=== NO-GO: 1 failure(s) ===
+Sandbox Reactions did NOT start (launch.py start exit 1). The lines above say why; its log: milestones/m0/logs/launcher.launch.game-xvfb.log
+Press Enter to close this window.
+=== NO-GO: the launcher exited 1 ===
+
+== 2026-11-06T09:02:34-05:00 desktop[port-taken] · task M0-T99a-r2 · box laserax-ai :: bash tests/smoke.sh {case}
+== 2026-11-06T09:02:35-05:00 desktop[world] · task M0-T99a-r2 · box laserax-ai :: bash tests/smoke.sh {case}
+-- desktop[world] · exit=1 · 0.21 s
+SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3 (change a constant, calibrate again: sandbox-reactions calibrate)
+=== NO-GO: the capture run exited 6, expected 0 ===
+
+-- desktop[race] · exit=1 · 10.65 s
+game-xvfb: died before ready, exit 6 (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T99a-r2-race.launch.game-xvfb.log)
+services: 1, ready: 0
+FAIL game-xvfb: died before ready, exit 6 (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-T99a-r2-race.launch.game-xvfb.log)
+=== NO-GO: game-xvfb, started straight behind the hand-over, did not reach ready ===
+
+-- desktop[port-taken] · exit=1 · 10.60 s
+SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3 (change a constant, calibrate again: sandbox-reactions calibrate)
+=== NO-GO: port-taken: the game failed: SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3 (change a constant, calibrate again: sandbox-reactions calibrate) ===
+

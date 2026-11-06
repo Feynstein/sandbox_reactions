@@ -1,0 +1,40 @@
+6238e3db6f2b  sr-today
+08a66d1226d6  /tmp/d153/sr-d153
+4f7c90b4e984  /tmp/d155/sr-base
+56e2f277bbf6  /tmp/d155/sr-fix
+561c095e4baf  /tmp/d155/sr-tree
+disk_today exit 0 wall 47.94 s warns=4 step 930 passes 64 rounds 820;step 931 passes 64 rounds 669;step 932 passes 64 rounds 589;step 933 passes 64 rounds 488; SR-HEADLESS DONE steps=940 sim_time=7.860681 until=none 
+disk_d155tree exit 0 wall 73.01 s warns=0  SR-HEADLESS DONE steps=940 sim_time=7.882379 until=none 
+disk_d155base exit 0 wall 61.19 s warns=0  SR-HEADLESS DONE steps=940 sim_time=7.842896 until=none 
+disk_d153 exit 0 wall 61.76 s warns=0  SR-HEADLESS DONE steps=940 sim_time=7.842896 until=none 
+preset_today exit 6 wall .0134 s warns=0  SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3 (change a constant, calibrate again: sandbox-reactions calibrate) 
+preset_d155tree exit 0 wall 79.08 s warns=0  SR-HEADLESS DONE steps=940 sim_time=7.855228 until=none 
+    Finished `release` profile [optimized] target(s) in 31.93s
+built sr-tree in 32 s
+patching file crates/sr-engine/shaders/heat.wgsl
+    Finished `release` profile [optimized] target(s) in 4.42s
+built sr-noshift in 5 s
+patching file crates/sr-engine/shaders/heat.wgsl
+patching file crates/sr-engine/shaders/heat.wgsl
+    Finished `release` profile [optimized] target(s) in 4.56s
+built sr-noratio in 4 s
+patching file crates/sr-engine/shaders/heat.wgsl
+6238e3db6f2b
+6238e3db6f2b
+56c823c6f4ec  sr-noshift
+18e2ff8b3d85  sr-noratio
+disk_noshift exit 0 wall 77.11 s warns=0  SR-HEADLESS DONE steps=940 sim_time=7.882379 until=none 
+disk_noratio exit 0 wall 53.41 s warns=4 step 930 passes 64 rounds 820;step 931 passes 64 rounds 669;step 932 passes 64 rounds 589;step 933 passes 64 rounds 488; SR-HEADLESS DONE steps=940 sim_time=7.860681 until=none 
+total 33160
+drwxrwxr-x 2 ybelanger ybelanger     4096 Nov  6 09:49 .
+drwxrwxr-x 3 ybelanger ybelanger     4096 Nov  6 09:49 ..
+-rw-rw-r-- 1 ybelanger ybelanger 16320388 Nov  6 09:49 s_929.bin
+-rw-rw-r-- 1 ybelanger ybelanger   168220 Nov  6 09:49 s_929.observers.json
+-rw-rw-r-- 1 ybelanger ybelanger 17280417 Nov  6 09:49 s_940.bin
+-rw-rw-r-- 1 ybelanger ybelanger   172030 Nov  6 09:49 s_940.observers.json
+res_today exit 0: SR-WARN heat unconverged step 930 passes 64 rounds 820;SR-WARN heat unconverged step 931 passes 64 rounds 669;SR-WARN heat unconverged step 932 passes 64 rounds 589;SR-WARN heat unconverged step 933 passes 64 rounds 488;SR-HEADLESS DONE steps=11 sim_time=7.860681 until=none;
+res_noshift exit 0: SR-WARN heat unconverged step 930 passes 64 rounds 1288;SR-WARN heat unconverged step 931 passes 64 rounds 981;SR-WARN heat unconverged step 932 passes 64 rounds 769;SR-WARN heat unconverged step 933 passes 64 rounds 532;SR-HEADLESS DONE steps=11 sim_time=7.861554 until=none;
+s_935.bin
+s_935.observers.json
+s_940.bin
+s_940.observers.json

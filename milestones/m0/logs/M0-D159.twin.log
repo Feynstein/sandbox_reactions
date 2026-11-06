@@ -1,0 +1,157 @@
+== shipped ceiling
+D159T pass    1 rounds   2340 (+ 2340) | moved/heat0 1.385e-1 | over 1e-10 131958 (up 10568) clamped 6454 | worst dT/T 1.000e0 at (318, 4) T 1.2695e1 T0 6.3473e0
+D159T pass    2 rounds   4096 (+ 1756) | moved/heat0 4.234e-2 | over 1e-10 130960 (up 127167) clamped 590 | worst dT/T 1.000e0 at (347, 5) T 2.4138e0 T0 6.0346e-1
+D159 twin dt 4.317050334066153e-3: passes 2 rounds 4096 converged false delta 0e0 radiated 3.593251116799564e-1 (5.5 s)
+== lifted ceiling
+D159T pass    1 rounds   2340 (+ 2340) | moved/heat0 1.385e-1 | over 1e-10 131958 (up 10568) clamped 6454 | worst dT/T 1.000e0 at (318, 4) T 1.2695e1 T0 6.3473e0
+D159T pass    2 rounds   4431 (+ 2091) | moved/heat0 4.234e-2 | over 1e-10 130960 (up 127167) clamped 590 | worst dT/T 1.000e0 at (347, 5) T 2.4138e0 T0 6.0346e-1
+D159T pass    3 rounds   6465 (+ 2034) | moved/heat0 8.070e-3 | over 1e-10 131038 (up 130921) clamped 422 | worst dT/T 1.000e0 at (347, 5) T 4.8277e0 T0 6.0346e-1
+D159T pass    4 rounds   8477 (+ 2012) | moved/heat0 2.258e-3 | over 1e-10 131112 (up 131097) clamped 397 | worst dT/T 1.000e0 at (347, 5) T 9.6553e0 T0 6.0346e-1
+D159T pass    5 rounds  10756 (+ 2279) | moved/heat0 2.352e-3 | over 1e-10 131147 (up 131147) clamped 384 | worst dT/T 1.000e0 at (347, 5) T 1.9311e1 T0 6.0346e-1
+D159T pass    6 rounds  13180 (+ 2424) | moved/heat0 2.875e-3 | over 1e-10 131179 (up 131179) clamped 340 | worst dT/T 1.000e0 at (347, 6) T 3.2000e0 T0 5.0000e-2
+D159T pass    7 rounds  15639 (+ 2459) | moved/heat0 2.302e-3 | over 1e-10 131205 (up 131205) clamped 359 | worst dT/T 1.000e0 at (347, 6) T 6.4000e0 T0 5.0000e-2
+D159T pass    8 rounds  18137 (+ 2498) | moved/heat0 1.880e-3 | over 1e-10 131246 (up 131246) clamped 366 | worst dT/T 1.000e0 at (347, 6) T 1.2800e1 T0 5.0000e-2
+D159T pass    9 rounds  20614 (+ 2477) | moved/heat0 2.312e-3 | over 1e-10 131300 (up 131300) clamped 338 | worst dT/T 1.000e0 at (378, 25) T 2.5606e1 T0 5.0012e-2
+D159T pass   10 rounds  23049 (+ 2435) | moved/heat0 2.619e-3 | over 1e-10 131336 (up 131336) clamped 254 | worst dT/T 1.000e0 at (292, 170) T 1.5934e0 T0 5.0000e-2
+D159T pass   11 rounds  24589 (+ 1540) | moved/heat0 1.684e-3 | over 1e-10 131353 (up 131353) clamped 231 | worst dT/T 1.000e0 at (279, 179) T 1.5772e0 T0 5.0000e-2
+D159T pass   12 rounds  26241 (+ 1652) | moved/heat0 1.227e-3 | over 1e-10 131379 (up 131379) clamped 227 | worst dT/T 1.000e0 at (289, 185) T 1.7332e-1 T0 5.0000e-2
+D159T pass   13 rounds  27835 (+ 1594) | moved/heat0 1.088e-3 | over 1e-10 131403 (up 131403) clamped 205 | worst dT/T 1.000e0 at (289, 185) T 3.4665e-1 T0 5.0000e-2
+D159T pass   14 rounds  29182 (+ 1347) | moved/heat0 8.411e-4 | over 1e-10 131413 (up 131413) clamped 210 | worst dT/T 1.000e0 at (289, 185) T 6.9329e-1 T0 5.0000e-2
+D159T pass   15 rounds  30178 (+  996) | moved/heat0 9.681e-4 | over 1e-10 131413 (up 131413) clamped 223 | worst dT/T 1.000e0 at (289, 185) T 1.3866e0 T0 5.0000e-2
+D159T pass   16 rounds  30736 (+  558) | moved/heat0 1.058e-3 | over 1e-10 4979 (up 4979) clamped 226 | worst dT/T 1.000e0 at (309, 184) T 1.3447e-1 T0 5.0002e-2
+D159T pass   17 rounds  30887 (+  151) | moved/heat0 1.207e-3 | over 1e-10 1939 (up 1939) clamped 222 | worst dT/T 1.000e0 at (289, 184) T 1.4665e-1 T0 5.0000e-2
+D159T pass   18 rounds  31006 (+  119) | moved/heat0 1.160e-3 | over 1e-10 1262 (up 1262) clamped 223 | worst dT/T 1.000e0 at (288, 184) T 3.3437e-1 T0 5.0029e-2
+D159T pass   19 rounds  31128 (+  122) | moved/heat0 1.237e-3 | over 1e-10 1155 (up 1155) clamped 224 | worst dT/T 1.000e0 at (288, 184) T 6.6874e-1 T0 5.0029e-2
+D159T pass   20 rounds  31254 (+  126) | moved/heat0 1.428e-3 | over 1e-10 1168 (up 1168) clamped 221 | worst dT/T 1.000e0 at (288, 184) T 1.3375e0 T0 5.0029e-2
+D159T pass   21 rounds  31382 (+  128) | moved/heat0 1.385e-3 | over 1e-10 1199 (up 1199) clamped 218 | worst dT/T 1.000e0 at (309, 183) T 1.5208e-1 T0 5.0000e-2
+D159T pass   22 rounds  31514 (+  132) | moved/heat0 1.420e-3 | over 1e-10 1228 (up 1228) clamped 223 | worst dT/T 1.000e0 at (289, 183) T 1.3922e-1 T0 5.0000e-2
+D159T pass   23 rounds  31651 (+  137) | moved/heat0 1.496e-3 | over 1e-10 1253 (up 1253) clamped 231 | worst dT/T 1.000e0 at (288, 183) T 2.1973e-1 T0 5.0000e-2
+D159T pass   24 rounds  31790 (+  139) | moved/heat0 1.635e-3 | over 1e-10 1276 (up 1276) clamped 236 | worst dT/T 1.000e0 at (288, 183) T 4.3947e-1 T0 5.0000e-2
+D159T pass   25 rounds  31932 (+  142) | moved/heat0 1.678e-3 | over 1e-10 1314 (up 1314) clamped 224 | worst dT/T 1.000e0 at (288, 183) T 8.7893e-1 T0 5.0000e-2
+D159T pass   26 rounds  32074 (+  142) | moved/heat0 1.695e-3 | over 1e-10 1341 (up 1341) clamped 222 | worst dT/T 1.000e0 at (309, 182) T 1.7214e-1 T0 5.0000e-2
+D159T pass   27 rounds  32221 (+  147) | moved/heat0 1.730e-3 | over 1e-10 1368 (up 1368) clamped 223 | worst dT/T 1.000e0 at (289, 182) T 1.4182e-1 T0 5.0056e-2
+D159T pass   28 rounds  32372 (+  151) | moved/heat0 1.849e-3 | over 1e-10 1391 (up 1391) clamped 225 | worst dT/T 1.000e0 at (288, 182) T 1.7414e-1 T0 5.0015e-2
+D159T pass   29 rounds  32521 (+  149) | moved/heat0 1.953e-3 | over 1e-10 1420 (up 1420) clamped 235 | worst dT/T 1.000e0 at (288, 182) T 3.4828e-1 T0 5.0015e-2
+D159T pass   30 rounds  32675 (+  154) | moved/heat0 2.050e-3 | over 1e-10 1455 (up 1455) clamped 230 | worst dT/T 1.000e0 at (288, 182) T 6.9656e-1 T0 5.0015e-2
+D159T pass   31 rounds  32830 (+  155) | moved/heat0 2.158e-3 | over 1e-10 1488 (up 1488) clamped 220 | worst dT/T 1.000e0 at (309, 181) T 1.9391e-1 T0 5.0000e-2
+D159T pass   32 rounds  32990 (+  160) | moved/heat0 2.261e-3 | over 1e-10 1511 (up 1511) clamped 221 | worst dT/T 1.000e0 at (289, 181) T 1.4979e-1 T0 5.0046e-2
+D159T pass   33 rounds  33153 (+  163) | moved/heat0 2.245e-3 | over 1e-10 1538 (up 1538) clamped 230 | worst dT/T 1.000e0 at (288, 181) T 1.5988e-1 T0 5.0035e-2
+D159T pass   34 rounds  33313 (+  160) | moved/heat0 2.373e-3 | over 1e-10 1570 (up 1570) clamped 228 | worst dT/T 1.000e0 at (288, 181) T 3.1976e-1 T0 5.0035e-2
+D159T pass   35 rounds  33481 (+  168) | moved/heat0 2.544e-3 | over 1e-10 1606 (up 1606) clamped 230 | worst dT/T 1.000e0 at (288, 181) T 6.3951e-1 T0 5.0035e-2
+D159T pass   36 rounds  33647 (+  166) | moved/heat0 2.655e-3 | over 1e-10 1636 (up 1636) clamped 222 | worst dT/T 1.000e0 at (290, 180) T 1.3748e-1 T0 5.0014e-2
+D159T pass   37 rounds  33819 (+  172) | moved/heat0 2.531e-3 | over 1e-10 1662 (up 1662) clamped 231 | worst dT/T 1.000e0 at (289, 180) T 1.7155e-1 T0 5.0055e-2
+D159T pass   38 rounds  33991 (+  172) | moved/heat0 2.515e-3 | over 1e-10 1693 (up 1693) clamped 237 | worst dT/T 1.000e0 at (288, 180) T 1.7007e-1 T0 5.0024e-2
+D159T pass   39 rounds  34166 (+  175) | moved/heat0 2.591e-3 | over 1e-10 1733 (up 1733) clamped 238 | worst dT/T 1.000e0 at (288, 180) T 3.4015e-1 T0 5.0024e-2
+D159T pass   40 rounds  34339 (+  173) | moved/heat0 2.722e-3 | over 1e-10 1764 (up 1764) clamped 226 | worst dT/T 1.000e0 at (309, 179) T 1.5131e-1 T0 5.0028e-2
+D159T pass   41 rounds  34513 (+  174) | moved/heat0 2.612e-3 | over 1e-10 1791 (up 1791) clamped 230 | worst dT/T 1.000e0 at (290, 179) T 1.7379e-1 T0 5.0000e-2
+D159T pass   42 rounds  34694 (+  181) | moved/heat0 2.363e-3 | over 1e-10 1818 (up 1818) clamped 236 | worst dT/T 1.000e0 at (289, 179) T 2.2233e-1 T0 5.0019e-2
+D159T pass   43 rounds  34877 (+  183) | moved/heat0 2.427e-3 | over 1e-10 1856 (up 1856) clamped 245 | worst dT/T 1.000e0 at (288, 179) T 2.0485e-1 T0 5.0010e-2
+D159T pass   44 rounds  35057 (+  180) | moved/heat0 2.444e-3 | over 1e-10 1894 (up 1894) clamped 240 | worst dT/T 1.000e0 at (288, 179) T 4.0970e-1 T0 5.0010e-2
+D159T pass   45 rounds  35242 (+  185) | moved/heat0 2.411e-3 | over 1e-10 1922 (up 1922) clamped 238 | worst dT/T 1.000e0 at (309, 178) T 2.0937e-1 T0 5.0000e-2
+D159T pass   46 rounds  35424 (+  182) | moved/heat0 2.174e-3 | over 1e-10 1949 (up 1949) clamped 240 | worst dT/T 1.000e0 at (289, 178) T 1.4948e-1 T0 5.0066e-2
+D159T pass   47 rounds  35609 (+  185) | moved/heat0 2.068e-3 | over 1e-10 1983 (up 1983) clamped 250 | worst dT/T 1.000e0 at (289, 178) T 2.9896e-1 T0 5.0066e-2
+D159T pass   48 rounds  35792 (+  183) | moved/heat0 2.086e-3 | over 1e-10 2024 (up 2024) clamped 248 | worst dT/T 1.000e0 at (288, 178) T 2.5977e-1 T0 5.0045e-2
+D159T pass   49 rounds  35980 (+  188) | moved/heat0 2.077e-3 | over 1e-10 2057 (up 2057) clamped 241 | worst dT/T 1.000e0 at (309, 177) T 1.4301e-1 T0 5.0039e-2
+D159T pass   50 rounds  36167 (+  187) | moved/heat0 1.961e-3 | over 1e-10 2084 (up 2084) clamped 234 | worst dT/T 1.000e0 at (290, 177) T 1.5789e-1 T0 5.0000e-2
+D159T pass   51 rounds  36355 (+  188) | moved/heat0 1.765e-3 | over 1e-10 2118 (up 2118) clamped 246 | worst dT/T 1.000e0 at (289, 177) T 1.8357e-1 T0 5.0047e-2
+D159T pass   52 rounds  36543 (+  188) | moved/heat0 1.783e-3 | over 1e-10 2154 (up 2154) clamped 251 | worst dT/T 1.000e0 at (288, 177) T 1.4754e-1 T0 5.0000e-2
+D159T pass   53 rounds  36733 (+  190) | moved/heat0 1.773e-3 | over 1e-10 2189 (up 2189) clamped 243 | worst dT/T 1.000e0 at (288, 177) T 2.9508e-1 T0 5.0000e-2
+D159T pass   54 rounds  36923 (+  190) | moved/heat0 1.778e-3 | over 1e-10 2228 (up 2228) clamped 239 | worst dT/T 1.000e0 at (309, 176) T 1.7637e-1 T0 5.0081e-2
+D159T pass   55 rounds  37109 (+  186) | moved/heat0 1.624e-3 | over 1e-10 2265 (up 2265) clamped 242 | worst dT/T 1.000e0 at (290, 176) T 1.8831e-1 T0 5.0009e-2
+D159T pass   56 rounds  37300 (+  191) | moved/heat0 1.572e-3 | over 1e-10 2308 (up 2308) clamped 252 | worst dT/T 1.000e0 at (289, 176) T 2.0501e-1 T0 5.0004e-2
+D159T pass   57 rounds  37492 (+  192) | moved/heat0 1.567e-3 | over 1e-10 2414 (up 2414) clamped 243 | worst dT/T 1.000e0 at (288, 176) T 1.4891e-1 T0 5.0013e-2
+D159T pass   58 rounds  37684 (+  192) | moved/heat0 1.614e-3 | over 1e-10 2926 (up 2926) clamped 239 | worst dT/T 1.000e0 at (288, 176) T 2.9781e-1 T0 5.0013e-2
+D159T pass   59 rounds  38088 (+  404) | moved/heat0 1.506e-3 | over 1e-10 5509 (up 5509) clamped 228 | worst dT/T 1.000e0 at (307, 175) T 1.6069e-1 T0 5.0065e-2
+D159T pass   60 rounds  38941 (+  853) | moved/heat0 1.460e-3 | over 1e-10 88010 (up 88009) clamped 233 | worst dT/T 1.000e0 at (290, 175) T 2.0491e-1 T0 5.0000e-2
+D159T pass   61 rounds  39993 (+ 1052) | moved/heat0 1.391e-3 | over 1e-10 132463 (up 132463) clamped 233 | worst dT/T 1.000e0 at (289, 175) T 2.0813e-1 T0 5.0059e-2
+D159T pass   62 rounds  41191 (+ 1198) | moved/heat0 1.432e-3 | over 1e-10 132693 (up 132693) clamped 225 | worst dT/T 1.000e0 at (288, 175) T 1.3943e-1 T0 5.0021e-2
+D159T pass   63 rounds  42525 (+ 1334) | moved/heat0 1.387e-3 | over 1e-10 132719 (up 132719) clamped 219 | worst dT/T 1.000e0 at (288, 175) T 2.7885e-1 T0 5.0021e-2
+D159T pass   64 rounds  43940 (+ 1415) | moved/heat0 1.315e-3 | over 1e-10 132732 (up 132732) clamped 206 | worst dT/T 1.000e0 at (306, 174) T 1.4599e-1 T0 5.0038e-2
+D159T pass   65 rounds  45432 (+ 1492) | moved/heat0 1.156e-3 | over 1e-10 132742 (up 132742) clamped 219 | worst dT/T 1.000e0 at (290, 174) T 2.0238e-1 T0 5.0012e-2
+D159T pass   66 rounds  47036 (+ 1604) | moved/heat0 1.180e-3 | over 1e-10 132756 (up 132756) clamped 216 | worst dT/T 1.000e0 at (289, 174) T 1.9048e-1 T0 5.0000e-2
+D159T pass   67 rounds  48737 (+ 1701) | moved/heat0 1.242e-3 | over 1e-10 132770 (up 132770) clamped 188 | worst dT/T 1.000e0 at (289, 174) T 3.8097e-1 T0 5.0000e-2
+D159T pass   68 rounds  50460 (+ 1723) | moved/heat0 1.200e-3 | over 1e-10 132777 (up 132777) clamped 176 | worst dT/T 1.000e0 at (288, 174) T 2.3119e-1 T0 5.0000e-2
+D159T pass   69 rounds  52134 (+ 1674) | moved/heat0 9.981e-4 | over 1e-10 132784 (up 132784) clamped 160 | worst dT/T 1.000e0 at (306, 173) T 1.5918e-1 T0 5.0000e-2
+D159T pass   70 rounds  53954 (+ 1820) | moved/heat0 8.933e-4 | over 1e-10 132788 (up 132788) clamped 168 | worst dT/T 1.000e0 at (290, 173) T 1.7611e-1 T0 5.0000e-2
+D159T pass   71 rounds  55756 (+ 1802) | moved/heat0 8.552e-4 | over 1e-10 132790 (up 132790) clamped 147 | worst dT/T 1.000e0 at (289, 173) T 1.6945e-1 T0 5.0000e-2
+D159T pass   72 rounds  57548 (+ 1792) | moved/heat0 7.963e-4 | over 1e-10 132793 (up 132793) clamped 133 | worst dT/T 1.000e0 at (289, 173) T 3.3890e-1 T0 5.0000e-2
+D159T pass   73 rounds  59220 (+ 1672) | moved/heat0 6.441e-4 | over 1e-10 132792 (up 132792) clamped 113 | worst dT/T 1.000e0 at (289, 173) T 6.7780e-1 T0 5.0000e-2
+D159T pass   74 rounds  60877 (+ 1657) | moved/heat0 5.131e-4 | over 1e-10 132797 (up 132797) clamped 115 | worst dT/T 1.000e0 at (306, 172) T 1.5497e-1 T0 5.0000e-2
+D159T pass   75 rounds  62480 (+ 1603) | moved/heat0 4.881e-4 | over 1e-10 132800 (up 132800) clamped 102 | worst dT/T 1.000e0 at (292, 172) T 1.7441e-1 T0 5.0022e-2
+D159T pass   76 rounds  64062 (+ 1582) | moved/heat0 4.790e-4 | over 1e-10 132804 (up 132804) clamped 93 | worst dT/T 1.000e0 at (291, 172) T 2.9176e-1 T0 5.0000e-2
+D159T pass   77 rounds  65789 (+ 1727) | moved/heat0 4.117e-4 | over 1e-10 132804 (up 132804) clamped 87 | worst dT/T 1.000e0 at (291, 172) T 5.8353e-1 T0 5.0000e-2
+D159T pass   78 rounds  67425 (+ 1636) | moved/heat0 2.948e-4 | over 1e-10 132804 (up 132804) clamped 80 | worst dT/T 1.000e0 at (291, 172) T 1.1671e0 T0 5.0000e-2
+D159T pass   79 rounds  69008 (+ 1583) | moved/heat0 2.789e-4 | over 1e-10 132804 (up 132804) clamped 69 | worst dT/T 1.000e0 at (293, 172) T 2.5596e0 T0 5.0021e-2
+D159T pass   80 rounds  70643 (+ 1635) | moved/heat0 2.633e-4 | over 1e-10 132804 (up 132804) clamped 59 | worst dT/T 1.000e0 at (305, 171) T 1.8678e-1 T0 5.0000e-2
+D159T pass   81 rounds  72282 (+ 1639) | moved/heat0 2.436e-4 | over 1e-10 132804 (up 132804) clamped 49 | worst dT/T 1.000e0 at (294, 171) T 1.9010e-1 T0 5.0000e-2
+D159T pass   82 rounds  73902 (+ 1620) | moved/heat0 1.829e-4 | over 1e-10 132804 (up 132804) clamped 50 | worst dT/T 1.000e0 at (294, 171) T 3.8019e-1 T0 5.0000e-2
+D159T pass   83 rounds  75505 (+ 1603) | moved/heat0 1.517e-4 | over 1e-10 132803 (up 132803) clamped 39 | worst dT/T 1.000e0 at (295, 171) T 3.4305e-1 T0 5.0014e-2
+D159T pass   84 rounds  77103 (+ 1598) | moved/heat0 1.339e-4 | over 1e-10 132803 (up 132803) clamped 37 | worst dT/T 1.000e0 at (295, 171) T 6.8610e-1 T0 5.0014e-2
+D159T pass   85 rounds  78690 (+ 1587) | moved/heat0 1.202e-4 | over 1e-10 132803 (up 132803) clamped 27 | worst dT/T 1.000e0 at (296, 171) T 6.2351e-1 T0 5.0016e-2
+D159T pass   86 rounds  80263 (+ 1573) | moved/heat0 9.110e-5 | over 1e-10 132803 (up 132803) clamped 23 | worst dT/T 1.000e0 at (297, 171) T 6.6122e-1 T0 5.0007e-2
+D159T pass   87 rounds  81746 (+ 1483) | moved/heat0 6.598e-5 | over 1e-10 132803 (up 132803) clamped 13 | worst dT/T 1.000e0 at (297, 171) T 1.3224e0 T0 5.0007e-2
+D159T pass   88 rounds  83293 (+ 1547) | moved/heat0 5.614e-5 | over 1e-10 132803 (up 132803) clamped 11 | worst dT/T 1.000e0 at (298, 171) T 1.6662e0 T0 5.0039e-2
+D159T pass   89 rounds  84878 (+ 1585) | moved/heat0 4.471e-5 | over 1e-10 132803 (up 132803) clamped 4 | worst dT/T 1.000e0 at (270, 197) T 6.5750e-1 T0 5.0032e-2
+D159T pass   90 rounds  86452 (+ 1574) | moved/heat0 2.255e-5 | over 1e-10 132803 (up 132803) clamped 0 | worst dT/T 8.371e-1 at (270, 199) T 1.1132e0 T0 5.0000e-2
+D159T pass   91 rounds  87748 (+ 1296) | moved/heat0 7.263e-6 | over 1e-10 132802 (up 132802) clamped 0 | worst dT/T 4.822e-1 at (270, 199) T 1.6500e0 T0 5.0000e-2
+D159T pass   92 rounds  88680 (+  932) | moved/heat0 1.651e-6 | over 1e-10 132799 (up 132799) clamped 0 | worst dT/T 2.267e-1 at (270, 199) T 2.0241e0 T0 5.0000e-2
+D159T pass   93 rounds  88829 (+  149) | moved/heat0 2.895e-7 | over 1e-10 4410 (up 4410) clamped 0 | worst dT/T 6.426e-2 at (270, 199) T 2.1541e0 T0 5.0000e-2
+D159T pass   94 rounds  88920 (+   91) | moved/heat0 1.944e-8 | over 1e-10 493 (up 490) clamped 0 | worst dT/T 5.769e-3 at (270, 199) T 2.1666e0 T0 5.0000e-2
+D159T pass   95 rounds  88932 (+   12) | moved/heat0 1.195e-10 | over 1e-10 75 (up 66) clamped 0 | worst dT/T 4.747e-5 at (270, 199) T 2.1667e0 T0 5.0000e-2
+D159T pass   96 rounds  88933 (+    1) | moved/heat0 2.393e-14 | over 1e-10 14 (up 10) clamped 0 | worst dT/T 4.777e-9 at (299, 170) T 1.5350e-1 T0 5.0009e-2
+D159T pass   97 rounds  88933 (+    0) | moved/heat0 1.241e-18 | over 1e-10 0 (up 0) clamped 0 | worst dT/T 1.996e-16 at (122, 95) T 1.7799e1 T0 3.9185e1
+D159 twin dt 4.317050334066153e-3: passes 97 rounds 88933 converged true delta 2.3455835568319167e-12 radiated 3.1947045649610127e3 (118.3 s)
+== 2026-11-06T10:25:35-05:00 twin · task M0-D159 · box laserax-ai-server :: bash tests/gpu.sh twin physics
+-- twin · exit=101 · 1.72 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 6 tests
+test twin::a_world_over_128_is_refused_and_128_runs ... SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'twin::a_world_over_128_is_refused_and_128_runs' (1949455) panicked at crates/sr-engine/tests/gpu/twin.rs:112:9:
+assertion `left == right` failed: --world 200x200
+  left: 6
+ right: 4
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test twin::cpu_reference_run_writes_the_in_process_twins_dumps_and_sim_time ... SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'twin::cpu_reference_run_writes_the_in_process_twins_dumps_and_sim_time' (1949456) panicked at crates/sr-engine/tests/gpu/twin.rs:79:5:
+assertion `left == right` failed
+  left: 6
+ right: 0
+FAILED
+test twin::p8_in_the_driver_books_what_it_changes ... SR-TWIN floors: ΔΣ 1.8799999885743546e-6 (vacuum_reset -1.8799999885743546e-6), ΔE 1.880003992931873e-7 (floor_added 1.880003992931873e-7)
+ok
+test twin::the_driver_steps_the_gpus_way_not_with_a_fresh_g_each_step ... SR-TWIN order: 12 steps, the driver = the GPU-order loop bit for bit; the fresh-g loop differs by 2.2814948989857697e-4 (sim time 1.6633383444375482e-5)
+ok
+test twin::the_drivers_pass_list_is_the_gpus ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-TWIN passes (gravity true, hydro true):
+  twin driver: ["P1 dt", "P2 gravity", "P4 hydro", "P8 floors", "P9 reductions"]
+  GPU step:    ["P1 dt", "P2 gravity", "P4 hydro", "P8 floors", "P9 reductions"]
+SR-TWIN passes (gravity true, hydro false):
+  twin driver: ["P1 dt", "P2 gravity", "P8 floors", "P9 reductions"]
+  GPU step:    ["P1 dt", "P2 gravity", "P8 floors", "P9 reductions"]
+SR-TWIN passes (gravity false, hydro true):
+  twin driver: ["P1 dt", "P4 hydro", "P8 floors", "P9 reductions"]
+  GPU step:    ["P1 dt", "P4 hydro", "P8 floors", "P9 reductions"]
+SR-TWIN passes (gravity false, hydro false):
+  twin driver: ["P1 dt", "P8 floors", "P9 reductions"]
+  GPU step:    ["P1 dt", "P8 floors", "P9 reductions"]
+ok
+test twin::the_gpus_own_flags_are_refused_with_the_twin ... SR-ERROR bad arguments: --adapter is the GPU's: it has no meaning with --cpu-reference
+SR-ERROR bad arguments: --timing is the GPU's: it has no meaning with --cpu-reference
+SR-ERROR bad arguments: --load-dump is the GPU's: it has no meaning with --cpu-reference
+ok
+
+failures:
+
+failures:
+    twin::a_world_over_128_is_refused_and_128_runs
+    twin::cpu_reference_run_writes_the_in_process_twins_dumps_and_sim_time
+
+test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 501 filtered out; finished in 1.59s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

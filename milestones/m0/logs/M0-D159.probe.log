@@ -1,0 +1,59 @@
+probe applied
+   Compiling thiserror v2.0.21
+D159 gpu Multigrid rate true: HeatReport { dt: 0.0042181173, passes: 15, rounds: 208, converged: true, delta: 0.0003415814 }
+D159 gpu Jacobi rate true: HeatReport { dt: 0.0042181173, passes: 4, rounds: 4096, converged: false, delta: 0.0 }
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 506 filtered out; finished in 6.47s
+test heat::d159::d159_twin ... D159T pass    1 rounds   2593 (+ 2593) | moved/heat0 4.683e-1 | over 1e-10 132618 (up 132162) clamped 177 | worst dT/T 1.000e0 at (293, 185) T 1.1379e2 T0 5.6897e1
+D159T pass    2 rounds   4096 (+ 1503) | moved/heat0 7.994e-2 | over 1e-10 132618 (up 132543) clamped 25 | worst dT/T 1.000e0 at (297, 199) T 2.0000e-1 T0 5.0000e-2
+D159 twin dt 4.218117333948612e-3: passes 2 rounds 4096 converged false delta 0e0 radiated 2.1638603832329606e-1 (5.3 s)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 507 filtered out; finished in 5.35s
+D159 gpu Multigrid rate true rounds/sub None: passes 15 rounds 208 converged true delta 3.415814e-4 (1 submissions)
+D159 gpu Multigrid rate true rounds/sub Some(8): passes 15 rounds 208 converged true delta 3.415814e-4 (32 submissions)
+D159 gpu Multigrid rate true rounds/sub Some(32): passes 15 rounds 208 converged true delta 3.415814e-4 (8 submissions)
+D159 gpu Multigrid rate true rounds/sub Some(128): passes 15 rounds 208 converged true delta 3.415814e-4 (2 submissions)
+D159 gpu Multigrid rate true rounds/sub Some(512): passes 15 rounds 208 converged true delta 3.415814e-4 (1 submissions)
+D159 gpu Multigrid rate true rounds/sub Some(2048): passes 15 rounds 208 converged true delta 3.415814e-4 (1 submissions)
+D159 gpu Jacobi rate true rounds/sub None: passes 4 rounds 4096 converged false delta 0e0 (1 submissions)
+D159 gpu Jacobi rate true rounds/sub Some(8): passes 4 rounds 4096 converged false delta 0e0 (514 submissions)
+D159 gpu Jacobi rate true rounds/sub Some(32): passes 4 rounds 4096 converged false delta 0e0 (129 submissions)
+D159 gpu Jacobi rate true rounds/sub Some(128): passes 4 rounds 4096 converged false delta 0e0 (33 submissions)
+D159 gpu Jacobi rate true rounds/sub Some(512): passes 4 rounds 4096 converged false delta 0e0 (9 submissions)
+D159 gpu Jacobi rate true rounds/sub Some(2048): passes 4 rounds 4096 converged false delta 0e0 (3 submissions)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 507 filtered out; finished in 2.43s
+D159M sub 6 report: passes 0 rounds 0 conv 0 stepped 1 delta 0e0 live 1 step 930
+D159M sub 7 report: passes 0 rounds 0 conv 0 stepped 1 delta 0e0 live 1 step 930
+D159M sub 8 report: passes 64 rounds 820 conv 0 stepped 1 delta 0e0 live 0 step 930
+SR-WARN heat unconverged step 930 passes 64 rounds 820
+D159 gpu Multigrid rate true rounds/sub None: passes 64 rounds 820 converged false delta 0e0 (1 submissions)
+D159 gpu Multigrid rate true rounds/sub Some(8): passes 64 rounds 820 converged false delta 0e0 (127 submissions)
+D159 gpu Multigrid rate true rounds/sub Some(32): passes 64 rounds 820 converged false delta 0e0 (32 submissions)
+D159 gpu Multigrid rate true rounds/sub Some(128): passes 64 rounds 820 converged false delta 0e0 (8 submissions)
+D159 gpu Multigrid rate true rounds/sub Some(512): passes 64 rounds 820 converged false delta 0e0 (2 submissions)
+D159 gpu Multigrid rate true rounds/sub Some(2048): passes 64 rounds 820 converged false delta 0e0 (1 submissions)
+D159 gpu Jacobi rate true rounds/sub None: passes 4 rounds 4096 converged false delta 0e0 (1 submissions)
+D159 gpu Jacobi rate true rounds/sub Some(8): passes 4 rounds 4096 converged false delta 0e0 (514 submissions)
+D159 gpu Jacobi rate true rounds/sub Some(32): passes 4 rounds 4096 converged false delta 0e0 (129 submissions)
+D159 gpu Jacobi rate true rounds/sub Some(128): passes 4 rounds 4096 converged false delta 0e0 (33 submissions)
+D159 gpu Jacobi rate true rounds/sub Some(512): passes 4 rounds 4096 converged false delta 0e0 (9 submissions)
+D159 gpu Jacobi rate true rounds/sub Some(2048): passes 4 rounds 4096 converged false delta 0e0 (3 submissions)
+54:pub const MAX_PASSES: usize = 256;
+55:pub const MAX_ROUNDS: usize = 16384;
+358:const MAX_PASSES: u32 = 256u;
+359:const MAX_ROUNDS: u32 = 16384u;
+D159 gpu Multigrid rate true rounds/sub None: passes 94 rounds 952 converged true delta 6.6593074e-8 (1 submissions)
+D159 gpu Multigrid rate true rounds/sub Some(32): passes 94 rounds 952 converged true delta 6.6593074e-8 (39 submissions)
+D159 gpu Jacobi rate true rounds/sub None: passes 86 rounds 16384 converged false delta 0e0 (1 submissions)
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+    Finished `release` profile [optimized] target(s) in 28.43s
+cp: cannot overwrite non-directory '/dev/null' with directory '/tmp/d159/p2'
+    Finished `release` profile [optimized] target(s) in 0.06s
+    Finished `release` profile [optimized] target(s) in 33.26s
+    Finished `release` profile [optimized] target(s) in 5.66s
+6238e3db6f2b  sr-today
+94c732a1641f  sr-p128
+85c47c76c14d  sr-p256
+0464fb444ae1  sr-probe
+2
+report: passes 15 rounds 208 conv 1 stepped 1 delta 3.415814e-4 live 0 step 929
+report: passes 94 rounds 952 conv 1 stepped 1 delta 6.6593074e-8 live 0 step 930
+report: passes 5 rounds 27 conv 1 stepped 1 delta 4.5167308e-6 live 0 step 935

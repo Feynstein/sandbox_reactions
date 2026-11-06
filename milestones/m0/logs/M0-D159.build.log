@@ -1,0 +1,23 @@
+    Finished `release` profile [optimized] target(s) in 10.15s
+  Executable tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+      2 warning: manually reimplementing `div_ceil`
+      1 warning: module has the same name as its containing module
+      1 warning: redundant slicing of the whole range
+      1 warning: `sr-engine` (test "gpu") generated 36 warnings (run `cargo clippy --fix --test "gpu" -p sr-engine -- ` to apply 8 suggestions)
+      1 warning: `sr-physics` (lib test) generated 3 warnings (run `cargo clippy --fix --lib -p sr-physics --tests -- ` to apply 3 suggestions)
+      1 warning: the loop variable `ch` is used to index `CHANNELS`
+      1 warning: the loop variable `ch` is used to index `out`
+      1 warning: the loop variable `c` is used to index `CHANNELS`
+      1 warning: the loop variable `c` is used to index `image`
+      1 warning: the loop variable `c` is used to index `names`
+clippy exit 0
+== 2026-11-06T10:25:15-05:00 build[native] · task M0-D159 · box laserax-ai-server :: bash tests/cargo.sh build {case}
+== 2026-11-06T10:25:15-05:00 build[wasm] · task M0-D159 · box laserax-ai-server :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 1.07 s
+build wasm: 1.99.0 in 1 s, target /home/ybelanger/workspace/sandbox_reactions/build/target (1.7G)
+=== GO ===
+
+-- build[native] · exit=0 · 4.82 s
+build native: 1.99.0 in 5 s, target /home/ybelanger/workspace/sandbox_reactions/build/target (1.7G)
+=== GO ===
+

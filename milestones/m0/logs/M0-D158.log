@@ -1,0 +1,54 @@
+M0-D158 log opened 2026-11-06T09:14:26-05:00 on linux-pc
+# plan: bisect on laserax-ai-server RTX 4090 — (1) server tree == bde397c? (2) fbcbadf built in /tmp/d158, disk scene run there; (3) perturbation sensitivity
+4 runs launched on laserax-ai-server /tmp/d158/runs (A today disk, B fbcbadf disk, C fbcbadf preset 2500, D fbcbadf preset 5000)
+A_today_disk/dumps/s_2500.bin vs B_fbc_disk/dumps/s_2500.bin: IDENTICAL
+A_today_disk/dumps/s_5000.bin vs B_fbc_disk/dumps/s_5000.bin: IDENTICAL
+A_today_disk/dumps/s_5391.bin vs B_fbc_disk/dumps/s_5391.bin: IDENTICAL
+A_today_disk/dumps/s_5000.bin vs t99a/giant_base/dumps/s_5000.bin: IDENTICAL
+D_fbc_preset5000/dumps/s_5000.bin vs t97/giant/dumps/s_5000.bin: IDENTICAL
+C_fbc_preset2500/dumps/s_5000.bin vs D_fbc_preset5000/dumps/s_5000.bin: IDENTICAL
+C_fbc_preset2500/dumps/s_5000.bin vs t97/giant/dumps/s_5000.bin: IDENTICAL
+A_today_disk [('ignition', 417), ('core_collapse', 1425), ('sink_formed', 1457)]
+B_fbc_disk [('ignition', 417), ('core_collapse', 1425), ('sink_formed', 1457)]
+C_fbc_preset2500 [('ignition', 417), ('core_collapse', 1377), ('sink_formed', 1393)]
+D_fbc_preset5000 [('ignition', 417), ('core_collapse', 1377), ('sink_formed', 1393)]
+SR-HEADLESS DONE steps=5349 sim_time=22.501323 until=met
+SR-HEADLESS DONE steps=5220 sim_time=22.501538 until=met
+SR-HEADLESS DONE steps=5123 sim_time=22.502203 until=met
+SR-HEADLESS DONE steps=5061 sim_time=22.503338 until=met
+P1_nearpreset [('ignition', 417), ('core_collapse', 1441), ('sink_formed', 1457)]
+P2_t+ [('ignition', 417), ('core_collapse', 1409), ('sink_formed', 1425)]
+P3_t- [('ignition', 417), ('core_collapse', 1361), ('sink_formed', 1393)]
+P4_sc+ [('ignition', 417), ('core_collapse', 1361), ('sink_formed', 1377)]
+C_fbc_preset2500 {"step": 2500, "t": 13.84, "gas": 9732.0, "sink": 8335.0, "r50": [446, 4921, 3654, 549, 138, 23], "band_m": 9.5, "band_smax": 0.0071, "d_1e2": 25.5}
+C_fbc_preset2500 {"step": 5000, "t": 22.33, "gas": 8693.0, "sink": 8982.0, "r50": [73, 226, 7613, 364, 258, 157], "band_m": 67.8, "band_smax": 0.0065, "d_1e2": 53.5}
+C_fbc_preset2500 {"step": 5052, "t": 22.5, "gas": 8679.0, "sink": 8987.0, "r50": [71, 224, 7611, 360, 255, 159], "band_m": 68.2, "band_smax": 0.0065, "d_1e2": 52.5}
+A_today_disk {"step": 2500, "t": 13.72, "gas": 7769.0, "sink": 10255.0, "r50": [946, 1444, 3658, 1488, 202, 30], "band_m": 0.0, "band_smax": 0, "d_1e2": 32.5}
+A_today_disk {"step": 5000, "t": 21.34, "gas": 4768.0, "sink": 11477.0, "r50": [114, 264, 480, 1187, 1870, 853], "band_m": 334.9, "band_smax": 0.0524, "d_1e2": 0.5}
+A_today_disk {"step": 5391, "t": 22.5, "gas": 4372.0, "sink": 11541.0, "r50": [97, 224, 401, 915, 1549, 1187], "band_m": 311.3, "band_smax": 0.047, "d_1e2": 0.5}
+P1_nearpreset {"step": 2500, "t": 13.7, "gas": 7643.0, "sink": 10377.0, "r50": [343, 914, 5013, 1126, 215, 32], "band_m": 0.0, "band_smax": 0, "d_1e2": 25.5}
+P1_nearpreset {"step": 5000, "t": 21.44, "gas": 5224.0, "sink": 10840.0, "r50": [50, 123, 249, 1003, 3334, 465], "band_m": 498.3, "band_smax": 0.1346, "d_1e2": 0.5}
+P1_nearpreset {"step": 5349, "t": 22.5, "gas": 4858.0, "sink": 10865.0, "r50": [44, 108, 208, 651, 3085, 762], "band_m": 459.0, "band_smax": 0.1321, "d_1e2": 0.5}
+P2_t+ {"step": 2500, "t": 13.87, "gas": 8589.0, "sink": 9442.0, "r50": [790, 5173, 1839, 617, 144, 27], "band_m": 5.3, "band_smax": 0.009, "d_1e2": 20.5}
+P2_t+ {"step": 5000, "t": 21.82, "gas": 6861.0, "sink": 10719.0, "r50": [381, 2342, 3166, 497, 278, 197], "band_m": 68.9, "band_smax": 0.0068, "d_1e2": 25.5}
+P2_t+ {"step": 5220, "t": 22.5, "gas": 6719.0, "sink": 10824.0, "r50": [409, 2387, 2962, 498, 263, 201], "band_m": 67.5, "band_smax": 0.0066, "d_1e2": 23.5}
+P3_t- {"step": 2500, "t": 13.82, "gas": 9027.0, "sink": 9027.0, "r50": [550, 1810, 5734, 770, 138, 25], "band_m": 9.2, "band_smax": 0.0098, "d_1e2": 17.5}
+P3_t- {"step": 5000, "t": 22.11, "gas": 7661.0, "sink": 9849.0, "r50": [93, 225, 657, 5992, 469, 226], "band_m": 191.4, "band_smax": 0.1554, "d_1e2": 0.5}
+P3_t- {"step": 5123, "t": 22.5, "gas": 7618.0, "sink": 9866.0, "r50": [89, 214, 603, 6007, 472, 234], "band_m": 241.4, "band_smax": 0.2184, "d_1e2": 0.5}
+P4_sc+ {"step": 2500, "t": 13.88, "gas": 9616.0, "sink": 8441.0, "r50": [464, 2275, 6099, 622, 132, 24], "band_m": 13.8, "band_smax": 0.0072, "d_1e2": 20.5}
+P4_sc+ {"step": 5000, "t": 22.3, "gas": 8534.0, "sink": 9119.0, "r50": [76, 172, 4944, 2865, 316, 161], "band_m": 83.3, "band_smax": 0.0092, "d_1e2": 21.5}
+P4_sc+ {"step": 5061, "t": 22.5, "gas": 8518.0, "sink": 9126.0, "r50": [74, 168, 4848, 2952, 312, 163], "band_m": 83.6, "band_smax": 0.0089, "d_1e2": 21.5}
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=9644 sim_time=37.793509 until=met
+323.108874171 [('ignition', 417, 4.56, None), ('core_collapse', 1377, 9.53, None), ('sink_formed', 1393, 9.6, None), ('ending', 9644, 37.79, 'black_hole')]
+V1_preset_ending {"step": 2500, "t": 13.84, "gas": 9732.0, "sink": 8335.0, "r50": [446, 4921, 3654, 549, 138, 23], "band_m": 9.5, "band_smax": 0.0071, "d_1e2": 25.5}
+V1_preset_ending {"step": 5000, "t": 22.33, "gas": 8693.0, "sink": 8982.0, "r50": [73, 226, 7613, 364, 258, 157], "band_m": 67.8, "band_smax": 0.0065, "d_1e2": 53.5}
+V1_preset_ending {"step": 7500, "t": 30.67, "gas": 8250.0, "sink": 9184.0, "r50": [49, 7147, 615, 174, 127, 138], "band_m": 67.1, "band_smax": 0.0031, "d_1e2": 74.5}
+V1_preset_ending {"step": 9644, "t": 37.79, "gas": 4845.0, "sink": 12486.0, "r50": [4358, 90, 120, 110, 75, 92], "band_m": 45.3, "band_smax": 0.002, "d_1e2": 65.5}
+giant_d {"step": 2500, "t": 13.84, "gas": 9732.0, "sink": 8335.0, "r50": [446, 4921, 3654, 549, 138, 23], "band_m": 9.5, "band_smax": 0.0071, "d_1e2": 25.5}
+giant_d {"step": 4000, "t": 19.01, "gas": 8997.0, "sink": 8834.0, "r50": [127, 351, 7616, 507, 277, 120], "band_m": 66.8, "band_smax": 0.0097, "d_1e2": 22.5}
+giant_d {"step": 5000, "t": 22.33, "gas": 8693.0, "sink": 8982.0, "r50": [73, 226, 7613, 364, 258, 157], "band_m": 67.8, "band_smax": 0.0065, "d_1e2": 53.5}
+giant_d {"step": 5799, "t": 25.0, "gas": 8514.0, "sink": 9059.0, "r50": [53, 198, 7591, 299, 209, 166], "band_m": 74.2, "band_smax": 0.0051, "d_1e2": 47.5}
+exit=6
+SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3 
+claim: verify.py --changed --task M0-D158 on linux-pc: NO-GO 943 passed / 50 failed, 1/21 scopes GO (121.6 s); every red = calibration OutOfDate (G-CAL, M0-D71g's, owed to M0-V14)

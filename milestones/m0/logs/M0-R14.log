@@ -1,0 +1,18 @@
+== 2026-11-06T10:59:15-05:00 M0-R14 probe on laserax-ai-server, RTX 4090 — binary build/target/release/sandbox-reactions (2026-11-06 10:21:52, source = linux-pc's tree by md5)
+SR-ERROR calibration out of date: its physics_hash is 56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea, the assets' is 05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3 (change a constant, calibrate again: sandbox-reactions calibrate)
+ls: cannot access 'p1/dumps': No such file or directory
+Traceback (most recent call last):
+  File "/tmp/r14/spin.py", line 10, in <module>
+    raw = open(src, "rb").read()
+          ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'p1/dumps/s_1.bin'
+SR-HEADLESS DONE steps=1 sim_time=0.028234 until=none
+spin: step 1 mass 6676.294 centre (300.000, 200.000) Sigma_c 1.0000 a 56.464 Omega_0 0.29563 beta 0.2 Omega 0.13221 edge_speed 7.465 cells 10348
+spin: step 1 mass 6676.294 centre (300.000, 200.000) Sigma_c 1.0000 a 56.464 Omega_0 0.29563 beta 0.0 Omega 0.00000 edge_speed 0.000 cells 10348
+spun exit=0 wall=16s SR-HEADLESS DONE steps=2632 sim_time=30.008256 until=met
+ctrl exit=0 wall=101s SR-HEADLESS DONE steps=5188 sim_time=30.003413 until=met
+spin: step 1 mass 6676.294 centre (300.000, 200.000) Sigma_c 1.0000 a 56.464 Omega_0 0.29563 beta 0.01 Omega 0.02956 edge_speed 1.669 cells 10348
+slow exit=0 wall=56s SR-HEADLESS DONE steps=4508 sim_time=30.004338 until=met warns=0
+{"detail":{"by":"fuel","mass_sb":6673.9962186468765},"kind":"ignition","object":1,"sim_time":3.935841079801321,"step":266}
+{"detail":{"mass_sb":6669.058766151778},"kind":"core_collapse","object":1,"sim_time":7.884346642997116,"step":926}
+{"detail":{"mass_sb":6649.229347738437},"kind":"supernova","object":1,"sim_time":9.528966107871383,"step":1266}

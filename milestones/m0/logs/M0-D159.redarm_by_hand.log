@@ -1,0 +1,8 @@
+SR-STIFF GPU massive_930.bin, steps 930–933: 4 heat-unconverged warnings
+thread 'heat::stiff::gpu_the_massive_disks_steps_930_to_933_end_their_newton_passes_below_the_ceiling' (1946578) panicked at crates/sr-engine/tests/gpu/heat.rs:1632:9:
+    heat::stiff::gpu_the_massive_disks_steps_930_to_933_end_their_newton_passes_below_the_ceiling
+    heat::stiff::gpu_the_sun_like_lifes_step_13594_ends_its_newton_passes_below_the_ceiling
+test result: FAILED. 14 passed; 2 failed; 0 ignored; 0 measured; 491 filtered out; finished in 4.33s
+thread 'heat::stiff::gpu_the_massive_disks_steps_930_to_933_end_their_newton_passes_below_the_ceiling' (1946578) panicked at crates/sr-engine/tests/gpu/heat.rs:1632:9:
+P5 reached its ceiling: ["SR-WARN heat unconverged step 930 passes 64 rounds 820", "SR-WARN heat unconverged step 931 passes 64 rounds 669", "SR-WARN heat unconverged step 932 passes 64 rounds 589", "SR-WARN heat unconverged step 933 passes 64 rounds 488"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

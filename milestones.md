@@ -76,3 +76,10 @@ lives in the current plan — `milestones/m0/m0_implementation_plan.md` today.
   routed past M0: the bound [7.5, 30] is reachable (q_ratio −0.0092) but lies in a shallow collapse that breaks the neutron-star lives
   (reports/nfe_cost.md); it needs a mechanism that deepens the collapse without N_Fe's heat (electron-capture pressure loss) — a design
   for a later milestone (the lead: «well do your recommendation»).
+- 2026-11-06 · M0-R14: rotation and jets are routed past M0 as one later milestone, «Rotation and jets» (the lead: «Later milestone
+  (Recommended)»). Measured on the RTX 4090: spin is a second fate axis, since 1 % rotational support leaves no neutron star by t 30
+  and 20 % stops the collapse. Nothing gives a spin today; the held neutron core and the sinks cannot spin; the ledger books no
+  angular momentum. The milestone's order: an angular-momentum ledger, spin at the drop and a Stir tool, a Motion view and spin
+  readout, then spinning remnants, then transport research, then jets. The jets are a sub-grid launch at fed, spinning sinks, shown
+  in a tilted view with jet matter as particles above the sheet (the lead: «Tilted view (Recommended)») —
+  milestones/m0/reports/rotation_jets.md.

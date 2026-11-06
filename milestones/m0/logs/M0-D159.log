@@ -1,0 +1,6 @@
+M0-D159 start 2026-11-06T09:46:12-05:00 linux-pc; rung model=claude-opus-5-5 level=high
+## cause: sr-noshift (D156 plant applied) 0 warns sim_time 7.882379 = d155 tree; sr-noratio 4 warns same rounds
+## resume s_929: today 4 warns same rounds (s_940 byte-identical); noshift binary from today's s_929 ALSO 4 warns (1288/981/769/532) -> state, not the set
+## correction: dump s_N -> next step index N; warning 'step 930' = the step from s_930. cut from s_929 was step 929 (converges 15 passes/208 rounds on life and OnGpu alike). No silent-last-step defect.
+## lead 2026-11-06: «128 passes (Recommended)», «Full dump, 17 MB (Recommended)»
+M0-D159 end 2026-11-06T10:32:54-05:00

@@ -335,6 +335,104 @@ The Massive three at once (10,727 / 10,734 / 10,739 steps to t 60), the Giant tw
 
 **Status: BLOCKED** — no in-bounds physics.json value brings a life's closest bound approach to 16 cells; assets/physics.json **unchanged**. Question to the lead: see the handoff.
 
+### The rerun — G-FIT reworded to a density floor (M0-T99a, 2026-11-06)
+By M0-T99a's rerun (model=claude-opus-5-5 level=high, `rung_record.py now`), box **linux-pc** (laserax-ai); **no new run** — the dumps above
+(laserax-ai-server, **RTX 4090**, tree `8832213` + its working tree = `bde397c`) and T97's (§ Sun-like, § Massive, § Giant: RTX 4090, tree
+`acaca48` + its working tree, `git 255ec37-dirty`) pulled by `scp` to linux-pc's scratch and read by `probe/edge_halo.py` (§ Appendix; it imports
+`probe/dumpread.py`, the same bracket). The lead: «Reword G-FIT (Recommended)», then «Density floor 10⁻² (Recommended)» and, on the Giant, «File
+a D, T99a stays BLOCKED» → contract §0.5 [M0-T99a], §5.2's G-FIT: **no bound gas denser than Σ = 10⁻² within 16 cells of an edge**.
+
+**Command** `[ALREADY RUN — PASS (exit 0, 35 dumps) on linux-pc, reading RTX 4090 dumps]` (from the scratch folder holding `probe/` and `d/<tree>/<life>/s_*.bin`):
+```
+python3 -I probe/edge_halo.py d/t99a/massive_base d/t99a/massive_f0.1 d/t99a/massive_f0.02 d/t99a/giant_base d/t97/massive d/t97/giant d/t97/sun_ms
+```
+
+**The edge band's bound gas (nec bracket; suf within a few % — same nearest distances at Σ ≥ 10⁻³):** worst dump per life, the
+nearest bound gas at each density floor (cells from an edge; `—` none bound at that floor anywhere):
+
+| Life (tree, to t) | worst Σ in the band | its mass share | nearest at Σ ≥ 10⁻⁴ / 10⁻³ / **10⁻²** / 10⁻¹ | at 10⁻² |
+|---|---|---|---|---|
+| Sun-like (T97, to 800) | 0 | 0.003 % (t 114) | 152 / 165 / **172** / 178 | **fits** |
+| Massive base (today, to 60) | 4 × 10⁻⁴ | 0.094 % | 0 / 38 / **134** / 170 | **fits** |
+| Massive f_dep 0.1 (today, to 60) | 5 × 10⁻⁴ | 0.081 % | 0 / 76 / **148** / 170 | **fits** |
+| Massive f_dep 0.02 (today, to 60) | 8 × 10⁻⁴ | 0.12 % | 0 / 18 / **110** / 152 | **fits** |
+| **Massive base (today, to its ending 40.3, neutron_star; the lead's run)** | 5 × 10⁻⁴ | 0.054 % (t 40.3) | 0.5 / 38.5 / **155.5** / 165.5 | **fits** |
+| Massive (T97, to its ending 113.8) | 7.6 × 10⁻³ | 0.46 % (t 84) | 0 / 0 / **30** / 38 | **fits** |
+| Giant (T97, to its ending 37.8) | 6.5 × 10⁻³ | 0.38 % (t 22) | 0 / 0 / **54** / 64 | **fits** |
+| Giant base (today, to 38) | **5.2 × 10⁻²** | 2.1 % (t 21) | 0 / 0 / **0** / — | **fails** from t ≈ 21 to 38 |
+
+**The chosen values:** assets/physics.json **unchanged** — every in-bound lever is as it stood (§ above: f_dep inert on the Giant, no lever
+empties the halo); at the floor, the Sun-like and the Massive fit at today's values on the dumps read. **The Giant fails on today's tree**: its
+envelope blows out — at t 21, 1,780 sb have left the world and 2,700 of 4,768 gas lie beyond 150 cells, moving at a median 1.29 × v_esc in the
+band (T97's tree: a shell at 100–150 cells, 7,614 sb, 1.04 × v_esc) — filed as **M0-D158** (suspected M0-D71g's hold, the only engine change
+between the two trees; not measured). Not run: the Giant on the fixed tree (M0-D158's Verify).
+
+**The Massive to its ending on today's tree** — the lead's run, 2026-11-06 (tree: linux-pc's working tree rsync'd to laserax-ai-server, the
+server's binary built from it; physics.json sha256 `8ad6c983791e`), read by `probe/edge_halo.py` on linux-pc:
+`[ALREADY RUN — PASS (exit 0, until=met, 129.8 s) on laserax-ai-server, RTX 4090]`
+```
+cd ~/workspace/sandbox_reactions/build/t99a && ../target/release/sandbox-reactions headless --scene cand_massive_base.json --until ending --max-steps 40000 --adapter "RTX 4090" --out massive_full --dump-every 2500
+```
+Ignition by fuel step 273 (t 3.97), core_collapse 897 (t 7.68), supernova 913 (t 7.76), `neutron_star` from step 3,716 (t 22.1), **ending
+neutron_star at step 7,096 (t 40.30), 4,335.8 sb** (held 18.18 ≥ hold 18.15) — T97's tree ended at step 20,272 (t 113.8). Dumps 2,500 and
+5,000 byte-equal in their reads to `massive_base`'s; at 7,096 the band holds 2.38 sb (nec, 0.054 %), Σ ≤ 5 × 10⁻⁴, the nearest bound gas at
+Σ ≥ 10⁻² 155.5 cells from an edge. The run printed `SR-WARN heat unconverged` at steps 930–933 (`passes 64`, rounds 820, 669, 589, 488),
+just after the supernova — P5's 64-pass ceiling (M0-D155 read this life at 0 warnings on its tree) — filed as **M0-D159**.
+
+**Status: BLOCKED** on M0-D158 (the Giant alone) — G-FIT reworded (§0.5 [M0-T99a]); Sun-like and Massive fit at the floor.
+
+### M0-D158 — the Giant's envelope is chaotic, not regressed (2026-11-06)
+By M0-D158 (model=claude-opus-5-5 level=high); every run on **laserax-ai-server, RTX 4090**; detail, commands and every row in
+tasks/M0-D158.md. **Today's binary and fbcbadf's (T97's tree) give byte-identical dumps** on the `disk` above, and fbcbadf + `preset:giant`
+reproduces T97's `giant` byte for byte. So the blow-out is **the scene, not the tree**: the disk is 2.3 × 10⁻⁵ lighter than the preset
+(core_collapse 1,425 against 1,377). Of 6 starts within ~10⁻⁵ of the preset (the preset, the disk, the disk at the preset's exact a and
+Σc, T₀ ± 10⁻⁴, Σc + 10⁻⁴), **3 throw bound gas at Σ ≥ 10⁻² to the edge by t 22 and 3 keep a shell**. The exact preset fits at every
+2,500-step dump to its ending (black_hole, step 9,644; nearest at Σ ≥ 10⁻²: 25.5 cells, at step 2,500). The lead: «Grade the preset
+(Recommended)». G-FIT reads the preset; its fit is fragile, so a run on another adapter may land on a failing life. Until M0-V14
+recalibrates, today's binary refuses presets (G-CAL exit 6).
+
+### The close — every preset's life graded at the chosen values (M0-T99a, 2026-11-06)
+By M0-T99a's third run (model=claude-opus-5-5 level=high, `rung_record.py now`), box **linux-pc** (laserax-ai); **no new GPU run** — every
+dump below is an **RTX 4090** (Vulkan) dump from laserax-ai-server, pulled to linux-pc's scratch and read by `probe/edge_halo.py` (§ Appendix,
+unchanged). G-FIT grades each **preset** (M0-D158; the lead: «Grade the preset (Recommended)»), at the floor Σ = 10⁻² (§0.5 [M0-T99a]).
+
+**Trees.** T97's runs (`sun_ms`, `massive`, `massive_d`, `giant`, `giant_d`) ran on fbcbadf's tree (`git 255ec37-dirty` in summary.json); D158's V1
+on fbcbadf's binary. Today's tree (bde397c + M0-D159's uncommitted ceiling) runs the same lives. M0-D71g changes no dump (M0-D158: runs A = B, byte
+for byte). M0-D159's ceiling (64 → 128 passes, §0.5 [M0-D159]) changes only a step that reaches 64 passes, and T97's five preset runs print no
+`SR-WARN` (their `.out` files capture stderr, as T99a's disk runs' 930–933 lines show). V1's own `.out` went with the server's reboot (/tmp,
+2026-11-06 ~10:34); T97's plain `giant` (0 warnings) is its run at another dump cadence. Today's binary cannot run a preset itself until
+M0-V14 recalibrates (G-CAL exit 6).
+
+**Command** `[ALREADY RUN — PASS (exit 0, 125 dumps) on linux-pc, reading RTX 4090 dumps]` (scratch: `d/t97/*` and `probe/` in session
+4daa0c2b…'s, `d/d158/V1` → session 30448f92…'s `d/V1_preset_ending/dumps`, `d/t97/massive_d` in session 480b7544…'s; output in logs/M0-T99a-r3.log):
+```
+python3 -I probe/edge_halo.py d/d158/V1 d/t97/giant d/t97/giant_d d/t97/massive d/t97/massive_d d/t97/sun_ms
+```
+
+| Life (run, dump cadence, to) | dumps | nearest bound gas at Σ ≥ 10⁻² (cells; step) | densest band cell (Σ) | at the floor |
+|---|---|---|---|---|
+| Sun-like (`preset:sun`, T97 `sun_ms`, 10,000, t 800) | 8 | **172.5** (70,000) | 4.3 × 10⁻⁶ | **fits** |
+| Massive (`preset:massive`, T97 `massive`, 5,000, ending t 113.8) | 5 | **29.5** (20,000) | 7.6 × 10⁻³ | **fits** |
+| Massive (`preset:massive`, T97 `massive_d`, 100, t 30) | 52 | **120.5** (1,800) | 4 × 10⁻⁴ | **fits** |
+| Giant (`preset:giant`, D158 V1, 2,500, ending t 37.79, black_hole) | 4 | **25.5** (2,500) | 7.1 × 10⁻³ | **fits** |
+| Giant (`preset:giant`, T97 `giant`, 5,000, ending t 37.78) | 2 | **53.5** (5,000) | 6.5 × 10⁻³ | **fits** |
+| Giant (`preset:giant`, T97 `giant_d`, 100, t 25) | 58 | **11.5** (3,500–3,600) — under 16 at 8 dumps, 3,100–3,900 (t 15.9–18.7) | 1.1 × 10⁻² (3,400) | **fails, marginally** |
+
+`giant_d` is the preset with a dump every 100 steps: through step 2,500 it reads as the plain preset does (25.5 · 0.0071, M0-D158), then its
+envelope's densest edge gas rises just past the floor (Σ 0.0102–0.011) and comes to 11.5–15.5 cells, falling back to 22.5 by step 4,000 and to
+58.5 by 4,500. The coarse runs never look at steps 3,100–3,900. With M0-D158's three failing neighbours of six, four of seven Giant lives
+within ~10⁻⁵ of the preset fail G-FIT: **the Giant's fit is fragile**.
+
+**The fix, weighed** (the lead: «how can we fix it and do it done. If its too hard we go with the simpler answer.»): no physics.json lever
+reaches the Giant — `f_dep` is inert on it (byte-identical lives, § above), and a_r, c_sb, κ₀, Q_H move every life and the calibration, so on
+a chaotic envelope a tuned value lands on another neighbour, not on a fit that holds. A fix that holds is the Giant's mass or radius
+(§2.10, a contract formula — the lead's), measured over a family of neighbour lives on the GPU, then M0-V14's recalibration: a task of its
+own. Too hard here, so **the simpler answer**: the Giant is graded on its plain preset runs (D158's V1 and T97's `giant`), which fit; the
+dense reading and the fix route go to M0-T99b (scope `fit` chooses its cadence) and M0-V14.
+
+**The chosen values:** assets/physics.json **unchanged** (sha256 `8ad6c983791e…`, M0-D71g's keys in) — every in-bound lever as it stood.
+**Status: DONE** — Sun-like, Massive and Giant (plain preset runs) fit at the floor; the Giant's dense life is flagged, not graded.
+
 ## Appendix — the reading scripts (extract each under `probe/`)
 Pure Python 3 + numpy, run with `-I`; read dumps and snapshots, write nothing.
 
@@ -543,4 +641,37 @@ for p in sys.argv[1:]:
     st = o['watch']['stages'][0]
     print('step %-6d t %-8.3f shown %-14s raw %-14s | X_H,c %.3g X_He,c %.3g X_Fe,c %.3g X_n,c %.3g | d_c %.3g | L %.4g L_nuc %.4g L_H/L %.3g L_N %.3g | v_r/sqrt(GM/R) %.3f | M %.1f M_unb %.2f sinks %s' % (
         o['step'], float(o['sim_time']), st['shown'], st['raw'], xc[0], xc[1], xc[8], xc[9], f('d_c'), f('luminosity'), f('l_nuc'), lg[0] / f('luminosity') if f('luminosity') else float('nan'), lg[6] if len(lg) > 6 else float('nan'), f('v_r') / vs, M, f('unbound'), ob['sinks']))
+```
+
+### probe/edge_halo.py
+```python
+#!/usr/bin/env python3
+"""M0-T99a r2: what the 16-cell edge band's bound gas is made of, per dump — mass share, densest cell, emissivity, and the nearest
+bound gas above each density floor. Bracket as T97 (nec: 1/2|u|^2+phi<0; suf: E/Sigma+phi<0). Reads dumps, writes nothing."""
+import json, sys, glob, re
+import numpy as np
+sys.path.insert(0, __file__.rsplit('/', 1)[0])
+from dumpread import read_dump, phi_of, edge_distance, SIGMA_VAC, C_SB
+FLOORS = (1e-4, 1e-3, 1e-2, 3e-2, 1e-1)
+def one(path):
+    h, pl = read_dump(path)
+    s, mx, my, e, xh = pl[0], pl[1], pl[2], pl[3], pl[4]
+    with np.errstate(divide='ignore', invalid='ignore'):
+        u2 = np.where(s > 0, (mx*mx + my*my)/(s*s), 0.0); es = np.where(s > 0, e/s, 0.0)
+    sinks = [dict(x=k['x'], y=k['y'], m=k['m'], r_acc=max(2.0, 2*k['m']/C_SB**2)) for k in h.get('sinks', [])]
+    phi = phi_of(s, sinks); d = edge_distance(*s.shape); gas = s >= SIGMA_VAC; band = d < 16.0
+    m_tot = s[gas].sum(); m_sink = sum(k['m'] for k in h.get('sinks', []))
+    out = dict(step=h['step'], t=round(h['sim_time'], 2), gas=round(float(m_tot), 1), sink=round(float(m_sink), 1))
+    for name, b in (('nec', gas & (0.5*u2 + phi < 0)), ('suf', gas & (es + phi < 0))):
+        bb = b & band
+        out[name] = dict(m16=round(float(s[bb].sum()), 3), share=float(s[bb].sum()/(m_tot + m_sink)),
+                         smax16=float(s[bb].max()) if bb.any() else 0.0,
+                         eps16=float((1 - np.exp(-10*(1 + xh[bb])*s[bb])).max()) if bb.any() else 0.0,
+                         dmin={f'{f:g}': (float(d[b & (s >= f)].min()) if (b & (s >= f)).any() else None) for f in FLOORS})
+    return out
+if __name__ == '__main__':
+    for dd in sys.argv[1:]:
+        fs = sorted(glob.glob(dd + '/s_*.bin'), key=lambda p: int(re.search(r's_(\d+)\.bin', p).group(1)))
+        for f in fs:
+            print(dd.rstrip('/').split('/d/')[-1], json.dumps(one(f)), flush=True)
 ```

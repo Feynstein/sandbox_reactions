@@ -1,0 +1,20 @@
+== 2026-11-06T09:42:43-05:00 plan_lint · task M0-D158 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.12 s
+lint: checks=828 failed=0 warnings=15 · blocks=394 · flow_rows=394 · verify_fences=0 · history=0 · flow=per-task · header=617/600 · pipeline=9/60 · ladder=6 rungs · refresh=3/5
+WARN: M0-TC13: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D144: DONE outside the current phase and 34 lines long - stub it (§2.6)
+WARN: M0-D145: DONE outside the current phase and 27 lines long - stub it (§2.6)
+WARN: M0-D146: DONE outside the current phase and 25 lines long - stub it (§2.6)
+WARN: M0-D147: DONE outside the current phase and 30 lines long - stub it (§2.6)
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (635 lines > 500) - name a section or a line range
+WARN: M0-T99a: `Read:` names milestones/m0/reports/lives.md whole (635 lines > 500) - name a section or a line range
+WARN: M0-T102: `Read:` names milestones/m0/reports/lives.md whole (635 lines > 500) - name a section or a line range
+WARN: M0-V14: `Read:` names milestones/m0/reports/lives.md whole (635 lines > 500) - name a section or a line range
+WARN: M0-T103: `Read:` names milestones/m0/reports/lives.md whole (635 lines > 500) - name a section or a line range
+WARN: M0-T106: `Read:` names milestones/m0/reports/lives.md whole (635 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (635 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (635 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (635 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (635 lines > 500) - name a section or a line range
+=== GO ===
+
