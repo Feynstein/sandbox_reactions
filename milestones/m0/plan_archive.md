@@ -8378,3 +8378,1458 @@ and D91 at the lead's word, D68 the same split as D71). Each new D's (AFTER M0-V
 - Adversarial: view models green while the drawn panel differs — the V compares TV3's captures with the
   view models' texts.
 - Handoff: DONE (two sessions, 2026-11-02; linux-pc + laserax-ai-server, RTX 4090; model=claude-opus-5-5 level=max — rung_record now at each launch and each of the lead's prompts, the heading's rung). reports/v13.md: lot 13 conforms clause by clause, TV3's captures read the view models' texts. Verify 1 [ALREADY RUN — PASS (GO: server --all 1,652/0, 82/82 + 5 owed, 168.54 s; linux-pc's five 18/0)]; red-arms [ALREADY RUN — PASS (linux-pc 27/27 red; the server's sweep moved 81 of 82 scopes, 182 red, 0 green, 0 errors, 4,810.95 s)]; claim [ALREADY RUN — PASS (GO: plan_lint 793/0, 5 owed none impacted, 81 not impacted) on laserax-ai-server, RTX 4090] as --task M0-V13-claim. Filed: M0-TC13, M0-D144–M0-D147 (the lead's answers in them); flags → M0-V14, M0-TW, M0-D145, M0-TC13. Deviations: the lead's two desk runs → M0-V14 («Flag them to M0-V14 (Recommended)») — render_reserve_ms NOT measured, 3.0 ms holds; --task M0-V13 refused on the server — its index holds a `git add -A` of 5,190 files (16:32:43), the lead's to clear before R18's push; the anchor came home before the rsync up as well (O8); five «;» in my filings' Deliver lines → «,»/«—» for the lint (plan_lint GO, M0-V13-lint). Measured, not filed: O1–O8 (E1: no wrong verdict), O7 a dead tests/plants/stage-in-step.patch. Phase 15's close: header 610/600 (M0-TC13's to fix), every loop under 600 s (no TR), no class moves (no TM). Next: M0-TC13; Phase 15's commit gate is the lead's.
+
+## M0-TC13 · Compaction — Phase 15's close: forty-one closed blocks to stub, more than ten (PLAYBOOK §8, §11) · **MOVE** · Sonnet 5.5, medium · switch · (AFTER M0-V13)
+- Status: DONE (2026-11-02 18:06)
+- Filed by: M0-V13, 2026-11-02 — Phase 15's close (PLAYBOOK §14.3's V template, §11's trigger: a phase-closing V with more than ten
+  blocks to stub); runs first, ahead of the D's M0-V13 filed and of Phase 16.
+- Carried flags: none · [M0-V13, 2026-11-02] M0-D147 (the docs lag lot 13's last blocks), filed by M0-V13 after this block's text, is TODO too: it stays whole with M0-D144–M0-D146
+- Read: this file (rules + this task) + milestones/m0/plan_archive.md § M0-TC12 (the last compaction: the shape to keep)
+- Deliver: `plan.py stub` over the forty-one closed blocks the lint names — the twelve outside the phase (M0-TC12, M0-D128, M0-D132,
+  M0-D131, M0-D130, M0-D125, M0-D122, M0-D127, M0-D126, M0-D123, M0-D129, M0-D124: the lint's twelve «stub it» WARNs on 2026-11-02) and
+  Phase 15's twenty-nine (M0-T89, M0-T90, M0-T91, M0-T92, M0-D133, M0-T93a, M0-T93b, M0-R12, M0-T126, M0-T127a, M0-T127b, M0-T127c,
+  M0-T128, M0-T129, M0-T94, M0-T95, M0-T96, M0-TV3, M0-D134, M0-D140, M0-D141, M0-D135, M0-D136, M0-D137, M0-D138, M0-D142, M0-D139,
+  M0-D143, M0-V13) — into plan_archive.md, no TODO or DEFERRED block touched (M0-D71, M0-R13, M0-D91, M0-D103, M0-D109, M0-D121,
+  M0-D144, M0-D145, M0-D146 and this block stay whole, the Phase 14 and Phase 15 commit-gate trailers where they stand), every moved
+  line diffed byte for byte with its count, then the header back within its 600 lines (`plan.py lint` read 605/600 at M0-V13's start,
+  inside §11's 100-line margin, and M0-V13's four filings add four Flow rows) by §11's (ii)–(iv) — the Pipeline state a register, a
+  line repeated in three or more blocks hoisted to Rules, a Rules entry over ~3 lines moved to m0_rules.md leaving its index line,
+  Repo facts de-duplicated, never a byte reworded — `plan.py lint`'s header before and after in the handoff → Verify 1
+- Verify: 1. `python3 tools/pb/verify.py plan_lint --task M0-TC13` · Pass: GO, the header within budget, the «stub it» WARNs gone,
+  diff count = moved count · Fail: any TODO or DEFERRED block touched, any line reworded
+- Done when: Verify 1 GO on linux-pc
+- Handoff: linux-pc (laserax-ai); model=claude-sonnet-5-5 level=medium (rung_record now). 41 closed blocks stubbed into plan_archive.md (12 outside the phase + Phase 15's 29): 757 lines moved, 757 verified byte-for-byte; no TODO/DEFERRED block touched; Phase 14's commit-gate trailer stays under M0-D124's stub. Header 610/600 → 593/600: the 18-line Rules paragraph moved byte for byte to m0_rules.md § The Rules paragraph, a pointer left in the plan (§11 ii/iii); 12 'stub it' WARNs gone, 2 left (M0-D91 Read whole, M0-D71/D91 Deliver→Verify: not mine). Verify 1 [ALREADY RUN — PASS (GO 792/0, header within budget) on linux-pc]; no --changed run (only plan/doc files touched). Phase 15's commit gate still the lead's. Next: M0-D144.
+
+## M0-D144 · G-WEB's `preset` case reads GO on a canvas whose central 100 × 100 px are all bg.space — «not all black» holds for an empty page, so the web build's star is never checked · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TC13)
+- Status: DONE (2026-11-02 18:53)
+- Filed by: M0-V13, 2026-11-02 — its contract-vs-code of lot 13 (G-WEB's «not all black» read against bg.space, M0-T94's adversarial: «a
+  stricter case is the lead's to grant»), at the lead's word: «File a D for a stricter case (Recommended)»; placed after M0-TC13
+- Blocks: nothing graded — `web[preset]` stays GO; G-WEB's pixel half proves nothing until this lands (§5.4, *UNVERIFIED*)
+- Caused by: M0-T94 (the case's pixel read: a Chrome screenshot of the clip, passing on any lit pixel)
+- Rating: rule (5) — a D whose cause is not measured (does the screenshot miss the WebGPU canvas's frames, or is nothing drawn at the
+  canvas's centre?): `(usual)`
+- Files: web/smoke.mjs (the header and the `preset` case, lines ≈ 14–24 and 130–165), tests/web/check.sh, crates/sr-app/src/web.rs
+  (`Query`, `signal_ready`), crates/sr-app/src/desktop.rs (`SandboxApp::open_with`), tools/pb/verify.json (`web`'s desc and plants),
+  tests/plants/, milestones/m0/m0_contrat.md §5.4 (G-WEB) — opened by M0-V13: web/smoke.mjs, web.rs and open_with, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §3.5, §4.2, §5.4 (G-WEB), §6.2.3 + web/smoke.mjs (the header and the
+  `preset` case) + crates/sr-app/src/web.rs + docs/agent/testing.md's `web` row + M0-T94's handoff (its probes: `page.screenshot` and a
+  canvas `drawImage` of the WebGPU canvas read nothing of it)
+- Symptom: measured on linux-pc (headless Chrome 156.0.8078.73, `--headless=new --use-angle=vulkan --enable-features=Vulkan
+  --disable-vulkan-surface --enable-unsafe-webgpu`, Chrome's adapter nvidia turing, fallback false), 2026-11-02, logs/M0-V13-lpc.web.log
+  and logs/M0-D139-claim-pc.web.log: «preset: srState "ready" after 6.6 s», then «SR-PIXELS central 100x100: 10000 not black, 0 differ
+  from bg.space #05070D» and «NOTE every central pixel is bg.space: "not all black" holds, but no star is drawn there» — `web` GO 5/5
+- Repro: `python3 tools/pb/verify.py web --case preset --task <ID>` on linux-pc; the SR-PIXELS and NOTE lines in its log
+- Suspected cause: either headless Chrome's screenshot does not see the WebGPU canvas's presented frames under
+  `--disable-vulkan-surface` (the page's own bg.space shows through), or the clip is not where the star is drawn — the world sits between
+  the 220 px and 300 px panels and above the legend (§4.2), its centre about 40 px left of and 36 px above the canvas's at the desktop's
+  layout, and at the headless viewport's size the world's scale and place are not measured
+- Deliver: the cause measured (where the page's canvas draws the dropped star, and what the screenshot reads there), then a `preset`
+  case that fails on an empty world — pixels at the world's centre differing from bg.space, read by a path that sees what the app drew
+  (the screenshot if it can be made to, else the app's own report to the page, e.g. a `document.body.dataset` value the app writes from
+  its own frame's read-back) — with §5.4's G-WEB sentence amended in place to that criterion, tagged [M0-D144], its §0.5 line and the
+  Superseded mirror (R19) → Verify 1 · plant tests/plants/web-preset-not-dropped.patch (the URL's preset never dropped, srState still
+  "ready") → Verify 1
+- Verify: 1. `python3 tools/pb/verify.py web --task <ID>` and `--redarm web` (≈ 10–11 min on linux-pc — over the line: the lead's, or
+  their word) · Pass: GO, the `preset` case's log naming its pixels off bg.space (> 0), the new plant RED · Fail: the case GO with no
+  pixel off bg.space, or the plant GREEN
+- Done when: Verify 1 GO on linux-pc; win-laptop owed (R15)
+- Handoff: Cause measured (linux-pc, Chrome 156): page.screenshot reads the WebGPU canvas all 00000000; the canvas's own toDataURL reads the frame, the star at the world's centre (600, 335), not the canvas's; egui-wgpu dithers an empty world by 1 level. Built: web.rs report_world → srWorld (§3.5), smoke.mjs preset reads toDataURL at the world's centre — > 0 opaque px more than 2 levels off bg.space, corners bg.space ±1; plant web-preset-not-dropped; §5.4 G-WEB in place + §0.5 [M0-D144] + Superseded mirror; verify.json, check.sh, testing.md. Verify 1 [ALREADY RUN — PASS (web GO 5/5, preset 8,603 drawn) on linux-pc]; --redarm web [ALREADY RUN — PASS (lead's run, clean GO, 8/8 RED, 1,165 s) on linux-pc]; claim [ALREADY RUN — PASS (GO 8/8, 839 passed, 5 owed) on laserax-ai-server, RTX 4090] + the 5 owed [ALREADY RUN — PASS (18/0) on linux-pc]. Deviation: the plant first read GREEN (dither) → the ±1/>2 tolerance, then RED. Auto mode refused my rsync up twice — the lead ran it. Owed: win-laptop (R15), toDataURL under D3D12 unmeasured. Ran on: model=claude-opus-5-5 level=high (rung_record). Detail: tasks/M0-D144.md. Next: M0-D145.
+
+## M0-D145 · A capture's `{"preset": …, "at": [x, y]}` — §3.3's own form — is refused: capture.rs takes the preset's name alone and drops it at the world's centre, so no script can capture a no-room refusal or two stars side by side · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-D144)
+- Status: DONE (2026-11-02 19:41)
+- Carried flags: [M0-V13, 2026-11-02] M0-V13 (O2, reports/v13.md): tests/capture/check.sh:94's catch-all prints «=== NO-GO: the actions did not reach the top bar ===» for every failure of the actions case's one Python checker — paint, select, hover, glow_white, zoom alike — so a red-arm's summary names the top bar for every plant (8 of 8 at M0-V13, M0-D137's run the same) while the real reason is the line above it; since this block edits check.sh, make that NO-GO line name the failing check
+- Filed by: M0-V13, 2026-11-02 — its contract-vs-code of lot 13 (§3.3's action list against capture.rs), at the lead's word: «Build `at`
+  (Recommended)»; M0-T96 named it unfiled («§3.3's preset form with `at` is not built (capture.rs refuses it; running.md says so)»)
+- Blocks: nothing graded; M0-TV3 drove its no-room and two-star captures with real input (xdotool) for want of it
+- Caused by: M0-T90 (the `preset` action switched to the panel's path, a click on the world's centre)
+- Rating: rule (3) — a BUILD block, its cause measured (source read): `parse_action` takes an object of exactly one key, so `"at"` is
+  refused, and `Action::Preset` carries the name only
+- Files: crates/sr-app/src/capture.rs (`parse_action`, lines ≈ 95–125, `Action::Preset`), crates/sr-app/src/desktop.rs (`apply`'s
+  `Action::Preset`, lines ≈ 177–184), tests/capture/actions.json, tests/capture/check.sh, tools/pb/verify.json (capture's desc, its
+  plants), docs/agent/running.md § Captures (the `preset` row: «not built»; the run-time refusals), tests/plants/ — opened by M0-V13:
+  capture.rs, desktop.rs's `apply` and running.md, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §3.3 (Capture), §4.5, §1.12 (Preset drop) + crates/sr-app/src/
+  capture.rs + desktop.rs's `apply` and `Sim::place` + docs/agent/running.md § Captures
+- Symptom: measured by source read on linux-pc, 2026-11-02: §3.3 lists `{"preset": "sun", "at": [x, y]}`; capture.rs's `parse_action`
+  refuses «an action is an object with exactly one key», and `apply` drops every preset at `[width / 2, height / 2]`; running.md
+  § Captures: «any second key — §3.3's `"at": [x, y]` is not built», and «a `preset` that does not fit» stops the capture
+- Deliver: `{"preset": "<name>", "at": [x, y]}` through the panel's path — its button arms it and a click at cell (x, y) drops it
+  (`Sim::place`), the bare form kept as the world's centre — a drop that does not fit leaves the preset armed with `presets.no_room` on
+  screen for the step's shot, as the window does (§4.5), the capture going on — actions.json steps: a drop off the centre and one too
+  near the edge (the refusal shown), check.sh's test of both, running.md's row and refusal line → Verify 1 · plant
+  tests/plants/capture-preset-at-ignored.patch (the `at` parsed, the drop still at the centre) → Verify 1
+- Verify: 1. `python3 tools/pb/verify.py capture --task <ID>` and `--redarm capture` · Pass: GO, its `actions` case running both new
+  steps, the new plant RED · Fail: NO-GO, or the plant GREEN
+- Done when: Verify 1 GO on linux-pc; win-laptop owed (R15)
+- Handoff: capture takes {"preset", "at": [x, y]} (bare form = centre); a drop that does not fit leaves the preset armed with presets.no_room on screen and the capture goes on; actions.json 24 steps (drop-at (80,80), drop-no-room (10,10)), check.sh tests both + 4 refuse cases; plant capture-preset-at-ignored RED, 9/9 plants red; M0-V13's O2 done (the actions NO-GO line names the failing check). Deviation: repaired tests/plants/capture-edge-ignored.patch's context (my signature change broke its apply) — flagged as oracle change with verify.json's. linux-pc: verify capture GO, --changed 9/9 GO (59 passed); win-laptop owed (R15). Model claude-sonnet-5-5, level high (rung_record). Detail: tasks/M0-D145.md. Next: M0-D146.
+
+## M0-D146 · The contract's zoom clips the magnified world to «the centre area» and pans it to cover that area (§4.2, §1.11), while the build clips and clamps it to the world's own z = 1 rectangle so the legend and the hint stay in view — the lead keeps the build, the contract still says otherwise · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M0-D145)
+- Status: DONE (2026-11-02 19:42)
+- Sizing: E
+- Filed by: M0-V13, 2026-11-02 — its contract-vs-code of [M0-R12] (M0-R12's flag), at the lead's word: «Keep the build (Recommended)»;
+  M0-T129 declared the deviation («the clip is the world's z = 1 rect (legend::layout), not the whole centre area»), the contract kept
+  its text
+- Blocks: nothing graded
+- Caused by: M0-T129 (a declared deviation left without its contract amendment)
+- Rating: rule (3) — an edit job (Sizing: E): two contract sentences, their §0.5 line and the Superseded mirror, no code
+- Files: milestones/m0/m0_contrat.md §1.11 (The zoom, line ≈ 1239), §4.2 (Centre, line ≈ 1831), §0.5's end, milestones/m0/
+  m0_superseded.md — opened by M0-V13, not changed; crates/sr-app/src/ui/zoom.rs lines 1–60 (the built viewport and clamp)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5's last three lines, §1.11 [M0-R12] (The zoom), §4.2 (Centre) +
+  crates/sr-app/src/ui/zoom.rs lines 1–60
+- Symptom: measured by source read on linux-pc, 2026-11-02: §4.2 «With the zoom (M0-T129) the world's scale is z · s, clipped to the
+  centre area», §1.11 «the middle button drags the view (clamped so the world covers the centre area whenever it is larger)»; zoom.rs:
+  «The viewport is where the world sits at z = 1 (`legend::layout`'s world rect): the zoomed image is clipped to it», the pan clamped
+  «so the zoomed world covers the viewport»
+- Deliver: §4.2's and §1.11's zoom sentences amended in place to the built viewport — the world's place at z = 1 (`legend::layout`'s
+  world rect), the legend and the hint kept in view under it — tagged [M0-D146], with its §0.5 line (the old words, the new, the lead's
+  answer) and the Superseded mirror (R19), no code → Verify 1
+- Verify: 1. `grep -n "M0-D146" milestones/m0/m0_contrat.md milestones/m0/m0_superseded.md` · Pass: the two amended passages, the
+  §0.5 line and the mirror, and neither zoom sentence still saying «centre area» · Fail: a passage left unamended or reworded beyond
+  the clip and the clamp
+- Done when: Verify 1 on linux-pc and the claim run GO
+- Handoff: Contract §1.11 [M0-R12] and §4.2 zoom sentences amended in place to the built viewport (the world's place at z = 1, legend and hint kept in view), tagged [M0-D146]; §0.5 line (old words, new, the lead's «Keep the build (Recommended)») and Superseded mirror (m0_superseded.md) added; no code. Verify 1: grep finds the two passages, §0.5 line and mirror; «centre area» remains only inside the §0.5 line's quoted old words. verify.py --changed GO on linux-pc (793 passed, 3/3 scopes). Found/not acted on: nothing. Model/level: claude-sonnet-5-5, medium (rung_record.py now). Next: M0-D147.
+
+## M0-D147 · The docs lag lot 13's last blocks: running.md has no word of the remnant's ring, `star.remnant` or the ignition notice, readouts.md's stages predate §0.5 [M0-D134], [M0-D140] and [M0-D141], and testing.md has no `ui_remnant` row while its `capture` row reads 21 steps and 7 plants · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-D146)
+- Status: DONE (2026-11-02 19:45, started 19:43)
+- Filed by: M0-V13, 2026-11-02 — its contract-vs-code of lot 13 (the docs against the code after M0-T96, the lot's docs block, ran
+  before M0-D134–M0-D143); placed after M0-D146 so the pages describe the tree after M0-D144–M0-D146 too
+- Blocks: nothing graded — every agent reading these pages before Phase 16's blocks
+- Caused by: M0-D134, M0-D137, M0-D138, M0-D139, M0-D140, M0-D141 (each changed what a page describes after M0-T96 wrote it; M0-D134 alone
+  added its testing.md row)
+- Rating: rule (3) — a BUILD block, its cause measured (the pages read against the code and the manifest), as M0-D124 for lot 12
+- Files: docs/agent/running.md (§ Tools and presets: the star readout, the world; § Captures), docs/agent/time_control.md (the banners),
+  docs/agent/readouts.md (§ the stages: `ROWS`, the display hold), docs/agent/testing.md (the `ui_remnant`, `ui_banner`, `capture`, `web`
+  rows) — opened by M0-V13, not changed
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-D134], [M0-D138]–[M0-D141] + the handoffs of M0-D134–M0-D146
+  + each page by the section named
+- Symptom: measured on linux-pc, 2026-11-02 (grep of the four pages against the code and tools/pb/verify.json): running.md names no ring,
+  no `star.remnant` and no ignition notice (§ Tools and presets lists the readout's lines without `star.remnant`); time_control.md's
+  banners have no notice; readouts.md's «The display hold» (lines ≈ 100–103) has no «never steps back» and no page names the settled
+  test of failed_star, white_dwarf and planetary_nebula or main_sequence's largest burning group; testing.md has no `ui_remnant` row (6
+  cases, 1 plant), its `ui_banner` row no notice cases (18), its `capture` row «21 steps … 7 plants» where actions.json holds 22 and
+  verify.json 8
+- Deliver: each page brought to the code as it stands after M0-D146 — running.md (the ring from core collapse on, 14 px at every zoom,
+  `star.remnant`, the ignition notice, its 5 s and when it shows, M0-D145's `at` if not already there), time_control.md (the notice
+  beside the slow-down's banners, the rung untouched), readouts.md (§0.5 [M0-D134]'s settled failed_star and the hold that never steps
+  back, [M0-D140]'s settled white_dwarf and planetary_nebula, [M0-D141]'s main_sequence), testing.md (a `ui_remnant` row, `ui_banner`'s,
+  `capture`'s and `web`'s rows with today's cases, steps and plants) — names and sections pointed to, no number the contract owns
+  restated → Verify 1
+- Verify: 1. `grep -c "ui_remnant" docs/agent/testing.md` and `grep -ciE "ring|notice|star.remnant" docs/agent/running.md` · Pass: ≥ 1
+  each, and every count a row states equal to tools/pb/verify.json's `expected` and plant list · Fail: a row or page still describing the
+  pre-M0-D134 behaviour
+- Done when: Verify 1 on linux-pc and the claim run GO
+- Handoff: linux-pc (laserax-ai), model=claude-sonnet-5-5 level=high (rung_record.py now at launch; the heading's rung). Docs only, no code: running.md (the remnant's ring from core collapse on, 14 px at every zoom, star.remnant under the readout, the ignition notice with its 5 s and when it shows, the zoom's clip at the world's z = 1 place [M0-D146]; M0-D145's at was already there), time_control.md (the notice beside the slow-down's banners, rung untouched; ui_banner 18), readouts.md (the settled test for failed_star, white_dwarf and planetary_nebula, main_sequence on the largest burning group, the hold that never steps back, the band now ignition's alone — no contract number restated), testing.md (new ui_remnant row 6/1 plant; ui_banner 18 cases + notice plant; capture 24 steps, 9 plants, hover-outside/drop-at/drop-no-room; web already today's from M0-D144). Also fixed outside the named list, same lag: ui_legend row 18 -> 21 cases and its 3 plants (M0-D135, M0-D136). Verify 1 [ALREADY RUN — PASS (ui_remnant count 1, ring/notice/star.remnant count 17 in running.md; every row's cases and plants equal verify.json) on linux-pc]; claim verify.py --changed --task M0-D147 [ALREADY RUN — PASS (788 passed, 1/1 scopes GO, plan_lint) on linux-pc], log logs/M0-D147.changed.log. Not acted on: nothing else measured. Next: M0-D71 (Phase 16's head).
+
+## M0-TG2 · Task generation — M0-D71's held core (H) cut into BUILD blocks under one task's ceiling, its contract lines written first · **PLAN** · Opus 5.5, max · switch · (AFTER M0-D70)
+- Status: DONE (2026-11-02 20:34, started 20:10)
+- Filed by: M0-D71, 2026-11-02 — the lead at M0-R11, «a PLAN + BUILD split if past one task's ceiling», and at M0-D71, «File a PLAN
+  block (Recommended)»; filed as TG2, the question's «M0-TC14» read as this block (`TC<n>` is this plan's compaction MOVE, PLAYBOOK §0)
+- Blocks: M0-D71 (moved after this block; its Deliver re-written here as the cut's first BUILD), then M0-R13, M0-D91 and M0-T97 on —
+  the lot's lives are measured with the hold built (Phase 16's ordering note)
+- Rating: rule (2) — a PLAN block, the gate rung by type
+- Sizing (M0-D71, 2026-11-02 — paths from the crate layout and a grep of `floor_added`, none opened): H touches ≈ 12–14 files. Twin:
+  crates/sr-physics/src/reference/{hydro,floors,mod}.rs; GPU: crates/sr-engine/shaders/{hydro,floors,reduce}.wgsl,
+  crates/sr-engine/src/{state,dump,ledger}.rs, crates/sr-engine/src/step/{hydro,mod}.rs; the check: a test file, tools/pb/verify.json,
+  a plant under tests/plants/; and the contract. That is past §2.1's ≈ 6 files / 600 lines. M0-R11's twin H, with N and D beside it,
+  is logs/M0-R11.scratch.diff (564 added lines over mod.rs, hydro.rs, r11.rs and two example drivers)
+- Read: this file (rules + M0-D71's block: Deliver, Carried flags) + milestones/m0/reports/unresolved_remnant.md (§ Candidates H, § SCF
+  cold disk's two rejected walls, § What each changes, § A "remnant at rest" check, § What H leaves open, § Ruling) +
+  milestones/m0/tasks/M0-D71.md + milestones/m0/m0_contrat.md §0.5 (with [M0-D64], [M0-D68]), §1.3.2, §1.4.2, §2.3.4, §2.7 (with
+  [M0-T19]), §2.9, §2.12, §5 + logs/M0-R11.scratch.diff (a record of the twin's form, not a patch to apply)
+- Deliver: (1) H's contract lines in place, each tagged [M0-TG2] with its §0.5 line: §2.3.4 (held cells; a held–free face a reflecting
+  wall — HLL between the free side's predicted face and its mirror, mass, energy and species flux 0; the free cell keeps its Σg kick
+  and its own slopes), §1.4.2 with [M0-D64] and [M0-D68] (no gravitational work across a held wall), §2.7 (`sigma_hold` 10, `eta_hold`
+  0.1, release past 2η or below ½Σ_hold; [M0-T19]'s P8 rule writes the mask after the floors and zeroes a newly held cell's momentum,
+  its KE left in E), §2.9 (the momentum term `held`), §1.3.2 (P8 writes the mask, P4 reads it), §2.12 (the mask in dumps), §5 (the
+  remnant-at-rest row: M0-R11's ruled bounds verbatim), the hold's limits (report items 3–5), and items 1–2 — collapse (no hold where
+  N_Fe's capture rate is > 0, or a held set released past its ceiling) and accretion (one-way inflow through a held wall, its momentum
+  booked to `held`) — written as the forms the build starts from, ruled final only on the GPU lives' measurement · (2) M0-D71's
+  heading, Deliver, Files, Verify and Done when re-written as the cut's first BUILD, the other BUILD blocks filed through `plan.py
+  append` in run order before M0-R13 — each under §2.1's ceiling, its Deliver paths grep-verified, its own Verify (a scope and a plant
+  where it adds a check), rating and Carried flags; cut by dependency, e.g. twin H + the SCF-disk check on the twin · GPU H (the mask
+  plane, walls, P8, dumps) + the disk check on the GPU · the `held` ledger term, GPU and twin · the GPU lives (items 1–2 on M0-D79's
+  4,572 life and M0-R6's 20 M₀, the step-450,000 window ≤ 15 % of radiated over 10,000 steps, G-CORE's resolved hold — report item 4 —
+  and G-REF, G-CONS, the ledger case, M0-D68's J bound not worsened); M0-D71's three flags carried to the block that reads them · (3)
+  any fork the cut finds put to the lead (PLAYBOOK §12) → Verify 1
+- Verify: 1. `python3 tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md` and `grep -n "M0-TG2"
+  milestones/m0/m0_contrat.md` · Pass: lint GO; every section Deliver (1) names amended and tagged, with its §0.5 line; every new BUILD
+  block's Deliver paths present in the tree or labelled (new) · Fail: a section unamended or untagged, a block past the ceiling, or a
+  path neither present nor (new)
+- Done when: Verify 1 on linux-pc and the claim run GO (plan and contract only)
+- Handoff: linux-pc (laserax-ai), model=claude-opus-5-5 level=max (rung_record now on both prompts; the heading's rung). Contract: H's lines in place, each tagged [M0-TG2] — §1.3.2 (P4, P8), §1.4.2, §2.3.4 (held cells, reflecting walls, item 2's one-way inflow, items 3–5 as limits; G-CORE (d)'s disk peaks at Σ 0.150, so item 4 needs no fork), §2.7 (the hold, item 1's N_Fe gate), §2.9 and G-CONS (`held`), §2.12.3 (`resume.held` + a plane, absent = none held), §5.1 G-REST (M0-R11's ruled bounds verbatim), §5.5; one §0.5 line, its mirror in m0_superseded.md. The lead: «In code (Recommended)», then «but would it be more proper to put them in the physics json?», then «Code now, move later (Recommended)»: σ_hold and η_hold are code constants now, M0-D71g moves them into physics.json after M0-T98a (M0-V14's recalibration covers it, flagged there). Plan: M0-D71 re-written as the twin, its three flags moved byte for byte to M0-D71f; M0-D71b (GPU P8 mask), D71c (GPU P4 walls), D71d (`held` ledger), D71e (mask in dumps), D71f (GPU lives, items 1–2 to the lead) before M0-R13, D71g after M0-T98a, each Opus 5.5 high by a named rule-(3) reason; M0-TB2 (PLAN) under this block, §2.1's re-run (≥ 3 appended, a Deliver moved); R13 after D71f; ordering note and register amended. TB's table on my output: no further split, no exception, no E (tasks/M0-TG2.md). Deviation: one plan line (D71's flags pointer) trimmed by a Python one-off, not the Edit tool — diffed, lint GO. Verify 1 [ALREADY RUN — PASS (lint GO, 811 checks; 67 Deliver paths: 53 present, 14 labelled new; every named section tagged) on linux-pc]; claim [ALREADY RUN — PASS (verify.py --changed --task M0-TG2: GO, 815 passed, 3/3 scopes) on linux-pc]; win-laptop: nothing owed (plan and contract only). Not acted on: header 601/600 (inside the margin), report items 6–7 unmeasured. Next: M0-TB2
+
+## M0-TB2 · Task-size and rating re-run — M0-TG2's cut of M0-D71, run through §2.1's TB table before the first of its builds · **PLAN** · Opus 5.5, max · switch · (AFTER M0-TG2)
+- Status: DONE (2026-11-02 21:18, started 20:46)
+- Filed by: M0-TG2, 2026-11-02 — PLAYBOOK §2.1: «TB re-fires when TG appends ≥3 blocks · a `Deliver:` moves between blocks»;
+  M0-TG2 appended seven (this block, M0-D71b–M0-D71f before M0-R13, M0-D71g after M0-T98a) and moved parts of M0-D71's Deliver
+  into them; a pending re-run is a blocking gate written under the block that fired it (§2.1, E1, E8)
+- Rating: rule (2) — a PLAN block, the gate rung by type
+- Read: this file (rules + M0-TG2's handoff + the blocks M0-D71 to M0-D71f and M0-D71g) + milestones/m0/tasks/M0-TG2.md (§ The cut,
+  § TB's table) + PLAYBOOK.md §0 (the rubric), §2.1 (step 2), §3.2 + milestones/m0/m0_contrat.md §0.5 [M0-TG2] and the passages it
+  tags (`grep -n "\[M0-TG2\]" milestones/m0/m0_contrat.md`)
+- Deliver: §2.1 step 2's table over the cut's seven BUILD blocks (M0-D71, M0-D71b–M0-D71g) — (i) one artifact kind, (ii) ≤ 2
+  independent failure classes, (iii) no context switch, (iv) the ruling-dependency cut, (v) every `Deliver:` path grep-verified
+  (present, or labelled new), (vi) one notch smaller and the edit-job test, against the ≈ 6 files / 600 new lines ceiling
+  (tools/pb/verify.json and plants counted apart, as M0-TB counted) — and each block's rating by §0's rubric with its named reason,
+  a block that fails split or re-scoped through `plan.py`, each change put to the lead first (§2.1: a gate changes nothing on its
+  own authority) → Verify 1 · the table and its findings in tasks/M0-TB2.md (new) → Verify 1 · two splits or more → M0-TG2's defect named
+  in the handoff and flagged to the next TG (§2.1) → Verify 1 · the register's `Model ratings:` line left as it is (the cut's
+  blocks only, no whole-plan pass) → none — nothing to write
+- Verify: 1. `python3 tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md` · Pass: GO · Fail: NO-GO
+- Done when: Verify 1 on linux-pc and the claim run GO (plan only)
+- Handoff: linux-pc (laserax-ai), model=claude-opus-5-5 level=max (rung_record now; the heading's rung). §2.1 step 2 over M0-TG2's seven BUILD blocks (table, findings, the lead's answers: tasks/M0-TB2.md): (i)–(iv) and (vi) hold for each — no split (so no TG defect), no exception, E 0 of 7; (v) 44 unique paths, 9 absent, all labelled (new). Two file lists fixed with the lead's «Fix it (Recommended)» ×2: M0-D71b's Clear lives in step/edit.rs, not step/mod.rs (Verify 1 + `edits`); M0-D71g's keys need registry.rs's `SCHEMA`, which refuses a key it lacks (Verify 1 + `registry`). Rating: all seven (usual) by rule (3)'s list, none moved; M0-D71's «design left open» does not hold for the twin (the contract writes the forms), its rung stands on numeric semantics; `Model ratings:` left as it is. Register (the lead: «Update them (Recommended)»): Phase 15's gate is in (54c9a5f, pushed), so Outstanding commit gates and Awaiting lead updated; Next task M0-D71. Flag to M0-D71: `step_forced`'s signature, the constants' names, the twin's held set readable. Deviation: the two blocks' text by the Edit tool (plan.py has no Files or Verify call). Verify 1 [ALREADY RUN — PASS (lint GO, 810 checks, 0 failed) on linux-pc]; claim [ALREADY RUN — PASS (verify.py --changed --task M0-TB2: GO, 810 passed, 1/1 scopes) on linux-pc]; win-laptop: nothing owed (plan only). Not acted on: the lint's 7 older warnings (5 stubs, M0-D91's two), header 601/600. Next: M0-D71
+
+## M0-D71 · P8's floor pays half a late remnant's light (1.48 × 10⁵ of 2.78 × 10⁵ at step 450,000) because P4 cannot hold a sub-cell core still — the held core on the CPU twin: P8's mask, P4's held cells behind reflecting walls with no work across, one-way inflow, G-REST's twin cases (M0-R11's H; the first of M0-TG2's cut) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-TB2)
+- Status: DONE (2026-11-02 21:54)
+- Carried flags: [M0-TB2, 2026-11-02] Seams the cut's later blocks read (tasks/M0-TB2.md): keep `Hydro::step_forced`'s signature (M0-R11's scratch put the mask on `Hydro`), else its two callers in crates/sr-engine/tests/gpu/radforce.rs (lines 193, 418) join your files · name the constants `SIGMA_HOLD` and `ETA_HOLD`, which M0-D71g's Deliver greps for, or name yours in your handoff · leave the twin's held set readable from sr-engine — your held_core cases count it and M0-D71e's `twin_dump` writes it
+- Blocks: M0-D71b–M0-D71f, the GPU's hold, which reads this twin (R13: each pass's twin before its shader), and M0-R13 after them; filed
+  after M0-V9 at the lead's word (2026-10-20, M0-D67: «Revert, file well-balanced D (Recommended)», «After M0-V9 (Recommended)»): the
+  calibration's late remnants shine ≈ half on floor energy
+- Caused by: M0-T34 and M0-T36 (P4's MUSCL-Hancock + HLL with gravity as a source term: no hydrostatic balance in the reconstruction),
+  exposed by M0-D64 (§0.5 [M0-D64]'s split books what Σu·g created unbooked)
+- Rating: (usual) — rule (3)'s list: numeric semantics (a reflecting wall's flux, the hold's thresholds) and a design the spec leaves
+  open (report items 1–2, the forms the build starts from)
+- Files: named by M0-TG2 from M0-R11's scratch (logs/M0-R11.scratch.diff) and a grep — crates/sr-physics/src/reference/mod.rs
+  (`Twin::new`, `Twin::step`: P4's call, P8's), reference/hydro.rs (`step_forced`: the faces' fluxes, `wall`, the update, `face_work`),
+  reference/floors.rs (`Floors::apply`); the check: crates/sr-engine/tests/gpu/held_core.rs (new), crates/sr-engine/tests/gpu/main.rs
+  (its `mod`), tools/pb/verify.json, tests/plants/held-wall-pressure-only.patch (new), docs/agent/testing.md; read, not changed:
+  crates/sr-engine/src/calibrate.rs (`cold_disk_scene`, the disks)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-TG2], §2.3.4, §1.4.2 with §0.5 [M0-D64] and [M0-D68], §2.7
+  ([M0-T19], [M0-TG2]), §2.9, §5.1 (G-REST) + milestones/m0/reports/unresolved_remnant.md (§ Candidates measured, § SCF cold disk) +
+  milestones/m0/tasks/M0-D71.md (§ Cause) + logs/M0-R11.scratch.diff lines 2–313 and 490–508 (mod.rs's and hydro.rs's hunks, r11.rs's
+  `update_held`: H's twin form, a record, not a patch to apply) + docs/agent/testing.md (the `cold_core` row)
+- Symptom: measured on linux-pc (laserax-ai), RTX 5090, 2026-10-20 (M0-D67): from build/v9-sun-life/dumps/s_450000.bin, 5,000 steps,
+  floor_added 1.478e5, radiated 2.777e5; from step ≈ 451,500 a steady state, floor ≈ radiated ≈ 2.3e4 per 500 steps. The CPU twin
+  (128 × 128 crop, passes by hand) puts it all in one cell, the remnant's centre (Σ 85.8, φ −1098 against −986…−1028, heat ≈ 1e-12),
+  short ≈ 50 after P4 every step, 0 with gravity off: its four neighbours hold steady momenta of 58–71 toward it while the face mass
+  fluxes are 1–10 (HLL diffusion out, advection in); the pair's work q·Δφ sums +383 per unit Δt, the split moves −5.9e3 of it out of
+  the centre. Splitting by heat instead (M0-D67's candidates) cuts the floor 60–70 % while the core holds heat, then the core cools to
+  none, the share falls back and the remnant bounces on the floor (GPU window: 90 % of radiated).
+- Repro: `build/target/release/sandbox-reactions headless --scene preset:sun --load-dump build/v9-sun-life/dumps/s_450000.bin --steps 5000
+  --adapter "RTX 5090" --out <dir>` (≈ 22 s) → summary.json's `ledger` end − start: floor_added 1.478e5 against radiated 2.777e5
+- Deliver: [re-written by M0-TG2, 2026-11-02 — M0-R11's ruling (the lead: «H, held core (Recommended)», «η 0.1 (Recommended)»,
+  «Measured bounds (Recommended)») cut past one task's ceiling into this block (the twin), M0-D71b (P8's mask on the GPU), M0-D71c (P4's
+  walls on the GPU), M0-D71d (the `held` ledger term), M0-D71e (the mask in dumps), M0-D71f (the GPU lives) and M0-D71g (the constants
+  into physics.json, after M0-T98a), the contract's lines written (§0.5 [M0-TG2]), M0-D71's three carried flags moved byte for byte to
+  M0-D71f — the well-balanced P4 this block first asked for failed at its 2026-10-28 screening] **the held core on the CPU twin**, as
+  contract §2.7 [M0-TG2], §2.3.4 [M0-TG2] and §1.4.2 [M0-TG2] write it: σ_hold 10 and η_hold 0.1 as pub constants of
+  reference/floors.rs (as reference/sinks.rs's `R_CORE`, M0-D71b's P8 reading them from there) → Verify 1 · P8's mask after the
+  floors and the renormalisation — the hold test with report item 1's N_Fe gate, released past 2η, under ½σ_hold or at the gate, a
+  newly held cell's momentum zeroed (its KE left in E) — and the initial state's mask before step 0 → Verify 1 · P4: a held cell left
+  as it is, a held–free face the reflecting wall (HLL against the mirror, mass, energy and species exactly 0), held–held and held–edge
+  faces carrying nothing, no face work across a wall, report item 2's one-way inflow → Verify 1 · the twin's `held` momentum (an f64
+  pair on `Twin` beside `booked`: each newly held momentum and every impulse P4 spares a held cell) → Verify 1 · G-REST's twin cases
+  in a new scope `held_core` (crates/sr-engine/tests/gpu/held_core.rs, new, `bash tests/gpu.sh held_core physics`): the SCF cold C/O
+  disks at M 900 and 1,800 (`cold_disk_scene`, 64 × 64, bounce, gravity + hydro, 10,000 steps) holding the ruled bounds — held u = 0,
+  floor_added over steps 1,000–10,000 ≤ 10, KE(10,000) ≤ 2 × KE(1,000) — and their momentum, grid + held, constant to 10⁻⁶ of Σm|u|
+  → Verify 1 · one case each for the wall (a free cell against a held one: mass, energy and species flux exactly 0, the free side's
+  normal momentum turned back), the hysteresis (held at η, kept to 2η, released past it and under ½σ_hold), item 1 (a held iron cell
+  released once Y_eΣ passes Σ_N) and item 2 (inflow into a held cell passes, outflow does not) → Verify 1 · plant tests/plants/held-wall-pressure-only.patch (new: the twin's held wall takes §2.8's bounce flux, Π alone) listed
+  for `held_core` → Verify 2 · testing.md's `held_core` row → none — a doc row
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py held_core twin sod --task M0-D71` on laserax-ai-server (R18) ·
+  Pass: GO, held_core ≥ 6 cases · Fail: NO-GO · 2. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm held_core --task
+  M0-D71` there · Pass: GO — held-wall-pressure-only NO-GO · Fail: the plant GREEN
+- Done when: on laserax-ai-server (R18; the cases run the twin), both SCF disks hold G-REST's bounds on the twin — held u = 0,
+  floor_added ≤ 10 over steps 1,000–10,000, KE(10,000) ≤ 2 × KE(1,000) — with grid + held momentum constant, and the plant red;
+  win-laptop `owed` (R15)
+- Adversarial: a rule that holds too much passes the disks too, since frozen gas reads u = 0 — the disk cases print the held count
+  against M0-R11's 16 (M 900) and 12 (M 1,800), and the hysteresis case holds no cell under σ_hold or past η; a `held` booking with a
+  wrong sign or a missed Σg term passes u = 0 regardless — the momentum case reads grid + held on both disks.
+- Handoff: linux-pc (laserax-ai), model=claude-opus-5-5 level=high (rung_record now; the heading's rung). The held core on the twin: floors.rs SIGMA_HOLD 10 / ETA_HOLD 0.1, Floors::holds + Floors::hold (after apply); hydro.rs Hydro::step_held (step_forced delegates, signature kept), held_wall, no work across held faces; mod.rs Twin::held beside booked, Twin::held_mask(), the hold in Twin::new and after P8's floors. Scope held_core (7 cases) + plant held-wall-pressure-only; twin-skip-floors regenerated (its context moved), twin re-armed RED (3 failed). Ruled here (§0.5 [M0-D71], Superseded mirror): inflow took the M 900 disk's floor to 392.6 (bound 10; 2.26 without) — «Walls only, inflow later (Recommended)», item 2 → M0-D71f (flagged, and M0-D71c); disk momentum can't hold 1e-6 (today's tree drifts 1.4e-2 with no hold; M 1,800's Σm|u| = 0) — «Booking exact, disks reported (Recommended)», strips at 1e-12. Measured: held 16 / 12 (M0-R11's), floor 2.26 / −6e-4, KE 155 → 154 / 0 → 0. Verify 1 [ALREADY RUN — PASS (held_core 7, twin 6, sod 15) on laserax-ai-server, RTX 4090]; Verify 2 [ALREADY RUN — PASS (held-wall-pressure-only RED, 2 failed) on laserax-ai-server]; claim [ALREADY RUN — PASS (verify.py --changed --task M0-D71-r3: 1594 passed, 75/75 GO, 5 owed, base M0-TB2's start) on laserax-ai-server] + the 5 owed [ALREADY RUN — PASS (18/0) on linux-pc]; win-laptop owed (R15). Not filed: the plan's «51 entries» Superseded pointer is stale (87 at HEAD). Detail → tasks/M0-D71.md § Session 2026-11-02 — the build. Next: M0-D71b
+
+## M0-D71b · The held core on the GPU, part 1 — P8 writes the hold's mask after the floors, zeroes a newly held cell's momentum and books it; the initial state's mask; Clear empties it · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D71)
+- Status: DONE (2026-11-03 10:08, started 09:51)
+- Carried flags: [M0-D71, 2026-11-02] [M0-D71, 2026-11-02] the twin's hold: sr_physics::reference::floors::{SIGMA_HOLD, ETA_HOLD, Floors::holds (one cell), Floors::hold (the world, after apply; returns the zeroed momentum)}; Twin::held_mask(), Twin::held. The twin reads ε_th in f64 and Σ_N (physics.json's sigma_n) unrounded — your f32 rule decides the GPU's comparison against it
+- Filed by: M0-TG2, 2026-11-02 — M0-D71's cut (the lead at M0-R11: «a PLAN + BUILD split if past one task's ceiling»); the second of
+  six before M0-R13
+- Blocks: M0-D71c (P4 reads the mask) and M0-D71e (the mask in dumps)
+- Caused by: M0-T34 and M0-T36, as M0-D71
+- Rating: (usual) — rule (3)'s list: numeric or precision semantics (the hold test in f32 against the twin's f64 at the η and 2η
+  edges, item 1's gate at Σ_N)
+- Files: named by M0-TG2 from step/mod.rs's `floors` and state.rs's `TERMS` (opened), the shader not opened —
+  crates/sr-engine/shaders/floors.wgsl (`floor_cells`, `renormalise_species`), crates/sr-engine/src/step/mod.rs (`floors`; the
+  step's start), crates/sr-engine/src/step/edit.rs (Clear: `Edit::Clear`, `Step::queue_edit`, applied by shaders/edit.wgsl's
+  `edit_cells` — named by M0-TB2, the lead: «Fix it (Recommended)»), crates/sr-engine/src/state.rs (the state's buffers; `TERMS`
+  and `BOOK_GROUPS`' `booking.floors`), crates/sr-engine/tests/gpu/floors.rs, crates/sr-engine/tests/gpu/booking.rs (its pinned
+  `TERMS` list), tools/pb/verify.json, tests/plants/hold-momentum-kept.patch (new), docs/agent/testing.md
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-TG2], §2.7 ([M0-T19], [M0-TG2]), §1.3.2, §2.2 (WebGPU's
+  8 storage buffers a stage), §2.9 + M0-D71's handoff + crates/sr-physics/src/reference/floors.rs (the twin's rule, M0-D71) +
+  docs/agent/testing.md (the `floors` and `booking` rows)
+- Deliver: the hold's mask on the GPU, as §2.7 [M0-TG2] writes it and M0-D71's twin does — one word per cell written by P8 after
+  `floor_cells` and `renormalise_species` (a third dispatch, or folded into the second), σ_hold and η_hold uploaded from
+  reference::floors' constants, item 1's gate on Y_eΣ against Σ_N as react.wgsl reads it → Verify 1 · a newly held cell's momentum
+  zeroed, its KE left in E, the momentum booked into two new `TERMS` written by P8 in `booking.floors`, appended at `TERMS`' end (so
+  M0-D71d can read an older snapshot's shorter list with them 0) → Verify 1 · before step 0 the initial state's mask by the rule, its
+  zeroing booked, and Clear emptying it → Verify 1 · the mask's binding chosen so P4 can read it — hydro.wgsl's `hydro_update` binds
+  the 8 storage buffers WebGPU's default allows (its F «the update's eighth», §2.2 binding native builds too), so the mask reaches P4
+  another way (a texture, or a plane of a buffer P4 binds read-only), named in the handoff for M0-D71c → none — M0-D71c's cases read
+  it · cases in `floors`: from one f32 state built for them (cells across the η and 2η edges, Σ about σ_hold and ½σ_hold, iron about
+  Σ_N's gate, a cell already held), P8's mask, momenta and booking against the twin's P8 from the same start — the mask equal cell
+  for cell (cells within f32's rounding of an edge counted, printed and left out), the zeroed momenta 0, the booked momentum within
+  1e-6 of the twin's — a second P8 over the held state moving nothing, the initial state's mask the rule's and Clear leaving none
+  → Verify 1 · crates/sr-engine/tests/gpu/booking.rs's pinned list with the two terms → Verify 1 · plant
+  tests/plants/hold-momentum-kept.patch (new: P8 sets the mask and leaves the momentum) listed for `floors` → Verify 2 ·
+  testing.md's `floors` row → none — a doc row
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py floors booking edits --task M0-D71b` on laserax-ai-server (R18) · Pass:
+  GO, floors ≥ 9 cases · Fail: NO-GO · 2. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm floors --task M0-D71b` there
+  · Pass: GO — hold-momentum-kept and floors-no-cold-energy NO-GO · Fail: a plant GREEN · 3. the same with `--redarm booking` · Pass:
+  GO — its plants NO-GO · Fail: a plant GREEN
+- Done when: on laserax-ai-server's RTX 4090 (R18), P8's mask equals the twin's from one state and the zeroed momentum is booked;
+  win-laptop `owed` (R15)
+- Adversarial: P4 still moves held cells until M0-D71c, so no run between the two blocks can show a remnant at rest — the cases grade
+  P8 alone from one state, never a run; an f32 hold test flips a cell sitting at η, so the case counts the cells within rounding of an
+  edge and grades the rest bit for bit; a snapshot written before this block lists 37 booking terms, which `Ledger::restore` refuses
+  (exit 4 on `--continue`) until M0-D71d reads the missing terms as 0 — no case continues an old snapshot meanwhile.
+- Handoff: linux-pc (laserax-ai), GPU runs on laserax-ai-server (R18; the rsync's first try refused by auto mode, then the lead: «you can run the rsync yourself, go»); model=claude-opus-5-5 level=high (rung_record now; the heading's rung). Built: the mask is State::held(), an r32uint texture (hydro_update's 8 storage slots are full — M0-D71c binds it as texture_2d<u32>, textureLoad), State::upload_held/read_held; P8's hold folded into renormalise_species (P8's list and box.rs's pin unchanged), hold_cells on the initial state before P2 and Δt_0; TERMS 39 (held.mom_x/y in booking.floors); Clear zeroes the mask in edit_cells; floors 7 → 12 cases, plant hold-momentum-kept. Verify 1 [ALREADY RUN — PASS (floors 12, booking 4, edits 17) on laserax-ai-server, RTX 4090] (r1 FAIL: my own edge bound, 626 > 512 by construction — replaced); Verify 2 [ALREADY RUN — PASS (hold-momentum-kept RED 2, floors-no-cold-energy RED 11)]; Verify 3 [ALREADY RUN — PASS (booking-row-skip RED 1)]; claim [ALREADY RUN — FAIL (--changed --task M0-D71b: 73/75 GO; plan_lint the TM refresh → M0-TM14 filed; sink 33/1 → M0-D148 filed, the lead: «File a D, run it next (Recommended)») on laserax-ai-server] + plan_lint and the 5 owed [ALREADY RUN — PASS (832/0, 6/6) on linux-pc]. Measured: 3,470 cells graded, 626 at an edge; Δt_0 zeroed-by-hand bit-equal. Not graded here: Clear's P0 zeroing (P8 releases every Σ_floor cell anyway; → M0-D71c). Header 603/600 (lint warns). Server git (the lead's ask): no commit since 255ec37, the 2026-11-02 index of 5,190 as recorded. win-laptop owed (R15). Detail → tasks/M0-D71b.md. Next: M0-D148
+
+## M0-D148 · `sink` NO-GO since P8's hold reached the GPU: `gpu_a_neutronized_core_holding_m_tov_sb_forms_a_sink_from_mass_as_the_twin` forms no sink — its cold neutron core is held before step 0, ∇·u = 0, and §2.6's converging test refuses it, where the case's P3-only twin forms one at (32, 32) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D71b; before M0-TM14 — the lead at M0-D71b: «File a D, run it next (Recommended)»)
+- Status: DONE (2026-11-03 10:32, started 10:15)
+- Filed by: M0-D71b, 2026-11-03 — measured in its claim (`verify.py --changed --task M0-D71b`, laserax-ai-server, RTX 4090: 73/75
+  GO, sink 33/1)
+- Caused by: M0-D71b
+- Rating: (usual) — rule (3)'s list: numeric semantics (the core's warmth against the hold's 2η edge once its kinetic energy is
+  heat, and the formation's boundness on a warmer core)
+- Symptom: crates/sr-engine/tests/gpu/sink.rs:1257, `assertion left == right failed — left: (None, Some((32, 32))), right:
+  (Some((32, 32)), Some((32, 32)))`: the GPU's step 1 forms nothing.
+- Repro: `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py sink --task M0-D148` on laserax-ai-server (R18).
+- Suspected cause (measured by reading, not by a probe): `core_world(64, 64, (32, 32), 1.05 m_tov, "n", −1.0)` (sink.rs:378) builds a
+  pure-neutron disk of r_core at Σ ≈ 1.05 × 4,854 / 50 ≈ 102 (the centre twice), u = −0.1 d, E = Σ(0.1 + ½|u|²) — ε_th = 0.1 −
+  ε_cold, below the floor, far under η_hold ε_cold. Since M0-D71b the GPU step runs the initial state's hold before step 0
+  (step/mod.rs `Step::hold`, floors.wgsl `hold_cells`): Σ ≥ σ_hold, ε_th ≤ η ε_cold, no iron → held, momentum zeroed → sinks.wgsl's
+  converging test (`div >= 0.0`, line 235) refuses formation. The contract says so (§2.3.4 [M0-TG2]: «a held core's ∇·u is 0, so
+  §2.6's converging test passes there only once the core is released (read at M0-D71f)»). The case's twin (`mass_sinks().step`)
+  runs P3 alone, no hold, so it forms.
+- Files opened by M0-D71b: crates/sr-engine/tests/gpu/sink.rs (core_world, the case), crates/sr-engine/shaders/sinks.wgsl (line 234's
+  divergence) — the fix's: crates/sr-engine/tests/gpu/sink.rs, docs/agent/testing.md (the `sink` row)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.6, §2.7 [M0-TG2] + tasks/M0-D71b.md + sink.rs's
+  `core_world` and the failing case
+- Deliver: the GPU case grades formation from mass again on a core the hold leaves free — its core warm enough that the initial
+  hold and step 0's P8 hold none of it (ε_th > 2η_hold ε_cold with its kinetic energy counted, or another design that keeps the case
+  P3's, named in the handoff), the twin side and every bound unchanged, `core_world`'s other callers (the CPU twin cases) untouched
+  or re-graded → Verify 1 · the case's scene printed with its hold margin (ε_th / ε_cold at the centre) → Verify 1 · testing.md's
+  `sink` row → none — a doc row
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py sink --task M0-D148` on laserax-ai-server (R18) · Pass: GO, 34
+  cases · Fail: NO-GO · 2. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm sink --task M0-D148` there · Pass: GO —
+  every plant NO-GO · Fail: a plant GREEN
+- Done when: on laserax-ai-server's RTX 4090 (R18), the case forms its sink at (32, 32) as the twin does; win-laptop `owed` (R15)
+- Adversarial: a core held by the GPU and not by the twin is not «as the twin» — warming the core moves the boundness and the
+  swallowed energy the case grades, so the twin must see the same core; whether a cold neutron core above m_tov_sb ever forms a
+  black hole while held is M0-D71f's measurement (the GPU lives), not this case's.
+- Handoff: BUILD done, RTX 4090 on laserax-ai-server (R18): the GPU mass-formation case forms at (32, 32) as the twin (m 5,095.8276 vs 5,095.8286). sink.rs `free_of_the_hold` warms each Σ ≥ σ_hold cell to ε_th = 2.5 η_hold ε_cold (printed 0.2500 at the centre); `core_world` calls it; `assert_none_held` (the twin's `Floors::holds`) guards every arm.
+  Deviations: the case's Σ_BH arm (shipped physics) had the same cause, masked by the first failure — warmed too, bowl offset −10,000; `core_world`'s bowl −100 → −1,000, since the warmed iron core went unbound and `sink-ye-filter-off` fell from 3 to 2 failed (back to 3).
+  Runs: sink 34/0 GO; --redarm sink GO, 5/5 red; claim --changed 1,604 passed, 75/75 GO, 5 owed → linux-pc 5/5 GO (--task M0-D148-owed); win-laptop owed (R15). The claim's oracle FLAG on sink.rs is the Deliver's own case. testing.md's sink row updated.
+  Model: model=claude-opus-5-5 level=high (rung_record.py now). Detail: tasks/M0-D148.md. Next: M0-TM14.
+
+## M0-TM14 · Rating pass — seven carried flags on open BUILD blocks since 2026-10-29 · **PLAN** · Opus 5.5, max · switch · (AFTER M0-D148)
+- Status: DONE (2026-11-03 10:51, started 10:41)
+- Filed by: M0-D71b, 2026-11-03 — its three flags (M0-D71c: the mask's binding and Clear's first grading; M0-D71d: the two `held`
+  terms; M0-D71e: the mask's upload and readback) reached `Rating refresh: 5 flags` (`plan.py lint`'s FAIL in M0-D71b's claim);
+  runs next, after M0-D148 (the lead's «run it next» for that D).
+- Carried flags: none
+- Read: this file (rules + this task) + PLAYBOOK.md §0 (the ladder, the rubric) and §B.3 (the probe) + the agent's model pages the
+  ladder cites + the record (`rung_record.py report`, the last phase-closing V's table: milestones/m0/reports/v13.md)
+- Deliver: the ladder re-read on the day — the probe and the model pages: a model retired, renamed or added, a price or a level
+  changed → the `Models:` line rewritten and dated, the lead's answer first where a rung they run changes (§12) · every open block's
+  rating re-derived by §0's rubric from its heading, `Sizing:`, `Deliver:`, `Verify:` and `Carried flags:` and the record — its
+  rating segment rewritten, nothing else in the block · the register's `Model ratings: <YYYY-MM-DD> by M0-TM14` line · in the
+  handoff, the ratings changed, counted by rung. The flags since M0-TM13's line (seven by `plan.py lint`'s count, 2026-11-03):
+  M0-D71b's two (M0-D71's, the twin's hold), M0-D71c's three (M0-D71's two — no inflow, G-REST's GPU half — and M0-D71b's, the
+  mask a texture P4 reads by `textureLoad`), M0-D71d's (M0-D71b's, `held.mom_x`/`held.mom_y`), M0-D71e's (M0-D71b's,
+  `State::upload_held`/`read_held`, a `--continue` starting with none held) → none — the rating segments, the `Models:` line and
+  the register's line are the record
+- Pass: `plan.py lint` GO; every open block on a rung of the ladder, each above the cheapest rung that fits named in the task file
+  with its rule; the diff touches rating segments, the `Models:` line and the register's line only. Fail: any other byte changed; a
+  BUILD or MOVE block above the cheapest rung that fits with none of §0's rules (1)–(4) named; a CHECK or PLAN block below `(gate)`.
+- Handoff: linux-pc (laserax-ai); model=claude-opus-5-5 level=max (rung_record now; the heading's rung). Ladder re-read 2026-11-03: probe Claude Code 2.1.314; the claude-api skill's table (cached 2026-10-06) and shared/models.md byte-identical to M0-TM13's read — no rung retired, renamed, added, repriced or relevelled, no question owed; `Models:` re-dated (2.1.312 → 2.1.314). Record: M0-V13's table, no class moves (rule (4); today's report agrees). Ratings: 42 open blocks re-derived, 0 changed — Opus 5.5, max 8 (0) · Opus 5.5, high 12 (0) · Sonnet 5.5, high 21 (0) · Sonnet 5.5, medium 1 (0) · Fable 5.1, high and Opus 5.5, xhigh 0 (0); the 12 above the cheapest rung, each with its rule, and the 6 flags the lint counts (flags, not stamps) in tasks/M0-TM14.md — none moves a rating (M0-D71c's mask question settled by M0-D71b's flag; its rung stands on (e) and (a)). Register: `Model ratings: 2026-11-03 by M0-TM14`, refresh 6/5 → 0/5; the diff is the `Models:` line and that line (checkdiff, red-tested). Claim [ALREADY RUN — PASS (verify.py --changed --task M0-TM14: GO, 1603 passed, 75/75 scopes) on linux-pc] — a deviation, mine: 74 scopes stale at the local anchor ran too, their GPU cases on linux-pc's RTX 5090, against R18; cause measured: M0-D71b and M0-D148 skipped R18's bring-back (M0-D71b's server loop records lost; M0-D148's claim record on the server only — bring it home before the next rsync up). Not acted on (bounded diff): the register's Next task still names M0-TM14 first; the lint's 7 older WARNs; header 603/600; the physics-red question still the lead's. Next: M0-D71c.
+
+## M0-D71c · The held core on the GPU, part 2 — P4 leaves a held cell still behind reflecting walls with no work across, inflow passing one way, the momentum it spares booked; G-REST's disks on the GPU · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D71b)
+- Status: DONE (2026-11-03 11:34)
+- Carried flags: [M0-D71, 2026-11-02] [M0-D71, 2026-11-02] §0.5 [M0-D71]: no one-way inflow — every held–free face is the wall, nothing crosses either way (inflow took the M 900 disk's floor to 392.6 on the twin); drop item 2 from your build (it moved to M0-D71f), and G-REST's GPU disks print grid + held momentum, not graded (the booking graded on strips). The twin's API: Hydro::step_held(st, dt, g, radiation, held) -> [f64; 2], held_wall, the still faces (tasks/M0-D71.md § Session 2026-11-02 — the build) · [M0-D71b, 2026-11-03] the mask is State::held() (state.rs), an r32uint texture of the world's size, 1 = held — bind it in hydro_update as texture_2d<u32> and read it with textureLoad (no storage slot; P8 binds it read_write, edit_cells write-only); P0's Clear zeroes it in edit_cells, but floors' clear_leaves_no_cell_held passes without that (P8 releases every Σ_floor cell anyway) — your P4 cases are the first that can grade it: a Clear plus a paint beside a held core in one step
+- Filed by: M0-TG2, 2026-11-02 — M0-D71's cut; the third of six before M0-R13
+- Blocks: M0-D71d (the ledger reads P4's booking) and M0-D71f (the lives run the whole hold)
+- Caused by: M0-T34 and M0-T36, as M0-D71
+- Rating: (usual) — rule (3)'s list: numeric semantics (the wall's HLL flux in f32, the face work skipped at a wall) and a design the
+  spec leaves open (how P4 reads the mask within WebGPU's 8 storage buffers)
+- Files: named by M0-TG2 from hydro.wgsl's header and step/hydro.rs's dispatches (opened) — crates/sr-engine/shaders/hydro.wgsl
+  (`hydro_update`: the faces' fluxes, the update, `face_work`; `hydro_edges`; `hydro_commit`), crates/sr-engine/src/step/hydro.rs
+  (the three dispatches' bind groups), crates/sr-engine/src/state.rs (`TERMS` and `BOOK_GROUPS`: a P4-written `held` group),
+  crates/sr-engine/tests/gpu/held_core.rs (new at M0-D71), crates/sr-engine/tests/gpu/booking.rs, tools/pb/verify.json,
+  tests/plants/held-wall-gpu-pressure-only.patch (new), docs/agent/testing.md
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-TG2], §2.3.4, §1.4.2 with §0.5 [M0-D64] and [M0-D68],
+  §2.4.4, §2.8, §2.9, §5.1 (G-REST, G-REF) + M0-D71's and M0-D71b's handoffs (the twin's form; the mask's binding) +
+  crates/sr-engine/shaders/hydro.wgsl lines 1–112 (its header and bindings) + docs/agent/testing.md (the `held_core` row)
+- Deliver: P4's held cells on the GPU, as §2.3.4 [M0-TG2] and §1.4.2 [M0-TG2] write them and M0-D71's twin does — `hydro_update`
+  leaving a held cell's Σ, E and species as they are and its momentum 0, a held–free face the reflecting wall (HLL between the free
+  side's predicted face and its mirror, mass, energy and species exactly 0), held–held faces nothing, `hydro_edges` booking nothing
+  for a held edge cell → Verify 1 · no face work across a wall ([M0-D64]'s ½Δt·p·Δφ share and [M0-D68]'s D both skipped there)
+  → Verify 1 · item 2's one-way inflow (the ordinary HLL flux taken where it carries mass into the held cell, its face work done, the
+  held cell's impulse booked) → Verify 1 · the momentum a held cell is spared — its flux differences and Σg·Δt — booked into a
+  P4-written `held` group appended at `TERMS`' end (e.g. carried in `next`'s momentum to `hydro_commit`, which books it and writes 0)
+  → Verify 1 · G-REST's GPU cases in `held_core`: the two SCF disks on the GPU to 10,000 steps (held u = 0, floor_added over steps
+  1,000–10,000 ≤ 10, KE(10,000) ≤ 2 × KE(1,000)), each holding its momentum — grid + P8's and P4's `held` booking — to 10⁻⁶ of Σm|u|
+  → Verify 1 · each disk against the twin from the same f32 start at step 200 (G-REF's span): Σ and E relative L1 ≤ 10⁻³, the held
+  set the same → Verify 1 · an inflow case (a free cell driven into a held one) against the twin's: the mass passed within 10⁻⁶ of
+  the twin's, none passing back out → Verify 1 · crates/sr-engine/tests/gpu/booking.rs's pinned list with P4's terms → Verify 1 · plant tests/plants/held-wall-gpu-pressure-only.patch (new: hydro.wgsl's held wall the
+  bounce flux, Π alone) listed for `held_core` → Verify 2 · testing.md's `held_core` row → none — a doc row
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py held_core booking cpu_gpu sod edges collapse --task M0-D71c` on
+  laserax-ai-server (R18) · Pass: GO, held_core ≥ 10 cases · Fail: NO-GO · 2. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py
+  --redarm held_core --task M0-D71c` there · Pass: GO — held-wall-pressure-only and held-wall-gpu-pressure-only NO-GO · Fail: a plant
+  GREEN · 3. the same with `--redarm booking` · Pass: GO — its plants NO-GO · Fail: a plant GREEN
+- Done when: on laserax-ai-server's RTX 4090, both SCF disks hold G-REST's bounds on the GPU with their momentum, and agree with the
+  twin at step 200; win-laptop `owed` (R15)
+- Adversarial: two walls meeting at a held cell's corner, or an inflow face beside a wall, can leak momentum that the disks' u = 0
+  does not show — each disk case reads grid + held momentum to 10⁻⁶ of Σm|u|, and the twin at step 200 within G-REF's band; a mask
+  packed into a buffer the update writes would be read half-updated — the mask is P8's, read-only in P4.
+- Handoff: linux-pc (laserax-ai), GPU runs on laserax-ai-server's RTX 4090 (R18); model=claude-opus-5-5 level=high (rung_record now; the heading's rung). Built, without inflow as carried (§0.5 [M0-D71]): hydro.wgsl reads State::held as texture_2d<u32> (binding 15) in all three dispatches. A held side's face is the free side's mirror inside the face's one hll, and held_flux keeps its momentum alone (no new hll, M0-D118). No face_work across a held face. A held cell is kept bit for bit and carries what it was spared in next's momentum; hydro_commit books that into booking.held (TERMS 41: held.spared.mom_x/y, Pass::Hydro, BOOK_GROUPS 9) and never writes the cell. hydro_edges books nothing at a held edge cell. held_core 7 → 16 cases (9 GPU), plant held-wall-gpu-pressure-only; booking.rs's pin; testing.md's rows. Measured: GPU disks M 900 held 16, floor 2.34, KE 155.45 → 154.07; M 1,800 held 12, floor −6.2e-4, KE 0 → 0; step 200 against the twin: L1 ≤ 1.8e-6, held sets equal; strips spared within 1.6e-6 of the twin's; work-across 1.2e-7 (4.0e-3 with work across, manual red); Clear+paint bit for bit (30 off without P0's zeroing, manual red, M0-D71b's flag). Verify 1 [ALREADY RUN — PASS (51 passed, 6/6) on laserax-ai-server, RTX 4090]; Verify 2 [ALREADY RUN — PASS (held-wall-pressure-only RED 6, held-wall-gpu-pressure-only RED 5)]; Verify 3 [ALREADY RUN — PASS (booking-row-skip RED 1)]; claim [ALREADY RUN — PASS (--changed --task M0-D71c: 1407 passed, 62/62 GO, 5 owed) on laserax-ai-server, RTX 4090] + the 5 owed [ALREADY RUN — PASS (18 passed, 5/5, --task M0-D71c-owed) on linux-pc]; win-laptop owed (R15). Flagged to M0-D71d: P4's terms, plus its disk case's 1e-6 against [M0-D71]. GPU f32 slots round at ~5e-8 of Σ|slot| (M 1,800: 0.136 of 2.8e6). Not measured: a P0-erased held cell's one-step divergence from the twin (source only). Also dropped M0-TM14 (DONE) from Next task. Detail → tasks/M0-D71c.md. Next: M0-D71d
+
+## M0-D71d · The ledger's momentum term `held` — P8's and P4's booking read into §2.9's momentum, summary.json's `momentum.held`, the invariant with it; an older record or snapshot reads it as 0 · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D71c)
+- Status: DONE (2026-11-03 12:02)
+- Carried flags: [M0-D71b, 2026-11-03] the two terms are TERMS[37..39] = held.mom_x, held.mom_y (booking.floors, written by P8's renormalise_species and the initial hold_cells); ledger.rs's Momentum has no held field yet, and Ledger::restore refuses a 37-term booked list · [M0-D71c, 2026-11-03] P4's terms are TERMS[39..41] = held.spared.mom_x, held.spared.mom_y (booking.held, BOOK_GROUPS[8], Pass::Hydro, written by hydro_commit); Momentum's held = TERMS[37..41]. Your Deliver's 'M 900 disk 1,000 steps within 10⁻⁶ of Σm|u|' meets §0.5 [M0-D71] ('the disks' grid + held momentum printed, not graded'): the GPU M 900 disk drifts 5.07 of Σm|u| 63.2 over 10,000 steps, and the f32 per-cell slots alone round at ~5e-8 of Σ|slot| (M 900: 5.4e5 at step 200, the sum 0.026 against the twin's 1e-11; M 1,800: 2.8e6, 0.136, Σm|u| 0) — read [M0-D71] before building that case (tasks/M0-D71c.md § For M0-D71d)
+- Filed by: M0-TG2, 2026-11-02 — M0-D71's cut; the fourth of six before M0-R13
+- Blocks: M0-D71f (G-CONS's momentum on the lives) and M0-T106 (G-CONS over whole lives: §5.1's momentum sum with `held`)
+- Caused by: M0-T34 and M0-T36, as M0-D71
+- Rating: (usual) — rule (3)'s list: a schema changed (§2.9's momentum, summary.json's ledger, the observers' snapshot §0.5 [M0-D76])
+- Files: named by M0-TG2 from ledger.rs (opened: `Momentum`, `invariant`, `json`, `Ledger::restore`) — crates/sr-engine/src/ledger.rs,
+  crates/sr-engine/tests/gpu/ledger.rs, tools/pb/verify.json, tests/plants/ledger-no-held.patch (new), docs/agent/testing.md
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-TG2], [M0-D76], §2.9, §2.12.2, §5.1 (G-CONS) + M0-D71b's
+  and M0-D71c's handoffs (the booking terms) + docs/agent/testing.md (the `ledger` row)
+- Deliver: §2.9's momentum term `held` in the ledger, as §2.9 [M0-TG2] writes it — `Momentum`'s `held` summed from P8's and P4's
+  `held` booking terms, `invariant()` grid + sinks + escaped + held, summary.json's records' `momentum.held` (the record's JSON and
+  its read-back), and `Ledger::restore` reading a snapshot written before [M0-TG2] — its `booked` list the four terms short — with
+  them 0 → Verify 1 · cases in `ledger`: G-REST's M 900 SCF disk (the shipped K's, so cells are held) in a bounce world, 1,000 steps
+  — momentum (grid + sinks + escaped + held) within 10⁻⁶ of Σm|u|, `held` larger than that band, summary.json's `momentum.held` the
+  ledger's; a 37-term snapshot restored with the held terms 0 → Verify 1 · plant tests/plants/ledger-no-held.patch (new:
+  `invariant()` leaves `held` out) listed for `ledger` → Verify 2 · testing.md's `ledger` row → none — a doc row
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py ledger summary observe_run booking --task M0-D71d` on
+  laserax-ai-server (R18) · Pass: GO, ledger ≥ 7 cases · Fail: NO-GO · 2. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py
+  --redarm ledger --task M0-D71d` there · Pass: GO — ledger-no-held and the scope's other plants NO-GO · Fail: a plant GREEN
+- Done when: on laserax-ai-server's RTX 4090, the held disk's momentum invariant holds to 10⁻⁶ of Σm|u| with `held` in it and
+  summary.json carries it; win-laptop `owed` (R15)
+- Adversarial: a disk whose held cells feel no net force books `held` ≈ 0 and passes without the term — the case asserts |held|
+  above the invariant's band, so dropping it breaks the invariant; the scope's other scenes switch the cold pressure off, where no
+  cell can be held, so only the new case sees the term.
+- Handoff: linux-pc (laserax-ai), GPU runs on laserax-ai-server's RTX 4090 (R18); model=claude-opus-5-5 level=high (rung_record now; the heading's rung). Built: ledger.rs Momentum.held = TERMS[37..41] per axis, invariant() grid + sinks + escaped + held, summary.json's momentum.held, Record::restore reads a record without it as 0, Ledger::restore takes 41 or 37 booked terms (the rest 0, any other length refused). Deviation, the lead's ruling (§0.5 [M0-D71]; «Disk printed + wall graded (Recommended)»): the M 900 disk is printed, not graded — its GPU held 2.0e-3 of Σm|u| is f32 slot noise (the invariant 2.0e-3 with held, 2.0e-5 without; the twin 1e-11) → M0-D149 filed («File a D after D71d (Recommended)»); graded instead, gas driven against a held block (gravity off, leave): 6.9e-6 against 2.2e-4, held 0.26 of Σm|u|. ledger 5 → 8, plant ledger-no-held RED 3. Deviation: ledger-cell-grav-work re-cut onto M0-D71c's held-face lines (it errored; same fault, RED 1); wall-copy and state-renorm-skip stale the same way → M0-D150 filed. Verify 1 [ALREADY RUN — PASS (28 passed, 4/4, ledger 8) on laserax-ai-server, RTX 4090]; Verify 2 [ALREADY RUN — FAIL (3 plants, 1 error), then PASS as M0-D71d-r2 (4/4 RED) on laserax-ai-server, RTX 4090]; claim [ALREADY RUN — FAIL (--changed --task M0-D71d: 598/816 failed, 60/61 GO, 5 owed; plan_lint only: D149's Flow row None after my second append) on laserax-ai-server, RTX 4090] → plan.py status M0-D149, then plan_lint [ALREADY RUN — PASS (816/0, --task M0-D71d-r2) on linux-pc]. Not acted on: my rsync ups overwrote the server's loop_times lines of five runs (numbers in the scope logs); the anchor's 2 stale entries predate this task. win-laptop owed (R15). Detail → tasks/M0-D71d.md. Next: M0-D149
+
+## M0-D149 · The GPU's `held` booking is f32 noise where the held cells feel no net force — G-REST's M 900 disk books 2.0e-3 of Σm|u| over 1,000 steps where the twin books 1e-11, so grid + held drifts 100 × grid alone and G-CONS's momentum (10⁻⁶) cannot hold over a life with a held core · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D71d; before M0-D71f — the lead at M0-D71d: «File a D after D71d (Recommended)»)
+- Status: DONE (2026-11-03 12:39)
+- Filed by: M0-D71d, 2026-11-03 — measured on laserax-ai-server's RTX 4090 (logs/M0-D71d.ledger.log, `SR-LEDGER-HELD disk M 900`)
+- Caused by: M0-D71c (P4's spared momentum booked per cell in f32 slots) and M0-D71b (P8's), as their booking's precision
+- Rating: (usual) — the cause is suspected, not measured
+- Symptom: `ledger::the_held_disk_writes_the_ledgers_held_into_summary_json` prints, for the M 900 SCF disk (64 × 64 bounce, 1,000
+  steps): held (0.1089, 0.0659) = 2.006e-3 of Σm|u| 63.44, grid (4.6e-4, 1.2e-3); the momentum invariant drifts 2.022e-3 of Σm|u|
+  with held and 1.989e-5 without. P8's terms are 0; all of it is P4's `held.spared.*`. M0-D71c measured the same at step 200 (the
+  slots' sums 0.026 / 0.136 at M 900 / 1,800, Σ|slot| 5.4e5 / 2.8e6; the twin's 1e-11 / 1e-10) and over 10,000 steps (M 900 drifts
+  5.07 of 63.2).
+- Repro: `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py ledger --task M0-D149` on laserax-ai-server (R18), the line above.
+- Suspected cause (from M0-D71c's numbers and reading, no probe): a held cell's spared impulse is mostly its own Δt·Σg (held–held
+  faces carry nothing, so nothing balances the gravity there), large and pointing at the core's centre; those impulses cancel over
+  the core in f64, but each slot adds them in f32 over a frame (`take_booked` clears per chunk, 256 steps without `--until`), and
+  `book_totals` sums ≈ 5e-8 × Σ|slot| of rounding. Where held cells feel a net force (gas against a held block) the term is real and
+  holds to 6.9e-6 (M0-D71d's wall case). The physics may be right and only the booking's precision wrong.
+- Files opened by M0-D71d: crates/sr-engine/src/ledger.rs, crates/sr-engine/tests/gpu/ledger.rs, crates/sr-engine/src/state.rs (TERMS,
+  BOOK_GROUPS) — the fix's are its own to name (hydro.wgsl's `hydro_commit`, the booking's layout, or `take_booked`'s cadence)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.9, §2.3.4 [M0-TG2], §5.1 G-CONS, §0.5 [M0-D71] +
+  tasks/M0-D71c.md § For M0-D71d + tasks/M0-D71d.md
+- Deliver: the GPU's `held` on G-REST's disks within a measured band of the twin's (its noise below the grid's own drift), by a
+  booking whose rounding does not scale with the cancelling impulses (e.g. the spared momentum's net per block or per step in f64,
+  or the self-gravity part left unbooked if the contract's §2.9 reading allows it — a contract change is asked); the ledger's
+  printed disk drift with held at or under its drift without → Verify 1 · the disk case graded, if the band allows it (the lead's
+  ruling at M0-D71d keeps it printed until then) → Verify 1
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py ledger held_core booking --task M0-D149` on laserax-ai-server
+  (R18) · Pass: GO, ledger's disk line's held ≤ 10 × the twin's or ≤ the drift without held · Fail: NO-GO
+- Done when: on laserax-ai-server's RTX 4090, the disk's held is not rounding noise; win-laptop `owed` (R15)
+- Adversarial: the wall case (gas against a held block) must keep its 0.26 of Σm|u| — a booking that rounds less by booking less
+  breaks it; and held_core's strips grade the spared momentum per cell against the twin.
+- Handoff: Measured (RTX 4090, laserax-ai-server): not the booking but P2's f32 field — a step's Σ Δt·Σ·g over the grid nets ≈ 1.5e-4 (twin's g 1e-13), the held core carries it; read every step the disk's held grows to 2.8e-3, so no f64 sum or cadence reaches the band (tasks/M0-D149.md § Measured). The lead: «Free-gas field (Recommended)» → contract §0.5 [M0-D149], §1.4.2, §2.3.4, P2 row; mirror in m0_superseded.md.
+  Built the twin's half: Twin::pull (P2's field, held cells emptied) read by step_held's new `pull`; held_core 16 → 18 (a held world books exactly 0; a block's held is the gas's pull's reaction within 1.9e-11); plant held-core-own-pull RED.
+  Deviation, the split the lead took: the GPU's g_pull and the disk's grade are M0-D151 (filed after this block) — Verify 1's band is met there, not here; held_core's first own-pull design (an L in vacuum) read its walls' 1e-10 and was redesigned.
+  [ALREADY RUN — PASS on laserax-ai-server, RTX 4090] held_core GO 18/18; --redarm held_core 3/3 RED (457 s); claim --changed GO, 1,623 passed, 75/75 scopes (166 s). [ALREADY RUN — PASS on linux-pc] the 5 owed scopes GO 18/18. win-laptop owed (R15).
+  Not acted on: tests/gpu/ledger.rs's doc says «f32 slots' rounding» (→ M0-D151's Deliver); the first held_core run's loop_times line was lost to an rsync up (R18 slip).
+  Opus 5.5, high (rung_record: model=claude-opus-5-5 level=high). Next: M0-D151.
+
+## M0-D151 · The GPU's held cells read the pull of all but the held cells (§1.4.2 [M0-D149]) — P2 solves g_pull beside g while a cell is held and hydro.wgsl's spared Σg·Δt reads it, so G-REST's M 900 disk's `held` is the free gas's pull, not P2's f32 net force (2.0e-3 of Σm|u| over 1,000 steps today, ≈ 1e-5 estimated) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D149; before M0-D71f — the lead at M0-D149: «Free-gas field (Recommended)», the split named there)
+- Status: DONE (2026-11-03 13:51)
+- Filed by: M0-D149, 2026-11-03 — the GPU half of the split the lead took at M0-D149 (the contract's §0.5 [M0-D149] and the twin's `pull` are M0-D149's); measured on laserax-ai-server's RTX 4090 (logs/M0-D149.probe1–3.log, tasks/M0-D149.md § Measured)
+- Caused by: M0-D71c (P4's spared momentum on the GPU, its Σg·Δt read from P2's whole f32 field)
+- Rating: (usual) — rule (3)'s list: numeric or precision semantics (an f32 field's net force on a dense held core)
+- Symptom: `ledger::the_held_disk_writes_the_ledgers_held_into_summary_json` — M 900 disk, 1,000 steps: held (0.1089, 0.0659) = 2.006e-3 of
+  Σm|u| 63.44, the invariant's drift 2.022e-3 with held, 1.989e-5 without; `held_core`'s SR-HELD-REF at step 200: GPU (0.0195, 0.0176) and
+  (−0.135, 0.0127) at M 1,800 against the twin's 1e-13 and 5e-24 (the twin reads `pull` since M0-D149).
+- Measured cause (M0-D149): not the slots — read every step the disk's held grows to 2.831e-3 (every 16: 2.532e-3) — but P2's f32 field: a
+  step's Σ Δt·Σ·g over the grid nets (1.56e-4, 1.60e-4) at step 202, the twin's g on the same state (3e-14, 7e-14); the held core carries
+  it (its Σg·Δt 2.0e3 a step, its walls' 21); held |g_gpu − g_twin|/|g| 2.1e-7. With the held cells emptied from the source the GPU's pull
+  on them reads (6.42, 2.81)e-6 a step against the twin's (5.90, 2.27)e-6, 0 at M 1,800 (every gas cell held).
+- Files opened by M0-D149: crates/sr-engine/shaders/hydro.wgsl (the held cell's `spared += dt * pred.mid.x * accel_at(x, y)` in
+  `hydro_update`, `hydro_commit`), shaders/grav.wgsl (header), src/step/grav.rs (`field`, `gas_field`), src/state.rs (TERMS, BOOK_GROUPS,
+  `book_totals`), src/ledger.rs (`take_booked`), src/headless.rs (CHUNK), the twin's src/reference/mod.rs (`solve_gravity`'s `pull`) and
+  reference/hydro.rs (`step_held`'s `pull`).
+- Read, not prescribed (M0-D149): hydro_update's 8 storage slots are full (hydro.wgsl's header), so g_pull can ride in `grav`'s binding as
+  two more planes after φ; P2's source needs the mask (State::held) to empty the held cells, and the sinks' §1.4.3 pull is added to g_pull;
+  «while the mask holds a cell» — the CPU has no held count without a readback: an always-on second solve under gravity or a gate, the
+  builder's, its cost measured (P2 ≈ 1.1 of 10.7 ms a step on the whole world, Quadro, reports/step_cost.md). Packing both sources into
+  one complex FFT would likely leak the core's rounding into g_pull — NOT PROVEN (reasoning only).
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-D149], §1.4.2, §1.4.3, §2.3.4, §2.9, §0.5 [M0-D71] +
+  tasks/M0-D149.md
+- Deliver: P2's g_pull on the GPU (the field of Σ_src with the held cells emptied, plus the sinks') beside g while a cell is held, and
+  hydro.wgsl's held cells' spared gravity impulse reading it (the twin's `Twin::pull` the reference) → Verify 1 · held_core's GPU mirror of M0-D149's
+  two twin pull cases — a world of held cells books held 0, a held block beside warm gas books the gas's pull within a measured band of the
+  twin's — and SR-HELD-REF's disks' held against the twin's printed → Verify 1 · the ledger's disk line: held at or under the drift
+  without held, and its module doc's «f32 slots' rounding» corrected to P2's f32 field, the disk graded only on the lead's word with
+  the band measured (§0.5 [M0-D71]: «disks printed») → Verify 1 · a plant (hydro.wgsl's held cells read P2's whole g) RED → Verify 2
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py ledger held_core booking grav_force grav_selfforce --task M0-D151` on
+  laserax-ai-server (R18) · Pass: GO, ledger's disk line's held ≤ the drift without held · Fail: NO-GO. 2. `SR_TEST_ADAPTER="RTX 4090"
+  python3 tools/pb/verify.py --redarm held_core --task M0-D151` on laserax-ai-server · Pass: GO, every plant RED · Fail: any GREEN
+- Done when: on laserax-ai-server's RTX 4090 the M 900 disk's `held` is the free gas's pull, not P2's rounding; win-laptop `owed` (R15)
+- Adversarial: the wall case (gas driven against a held block, gravity off) keeps its 0.26 of Σm|u| — g_pull touches gravity only; a held
+  core in an envelope gone off-centre must still book its pull (M0-D149's probe, the M 900 disk at step 800: GPU (1.490, 0.316)e-4 a step,
+  the twin's (1.481, 0.308)e-4 — real, not noise); held_core's strips' spared against the twin within 1e-3; the free cells' g unchanged
+  (grav_force, grav_selfforce).
+- Handoff: Built: P2 solves g_pull beside g (grav.wgsl's pull chain: grav_rows_pull empties the held cells and sets a flag; its columns, inverse and grav_gradient_pull run only while the flag is set; g_pull in the field's planes 3–4, sinks added), and hydro.wgsl's held kick reads it (pull_at). held_core 20 cases (+2 GPU mirrors: a world of held cells books held exactly 0; the block beside gas books the twin's pull within 1e-4, off 1.1e-6); plant held-core-gpu-whole-g. On the RTX 4090 the M 900 disk's held is 6.6e-6 of Σm|u| (was 2.0e-3), under the 2.0e-5 drift without held. SR-HELD-REF M 900 at step 200 is (4.1e-4, 1.7e-4) (was 0.0195). The lead: «Grade it (Recommended)» — the ledger asserts held ≤ the drift without held (§0.5 [M0-D151], mirror in m0_superseded.md).
+  Deviation: grav-ring-one-sided re-cut onto gradient_at; grav-half, grav-vacuum-mask-off and sink-phi-skip kept applying by placing my lines outside their context. wall-copy is still M0-D150's.
+  Cost (Quadro, preset:sun, medians of 3): P2 0.382 → 0.461 ms with no held cell (≈ +1 % of a step), 0.768 ms while held (≈ +4.7 %); NOT PROVEN on the whole-world box.
+  Claim: --changed on laserax-ai-server, 606 passed, 62/62 GO; its 5 owed scopes on linux-pc, 5/5 GO. Verify 2: 4/4 RED; ledger red-arm 5/5 RED. win-laptop owed (R15).
+  model=claude-opus-5-5 level=high. Detail: tasks/M0-D151.md. Next: M0-D150.
+
+## M0-D150 · Two plants no longer apply since the held core reached the GPU — `wall-copy` (`edges`; M0-D71c's hydro.wgsl) and `state-renorm-skip` (`state`; M0-D71b's floors.wgsl) — so those scopes' red-arms error · **BUILD** · Sonnet 5.5, medium · switch · (AFTER M0-D149; before the next phase V's sweep)
+- Status: DONE (2026-11-03 14:16)
+- Filed by: M0-D71d, 2026-11-03 — `verify.py --redarm ledger` errored on `ledger-cell-grav-work` («its old lines appear 0 times in the
+  file»); M0-D71d re-cut that one (its own scope) and read every plant's old text against the tree: these two match 0 times in the
+  tree and once at HEAD (c9a4fc2)
+- Caused by: M0-D71c (hydro.wgsl, `wall-copy`) and M0-D71b (floors.wgsl, `state-renorm-skip`'s second hunk)
+- Rating: Sonnet 5.5, medium — rule (3): the cause measured (the hunks' old text, as M0-D130's)
+- Symptom: tests/plants/wall-copy.patch's hunk (`if (mx != x) { p.u = -p.u; } …`, hydro.wgsl @@ -202) and
+  tests/plants/state-renorm-skip.patch's second hunk (`for (var i = 0u; i < PLANES_B; i++) { species_b[…] = x[PLANES_A + i]; }`,
+  floors.wgsl @@ -54) no longer match the tree's text.
+- Repro: `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm edges --task M0-D150` and `… --redarm state …` on
+  laserax-ai-server (R18) — expected ERROR, not RED
+- Files: tests/plants/wall-copy.patch, tests/plants/state-renorm-skip.patch, docs/agent/testing.md (the two rows, if they name the hunk)
+- Read: this file (rules + this task) + M0-D130's handoff (the last re-cut of wall-copy) + docs/agent/testing.md (the `edges` and
+  `state` rows)
+- Deliver: both patches re-cut against today's hydro.wgsl and floors.wgsl, the same fault each (the bounce ghost copies the clamped
+  edge cell, and the renormalisation skips the last species in both loops) → Verify 1
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm edges state --task M0-D150` on laserax-ai-server (R18)
+  · Pass: GO — every plant of both scopes RED · Fail: an ERROR or a GREEN
+- Done when: both scopes' red-arms read GO on the RTX 4090; win-laptop `owed` (R15)
+- Adversarial: a re-cut that patches a line no case reaches is GREEN, not RED — the run, not the apply, is the check.
+- Handoff: wall-copy.patch and state-renorm-skip.patch re-cut against today's hydro.wgsl / floors.wgsl (same faults; state's both loops). [ALREADY RUN — PASS (edges: clean GO, wall-copy RED; state: clean GO, state-renorm-skip + state-inspect-row RED, 0 green 0 errors) on laserax-ai-server RTX 4090] logs/M0-D150-edges.edges.redarm.log, M0-D150-state.state.redarm.log; scopes edges 7/7, state 12/12 GO there. A --changed run on linux-pc (no 4090) read NO-GO from GPU scopes — wrong box under R18, not a verdict; the full --changed on the server is NOT RUN (no baseline there). testing.md rows unchanged (don't name hunks). Ran model=claude-sonnet-5-5 level=medium. Next: M0-D71e. win-laptop owed (R15).
+
+## M0-D71e · The hold's mask in dumps — §2.12.3's `resume.held` and its plane, written when a cell is held and read back by `--load-dump`, the twin's dumps alike; a resume through a dump equals the straight run with cells held · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D71d)
+- Status: DONE (2026-11-03 14:49)
+- Carried flags: [M0-D71b, 2026-11-03] State::upload_held(queue, &[u32]) and State::read_held(device, queue) -> Vec<u32> exist (row-major, one word per cell); a --continue (Step::restore) skips the initial hold, so until the dump carries the mask a continued run starts with none held and P8 re-holds by the rule at its first step
+- Filed by: M0-TG2, 2026-11-02 — M0-D71's cut; the fifth of six before M0-R13
+- Blocks: M0-D71f (calibrate's checkpointed lives resume through dumps, §0.5 [M0-D77]) and M0-T97 (whole lives, `--continue`d)
+- Caused by: M0-T34 and M0-T36, as M0-D71
+- Rating: (usual) — rule (3)'s list: a persisted format changed (§2.12.3's dump)
+- Files: named by M0-TG2 from dump.rs's header (opened: `Dump`, `Resume`, `resume.flux` and `resume.rate`) and headless.rs's
+  `twin_dump` — crates/sr-engine/src/dump.rs (the header, `Dump::read` and `write`, `dump_state`, `load_dump`),
+  crates/sr-engine/src/headless.rs (`twin_dump`), crates/sr-engine/tests/gpu/dump.rs, tools/pb/verify.json,
+  tests/plants/dump-held-dropped.patch (new), docs/agent/testing.md
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-TG2], [M0-T26], [M0-D33], [M0-D85], §2.12.3, §1.3.4 +
+  M0-D71b's handoff (the mask's buffer) + docs/agent/testing.md (the `dump` and `twin` rows)
+- Deliver: §2.12.3 [M0-TG2]'s mask in dumps — `"held": true` in `resume` and one f32 plane after F's and the rate's when any cell is
+  held, the key absent otherwise (a dump with no held cell keeps its bytes), a header without it read as none held, `dump_state`
+  reading the GPU's mask, `load_dump` restoring it, `twin_dump` writing the twin's → Verify 1 · cases in `dump`: a held run 2 × 100 steps
+  through a dump equals 200 straight steps bit for bit, its state holding cells inside the hysteresis band (held, η < ε_th/ε_cold ≤
+  2η), and the same through a dump with the key dropped by hand visibly does not; the header's `held` read back; scenes/heat_ceiling.bin
+  and heat_overflow.bin loading as before, none held → Verify 1 · plant tests/plants/dump-held-dropped.patch (new: `dump_state` never
+  writes the key) listed for `dump` → Verify 2 · testing.md's `dump` row → none — a doc row
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py dump twin heat_stiff --task M0-D71e` on laserax-ai-server (R18) ·
+  Pass: GO, dump ≥ 14 cases · Fail: NO-GO · 2. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm dump --task M0-D71e`
+  there · Pass: GO — dump-held-dropped and the scope's other plants NO-GO · Fail: a plant GREEN
+- Done when: on laserax-ai-server's RTX 4090, a run with held cells resumed through a dump is bit-identical to the straight run;
+  win-laptop `owed` (R15)
+- Adversarial: a state whose held cells all sit well under η re-holds identically from an empty mask, so a resume without the mask can
+  still match — the case's state holds cells inside the hysteresis band, which an empty mask leaves free.
+- Handoff: linux-pc (laserax-ai), GPU runs on laserax-ai-server's RTX 4090 (R18); model=claude-opus-5-5 level=high (rung_record now; the heading's rung). Built: Dump.held (Option<Vec<u32>>) — resume.held true and the mask as one f32 plane after every other only when a cell is held, the key absent otherwise (bytes unchanged), a header without it read as none held; refused: flag/plane disagreeing, a value not 0 or 1; dump_state reads State::read_held, load_dump uploads it or an empty mask, twin_dump writes Twin::held_mask(); dump 12 → 14 cases, plant dump-held-dropped. Deviation: 9 files, not 6 — dump-flux-zero, dump-sinks-drop and warm-rate-not-dumped re-cut (same faults; my dump.rs edits moved their context). Verify 1 [ALREADY RUN — FAIL then PASS (r1 dump 13/1: my own refusal order, fixed; r2 dump 14, twin 6, heat_stiff 13) on laserax-ai-server, RTX 4090]; Verify 2 [ALREADY RUN — FAIL then PASS (r1 3 stale plants ERROR; r2 8 red, 0 green, 0 errors) there]; claim [ALREADY RUN — PASS (--changed --task M0-D71e-claim, base M0-D71e's start: 1,419/0, 61/61 GO, 5 owed, 22 not impacted) there] + the 5 owed [ALREADY RUN — PASS (18/0, 5/5) on linux-pc]. Measured: 64 core cells held in the band at step 100 (ratio 1.5); the mask dropped → 30,484 state values off at step 200; heat_ceiling.bin and heat_overflow.bin read back byte for byte, none held. Not filed: a timeout around verify.py orphaned a probe's held_core run on the server (killed by PID). A --continue from a pre-[M0-TG2] dump starts with none held (→ M0-D71f). win-laptop owed (R15). Detail → tasks/M0-D71e.md. Next: M0-D71f
+
+## M0-D71f · The held core on the GPU lives — M0-D79's 4,572 life and M0-R6's 20 M₀ keep their endings, the step-450,000 window ≤ 15 % of radiated, G-REST's crop on the GPU; report items 1–2 put to the lead on the measurement · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D71e)
+- Status: DONE (2026-11-03 15:40)
+- Carried flags: [M0-D79, 2026-10-21] Restore the neutron_star row's |v_r| ≤ 0.05 √(GM/R) term once P4 is well-balanced at a remnant's core: M0-D79 dropped it (contract §0.5 [M0-D79]; a 2-cell remnant's grid flow held |v_r| at 0.05–0.49 √(GM/R), reports/neutronization.md M1) — add it back to ROWS' NeutronStar test in crates/sr-physics/src/observe/stages.rs with its classify cases (either side of 0.05), a §0.5 line naming [M0-D79]'s term returned, and the plant neutron-star-old-row re-cut if its context moves · [M0-R6, 2026-10-23] M0-R6 measured the floor paying N_Fe and then some (reports/black_hole.md M3, RTX 4090): at the 20 M₀ collapse N_Fe's draw (nuclear −93.7 × 10⁶, steps 1,600→2,100) is refilled by P8 (floor_added +103.0 × 10⁶, cores at T_floor); from 1,600 to 5,600 the floor adds +197.1 against nuclear −131.7, a net +65 × 10⁶ = 2× the gas's binding at collapse (the light end net +16.7 against −2.66, 6×) — the energy that unbinds the envelope, against neutrino heating's 2 × 10⁴; a well-balanced P4 should be read against these totals · [M0-D68, 2026-10-28] §0.5 [M0-D68] changed who pays the diffusive flux's work (relative motion first, then heat by mass): read the late remnant's floor against it; on M0-D67's twin crop of s_450000 (2,500 steps) the built source read floor 6.1e3 / radiated 1.26e5 against the old split's 1.09e4 / 1.20e5, but that crop's old-split run misses M0-D67's 4.87e4 / 1.59e5, so NOT PROVEN (tasks/M0-D68.md F1) · [M0-D71, 2026-11-02] [M0-D71, 2026-11-02] item 2 (one-way inflow) is yours, §0.5 [M0-D71]: measured on the twin as §2.3.4 [M0-TG2] wrote it (HLL's ordinary flux into the held cell passing), it took the M 900 SCF disk's floor_added over steps 1,000–10,000 to 392.6 against G-REST's 10 (2.26 without); a gate on the free face's velocity changed nothing — every inflow face is the envelope falling in. Measure whether the lives need accretion past m_tov_sb, then design and rule its form (tasks/M0-D71.md § Session 2026-11-02 — the build) · [M0-D71d, 2026-11-03] the GPU's held booking is f32 noise on held cores feeling no net force (M 900 disk: 2.0e-3 of Σm|u| over 1,000 steps, the twin 1e-11) — G-CONS's momentum on the lives waits on M0-D149; ledger's disk case prints it (tasks/M0-D71d.md) · [M0-D151, 2026-11-03] M0-D151: the GPU's held cells read g_pull (P2's pull chain, gated on a held cell). While a cell is held, P2 costs ≈ 2× (Quadro, preset:sun: 0.461 → 0.768 ms). Read it in the lives' step cost; the disk's held is graded in ledger (§0.5 [M0-D151]). · [M0-D71e, 2026-11-03] Dump.held (Option<Vec<u32>>, 1 held) is in every dump written with a held cell, and load_dump restores it (an empty mask when the dump has none); a --continue or calibrate checkpoint from a dump written before M0-D71e (no resume.held) starts with none held, so cells in the hysteresis band resume free — a life resumed from such a stamp is not the straight one once a core is held
+- Filed by: M0-TG2, 2026-11-02 — M0-D71's cut, the last of six before M0-R13 (the lead at M0-R11: items 1–2 «measured in the same
+  build on the GPU lives»); M0-D71's three flags moved here byte for byte, this being the block that reads them
+- Blocks: M0-R13 (the cold remnant, read on the held lives) and M0-T97 (the lives measured with the hold built, Phase 16's ordering note)
+- Caused by: M0-T34 and M0-T36, as M0-D71
+- Rating: (usual) — rule (3)'s list: a design the spec leaves open (report items 1–2, ruled final on this block's measurement)
+- Files: named by M0-TG2 — crates/sr-engine/tests/gpu/held_core.rs (new at M0-D71; the crop's case), scenes/remnant_window.bin (new),
+  tools/pb/verify.json, milestones/m0/reports/held_core.md (new), milestones/m0/m0_contrat.md (§0.5 [M0-TG2]'s items 1–2 marked
+  final, or the form that replaces them), docs/agent/testing.md; read, not changed: build/v9-sun-life/dumps/s_450000.bin (the window's
+  and the crop's source, git-ignored: on linux-pc, copied to laserax-ai-server if absent — R18's rsync leaves build/ out)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-TG2], [M0-R6], [M0-D79], [M0-D68], §2.3.4, §2.6, §2.7
+  ([M0-TG2]), §5.1 (G-REST, G-CONS, G-CORE) + milestones/m0/reports/unresolved_remnant.md (§ What H leaves open) +
+  milestones/m0/reports/black_hole.md (M3, M8, the lives' commands) + the handoffs of M0-D71 to M0-D71e
+- Deliver: on laserax-ai-server's RTX 4090 (R18), each run's command, wall time and numbers in reports/held_core.md (new) — (a) § The
+  window: M0-D71's Repro from build/v9-sun-life/dumps/s_450000.bin, 10,000 steps: floor_added ≤ 15 % of radiated (G-REST; the
+  twin's crop read 3.8 % under H, 71.2 % today), each half reported, the energy invariant's drift against G-CONS's 10⁻³ |W| per
+  τ_dyn, the held count and `held` → Verify 2 · (b) § The lives: `calibrate --only m_bh_sb --bracket 4572.394,67020.643 --out
+  <scratch>`, lives 01 and 02 to their endings (M0-D90's Done-when form) — 4,572 ends neutron_star, and 67,020 forms a sink and ends
+  black_hole, as the embedded calibration's m_bh_sb (11,260.0) puts them — with the N_Fe gate's releases, the held set at core
+  collapse and the sink's step and mass, a life over 10 minutes the lead's in one visible terminal [NOT RUN — for you], and an ending
+  that moved run again on the tree before M0-D71's build (a scratch copy, read-only git) to tell the hold's part → Verify 2 ·
+  (c) § The crop: G-REST's window case in `held_core` — scenes/remnant_window.bin (new: the box (248, 144, 104, 104) of s_450000.bin
+  in a 128 × 128 leave world, cut by the case behind an env var as cold_core's scene is), 10,000 steps on the GPU, floor_added ≤ 15 %
+  of radiated → Verify 1 · (d) § The flags: each carried flag read against the held lives — M0-D79's |v_r| ≤ 0.05 √(GM/R) on the
+  held neutron star (its return filed as a block after this one if it holds, else the flag carried on), M0-R6's floor totals at the
+  20 M₀ collapse, M0-D68's split against the late remnant's floor → Verify 2 · (e) § Ruling: items 1–2 put to the lead with these
+  measurements (PLAYBOOK §12), the answer verbatim, §0.5 [M0-TG2]'s two forms marked final (tagged [M0-D71f]) or a D filed for the
+  form the lead picks → Verify 2
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py held_core cold_core cpu_gpu ledger jeans --task M0-D71f` on
+  laserax-ai-server (R18) · Pass: GO, held_core ≥ 11 cases · Fail: NO-GO · 2. `grep -cE "^## (The window|The lives|The crop|The
+  flags|Ruling)$" milestones/m0/reports/held_core.md` · Pass: 5 · Fail: fewer · 3. `SR_TEST_ADAPTER="RTX 4090" python3
+  tools/pb/verify.py --redarm held_core --task M0-D71f` there · Pass: GO — every plant NO-GO, the crop's case red under one at least ·
+  Fail: a plant GREEN
+- Done when: on laserax-ai-server's RTX 4090, the window's floor_added ≤ 15 % of its radiated over 10,000 steps and the 4,572 and
+  67,020 lives keep their endings — or the lead's ruling on what replaces items 1–2 recorded and its D filed; win-laptop `owed` (R15)
+- Adversarial: a held proto-neutron star's ∇·u is 0, so §2.6's converging test cannot form the 67,020 life's sink while its core is
+  held — the sink's step, the held count at it and the inflow's releases are read, and a 67,020 life that ends neutron_star is the
+  hold's failure, never a looser bracket; the window's 15 % over 10,000 steps can hide a second half like the twin's 46 % — both
+  halves reported.
+- Handoff: linux-pc (laserax-ai), GPU runs on laserax-ai-server's RTX 4090 (R18); model=claude-opus-5-5 level=high (rung_record now; the heading's rung). Built: held_core's crop case (scenes/remnant_window.bin, new, cut from s_450000 behind SR_WRITE_SCENES; held_core 20 → 21), verify.json, testing.md, reports/held_core.md (5 sections). Measured: the 600 × 400 window floor 4.56 % of radiated (1.39 % / 51.6 % by halves, 46 s), the crop 3.85 % (1.24 % / 45.95 %; twin 3.8 %); life 01 (4,572) ends neutron_star at step 4,239 on 19 held iron cells frozen at N_Fe's gate; life 02 (20 M₀) holds a dozen iron clumps and forms no sink by step 8,807 (cut at 570 s), where from its step-1,362 state f98f96d forms one at 2,600 (5,165.7) — the hold's failure. Ruled (§0.5 [M0-D71f], §2.7/§2.3.4/§1.4.2/G-REST/§5.5 amended, mirror): «Hold no iron (Recommended)» → M0-D152 filed; «Walls only, final (Recommended)»; «Carry the flag on (Recommended)» — M0-D79, M0-R6, M0-D71d's flags carried to M0-D152; M0-D68's read (floor −0.3 over 2,500 steps), no D. Verify 1 [ALREADY RUN — PASS (46 passed, 5/5 GO, held_core 21) on laserax-ai-server, RTX 4090]; Verify 2 [ALREADY RUN — PASS (5) on linux-pc]; Verify 3 [ALREADY RUN — PASS (by the lead: 4 plants red, 0 green, 773.91 s; the crop case red under held-wall-gpu-pressure-only, 51.20 %) on laserax-ai-server, RTX 4090]; claim [ALREADY RUN — NO-GO by its zero-case rule only (by the lead, --changed --task M0-D71f-claim, base M0-D71f's start: 0 scopes chosen, 83 not impacted — every scope's last GO on this tree, Verify 1's and the red-arm's) on laserax-ai-server, RTX 4090] — not a red, nothing owed on linux-pc; plan_lint after the close [ALREADY RUN — PASS (816) on linux-pc]. My first claim under timeout 590 was killed, its orphans killed by PID, its partial logs and /tmp/pb-redarm-5bhk_hyg removed. Life 02's ending under the gate form NOT RUN (moot after the ruling). win-laptop owed (R15). Detail → tasks/M0-D71f.md. Next: M0-D152
+
+## M0-D152 · No iron is held (§2.7 [M0-D71f]) — the hold's test reads X_Fe = 0 and a held cell is released once X_Fe > 0, on the twin and in floors.wgsl, so a collapsing iron core stays free: today's gate form freezes the 20 M₀ life's iron clumps and no sink forms by step 8,807 · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D71f; before M0-R13 — the lead at M0-D71f: «Hold no iron (Recommended)»)
+- Status: DONE (2026-11-03 16:44, started 16:04)
+- Carried flags: [M0-D71f, 2026-11-03] [M0-D79, 2026-10-21 → carried by M0-D71f, the lead: «Carry the flag on (Recommended)»] Restore the neutron_star row's |v_r| ≤ 0.05 √(GM/R) term once the remnant holds still: on M0-D71f's held 4,572 life it held from step 3,215 on (≤ 0.0175, then ≈ 0.005 √(GM/R); 6 of 17 neutron_star progress lines over 0.05, the last at step 3,103) — trivially, a held iron core at u = 0; read it on this block's free core, and if it holds file its return (ROWS' NeutronStar test in crates/sr-physics/src/observe/stages.rs with its classify cases either side of 0.05, a §0.5 line naming [M0-D79]'s term returned, the plant neutron-star-old-row re-cut if its context moves), else carry it on · [M0-D71f, 2026-11-03] [M0-R6, 2026-10-23 → carried by M0-D71f] the floor paying N_Fe at collapse: on M0-D71f's 20 M₀ replay (steps 1,363–3,062 from s_1362) the hold read floor_added +4.04 × 10⁶ against nuclear −5.62 × 10⁶ (invariant −0.01 × 10⁶), the tree before M0-D71's build +168.0 against −150.3 (invariant +17.35 × 10⁶) — with no iron held the pump returns; read this block's lives against both · [M0-D71f, 2026-11-03] [M0-D71d, 2026-11-03 → carried by M0-D71f] G-CONS's momentum on the lives (grid + sinks + escaped + held to 10⁻⁶ of Σm|u|) is not read by M0-D71f; read it on this block's lives, printed (M0-T106's to grade)
+- Filed by: M0-D71f, 2026-11-03 — item 1's form the lead picked on M0-D71f's lives (contract §0.5 [M0-D71f], amended in place; the
+  build is this block's); measured on laserax-ai-server's RTX 4090 (reports/held_core.md § The lives, logs/M0-D71f.log)
+- Caused by: M0-D71 (the twin's hold, `Floors::holds`) and M0-D71b (floors.wgsl's `hold`) — the gate form, §0.5 [M0-TG2]'s item 1
+- Rating: (usual) — rule (3)'s list: a physics rule's reach (which cells the hold takes), read on the lives
+- Symptom: `calibrate --only m_bh_sb --bracket 4572.394,67020.643 --adapter "RTX 4090" --checkpoint-every 50` (capped at 570 s; record
+  build/calibrate_runs/2026-11-03T20-01-35Z/ on the server): life 01 ends neutron_star at step 4,239 (87.8 s) on a remnant of 19 held
+  iron cells (3,617, X_Fe 0.84), its centre at Y_eΣ = 0.2632 × 607.8 = Σ_N, frozen from step ≈ 863; life 02 holds a dozen iron
+  clumps of 2,979–3,731 (277 cells, 42,818, X_Fe 0.97–1.0 by step 3,159), its densest cell (Σ 461.6) unchanged from step 1,655, and
+  no sink by step 8,807 (t 48.14, cut), displayed neutron_star.
+- Repro (≈ 31 s): the life-02 checkpoint before any cell is held, kept on the server at /tmp/d71f/lives/keep/m_bh_sb-02/s_1362.bin —
+  `build/target/release/sandbox-reactions headless --scene preset:giant --load-dump /tmp/d71f/lives/keep/m_bh_sb-02/s_1362.bin --steps
+  1700 --dump-every 100 --adapter "RTX 4090" --out <dir>` → events.jsonl has core_collapse and no sink_formed, 254 held at step
+  3,062; the tree before M0-D71's build (f98f96d, git archive into a scratch, 60 s) forms a sink at step 2,600 (t 14.41, 5,165.7 =
+  1.06 m_tov_sb, at (243.8, 142.9)), a second by 3,000, and shows black_hole.
+- Measured cause (M0-D71f): the gate form holds an iron cell while Y_eΣ ≤ Σ_N; a held cell never compresses, so it never reaches the
+  gate; a gated cell walled in by held ones is frozen too (no flux crosses a held wall); held cells never move (§2.3.4's limits), so
+  the ring's clumps neither collapse nor merge. Over the replay's 1,700 steps the hold also stops N_Fe's draw and the floor's pump
+  (floor +4.0 × 10⁶, nuclear −5.6 × 10⁶; before the hold +168 × 10⁶ against −150 × 10⁶ — M0-R6's M3): under this block's form an
+  iron core is free again, so that pump returns for neutron-star cores (the lead chose it, M0-D71f's question).
+- Files opened by M0-D71f: crates/sr-physics/src/reference/floors.rs (`Floors::holds`: `n_fe = x[ID_FE] > 0.0 && comp.y_e * sigma >
+  self.sigma_n`), crates/sr-engine/shaders/floors.wgsl (`hold`: the same test, `hold_params.sigma_n`), crates/sr-engine/tests/gpu/
+  held_core.rs (`a_held_iron_cell_is_released_at_n_fe_gate`), crates/sr-engine/src/headless.rs, src/dump.rs, src/calibrate.rs.
+- Files: crates/sr-physics/src/reference/floors.rs, crates/sr-engine/shaders/floors.wgsl (and the Rust side that fills `Hold`'s
+  `sigma_n`, if the uniform goes), crates/sr-engine/tests/gpu/held_core.rs, tests/plants/<one new plant: the gate form back>.patch,
+  tools/pb/verify.json, docs/agent/testing.md
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-D71f], §2.7 [M0-TG2] as amended, §2.3.4 [M0-D71f], §2.6,
+  §5.1 G-REST + milestones/m0/reports/held_core.md + M0-D71f's handoff
+- Deliver: the hold's test and release on X_Fe (twin and GPU, f32 alike: X_Fe = 0 exactly; a cell with any iron never held, a held
+  cell gaining iron released); held_core's item-1 case re-cut to it (cold iron under and past the gate never held, C/O beside it
+  held, a held C/O cell released once iron appears) on the twin and the GPU; one plant (the gate form back) red there; the Repro
+  re-run — a sink by step 3,062, its step and mass against the pre-hold tree's (2,600, 5,165.7) — and G-REST's window and crop
+  re-read (iron-free: unchanged expected; the crop case grades it); the lives on the RTX 4090 — life 01 (4,572.394, ≈ 90 s–7 min)
+  to its ending, life 02 (67,020.643, ≈ 20 min to its ending: the lead's in one visible terminal [NOT RUN — for you]) to a sink and
+  black_hole, each life's held set at its ending named
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py held_core floors sink cold_core ledger --task M0-D152` on
+  laserax-ai-server (R18) · Pass: GO · Fail: NO-GO · 2. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm held_core
+  --task M0-D152` there · Pass: GO, the new plant red · Fail: a plant GREEN · 3. the Repro on today's tree · Pass: a `sink_formed` in
+  events.jsonl by step 3,062 · Fail: none
+- Done when: on laserax-ai-server's RTX 4090 no iron cell is held, the Repro forms a sink, the window and crop keep G-REST's 15 %, and
+  life 01 ends neutron_star — life 02's ending the lead's run; win-laptop `owed` (R15)
+- Adversarial: a neutron-star core that keeps a trace of iron is never held, so this form brings M0-R6's floor pump back for every
+  neutron-star remnant — read the 4,572 life's floor_added after its supernova against M0-D71f's held run's, never a looser G-REST;
+  f32 X_Fe from the renormalisation can sit at 1e-30 instead of 0, holding nothing that should be held — the held count on the
+  window (37) is the check.
+- Handoff: linux-pc (laserax-ai), GPU runs on laserax-ai-server's RTX 4090 (R18); model=claude-opus-5-5 level=high (rung_record now; the heading's rung). Built: the hold's test X_Fe = 0 on the twin (Floors::holds, sigma_n dropped) and in floors.wgsl (Hold's Σ_N slot a pad; step/mod.rs floors() drops physics); held_core's item-1 case re-cut (no_iron_is_held) and gpu_no_iron_is_held added (21 → 22); plant hold-iron-gate; verify.json, testing.md. Measured: the Repro forms its sink at step 2,600 (5,165.74 at (243.79, 142.92), black_hole from 2,800 — f98f96d's numbers, none held in 18 dumps); window 4.56 % (1.39/51.64), crop 3.85 %, 37 held, X_Fe 0 in them; life 01 ends neutron_star at step 32,059 (278.5 s), life 02 a sink by 2,613 and black_hole, cut at 6,905 — no cell held in either life's 155 kept checkpoints. Flags (my picks, cheap to move): M0-D79's 0.05 term fails on the free core (75 of 294 lines over) → M0-T104; M0-R6's floor pump back (life 01 2.03 × 10⁷ by step 1,003 against the held run's 4.62 × 10⁶) → M0-R13; M0-D71d's momentum printed (6.7 × 10⁻³ and 3.7 × 10⁻² of Σm|u|) → M0-T106. Verify 1 [ALREADY RUN — PASS (84 passed, 5/5 GO, held_core 22) on laserax-ai-server, RTX 4090]; the plant red by hand [ALREADY RUN — PASS (both item-1 cases red) on laserax-ai-server, RTX 4090]; Verify 3 [ALREADY RUN — PASS (sink_formed at 2,600) on laserax-ai-server, RTX 4090]; claim [ALREADY RUN — NO-GO by its zero-case rule only (by the lead, --changed --task M0-D152: 0 scopes chosen, 83 not impacted — every scope's last GO on this tree, Verify 1's and the 75 my capped claim ran before its 590 s cut) on laserax-ai-server, RTX 4090] — not a red; Verify 2 partly [ALREADY RUN — clean GO 22, held-wall-pressure-only red, then cut; hold-iron-gate red by hand] on laserax-ai-server, its last three plants (M0-D71f's, red there) left to M0-V14's sweep (the lead: continue); life 02's ending [NOT RUN — for you]. win-laptop owed (R15). Detail → tasks/M0-D152.md. Next: M0-R13
+
+## M0-R13 · The cold remnant — why a fresh neutron star reads 10 K and draws dark, and what it should read · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D71f)
+- Status: DONE (2026-11-03 18:48, started 17:34)
+- Carried flags: [M0-D152, 2026-11-03] [M0-R6, 2026-10-23 → carried by M0-D71f, M0-D152] the floor paying N_Fe at collapse is back with no iron held (the lead's pick at M0-D71f): life 01 (4,572.394, RTX 4090) floor_added 2.03 × 10⁷ by step 1,003 against M0-D71f's held run's 4.62 × 10⁶ by 1,007, 2.73 × 10⁷ over the life against radiated 5.34 × 10⁶; life 02 (20 M₀) 1.71 × 10⁸ by step 6,761 against radiated 5.07 × 10⁷; M0-D71f's Repro +168.0 × 10⁶ against nuclear −150.3 × 10⁶ — read it in the remnant's heat budget by pass (P8's floor) (tasks/M0-D152.md § The flags) · [M0-R13, 2026-11-03] RESUME, do not restart: M0-R13's first session (2026-11-03) measured the heat budget and ran five candidates on the life — read milestones/m0/tasks/M0-R13.md first (§ Measured — today's tree, § Measured — candidates, § What is left) and build on it. Its lives, dumps, candidate binaries and scratch copy are on laserax-ai-server in ~/workspace/sandbox_reactions/build/r13 (moved from /tmp/r13 at the lead's word, 2026-11-03; git-ignored; today's life build/r13/a + build/r13/b; candidates build/r13/c<cand>[_2|_3]; r13core and r13twin built in build/r13/w), sources in logs/M0-R13.scratch.*, raw lines logs/M0-R13.log. Re-run nothing already measured; the remaining work is the sources, the reads from dumps on disk, reports/cold_remnant.md (6 sections), the fork to the lead, then the contract and the blocks. A new run is only for a new form of F (held once X_n ≥ 0.5 froze the 20 M₀ Repro: no sink) — the lead's time, ask first
+- Ask (verbatim): the lead, 2026-11-01, during M0-R12: « is it normal that we cant see the remnant solid core? » — then (question tool, offered «a research block: should a fresh remnant keep its heat (neutrino cooling, the cold/thermal split, M0-D71's heatless centre)? Measured, then your pick. Placed with M0-D71 at Phase 16's head»): « File an R block to look into it (Recommended) »
+- Measured by the filer (M0-R12, linux-pc, the RTX 4090's dumps; reports/display_range.md § Sources): the Massive preset's remnant at step 8,001 (a `neutron_star`, 4,373 sandbox mass) has 33 cells at Σ > 10 (the densest Σ 76, x_n 0.64) reading T_K 10–330 K — its pressure the cold term, ε_th floored — so the Glow view draws it as dense haze and Heat as black; no display setting lights 10 K. M0-V11's O6 saw the same dark dot at the supernova (step 929), left «for the lead's eye»; a real newborn neutron star is ~10¹¹ K inside, ~10⁶ K at its surface (the filer's reading, to be sourced)
+- Rating: (usual) — rule (3)'s list: a D-like cause not measured (where the remnant's heat goes: P5's neutrino losses, P8's floor, P4's well-balance, M0-D71) and a design the spec leaves open
+- Read: this file (rules + this task) + milestones/m0/reports/unresolved_remnant.md + milestones/m0/reports/neutronization.md + M0-D71's block + milestones/m0/reports/held_core.md (M0-D71f, the held lives — M0-TG2) + milestones/m0/m0_contrat.md §2.3, §2.5, §1.10.2 + milestones/m0/reports/v11.md O6 + milestones/m0/reports/display_range.md § Sources
+- Deliver: reports/cold_remnant.md — the remnant's heat budget from the supernova to the held ending (the same lives as M0-R12's on laserax-ai-server, R18: thermal energy in the core per step, where it goes, by pass), what it should read and what the stage text says, the candidates (none — it is the model, a heat floor for degenerate matter, neutrino cooling's rate, a display-only reading of the core) each with its cost and its physics, the recommendation → Verify 2 · the fork to the lead (question tool) → none — the lead's words are the record, verbatim in § Ruling · at the lead's pick the contract amended [M0-R13] and the build blocks filed right after this block, rated by §0's rubric → Verify 1
+- Verify: 1. `python3 tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md` · Pass: GO · Fail: NO-GO · 2. `grep -cE "^## (Problem|Candidates|Evidence|Recommendation|Ruling|Blocks filed)$" milestones/m0/reports/cold_remnant.md` · Pass: 6 · Fail: fewer
+- Adversarial: a core that reads hot once a heat floor is added but stops being degenerate (its pressure now thermal, its radius growing) — each candidate is run on the life to its ending and its remnant's radius and stage compared to today's.
+- Handoff: linux-pc (laserax-ai); the reads from dumps on laserax-ai-server (R18); model=claude-opus-5-5 level=high (rung_record now, the heading's rung). Exists: reports/cold_remnant.md (6 sections, sources S1–S8). Cause: N_Fe's q takes ≈ 12× the collapse's P4 heat (nature: the binding ≈ 15× the iron's cost), then P4's pump drains the free core; the floor pays 3.93× the light after the supernova. Candidate F holds a degenerate core at 2 × 10⁶ – 3 × 10⁷ K but loses the 20 M₀ sink. The lead verbatim: «G: gated hold (Recommended)», «File it with the fix». Contract [M0-R13]: §0.5, §2.7, §2.3.4, §2.5.1. Filed M0-T130 (after this block) and M0-T131 (after M0-D71g); flagged M0-V14 for the recalibration. Register: keep s_1362.bin and build/r13. Risk in T130's refusal arm: §1.9.2's object is 6,670 > m_tov_sb at the collapse. Deviation: the claim (verify --changed, 79/79 GO, 1,647 passed, 335.7 s) ran on linux-pc, not the server (R18); plan text only changed. Lint GO, Verify 2 = 6. A Deliver ';' fix was made with the file-edit tool (plan.py has no edit-block call). Detail → tasks/M0-R13.md. Next: M0-T130
+
+## M0-D153 · The neutron core held, gated at r ≤ 24 (§0.5 [M0-T130]) — P8 holds a cell with X_n ≥ 0.5 while the mass within 24 cells of it is under m_tov_sb, on the twin and in floors.wgsl: M0-T130's r ≤ 4 disk froze the 20 M₀ Repro's neutron clumps at birth and no sink formed by step 3,062 · **BUILD** · Opus 5.5, high · switch · (AFTER M0-R13; before M0-T130's rerun and M0-T131 — the lead at M0-T130: «Same gate, r ≤ 24 (Recommended)»; moved before M0-T130 by the lead, 2026-11-03: «move it before T130 so I can do T130 rerun after it»)
+- Status: DONE (2026-11-03 21:03)
+- Filed by: M0-T130, 2026-11-03 — the lead's pick after M0-T130's lives (contract §0.5 [M0-T130], §2.7 and §2.3.4 tagged); measured on
+  laserax-ai-server's RTX 4090 (tasks/M0-T130.md, logs/M0-T130.log)
+- Caused by: M0-T130 (its r ≤ 4 disk gate, built, measured and reverted at the lead's word: «Revert to M0-D152's rule (Recommended)»)
+- Rating: (usual) — rule (3)'s list: a physics rule's reach (which cells the hold takes), read on the lives; the offline margins are thin
+- Symptom (M0-T130, the r ≤ 4 gate built): the Massive life ends neutron_star at step 14,394 (3,919.3), 4 cells held at Σ 783.1 from
+  step 940, 0 releases, T_c 2.1 × 10⁶ K, ε_th/ε_cold 0.067, floor ÷ radiated 1.67 from s_1000 (today 3.93) — M0-R13's F to the step;
+  the Repro holds its neutron clumps at birth (disks r ≤ 4 of 3,700–3,990; 7 cells at step 1,700 → 19 by 3,062, frozen at Σ 788.9)
+  and forms no sink by step 3,062 (today's tree: a sink at 2,600, 5,165.7) — the walls stop the infall and the disks fall to
+  1,000–3,900, so the gate never reopens.
+- Repro (≈ 2 min): apply logs/M0-T130.scratch.gdisk.diff (the r ≤ 4 build, its tests, plants and verify.json) in a scratch copy, build
+  sr-app, `headless --scene preset:giant --load-dump /tmp/d71f/lives/keep/m_bh_sb-02/s_1362.bin --steps 1700 --dump-every 100
+  --adapter "RTX 4090" --out <dir>` → events.jsonl: core_collapse at 1,700, no sink_formed.
+- Measured (offline, M0-T130's scratch reader logs/M0-T130.scratch.t130rad.rs over /tmp/t130 and /tmp/d152/repro): the mass within
+  r ≤ 4/8/12/16/24/32 of the held core — Massive at step 1,000: 4,351/4,362/4,385/4,431/**4,600**/5,057, at 900: 4,251/…/**5,139**/
+  5,451, late (2,250–14,250) r ≤ 24 3,168–4,413; each Repro clump at its birth (step 1,700): r ≤ 24 **5,349–5,701**, r ≤ 16
+  4,086–4,116. m_tov_sb 4,853.17 lies between at r = 24 only (−5 %, +10 %) — NOT PROVEN on a life.
+- Files opened by M0-T130: crates/sr-physics/src/reference/{floors.rs, sinks.rs}, crates/sr-engine/shaders/{floors.wgsl, sinks.wgsl},
+  crates/sr-engine/src/step/{mod.rs, sinks.rs}, crates/sr-engine/tests/gpu/{held_core.rs, floors.rs, sink.rs}, tests/watch/check.py
+  (`m_tov_sb` EXEMPT anywhere in the step, §0.5 [M0-D90]).
+- Files: the same as logs/M0-T130.scratch.gdisk.diff — crates/sr-physics/src/reference/floors.rs (`Floors::holds` with `m_disk`,
+  `disk_mass` at a new `R_HOLD` = 24), crates/sr-engine/shaders/floors.wgsl (`disk_mass`, `Hold`'s m_tov and radius),
+  crates/sr-engine/src/step/mod.rs (`floors()` takes physics), crates/sr-engine/tests/gpu/{held_core.rs, floors.rs, sink.rs},
+  tests/plants/{neutron-hold-ungated.patch (new), hold-iron-gate.patch (re-cut onto `kind`)}, tools/pb/verify.json,
+  docs/agent/testing.md
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-R13] and [M0-T130], §2.7's hold paragraph, §2.3.4, §2.6
+  + milestones/m0/tasks/M0-T130.md + logs/M0-T130.scratch.gdisk.diff
+- Deliver: the diff applied with the disk at r ≤ 24 (the twin and the GPU alike, the disk summed only where Σ ≥ ½σ_hold) → Verify 1;
+  its cost timed on the Massive life against today's → Verify 3; held_core's two neutron cases with their ballast spread over r ≤ 24
+  (0.95 and 1.05 m_tov_sb, the probes ≥ 50 cells apart) → Verify 1; floors' hold field on `field_constants` (the neutrons' cold pressure off — K₂ₙ × 10 is
+  refused by K9's bound) → Verify 1 · neutron-hold-ungated red, hold-iron-gate red → Verify 2 · the three lives → Verify 3
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py held_core floors twin sink --task M0-D153` on laserax-ai-server
+  (R18) · Pass: GO · Fail: NO-GO · 2. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm held_core --task M0-D153` there
+  (6 plants; over 10 min it is the lead's, one visible terminal) · Pass: GO — both plants NO-GO · Fail: a plant GREEN · 3. the lives
+  at once, each capped at 570 s (logs/M0-T130.scratch.lives.sh, life 01's bracket `4572.394,67020.643` — calibrate refuses LO = HI):
+  the Massive preset to its ending; the Repro; m_bh_sb's life 01 to its ending · Pass: Massive ends neutron_star, its core held by step
+  2,000, at the ending dump T_c in [10⁵, 10⁸] K and ε_th/ε_cold ≤ 0.2; the Repro forms a sink by step 3,062 and shows black_hole; life
+  01 ends neutron_star; each life's floor ÷ radiated after the supernova printed beside 3.93 (today), 1.67 (F and r ≤ 4); releases
+  counted (dumps every 20 to step 2,000) · Fail: any of these · Refusal: r ≤ 24 holds no Massive cell by step 2,000, or the Repro
+  loses its sink — Status BLOCKED with the r ≤ 24 masses at both onsets; another radius or form is the lead's
+- Adversarial: the margins. The Massive core reads 5,139 within r ≤ 24 at step 900 and 4,600 at 1,000 — its hold may start later
+  than r ≤ 4's step 940, the core already spreading (Σ_c 1,022 → 481 by step 1,100 when free); the Repro's later clumps (today's at
+  (370, 199), r ≤ 24 3,314 at step 2,000) fall under and may be held, freezing gas the 2,600 sink takes — read the sink's step and
+  mass against 2,600 and 5,165.7. M0-T130's R₉₀ reader (r ≤ 20, Σ ≥ 10⁻³) read the r ≤ 4 Massive's ending at 7.81 (2.24 to step
+  2,000) — say which R₉₀ is meant before grading compactness.
+- Done when: on laserax-ai-server's RTX 4090, Verify 1–3 GO or the refusal arm with its numbers; the moved endings named for M0-V14's
+  recalibration, never re-thresholded here; win-laptop `owed` (R15)
+- Handoff: The r ≤ 24 hold gate is built on the twin and in floors.wgsl (floors::R_HOLD 24; the disk summed only where the rest of the test holds or keeps the cell — a declared narrowing of «Σ ≥ ½σ_hold», same answer). held_core's neutron probes spread their ballast over r ≤ 24, 64 apart; three held_core fixtures that pack C/O past m_tov_sb run on gate_off() (K₁ₙ = K₂ₙ = 0, as floors' field_constants). Verify 1 GO on the RTX 4090 (76 passed; take 1 NO-GO, those fixtures). Verify 3 GO: Massive held from step 980, neutron_star at 4,990 (T_c 7.96e6 K, ε_th/ε_cold 0.06, floor ÷ radiated 1.00 from s_1000 against 3.93 today and 1.67 for r ≤ 4); the Repro's sink at 2,600 (5,230.2), black_hole; life 01 neutron_star at 11,003. Gate cost nil (steps 0–900 equal, dumps identical). · Measured, not filed: the Massive held rim flickers (65 holds, 56 releases, the gate not the cause); the Repro's held clumps leave its sink 6,874 by 3,062 against today's 12,795. · Verify 2 and the claim are over 10 minutes, the lead's — the two plants shown red by hand; win-laptop owed (R15); the contract untouched (§2.7's «not built until M0-D153» stale, the ruling the lead's). · Ran on model=claude-opus-5-5 level=high. Next: M0-T130's rerun. Detail: tasks/M0-D153.md
+
+## M0-T130 · The neutron core held (§2.7 [M0-R13], G) — P8 also holds a cell with X_n ≥ 0.5 while its object is under m_tov_sb, on the twin and in floors.wgsl, so a fresh neutron star stays compact, degenerate and warm instead of P4 pumping it to 10 K · **BUILD** · Opus 5.5, high · switch · (AFTER M0-R13; the lead at M0-R13: «G: gated hold (Recommended)»)
+- Status: DONE (2026-11-04 09:07)
+- Carried flags: [M0-T130, 2026-11-03] The rerun (the lead, 2026-11-03: «move it before T130 so I can do T130 rerun after it»): the gate is §0.5 [M0-T130]'s mass within r ≤ 24, never §1.9.2's object (G-WATCH), built by M0-D153 just above — read this block's «object» as that mass; if M0-D153 is DONE, re-read Verify 1–3 on its tree (the lives script logs/M0-T130.scratch.lives.sh, life 01's bracket 4572.394,67020.643 — calibrate refuses LO = HI); the first run's numbers are tasks/M0-T130.md · [M0-T130, 2026-11-03] [M0-T130, 2026-11-03] The rerun's one job (the lead: «the only thing he tells me is to run the second test on the server»): build nothing, run nothing; hand the lead `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --changed --task M0-T130` on laserax-ai-server, tagged NOT RUN — for you (over 10 minutes; it re-arms held_core; linux-pc's tree rsync'd there first; keep the id M0-T130: its start baseline logs/.baseline/M0-T130.json, 18:54:16, is on both boxes), then close on its result (GO → DONE; NO-GO → the failing scope's log read, a D if outside this block); Verify 1–3 are GO (tasks/M0-T130.md § 5, § Verify 2)
+- Filed by: M0-R13, 2026-11-03 — the lead's pick (contract §0.5 [M0-R13], §2.7 and §2.3.4 amended in place); measured on
+  laserax-ai-server's RTX 4090 (reports/cold_remnant.md § Evidence, logs/M0-R13.log)
+- Blocks: M0-T131 (N_Fe's q, measured on this block's hold)
+- Rating: (usual) — rule (3)'s list: a design the spec leaves open (how P8 learns a cell's object mass, an algorithm with no reference)
+- Measured by M0-R13 (today's tree, Massive): the core is never held (X_Fe 0.36, X_n 0.64), reads T_floor 10 K from step 920 to its
+  ending (neutron_star, step 29,208) and spreads (Σ_c 1,020 → 45, R₉₀ 2 → 16); after the collapse P4's pump draws its heat (−6.1 × 10⁶
+  over 800 steps, the twin crop) and P8 refills it at the floor, 3.93× the light after the supernova. Candidate F (hold once X_n ≥
+  0.5, floors.wgsl only, build/r13/bin/sr-F on the server): 4 held cells at Σ 783.1 from step ≈ 1,000, T_c 2 × 10⁶ – 3 × 10⁷ K,
+  ε_th/ε_cold 0.05–0.11, ending neutron_star at step 14,394 (3,919), floor 1.67× — but M0-D152's 20 M₀ Repro forms no sink by step
+  3,062 (today's tree: a sink at 2,600, a free ring clump of 5,165.7 = 1.06 m_tov_sb). G is F gated by m_tov_sb (4,853.17, the
+  shipped calibration) — NOT RUN.
+- Files: crates/sr-physics/src/reference/floors.rs (`Floors::holds`), crates/sr-engine/shaders/floors.wgsl (`hold`), the Rust side that
+  hands P8 a cell's object mass (crates/sr-engine/src/step/mod.rs today, `Hold`'s uniform — or the mask path the design picks),
+  crates/sr-engine/tests/gpu/held_core.rs, tests/plants/neutron-hold-ungated.patch (new: the m_tov_sb gate removed — F's form),
+  tools/pb/verify.json
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-R13] and [M0-D71f], §2.7's hold paragraph, §2.3.4
+  [M0-D71f], §1.9.2 (objects), §2.6 (sinks), §2.11 (m_tov_sb) + milestones/m0/reports/cold_remnant.md + M0-D152's handoff +
+  logs/M0-R13.scratch.cands.py (F's floors.wgsl edit) and logs/M0-R13.scratch.r13core.rs (the core reader)
+- Deliver: the hold's test and release per §2.7 [M0-R13] on the twin and the GPU, f32 alike — held when X_Fe = 0, or X_n ≥ 0.5 with
+  its object under m_tov_sb, and released past 2η_hold, under ½σ_hold, once X_Fe > 0 with X_n < 0.5, or once its object reaches
+  m_tov_sb → Verify 1 · held_core cases on the twin and the GPU: a cold neutron-rich cell (X_n 0.6, X_Fe 0.4) in an object under
+  m_tov_sb held, the same over m_tov_sb never held, a held one released when its object crosses m_tov_sb, an iron cell under X_n 0.5
+  never held (M0-D152's case kept) → Verify 1 · one plant, neutron-hold-ungated, red in held_core → Verify 2 · the three lives on
+  the RTX 4090, each read with r13core on its dumps → Verify 3
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py held_core floors twin --task M0-T130` on laserax-ai-server (R18)
+  · Pass: GO · Fail: NO-GO · 2. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm held_core --task M0-T130` there ·
+  Pass: GO — neutron-hold-ungated NO-GO · Fail: the plant GREEN · 3. the lives (each < 10 min, agent-run): the Massive preset to
+  its ending (`headless --scene preset:massive --until ending --max-steps 60000 --dump-every 250`, ≈ 250 s); M0-D152's Repro (20 M₀
+  from /tmp/d71f/lives/keep/m_bh_sb-02/s_1362.bin, 1,700 steps, then `--continue` to step 3,062, ≈ 75 s); m_bh_sb's 4,572.394 life 01
+  (`calibrate --only m_bh_sb --bracket 4572.394,4572.394`, or its preset scene, to its ending, ≈ 280 s) · Pass: Massive ends
+  neutron_star, its core held by step 2,000, at the ending dump T_c in [10⁵, 10⁸] K, ε_th/ε_cold ≤ 0.2 and R₉₀ ≤ 4 · the Repro
+  forms a sink by step 3,062 and shows black_hole · life 01 ends neutron_star · each life's floor_added ÷ radiated after the
+  supernova printed beside today's 3.93 and F's 1.67 · Fail: any of these · Refusal: the object gate holds nothing while the core
+  is compact — the Massive object is 6,670 at the supernova (over m_tov_sb with its envelope) — so Status BLOCKED, with the step the
+  object falls under m_tov_sb and Σ_c, R₉₀ there: a gate on another mass (the core's own Σ ≥ σ_hold cells) is a question to the
+  lead, not this block's choice
+- Adversarial: the gate read on the wrong mass. At the collapse the object still holds its envelope (6,670 > 4,853.17), so G holds
+  nothing until the ejecta detach, and by then the free core may have spread (today: Σ_c 214 by step 2,000). Read the step the
+  object falls under m_tov_sb on the Massive life before anything else. Also: a held core that heats past 2η_hold (F read 0.11 at
+  step 5,000) flickers between held and free — count the releases.
+- Done when: on laserax-ai-server's RTX 4090, Verify 1–3 GO or the refusal arm with its numbers; the moved endings (F's 29,208 →
+  14,394) named for M0-V14's recalibration, never re-thresholded here; win-laptop `owed` (R15)
+- Handoff: The claim and two stale fixtures, linux-pc (laserax-ai) + laserax-ai-server's RTX 4090; model=claude-opus-5-5 level=high (rung_record now, each of the lead's prompts). The claim ran as M0-T130-claim, its baseline M0-T130's 18:54:16 start re-keyed (the lead's pick: the server's index stages all 11 M0-T130 logs, so --task M0-T130 was refused). Take 2 NO-GO 72/74: ledger's held wall and dump's held core, fixtures from before M0-D153's gate sitting over m_tov_sb within r ≤ 24 (≈ 15,700; 4,626–4,736 plus infall). The gate reads every held cell alike, as §2.7's release does. Deviation, outside Files, the lead's word («fold them into your task and fix them»): ledger.rs's block 16 → 4 wide, dump.rs's gas Σ 2 → 1; ledger dump GO on the RTX 4090, held 0.264 of Σm|u|, the case's own record. [ALREADY RUN — PASS (GO 1635 passed, 0 failed, 74/74 scopes; the lead's) on laserax-ai-server, RTX 4090]; red-arms, the lead's: held_core 6/6, ledger 5/5, dump 8/8 red. It discharges M0-D153's claim. Verify 1–3 GO (tasks/M0-T130.md § 5). Not acted on: the server's staged logs (the lead's); the moved endings flagged to M0-V14. win-laptop owed (R15). Detail → tasks/M0-T130.md § 6. Next: M0-D154
+
+## M0-D154 · The heat warning fires off its ceiling (§0.5 [M0-TJ4] (6), [M0-D37]) — `SR-WARN heat unconverged … passes 0|1 rounds 0` on lives that hold a neutron core, though the only ceiling that prints it is 64 passes or 4,096 rounds · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T130; filed by M0-T130's rerun, runs where the lead places it — before M0-V14's recalibration reads heat_unconverged)
+- Status: DONE (2026-11-04 10:03)
+- Filed by: M0-T130's rerun, 2026-11-03 — read in M0-D153's lives outputs on laserax-ai-server (RTX 4090)
+- Caused by: unknown — seen only where a core is held or a held state is loaded (below); M0-D153's r ≤ 24 hold or P5's carry across a
+  submission (§0.5 [M0-TJ4] (6)) are the suspects, neither measured
+- Rating: (usual) — the cause is not measured
+- Symptom: §0.5 [M0-TJ4] (6) as amended by [M0-D37] prints `SR-WARN heat unconverged step <n> passes <k> rounds <r>` only when a step
+  hits its ceiling, 64 passes or 4,096 rounds. These lives print it with k ∈ {0, 1} and r = 0: /tmp/d153/massive_b.out (M0-D153's
+  tree, the Massive life from its s_2000 to its ending) has 13 lines at steps 3,327–4,739. /tmp/d153/cost_today.b.out (HEAD's crates,
+  /tmp/d153/sr-today, run from M0-D153's held s_2000 to step 3,000) has 112 lines, from step 2,263 on, all `passes 1 rounds 0`.
+  build/r13/cB.out (M0-R13's hold candidate B) has 110. None appear in /tmp/d153/{massive_a, repro, life01, cost_*}.out (other than
+  cost_today.b), /tmp/t130/*.out (the r ≤ 4 lives), /tmp/d152/*.out, or M0-R13's free today-tree lives build/r13/{a, b}.
+- Repro (≈ 4 min, laserax-ai-server; reconstructed from logs/M0-D153.log § the cost, take 2): `/tmp/d153/sr-today headless --scene
+  preset:massive --load-dump /tmp/d153/massive_a/dumps/s_2000.bin --continue --steps 3000 --adapter "RTX 4090" --out <dir>` →
+  `grep -c "heat unconverged"` reads 112. On the tree: logs/M0-D153.scratch.lives.sh's Massive pair → 13 in massive_b.out.
+- Suspected cause (source not read past a grep): the logged `passes`/`rounds` are those of the submission that ended the step, after
+  (6)'s carry, so the ceiling's own counts are lost. Or `converged` reads false on a step that a held cell's frozen row
+  (§2.3.4's walls) never lets close. Either way the line misreports what the step did.
+- Files opened: crates/sr-engine/src/step/heat.rs (grep only: `unconverged`, lines 56–63, 229–232, 513–522), m0_contrat.md §0.5
+  [M0-TJ4] (6), [M0-D37], [M0-D74]
+- Files: crates/sr-engine/src/step/heat.rs, crates/sr-engine/shaders/heat.wgsl (`LOG`), crates/sr-physics/src/reference/heat.rs if
+  the twin shares the flaw, one heat_implicit or held_core GPU case
+- Read: this file (rules + this task) + m0_contrat.md §0.5 [M0-TJ4] (5)–(6), [M0-D37], [M0-D74], §2.3.4 + tasks/M0-D153.md § 3
+- Deliver: the cause measured on the Repro (each warned step's real passes and rounds, read off the GPU), then the fix that makes the
+  line true (the ceiling's counts, or no line when the step converged) → Verify 1 · a case that grades the line on a held-core
+  step → Verify 1
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py heat_implicit held_core --task M0-D154` on laserax-ai-server (R18) · Pass:
+  GO · Fail: NO-GO · 2. the Repro on the fixed tree · Pass: every `SR-WARN heat unconverged` line is the ceiling (passes 64 or
+  rounds 4,096) or §0.5 [M0-D93]'s exit, and none reads passes 0 where the first pass's Σ c u² is in f32's range (§0.5
+  [M0-D154]; amended at M0-D154, the lead, 2026-11-04: «Amend Verify 2, DONE (Recommended)» — it read «has passes 64 or rounds
+  4,096 · Fail: a line with neither») · Fail: a line at passes 0 with that bound in range · Refusal: the steps really did not
+  converge at k ≤ 1 (a (5) closure that exits early by design) — Status BLOCKED with the warned steps' residuals; the
+  contract's wording is the lead's
+- Done when: Verify 1–2 GO or the refusal arm with its numbers; win-laptop `owed` (R15)
+- Handoff: Exists: P5 build() keeps c·u·u and re-forms it without u² where it is not finite (bit-identical elsewhere; §0.5 [M0-D154]). Measured off the GPU: the passes 0 lines were an f32 evaluation-order overflow (the RTX 4090 forms u² first: step 3,328 read Σ c u² 7.2e24 as inf); every passes 1 rounds 0 line is a genuine [M0-D93] round-0 exit — no count lost to the carry. On the fixed tree the Massive life is byte-identical to M0-D153 (s_4990), its 13 lines all passes 1 rounds 0.
+  Deviations: the case is in heat_stiff on M0-D93 cut (passes ≥ 1, plant bound-u-squared), not a held-core cut — a held-core cut needs P5 rate plane; Verify 2 amended (the lead: «Amend Verify 2, DONE (Recommended)»).
+  Tried and reverted: re-forming the round measures (r²/D, (C/Δt)ê²) — step 4,443 ran 4,096 rounds, life non-finite at 4,736; the lead: «Keep them as exits (Recommended)».
+  Runs (laserax-ai-server, RTX 4090): heat_stiff GO 13/0/0; --redarm heat_stiff GO 6/6 red; Verify 1 GO 32/0/0; Verify 2 the Repro: 13 lines, none passes 0; the claim (the lead, 2026-11-04) GO: 778 passed, 0 failed, 71/71 scopes, 5 owed, 12 not impacted, 158.00 s, base M0-D154 start. Its oracle FLAGs: tests/gpu/{heat.rs, verify.json heat_stiff, bound-u-squared.patch} are the declared heat_stiff deviation; dump.rs, ledger.rs are M0-T130 fixture fix (uncommitted before this start). win-laptop owed (R15).
+  Filed: M0-D155 (the thin cell beside the held core, |v| 27 → 2,100 in one step, cause in P1–P4 unmeasured). Not filed: heat_ceiling.bin ends at passes 1 rounds 0 on one preconditioner (pre-existing, passes).
+  Model: model=claude-opus-5-5 level=high. Next: M0-D155.
+
+## M0-D155 · A thin cell beside the held core leaps to |v| 2,100 in one step, then P5 reads it at T⁰ 5.9 × 10⁵ — the Massive life's 13 `SR-WARN heat unconverged` lines and its Δt falls (4.95 × 10⁻³ → 1.77 × 10⁻⁴) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D154; filed by M0-D154 — before M0-V14's recalibration reads heat_unconverged)
+- Status: DONE (2026-11-04 10:53)
+- Filed by: M0-D154, 2026-11-04 — measured on laserax-ai-server (RTX 4090) in the Massive life of M0-D153's tree
+- Caused by: unknown — seen only at the held core's edge (M0-D153's r ≤ 24 hold); P1–P4 of the step before P5 are the suspects,
+  none measured apart
+- Rating: (usual) — the cause is not measured
+- Symptom: from M0-D153's s_2000 to the ending (step 4,990) 13 steps end P5 at passes 1, rounds 0 (§0.5 [M0-D93], [M0-D154]),
+  each with a free cell at x 297–302, y 195–203 — beside the held core (299–302, 199–200) — holding T⁰ 1.2 × 10⁵–6.3 × 10⁷ at
+  Σ 7.6 × 10⁻⁶–5.4 × 10⁻⁴ where its neighbours sit at T 30–250. The first, read per step (logs/M0-D154.log § d154win): (298, 197)
+  goes from Σ 8.4 × 10⁻⁴, T 61, |v| 27 at s_3326 to Σ 2.3 × 10⁻⁴, T at the floor, |v| 2,100 at s_3327 (its neighbours ≤ 40),
+  beside (298, 198) at Σ 8.9, which faces (298, 199), newly held in that step's P8 while (298, 200) is released; in the next
+  step P5's frozen T⁰ at (298, 196) is 5.9 × 10⁵ (u 2.5 × 10¹⁸), its round-0 γ, η are inf, and the step's Δt is 1.77 × 10⁻⁴
+  against 4.95 × 10⁻³; at s_3328 five cells around (298, 196) sit at T ≈ 1,100 with P5 rates ±3 × 10⁹.
+- Repro (≈ 30 s, laserax-ai-server): `/tmp/d154/sr-d154 headless --scene preset:massive --load-dump /tmp/d153/massive_b/dumps/s_3250.bin
+  --continue --steps 3330 --dump-every 1 --adapter "RTX 4090" --out <dir>` → `SR-WARN heat unconverged step 3327 passes 1 rounds 0`
+  and `… 3328 …`; the window by `/tmp/d154/target/release/examples/d154win 298 197 3 <dir>/dumps/s_332{6,7,8}.bin` (source:
+  logs/M0-D154.scratch.d154win.rs); P5's frozen planes and records by the scratch probe in /tmp/d154/w (logs/M0-D154.scratch.probe.diff,
+  `D154_ALL=1`, `D154_ONESTEP=1`). The kept dumps /tmp/d154/m3330/dumps/s_3320–s_3330 are the same states.
+- Suspected cause (not measured): P4 at the core's edge — the dense free cell (298, 198) expanding into the thin one beside a
+  reflecting held wall (§2.3.4) — or the hold switching cells in that P8 ((298, 199) held, (298, 200) released), or P2's pull of the
+  held core (§0.5 [M0-D151]) or the radiation force on a Σ 2 × 10⁻⁴ cell; either way a cell 70× faster than its neighbours.
+- Files opened: none of P1–P4's (M0-D154 read P5's heat.wgsl only)
+- Files: named by the cause (P4's hydro shader, P2's gravity, P8's hold), its twin in crates/sr-physics/src/reference/ if it
+  shares the flaw, one held_core case
+- Read: this file (rules + this task) + m0_contrat.md §2.3.4, §2.7, §0.5 [M0-D71], [M0-D71f], [M0-D151], [M0-T130], [M0-D93],
+  [M0-D154] + tasks/M0-D154.md § The thin cell
+- Deliver: the phase that gives (298, 197) its |v| 2,100 at step 3,326, measured on the Repro (the state after each of P1–P4 read
+  off the GPU, and the twin from the same s_3326), then the fix → Verify 1 · a case that grades it → Verify 1
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py held_core heat_stiff --task M0-D155` on laserax-ai-server (R18) ·
+  Pass: GO · Fail: NO-GO · 2. the Repro on the fixed tree, then M0-D154's (massive_b's command from M0-D153's s_2000) · Pass: no free
+  cell beside the held core gains |v| more than 10× its neighbours' largest in a step, the warned steps counted against M0-D154's 13,
+  the Massive life still ends neutron_star · Fail: the leap remains · Refusal: the twin from the same state leaps too (a dense cell's
+  honest expansion into thin gas) — Status BLOCKED with both sides' numbers; whether that is physics is the lead's
+- Done when: Verify 1–2 GO or the refusal arm with its numbers; win-laptop `owed` (R15)
+- Handoff: DONE, linux-pc (laserax-ai) + laserax-ai-server's RTX 4090 (R18); model=claude-opus-5-5 level=xhigh (rung_record now; MISMATCH: the heading's Opus 5.5, high). Measured (tasks/M0-D155.md § 1): P0–P3 leave step 3,326's state as it was; P4 alone gives (298, 197) |v| 2,135 — MC limits Σ and Π apart, so the dense cell (298, 198) faces it with Σ 8.4e-4 (the thin cell's) and Π 200, c 691 against 8–13, and HLL pours momentum 100.7 and energy 6.8e4 into it while its mass flows out; the f64 twin on the same state, P2 field and F reads the same, with or without gravity and the radiation force — a shared flaw, not the refusal arm's honest expansion (escape speed ≈ 30).
+  Fix (the lead: «Thermal bracket, K 2 (Recommended)»; §0.5 [M0-D155], §2.3.4, m0_superseded.md): a slope whose either face would hold Π/Σ above HOT_FACE 2 × its three cells' largest takes Σ and Π flat on that axis, the twin's `slope` and hydro.wgsl's (3 of 33,792 slopes about the core; 4,263 at 1 ×).
+  Case (the lead: «sod, the scheme's (Recommended)» — Files named held_core; the claim's 5 oracle FLAGs are this move): scenes/thin_cell.bin (64 × 64 of s_3326, re-cut from build/m0-d155/s_3326.bin on the server), one P4 step on the twin and the GPU, no free cell over 10 × its neighbours' |v| (1.127 both; planted 55.2 / 55.1); plants hll-hot-face-twin, hll-hot-face-gpu; sod 17 cases, testing.md row.
+  Runs, all laserax-ai-server: sod 17/0/0; --redarm sod 3 plants 3 red 73 s; Verify 1 held_core 24/0/0 + heat_stiff 13/0/0 GO; Verify 2 on the tree's binary: the Repro no warning; the Massive life from s_2000 0 SR-WARN (M0-D154's 13), neutron_star at step 4,878 (4,435.9; 4,990 before), its dumps sr-fix's byte for byte, whose per-step leap check reads 0 steps over 10 × (largest 1.76; today's tree 6, 11–55 ×). The claim [ALREADY RUN — PASS (1,587 passed, 0 failed, 72/72 scopes GO, 5 owed, 11 not impacted, 160.29 s) on laserax-ai-server, RTX 4090] `verify.py --changed --task M0-D155`; owed on linux-pc: toolchain, desktop, capture, measure_ui GO 13/0/0 (--task M0-D155-owed), web GO 5/0/0 (the lead's run, 175 s wall).
+  Measured, not filed: M0-D89's and M0-D93's thin hot cells P4 left beside vacuum look like this face (inferred — their pre-P4 states are gone); only the Massive life ran under the bracket — flagged to M0-V14. Server: /tmp/d154 and /tmp/d155 removable, keep build/m0-d155 (register).
+  Next: M0-D91.
+
+## M0-D91 · P5's f32 solve stagnates where a thin cell beside vacuum holds u ~ 10¹⁶ — the 40 M₀ life's step 2,517 spends all 4,096 rounds in its first Newton pass on either preconditioner (still unconverged at 32,768), so the step commits by limited fluxes instead of its backward-Euler answer · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D71)
+- Status: DONE (2026-11-04 11:31)
+- Carried flags: none · [M0-V21, 2026-10-27] On today's constants (M0-D94: c_sb 400, a_r 2e-5 — on which heat_ceiling.bin's f32 Jacobi solve converges, «its premise gone»; heat_stiff keeps its cuts on a_r 4e-5 / c_sb 200), M0-V9's lives (logs/M0-V9-r8.chain.log's heat_unconverged, RTX 4090): the Giant (40 M₀) preset 0 in 12,005 steps; the Sun-like preset 266 in 177,762, the first at step 13,730 (main_sequence, sim_time 154.867; record build/calibrate_runs/2026-10-26T20-04-01Z/preset_sun-01 on laserax-ai-server, its dumps not kept); m_up_sb-01 (3,351.0) 53 from step 16,210; m_bh_sb's 67,020.6 life 14. Whether those steps are your stagnation or M0-D93's non-finite end is unmeasured: measure one ceiling step of today's physics (the Sun's from ≈ 13,730) before fixing on heat_ceiling.bin alone; your Done-when's s_2510.bin is an old-constants state, not re-run.
+- Blocks: nothing today — since M0-D89 a ceiling step commits bounded (§0.5 [M0-D89]); each one costs all 4,096 rounds (≈ 1.2 s on the V-cycle at [M0-D84]'s 281 µs a round, my estimate) and moves heat by the first iterate's limited F, not the step's answer: 3 steps of the 40 M₀ life's 2,510–3,100, 8 of its 6,000 (M0-R6's run). Filed after M0-V9 at the lead's word (2026-10-23, M0-D89: «After M0-V9 (Recommended)»)
+- Caused by: unknown — P5's f32 measures (§0.5 [M0-TJ4] (4)) at a heat-free cell of extreme u; not measured to a term
+- Rating: `(usual)` — the cause is not measured
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.5 [M0-TJ4] (3)–(6), [M0-D82], [M0-D85], [M0-D89] + crates/sr-engine/shaders/heat.wgsl's header (M0-D56's face-by-face products, M0-D36's shift) + milestones/m0/tasks/M0-D89.md (§ Measured)
+- Symptom (measured by M0-D89, laserax-ai-server, RTX 4090, idle, 2026-10-23): P5 alone on scenes/heat_ceiling.bin (64 × 64 of P5's start in that step) runs 1 pass, 4,096 rounds on Jacobi and on the V-cycle with identical records — the first pass never ends, so the committed iterate is the first one; with MAX_ROUNDS 32,768 in a scratch build the full step still reads 1 pass, 32,768 rounds. The twin (f64, 10⁻¹² measures) from the same start converges in 16 passes, 14,334 rounds, its first pass solved in 1,734
+- Suspected cause (estimate, not measured): the u-measure (r, D⁻¹r) ≤ (10⁻⁵)² Σ c_i u_i² cannot be met in f32 where a heat-free cell (c_i ≪ Σ_f D_f) holds u_i ~ 5 × 10¹⁵ — its residual's rounding floor ε_f32 D_ii u_i gives r²/D_ii ~ 10¹⁹ against a bound ~ 10⁹ (cell (216, 75) of the world, (32, 32) of the cut: Σ 2.1 × 10⁻⁵, T 3.4 × 10⁵, C 1.6 × 10⁻⁵, vacuum east, Σ 1.2 north). Candidates: the measure weighed per cell against its own scale; a heat-free cell solved locally (its u its faces' weighted mean) around the system; its first iterate at its local balance instead of T⁰ (the factor-2 clamp alone costs 13 passes from 3.4 × 10⁵ to 40)
+- Repro: on laserax-ai-server, `SR_TEST_ADAPTER="RTX 4090" bash tests/gpu.sh heat::stiff physics` — `SR-STIFF GPU heat_ceiling.bin: HeatReport { … passes: 1, rounds: 4096, converged: false … }` on both `::jacobi` and `::multigrid` (the ceiling case's precondition), 10 s
+- Files opened: crates/sr-engine/shaders/heat.wgsl (`heat_round`'s modes, the commit), crates/sr-physics/src/reference/heat.rs (`System::solve`, the commit), crates/sr-engine/src/step/heat.rs (by M0-D89)
+- Deliver: the stagnation measured to its term (both measures by cell, round by round, on heat_ceiling.bin); a fix within §0.5 [M0-TJ4]'s tolerances, or a §0.5 line, that converges that step on the GPU; heat_stiff's ceiling cases then need a state that still reaches the ceiling (their precondition) — a new cut, or a test-only round cap
+- Verify: 1. `python3 tools/pb/verify.py heat_multigrid heat_stiff heat_implicit heat_gauss heat_limiter --task M0-D91` (laserax-ai-server, `SR_TEST_ADAPTER="RTX 4090"`) · Pass: GO, every scope · Fail: NO-GO · 2. `python3 tools/pb/verify.py --redarm <the scope given the new case> --task M0-D91` · Pass: every plant red · Fail: a plant green
+- Done when: Verify 1–2 GO; the 40 M₀ life from build/r6_evidence/m40/s_2510.bin to step 3,100 prints no `SR-WARN heat unconverged` on the RTX 4090
+- Adversarial: a looser tolerance or a raised ceiling (32,768 did not converge it); a fix read on the one state only
+- Handoff: DONE, linux-pc (laserax-ai) + laserax-ai-server's RTX 4090 (R18); model=claude-opus-5-5 level=high (rung_record now, the heading's rung). Measured (tasks/M0-D91.md, a scratch per-slot trace): on heat_ceiling.bin γ 1.10e38 and η 1.28e38 pass 2^126, the GPU's subnormal 1/b flushes to 0, so α = β = 0 and no cell moves in 4,096 rounds — not the ε D u floor the block guessed; M0-D94's halved u is why today's constants converge the cut.
+  Exists: heat.wgsl ratio() — the shift, β, α and δ scaled by 2^-64 when |b| ≥ 2^64, bit-identical elsewhere (the 40 M₀ life's 59 dumps and the Sun-like life's 30 byte-identical before/after); heat_stiff case gpu_jacobi_converges_the_ceiling_cut… (17 passes, 3,518 rounds, δ 9.5e-7; precondition 1.02e38 ≥ 2^126), plant ratio-unscaled, the ceiling case at 2 Δt (Jacobi 10 passes, 4,096 rounds); verify.json 14, testing.md row. No contract line (within (4)'s tolerances).
+  Deviations: the V-cycle (P5's default) still ends the cut at round 0 by [M0-D154]'s r·r term exit — the lead's ruling, kept; M0-D154's re-form trial ran with this flush in place, so its stall may have been this term (not re-measured; a question for the lead). Done-when's life (s_2510 → 3,100, without --continue: its observers.json predates sinks) prints no warning — but on today's physics the tree before the fix prints none either.
+  Filed: M0-D156 — the carried flag's measure: today's Sun-like life warns 221 times by step 30,000, every one at 64 passes ≤ 89 rounds; at 13,594 the heat-free START shift walks cold edge cells down against their own residual while each pass runs 0 rounds.
+  Runs [ALREADY RUN — PASS on laserax-ai-server]: heat_stiff 14/0/0 (12.99 s); --redarm heat_stiff 7/7 red (115.33 s); heat_multigrid, heat_implicit, heat_gauss, heat_limiter 34/0/0. Claim [ALREADY RUN — PASS (1,391 passed, 0 failed, 57/57 scopes GO, 26 not impacted, 204.81 s + loop 69.95 s) on laserax-ai-server] verify.py --changed --task M0-D91 (base M0-D155's start: no start for M0-D91 there; its oracle FLAGs the new heat_stiff case, plant and manifest, and M0-D155's sod files); [NOT RUN — owed on linux-pc or win-laptop] toolchain, desktop, web, capture, measure_ui.
+  Next: M0-D156. Scratch: laserax-ai-server /tmp/d91 (keep sun13/dumps/s_13593.bin, sr-fix).
+
+## M0-D156 · The Sun-like life's P5 reaches its 64-pass ceiling 221 times by step 30,000 (first at 13,594), every pass after the second at 0 rounds — the heat-free cells' one common START shift walks thin cold cells at the world's top edge down against their own residual, so (3)'s per-cell test never ends the passes · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D91; filed by M0-D91 — before M0-V14's recalibration reads heat_unconverged)
+- Status: DONE (2026-11-04 12:46)
+- Filed by: M0-D91, 2026-11-04 — measured on laserax-ai-server (RTX 4090) on the tree at M0-D91's start (binary 988ccd3a) and
+  on M0-D91's fix (080bb068): the same 221 warnings, the 30 dumps byte-identical
+- Caused by: M0-T121 — the heat-free START shift (heat.wgsl `free_at`, `FREE_SHARE`; `git log -S FREE_SHARE` → 34e41ca, «M0-T121
+  done»), a GPU-only device: neither the contract nor the twin has it
+- Rating: (usual) — rule (3)'s reason: numeric or precision semantics (P5's solve, the heat-free cells' handling)
+- Symptom: `headless --scene preset:sun --steps 30000 --adapter "RTX 4090"` prints 221 `SR-WARN heat unconverged`, steps
+  13,594–17,207 (main_sequence), every one `passes 64` with rounds 1–89 — P5's other ceiling, not M0-D91's 4,096 rounds. Step
+  13,594 traced slot by slot (M0-D91's probe): pass 2 runs 3–4 rounds, every later pass 0 — the solve meets (4)'s two measures at
+  its START — yet 54–110 gas cells move by more than 10⁻³ T a pass, all at the world's top edge (y 0–5, x 496–551, T 0.07–0.38),
+  all cooling, no sign flip in 64 passes, many at the factor-2 clamp. Cell (548, 1): r = +0.112 unchanged while x (its u) falls
+  ~1 % at each START (4.21 → 4.12 → 3.98 → 3.84 × 10⁻⁷), D 8.4 × 10⁶, (A z)_i 57 — heat-free, its faces mostly to other heat-free
+  cells. With 0 rounds only the shift moves x: one level zᵀr / zᵀA z over every heat-free cell of the world, set by the others'
+  residual, pushes these cells against their own. On heat_ceiling.bin (M0-D91) the same shift is −1.0 × 10¹⁵: it moves the lone hot
+  cell (32, 32) by 0.2 % and drives (40, 40), at T 44, to u = −1.0 × 10¹⁵
+- Repro (≈ 5 s, laserax-ai-server): `/tmp/d91/sr-fix headless --scene preset:sun --load-dump /tmp/d91/sun13/dumps/s_13593.bin
+  --continue --steps 13596 --adapter "RTX 4090" --out <dir>` → `SR-WARN heat unconverged step 13594 passes 64 rounds 3` (the tree's
+  binary prints the same; `--steps 13594` stops before the step). The trace: the scratch probe in /tmp/d91/probe
+  (logs/M0-D91.scratch.probe.diff: `D91_TRACE=<dir>` dumps P5's planes after each 2-slot submission; `d91_analyse` with `D91_DIR
+  D91_W=600 D91_H=400 D91_FIRST=1 [D91_CELLS='548,1;546,4' D91_EVERY=1]` prints each pass's Newton test and the cells); M0-D91's
+  numbers in logs/M0-D91.sun.log
+- Suspected cause (measured to the slot, not to a fix): the shift is one scalar over all heat-free cells, so a cell whose own
+  residual opposes the aggregate moves the wrong way every pass, and (4)'s measures, weighing heat, never see it. Candidates: a shift
+  per connected heat-free component; the heat-free cells' own residual in a stopping test; their u solved locally (its faces' mean)
+- Files opened: crates/sr-engine/shaders/heat.wgsl (`free_at`, `heat_round`'s RESID and START), crates/sr-engine/src/step/heat.rs
+  and latch.rs (the probe's hooks) — by M0-D91
+- Files: crates/sr-engine/shaders/heat.wgsl; one heat_stiff case (a cut of P5's start at 13,594 — M0-D89's way, tasks/M0-D89.md §
+  Measured — or a scene that holds a heat-free edge), its plant; verify.json, docs/agent/testing.md
+- Read: this file (rules + this task) + m0_contrat.md §0.5 [M0-TJ4] (3)–(6), [M0-D37], [M0-D82], [M0-D85], [M0-D89] + heat.wgsl's
+  `free_at`, `heat_round` + tasks/M0-D91.md
+- Deliver: the shift measured over one pass of step 13,594 (each heat-free cell's share of zᵀr, which cells set its sign), then a
+  fix within §0.5 [M0-TJ4]'s tolerances, or a §0.5 line → Verify 1 · a case that grades it, red-armed → Verify 1
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py heat_stiff heat_multigrid heat_implicit heat_gauss heat_limiter
+  --task M0-D156` on laserax-ai-server (R18) · Pass: GO, every scope · Fail: NO-GO · 2. the Sun-like life to step 30,000 on the fixed
+  tree · Pass: no `SR-WARN heat unconverged` (221 before) · Fail: a warned step · Refusal: the twin (f64) from the same P5 start needs
+  more than 64 passes too (a cooling front one cell a pass, as [M0-D37]'s heating front) — Status BLOCKED with both sides' numbers;
+  the ceiling is the lead's
+- Done when: Verify 1–2 GO or the refusal arm with its numbers; win-laptop `owed` (R15)
+- Adversarial: a looser per-cell Newton test or a higher pass ceiling; a fix read on step 13,594 alone
+- Handoff: DONE, linux-pc (laserax-ai) + laserax-ai-server's RTX 4090 (R18; the lead: «you can run rsync yourself and run the tests on the server»); model=claude-opus-5-5 level=high (rung_record now, the heading's rung). Measured (tasks/M0-D156.md, the RESID's own sums by a scratch trace): at 13,594 one heat-free component of 149,742 cells; from pass 8 five floor components (21 cells at the top edge, T_floor) carry 95 % of zᵀA z while the big one's residual (≈ −0.5) sets the sign — the shift (−5e-9) pushes the floor cells below u_vac, the update puts them back, the same zᵀr returns, every other heat-free cell walks ~1 % of u a pass at 0 rounds.
+  Exists: heat.wgsl shifted_at — one shift set, the heat-free cells off the floor that the step's largest downward shift (the record's reach) leaves above u_vac and moves within (3)'s per-cell test; the Sun-like life to 30,000: 0 warnings (221), 139.8 s (201.9); heat_stiff case gpu_the_sun_like_lifes_step_13594… on scenes/sun_13593.bin + .observers (16.3 MB; the lead: «Full dump, 16 MB (Recommended)»), plant shift-every-heat-free; the ceiling case at 16 Δt (the lead: «Move it to 16Δt (Recommended)» — Jacobi converges that cut at 1–8 Δt now).
+  Deviations: 8 variants measured (the task file's table: the floor alone 27 warnings, bound gaps 7, a set per direction cycles, a reach raised by upward shifts drops heat_rim's ring, ::jacobi L1 1.44e-4); no contract line (every tolerance unchanged); the life differs from s_1000 on (pinned heat-free cells early); P5-alone cuts never stalled, hence the full dump; the snapshot is scenes/sun_13593.observers, not .json (the scene scope parses every scenes/*.json: the first claim's 1 failure).
+  Measured, not acted on: the momentum invariant at 30,000 (0.036, −0.036) → (0.015, −0.41) — P5 moves none, another variant's life read (0.19, 0.24); the ceiling cut's converged δ 1.07–1.41e-5 at 2–8 Δt (no case reads it).
+  Runs [ALREADY RUN — PASS on laserax-ai-server]: heat_stiff 15/0/0, scene 8/0/0; --redarm heat_stiff 8/8 red, 0 green (133.43 s); heat_multigrid, heat_implicit, heat_gauss, heat_limiter 34/0/0 (Verify 1); Verify 2's life 0 warnings. Claim [ALREADY RUN — PASS (590 passed, 0 failed, 59/59 scopes GO, 24 not impacted, 205.97 s; base M0-D156's start) on laserax-ai-server] verify.py --changed --task M0-D156 (its oracle FLAGs the case, plant and manifest, as at M0-D91); [NOT RUN — owed on laserax-ai or Laser2025-20] toolchain, desktop, web, capture, measure_ui; win-laptop owed (R15) → M0-V14.
+  Next: M0-D103. Scratch: laserax-ai-server /tmp/d156 (24 GB) removable; /tmp/d91 (6.9 GB) removable (s_13593 is scenes/sun_13593.bin).
+
+## M0-D103 · summary.json's objects carry none of §2.12.2's four readouts — `mass_suns`, `predicted_ending`, `ending`, `age_years`: M0-T60 left them «once M0-T69, M0-T72 and M0-T73 exist», and those three built the library alone · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D91)
+- Status: DONE (2026-11-04 15:35)
+- Carried flags: [M0-V22, 2026-10-28] Merged here by E6's triage — one thread, the Watch built on the embedded calibration: M0-V10's F2, the observers' wisp cut on the nominal Sun. `Watch::new` (watch.rs:256) and `Watch::restore` (:454) build the tracker on `TrackerConfig::from_physics(physics, SUN_MASS_NOMINAL)`, a cut of 0.01 × 3,351.032 = 33.510, where §1.9.2 lists every object of at least 1 % of the Sun-like preset — `preset_mass_sb.sun` 3,136.718 in assets/calibration.json, a cut of 31.367 (Watch::new's own doc: «until calibration gives preset_mass_sb.sun», given since M0-V9). Measured on laserax-ai-server's RTX 4090 (logs/M0-V10.wisp_probe.log, whose header spells the scenes: 128 × 128, bounce, one cold rect at (50, 50), w 25, h 12|13|14, Σ 0.1, T 0.05, H 1.0, `--steps 1`): rect masses 30.0 / 32.5 / 35.0 → objects none / none / one, the 32.5 one dropped. Caused by: M0-T74 (its handoff: «Not done: Watch's wisp cut still uses the nominal Sun mass»). With the four readouts: both constructors take the Sun's mass from the same embedded calibration, SUN_MASS_NOMINAL where none is embedded as today — `TrackerConfig::from_physics` already takes it (tracker.rs:90); a case in the scope that grades the four — the 32.5 rect listed, the 30.0 one not — and a plant listed there that puts the nominal back, armed in the same `--redarm observe_run`. tracker.rs's own `a_wisp_is_left_out` (:807) is a unit case on the nominal, left as it is.
+- Filed by: M0-V10, 2026-10-28 — lot 10's validation (E4); placed at Phase 16's head after M0-D91 under Phase 16's ordering note — the
+  game does not read summary.json (the lead's «Game first»); before M0-T97, M0-T104 (G-END) and M0-T107 (G-AGE), which read lives'
+  summaries. M0-V10's logged F2 (the wisp cut on the nominal Sun, in the same two Watch constructors) waits for M0-V22, which may
+  merge it here.
+- Blocks: M0-T107 (G-AGE: «the Sun-like preset reaching white_dwarf reading within a factor 1.5 of 1.21 × 10¹⁰ years» needs a run's
+  ages) and M0-T104's at-drop predictions (G-END) — nothing before them
+- Caused by: M0-T60 (its Deliver, plan_archive.md § M0-T60: summary.json's `objects` «(id, stage, mass_sb, stages with from_step and
+  sim_time — mass_suns, predicted_ending, ending and age_years once M0-T69, M0-T72 and M0-T73 exist)»; watch.rs:509–510 says the same;
+  M0-T69's, M0-T72's and M0-T73's Delivers name translate.rs, ending.rs and age.rs only, their handoffs «no summary.json wiring»)
+- Rating: (usual) by rule (3)'s list — a persisted format changed: the observers' snapshot (§0.5 [M0-D76]) carries the age clock, so a
+  `--continue`d life writes the unbroken life's ages: Opus 5.5, high
+- Files: crates/sr-engine/src/watch.rs (`objects_json` 509–532; `Watch::new` 250–262; `snapshot`/`restore` 430–470), crates/sr-physics/
+  src/observe/age.rs (`AgeClock`: no snapshot of its tracks — tasks/M0-T73.md «a resumed dump restarts every age at 0»), ending.rs
+  (`Predictor::predict`, `readout`), translate.rs (`MassScale`) — opened by M0-V10, not changed; named, not opened —
+  crates/sr-engine/src/headless.rs:985 (`Watch::new`), crates/sr-engine/tests/gpu/observe.rs
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.9.5, §1.10.1, §1.10.4, §2.12.2, §0.5 [M0-D76], [M0-D78] +
+  milestones/m0/logs/M0-V10.summary_fields.log + docs/agent/readouts.md § The predicted ending, § The age clock + docs/agent/testing.md
+  (the `observe_run` row)
+- Symptom: measured on linux-pc (RTX 5090), 2026-10-28 (logs/M0-V10.summary_fields.log): the `multi` scope's G-MULTI run
+  (scenes/two_suns.json to sim_time 40, b3e8b22-dirty, 15:15:34) wrote summary.json objects keyed id, mass_sb, stage, stages only;
+  no code under crates/ writes any of the four keys (grep, M0-V10).
+- Repro: any headless run with an object, then summary.json's `objects[*]` keys — on laserax-ai-server `build/target/release/
+  sandbox-reactions headless --scene preset:sun --steps 10 --adapter "RTX 4090" --out <dir>` (R18)
+- Suspected cause: measured — `objects_json` writes id, stage, mass_sb and stages; the Watch holds no MassScale, Predictor or AgeClock
+- Deliver: each summary.json object gains, from the embedded calibration (read as `Scene::with_embedded_masses` reads it), `mass_suns`
+  = MassScale::to_suns(mass_sb), `predicted_ending` = Predictor::predict(mass_sb) as a list of fate ids (`failed_star`, `white_dwarf`,
+  `supernova`, `black_hole` — the `fate.*` keys' ids, one for a sure call, the close call's two lighter first), `ending` = the ending
+  id (`ending.*`'s) once Predictor::readout reads Ended — the displayed remnant stage held stages::ending_hold — else null, and
+  `age_years` = an AgeClock the Watch updates every frame on each object's displayed stage (§1.10.4), the clock carried in the
+  observers' snapshot so a `--continue`d life writes the unbroken life's ages (one §0.5 line, the snapshot's version, PLAYBOOK §9), a
+  tree with no calibration embedded writing the four as null → Verify 1 · cases in tests/gpu/observe.rs — the four on a short
+  preset:sun run against the library's values for its last frame, an age that never decreases over the frames, a cut-and-continued
+  run's `age_years` equal to the unbroken one's → scope `observe_run` → Verify 1 · plant tests/plants/age-not-carried.patch (new: the
+  snapshot drops the clock) listed for `observe_run` → Verify 2
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py observe_run --task M0-D103` on laserax-ai-server (R18) · Pass: GO,
+  ≥ 13 cases · Fail: NO-GO · 2. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm observe_run --task M0-D103` there ·
+  Pass: GO — age-not-carried NO-GO with the scope's other plants · Fail: age-not-carried GREEN
+- Done when: the four readouts in summary.json on laserax-ai-server's RTX 4090, equal across a `--continue`; win-laptop `owed` (R15)
+- Adversarial: an age computed once from the last frame reads 0 or one jump — the clock is updated every frame, and the
+  never-decreasing case reads the frames.
+- Handoff: summary.json's objects carry mass_suns, predicted_ending (fate ids), ending and age_years from the embedded calibration (null with none); Watch::new/::restore cut wisps at 1 % of preset_mass_sb.sun (M0-V10's F2); the age clock runs every frame and rides the observers' snapshot, version 3 (§0.5 [M0-D103]); scenes/sun_13593.observers upgraded in place with an empty clock (the lead: «Upgrade it in place (Recommended)»). On laserax-ai-server's RTX 4090: Verify 1 observe_run 14/0/0 GO (48.3 s); Verify 2 GO, clean 14/0, 8 of 8 plants RED (age-not-carried 2, wisp-cut-nominal 1). Claim NO-GO 70/71: calibrate_bisect's needle «reads 2» — fixed (the lead: «Fix it here (Recommended)»), re-run scoped GO 19/0/0; the claim red-armed observe_run inside it, ≈ 18 min, past the 10-minute line unasked. Measured: the calibrated Sun-like life to t 20 reads 0.888 Suns, [white_dwarf], 3.21e7 yr; continued = unbroken (3,279,122.408 yr). Not acted on: sr-app's Stars (right.rs:138) still cuts wisps at the nominal Sun (source only); calibrate's cut 33.51 → 31.37 (unmeasured); v2 checkpoints won't resume. Deviations: the Watch's clock takes sim time as wall (its rate unread); Star gains id, age_years. win-laptop owed (R15). model=claude-opus-5-5 level=xhigh (heading: Opus 5.5, high — MISMATCH). Detail: tasks/M0-D103.md. Next: M0-D109.
+
+## M0-D109 · An edit's step moves §2.9's energy invariant by the potential energy the added mass brings — no term books ΔW: a paint inside the box −2.25 against ΔW −1.99, a Sun drop −2.661 × 10⁵ against ΔW −2.661 × 10⁵ · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D103)
+- Status: DONE (2026-11-05 08:14, started 08:02)
+- Filed by: M0-D101, 2026-10-29 — measured by its whole-step cases; the lead at M0-D101: «Report, file ΔW as a D (Recommended)» (the
+  cases report the energy invariant, not grade it); placed after M0-D103, summary.json's other ledger-side D, at the head of Phase 16.
+- Blocks: G-CONS's energy across any edit (inside the box or out); the ledger's energy in summary.json for a run with an edits file;
+  M0-D101's cases grading energy instead of reporting it
+- Caused by: M0-T76 (P0 books `tools.*` as the E plane's stored change — kinetic, thermal and cold — never W = ½Σmφ)
+- Rating: Opus 5.5, high (usual) — §0 rule (3): a schema changed (§2.9's terms, summary.json's ledger, §2.12.2)
+- Files: crates/sr-engine/src/ledger.rs (`Energy`, `Energy::invariant`: tools subtracted, W = `potential`), crates/sr-engine/shaders/
+  edit.wgsl (`deposit`, the booking of `tools.painted` and `tools.preset`), crates/sr-engine/tests/gpu/edit.rs (`Whole`: the reported
+  energy line) — opened by M0-D101; named, not opened — crates/sr-engine/src/state.rs (TERMS, BOOK_GROUPS), crates/sr-engine/src/
+  summary.rs (W's block sums), the contract's §2.9 and §2.12.2
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.9, §2.12.2, §1.12, §5.3 (G-CONS) + milestones/m0/tasks/
+  M0-D101.md § Measured + docs/agent/testing.md (the `edits` and `ledger` rows)
+- Symptom: measured on laserax-ai-server (RTX 4090), 2026-10-29 (logs/M0-D101.log, the diagnostics and iteration 2b): over the step
+  that applies the edit, Δ(energy invariant) against ΔW — a paint inside a box spanning the world −2.2501 / −1.9947; beside a star
+  −6.3252 / −5.4314; into an empty world −1.7662 / −1.6593; a Sun-like drop beside a star −2.6610e5 / −2.6611e5. The steps after it
+  drift as the same scene without the edit (star 9.42e-3 against 9.46e-3 |W| per τ_dyn; drop 3.01e-3 against 2.95e-3).
+- Repro: on laserax-ai-server, `SR_TEST_ADAPTER="RTX 4090" bash tests/gpu.sh edit physics` — each `whole_steps_*` line prints «the
+  edit's step <Δinvariant> with ΔW <ΔW>» (≈ 3 s)
+- Suspected cause: measured — §2.9's tools are «net energies added», booked from the E plane; mass added at φ changes W by its
+  interaction and self-energy, which nothing books. The rest of the edit's step (the residual after ΔW, −0.26 to −0.89) is not
+  separated from that step's own physics.
+- Deliver: a §2.9 term for the potential energy an edit brings (its name, where it is booked — P0 from the φ before the edit plus the
+  self term, or the summary's W across P0 — and its tolerance: by asking, the contract amended), built and in summary.json's ledger →
+  Verify 1 · M0-D101's four whole-step cases grading the energy invariant across the edit's step at that tolerance → scope `edits` →
+  Verify 1 · a plant that drops the term → Verify 2
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py edits --task M0-D109` and `... ledger --task M0-D109` on
+  laserax-ai-server (R18) · Pass: GO both, edits ≥ 14 cases · Fail: NO-GO · 2. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py
+  --redarm edits --task M0-D109` there · Pass: GO — every plant red · Fail: a plant GREEN or ERROR
+- Done when: an edit's step keeps the energy invariant at the ruled tolerance on laserax-ai-server's RTX 4090; win-laptop `owed` (R15)
+- Adversarial: a paint far from any mass has a small ΔW and hides the term: the cases include the Sun drop beside a star (ΔW ≈ |W|).
+- Handoff: §2.9's `edit_potential` [M0-D109]: on a step whose P0 paints, erases, drops or clears, P2 solves φ_δ = K∗ΔΣ and books ½ΔΣ(φ_before + φ_after) a cell (sinks as W counts them); the invariant less it, summary.json's `energy.edit_potential` (an older record or snapshot reads 0) — the lead: «Second solve in P2», «edit_potential», «Twin-differenced, 2e-2» (all Recommended), contract §2.9 and §0.5 [M0-D109].
+  The edit's step against its twin (same scene, nothing queued; RTX 4090): 8.3e-4 beside a star, 5.0e-3 empty world and Σ = 0 vacuum, 2.4e-3 cold box, 5.6e-6 Sun drop of edit_potential (bound 2e-2) — before, its whole ΔW. Verify 1 GO (edits 17/0/0, ledger 8/0/0), Verify 2 GO (5 of 5 plants red; new: edit-potential-unbooked, edit-potential-no-self); the claim GO 1,445/0, 63/63 scopes (laserax-ai-server), 5 owed on linux-pc/win-laptop (toolchain, desktop, web, capture, measure_ui).
+  Deviations: ΔΣ by two dispatches around edit_cells (it already binds 8 storage buffers); 9 code files, +310 lines — over the 6-file ceiling, one thread, declared; booking.rs's and ledger.rs's tests extended to the new term (oracle FLAGs, none loosened — tasks/M0-D109.md § The claim).
+  Not acted on: the ledger's W (½ m_end φ_start) lags a step's own motion by half, ≈ 0.5–1 % of a hot paint's first step — bounded, recovered next step, no D; an erase the same step's re-fit leaves outside the box goes unbooked (NOT PROVEN, source only). win-laptop owed (R15).
+  Model: claude-opus-5-5, level high (rung_record). Next: M0-D121, M0-T97.
+
+## M0-D121 · A round star grows square: the Sun-like preset, a round disk at its drop, is a rounded square by 300 steps (Glow), and the massive's cold haze around a round core — the grid's four-fold imprint on the state, seen by every player · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D109)
+- Status: DONE (2026-11-05 08:55)
+- Filed by: M0-TV2, 2026-10-30 — its own look at the Phase 14 captures (E1); seen before by M0-V11 (reports/v11.md O3: «the star's density
+  contour is a rounded square … the physics' grid imprint, not the drawing», not filed then, «for the lead's eye»); filed at the lead's
+  word at M0-TV2's launch, «file the necessary tasks yourself». Placed at Phase 16's head after M0-D109, with the physics D's, by the
+  lead's «Game first (Recommended)» (M0-R11): before M0-T97's life probe measures the lives
+- Blocks: nothing graded — no oracle says the field must stay round (M0-V11 O3); the window shows it from the first minute of a life
+- Caused by: unknown
+- Rating: rule (5) — a D whose cause is not measured: `(usual)`
+- Files: none opened by M0-TV2 beyond the captures; the candidates are P4 (hydro), P1–P2 (gravity) and the preset's deposit (§2.10)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §2.10 (the preset's disk) and the P1–P5 rows of §1.7's solver table +
+  milestones/m0/reports/v11.md § Observations O3 + milestones/m0/tasks/M0-TV2.md § Findings
+- Symptom: measured on laserax-ai-server's lavapipe (private Xvfb, R18), 2026-10-30: images/tv2/final/s02-dropped.png (step 1) a round disk,
+  157 px across; s03-star-x1.png (301 steps) the bright body a rounded square 137 × 137 px, its haze a rounded square; s12-rung7.png
+  the body's sides flat, its corners rounded; M0-V11's frames (images/M0-V11.sun_ms_s2721_density.png) the same on the RTX 4090 —
+  so not lavapipe's
+- Repro: `headless --scene preset:sun --steps 300 --out <dir> --adapter "RTX 4090"` on laserax-ai-server with a frame or a dump at steps 1
+  and 300 (§3.3's `--frames-every`, `--dump-every`); measure the density contour's radius along the axes and the diagonals
+- Suspected cause: not measured — a four-fold anisotropy of the grid: dimensionally split hydro (P4), the gravity stencil (P1–P2), or both;
+  the deposit is round at step 1, so not §2.10's drop
+- Deliver: the cause measured (each solver alone on a round equilibrium: which one squares it), then either a fix within the contract
+  (a FROZEN passage's change declared, PLAYBOOK §9) or a measured report naming the scheme's limit for the lead's ruling → Verify 1
+- Verify: 1. the contour's axis-to-diagonal radius ratio of the Sun-like star at 300 and 3,000 steps on the RTX 4090 · Pass: within a bound
+  this block measures and names (a round 2D equilibrium ≈ 1.00) · Fail: the ratio of today's state, measured first, unchanged
+- Done when: the cause named by measurement and either fixed under a case that reads the ratio, or reported with the lead's ruling
+- Handoff: linux-pc (laserax-ai); every GPU run on laserax-ai-server, RTX 4090 (R18); model=claude-opus-5-5 level=high (rung_record now, both prompts; the heading's rung). Cause measured (tasks/M0-D121.md): the star's body is round (Σ contours 0.5→0.01 of peak 0.979–1.002, steps 100–3,000 — Verify 1's bound 0.97–1.03, Pass); the square is the thin gas thrown off at the drop (Σ ≤ 1e-4): its vacuum edge 0.892 at 300, its temperature 0.752 at 3,000 — P4 alone squares it (hydro-only 0.935; each face's 1-D problem against vacuum, diagonal gas × 1.23 faster), the f64 twin = the GPU to 4 digits, no better at a = 12–96, not the floors; P5 amplifies (0.892 vs 0.941 without heat); gravity and §2.10's deposit are not causes; Massive 300 the same (0.930). No code changed. The lead's ruling (verbatim in the task file): a Glow block first, the gas flow fixed only if Glow does not cure it, by that block, flagged to M0-V14's recalibration → filed M0-D157 (right after this block). Answered the lead: M0-V14's recalibration is the one left; a P4 fix rides it if placed before M0-T98a; G-CAL's hash covers no code. Measured, not filed: P5's R_f face-normal only vs §2.4.1's |∇u| (source only; heat-only front a diamond, its scene unconverged from step ≈ 398) — for the gas-flow D's author. Claim: verify.py --changed GO, 842 passed, 5/5 scopes, linux-pc (no GPU scope touched). Probes removable: laserax-ai-server /tmp/d121 (≈ 1 GB). Next: M0-D157.
+
+## M0-D157 · Thin gas glows like a star: the Glow view's brightness b reads T alone (§1.11), so the near-empty envelope a star throws off draws at the star's own white — the rounded-square halo M0-D121 measured — weight b by the cell's emissivity, shown to the lead in images · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D121)
+- Status: DONE (2026-11-05 09:53)
+- Filed by: M0-D121, 2026-11-05 — at the lead's word on M0-D121's ruling: «what well do is we file a glow task. If that fixes the square
+  shape we dont fix the gas flow. If it doesnt fix it, the task that worked on the glow files a fix for the gas flow. And then we tell
+  V14 that this is included in the re-calibration. […] Ill need to see the glow fix first in an image however.»
+- Blocks: nothing graded — the window's look of every life (Glow is the default view)
+- Caused by: none — §1.11's Glow formula as written (b = 1 − exp(−(T_K / min(S, 3000 K))⁴) · D, a function of T only); the square itself
+  is P4's (tasks/M0-D121.md)
+- Rating: (usual) — rule (3)'s reason: a design the spec leaves open (the emissivity's form and scale)
+- Symptom: measured by M0-D121 (laserax-ai-server, RTX 4090, `preset:sun`): the star's body is round — density contours 0.5 → 0.01 of
+  the peak read axis/diagonal 0.979–1.002 at steps 100–3,000 — but the gas thrown off at the drop (Σ ≤ 1e-4, ≈ 1e-5 of the peak) has
+  a rounded-square leading edge (0.892 at step 300) and at 3,000 a square temperature halo (eint contour 0.752); Glow draws that thin gas
+  at full brightness wherever T_K ≥ 3,000 K, so the player sees a square star (step 300) and a square halo (3,000). Massive, step 300:
+  body 0.9997–1.013, envelope 0.930. Frames: laserax-ai-server /tmp/d121/fr_{glow,heat,density}/frames/f_{300,3000}.png
+- Files: crates/sr-engine/shaders/render.wgsl (`glow_colour`, render.wgsl:232) · crates/sr-engine/src/render.rs (whatever the shader
+  needs from the physics: κ₀, X_H's channel) · crates/sr-engine/tests/gpu/views.rs (the Glow case's CPU formula) · tests/plants/ (one
+  plant) · milestones/m0/m0_contrat.md (§0's override line, §1.11's Glow bullet) · docs/agent/testing.md (the `views` row)
+- Read: this file (rules + this task) + milestones/m0/tasks/M0-D121.md + m0_contrat.md §1.11's Glow view bullet and [M0-R12]'s
+  setting S + §2.4.2 (κ) + docs/agent/testing.md's `views` row
+- Deliver: (1) **today's drawn ratio first**: the Glow frames of `preset:sun` at steps 300 and 3,000 and of `preset:massive` at 300
+  (`headless --frames-every 300 --view glow`, RTX 4090, R18), the drawn bright region's axis/diagonal ratio (360 rays from the centroid,
+  M0-D121's method, on the frame's brightest channel at ½ and ⅛ of its peak) — the Fail line's number. (2) **The emissivity**: b
+  multiplied by ε = 1 − exp(−τ), τ = κΣ the cell's optical depth across one cell (κ = κ₀(1 + X_H), §2.4.2) — the starting form; a scale
+  on τ or another form only if measured better, and named. Thin gas then glows as faintly as it emits; the haze term is unchanged.
+  The trade-offs to show, not to hide: the star's drawn edge moves in to its τ ≈ 1 radius, and a painted stroke (Σ 0.02, §2.7's
+  paint_sigma) heated to stellar T glows ≈ 3 % of today's. (3) **Images for the lead**: before/after side by side in
+  `images/M0-D157/` — Sun steps 300 and 3,000, Massive 300, a heated painted stroke — and the same steps in the Heat and Density views
+  (they draw Σ and T and keep the square: the lead judges whether that is acceptable). (4) **The contract**: one override line in §0
+  and §1.11's Glow bullet amended, tagged [M0-D157], only after the lead's yes on the images (Changes by asking). (5) `views`' Glow case
+  re-written from the amended text, one plant (ε ignored), red-armed. (6) **The gas flow, conditional (the lead's plan)**: if the
+  lead says the square still shows, or Verify 1 fails, file the P4 fix as a D (`plan.py append`): the near-vacuum flux — each face's
+  one-dimensional problem against vacuum drives its normal velocity alone, so thin gas on a diagonal outruns the axes' (× 1.23 at
+  Σ 1e-4; edge ratio 0.94 at a = 12–96; the f64 twin = the GPU to four digits; tasks/M0-D121.md); twin first (R13), a case reading the
+  vacuum-edge ratio of `h`'s hydro-only disk; placed **before M0-T98a** (it changes every life, so M0-T98a must tune on it); and
+  `plan.py flag M0-V14 "…" --from M0-D157`: its recalibration includes that fix — G-CAL's hash covers elements, physics and reactions
+  only (calibration.rs:157), so nothing else marks the calibration stale for a P4 code change → Verify 1–3
+- Verify: 1. the drawn Glow ratio (Deliver 1's method) at Sun 300 and 3,000 and Massive 300, RTX 4090 · Pass: within 0.97–1.03 at each
+  (the body's own density contours, 0.979–1.002, M0-D121) · Fail: today's ratio, measured first, unchanged · 2. `verify.py --redarm views
+  --task M0-D157` on laserax-ai-server (RTX 4090) · Pass: the clean copy GO, the new plant NO-GO · Fail: either not · 3. the lead's look at
+  `images/M0-D157/` · Pass: the lead's yes · Fail: the lead's no — then Deliver (6) is filed whatever Verify 1 reads
+- Done when: the Glow view draws the envelope by its emissivity, the lead's yes on the images, the contract amended, `views` red-armed;
+  and, where the square still shows (Verify 1 or the lead), the gas-flow D filed before M0-T98a and flagged to M0-V14
+- Handoff: Glow by emissivity is in: render.wgsl draws b × ε, ε = 1 − exp(−10 κ₀(1 + X_H) Σ) (render.rs EMISSIVITY_SCALE, κ₀ from EosGpu), §0.5 and §1.11 amended [M0-D157]. Drawn ratio at ½ of the peak (RTX 4090): Sun 300 0.891 → 0.980, Sun 3,000 0.997 → 0.996, Massive 300 0.931 → 0.993; ×1/3/30/100 measured too, ×10 the lead's pick («ε, τ ×10 (Recommended)»). Deviation: Verify 1's ⅛ level at Sun 300 reads 0.963 (the haze's log Σ of P4's envelope) — the lead: «the fix works... the faint square is not visible enough for it to be an issue», so Deliver (6)'s gas-flow D and its M0-V14 flag are not filed. Trade-offs shown: the star drawn smaller (Sun 300 ½-radius 67 → 32 cells), a painted Σ 0.02 stroke at ≈ 6,700 K 109/255. views: 16/16 GO, red-arm clean GO + 5 of 5 RED (views-colour-shift re-cut onto glow.z); two cases re-cut, declared in tasks/M0-D157.md § Oracle FLAGs. Claim: tasks/M0-D157.md § The claim. Images: images/M0-D157/. Ran on model=claude-opus-5-5 level=high. Next: M0-T97.
+
+## M0-T97 · The life probe — three presets' lives, measured · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-V13)
+- Status: DONE (2026-11-05 10:30)
+- Carried flags: [M0-D55, 2026-10-18] M0-D55 (2026-10-18): at the shipped a_r 4e-5, heat_hot's one P5 step of Δt 0.02 keeps 2.657 × the heat its 64-step refinement keeps (1.686 at M0-TC's a_r) — backward Euler's first order at 10 × the stiffness: a burnt star's cooling per step is that much under-resolved; tasks/M0-D55.md § heat_stiff · [M0-V9, 2026-10-27] M0-V9's preset lives (RTX 4090, laserax-ai-server build/calibrate_runs/2026-10-26T20-04-01Z; reports/v9.md § S1 and S2, § The presets): S1's trigger cannot be read as worded — the Sun-like preset never shows he_shell (he_core t 1,556 → 1,970); its envelope leaves during he_core (the star 3,062 → 2,050, escaped 12 → 949 by t 1,958, 1,187.4 by the ending) and it ends an iron white dwarf (X_Fe,c 0.9955, X_n 0, Σ_c 268.6 at step 176,002) — whether N_Fe set §1.8.5's latch there (the game's ×0.1 and banner.core_collapse, M0-D92's caveat) is NOT PROVEN headless; S2 off (97.9 % of the envelope unbound 19.5 t.u. after neutron matter, f_dep 0.05); the Massive and the Giant show no main sequence (iron_core 0.35 and 1.21 t.u. after ignition)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.6.4 (the stand-ins' triggers),
+  §1.9.3, §2.10, §5.2, §5.5, §6.4 + milestones/m0/reports/step_cost.md
+- Deliver: milestones/m0/reports/lives.md (new): the three presets (sun, massive, giant) each run
+  `--until ending` (or to `--max-steps`) on the RTX 5090 (physics only, §6.4) — each preset's sandbox
+  mass, radius a, Σc and starting temperature recorded (M0-T98a and M0-T99a rebuild them as preset-free
+  clouds, [M0-TB]), the displayed stage
+  sequence against G-STAGES' subsequences, each stage's duration, the main sequence's τ_dyn, τ_KH and
+  τ_nuc (G-SQUEEZE's), the closest bound gas to an edge (G-FIT's 16 cells), the stand-ins' triggers
+  measured — S1: the Sun-like preset's unbound envelope 20 τ_dyn after entering he_shell (< 30 % enables),
+  S2: the Massive preset's unbound envelope within 20 t.u. of forming neutron matter at f_dep = 0.1
+  (< 50 % enables) — and two dumps kept in ~/.cache/sandbox-reactions/dumps/ (outside the tree, so
+  red-arm copies read them too — §6.5's reasoning) with the commands that remake them: the Sun-like
+  mid-main-sequence (G-FPS, G-THERMO) and the Massive iron core (G-LATCH, G-CONS), each number with its
+  command, SHA and adapter, a run over 10 minutes the lead's [NOT RUN — for you], a life that stalls is the
+  finding, with its stage → none — the record M0-TJ1, M0-T98a, M0-T99a, M0-V14 and lot 15's checks read
+  (a BUILD block's report)
+- Verify: 1. `grep -cE "^## (Sun-like|Massive|Giant|Stand-ins|Dumps)" milestones/m0/reports/lives.md` ·
+  Pass: 5 · Fail: fewer, or a number without its command and adapter
+- Adversarial: a life read from labels alone can look right while the physics is wrong — each stage
+  claim carries the measured quantity its §1.9.3 row reads (X_c, d_c, L_g).
+- Handoff: linux-pc + laserax-ai-server RTX 4090 (R18; the task names the 5090); model=claude-sonnet-5-5 level=high (rung_record now at launch, the heading's rung). reports/lives.md written: Verify 1 [ALREADY RUN — PASS (5 headings) on linux-pc]. Massive and Giant run to their endings (neutron_star 3,658.5 t 113.8; black_hole 17,331.1 t 37.8), the Sun-like to t 800 only (394 s; its full life is the lead's, C4 [NOT RUN — for you]) so S1 is NOT RUN; S2 measured off (75–79 % unbound at f_dep 0.1 / 0.05, a preset-free disk for 0.1); Sun clocks at t 800: τ_KH/τ_dyn 101.5, τ_nuc/τ_KH 18.3; G-FIT failed by the Massive (from t ≤ 57) and the Giant (from t ≈ 13), bracketed (a dump holds no ε_th); stage ids miss G-STAGES' (Massive 7, Giant 3). Two dumps kept in ~/.cache/sandbox-reactions/dumps/ (linux-pc and server). Deviations: scripts live in the report's appendix, not the tree; M0-TM15 filed (the lint's call: my 3 flags made 5). Measured, not filed: --dump-every 100 vs 5000 gives a different life (Massive ignition step 264 vs 273), possibly frame-boundary by design, cause unmeasured — the lead says if it is a D. Claim: verify --changed --task M0-T97-claim [ALREADY RUN — PASS (827/0, plan_lint 1/1 scopes, 87 not impacted; its first run FAILED on the TM15 demand, filed) on laserax-ai, no GPU scope impacted]. Detail: tasks/M0-T97.md. Next: M0-TJ1 (DEFERRED: S2 not fired, S1 unmeasured) → M0-TM15 → M0-T98a.
+
+## M0-TM15 · Rating pass — five carried flags on open BUILD blocks since 2026-11-03 · **PLAN** · Opus 5.5, max · switch · (AFTER M0-TJ1)
+- Status: DONE (2026-11-05 11:04, started 10:56)
+- Filed by: M0-T97, 2026-11-05 — its flags to M0-T98a, M0-T99a and M0-T103 reached `Rating refresh: 5 flags` (`plan.py lint`'s FAIL in M0-T97's
+  claim, with M0-D153's and M0-D71g's earlier flag); runs next, after M0-TJ1, as the lint's call places it.
+- Carried flags: none
+- Read: this file (rules + this task) + PLAYBOOK.md §0 (the ladder, the rubric) and §B.3 (the probe) + the agent's model pages the
+  ladder cites + the record (`rung_record.py report`, the last phase-closing V's table: milestones/m0/reports/v13.md)
+- Deliver: the ladder re-read on the day — the probe and the model pages: a model retired, renamed or added, a price or a level
+  changed → the `Models:` line rewritten and dated, the lead's answer first where a rung they run changes (§12) · every open block's
+  rating re-derived by §0's rubric from its heading, `Sizing:`, `Deliver:`, `Verify:` and `Carried flags:` and the record — its
+  rating segment rewritten, nothing else in the block · the register's `Model ratings: <YYYY-MM-DD> by M0-TM15` line · in the
+  handoff, the ratings changed, counted by rung. The flags since M0-TM14's line (five by `plan.py lint`'s count, 2026-11-05): M0-T97's three
+  (M0-T98a: the Sun-like clocks on this tree, τ_KH/τ_dyn 101.5 at t 800; M0-T99a: G-FIT failed by the Massive and the Giant; M0-T103: the displayed
+  stage ids against G-STAGES), M0-D153's to M0-D71g (R_HOLD) and one earlier → none — the rating segments, the `Models:` line and the register's
+  line are the record
+- Pass: `plan.py lint` GO; every open block on a rung of the ladder, each above the cheapest rung that fits named in the task file
+  with its rule; the diff touches rating segments, the `Models:` line and the register's line only. Fail: any other byte changed; a
+  BUILD or MOVE block above the cheapest rung that fits with none of §0's rules (1)–(4) named; a CHECK or PLAN block below `(gate)`.
+- Handoff: linux-pc (laserax-ai); model=claude-opus-5-5 level=max (rung_record now; the heading's rung). Ladder re-read 2026-11-05: probe Claude Code 2.1.318; the claude-api skill's table (cached 2026-10-06) reads every rung's model Active at M0-TM14's prices and levels — no rung retired, renamed, added, repriced or relevelled, no question owed; shared/models.md's hash moved (fe22d54e… → 34d72be0…), what moved off the rungs unreadable (the page is compressed in both builds' binaries) — NOT PROVEN; `Models:` re-dated (2.1.314 → 2.1.318). Record: M0-V13's table, no class moves (rule (4); today's report agrees: Sonnet 5.5, high $2.71 against (usual)'s $12.39 per DONE block). Ratings: 33 open blocks re-derived, 0 changed — Opus 5.5, max 8 (0) · Opus 5.5, high 3 (0) · Sonnet 5.5, high 21 (0) · Sonnet 5.5, medium 1 (0) · Fable 5.1, high and Opus 5.5, xhigh 0 (0); the 3 above the cheapest rung with their rule (M0-D71g (a), M0-R14 (c), M0-T124 (c) and (e)) and every flag read, in tasks/M0-TM15.md. The lint counts M0-T97's three and M0-D103's two (M0-T104, M0-T107), not the M0-D153 flag the Deliver names (3 mutants) — none moves a rating. Register: `Model ratings: 2026-11-05 by M0-TM15`, refresh 5/5 → 0/5; the diff is the `Models:` line and that line (checkdiff, red-tested). Claim [ALREADY RUN — PASS (verify.py --changed --task M0-TM15: GO, 827 passed, plan_lint 1/1 scopes, 87 not impacted, 0 stale) on linux-pc] — no GPU scope impacted (checked first), R18's plan side. The lead's: the physics' reds, now measured on today's tree (M0-T103's stage ids, M0-T106's momentum 3.7 × 10⁻² against 10⁻⁶ — red in their own new scopes on Sonnet) — whether such a red ends a try is still open; M0-T97 re-ran its claim after a lint-demand NO-GO its own flags raised instead of escalating (DONE, moves no class) — whether that ends a try, open too. Not acted on (bounded diff): the register's Next task reads «M0-TM15 on»; the lint's 5 WARNs (stubs); header 615/600. Next: M0-T98a.
+
+## M0-T98a · K1's gap tuned — the clocks spread apart · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-TJ1)
+- Status: N/A — superseded by the lead's decision, 2026-11-05 («lets go with your recommendation»: keep today's K1 values)
+- Carried flags: [M0-TB, 2026-10-08] the one physics.json write makes assets/calibration.json stale (G-CAL): scopes that run named presets or read the real calibration are refused (exit 6) until M0-V14's recalibration — if your claim run's --changed set holds one, that red is G-CAL working: name it and ask the lead before the claim run (Changes by asking), never a looser check · [M0-D50, 2026-10-18] Start from M0-D50's W2 (ladder × 0.56, a_r 4e-5; contract §0.5 [M0-D50]). Measured margins: A_H × 1.4 holds, × 2 runs away; the ladder ± 4 % holds; a_r × 30 (of M0-TC's) runs away at the bounce, × 100 holds. My arithmetic: τ_nuc/τ_KH ≈ 26, τ_KH ≈ 134 t.u. (UNVERIFIED). Keep `sun_burn` GO (reports/ignition.md) · [M0-V9, 2026-10-27] M0-V9 (reports/v9.md § The clocks, § Observations): O7 — with a calibration embedded (M0-D62), a physics constant changed reds every preset run (exit 6, G-CAL) until `calibrate` re-runs from item 3 — 2 h 17 min of the lead's on the RTX 4090 for items 3–6; O-21 — m_up_sb (3,510.1) is a burning runaway at ignition: 3,492.1 burns a 650 t.u. main sequence to a white dwarf, 3,528.3 reaches X_H,c 0.35 0.115 t.u. after ignition and core-collapses at t 8.6; the presets' ignition → iron_core spans: the Sun-like main sequence 1,521.5 t.u., the Massive 0.35, the Giant 1.21 — G-SQUEEZE's «Sun-like > Massive > Giant» reads Massive < Giant (M0-T98b's order) · [M0-T97, 2026-11-05] [M0-T97, 2026-11-05] M0-T97 (reports/lives.md § Sun-like, RTX 4090, tree = acaca48 + working tree): the Sun-like preset on this tree ignites at step 273 (t 4.27) and holds main_sequence from t 4.58; its clocks at t 225.5 / 452.7 / 800.0 — τ_KH/τ_dyn 201.7 / 150.4 / 101.5, τ_nuc/τ_KH 27.1 / 23.3 / 18.3 (X_H,c 0.666 / 0.573 / 0.436; τ_dyn 0.97–1.06) — so the τ_KH gap is the one far from 10 (M0-D50's ≈ 134 and ≈ 26 hold in kind); the Massive and the Giant go raw iron_core ≤ 0.6 t.u. after ignition (X_Fe,c 1, X_H,c ~ 10⁻⁹), no main sequence to read a ratio on; the Sun's full life (steps to X_H,c 10⁻³) was NOT RUN, the lead's (C4)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.4, §2.4 (a_r, c_sb, κ₀), §2.5.1
+  (Q_H), §2.7, §2.11 (the refusal), §2.12.1 (overrides), §5.2 (G-SQUEEZE), §5.5 +
+  milestones/m0/reports/lives.md + milestones/m0/reports/time_warp.md (the gap's scenarios) +
+  milestones/m0/reports/top_speed.md § The measured numbers
+- Deliver: K1's gap tuned within §2.4's and §2.5.1's bounds (a_r, c_sb, κ₀, Q_H — M0-TC's flag (d): the
+  first full-life lot's target) toward G-SQUEEZE (§5.2: τ_KH/τ_dyn ≥ 10 and τ_nuc/τ_KH ≥ 10 on the Sun-like
+  main sequence, the Massive life's stage durations H > He > C > {Ne, O} > Si) and, inside those bounds, the
+  shortest Sun-like life [M0-TJ2]: each of the two gaps as near 10 as holds (aim 10–20, never under 10, from
+  M0-D50's ≈ 134 and ≈ 26, UNVERIFIED) — the lead at M0-TJ2 (reports/top_speed.md): «we go with shortest
+  life otherwise» — measured on scenes that
+  name no preset — §2.10's cloud as `disk` objects at the masses and temperatures reports/lives.md
+  recorded, each candidate value as the scene's `overrides` — so no run needs the calibration a change
+  makes stale (§2.11, G-CAL); each candidate's effect on all three ratios, its steps per Sun-like life
+  (to X_H,c 10⁻³, measured or extrapolated, labelled) and that life's wall time at Max on the Quadro at
+  reports/top_speed.md's step cost appended to reports/lives.md § Tuning — K1, with its command, SHA and
+  adapter, the chosen values (the fewest steps among the candidates that hold every bound and keep the
+  sun_burn scope GO) then written once into assets/physics.json, a run over 10 minutes the
+  lead's [NOT RUN — for you], no in-bounds value reaching the gap → BLOCKED with the measurements and a
+  question to the lead (§5.5), never a looser number (§0.4) → Verify 1 · scenes/tune_k1_sun.json and
+  scenes/tune_k1_massive.json (new: those measuring clouds) → Verify 1 · the recalibration the write
+  forces → none — the lead's, in M0-V14's window, before lot 15's checks (M0-T98b)
+- Verify: 1. `grep -cE "^## Tuning — K1" milestones/m0/reports/lives.md` · Pass: 1 — both ratios ≥ 10
+  and the stage order measured at the chosen values, and the chosen set's steps per Sun-like life beside
+  every candidate's, each with its command, SHA and adapter · Fail: 0, a ratio under 10, or a number
+  without its command — or BLOCKED as the Deliver says
+- Adversarial: a gap reached by pushing a constant to its bound breaks another clock — each candidate's
+  effect on all three ratios and on its steps per life is recorded; a gap pressed to exactly 10 leaves
+  no margin for the Massive and Giant lives — the aim is the fewest steps that still hold them all; a candidate tried on a preset
+  run is refused once physics.json differs from the calibration (G-CAL) — candidates ride as overrides on
+  preset-free clouds until the one final write.
+- Handoff: linux-pc (laserax-ai); model=claude-sonnet-5-5 level=high (rung_record now, plugin=installed). Retired on the lead's answer to (a): today's a_r, c_sb, κ₀, Q_H and A_H stay (assets/physics.json untouched, calibration not made stale by this task); G-SQUEEZE's ≥ 10 holds as measured (τ_KH/τ_dyn ≈ 214–239, τ_nuc/τ_KH ≈ 28–29, reports/lives.md § Tuning — K1). Kept: scenes/tune_k1_sun.json and tune_k1_massive.json, the report section. Not run: full Sun life, Quadro burning-star step (M0-T124), sun_burn on a candidate. Next: M0-D71g, whose write of physics.json is now the first to stale the calibration (its text says M0-T98a's window; M0-V14's recalibration still covers it). Detail: tasks/M0-T98a.md
+
+## M0-D71g · The hold's constants move into physics.json — sigma_hold 10 and eta_hold 0.1 read from the physics by the twin and the GPU, inside the tuning's stale-calibration window · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T98a)
+- Status: DONE (2026-11-05 12:34)
+- Carried flags: [M0-D153, 2026-11-03] R_HOLD (24, sr_physics::reference::floors, the neutron hold's gate radius, §0.5 [M0-T130]) joins σ_hold and η_hold as a code constant to move into physics.json (M0-D153)
+- Ask (verbatim): the lead at M0-TG2, 2026-11-02 — «but would it be more proper to put them in the physics json?», then «Code now,
+  move later (Recommended)», the option shown as: "The split builds them as code constants, so nothing breaks now. A small block
+  right after M0-T98a moves them into physics.json, inside the window where the calibration is already stale, and M0-V14's planned
+  recalibration covers it. They end up in the proper place with no extra calibrate run."
+- Filed by: M0-TG2, 2026-11-02 — the lead's answer above; placed right after M0-T98a, whose tuning writes physics.json first, so the
+  calibration is already stale until M0-V14's recalibration (M0-TB's S3/S4: the preset checks run after it)
+- Blocks: nothing — M0-V14's recalibration covers its hash change (flagged there)
+- Caused by: M0-TG2's pick, the lead's (σ_hold and η_hold built as code constants by M0-D71 and M0-D71b)
+- Rating: (usual) — rule (3)'s list: a schema changed (physics.json's keys and §2.7's table, which the physics hash G-CAL reads)
+- Files: named by M0-TG2 — assets/physics.json, crates/sr-physics/src/registry.rs (`SCHEMA`, which refuses a physics.json key it
+  lacks: the two keys and their bounds; its tests `shipped_files_load`'s count, 52, and `physics_initial_values_verbatim`'s list —
+  named by M0-TB2, the lead: «Fix it (Recommended)»), crates/sr-physics/src/reference/floors.rs (M0-D71's constants), the file
+  M0-D71b's handoff names for P8's uniform (crates/sr-engine/src/step/mod.rs today), crates/sr-engine/tests/gpu/held_core.rs (new at
+  M0-D71), milestones/m0/m0_contrat.md (§2.7), tools/pb/verify.json, tests/plants/hold-constants-ignored.patch (new)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.4, §2.7 ([M0-TG2]), §2.11 (the refusal), §2.12.1 (overrides) +
+  M0-D71's and M0-D71b's handoffs + M0-T98a's carried flags (M0-TB's, on the stale calibration)
+- Deliver: `sigma_hold` 10 and `eta_hold` 0.1 in assets/physics.json, read through `Physics` by the twin (reference::floors) and the
+  GPU's P8, no code constant left (`grep -rn "SIGMA_HOLD\|ETA_HOLD" crates/` empty) → Verify 1 · §2.7's table with the two rows, its
+  [M0-TG2] paragraph's code-constant clause struck — amended in place, tagged [M0-D71g] → Verify 1 · a case in `held_core`: an
+  `overrides` of sigma_hold above every Σ holds no cell, twin and GPU, where the shipped value holds the M 900 disk's 16 → Verify 1 ·
+  plant tests/plants/hold-constants-ignored.patch (new: the twin and P8 read the old literals, not the physics) listed for
+  `held_core` → Verify 2
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py held_core floors twin registry --task M0-D71g` on laserax-ai-server (R18)
+  · Pass: GO · Fail: NO-GO · 2. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm held_core --task M0-D71g` there ·
+  Pass: GO — hold-constants-ignored NO-GO · Fail: the plant GREEN
+- Done when: on laserax-ai-server's RTX 4090, the two keys are read from physics.json by the twin and the GPU; the claim's G-CAL
+  refusals (the calibration stale since M0-T98a) named and asked to the lead before the claim run, never bypassed (M0-T98a's flag);
+  win-laptop `owed` (R15)
+- Adversarial: a key read on one side only — the twin from physics.json, the GPU from a literal — passes every case at the shipped
+  values; the override case runs both sides at a value no literal holds.
+- Handoff: linux-pc (laserax-ai), GPU runs on laserax-ai-server RTX 4090 (R18; rsync); model=claude-opus-5-5 level=high (rung_record now; the heading's rung). Built: physics.json sigma_hold 10, eta_hold 0.1 and r_hold 24 (M0-D153's flag: 3 keys, SCHEMA 52 → 55); Floors reads them (accessors, disk_mass a method), P8's uniform from the run's physics; no SIGMA_HOLD/ETA_HOLD/R_HOLD left in crates/; held_core + gpu_an_overridden_sigma_hold_reaches_the_twin_and_the_gpu (shipped 16/16 same set, override 0/0); plant hold-constants-ignored; hold-iron-gate and neutron-hold-ungated re-cut (context); §2.7 three rows, [M0-TG2]'s clause struck [M0-D71g]. Deviation: floors/sink/dump tests touched for the grep (14 files, ceiling 6). Verify 1 [ALREADY RUN — FAIL (69/72: held_core 24/1, twin 4/2 — all 3 G-CAL exit 6, calibration out of date; floors 12, registry 29 GO) on laserax-ai-server] — the lead: «Name them, M0-V14 (Recommended)», flagged there. Plant probe [ALREADY RUN — PASS (RED: override 16/16, scratch /tmp/d71g, one case by cargo — NOT the harness) on laserax-ai-server]. Verify 2 --redarm held_core [ALREADY RUN — FAIL (by the lead, 2026-11-05 12:37, 251 s: clean arm 24/1, the remnant window's G-CAL exit 6 alone, so 7 plants uncounted; held-wall-pressure-only's arm 18/7 before it stopped) on laserax-ai-server] — owed again after M0-V14's recalibration (flagged); claim --changed [NOT RUN — for the lead (G-CAL refusals expected)]; win-laptop owed (R15). Not filed: clippy --all-targets pre-existing test lints (not the gate); 5 untouched plants fail git apply --check (stage-in-step's context gone). Server /tmp/d71g removable. Detail → tasks/M0-D71g.md. Next: M0-T131
+
+## M0-T131 · N_Fe's cost at nature's share (§2.5.1 [M0-R13], D) — q_ratio re-set so the collapse's P4 heat into the core is 7.5–30× what N_Fe absorbs (nature's ≈ 15), inside the tuning's stale-calibration window · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-D71g; after M0-T130 — the lead at M0-R13: «File it with the fix»)
+- Status: N/A — superseded by the lead's decision, 2026-11-05 («Keep −1.14, BLOCKED (Recommended)», then «well do your recommendation»): q_ratio stays −1.14, the ratio bound withdrawn for M0 (contract §0.5 [M0-T131])
+- Carried flags: [M0-T130, 2026-11-03] Read «M0-T130's hold» and «M0-T130's three lives» as M0-D153's: M0-T130 ended BLOCKED and its r ≤ 4 gate was reverted (the lead: «Revert to M0-D152's rule (Recommended)»), so no neutron core is held on the tree until M0-D153 builds the r ≤ 24 gate; run after M0-D153, its Pass and lives script (logs/M0-T130.scratch.lives.sh, life 01's bracket 4572.394,67020.643 — calibrate refuses LO = HI)
+- Ask (verbatim): the lead at M0-R13, 2026-11-03 — «File it with the fix», the option shown as: "Add a block to bring the cost to
+  nature's ratio, measured together with the chosen fix, so one recalibration covers both."
+- Filed by: M0-R13, 2026-11-03 — the lead's answer above (contract §0.5 [M0-R13], §2.5.1's N_Fe row amended in place); placed after
+  M0-D71g, inside the window M0-T98a opens (its physics.json write stales the calibration until M0-V14's recalibration), so one
+  recalibration covers both
+- Blocks: nothing — M0-V14's recalibration covers its hash change (flagged there)
+- Caused by: unknown — N_Fe's q_ratio −1.14 is SM-E24's per-unit-mass cost against Q_H (§2.5.1), right per gram, but the squeezed
+  ladder's collapse releases far less than nature's binding (≈ 15× the iron's cost, reports/cold_remnant.md § Evidence 2)
+- Rating: Sonnet 5.5, high — rule (3): one physics.json value tuned inside a bound the contract states, no reason from the list
+- Measured by M0-R13 (today's tree, Massive, the twin crop's R13 tally, s_900 + 120 steps): P4 +2.23 × 10⁶ into the core against
+  N_Fe's −2.77 × 10⁷ (ratio 0.08); q ÷ 10 (candidate D, build/r13/bin/sr-D on the server): 1.3 × 10⁹ K at step 1,000, 10 K again by
+  2,000 without a hold, ending neutron_star at step 41,750 (3,345). The ratio's response to q is not measured: ÷ 10 is one point,
+  nature's ratio needs ≈ ÷ 180 by linear arithmetic (my arithmetic, UNVERIFIED).
+- Files: assets/physics.json (N_Fe's q_ratio), crates/sr-physics/src/registry.rs (`physics_initial_values_verbatim`'s value, if it
+  lists it), milestones/m0/m0_contrat.md (§2.5.1's N_Fe row: the value written, tagged [M0-T131])
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.4, §0.5 [M0-R13], §2.5.1 (the reactions table, K8), §2.11
+  (the refusal) + milestones/m0/reports/cold_remnant.md § Evidence + M0-T130's handoff + M0-T98a's carried flags (M0-TB's, on the
+  stale calibration) + logs/M0-R13.scratch.twin_r13.diff and .r13twin.rs (the tally)
+- Deliver: the ratio measured on the twin crop (the R13 tally over the Massive core_collapse step + 120, from the life's dump nearest
+  it, on M0-T130's hold) for q_ratio −1.14, −0.114, −0.0114 and as many more as bracket the bound, and the value nearest 15 inside [7.5,
+  30] written to physics.json and §2.5.1 → Verify 1 · M0-T130's three lives re-run on that value in a scratch copy with its
+  calibration's physics_hash stamped (declared, as M0-R13 did, the tree's calibration left stale for M0-V14) → Verify 2
+- Verify: 1. `SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py registry twin --task M0-T131` on laserax-ai-server (R18) · Pass:
+  GO, the chosen value's ratio printed inside [7.5, 30] · Fail: NO-GO, or no value of q_ratio in [−1.14, 0) reaches the bound ·
+  Refusal: the bound unreachable (the ratio saturates as q → 0) — Status BLOCKED with the measured curve, the bound's re-set the
+  lead's (§0.4) · 2. the three lives · Pass: M0-T130's Pass on each (Massive neutron_star, held, T_c in [10⁵, 10⁸] K, ε_th/ε_cold
+  ≤ 0.2; the Repro's sink by step 3,062; life 01 neutron_star), and the Massive core's T_c at step 1,000 printed beside D's 1.3 ×
+  10⁹ K · Fail: any of these
+- Adversarial: a hotter collapse that unbinds the core — at q ÷ 10 the core read ε_th/ε_cold 0.40 at step 1,000, past η_hold, so the
+  hold waits until it cools; a smaller q may keep it over 2η_hold until it spreads (B9's failure). Read the step the core is first
+  held on the Massive life and its Σ_c there.
+- Done when: on laserax-ai-server's RTX 4090, Verify 1–2 GO or the refusal arm with its curve; the claim's G-CAL refusals (the
+  calibration stale since M0-T98a) named and asked to the lead before the claim run, never bypassed (M0-T98a's flag); win-laptop
+  `owed` (R15)
+- Handoff: BLOCKED at the lead's pick (question tool, 2026-11-05: «Keep −1.14, BLOCKED (Recommended)»), the refusal's curve in reports/nfe_cost.md; laserax-ai-server (RTX 4090) + linux-pc, model=claude-sonnet-5-5 level=high (rung_record now). Measured on the twin crop (s_900 + 120, N_Fe's own heat = Δ neutron mass × q): the bound [7.5, 30] IS reachable (q −0.0092 → 14.93; window ≈ −0.0187…−0.0045) but sits wholly in a shallow-collapse regime (Σ_c ≈ 405 against ≈ 965 at −1.14; the deep collapse needs |q| ≥ ~0.2, ratio ≲ 0.5). At −0.0092 life 01 loses its neutron star to cloud (control −1.14, same tree, holds a compact one), the Repro's sink moves 2,700 → 3,000 (black_hole shown by 3,100), the Massive reaches no ending by step 14,250 (the control none by 10,500). Value, registry.rs, neutrino.rs, burn.rs and the contract row put back to −1.14 by hand: nothing in the tree moved. [ALREADY RUN — NO-GO (registry 29/0 GO; twin 4/2: the two G-CAL exit-6 refusals M0-D71g named, on the −0.0092 tree) on laserax-ai-server, RTX 4090]. Claim: NOT RUN (over 10 minutes) — `verify.py --changed --task M0-T131` on linux-pc picked a long loop (calibrate_bisect among it) and I stopped it at 300 s; logs/M0-T131.*.log are partial; the lead's, if wanted. Not filed: the Massive's ending absent at step 10,500 on today's tree at −1.14 (M0-D153 4,990, M0-D155 4,878) — one run, four lives at once, the ending's hold may need more steps; flagged to M0-V14. Server /tmp/t131 (27 GB) removable, the lead's. win-laptop owed (R15). Next: M0-T99a, the bound's re-set the lead's (§0.4).
+
+## M0-D158 · The Giant blows its envelope out: on today's tree 1,780 sb leave the world by t 21 at ≈ 1.3 × escape speed and bound gas at Σ 0.05 lies on the edge (G-FIT red), where T97's tree kept the envelope as a shell at 100–150 cells (Σ ≤ 0.0065 at the edge) · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T98a; filed by M0-T99a — runs before M0-T99a's rerun, which waits on it)
+- Status: DONE (2026-11-06 09:42)
+- Filed by: M0-T99a, 2026-11-06 — measured from dumps already run on laserax-ai-server's RTX 4090 (no new run): T99a's
+  `giant_base` (tree HEAD 8832213 + the uncommitted working tree, now bde397c) against T97's `giant` (tree acaca48 + its
+  uncommitted working tree; both summaries print `git 255ec37-dirty`, the server checkout's own HEAD); the lead at M0-T99a,
+  2026-11-06: «File a D, T99a stays BLOCKED»
+- Blocks: M0-T99a (G-FIT on the Giant, §0.5 [M0-T99a]'s floor), M0-T99b (scope `fit`), M0-V14's recalibration (m_bh_sb reads Giant-like lives)
+- Caused by: unknown — suspected M0-D71g (the only crates/ and assets/ change between the two trees, `git diff --stat fbcbadf
+  bde397c -- crates assets`: floors.wgsl, step/mod.rs, reference/floors.rs, registry.rs, physics.json's sigma_hold 10, eta_hold 0.1,
+  r_hold 24); not measured
+- Rating: (usual) — the cause is not measured
+- Symptom (the 40-Sun cloud as a `disk`, scenes/tune_fit_giant.json: a 93.249, Σc 1, T₀ 11.0453, solar mix; RTX 4090):
+  | step (t) | tree | gas + sink | mass by r from the centre [0–50, 50–100, 100–150, 150–200, 200–250, 250+] | bound (½|u|²+φ<0) in the 16-cell band: mass, Σ max |
+  |---|---|---|---|---|
+  | 2,500 (13.7) | today | 7,769 + 10,255 | 946, 1,444, 3,658, 1,488, 203, 30 | 0 (nearest 32 cells) |
+  | 5,000 (21.3) | today | 4,768 + 11,477 (1,780 gone) | 114, 264, 480, 1,187, 1,870, 853 | 335 (2.1 %), 0.052 |
+  | 10,619 (38.0) | today | 1,002 + 11,993 | — | 201 (1.6 %), 0.014 |
+  | 5,000 (22.3) | T97 | 8,693 + 8,982 (537 gone) | 73, 226, 7,614, 364, 258, 158 | 68 (0.38 %), 0.0065 |
+  | 9,640 (37.8, black_hole) | T97 | 4,913 + 12,418 | — | 45 (0.26 %), 0.0020 |
+  In the band at step 5,000, cells at Σ ≥ 10⁻³: |u| median 14.4 against v_esc 11.2 today (u/v_esc 1.29), 11.7 against 11.2 on T97's
+  tree (1.04). `f_dep` 0.05 and 0.1 give byte-identical dumps (no supernova event in either tree)
+- Repro (≈ 3 min, laserax-ai-server): `cd ~/workspace/sandbox_reactions/build/t99a && ../target/release/sandbox-reactions headless
+  --scene cand_giant_base.json --until sim_time:22 --max-steps 40000 --adapter "RTX 4090" --out <dir> --dump-every 2500`, then the
+  same scene on a binary built from fbcbadf's tree; read the dumps with reports/lives.md's probe/dumpread.py and M0-T99a's
+  probe/edge_halo.py (reports/lives.md § Appendix). Raw: server build/t99a/giant_base, build/t97/giant and build/t97/giant_d (T97's
+  dense run); copies on linux-pc in M0-T99a's scratch (removable)
+- Suspected cause (not measured): the hold (sigma_hold/eta_hold/r_hold) acting on the Giant's collapsing core before or around the
+  sink drives a bounce the earlier tree did not have; first test: the same disk with the hold switched off by `overrides`, then
+  fbcbadf's binary — whichever reproduces T97's shell names the change
+- Files opened: assets/physics.json, scenes/tune_fit_giant.json, reports/lives.md (§ Giant, § Tuning — the mass ladder) — by M0-T99a;
+  no engine source read
+- Read: this file (rules + this task) + m0_contrat.md §0.5 [M0-D71g], [M0-T99a], §5.2 (G-FIT) + reports/lives.md § Giant, § Tuning —
+  the mass ladder + tasks/M0-D71g.md
+- Deliver: the change that blows the envelope out, measured by bisecting the two trees on the Repro (tasks/M0-D158.md), then either
+  a fix within the contract (the Giant's bound gas at Σ ≥ 10⁻² ≥ 16 cells from an edge to its ending, its ending still black_hole),
+  or a §0.5 line the lead rules on → Verify 1 · a case that grades it, red-armed, if the fix is in code → Verify 1
+- Verify: 1. the Giant disk to its ending on the fixed tree (over 10 minutes: the lead's [NOT RUN — for you]) · Pass: bound gas at
+  Σ ≥ 10⁻² ≥ 16 cells from every edge at every dump (dump-every ≤ 2,500), ending black_hole · Fail: a dump under 16 cells · Refusal:
+  the outflow is the physics the contract asks for (the hold working as §0.5 [M0-D71g] rules) — Status BLOCKED with both trees'
+  numbers; the Giant's fit then goes to the lead (§2.10's radius or the preset's Suns)
+- Done when: Verify 1 GO or the refusal arm with its numbers; win-laptop `owed` (R15)
+- Adversarial: a fix that loosens G-FIT's floor or shrinks the Giant's radius in place; the outflow read on one dump alone
+- Handoff: Exists: tasks/M0-D158.md (the bisect, 11 runs, radial.py), reports/lives.md § M0-D158; no code. Nothing regressed: today = fbcbadf byte-identical on the Repro disk (A = B), and fbcbadf + preset:giant = T97's giant byte for byte; the disk is a different life (2.3e-5 lighter, core_collapse 1,425 vs 1,377). The Giant's envelope is chaotic: of 6 starts within ~1e-5 of the preset, 3 fail G-FIT by t 22 (d at Σ ≥ 1e-2: 0.5) and 3 keep a shell.
+  Verify 1 [ALREADY RUN — PASS on laserax-ai-server, RTX 4090]: GO on preset:giant (the lead: «Grade the preset (Recommended)», not the disk), fbcbadf's binary (physics = today's): nearest bound gas at Σ ≥ 1e-2 25.5 / 53.5 / 74.5 / 65.5 cells at steps 2,500–9,644, ending black_hole at 9,644 (323 s).
+  Claim [ALREADY RUN — FAIL on linux-pc]: verify.py --changed NO-GO, 943 passed / 50 failed, 1/21 scopes GO. Every red is calibration OutOfDate (G-CAL, M0-D71g's, the lead: «Name them, M0-V14»). My changes are .md only; 21 scopes were impacted through the plan/report paths. It ran on linux-pc, not the server (R18): a deviation, and the verdict is the same on any box.
+  Deviations: Verify 1 on the preset, not the disk (the lead); no fix and no case (nothing to fix); win-laptop owed (R15). My first plan.py close --set wrote a stray Pipeline row; I removed it by hand.
+  Measured, not filed: the fit's fragility, flagged to M0-T99a/T99b/V14 (another adapter may land on a failing life); today's binary refuses presets (G-CAL exit 6) until M0-V14; T99a's 3 server watcher loops never exit (pgrep matches itself), so they are the lead's to stop.
+  Next: M0-T99a's rerun grades the Giant on preset:giant (use /tmp/d158/runs/sr-fbcbadf until M0-V14 recalibrates). Ran on model=claude-opus-5-5 level=high. Left: server /tmp/d158, removable after T99a.
+
+## M0-D159 · The Massive life prints 4 `SR-WARN heat unconverged` at steps 930–933, just after its supernova (step 913) — P5's 64-pass ceiling, rounds 820 → 488 — where M0-D155 read the same life at 0 warnings · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D158; filed by M0-T99a — before M0-V14's recalibration reads heat_unconverged)
+- Status: DONE (2026-11-06 10:32)
+- Filed by: M0-T99a, 2026-11-06 — the lead's run of the Massive disk to its ending on laserax-ai-server's RTX 4090 (tree: linux-pc's
+  working tree at bde397c + M0-T99a's text-only changes, rsync'd 2026-11-06; physics.json sha256 `8ad6c983791e`); reports/lives.md §
+  Tuning — the mass ladder › The rerun
+- Blocks: M0-V14's recalibration (it reads heat_unconverged over every life)
+- Caused by: unknown — between M0-D155's tree (0 warnings, 2026-11-04) and today's, M0-D156 (heat.wgsl `shifted_at`) and M0-D71g (the
+  hold: floors.wgsl, step/mod.rs, sigma_hold/eta_hold/r_hold) changed the engine; not measured which
+- Rating: (usual) — the cause is not measured
+- Symptom: `headless --scene cand_massive_base.json --until ending --adapter "RTX 4090"` (the 15-Sun cloud as a disk: a 56.4636, Σc 1, T₀
+  6.68555, solar mix; scenes/tune_fit_massive.json) prints `SR-WARN heat unconverged step 930 passes 64 rounds 820`, 931 (669), 932 (589),
+  933 (488); supernova at 913, ending neutron_star at 7,096 (t 40.30, 4,335.8 sb), 129.8 s. No other warning
+- Repro (≈ 30 s to step 940, laserax-ai-server): `cd ~/workspace/sandbox_reactions/build/t99a && ../target/release/sandbox-reactions
+  headless --scene cand_massive_base.json --steps 940 --adapter "RTX 4090" --out <dir> --dump-every 900` — then the same on a binary
+  without M0-D71g's hold (its keys off by `overrides`, if they switch it off) and on M0-D155's binary (/tmp/d155 on the server, if kept)
+- Suspected cause (not measured): the held core's walls (M0-D71g) next to the supernova's shock give P5 a cooling or heating front it
+  meets one cell a pass ([M0-D37]'s case); or M0-D156's shift set on a world whose heat-free cells now sit beside the hold
+- Files opened: none of the engine's — by M0-T99a (the run's output only)
+- Read: this file (rules + this task) + m0_contrat.md §0.5 [M0-TJ4] (3)–(6), [M0-D37], [M0-D71g], [M0-D155], [M0-D156] + tasks/M0-D155.md,
+  tasks/M0-D156.md
+- Deliver: the change that brings the warnings back, measured (tasks/M0-D159.md), then a fix within §0.5 [M0-TJ4]'s tolerances or a §0.5
+  line the lead rules on → Verify 1 · a case that grades step 930, red-armed → Verify 1
+- Verify: 1. the Massive disk to its ending on the fixed tree (≈ 130 s, laserax-ai-server, R18) · Pass: no `SR-WARN heat unconverged`,
+  ending neutron_star · Fail: a warned step · Refusal: the twin (f64) from the same P5 start needs more than 64 passes too — Status
+  BLOCKED with both sides' numbers; the ceiling is the lead's
+- Done when: Verify 1 GO or the refusal arm with its numbers; win-laptop `owed` (R15)
+- Adversarial: a higher pass ceiling or a looser per-cell test; a fix read on step 930 alone
+- Handoff: linux-pc (laserax-ai); every GPU run on laserax-ai-server, RTX 4090 (R18); model=claude-opus-5-5 level=high (rung_record now at launch; the heading's rung). Cause measured (tasks/M0-D159.md § 1–2): M0-D156's shift set moved the Massive disk's trajectory before step 929 (its plant on the tree: 0 warnings, M0-D155's sim time) — not the set at the step: reverted, it stalls today's s_929 too; M0-D71g and M0-D91 not it (fbcbadf prints the same 4). The step is real: from step 930's exact P5 start the f64 twin converges in 97 passes (88,933 rounds), the GPU's V-cycle in 94 (952) — an iron shell at T_floor (X_Fe 1, E nearly all kinetic) heated a cell a pass; refusal arm → the lead: «128 passes (Recommended)», «Full dump, 17 MB (Recommended)». Built: MAX_PASSES 128 (twin heat.rs, heat.wgsl), §0.5 [M0-D159] ([M0-D37] tagged, the mirror in m0_superseded.md); heat_stiff's case on scenes/massive_930.bin (steps 930–933, no warning) + plant ceiling-64-passes; verify.json 16, testing.md. Verify 1 [ALREADY RUN — PASS (0 warnings, neutron_star at step 6,840, t 38.87, 4,310.5; 7,096 at 64; 129.9 s) on laserax-ai-server, RTX 4090]. heat_stiff [ALREADY RUN — FAIL (15/1: the 1 is M0-D156's preset:sun case, G-CAL exit 6, as before this task) on laserax-ai-server]; --redarm heat_stiff refused (clean arm red, G-CAL) — the plant reds the new case by hand with the life's 4 lines (NOT PROVEN — harness). Claim [ALREADY RUN — FAIL (1,619 passed, 38 failed, 60/76 scopes GO, 5 owed; every red G-CAL exit 6, M0-D158's same cases) on laserax-ai-server, RTX 4090] verify.py --changed --task M0-D159 — the lead: «DONE, reds to M0-V14 (Recommended)»; [NOT RUN — owed on laserax-ai or Laser2025-20] toolchain, desktop, web, capture, measure_ui; heat_stiff's --redarm and win-laptop (R15) flagged to M0-V14. Measured, not filed: the shell's ε_th a small difference of f32 terms (physical or cancellation, not measured); step 929's V-cycle δ 3.4e-4 (34 × (4)'s 1e-5, converged; no case reads it). Next: the Pipeline state's Next task.
+
+## M0-T99a · The mass ladder tuned — every life fits the world · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T98a)
+- Status: DONE (2026-11-06 10:50, started 10:44)
+- Carried flags: [M0-TB, 2026-10-08] the one physics.json write makes assets/calibration.json stale (G-CAL): scopes that run named presets or read the real calibration are refused (exit 6) until M0-V14's recalibration — if your claim run's --changed set holds one, that red is G-CAL working: name it and ask the lead before the claim run (Changes by asking), never a looser check · [M0-T97, 2026-11-05] [M0-T97, 2026-11-05] M0-T97 (reports/lives.md § Massive, § Giant, RTX 4090): G-FIT is failed by two lives — the Massive's bound ejecta within 0.5 cell of an edge from t ≤ 57 (step 10,000), 14.5–14.8 of 3,905.9 sb (0.4 %) inside 16 cells at the ending (t 113.8); the Giant's from t ≈ 13 (step 2,300), 65.8–67.8 of 8,692.5 sb (0.8 %) at step 5,000, 45 of 4,913 at its ending; the Sun-like to t 800 is clear (nearest 142.5; 0.099 sb at 0.5 cell once, t 114). Measured by a bracket (tasks: reports/lives.md § Method): ½|u|²+φ < 0 and E/Σ+φ < 0, no ε_th in a dump; a dump-every-100 life is not the dump-every-5000 life (ignition step 264 vs 273) · [M0-D158, 2026-11-06] M0-D158 DONE, no regression: grade the Giant on preset:giant, never a disk (a disk 2.3e-5 off the preset is a different life; 3 of 6 starts within ~1e-5 fail G-FIT by t 22). Today's binary refuses presets (G-CAL exit 6) until M0-V14 recalibrates; laserax-ai-server /tmp/d158/runs/sr-fbcbadf runs them and its physics is byte-identical to today's. The preset's reading to its ending (dump-every 2,500): nearest bound gas at Σ ≥ 1e-2 25.5 cells at worst, black_hole at step 9,644 (tasks/M0-D158.md § Verify 1). Your Massive also ran as a disk, so its comparison to T97 carries the same caveat.
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.4, §1.10.1 (D5's squeezed ladder),
+  §2.10, §2.11 (the refusal), §2.12.1 (overrides), §5.2 (G-FIT), §5.5 + milestones/m0/reports/lives.md
+- Deliver: the squeezed mass ladder tuned within the contract's bounds — the levers §1.10.1 and §2.10
+  name — toward G-FIT (§5.2: through each preset's life no bound gas within 16 cells of an edge of the
+  default world), measured on scenes that name no preset (§2.10's cloud as `disk` objects at the masses
+  and temperatures reports/lives.md recorded, candidates as `overrides`), so no run needs a stale
+  calibration (§2.11); each candidate's closest bound approach per life appended to reports/lives.md
+  § Tuning — the mass ladder, with its command, SHA and adapter, the chosen values written once into
+  assets/physics.json, a run over 10 minutes the lead's [NOT RUN — for you], a lever outside the bounds
+  → BLOCKED and a question to the lead → Verify 1 · scenes/tune_fit_sun.json, tune_fit_massive.json and
+  tune_fit_giant.json (new: the three measuring clouds) → Verify 1 · the recalibration → none — the
+  lead's, in M0-V14's window, before M0-T99b
+- Verify: 1. `grep -cE "^## Tuning — the mass ladder" milestones/m0/reports/lives.md` · Pass: 1 — each
+  life's closest bound gas ≥ 16 cells from an edge at the chosen values, with its command, SHA and adapter
+  · Fail: 0, a life under 16 cells, or a number without its command — or BLOCKED as the Deliver says
+- Adversarial: unbound ejecta near the edge counted as a fit failure — the measurement reads bound gas
+  only (½|u|² + ε_th + φ < 0); a lever that is a contract formula (§2.10's radius) rather than a
+  physics.json key changes only by asking the lead (Changes by asking, §0.3), never in place here.
+- Handoff: Third run, after M0-D158: linux-pc (laserax-ai), no GPU run — RTX 4090 dumps from laserax-ai-server read by probe/edge_halo.py; model=claude-opus-5-5 level=high (rung_record now, the heading's rung). Exists: reports/lives.md § Tuning — the mass ladder › The close (per preset life, command, trees, adapter); assets/physics.json unchanged (8ad6c983791e). At the floor Σ ≥ 10⁻² on the presets: Sun-like 172.5 cells, Massive 29.5 (to its ending; 120.5 on T97's dense run to t 30), Giant 25.5 (D158's V1 to black_hole) and 53.5 (T97's plain run) — fits. Today's tree = those lives: D71g byte-identical (D158 A = B), D159's 128-pass ceiling binds only on a warned step and T97's five preset runs print no SR-WARN. Found: T97's giant_d (preset:giant, a dump every 100) has bound gas at Σ 0.0102–0.011 at 11.5–15.5 cells, steps 3,100–3,900 (t 15.9–18.7), unseen by the coarse runs; with D158's, 4 of 7 Giant neighbours fail. Asked; the lead: «how can we fix it and do it done. If its too hard we go with the simpler answer.» No physics.json lever reaches the Giant (f_dep inert; the rest land on another chaotic neighbour); §2.10's Giant mass/radius over a family of GPU lives + recalibration is its own task → simpler answer, flags → M0-T99b, M0-V14; split named, not filed: the Giant made to fit robustly. Verify 1 [ALREADY RUN — PASS (1 heading; Giant on its plain preset runs, the lead's ruling) on linux-pc]. plan_lint [ALREADY RUN — PASS (827 passed, 1/1 GO) on linux-pc]. Claim [NOT RUN — owed on laserax-ai-server]: against this block's 2026-11-05 start --changed holds M0-D158/D159's uncommitted engine work (heat.wgsl, heat.rs, GPU heat tests), GPU scopes R18 sends to the server, over 10 minutes — the same code M0-D159 claimed there today (reds G-CAL, the lead's ruling); this run's own changes are text only. Server rebooted ~10:34: /tmp/d158 gone. Scratch removable: 480b7544…/scratchpad/d (861 MB), 4daa0c2b…/scratchpad/d (1.5 GB), 30448f92…/scratchpad/d (405 MB). Detail: tasks/M0-T99a.md § Close. Next: the Pipeline state's Next task.
+
+## M0-T102 · Docs — physics.md (the tuning record) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T99a)
+- Status: DONE (2026-11-06 10:56)
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §0.4, §2.5.1, §2.7, §7 +
+  milestones/m0/reports/lives.md + the handoffs of M0-T97, M0-T98a and M0-T99a (and M0-TJ1's if woken)
+- Deliver: docs/agent/physics.md § Tuning — each constant moved from its initial value, why, and the
+  scope that will hold it in lot 15 (squeeze, fit), pointing to physics.json and reports/lives.md →
+  Verify 1 · the four whole-life scopes' testing rows → none — M0-T108 writes them with the scopes
+  (lot 15, [M0-TB])
+- Verify: 1. `grep -c "^## Tuning" docs/agent/physics.md` · Pass: 1 · Fail: 0
+- Adversarial: the tuned values written into the page — it points to physics.json (§7).
+- Handoff: linux-pc (laserax-ai); model=claude-sonnet-5-5 level=high (rung_record now at launch, the heading's rung, plugin=installed). Exists: docs/agent/physics.md § Tuning (one heading) — a table of each constant the lot-14 tuning touched (a_r, c_sb, kappa0, q_h, a_h_burn, f_dep: not moved, why; sigma_hold/eta_hold/r_hold: code → physics.json keys, M0-D71g; MAX_PASSES 64 → 128, a code constant, M0-D159; G-FIT's wording → a density floor, the lead's), the scope that holds each in lot 15 (squeeze, fit, held_core, heat_stiff), pointing to physics.json and reports/lives.md; no tuned value written into the page. Deviation (small, same page): two stale '64 passes' phrases (Heat and light, Where a number lives) now read the ceiling without the number. Verify 1 [ALREADY RUN — PASS (1 heading) on linux-pc]; plan lint [ALREADY RUN — PASS (GO, 2 WARN: whole-file Read: in M0-T112, M0-TD) on linux-pc]. Claim verify.py --changed [ALREADY RUN — FAIL (942 passed, 50 failed, 1/21 scopes GO, 138 s) on laserax-ai]: every red read is calibration OutOfDate (G-CAL, M0-V14's recalibration), none from this text-only change; the lead: «DONE, reds to M0-V14 (Recommended)», flagged to M0-V14. Lot 15's testing rows: none, M0-T108's. Measured, not filed: the claim's base listed .cargo/config.toml and assets/elements.json as never-checked, so it ran 20 scopes for a docs-only change (harness anchor, cause not read). Detail: logs/M0-T102.claim.log. Next: M0-R14.
+
+## M0-R14 · Rotation and jets — what spinning stars and the jets of black holes and neutron stars would take in this engine · **BUILD** · Opus 5.5, high · switch · (AFTER M0-T102)
+- Status: DONE (2026-11-06 11:11, started 10:56)
+- Ask (verbatim): the lead, 2026-11-01, during M0-R12: « oh and also file something so that we can have rotation, id like for us to be able to see the relativistic jets from black holes and neutron stars. MAybe they could rotate. If thats not too much work » — then (question tool, after the filer's note that the world is 2D seen face-on so a jet would point out of the screen, that jets are driven by magnetic fields the sandbox does not have, and that the goal routes the rest of the physics list past M0): « R block in M0, research only (Recommended) »
+- Rating: (usual) — rule (3)'s list: a design the spec leaves open (a spin tool or preset, a jet model, the view's geometry) and an algorithm with no reference in the contract
+- Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.3, §1.4, §1.12, §2.6 (sinks), §2.10 (presets) + milestones/m0/reports/star_physics.md, sim_models.md, black_hole.md + milestones/m0/reports/sandbox_interview.md §4 (what was routed past M0)
+- Deliver: reports/rotation_jets.md — what rotation is today (the gas carries momentum, no tool or preset gives a spin, what a spun cloud does now, measured on one life, R18), what jets would need (a side-on or axisymmetric world, or a drawn third axis, a launching model — a sub-grid jet at sinks and remnants by mass inflow, or magnetic fields, relativistic speeds against the Δt limit), the candidates each with its cost in blocks, its physics and its place (M0 or a later milestone, milestones.md), the recommendation → Verify 2 · the fork to the lead (question tool) → none — the lead's words are the record, verbatim in § Ruling · at the lead's pick: build blocks filed for M0 (contract amended [M0-R14]) or a milestones.md line routing it past M0 → Verify 1
+- Verify: 1. `python3 tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md` · Pass: GO · Fail: NO-GO · 2. `grep -cE "^## (Problem|Candidates|Evidence|Recommendation|Ruling|Blocks filed)$" milestones/m0/reports/rotation_jets.md` · Pass: 6 · Fail: fewer
+- Adversarial: a jet that is a script (drawn, not flowing) breaks the goal's «every stage comes out of the physics, never a script» — a candidate states which of its parts are physics and which are drawing.
+- Handoff: DONE — reports/rotation_jets.md (6 sections). Measured on laserax-ai-server, RTX 4090, the Massive cloud spun to t 30: spin is a second fate axis. At β 0.01 there is no neutron star (supernova 1.8 t.u. late, the core a spinning ring); at β 0.2 there is no collapse. Nothing gives a spin today, the held core and the sinks cannot spin, and the ledger books no L. The lead: «Later milestone (Recommended)», «Tilted view (Recommended)» → a milestones.md Deltas line; no M0 block; contract unchanged. Verify 1 GO, Verify 2 6. Claim [ALREADY RUN — FAIL (941 passed, 50 failed; 1/21 scopes GO, plan_lint) on linux-pc]: every red is G-CAL's OutOfDate, owed to M0-V14. My diff touches plan_lint alone; 20 more scopes were pulled in, and their GPU tests ran on linux-pc's RTX 5090, not R18's server (unplanned). Measured, not filed: L_z drifts after a collapse (no L ledger → the later milestone's S4); the server's /tmp is emptied (the Awaiting-lead /tmp entries are gone); /tmp/r14 (885 MB) removable. Detail: tasks/M0-R14.md. model=claude-opus-5-5 level=high. Next: per the Pipeline state.
+
+## M0-D160 · m_up_sb's light end never ends — its remnant, a cold iron core inside a Keplerian disk, fails §0.5 [M0-D140]'s settled test on 2P/(−W) alone (0.356; 2(P + K)/(−W) 0.964), so the 3,351.032 life shows iron_core for 467,455 steps and calibrate item 4 exits 6 · **BUILD** · Opus 5.5, high · switch · (AFTER M0-R14; filed by M0-V14 — before M0-V14's re-run, which waits on it; moved above M0-V14 by the lead, 2026-11-07: «move it above V14 if I have to re-run V14 after D160»)
+- Status: DONE (2026-11-08 07:48)
+- Filed by: M0-V14, 2026-11-07 — the recalibration chain's step 4 (`calibrate --adapter "RTX 4090" --only m_up_sb --progress-every 5000
+  --max-steps 600000 --checkpoint-every 3000`, laserax-ai-server; tree HEAD 860cd54 rsync'd 2026-11-06, physics.json `8ad6c983791e`, the
+  run's physics_hash `05b52c15…`); reports/v14.md § The recalibration, tasks/M0-V14.md § Session 2
+- Blocks: M0-V14 — calibrate items 4–6, so its two dumps, S1, the Giant's dense fit, Verify 1 and Phase 16's close
+- Caused by: M0-D140 — its settled test is the one white_dwarf term this remnant fails (measured below); V9's calibration (2026-10-26,
+  before it) ended the same life white_dwarf at step 139,379 (t 1,544.07, 1,880.1 sb)
+- Rating: (usual) — §0's rule (5): the fix changes a frozen passage (§1.9.3's white_dwarf row as [M0-D81] and [M0-D140] read it)
+- Symptom: the server's logs/M0-V14.chain.log, step 4 — life 01 at 3,351.032 (M₀, the default bracket's light end): main_sequence to
+  step 102,497, he_core, the flash to iron by step 130,625 (X_Fe,c 0 → 0.996, T_c 88 → T_floor 0.05, d_c 0.9998), shown iron_core from
+  132,545 (t 1,473.8) to 600,000 (t 13,942.3), M 2,001 → 309 as the gas leaves by the edge, L_nuc 0, |v_r| ≤ 0.040 √(GM/R) and M ≤ 2,001
+  on all 94 progress samples → `SR-ERROR calibration failed: the run at mass 3351.032 reached no ending within --max-steps 600000 —
+  reported, not guessed`, exit 6, 3,774 s; items 5 (m_bh_sb, whose default bracket reads m_up_sb) and 6 (the presets) never ran
+- Measured — the checkpoint at step 600,000 (server `build/calibrate_runs/2026-11-06T21-28-41Z/m_up_sb-01/checkpoint/s_600000.bin` +
+  `.observers.json`, dump sha256 `a124fd69335cf3a0` — keep it): the white_dwarf row's terms, ignited (object 1 since step 673) ✓, d_c
+  0.996 ✓, L_nuc 0 < 0.01 L ✓, M_unb 0 ✓, X_n,c 0 ✓, M 309.05 ≤ m_ch_sb 3,216.42 ✓ ([M0-D81]), |v_r| 1.3 × 10⁻⁴ √(GM/R) ✓ — and 2P/|W|
+  = 2 × 383.77 / 2,155.67 = **0.356** < 0.8 ✗ ([M0-D140]); iron_core is the next row that matches. The remnant is rotation-supported
+  (reports/lives.md's dumpread.py on the dump): K 678.4, 99.1 % of it tangential about the max-Σ cell (K_r 6.2), L_z 28,186; a core
+  (r < 5: ≈ 60 of the grid's 340.5 sb, Σ 0.8–1.5) inside a disk whose gas orbits at √(M(<r)/r) within 4 % from r 10 to 120;
+  2(P + K)/|W| 0.964 (virial balance, ≈ 63 % of it from motion); X_H,c 1.9 × 10⁻³, X_Fe,c 0.9962
+- Not measured: when the spin arose (the run keeps its last checkpoint only); the Sun-like preset's remnant — V9's ended white_dwarf at
+  step 177,762 (t 1,990.42) holding 1,885.6, the same size after the same flash: if it spins, item 6's Sun-like life, S1 and G-END fail
+  the same way; failed_star's own settled test ([M0-D134]) on a spun-up failed star
+- Files: crates/sr-physics/src/observe/stages.rs (`ROWS`, `settled`) and crates/sr-engine/src/watch.rs (`Star.virial`) — named by
+  tasks/M0-D140.md § Built, not opened by M0-V14; unverified — the executing task confirms first
+- Read: this file (rules + this task) + m0_contrat.md §1.9.2–§1.9.5, §0.5 [M0-D81], [M0-D92], [M0-D134], [M0-D140] + tasks/M0-D140.md +
+  reports/v14.md § The recalibration
+- Deliver: each option measured on this remnant (the snapshot above) and on M0-D140's false white dwarf (stage_order's Sun-like, steps
+  401–657: 2P/|W| 0.787–0.798 near rest, X_H,c 0.7318 — its K and K_t not yet read), then the lead's ruling (§12) among (a) motion
+  counted, 2(P + K)/|W| ≥ 0.8 (here 0.964 — M0-D140's frames come back if K/|W| ≥ 0.007 there), (b) ordered rotation counted,
+  2(P + K_t)/|W| ≥ 0.8 with K_t the tangential kinetic energy about c from the blocks' momenta (here ≈ 0.96: the snapshot's K × the
+  dump's 99.1 % tangential share), (c) M0-D140's own option (b), X_H,c < 10⁻³ in place of 2P/|W|, which refuses this remnant too
+  (1.9 × 10⁻³) — M0-V14's reading: (b), if M0-D140's frames still read under 0.8 → the rows in stages.rs (white_dwarf and
+  planetary_nebula, failed_star's [M0-D134] test named in the question), a §0.5 line and its mirror in m0_superseded.md, a stages case
+  on this snapshot's object, red-armed → Verify 1 and 2
+- Verify: 1. `python3 tools/pb/verify.py classify stage_order --task M0-D160` (stage_order on laserax-ai-server, RTX 4090, R18) · Pass:
+  GO; the snapshot's object reads white_dwarf; M0-D140's Sun-like shows no white_dwarf while X_H,c ≥ 10⁻³ · Fail: either red.
+  2. life 01 on the fixed tree to its ending — `calibrate --only m_up_sb --max-steps 200000` into a scratch `--out` (≈ 15–25 min on
+  the 4090: the lead's, one visible terminal, R18) · Pass: life 01 `side=Light`, ending white_dwarf · Fail: no ending, or another ·
+  Refusal: the lead keeps [M0-D140]'s test as written — Status BLOCKED with the options' numbers; M0-V14's recalibration then waits on
+  the lead's next ruling
+- Done when: the ruling recorded; Verify 1 GO and red-armed; Verify 2's life 01 ends white_dwarf; win-laptop `owed` (R15)
+- Adversarial: a rule read on this one snapshot (M0-D140's frames must stay refused); a bound fitted to 0.356; a calibrate-only
+  exception (the game's readout reads the same rows)
+- Handoff: Settled = 2(P + K_t)/|W| ≥ 0.8 for protostar, failed_star, white_dwarf, planetary_nebula (§0.5 [M0-D160], mirror in m0_superseded.md; the lead: «(b) Rotation counted», «All four rows», «Read missing as 0», «classify GO, stage_order → V14»); tracker.rs Object.kinetic_t (member blocks' tangential momentum about c), snapshot v3 carries it, older reads 0; stages.rs settled; plants settled-no-rotation, kinetic-t-radial, kinetic-t-required. Measured (RTX 4090): the remnant 2(P + K_t)/|W| 0.93–0.95 (2P/|W| 0.36); the Sun-like's step 577 stays 0.798 (all motion would read 0.807). Verify 1: classify 54/54, objects 26/26 GO, red-armed 14/14, 8/8 (linux-pc). Verify 2 (the lead's run, laserax-ai-server): life 01 ends white_dwarf at step 137,329. Claim (laserax-ai-server, RTX 4090): NO-GO 756/38 — M0-V14's 38 G-CAL reds exactly; observe_run GO. Finding → M0-D161: life 08 (3,492.101) flickers white_dwarf ↔ iron_core on |v_r| 0.050–0.061 under a 600–760 t.u. hold, no ending at 200,000. stage_order G-CAL red → M0-V14; classify/objects owed on win-laptop. Next: M0-D161. claude-opus-5-5, high.
+
+## M0-D161 · m_up_sb's second light life (3,492.101) never holds its ending — its spun-up remnant shows white_dwarf on 93 % of frames, but |v_r| crosses 0.05 √(GM/R) every few hundred steps and the hold is 20 τ_dyn ≈ 600–760 t.u. on a disk-wide R₉₀, so calibrate item 4 exits at 200,000 steps · **BUILD** · Opus 5.5, high · switch · (AFTER M0-D160; filed by M0-D160 from its Verify 2 — before M0-V14's re-run, which waits on it)
+- Status: DONE (2026-11-08 09:09)
+- Filed by: M0-D160, 2026-11-08 — its Verify 2, the lead's run on laserax-ai-server (RTX 4090): `calibrate --adapter "RTX 4090" --only
+  m_up_sb --max-steps 200000 --progress-every 5000 --out build/m0-d160/calibration.json`, run folder
+  `build/calibrate_runs/2026-11-07T23-14-54Z` (16 MB — keep); tasks/M0-D160.md § Verify
+- Blocks: M0-V14 — calibrate item 4 (its bisection reaches 3,492.101 at life 08), so items 5–6 and Phase 16's close
+- Caused by: M0-D140 — the settled test's |v_r| term on the remnant rows is the term that flickers (measured below); with [M0-D78]'s
+  hold of 20 τ_dyn. V9's calibration (before [M0-D140]) ended the same mass white_dwarf at step 123,658
+- Rating: (usual) — §0's rule (5): the fix changes a frozen passage (§1.9.3's settled test as [M0-D140]/[M0-D160] read it, or §1.9.5's
+  hold as [M0-D78] reads it)
+- Symptom: life 08 (3,492.101): ignition at step 289; main_sequence; he_core from 91,809; iron_core 98,529; white_dwarf first shown at
+  101,009, then shown white_dwarf ↔ iron_core about 150 times to step 200,000 (summary.json's `stages`); the longest white_dwarf
+  stretch ≈ 128 t.u. (141,377 → 149,889); M 3,490 → 1,461; `SR-ERROR calibration failed: the run at mass 3492.101 reached no ending
+  within --max-steps 200000`. Lives 01–07 of the same run ended (01: white_dwarf at 137,329, hold 48.3 t.u.)
+- Measured — `m_up_sb-08/checkpoint/s_200000.bin` (+ `.observers.json`, sha256 `406259a800a140c7`) resumed `--continue` for 3,200 steps
+  on M0-D160's scratch probe (the fixed stages.rs; logs/M0-D160.probe_life08.log, 200 frames of 16 steps): raw white_dwarf 186,
+  iron_core 14 — **each of the 14 fails |v_r| ≤ 0.05 √(GM/R) alone** (0.050–0.061); 2(P + K_t)/|W| 0.832–0.905 on every frame (2P/|W|
+  0.33–0.37, K_t 0.25–0.27 |W|); d_c 0.995–0.999, X_Fe,c 0.799, M 1,421–1,461; R₉₀ 109–128 cells (the disk), τ_dyn 30.1–38.0 →
+  [M0-D78]'s hold max(10, 20 τ_dyn) = 603–760 t.u. ≈ 46,000–58,000 steps at the life's 0.0132 t.u. a step, unbroken
+- Not measured: whether the hold alone (no flicker) would end it within a calibrate budget; |v_r| about the core alone (r < R_core)
+  against the disk's; the 3,351.032 life's τ_dyn at its ending (its hold read 48.3 — compact then)
+- Files: crates/sr-physics/src/observe/stages.rs (`settled`, `ending_hold`, `ENDING_HOLD_TAU`) and the hold's reader
+  (crates/sr-physics/src/observe/ending.rs or the watch — unverified, the executing task confirms first)
+- Read: this file (rules + this task) + m0_contrat.md §1.9.2, §1.9.3, §1.9.5, §0.5 [M0-D78], [M0-D140], [M0-D160] + tasks/M0-D160.md
+- Deliver: each option measured on this remnant (s_200000) and on M0-D140's Sun-like frames (stage_order, steps 401–657), then the
+  lead's ruling (§12) — options to measure, none chosen: (a) the hold's τ_dyn from the core (R_core, or the radius of the degenerate
+  centre) instead of R₉₀ over the disk · (b) |v_r| read about the core rather than the whole object · (c) the ending hold not restarted
+  by a shown flicker under N frames · (d) the |v_r| bound for the remnant rows widened — then the rows or the hold in stages.rs, a §0.5
+  line and its mirror, a classify case on this snapshot's object, red-armed → Verify 1 and 2
+- Verify: 1. `python3 tools/pb/verify.py classify --task M0-D161` (linux-pc, CPU) · Pass: GO, red-armed; the s_200000 object's case
+  reads the chosen rule · Fail: red. 2. life 08 to its ending — M0-D160's Verify 2 command again (`calibrate --adapter "RTX 4090" --only m_up_sb
+  --max-steps 200000 --progress-every 5000 --out build/m0-d161/calibration.json`; its bisection reaches 3,492.101 at life 08 — life
+  01 took 624 s, lives 02–07 under 1 min; ≈ 30–45 min in all, the lead's, one visible terminal, R18) · Pass: 3,492.101 ends white_dwarf, `side=Light` · Fail: no ending, or another · Refusal: the lead keeps the rows and
+  the hold as written — BLOCKED with the options' numbers
+- Done when: the ruling recorded; Verify 1 GO and red-armed; Verify 2's 3,492.101 life ends white_dwarf; win-laptop `owed` (R15)
+- Adversarial: a bound fitted to 0.061; a calibrate-only exception (the readout reads the same rows and hold); M0-D140's Sun-like frames
+  must stay refused (they fail on 2(P + K_t)/|W|, not |v_r|, at steps 529–577)
+- Handoff: Ruled (the lead, 2026-11-08): «(a) Core's τ», «R₉₀ as today» — the ending hold is max(10, 20 τ) with τ the degenerate centre's τ_deg = √(r_deg³/G M_in) (blocks with Π_cold/Π ≥ 0.5), else τ_dyn; §0.5 [M0-D161] + mirror. Measured (RTX 4090, s_200000 → 260,000; tasks/M0-D161.md): today none in 60,000 steps; (a) ends at 201,248; (c) only at N ≥ 100 frames, (d) only at 0.10, (b) never — and (b)/(d) admit the Sun-like's step 497 (2(P+K_t)/|W| 0.8003, refused today by |v_r| alone). Built: tracker.rs tau_deg (+ an optional snapshot key, absent → none — K_t's ruling taken as the default), stages.rs hold_tau, watch.rs and right.rs read it; plants hold-tau-dyn, tau-deg-every-block. Verify 1 [ALREADY RUN — PASS on linux-pc]: classify 55/55, objects 28/28, red-arm 15/15 and 9/9. Verify 2 [ALREADY RUN — PASS on laserax-ai-server, RTX 4090] (the lead: «you can rsync and run it yourself»): life 08 white_dwarf at 102,513, every life on M0-D160's side (life 01 at 133,681, was 137,329), m_up_sb 3,510.148 (scratch). Claim [ALREADY RUN — FAIL (G-CAL only) on laserax-ai-server]: 1,527 passed, 38 failed, 56/72 — M0-D160's 16 red scopes exactly, each OutOfDate/exit 6 → M0-V14. win-laptop owed (R15). Opus 5.5, high (rung_record: model=claude-opus-5-5 level=high). Next: M0-V14.
+
+## M0-V14 · Validation — lot 14: a star's whole life, measured and tuned · **CHECK** · Opus 5.5, max · switch · (AFTER M0-T102)
+- Status: DONE (2026-11-08 18:39, started 09:44)
+- Carried flags: [M0-V13, 2026-11-02] M0-V13's two desk runs, the lead's word «Flag them to M0-V14 (Recommended)» (the lead was remote, on VS Code over SSH, 2026-11-02): (1) `build/target/release/sandbox-reactions --adapter "Quadro RTX 4000" --measure-ui 600` from the repo root on linux-pc, a visible window, an idle box — SR-UI p95_ms read, render_reserve_ms written into assets/calibration.json (then a rebuild embeds it, M0-D62); the time control keeps §1.8.3's 3.0 ms until then; (2) start.sh — a preset dropped, painted on, a cell inspected, the lead's words recorded. Both into reports/v14.md (reports/v13.md § The human-run tier) · [M0-V13, 2026-11-02] M0-D140's owed re-read, at this V's recalibration (calibrate item 4 on the RTX 4090): the m_up_sb bisection's light-side lives read for an ending that moved — since §0.5 [M0-D140] a white dwarf that pulses (|v_r| > 0.05 √(GM/R)) or sits under 2P/|W| 0.8 no longer holds §1.9.5's ending (tasks/M0-D140.md § Owed); calibrate_bisect's lives end at ignition and cannot show it · [M0-V13, 2026-11-02] Owed on win-laptop (R15) — M0-V13 ran on laserax-ai-server (RTX 4090) and linux-pc, so all of this still runs there: lot 13's scopes and their red-arms on win-laptop's routes (ui_tools, ui_presets, ui_star, ui_inspect, ui_display, ui_legend, ui_zoom, ui_remnant, extents, stage_order, views, measure_ui's refusal, web's preset case, capture's 22 steps on the off-screen window); and the list M0-V13 carried: M0-D106's timing read in win-laptop's --all (case 1's frame under 5 s wall; a timeout reopens it), M0-D108's --redarm dump, observe_run, calibrate_bisect (Pass: no plant ERROR by timeout; an LNK1104 clean red again → a D), M0-V12's lot-12 list (ui_topbar, ui_banner, ui_world, ui_theme and their red-arms, desktop's world case off-screen, capture's actions, M0-D119's and M0-D120's runs, the theme install and fixed-width bar under a light Windows theme, lot 11's four scopes on the RTX 4080 Laptop, M0-D101, M0-D102, M0-D110–M0-D116), M0-D128's web and desktop --case launcher and their red-arms (plants web-stop-lost, launcher-decoy-left), M0-D131's `py -3.12 tools/pb/launch.py selftest` and --redarm tools_selftest (msvcrt arm), M0-D125's tools_selftest[verify] SIGINT check — `py -3.12 tools/pb/verify.py --all` and `--redarm --moved` there cover them (reports/v13.md § Owed) · [M0-TG2, 2026-11-02] M0-D71g (after M0-T98a; the lead at M0-TG2: «Code now, move later (Recommended)») writes sigma_hold and eta_hold into assets/physics.json, which moves the physics hash: your recalibration covers it — read its keys among the tuned constants (§2.7's table, [M0-D71g]); were the tuning to write no constant, the recalibration is M0-D71g's alone · [M0-R13, 2026-11-03] M0-V14's recalibration (with M0-D71g's and M0-T98a's) also covers M0-T131's physics.json write (N_Fe's q_ratio, §2.5.1 [M0-R13]) and the endings M0-T130's neutron hold moves (candidate F's Massive ending 29,208 → 14,394, reports/cold_remnant.md) — re-measure, never re-threshold in the builds · [M0-T130, 2026-11-03] The endings M0-R13 flagged as «M0-T130 moves» are M0-D153's now: M0-T130's r ≤ 4 gate (Massive 29,208 → 14,394) was reverted, the tree's endings are M0-D152's until M0-D153 lands · [M0-D153, 2026-11-03] M0-D153's moved endings for the recalibration (r ≤ 24 gate, RTX 4090): Massive neutron_star at 4,990 (4,436.2; today 29,208); m_bh_sb life 01 (4,572.394) neutron_star at 11,003 (3,628.9; M0-D152's 32,059); the 20 M₀ Repro's sink 5,230.2 at 2,600, 6,874.2 by 3,062 (today's 12,795.1) — and the Massive held rim's 56 releases (tasks/M0-D153.md § 3) · [M0-T130, 2026-11-04] The moved endings for the recalibration (Done when of M0-T130): the r ≤ 24 gated hold moves Massive's ending from step 29,208 (free core) to 4,990 (neutron_star, held from 980); life 01 (m_bh_sb 4,572.394) ends neutron_star at 11,003; the 20 M₀ Repro forms its sink at 2,600, black_hole; floor ÷ radiated after the supernova 1.00 / 9.99 / 2.71 against 3.93 before (tasks/M0-T130.md § 5) — never re-thresholded by M0-T130 · [M0-D155, 2026-11-04] M0-D155's thermal bracket (§0.5 [M0-D155], §2.3.4) changes P4 wherever a face's Π/Σ passes 2 × its three cells' largest: the Massive life from M0-D153's s_2000 reads 0 heat_unconverged (M0-D154's 13), no free cell past 10 × its neighbours' |v|, neutron_star at step 4,878 (4,990 before; RTX 4090); the Sun-like and 20 M₀ lives were not run under it — the recalibration reads them fresh, and M0-D89's and M0-D93's thin hot cells beside vacuum (heat_ceiling.bin, heat_overflow.bin) are likely the same face (inferred, tasks/M0-D155.md § Measured, not filed) · [M0-D156, 2026-11-04] M0-D156: the heat-free START shift's set changed (heat.wgsl shifted_at) — the Sun-like life reads 0 heat_unconverged to 30,000 on the RTX 4090 (221 before) and differs from s_1000 on, so a pre-D156 life or dump is not this tree's; owed on win-laptop (R15): heat_stiff (15 cases, scenes/sun_13593.bin's case reads an RTX 4090 dump on the Arc/4080) and the Sun-like life to 30,000 for its warnings · [M0-D109, 2026-11-05] M0-D109: win-laptop owed (R15) — `verify.py edits`, `ledger` and `--redarm edits` (5 plants; two new: edit-potential-unbooked, edit-potential-no-self); its claim's owed five on linux-pc (toolchain, desktop, web, capture, measure_ui) · [M0-D157, 2026-11-05] the Glow view draws by emissivity since M0-D157 (§1.11 [M0-D157]): thin gas dark, the star drawn smaller (Sun-like step 300 ½-radius 67 → 32 cells), a painted Σ 0.02 stroke dimmer (109/255 at ≈ 6,700 K); the window looks and the lead's desk runs read the new look; the Heat and Density views keep P4's square (the lead: «not visible enough for it to be an issue») · [M0-TJ1, 2026-11-05] S1 and S2 read on the tuned lives (the lead, 2026-11-05: «At M0-V14, after tuning (Recommended)»). S1 — §1.6.4: the Sun-like preset, 20 τ_dyn after it enters he_shell, with under 30 % of its envelope (the mass outside 2 R_core, §1.9.2) unbound enables it — NOT RUN by M0-T97 (reports/lives.md § Stand-ins: the Sun's full life, C4b, is over 10 minutes and never ran — laserax-ai-server holds no build/t97/sun_life, 2026-11-05): one more of the lead's runs here, the tuned Sun-like's full life with dumps dense enough for the 20 τ_dyn window (C4b's 20,000-step cadence is ≈ 228 t.u. on the main sequence, where τ_dyn ≈ 1 — my arithmetic); no he_shell displayed (M0-V9's reading, an older build) leaves the trigger unreadable as written — a question to the lead, never a pass. S2 — measured off on M0-T97's tree (74.9–75.1 % of the Massive's envelope unbound at f_dep 0.1 against under 50 % to enable, a preset-free disk, lives.md C6): re-read on the tuned Massive (C6's two runs, 95.5 s and 95.8 s on M0-T97's tree). A fired trigger wakes M0-TJ1 — Q3's question and the amendment are its, not this V's; none fired → M0-TJ1 stays DEFERRED to M0-V17 · [M0-D71g, 2026-11-05] M0-D71g's physics.json write (sigma_hold, eta_hold, r_hold) stales the calibration (G-CAL): its Verify 1 read 3 exit-6 refusals on the RTX 4090 — held_core::gpu_the_remnant_window_shines_on_its_own_heat (preset:sun), twin::a_world_over_128_is_refused_and_128_runs, twin::cpu_reference_run_writes_the_in_process_twins_dumps_and_sim_time (the lead: «Name them, M0-V14 (Recommended)»); after the recalibration re-run held_core and twin GO, then M0-D71g's owed verify.py --redarm held_core (hold-constants-ignored among 7 plants) and its claim (tasks/M0-D71g.md) · [M0-T131, 2026-11-05] [M0-T131, 2026-11-05] M0-T131 ended BLOCKED (reports/nfe_cost.md): N_Fe's q_ratio stays −1.14, so no physics.json or reactions.json write from it reaches your recalibration. Read for it: on today's tree (M0-D71g's constants, M0-D155, M0-D156) the Massive life at −1.14 shows neutron_star but declares no ending by step 10,500 (scratch tree, calibration's physics_hash stamped, four lives at once, 570 s cap; M0-D153's was 4,990, M0-D155's 4,878) — one run, the ending's hold may need more steps; re-measure at your recalibration, never re-threshold · [M0-D158, 2026-11-06] M0-D158: the Giant's G-FIT is fragile (3 of 6 starts within ~1e-5 of the preset fail by t 22; tasks/M0-D158.md). The recalibration's Giant lives and any RTX 5090 or win-laptop read of the Giant may flip, so read them on preset:giant, never a disk. Server /tmp/d158 (fbcbadf's binary for presets until your recalibration) is removable after it. · [M0-D159, 2026-11-06] [M0-D159] P5's ceiling is 128 passes since §0.5 [M0-D159] (the lead: «128 passes (Recommended)»): every life that reached 64 passes moves — the Massive disk ends neutron_star at step 6,840, 4,310.5 (7,096, 4,335.8 at 64); heat_stiff's --redarm is owed (9 plants, ceiling-64-passes new): its clean arm is red on G-CAL exit 6 (M0-D156's preset:sun case) until the recalibration — the new case went red by hand under its plant (tasks/M0-D159.md § 4); win-laptop owed (R15): heat_stiff and Verify 1's life · [M0-T99a, 2026-11-06] M0-T99a DONE: G-FIT graded at the floor on the presets' plain runs (Sun-like 172.5, Massive 29.5, Giant 25.5 cells), physics.json unchanged; the Giant's dense life (T97 giant_d, a dump every 100) reaches 11.5 cells at Σ 0.011, steps 3,100–3,900 — after recalibration, read the Giant's fit on every adapter densely enough to see t 15–19 (reports/lives.md § Tuning — the mass ladder › The close); its claim run is owed on laserax-ai-server (its --changed set holds M0-D158/D159's engine work, G-CAL reds expected). · [M0-T102, 2026-11-06] M0-T102: physics.md § Tuning is written (the tuning record: which constants moved, why, the lot-15 scope each; no value restated). Its claim run, verify.py --changed (laserax-ai, 138 s), was NO-GO: 50 failures in 20 scopes, every one read (stage_order, twin, ui_star, ui_banner, ui_inspect, ui_presets, frames, plus the sampled others) an OutOfDate G-CAL refusal (calibration physics_hash 56df8ade…, assets 05b52c15…) — the recalibration owed here; none from a text-only change. Re-run those scopes green after the recalibration. · [M0-D160, 2026-11-08] M0-D160 (2026-11-08): settled = 2(P + K_t)/|W| ≥ 0.8 (§0.5 [M0-D160]); its Verify 2 run (build/calibrate_runs/2026-11-07T23-14-54Z on laserax-ai-server, keep) ended life 01 white_dwarf at 137,329 but life 08 (3,492.101) found no ending → M0-D161 first. stage_order's G-CAL red is yours (the lead: «classify GO, stage_order → V14»); classify and objects owed on win-laptop; the Sun-like preset's remnant spin unmeasured (item 6 reads it). · [M0-D161, 2026-11-08] M0-D161 (2026-11-08): the ending hold now reads the degenerate centre's τ_deg (§0.5 [M0-D161]) — remnant endings come earlier where the core is smaller than R₉₀ (m_up_sb life 01 at 133,681, was 137,329; life 08 now ends at 102,513 → m_up_sb 3,510.148 on a scratch run, build/m0-d161 on the server); re-read the NS/BH and failed-star endings on the new calibration; classify (55) and objects (28) owed on win-laptop (R15).
+- Read: milestones/m0/m0_contrat.md §0.4, §1.6.4, §2.11, §5.2 (G-SQUEEZE, G-FIT), §5.5 +
+  milestones/m0/reports/lives.md + the handoffs of M0-T97, M0-T98a, M0-T99a and M0-T102 (and M0-TJ1's if
+  woken) + docs/agent/physics.md + the delivered files, each by the section it covers
+- Deliver: the lead's runs owed here, one visible terminal each [NOT RUN — for you]: the recalibration the
+  tuning forced (`calibrate`, or `--only` per item, §6.4), then the two dumps of reports/lives.md § Dumps
+  remade on the tuned physics by their recorded commands (lot 15's G-THERMO and G-CONS, and lot 16's
+  G-LATCH and G-FPS, load them) → none — the lead's runs, read here · contract-vs-code on lot 14 — every
+  tuned constant inside its bound, each tuning section's numbers against its recorded command, the
+  stand-ins' state against M0-TJ1, each defect its own D (E4), every UNVERIFIED red a D or a question
+  (§5.5) → reports/v14.md → Verify 1 · Phase 16's close (stubs, the header budget, the complete loop and
+  its seconds, `rung_record.py report`'s table, a moved class → a TM<n>) → Verify 1
+- Verify: 1. `python3 tools/pb/verify.py --all --task M0-V14` · Pass: GO, every scope present, the
+  presets' scopes green on the new calibration · Fail: NO-GO — each red a D (E4)
+- Done when: verdict recorded; D's created; register updated; assets/calibration.json matching the tuned
+  physics (G-CAL GO) and both dumps remade.
+- Adversarial: a tuning section whose numbers no recorded command reproduces reads as tuned — the V
+  re-runs one candidate's command per section; the whole-life checks come after this window (lot 15,
+  [M0-TB]), so a calibration taken before the last physics.json write is caught here by G-CAL.
+- Handoff: DONE — session 4, 2026-11-08; linux-pc (laserax-ai) + laserax-ai-server RTX 4090 (R18); model=claude-opus-5-5 level=max (rung_record now at launch; the heading's rung). Verdict DEFECTS(2) (reports/v14.md): the recalibration is in — assets/calibration.json a480dc19… (physics_hash 05b52c15…, G-CAL GO), §2.11's bounds and K9 hold (m_ign 2,486.5 < m_ch 3,216.4 < m_up 3,510.1 < m_bh 9,003.6, −20 % on V9); the presets 3,113.6/5,902.2/13,278.9 end as predicted (white_dwarf at 178,609 — M0-D160's risk cleared; neutron_star 5,074; black_hole 7,602). Verify 1: the server's --all GO 83/83 (1,755 passed, 5 owed by box); linux-pc's five 4/5 — measure_ui NO-GO, reproduced (--measure-ui rewrites t_eff_sun_sb one ULP) → M0-D162. Sweep GO (78 moved, 200 red, 0 green); here toolchain 3/3, capture 9/9 red. F3 → M0-D163: above m_up every star flashes to iron at ignition (no main sequence; G-STAGES and G-SQUEEZE red) — the lead: «D before lot 15 (Recommended)». Dumps remade on both boxes (~/.cache/sandbox-reactions/dumps/m0-v14_sun_mid_ms_s70200, m0-v14_massive_iron_core_s800), flagged to M0-T101/T106/T111/T112. The lead's other rulings: the Giant's dense life fails G-FIT (bound Σ 0.031 on the edge, t 18–32) «Flag; re-read after (Recommended)»; S1 (no he_shell; 1.7–2.2 % at he_core) «S1 stays off (Recommended)»; desktop/web red-arms and the two desk runs «Owe all to M0-V15 (Recommended)». Filed: M0-TC14 (43 to stub), M0-TM16 (refresh 12/5), M0-D162, M0-D163; flags to M0-T112, T111, T106, T101, T103, T98b, T99b, T104, V15, TJ1; register rewritten. Loop 170.85 s idle on the server (no TR); rung report: no class moves. Measured, not filed (my errors, no result touched): a watchdog signalled an idle tmux shell and wrote a false «stopped» line into build/v14/giant_d.out (corrected there); backticks in M0-V15's flag argument ran the desk run's command, which died at once (no display; calibration unchanged) — the flag text corrected. Claim [ALREADY RUN — PASS (GO: plan_lint 840/0, 82 not impacted at the anchor, 5 owed by box) on laserax-ai-server, RTX 4090] verify.py --changed --task M0-V14-claim2; the box's five [ALREADY RUN — FAIL (4 GO, measure_ui NO-GO → M0-D162) on linux-pc] as M0-V14-lpc; plan_lint re-run after this handoff on linux-pc. Lint GO; header 623/600 inside the margin (M0-TC14's). Scratch: the session's scratchpad (dump copies removed). Next: M0-TC14.

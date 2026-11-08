@@ -1,0 +1,4 @@
+stub: 1412 lines moved, 1412 verified byte-for-byte -> milestones/m0/plan_archive.md
+stub: checks=43 failed=0 warnings=1 · stubbed=43 · moved_lines=1412 · verified_lines=1412 · trailers_kept=1
+WARN: M0-D147's trailer (> **Commit gate (lead):** Phase 15 closes after M0-V13 — fr…) stays in the plan under its stub, not archived
+=== GO ===

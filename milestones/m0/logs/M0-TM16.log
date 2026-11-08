@@ -1,0 +1,65 @@
+== M0-TM16 2026-11-08T18:43:22-05:00 on laserax-ai ==
+-- the probe (§B.3)
+CLAUDECODE=1
+CLAUDE_EFFORT=max
+AI_AGENT=claude-code_2-1-319_agent
+-- plan.py lint (start)
+lint: checks=838 failed=0 warnings=7 · blocks=400 · flow_rows=400 · verify_fences=0 · history=0 · flow=per-task · header=599/600 · pipeline=9/60 · ladder=6 rungs · refresh=12/5
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T103: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T106: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+=== GO ===
+lint exit=0
+-- the model pages (claude-api skill, bundle 2.1.319) — 2026-11-08T18:46:01-05:00
+models.md sha256 raw: 34d72be05f1316672368eba38681a4502be83e437eece1eaf852a325c857274c
+models.md sha256 CR-stripped: 34d72be05f1316672368eba38681a4502be83e437eece1eaf852a325c857274c
+ugrep: warning: /tmp/claude-1000/bundled-skills/2.1.319/741cd537b3f2343c332ed71f96019344/claude-api/SKILL.md: No such file or directory
+SKILL.md table header: 
+ugrep: warning: /tmp/claude-1000/bundled-skills/2.1.319/741cd537b3f2343c332ed71f96019344/claude-api/SKILL.md: No such file or directory
+/bin/bash: line 1: : No such file or directory
+main file:  sha256 
+ugrep: warning: : No such file or directory
+ugrep: warning: : No such file or directory
+/tmp/claude-1000/bundled-skills/2.1.318/
+/tmp/claude-1000/bundled-skills/2.1.319/
+register: checks=1 failed=0 warnings=0 · set=1 · replaced=1 · appended=0
+=== GO ===
+-- checkdiff on the mutant (expect rating=1, other=2+, NO-GO exit 1) — 2026-11-08T18:50:11-05:00
+models:   Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonnet 5.5, hi …
+register: - Model ratings: 2026-11-08 by M0-TM16
+rating:   M0-T103: Sonnet 5.5, high -> Sonnet 5.5, medium
+OTHER (heading) - ## M0-T104 · Each ending as predicted (G-END) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T103)
+OTHER (heading) + ## M0-T104 · Each ending as predicted (G-END) · **BUILD** · Sonnet 5.5, high · (AFTER M0-T103)
+OTHER - - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.12, §2.12.5, §5.2 (G-TOUCH), §5.5 +
+OTHER + - Read: (mutant) this file (rules + this task) + milestones/m0/m0_contrat.md §1.12, §2.12.5, §5.2 (G-TOUCH), §5.5 +
+checkdiff: models=1 · register=1 · rating=1 · own=0 · other=2
+=== NO-GO: bytes changed outside rating segments, the Models: line, the register's line and own lines ===
+exit=1
+-- checkdiff on the plan (expect models=1, register=1, rating=0, other=0, GO)
+models:   Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonnet 5.5, hi …
+register: - Model ratings: 2026-11-08 by M0-TM16
+checkdiff: models=1 · register=1 · rating=0 · own=0 · other=0
+=== GO ===
+exit=0
+-- plan.py lint after the Models: line and the register — 2026-11-08T18:50:15-05:00
+lint: checks=838 failed=0 warnings=7 · blocks=400 · flow_rows=400 · verify_fences=0 · history=0 · flow=per-task · header=599/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+uname -r: 7.0.0-42-generic
+-- the claim (verify.py --changed --task M0-TM16), 18:53:32: NO-GO — measure_ui[run] 1 failed (its verdict: the copy does not hold p95 + 0.5 and nothing else new); anchor 141 never checked = measure_ui's 141 covered files (git ls-files under its globs), every one missing only its measure_ui entry; 0 other path x scope pairs unproven; plan_lint NOT RUN (its 2 paths checked at the anchor by Verify 1); touched: tasks/M0-TM16.md (added), the plan (modified); assets/calibration.json sha256 a480dc19a54e = HEAD's
+close: checks=3 failed=0 warnings=0 · handoff_lines=1 · flow=per-task
+=== GO ===
+-- after the close — 2026-11-08T18:56:42-05:00
+models:   Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonnet 5.5, hi …
+own:      Flow row | M0-TM16 | PLAN | Rating pass — carried flags on open BUILD blocks past the refresh count since 2026-11-05 | AFTER M0-T
+register: - Model ratings: 2026-11-08 by M0-TM16
+own:      M0-TM16 - Status: DONE (2026-11-08 18:56, started 18:43) …
+own:      M0-TM16 - Handoff: linux-pc (laserax-ai); model=claude-opus-5-5 level=max (rung_record now; the he …
+checkdiff: models=1 · register=1 · rating=0 · own=3 · other=0
+=== GO ===
+exit=0
+lint: checks=837 failed=0 warnings=7 · blocks=400 · flow_rows=400 · verify_fences=0 · history=0 · flow=per-task · header=599/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+-- task file closed out 2026-11-08T18:56:58-05:00

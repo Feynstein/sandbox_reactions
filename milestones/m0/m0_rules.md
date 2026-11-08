@@ -356,3 +356,38 @@ the lead with the new evidence, never applies it. Started by M0-TB, 2026-10-08.
   `Read:` line lists exactly what its block reads (§3.2).
 - **Stepping a near-ceiling block up a rung instead of splitting it** — size is §2.1's: a block too big
   for its rung splits, never steps up (§0, no step up on a guess).
+
+## Repo facts moved byte for byte from the plan by M0-TC14, 2026-11-08 (§11 (iv))
+
+### Hazards: the six win-laptop entries of 2026-10-08
+- 2026-10-08 · win-laptop, `bash` is two programs (M0-TE-win): from PowerShell the toolkit's `bash` is
+  `C:\WINDOWS\system32\bash.exe`, WSL's relay (no `/bin/bash` in its docker-desktop distro) — `verify.py
+  toolchain` read NO-GO 0/3 there; in the Bash tool it is Git's `usr\bin\bash.EXE`. Every toolkit call on
+  win-laptop goes through the Bash tool; no PATH edit (it would shadow Windows' find and sort). Since M0-D23 (2026-10-12)
+  both shells work: verify.py puts Git's `usr\bin` and `~/bin` first on the PATH of the commands it spawns only, so a plain
+  PowerShell window runs every scope (the lead, M0-V3, 2026-10-11: "I shouldnt be forced to use git bash").
+- 2026-10-08 · win-laptop, symlinks and rsync (M0-TE-win): Git Bash copies instead of linking unless
+  `MSYS=winsymlinks:nativestrict` (Developer Mode is on; a user variable now); Windows has no rsync (installed to
+  `~/bin`, the lead's yes). Effect before: scratch_copy.sh's selftest 3/12; now 11/12 (M0-D5 holds the last).
+- 2026-10-08 · win-laptop, the disk is 97 % full (31 GiB free of 953 GiB): `build/target`, the red-arm cache,
+  trunk's cache and node_modules compete for it — read the free space before a lot's first big build.
+- 2026-10-08 · win-laptop, `tools_selftest` read 6 of 10 GO (a Windows file lock, WinError 32, one root cause);
+  M0-D2..D5 fixed the four reds and `verify.py --all` re-ran GO there (500 passed, 3/3 scopes, 98 s wall; logs
+  M0-TE-win-r2.*). The loop is 75–215 s of case time here. A task's logs committed in a commit gate are never
+  appended to — a re-run takes a fresh `--task` id. `tools_selftest[verify]` exit 3221225477 (0xC0000005), no
+  output, no WER event, seen twice under the Store `python3` — routed by M0-D7 (the next Hazard).
+- 2026-10-08 · win-laptop, `python3` is the Store package's alias (3.13.14), not the python.org 3.12.10 behind
+  `python`; `py -3` picks it too (the launcher's default is 3.13). Root cause of M0-D7's suspect: `{python}` is
+  `sys.executable`, here the App Execution Alias `…\WindowsApps\PythonSoftwareFoundation.Python.3.13_…\python.exe`,
+  for every case and every child a selftest fans out. Effect: on win-laptop every toolkit call is `py -3.12
+  tools/pb/<tool> …` (the lead, M0-D7, 2026-10-08); cases run with `PYTHONFAULTHANDLER=1` (verify.py `case_env`),
+  so a native crash leaves its stack in the log — one more 0xC0000005 under 3.12 is a D with that stack.
+
+### Agent on win-laptop
+- Agent on win-laptop (M0-TE-win, 2026-10-08): Claude Code 2.1.294 (`AI_AGENT=claude-code_2-1-294_agent`); the
+  switch plugin `pb-switch@pb` 12.2.1 is installed (`rung_record.py now` → `plugin=installed`). Re-probed 2026-10-11
+  by M0-TE-V12.3: Claude Code 2.1.295 (`AI_AGENT=claude-code_2-1-295_agent`), v12.2's `now` → `plugin=installed`.
+
+### Python
+- Python: a `.venv/` at the repo root when a task needs packages (R1); the playbook's tools need
+  none.
