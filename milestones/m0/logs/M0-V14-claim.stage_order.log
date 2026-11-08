@@ -1,0 +1,29 @@
+== 2026-11-07T17:41:02-05:00 stage_order · task M0-V14-claim · box laserax-ai-server :: bash tests/gpu.sh stage_order physics
+-- stage_order · exit=101 · 0.37 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 0.32s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 2 tests
+test stage_order::the_15_sun_preset_shows_its_stages_in_order ... 
+thread 'stage_order::the_15_sun_preset_shows_its_stages_in_order' (88938) panicked at crates/sr-engine/tests/gpu/stage_order.rs:51:65:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea", assets: "05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test stage_order::the_sun_like_preset_shows_its_stages_in_order ... 
+thread 'stage_order::the_sun_like_preset_shows_its_stages_in_order' (88940) panicked at crates/sr-engine/tests/gpu/stage_order.rs:51:65:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "56df8ade55f98f0e95b03c4c2ff2a643cd247c689401ab526a00246fb0fe1dea", assets: "05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3" }
+FAILED
+
+failures:
+
+failures:
+    stage_order::the_15_sun_preset_shows_its_stages_in_order
+    stage_order::the_sun_like_preset_shows_its_stages_in_order
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 505 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

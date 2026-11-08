@@ -67,6 +67,9 @@ pub const SUN_MASS_NOMINAL: f64 = 2.0 * std::f64::consts::PI * 40.0 * 40.0 / 3.0
 const WISP_FRACTION: f64 = 0.01;
 /// The share of an object's weight a successor must hold to inherit its id (§1.9.2).
 const INHERIT: f64 = 0.25;
+/// A block is degenerate when its densest cell's Π_cold / Π is at least this — the remnant rows' d_c ≥ 0.5 (§1.9.3), read
+/// for τ_deg (§0.5 [M0-D161]).
+const DEGENERATE: f64 = 0.5;
 /// The mass fraction R encloses, and the power fraction R_core encloses (§1.9.2).
 const ENCLOSED: f64 = 0.9;
 /// How far (in blocks) a block reaches to join its neighbours: 1 is 8-connectivity.
@@ -140,6 +143,9 @@ pub struct Object {
     /// U (thermal), K (kinetic, gas), P = ∫Π dA, W = ½Σmφ, M_unb.
     pub thermal: f64,
     pub kinetic: f64,
+    /// K_t: the ordered rotation about c, Σ (p · t̂)² / 2m over the member blocks — a block's momentum at its centroid, t̂
+    /// square to the line from c — the part of K the settled test counts beside P (§0.5 [M0-D160]); none for a lone sink.
+    pub kinetic_t: f64,
     pub pressure: f64,
     pub potential: f64,
     pub unbound: f64,
@@ -148,6 +154,11 @@ pub struct Object {
     pub core_group: Option<usize>,
     pub r_core: Option<f64>,
     pub envelope_mass: Option<f64>,
+    /// τ_deg: the degenerate centre's dynamical time, √(r_deg³ / G M_in) — r_deg the radius about c holding 90 % of the mass
+    /// of the member blocks whose densest cell is degenerate (Π_cold / Π ≥ 0.5), M_in the object's mass (gas blocks and
+    /// sinks) within r_deg, c's own block always in; none without a degenerate block, and for a lone sink. The ending hold
+    /// reads it, else τ_dyn (§0.5 [M0-D161]; `stages::hold_tau`).
+    pub tau_deg: Option<f64>,
 }
 
 /// A component's blocks as the next frame's identity reads them: absolute block coordinates and gas masses.
@@ -396,9 +407,11 @@ impl Object {
         m.insert("core_group".into(), json!(o.core_group));
         m.insert("r_core".into(), o.r_core.map_or(Value::Null, exact));
         m.insert("envelope_mass".into(), o.envelope_mass.map_or(Value::Null, exact));
+        m.insert("tau_deg".into(), o.tau_deg.map_or(Value::Null, exact));
         for (k, x) in o.reals() {
             m.insert(k.into(), exact(*x));
         }
+        m.insert("kinetic_t".into(), exact(o.kinetic_t));
         for (k, xs) in o.lists() {
             m.insert(k.into(), xs.iter().map(|x| exact(*x)).collect());
         }
@@ -414,6 +427,8 @@ impl Object {
             core_group: if v["core_group"].is_null() { None } else { Some(read_whole(v, "core_group")? as usize) },
             r_core: optional("r_core")?,
             envelope_mass: optional("envelope_mass")?,
+            // A snapshot from before §0.5 [M0-D160] has no K_t: it reads 0 until the next frame measures it (the lead, M0-D160).
+            kinetic_t: optional("kinetic_t")?.unwrap_or(0.0),
             ..Object::default()
         };
         for (k, x) in o.reals() {
@@ -428,6 +443,8 @@ impl Object {
                 *x = read_exact(s, k)?;
             }
         }
+        // One written before §0.5 [M0-D161] has no τ_deg: none, so the hold reads τ_dyn until the next frame measures it.
+        o.tau_deg = optional("tau_deg")?;
         Ok(o)
     }
 }
@@ -630,6 +647,20 @@ fn measure(config: &TrackerConfig, report: &Report, members: Vec<usize>) -> Foun
     let radius = radius_holding(&mut entries, ENCLOSED).max(r_min);
     let tau_dyn = (radius.powi(3) / (config.g * mass)).sqrt();
 
+    // τ_deg: the degenerate centre's R₉₀ and the mass within it, c's block always in (§0.5 [M0-D161]): m_up_sb's light end is a
+    // cold core of 4–5 cells inside a Keplerian disk, whose R₉₀ of 76–148 cells made the hold 420–990 t.u. (RTX 4090).
+    let mut degenerate: Vec<(f64, f64)> =
+        list.iter().filter(|&&i| at(i).mass > 0.0 && at(i).cold_ratio >= DEGENERATE).map(|&i| (dist(centroid(i)), at(i).mass)).collect();
+    let tau_deg = if degenerate.is_empty() {
+        None
+    } else {
+        let r = radius_holding(&mut degenerate, ENCLOSED).max(r_min);
+        let gas: f64 = list.iter().filter(|&&i| i == centre_block || dist(centroid(i)) <= r).map(|&i| at(i).mass).sum();
+        let held: f64 = sinks.iter().filter(|&&(k, _)| dist([report.sinks[k].x, report.sinks[k].y]) <= r).map(|&(k, _)| report.sinks[k].m).sum();
+        let m_in = gas + held;
+        (m_in > 0.0).then(|| (r.powi(3) / (config.g * m_in)).sqrt())
+    };
+
     // v_r: Σ (p · r̂) / M, a block's momentum at its centroid, a sink's at its position, a point at c adding none.
     let radial = |p: [f64; 2], at_: [f64; 2]| -> f64 {
         let (dx, dy) = (at_[0] - centre[0], at_[1] - centre[1]);
@@ -643,6 +674,19 @@ fn measure(config: &TrackerConfig, report: &Report, members: Vec<usize>) -> Foun
     let mut radial_sum: f64 = list.iter().map(|&i| radial(at(i).momentum, centroid(i))).sum();
     radial_sum += sinks.iter().map(|&(k, _)| report.sinks[k].m * radial([report.sinks[k].vx, report.sinks[k].vy], [report.sinks[k].x, report.sinks[k].y])).sum::<f64>();
     let v_r = if mass > 0.0 { radial_sum / mass } else { 0.0 };
+    // K_t: each block's momentum square to the line from c, (p · t̂)² / 2m; a block at c adds none (§0.5 [M0-D160]).
+    let tangential = |i: usize| -> f64 {
+        let (b, at_) = (at(i), centroid(i));
+        let (dx, dy) = (at_[0] - centre[0], at_[1] - centre[1]);
+        let d = dx.hypot(dy);
+        if b.mass > 0.0 && d > 1e-12 {
+            let p_t = (b.momentum[1] * dx - b.momentum[0] * dy) / d;
+            p_t * p_t / (2.0 * b.mass)
+        } else {
+            0.0
+        }
+    };
+    let kinetic_t: f64 = list.iter().map(|&i| tangential(i)).sum();
 
     // Powers over the frame.
     let dt = report.sim_dt;
@@ -693,12 +737,14 @@ fn measure(config: &TrackerConfig, report: &Report, members: Vec<usize>) -> Foun
         v_r,
         thermal: sum(&|b| b.thermal),
         kinetic: sum(&|b| b.kinetic),
+        kinetic_t,
         pressure: sum(&|b| b.pressure),
         potential: 0.5 * sum(&|b| b.phi_m),
         unbound: sum(&|b| b.unbound),
         core_group: dominant,
         r_core,
         envelope_mass,
+        tau_deg,
     };
     Found { object, weights, list: members, sinks: sinks.into_iter().map(|(k, _)| k).collect() }
 }
@@ -1108,6 +1154,73 @@ mod tests {
         r.blocks[3].momentum = [0.0, -20.0]; // inward
         let o = Tracker::new(cfg()).update(&r).to_vec();
         assert!((o[0].v_r - (30.0 + 30.0 - 20.0) / 1000.0).abs() < 1e-12, "{}", o[0].v_r);
+        assert_eq!(o[0].kinetic_t, 0.0, "radial momenta: no rotation");
+    }
+
+    #[test]
+    fn the_rotation_is_the_tangential_kinetic_energy_about_the_centre() {
+        // §0.5 [M0-D160]: K_t = Σ (p · t̂)² / 2m, a block's momentum at its centroid; c = (1.5, 1.5) as above.
+        let mut r = report(4, 1);
+        put(&mut r, 0, 0, 0.0);
+        put_at(&mut r, 1, 0, 400.0, [11.5, 1.5]);
+        put_at(&mut r, 2, 0, 400.0, [-8.5, 1.5]);
+        put_at(&mut r, 3, 0, 200.0, [1.5, 11.5]);
+        r.blocks[1].momentum = [30.0, 40.0]; // 30 outward, 40 along the orbit
+        r.blocks[2].momentum = [0.0, -40.0]; // 40 along the orbit, the same sense
+        r.blocks[3].momentum = [-20.0, -10.0]; // 20 along the orbit, 10 inward
+        let o = Tracker::new(cfg()).update(&r).to_vec();
+        let k_t = 40.0 * 40.0 / 800.0 + 40.0 * 40.0 / 800.0 + 20.0 * 20.0 / 400.0;
+        assert!((o[0].kinetic_t - k_t).abs() < 1e-12, "{} against {k_t}", o[0].kinetic_t);
+        assert!((o[0].v_r - (30.0 - 10.0) / 1000.0).abs() < 1e-12, "{}", o[0].v_r);
+    }
+
+    #[test]
+    fn the_snapshot_carries_the_rotation_and_reads_one_without_it_as_none() {
+        // §0.5 [M0-D160] (the lead: «Read missing as 0»): a version-3 snapshot written before K_t still restores.
+        let o = Object { id: 1, mass: 309.054, kinetic: 655.23, kinetic_t: 622.38, pressure: 383.77, potential: -2155.67, ..Object::default() };
+        let snap = o.snapshot();
+        assert_eq!(Object::restore(&snap), Ok(o.clone()), "round trip");
+        let mut old = snap;
+        old.as_object_mut().unwrap().remove("kinetic_t");
+        assert_eq!(Object::restore(&old), Ok(Object { kinetic_t: 0.0, ..o }), "no K_t: none until the next frame measures it");
+    }
+
+    #[test]
+    fn the_degenerate_centre_has_its_own_dynamical_time() {
+        // §0.5 [M0-D161]: τ_deg = √(r_deg³ / G M_in), r_deg the degenerate blocks' R₉₀ about c, M_in the mass within it.
+        let mut r = report(8, 8);
+        rect(&mut r, 1..7, 1..7, 50.0); // a disk of blocks whose densest cells are not degenerate
+        put(&mut r, 3, 3, 300.0);
+        r.blocks[3 * 8 + 3].max_sigma = 2.0; // c = (13.5, 13.5)
+        r.blocks[3 * 8 + 3].cold_ratio = 0.9;
+        put(&mut r, 4, 3, 100.0);
+        r.blocks[3 * 8 + 4].cold_ratio = 0.5; // degenerate at the bound
+        let o = Tracker::new(cfg()).update(&r).to_vec();
+        // The degenerate blocks at 0.5√2 (300) and √(4.5² + 0.5²) (100): 90 % of 400 is 300 + 60 % of the second.
+        let (d0, d1) = (0.5f64.hypot(0.5), 4.5f64.hypot(0.5));
+        let r_deg = d0 + (d1 - d0) * 0.6;
+        // Within r_deg ≈ 3.0: c's block alone (the nearest disk block's centroid is 3.54 away).
+        let tau_deg = (r_deg.powi(3) / 300.0).sqrt();
+        assert!((o[0].tau_deg.unwrap() - tau_deg).abs() < 1e-12, "{:?} against {tau_deg}", o[0].tau_deg);
+        assert!(o[0].tau_dyn > 2.0 * tau_deg, "the disk's τ_dyn {} is the object's", o[0].tau_dyn);
+        // 0.4999 is not degenerate: the second block leaves, r_deg is 90 % of the first's distance, floored at half a block.
+        r.blocks[3 * 8 + 4].cold_ratio = 0.4999;
+        let o = Tracker::new(cfg()).update(&r).to_vec();
+        assert!((o[0].tau_deg.unwrap() - (8.0f64 / 300.0).sqrt()).abs() < 1e-12, "{:?}", o[0].tau_deg);
+        // No degenerate block: none, and the hold reads τ_dyn.
+        r.blocks[3 * 8 + 3].cold_ratio = 0.0;
+        assert_eq!(Tracker::new(cfg()).update(&r)[0].tau_deg, None);
+    }
+
+    #[test]
+    fn the_snapshot_carries_tau_deg_and_reads_one_without_it_as_none() {
+        // §0.5 [M0-D161]: a version-3 snapshot written before τ_deg restores with none — the hold reads τ_dyn for that frame.
+        let o = Object { id: 1, mass: 1460.94, tau_dyn: 38.0173, tau_deg: Some(0.441843), ..Object::default() };
+        let snap = o.snapshot();
+        assert_eq!(Object::restore(&snap), Ok(o.clone()), "round trip");
+        let mut old = snap;
+        old.as_object_mut().unwrap().remove("tau_deg");
+        assert_eq!(Object::restore(&old), Ok(Object { tau_deg: None, ..o }));
     }
 
     #[test]

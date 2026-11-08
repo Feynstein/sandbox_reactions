@@ -1,0 +1,13 @@
+capture · clean · GO · arm 1/10, 9 left
+capture · plant capture-no-captions · RED (proven: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the captures do not match §3.3; capture[actions]: 1 fai) · arm 2/10, 8 left
+capture · plant capture-edge-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the top bar of edge-leave is the same as edge's: th) · arm 3/10, 7 left
+capture · plant capture-paint-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the world's upper-left corner of paint differs from) · arm 4/10, 6 left
+capture · plant capture-star-panel-blank · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the right panel of select holds 3835 lit pixels, st) · arm 5/10, 5 left
+capture · plant capture-hover-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the right panel of hover is the same as select's: t) · arm 6/10, 4 left
+capture · plant capture-hover-off-world · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the right panel of hover-outside holds 10126 lit pi) · arm 7/10, 3 left
+capture · plant capture-glow-white-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the world of star-glow-white is the same as star-gl) · arm 8/10, 2 left
+capture · plant capture-zoom-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the world of star-zoom is the same as star-heat-fit) · arm 9/10, 1 left
+capture · plant capture-preset-at-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the dropped star spans x 424..457, y 228..261 px (c) · arm 10/10, 0 left
+redarm: 9 plants · 9 red · 0 green · 0 errors · scope capture · 322.57 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-V14-lpc.capture.redarm.log
+=== GO ===
+capture exit=0

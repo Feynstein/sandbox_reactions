@@ -1,0 +1,356 @@
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=5009 sim_time=58.529 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01123 s/step   0.006181 P5_ceil         0
+  star   M            3335 R           15.21 tau_dyn     1.028 M_unb           0
+  core   sigma_c     8.911 T_c         37.19 d_c        0.6137 Ye_c       0.8573
+  centre X_Fe            0 X_n             0 v_r     -0.009426 vr/vdyn -6.367e-4
+  light  L            2267 L_nuc        2162 L_N             0 L_nu            0
+  world  escaped     9.674 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=10001 sim_time=114.562 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01124 s/step   0.006012 P5_ceil         0
+  star   M            3337 R           15.25 tau_dyn     1.031 M_unb           0
+  core   sigma_c     9.023 T_c         38.46 d_c        0.6066 Ye_c       0.8458
+  centre X_Fe            0 X_n             0 v_r     -0.008850 vr/vdyn -5.982e-4
+  light  L            2351 L_nuc        2362 L_N             0 L_nu            0
+  world  escaped     11.17 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=15009 sim_time=171.020 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01130 s/step   0.008046 P5_ceil         0
+  star   M            3338 R           15.56 tau_dyn     1.062 M_unb           0
+  core   sigma_c     9.066 T_c         39.51 d_c        0.5992 Ye_c       0.8334
+  centre X_Fe            0 X_n             0 v_r     -0.006485 vr/vdyn -4.427e-4
+  light  L            2476 L_nuc        2503 L_N             0 L_nu            0
+  world  escaped     11.20 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=20001 sim_time=227.558 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01135 s/step   0.003144 P5_ceil         0
+  star   M            3337 R           15.57 tau_dyn     1.063 M_unb           0
+  core   sigma_c     9.180 T_c         40.70 d_c        0.5926 Ye_c       0.8204
+  centre X_Fe            0 X_n             0 v_r     -0.007171 vr/vdyn -4.897e-4
+  light  L            2618 L_nuc        2630 L_N             0 L_nu            0
+  world  escaped     11.20 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=25009 sim_time=284.478 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01139 s/step   0.003157 P5_ceil         0
+  star   M            3336 R           15.87 tau_dyn     1.094 M_unb           0
+  core   sigma_c     9.345 T_c         41.86 d_c        0.5873 Ye_c       0.8065
+  centre X_Fe            0 X_n             0 v_r     -0.007351 vr/vdyn -5.069e-4
+  light  L            2762 L_nuc        2777 L_N             0 L_nu            0
+  world  escaped     11.20 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=30001 sim_time=341.409 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01142 s/step   0.003007 P5_ceil         0
+  star   M            3335 R           16.14 tau_dyn     1.123 M_unb           0
+  core   sigma_c     9.546 T_c         43.10 d_c        0.5823 Ye_c       0.7916
+  centre X_Fe            0 X_n             0 v_r     -0.008128 vr/vdyn -5.655e-4
+  light  L            2930 L_nuc        2934 L_N             0 L_nu            0
+  world  escaped     11.20 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=35009 sim_time=398.704 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01146 s/step   0.003012 P5_ceil         0
+  star   M            3333 R           16.38 tau_dyn     1.148 M_unb           0
+  core   sigma_c     9.803 T_c         44.44 d_c        0.5779 Ye_c       0.7763
+  centre X_Fe            0 X_n             0 v_r     -0.008668 vr/vdyn -6.076e-4
+  light  L            3111 L_nuc        3116 L_N             0 L_nu            0
+  world  escaped     11.20 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=40001 sim_time=455.979 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01149 s/step   0.003077 P5_ceil         0
+  star   M            3332 R           16.75 tau_dyn     1.188 M_unb           0
+  core   sigma_c     10.10 T_c         45.89 d_c        0.5737 Ye_c       0.7603
+  centre X_Fe            0 X_n             0 v_r     -0.009980 vr/vdyn -7.077e-4
+  light  L            3317 L_nuc        3302 L_N             0 L_nu            0
+  world  escaped     11.20 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=45009 sim_time=513.545 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01150 s/step   0.002916 P5_ceil         0
+  star   M            3330 R           16.76 tau_dyn     1.189 M_unb           0
+  core   sigma_c     10.49 T_c         47.42 d_c        0.5709 Ye_c       0.7431
+  centre X_Fe            0 X_n             0 v_r      -0.01097 vr/vdyn -7.784e-4
+  light  L            3536 L_nuc        3515 L_N             0 L_nu            0
+  world  escaped     11.20 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=50001 sim_time=570.966 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01150 s/step   0.003124 P5_ceil         0
+  star   M            3328 R           16.86 tau_dyn     1.200 M_unb           0
+  core   sigma_c     11.01 T_c         48.69 d_c        0.5718 Ye_c       0.7264
+  centre X_Fe            0 X_n             0 v_r      -0.01213 vr/vdyn -8.632e-4
+  light  L            3780 L_nuc        3747 L_N             0 L_nu            0
+  world  escaped     11.20 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=55009 sim_time=628.491 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01147 s/step   0.003058 P5_ceil         0
+  star   M            3326 R           16.95 tau_dyn     1.209 M_unb           0
+  core   sigma_c     11.61 T_c         49.72 d_c        0.5754 Ye_c       0.7118
+  centre X_Fe            0 X_n             0 v_r      -0.01283 vr/vdyn -9.158e-4
+  light  L            4068 L_nuc        4026 L_N             0 L_nu            0
+  world  escaped     11.20 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=60001 sim_time=685.622 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01141 s/step   0.003070 P5_ceil         0
+  star   M            3324 R           17.01 tau_dyn     1.217 M_unb           0
+  core   sigma_c     12.35 T_c         50.63 d_c        0.5812 Ye_c       0.6960
+  centre X_Fe            0 X_n             0 v_r      -0.01358 vr/vdyn -9.710e-4
+  light  L            4389 L_nuc        4344 L_N             0 L_nu            0
+  world  escaped     11.20 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=65009 sim_time=742.563 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01133 s/step   0.003114 P5_ceil         0
+  star   M            3322 R           17.01 tau_dyn     1.217 M_unb           0
+  core   sigma_c     13.13 T_c         50.69 d_c        0.5923 Ye_c       0.6892
+  centre X_Fe            0 X_n             0 v_r      -0.01472 vr/vdyn -0.001054
+  light  L            4761 L_nuc        4706 L_N             0 L_nu            0
+  world  escaped     11.20 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=70001 sim_time=798.917 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01125 s/step   0.003277 P5_ceil         0
+  star   M            3319 R           17.02 tau_dyn     1.218 M_unb           0
+  core   sigma_c     13.88 T_c         51.72 d_c        0.5973 Ye_c       0.6799
+  centre X_Fe            0 X_n             0 v_r      -0.01608 vr/vdyn -0.001152
+  light  L            5165 L_nuc        5110 L_N             0 L_nu            0
+  world  escaped     11.20 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=75009 sim_time=855.048 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01118 s/step   0.003344 P5_ceil         0
+  star   M            3316 R           17.02 tau_dyn     1.219 M_unb           0
+  core   sigma_c     14.72 T_c         53.76 d_c        0.5979 Ye_c       0.6661
+  centre X_Fe            0 X_n             0 v_r      -0.01682 vr/vdyn -0.001205
+  light  L            5626 L_nuc        5582 L_N             0 L_nu            0
+  world  escaped     11.20 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=80001 sim_time=910.767 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01115 s/step   0.003433 P5_ceil         0
+  star   M            3312 R           17.22 tau_dyn     1.242 M_unb           0
+  core   sigma_c     15.64 T_c         56.24 d_c        0.5971 Ye_c       0.6519
+  centre X_Fe            0 X_n             0 v_r      -0.01834 vr/vdyn -0.001323
+  light  L            6174 L_nuc        6102 L_N             0 L_nu            0
+  world  escaped     11.20 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=85009 sim_time=966.504 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01109 s/step   0.003752 P5_ceil         0
+  star   M            3307 R           17.27 tau_dyn     1.248 M_unb           0
+  core   sigma_c     16.90 T_c         59.18 d_c        0.5976 Ye_c       0.6329
+  centre X_Fe            0 X_n             0 v_r      -0.02025 vr/vdyn -0.001463
+  light  L            6820 L_nuc        6731 L_N             0 L_nu            0
+  world  escaped     11.20 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=90001 sim_time=1021.434 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01090 s/step   0.004095 P5_ceil         0
+  star   M            3299 R           17.38 tau_dyn     1.262 M_unb           0
+  core   sigma_c     18.59 T_c         62.06 d_c        0.6024 Ye_c       0.6124
+  centre X_Fe            0 X_n             0 v_r      -0.02523 vr/vdyn -0.001831
+  light  L            7615 L_nuc        7532 L_N             0 L_nu            0
+  world  escaped     11.20 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=95009 sim_time=1075.855 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01091 s/step   0.004724 P5_ceil         0
+  star   M            3288 R           17.52 tau_dyn     1.279 M_unb           0
+  core   sigma_c     20.74 T_c         62.30 d_c        0.6220 Ye_c       0.6055
+  centre X_Fe            0 X_n             0 v_r      -0.02077 vr/vdyn -0.001516
+  light  L            8528 L_nuc        8408 L_N             0 L_nu            0
+  world  escaped     12.21 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=100001 sim_time=1130.502 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01096 s/step   0.005359 P5_ceil         0
+  star   M            3271 R           18.34 tau_dyn     1.373 M_unb           0
+  core   sigma_c     22.44 T_c         69.19 d_c        0.6097 Ye_c       0.5754
+  centre X_Fe            0 X_n             0 v_r      0.008556 vr/vdyn  6.406e-4
+  light  L            9515 L_nuc        9799 L_N             0 L_nu            0
+  world  escaped     19.21 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=105009 sim_time=1185.830 heat_unconverged=0 stage=he_core | raw=he_core
+  frame  steps          16 dt        0.01102 s/step   0.005359 P5_ceil         0
+  star   M            3226 R           20.17 tau_dyn     1.594 M_unb           0
+  core   sigma_c     26.31 T_c         84.08 d_c        0.6346 Ye_c       0.5217
+  centre X_Fe            0 X_n             0 v_r      0.009370 vr/vdyn  7.408e-4
+  light  L           10813 L_nuc       10698 L_N             0 L_nu            0
+  world  escaped     43.41 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=110001 sim_time=1241.147 heat_unconverged=0 stage=he_core | raw=he_core
+  frame  steps          16 dt        0.01109 s/step   0.005370 P5_ceil         0
+  star   M            3146 R           23.73 tau_dyn     2.061 M_unb           0
+  core   sigma_c     29.57 T_c         86.91 d_c        0.6599 Ye_c       0.5085
+  centre X_Fe            0 X_n             0 v_r       0.07731 vr/vdyn  0.006715
+  light  L           11801 L_nuc       11922 L_N             0 L_nu            0
+  world  escaped     103.0 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=115009 sim_time=1295.960 heat_unconverged=0 stage=he_core | raw=he_core
+  frame  steps          16 dt        0.01093 s/step   0.005394 P5_ceil         0
+  star   M            2994 R           26.37 tau_dyn     2.475 M_unb     0.05770
+  core   sigma_c     33.12 T_c         85.76 d_c        0.6823 Ye_c       0.5103
+  centre X_Fe            0 X_n             0 v_r        0.1429 vr/vdyn   0.01341
+  light  L           12592 L_nuc       13185 L_N             0 L_nu            0
+  world  escaped     236.7 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=120001 sim_time=1350.342 heat_unconverged=0 stage=he_core | raw=he_core
+  frame  steps          16 dt        0.01074 s/step   0.005395 P5_ceil         0
+  star   M            2777 R           28.71 tau_dyn     2.920 M_unb       25.70
+  core   sigma_c     38.36 T_c         87.05 d_c        0.7081 Ye_c       0.5046
+  centre X_Fe            0 X_n             0 v_r        0.1727 vr/vdyn   0.01757
+  light  L           13446 L_nuc       13182 L_N             0 L_nu            0
+  world  escaped     447.6 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=125009 sim_time=1402.655 heat_unconverged=0 stage=he_core | raw=he_core
+  frame  steps          16 dt        0.01021 s/step   0.005383 P5_ceil         0
+  star   M            2547 R           16.84 tau_dyn     1.369 M_unb           0
+  core   sigma_c     45.23 T_c         91.90 d_c        0.7256 Ye_c       0.5015
+  centre X_Fe            0 X_n             0 v_r       0.03197 vr/vdyn  0.002599
+  light  L           14995 L_nuc       15209 L_N             0 L_nu       0.4495
+  world  escaped     668.8 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=130001 sim_time=1453.649 heat_unconverged=0 stage=he_core | raw=he_core
+  frame  steps          16 dt        0.01008 s/step   0.005394 P5_ceil         0
+  star   M            2338 R           20.21 tau_dyn     1.880 M_unb       48.71
+  core   sigma_c     48.11 T_c         88.16 d_c        0.7423 Ye_c       0.5030
+  centre X_Fe            0 X_n             0 v_r        0.2048 vr/vdyn   0.01905
+  light  L           18962 L_nuc       18559 L_N             0 L_nu       0.1697
+  world  escaped     871.5 objects         1 sinks           0 sink_M          0
+SR-HEADLESS DONE steps=133681 sim_time=1483.844111 until=met
+SR-CALIBRATE run item=m_up_sb side=Light mass=3351.032 ignited=true core_collapse=false ending=white_dwarf steps=133681 sim_time=1483.844 wall_s=590.0 record=build/calibrate_runs/2026-11-08T13-33-47Z/m_up_sb-01
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1553 sim_time=10.807840 until=met
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=46914.450 ignited=true core_collapse=true ending=none steps=1553 sim_time=10.808 wall_s=19.1 record=build/calibrate_runs/2026-11-08T13-33-47Z/m_up_sb-02
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1169 sim_time=8.693636 until=met
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=12538.414 ignited=true core_collapse=true ending=none steps=1169 sim_time=8.694 wall_s=11.1 record=build/calibrate_runs/2026-11-08T13-33-47Z/m_up_sb-03
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=913 sim_time=7.696843 until=met
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=6482.024 ignited=true core_collapse=true ending=none steps=913 sim_time=7.697 wall_s=6.7 record=build/calibrate_runs/2026-11-08T13-33-47Z/m_up_sb-04
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=817 sim_time=7.411458 until=met
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=4660.630 ignited=true core_collapse=true ending=none steps=817 sim_time=7.411 wall_s=6.0 record=build/calibrate_runs/2026-11-08T13-33-47Z/m_up_sb-05
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=817 sim_time=7.580710 until=met
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=3951.951 ignited=true core_collapse=true ending=none steps=817 sim_time=7.581 wall_s=6.3 record=build/calibrate_runs/2026-11-08T13-33-47Z/m_up_sb-06
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=913 sim_time=8.528645 until=met
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=3639.109 ignited=true core_collapse=true ending=none steps=913 sim_time=8.529 wall_s=5.9 record=build/calibrate_runs/2026-11-08T13-33-47Z/m_up_sb-07
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=5009 sim_time=58.514 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01126 s/step   0.005815 P5_ceil         0
+  star   M            3470 R           16.71 tau_dyn     1.160 M_unb           0
+  core   sigma_c     8.594 T_c         39.07 d_c        0.5940 Ye_c       0.8538
+  centre X_Fe            0 X_n             0 v_r      -0.01067 vr/vdyn -7.406e-4
+  light  L            2903 L_nuc        2786 L_N             0 L_nu            0
+  world  escaped     14.26 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=10001 sim_time=114.780 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01129 s/step   0.005889 P5_ceil         0
+  star   M            3473 R           16.75 tau_dyn     1.163 M_unb           0
+  core   sigma_c     8.727 T_c         40.34 d_c        0.5875 Ye_c       0.8405
+  centre X_Fe            0 X_n             0 v_r     -0.007546 vr/vdyn -5.240e-4
+  light  L            3007 L_nuc        3009 L_N             0 L_nu            0
+  world  escaped     16.23 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=15009 sim_time=171.433 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01133 s/step   0.007194 P5_ceil         0
+  star   M            3473 R           16.89 tau_dyn     1.178 M_unb           0
+  core   sigma_c     8.885 T_c         41.50 d_c        0.5819 Ye_c       0.8259
+  centre X_Fe            0 X_n             0 v_r     -0.005986 vr/vdyn -4.175e-4
+  light  L            3171 L_nuc        3177 L_N             0 L_nu            0
+  world  escaped     16.26 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=20001 sim_time=228.084 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01137 s/step   0.003678 P5_ceil         0
+  star   M            3473 R           16.99 tau_dyn     1.189 M_unb           0
+  core   sigma_c     9.101 T_c         42.68 d_c        0.5777 Ye_c       0.8107
+  centre X_Fe            0 X_n             0 v_r     -0.006563 vr/vdyn -4.591e-4
+  light  L            3367 L_nuc        3371 L_N             0 L_nu            0
+  world  escaped     16.26 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=25009 sim_time=285.088 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01140 s/step   0.003080 P5_ceil         0
+  star   M            3472 R           17.08 tau_dyn     1.198 M_unb           0
+  core   sigma_c     9.358 T_c         44.08 d_c        0.5731 Ye_c       0.7944
+  centre X_Fe            0 X_n             0 v_r     -0.007646 vr/vdyn -5.363e-4
+  light  L            3586 L_nuc        3575 L_N             0 L_nu            0
+  world  escaped     16.26 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=30001 sim_time=342.047 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01142 s/step   0.003067 P5_ceil         0
+  star   M            3471 R           17.21 tau_dyn     1.212 M_unb           0
+  core   sigma_c     9.669 T_c         45.55 d_c        0.5692 Ye_c       0.7774
+  centre X_Fe            0 X_n             0 v_r     -0.008190 vr/vdyn -5.768e-4
+  light  L            3817 L_nuc        3806 L_N             0 L_nu            0
+  world  escaped     16.26 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=35009 sim_time=399.314 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01144 s/step   0.003048 P5_ceil         0
+  star   M            3469 R           17.26 tau_dyn     1.217 M_unb           0
+  core   sigma_c     10.05 T_c         47.13 d_c        0.5661 Ye_c       0.7593
+  centre X_Fe            0 X_n             0 v_r     -0.009378 vr/vdyn -6.614e-4
+  light  L            4092 L_nuc        4068 L_N             0 L_nu            0
+  world  escaped     16.26 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=40001 sim_time=456.467 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01145 s/step   0.003102 P5_ceil         0
+  star   M            3467 R           17.34 tau_dyn     1.227 M_unb           0
+  core   sigma_c     10.56 T_c         48.74 d_c        0.5651 Ye_c       0.7401
+  centre X_Fe            0 X_n             0 v_r      -0.01036 vr/vdyn -7.324e-4
+  light  L            4395 L_nuc        4364 L_N             0 L_nu            0
+  world  escaped     16.26 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=45009 sim_time=513.786 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01144 s/step   0.003102 P5_ceil         0
+  star   M            3465 R           17.35 tau_dyn     1.228 M_unb           0
+  core   sigma_c     11.18 T_c         50.33 d_c        0.5660 Ye_c       0.7211
+  centre X_Fe            0 X_n             0 v_r      -0.01145 vr/vdyn -8.099e-4
+  light  L            4739 L_nuc        4701 L_N             0 L_nu            0
+  world  escaped     16.26 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=50001 sim_time=570.780 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01139 s/step   0.003134 P5_ceil         0
+  star   M            3463 R           17.41 tau_dyn     1.234 M_unb           0
+  core   sigma_c     11.94 T_c         51.48 d_c        0.5715 Ye_c       0.7044
+  centre X_Fe            0 X_n             0 v_r      -0.01299 vr/vdyn -9.211e-4
+  light  L            5142 L_nuc        5077 L_N             0 L_nu            0
+  world  escaped     16.26 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=55009 sim_time=627.574 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01129 s/step   0.003287 P5_ceil         0
+  star   M            3460 R           17.52 tau_dyn     1.246 M_unb           0
+  core   sigma_c     12.67 T_c         52.04 d_c        0.5798 Ye_c       0.6960
+  centre X_Fe            0 X_n             0 v_r      -0.01290 vr/vdyn -9.180e-4
+  light  L            5590 L_nuc        5537 L_N             0 L_nu            0
+  world  escaped     16.26 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=60001 sim_time=683.867 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01127 s/step   0.003410 P5_ceil         0
+  star   M            3456 R           17.57 tau_dyn     1.252 M_unb           0
+  core   sigma_c     13.72 T_c         54.25 d_c        0.5831 Ye_c       0.6770
+  centre X_Fe            0 X_n             0 v_r      -0.01255 vr/vdyn -8.949e-4
+  light  L            6118 L_nuc        6045 L_N             0 L_nu            0
+  world  escaped     16.26 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=65009 sim_time=740.199 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01125 s/step   0.003575 P5_ceil         0
+  star   M            3452 R           17.61 tau_dyn     1.257 M_unb           0
+  core   sigma_c     15.03 T_c         55.65 d_c        0.5930 Ye_c       0.6612
+  centre X_Fe            0 X_n             0 v_r      -0.01252 vr/vdyn -8.943e-4
+  light  L            6756 L_nuc        6646 L_N             0 L_nu            0
+  world  escaped     16.26 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=70001 sim_time=796.300 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01123 s/step   0.003855 P5_ceil         0
+  star   M            3446 R           17.64 tau_dyn     1.263 M_unb           0
+  core   sigma_c     16.38 T_c         59.21 d_c        0.5920 Ye_c       0.6381
+  centre X_Fe            0 X_n             0 v_r     -0.008405 vr/vdyn -6.015e-4
+  light  L            7453 L_nuc        7369 L_N             0 L_nu            0
+  world  escaped     16.26 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=75009 sim_time=852.398 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01118 s/step   0.004412 P5_ceil         0
+  star   M            3437 R           18.06 tau_dyn     1.309 M_unb           0
+  core   sigma_c     18.10 T_c         63.53 d_c        0.5913 Ye_c       0.6115
+  centre X_Fe            0 X_n             0 v_r     -0.006751 vr/vdyn -4.894e-4
+  light  L            8325 L_nuc        8258 L_N             0 L_nu            0
+  world  escaped     16.26 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=80001 sim_time=908.046 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01113 s/step   0.005159 P5_ceil         0
+  star   M            3423 R           18.39 tau_dyn     1.348 M_unb           0
+  core   sigma_c     20.26 T_c         70.11 d_c        0.5866 Ye_c       0.5773
+  centre X_Fe            0 X_n             0 v_r     -0.002021 vr/vdyn -1.481e-4
+  light  L            9349 L_nuc        9382 L_N             0 L_nu            0
+  world  escaped     19.71 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=85009 sim_time=963.717 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01094 s/step   0.005352 P5_ceil         0
+  star   M            3393 R           19.35 tau_dyn     1.462 M_unb           0
+  core   sigma_c     24.71 T_c         80.30 d_c        0.6252 Ye_c       0.5298
+  centre X_Fe            0 X_n             0 v_r     -0.009315 vr/vdyn -7.035e-4
+  light  L           10711 L_nuc       10447 L_N             0 L_nu            0
+  world  escaped     33.41 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=90001 sim_time=1017.567 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+  frame  steps          16 dt        0.01066 s/step   0.005339 P5_ceil         0
+  star   M            3348 R           20.17 tau_dyn     1.565 M_unb           0
+  core   sigma_c     28.63 T_c         89.69 d_c        0.6479 Ye_c       0.5095
+  centre X_Fe            0 X_n             0 v_r       0.01314 vr/vdyn  0.001020
+  light  L           12081 L_nuc       12100 L_N             0 L_nu            0
+  world  escaped     66.46 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=95009 sim_time=1071.110 heat_unconverged=0 stage=he_core | raw=he_core
+  frame  steps          16 dt        0.01076 s/step   0.005357 P5_ceil         0
+  star   M            3260 R           26.07 tau_dyn     2.331 M_unb           0
+  core   sigma_c     30.36 T_c         87.15 d_c        0.6610 Ye_c       0.5147
+  centre X_Fe            0 X_n             0 v_r        0.1277 vr/vdyn   0.01142
+  light  L           13107 L_nuc       13669 L_N             0 L_nu            0
+  world  escaped     133.2 objects         1 sinks           0 sink_M          0
+SR-CALIBRATE progress item=m_up_sb mass=3492.101 step=100001 sim_time=1119.396 heat_unconverged=0 stage=iron_core | raw=iron_core
+  frame  steps          16 dt       0.007413 s/step    0.01427 P5_ceil         0
+  star   M            2966 R           178.8 tau_dyn     43.90 M_unb       476.3
+  core   sigma_c     144.1 T_c       0.05002 d_c        0.9999 Ye_c       0.3703
+  centre X_Fe       0.7976 X_n        0.2024 v_r         3.401 vr/vdyn    0.8350
+  light  L           13053 L_nuc    5.894e-9 L_N             0 L_nu            0
+  world  escaped     474.9 objects         1 sinks           0 sink_M          0
+SR-HEADLESS DONE steps=102513 sim_time=1142.176382 until=met
+SR-CALIBRATE run item=m_up_sb side=Light mass=3492.101 ignited=true core_collapse=false ending=white_dwarf steps=102513 sim_time=1142.176 wall_s=470.1 record=build/calibrate_runs/2026-11-08T13-33-47Z/m_up_sb-08
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=897 sim_time=8.711968 until=met
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=3564.848 ignited=true core_collapse=true ending=none steps=897 sim_time=8.712 wall_s=5.7 record=build/calibrate_runs/2026-11-08T13-33-47Z/m_up_sb-09
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=961 sim_time=9.185374 until=met
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=3528.287 ignited=true core_collapse=true ending=none steps=961 sim_time=9.185 wall_s=6.1 record=build/calibrate_runs/2026-11-08T13-33-47Z/m_up_sb-10
+SR-CALIBRATE item=m_up_sb value=3510.148 bracket=3492.101..3528.287 runs=10 wall_s=1131.8
+SR-CALIBRATE item=max_gas_speed value=50.1296
+SR-CALIBRATE DONE out=build/m0-d161/calibration.json wall_s=1131.9
+EXIT=0

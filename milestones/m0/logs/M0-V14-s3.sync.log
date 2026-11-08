@@ -1,0 +1,3 @@
+2026-11-08T09:42:35-05:00 R18 rsync up (the route): rsync -a --exclude .git --exclude build --exclude .venv ./ ybelanger@192.168.1.134:workspace/sandbox_reactions/
+rsync exit=0
+after the sync: linux-pc 15059 files, every one on the server: False (missing 24), differing 2 ['./milestones/m0/logs/M0-V14-s3.log', './milestones/m0/logs/M0-V14-s3.sync.log']; server-only files 435 (older blocks' logs, kept)

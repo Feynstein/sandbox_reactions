@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/stages.rs
++++ b/crates/sr-physics/src/observe/stages.rs
+@@ -294,7 +294,7 @@
+ /// every few hundred steps never let it reach. The engine's `ending` event, summary.json's readout and the app's readout read
+ /// [`ending_hold`] of this.
+ pub fn hold_tau(o: &Object) -> f64 {
+-    o.tau_deg.unwrap_or(o.tau_dyn)
++    o.tau_dyn
+ }
+ 
+ /// How long (t.u.) a remnant stage must show before it is the object's ending: max(10 t.u., 20 τ_dyn), τ_dyn the object's at

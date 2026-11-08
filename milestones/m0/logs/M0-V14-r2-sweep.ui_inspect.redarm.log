@@ -1,0 +1,62 @@
+==== 2026-11-08T13:22:16-05:00 ui_inspect · clean · a fresh scratch copy of the tree
+== 2026-11-08T13:22:17-05:00 ui_inspect · task M0-V14-r2-sweep · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::right::inspect_tests
+-- ui_inspect · exit=0 · 5.93 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-n20f0f0c/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-n20f0f0c/arm0/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-n20f0f0c/arm0/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.85s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 9 tests
+test ui::right::inspect_tests::a_gas_cell_reads_each_line_in_the_contracts_numbers ... ok
+test ui::right::inspect_tests::hovering_every_frame_keeps_one_request_in_flight ... ok
+test ui::right::inspect_tests::outside_the_world_the_panel_asks_for_a_hover ... ok
+test ui::right::inspect_tests::nothing_is_asked_off_the_world_and_a_refusal_frees_the_slot ... ok
+test ui::right::inspect_tests::the_temperature_is_translated_to_kelvins_as_the_star_readout_does ... ok
+test ui::right::inspect_tests::the_mix_is_never_more_than_three_species ... ok
+test ui::right::inspect_tests::the_mix_lists_the_largest_shares_first_and_cuts_at_half_a_percent ... ok
+test ui::right::inspect_tests::a_cell_below_sigma_vac_is_empty_space ... ok
+test ui::right::inspect_tests::the_mach_number_is_the_speed_over_the_wave_speed ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 154 filtered out; finished in 0.01s
+
+
+==== 2026-11-08T13:22:23-05:00 ui_inspect · plant inspect-mix-four · a fresh scratch copy of the tree
+planted inspect-mix-four: tests/plants/inspect-mix-four.patch -> crates/sr-app/src/ui/right.rs
+== 2026-11-08T13:22:23-05:00 ui_inspect · task M0-V14-r2-sweep · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::right::inspect_tests
+-- ui_inspect · exit=101 · 5.83 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-n20f0f0c/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-n20f0f0c/arm1/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/tmp/pb-redarm-n20f0f0c/arm1/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.73s
+     Running unittests src/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 9 tests
+test ui::right::inspect_tests::hovering_every_frame_keeps_one_request_in_flight ... ok
+test ui::right::inspect_tests::a_gas_cell_reads_each_line_in_the_contracts_numbers ... ok
+test ui::right::inspect_tests::nothing_is_asked_off_the_world_and_a_refusal_frees_the_slot ... ok
+test ui::right::inspect_tests::outside_the_world_the_panel_asks_for_a_hover ... ok
+test ui::right::inspect_tests::a_cell_below_sigma_vac_is_empty_space ... ok
+test ui::right::inspect_tests::the_temperature_is_translated_to_kelvins_as_the_star_readout_does ... ok
+test ui::right::inspect_tests::the_mix_is_never_more_than_three_species ... FAILED
+test ui::right::inspect_tests::the_mach_number_is_the_speed_over_the_wave_speed ... ok
+test ui::right::inspect_tests::the_mix_lists_the_largest_shares_first_and_cuts_at_half_a_percent ... ok
+
+failures:
+
+---- ui::right::inspect_tests::the_mix_is_never_more_than_three_species stdout ----
+
+thread 'ui::right::inspect_tests::the_mix_is_never_more_than_three_species' (251821) panicked at crates/sr-app/src/ui/right.rs:694:9:
+assertion `left == right` failed: [("Hydrogen", 40.0), ("Helium", 30.0), ("Carbon", 20.0), ("Oxygen", 10.0)]
+  left: 4
+ right: 3
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    ui::right::inspect_tests::the_mix_is_never_more_than_three_species
+
+test result: FAILED. 8 passed; 1 failed; 0 ignored; 0 measured; 154 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+

@@ -3,7 +3,7 @@
 //! A run's frames — each chunk of steps `headless` summarises, [`crate::step::Step::summarise`] — go through
 //! [`Watch::update`]: the block summary widened to f64 as a [`Report`], the objects of [`Tracker`], their stages and events
 //! of [`StageTracker`], and the one event the engine adds, `ending` (an object holding a remnant stage for
-//! [`ending_hold`] — max(10 t.u., 20 τ_dyn), §0.5 [M0-D78]). What it keeps becomes summary.json's `events`, `objects` and `until` and DIR/events.jsonl, and
+//! [`ending_hold`] — max(10 t.u., 20 τ), §0.5 [M0-D78], τ the degenerate centre's or τ_dyn, §0.5 [M0-D161]). What it keeps becomes summary.json's `events`, `objects` and `until` and DIR/events.jsonl, and
 //! [`Until`] is the condition `--until` stops on. Observers watch, never drive (I2): nothing here reaches into a step.
 //!
 //! Readings the contract leaves open, declared here:
@@ -35,7 +35,7 @@ use serde_json::{json, Value};
 use sr_physics::calibration::{Calibration, EMBEDDED};
 use sr_physics::observe::age::AgeClock;
 use sr_physics::observe::ending::{self, Prediction, Predictor, Readout};
-use sr_physics::observe::stages::{ending_hold, stage_order};
+use sr_physics::observe::stages::{ending_hold, hold_tau, stage_order};
 use sr_physics::observe::tracker::{exact, read_exact, read_list, read_whole, SUN_MASS_NOMINAL};
 use sr_physics::observe::translate::MassScale;
 use sr_physics::observe::{BlockData, EventKind, Object, Report, SinkData, Stage, StageTracker, Tracker, TrackerConfig, GROUP_N};
@@ -98,7 +98,7 @@ pub enum Until {
     Event(EventKind),
     /// An object displays this stage.
     Stage(Stage),
-    /// The life's ending: the frame's heaviest object holds a remnant stage for [`ending_hold`] of its τ_dyn (§0.5 [M0-D95];
+    /// The life's ending: the frame's heaviest object holds a remnant stage for [`ending_hold`] of its [`hold_tau`] (§0.5 [M0-D95], [M0-D161];
     /// [`Watch::life_ending`]).
     Ending,
     /// The first of any object's `ignition` event and the life's ending: `calibrate`'s m_ign_sb run (§2.11 item 3), which
@@ -373,7 +373,8 @@ impl Watch {
                     if held.stage != stage {
                         *held = Remnant { stage, since: at.sim_time };
                     }
-                    let hold = ending_hold(o.tau_dyn);
+                    // The degenerate centre's τ, else τ_dyn (§0.5 [M0-D161]).
+                    let hold = ending_hold(hold_tau(o));
                     if at.sim_time - held.since >= hold && self.ended.insert(o.id) {
                         let detail = json!({"stage": stage.id(), "held_t": at.sim_time - held.since, "hold_t": hold, "mass_sb": o.mass});
                         fresh.push(RunEvent { step: at.step, sim_time: at.sim_time, kind: "ending", object: o.id, detail });
@@ -616,7 +617,7 @@ impl Watch {
                         Some(Prediction::CloseCall(a, b)) => json!([key_id(a.key()), key_id(b.key())]),
                         None => Value::Null,
                     };
-                    let held = self.remnants.get(&o.id).map(|h| ending::Remnant { stage: h.stage, held_t: self.last_sim - h.since, tau_dyn: o.tau_dyn });
+                    let held = self.remnants.get(&o.id).map(|h| ending::Remnant { stage: h.stage, held_t: self.last_sim - h.since, tau_dyn: hold_tau(o) });
                     if let Some(Readout::Ended(e)) = r.predictor.readout(o.mass, held) {
                         object["ending"] = json!(key_id(e.key()));
                     }

@@ -1,0 +1,86 @@
+# M0-V14 session 4 trail — linux-pc (laserax-ai) + laserax-ai-server (RTX 4090, R18); model=claude-opus-5-5 level=max (rung_record now at launch)
+2026-11-08T18:05:25-05:00 start: grep heading, rung_record now (model=claude-opus-5-5 level=max plugin=installed), plan.py show M0-V14 (baseline: M0-V14, 846 files, 2026-11-06T16:10:37-05:00)
+2026-11-08T18:05:25-05:00 probe: server state + chain2 log (read-only ssh)
+Sun Nov  8 06:05:26 PM EST 2026
+v14: 1 windows (created Fri Nov  6 16:24:56 2026)
+v14b: 1 windows (created Sun Nov  8 09:44:31 2026)
+v14s2: 1 windows (created Fri Nov  6 16:26:31 2026)
+NVIDIA GeForce RTX 3060, 13 MiB, 0 %
+NVIDIA GeForce RTX 4090, 19 MiB, 0 %
+---
+1:=== M0-V14 chain start on laserax-ai-server (START=2) · 2026-11-08T09:44:31-0500
+8:=== 1 build · 2026-11-08T09:44:31-0500
+10:=== 1 skipped (START=2) · 2026-11-08T09:44:31-0500
+11:=== 2 calibrate items 1-2 (CPU) · 2026-11-08T09:44:31-0500
+12:SR-WARN assets/calibration.json holds another physics_hash: its items are dropped
+13:SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+14:SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+15:SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+17:=== 3 calibrate m_ign_sb · 2026-11-08T09:44:31-0500
+118:SR-CALIBRATE item=m_ign_sb value=2486.473 bracket=2471.967..2501.064 runs=10 wall_s=81.8
+119:SR-CALIBRATE item=max_gas_speed value=21.3376
+121:=== 4 calibrate m_up_sb · 2026-11-08T09:45:53-0500
+474:SR-CALIBRATE item=m_up_sb value=3510.148 bracket=3492.101..3528.287 runs=10 wall_s=1132.6
+475:SR-CALIBRATE item=max_gas_speed value=50.1296
+477:=== 5 calibrate m_bh_sb · 2026-11-08T10:04:46-0500
+1446:SR-CALIBRATE item=m_bh_sb value=9003.592 bracket=8955.779..9051.661 runs=10 wall_s=2485.1
+1447:SR-CALIBRATE item=max_gas_speed value=127.9062
+1449:=== 6 calibrate the presets (item 6) · 2026-11-08T10:46:11-0500
+2131:SR-CALIBRATE item=presets preset_mass_sb=3113.6/5902.2/13278.9 t_eff_sun_sb=11.54418 life_sun_sb=1993.454 top_rung=200 stages=7 wall_s=1016.7
+2132:SR-CALIBRATE item=max_gas_speed value=127.9062
+2134:=== 6b rebuild (embeds the calibration) · 2026-11-08T11:03:08-0500
+2141:=== 7 dump C4a: preset:sun to t 800, a dump every 10,000 · 2026-11-08T11:03:14-0500
+2144:sun_ms exit=0
+2145:=== 8 dump C3a: preset:massive to t 30, a dump every 100 · 2026-11-08T11:07:38-0500
+2148:massive_d exit=0
+2149:=== 9 S1: preset:sun to its ending, a dump every 1,000 · 2026-11-08T11:09:39-0500
+2152:sun_life exit=0
+2153:=== 10 Verify 1: verify.py --all --task M0-V14-r2 · 2026-11-08T11:21:41-0500
+2275:=== GO ===
+2276:--all exit=0
+2277:=== 11 the sweep: verify.py --redarm --moved --task M0-V14-r2-sweep · 2026-11-08T11:27:03-0500
+2645:=== GO ===
+2646:sweep exit=0
+2647:=== M0-V14 chain end · 2026-11-08T13:22:29-0500
+---
+2647 milestones/m0/logs/M0-V14.chain2.log
+total 84
+drwxrwxr-x  9 ybelanger ybelanger 4096 Nov  8 11:09 .
+drwxrwxr-x 17 ybelanger ybelanger 4096 Nov  8 08:33 ..
+-rw-rw-r--  1 ybelanger ybelanger 5686 Nov  8 09:43 chain2.sh
+-rw-rw-r--  1 ybelanger ybelanger 5672 Nov  6 16:24 chain.sh
+drwxrwxr-x  3 ybelanger ybelanger 4096 Nov  8 11:09 massive_d
+-rw-rw-r--  1 ybelanger ybelanger  126 Nov  8 11:09 massive_d.out
+drwxrwxr-x  3 ybelanger ybelanger 4096 Nov  6 16:31 s2_0.05
+-rw-rw-r--  1 ybelanger ybelanger  126 Nov  6 16:31 s2_0.05.out
+drwxrwxr-x  3 ybelanger ybelanger 4096 Nov  6 16:36 s2_0.1
+-rw-rw-r--  1 ybelanger ybelanger  126 Nov  6 16:36 s2_0.1.out
+-rw-rw-r--  1 ybelanger ybelanger   29 Nov  6 16:36 s2.done
+drwxrwxr-x  3 ybelanger ybelanger 4096 Nov  8 11:21 sun_life
+-rw-rw-r--  1 ybelanger ybelanger  130 Nov  8 11:21 sun_life.out
+drwxrwxr-x  3 ybelanger ybelanger 4096 Nov  8 11:07 sun_ms
+-rw-rw-r--  1 ybelanger ybelanger  128 Nov  8 11:07 sun_ms.out
+drwxrwxr-x  3 ybelanger ybelanger 4096 Nov  6 16:30 t98a_sun_base
+-rw-rw-r--  1 ybelanger ybelanger  128 Nov  6 16:30 t98a_sun_base.out
+drwxrwxr-x  3 ybelanger ybelanger 4096 Nov  6 16:37 t99a_giant_base
+-rw-rw-r--  1 ybelanger ybelanger  127 Nov  6 16:37 t99a_giant_base.out
+a480dc19a54e0c9a6310dc84906a32a38bd8ce6f2d4910740680026add36430e  assets/calibration.json
+8ad6c983791e170bc2bc5b767eafa1ba7b4ba27c0a2ee9d50cfa93e760947827  assets/physics.json
+a495b6fc4fb0aea4b99fdb3c269cf552fc926ceb7b20ea41b7ae882e935f9fae  assets/elements.json
+885275c3f125004367e12e18f2bb582dff8591b605010fb3f37171360cb94c9e  assets/reactions.json
+2026-11-08T18:07:05-05:00 bring-home: 165 logs (M0-V14.chain2.log, 86 M0-V14-r2.*, 78 M0-V14-r2-sweep.*) copied in, none overwritten (s3 trail + sync: linux-pc's kept, longer); loop_times.jsonl +79 server lines after its 2,193rd (2,274 lines, all parse); assets/calibration.json <- server's (sha256 a480dc19a54e…, was V9's 53d692bb20d0…, kept at scratch calibration.v9.json); anchor = server's (2,069 entries only there, 6 newer) with the plan's plan_lint line kept from linux-pc (its sha1 c23a49fc… = the current plan; the server's graded the 09:42 copy)
+2026-11-08T18:07:13-05:00 rebuild on linux-pc: source tests/cargo.sh && cargo build --release --locked -p sr-app (log M0-V14-s4.cargo.log)
+2026-11-08T18:07:26-05:00 rebuild:     Finished `release` profile [optimized] target(s) in 4.61s exit=0 
+2026-11-08T18:11:23-05:00 step 7 launched on laserax-ai-server (tmux v14g): cd build/v14 && ../target/release/sandbox-reactions headless --scene preset:giant --until ending --max-steps 40000 --adapter "RTX 4090" --out giant_d --dump-every 100 > giant_d.out 2>&1
+2026-11-08T18:13:00-05:00 dumps remade, placed in ~/.cache/sandbox-reactions/dumps/ on both boxes: m0-v14_sun_mid_ms_s70200 (.bin 686228a8787e080b, .observers.json 4d0b1aaa5018a572) and m0-v14_massive_iron_core_s800 (.bin 6707f6ecc17c6296, .observers.json ee20972d58e45407); sha256 equal on both boxes; T97's two left beside them
+2026-11-08T18:14:57-05:00 step 8: python3 tools/pb/verify.py desktop web capture toolchain measure_ui --task M0-V14-lpc (linux-pc's five, after the rebuild)
+2026-11-08T18:16:27-05:00 step 7 watchdog: the Giant's dense life past the calibrate life's ending (t 37 at 255 s, black_hole since t 9.14, no ending: [M0-D161]'s hold max(10, 20 tau)); stopped by SIGINT at 595 s wall if not ended (10-minute grant)
+2026-11-08T18:21:57-05:00 step 7 done: giant_d ended on its own — SR-HEADLESS DONE steps=10864 sim_time=41.518984 until=met, exit 0, 314 s wall, 109 dumps. Watchdog error: pgrep matched the tmux shell (265513) with the binary (265517); after the run it signalled the idle interactive shell (SIGINT, SIGTERM — ignored; tmux v14g intact) and appended a false «stopped» line to giant_d.out — corrected there by an appended line
+2026-11-08T18:25:22-05:00 red-arms of the box-bound scopes on linux-pc (the server's sweep reads them owed): toolchain, then capture (both under 10 min at V13: 15.75 s, 239.61 s); desktop (595 s) and web (984 s) — the lead's call; measure_ui waits on its D (clean arm red)
+2026-11-08T18:26:53-05:00 the lead's rulings (question tool): onion «D before lot 15 (Recommended)» · S1 «S1 stays off (Recommended)» · Giant fit «Flag; re-read after (Recommended)» · linux-pc runs «Owe all to M0-V15 (Recommended)»
+2026-11-08T18:30:12-05:00 MY ERROR, measured: plan.py flag M0-V15's text held three backtick spans inside a double-quoted shell string, so bash ran them as command substitutions: (1) build/target/release/sandbox-reactions --adapter "Quadro RTX 4000" --measure-ui 600 — started and exited at once, SR-ERROR winit EventLoopError: neither WAYLAND_DISPLAY nor WAYLAND_SOCKET nor DISPLAY is set (no window, no frame, nothing written: assets/calibration.json sha256 a480dc19a54e… and mtime 18:07:05 unchanged, read 18:29:46; no sandbox-reactions process left but the capture red-arm's llvmpipe ones); (2) py -3.12 … and (3) --redarm --moved — command not found. The flag's text took the SR-ERROR line and two empty gaps — corrected by hand in the plan (my own appended text)
+2026-11-08T18:31:18-05:00 red-arms on linux-pc: redarm: 9 plants · 9 red · 0 green · 0 errors · scope capture · 322.57 s · 1 arm(s) at a time · box laserax-ai · redarm: 3 plants · 3 red · 0 green · 0 errors · scope toolchain · 9.40 s · 1 arm(s) at a time · box laserax-ai · 
+2026-11-08T18:37:51-05:00 R18 rsync up (the claim's tree): rsync -a --exclude .git --exclude build --exclude .venv ./ ybelanger@192.168.1.134:workspace/sandbox_reactions/
+2026-11-08T18:38:13-05:00 the claim on laserax-ai-server: SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --changed --task M0-V14-claim2 (stdout to build/v14/claim2.out there; brought home after)
+2026-11-08T18:39:17-05:00 the claim: GO on laserax-ai-server (plan_lint 840/0, 82 not impacted at the anchor, 5 owed by box: run here as M0-V14-lpc, measure_ui NO-GO -> M0-D162); brought home: M0-V14-claim2.plan_lint.log, its loop line (2,278 lines), the anchor (the server's = local + the plan's plan_lint entry), stdout as M0-V14-s4.claim_stdout.log
+2026-11-08T18:39:58-05:00 closed: M0-V14 DONE (plan.py close), plan_lint re-run GO 839/0 after the handoff (M0-V14-s4); scratch dump copies removed (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/046002a8-4f48-4d7f-8220-3612eeae5161/scratchpad/d); session 4 ends — Next: M0-TC14

@@ -1005,6 +1005,32 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     (neutron_star at step 6,840, t 38.87, 4,310.5; 7,096, t 40.30 at 64) — the warnings came with M0-D156's shift set, which
     moved the life before step 929 (its plant on today's s_929 stalls the same steps) — the lead at M0-D159, 2026-11-06: «128
     passes (Recommended)», «Full dump, 17 MB (Recommended)».
+  - [M0-D160] §1.9.3's protostar row's settled test («|v_r| ≤ 0.05 √(GM/R) and 2P/|W| ≥ 0.8 (pressure-supported, near virial)»),
+    as failed_star ([M0-D134]), white_dwarf and planetary_nebula ([M0-D140]) read it · **the support counts the ordered rotation
+    about c: 2(P + K_t)/|W| ≥ 0.8, K_t = Σ (p · t̂)²/2m over the object's member blocks — a block's momentum at its centroid, t̂
+    square to the line from c (§1.9.2 gains K_t; none for a lone sink); one test for the four rows; the observers' snapshot
+    ([M0-D76], version 3 as [M0-D103] left it) carries each object's `kinetic_t`, and one written before it restores with K_t 0**
+    — |v_r|, the 0.8, the other terms, the order, [M0-D134]'s display hold and §1.9.5 unchanged · measured on laserax-ai-server's
+    RTX 4090 (2026-11-07, tasks/M0-D160.md): m_up_sb's light end (the 3,351.032 life, M0-V14's calibrate item 4) leaves a cold
+    iron core inside a Keplerian disk — at step 600,000 (t 13,942) 309.1 sb, d_c 0.996, X_Fe,c 0.996, |v_r| ≤ 0.03 √(GM/R),
+    2P/|W| 0.350–0.357, K 0.30–0.32 |W|, K_t 0.29–0.30 |W|, 2(P + K_t)/|W| 0.932–0.951 over 30 frames — so it showed iron_core
+    for 467,455 steps and calibrate exited 6; the Sun-like's false white dwarf after its flash ([M0-D140]) near rest at steps
+    529–577 has K 0.004–0.006 |W| (all motion counted, step 577 read 0.807 and white_dwarf again) but K_t ≈ 10⁻⁵ |W|, 2(P +
+    K_t)/|W| 0.787–0.798 as before — the lead at M0-D160, 2026-11-07: «(b) Rotation counted (Recommended)», «All four rows
+    (Recommended)», «Read missing as 0 (Recommended)».
+  - [M0-D161] §1.9.5's hold as [M0-D78] reads it («every remnant settles for max(10 t.u., 20 τ_dyn)», τ_dyn the object's at that
+    frame) · **τ in the hold is the degenerate centre's when the object has one: τ_deg = √(r_deg³ / G M_in), r_deg the radius about c
+    holding 90 % of the mass of the member blocks whose densest cell has Π_cold / Π ≥ 0.5 (floored at half a block, as R), M_in the
+    object's mass — gas blocks and sinks — within r_deg, c's own block always in; with no degenerate block (and for a lone sink) τ_dyn
+    as before; one τ for the engine's `ending` event, summary.json's ending and the game's readout; the observers' snapshot
+    ([M0-D76], version 3) carries each object's `tau_deg`, and one written before it restores with none (τ_dyn for that frame)** — the
+    10 t.u. and the 20, the rows, the settled test ([M0-D160]), the display hold and §1.9.2's R and τ_dyn unchanged · measured on
+    laserax-ai-server's RTX 4090 (2026-11-08, tasks/M0-D161.md): m_up_sb's life 08 (3,492.101, M0-V14's calibrate item 4) leaves a
+    cold core mostly of 4–5 cells (τ_deg 0.28–0.76; to 50 cells and τ_deg 12 while its inner disk reads degenerate) inside a Keplerian disk of R₉₀ 76–148 cells (τ_dyn 20–50, a hold of 420–990
+    t.u.); the disk's |v_r| crosses 0.05 √(GM/R) every few hundred steps (to 0.19), so the white dwarf, raw on 88 % of 3,750 frames
+    from step 200,000, never held — under τ_deg it ends at step 201,248 (10.3 t.u.); |v_r| about the core or a wider bound would admit
+    the Sun-like's post-flash step 497 (2(P + K_t)/|W| 0.8003, refused today by |v_r| 0.094 alone) and still left no ending at 0.075 —
+    the lead at M0-D161, 2026-11-08: «(a) Core's τ (Recommended)», «R₉₀ as today (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —

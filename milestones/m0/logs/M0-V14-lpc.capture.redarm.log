@@ -1,0 +1,312 @@
+==== 2026-11-08T18:25:32-05:00 capture · clean · a fresh scratch copy of the tree
+== 2026-11-08T18:25:33-05:00 capture[smoke] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:25:33-05:00 capture[refuse] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:25:33-05:00 capture[actions] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 6.53 s
+capture refuse: a malformed hover, select, glow_white, range, fit, display_reset, zoom and preset (a bad or extra key beside it), an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 8.74 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.ByYX3ugnDI
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=0 · 31.61 s
+SR-CAPTURE-STATUS star-heat-fit llvmpipe (LLVM 20.1.2, 256 bits) · 30 fps · 129 steps per frame · 600 × 400 cells
+SR-CAPTURE star-zoom star-zoom.png 1760x940
+SR-CAPTURE-STATUS star-zoom llvmpipe (LLVM 20.1.2, 256 bits) · 35 fps · 129 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-at drop-at.png 1760x940
+SR-CAPTURE-STATUS drop-at llvmpipe (LLVM 20.1.2, 256 bits) · 39 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-no-room drop-no-room.png 1760x940
+SR-CAPTURE-STATUS drop-no-room llvmpipe (LLVM 20.1.2, 256 bits) · 44 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 24 /tmp/tmp.8QF16kvwqS
+24 PNGs of (1760, 940); the bar changed after each action; accent at x = 219 (x1), 288 (x10), 413 (Max); the left panel's accent at y = 327 (Brush), 336 (Heat), 374 (Iron); 1986 pixels painted; the right panel 5031 lit pixels without a star, 6632 with one, 7019 with the pointer off the world; Glow toned down differs, its Reset matches the default, Heat fitted differs; zoom 8 about (300, 200) matches the whole world on 6 probed cells (6 colours), 16 px a cell; the preset dropped at (80, 80) spans x 322..479 px about (400, 204), the one at (10, 10) refused (402 red pixels, preset armed, world as it was)
+capture actions: ok
+=== GO ===
+
+==== 2026-11-08T18:26:04-05:00 capture · plant capture-no-captions · a fresh scratch copy of the tree
+planted capture-no-captions: tests/plants/capture-no-captions.patch -> crates/sr-app/src/capture.rs
+== 2026-11-08T18:26:05-05:00 capture[smoke] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:26:05-05:00 capture[refuse] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:26:05-05:00 capture[actions] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 6.43 s
+capture refuse: a malformed hover, select, glow_white, range, fit, display_reset, zoom and preset (a bad or extra key beside it), an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=1 · 9.08 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.dTapFOIdIt
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp.dTapFOIdIt/captions.json'
+=== NO-GO: the captures do not match §3.3 ===
+
+-- capture[actions] · exit=1 · 20.06 s
+SR-CAPTURE-STATUS star-heat-fit llvmpipe (LLVM 20.1.2, 256 bits) · 29 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE star-zoom star-zoom.png 1760x940
+SR-CAPTURE-STATUS star-zoom llvmpipe (LLVM 20.1.2, 256 bits) · 34 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-at drop-at.png 1760x940
+SR-CAPTURE-STATUS drop-at llvmpipe (LLVM 20.1.2, 256 bits) · 39 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-no-room drop-no-room.png 1760x940
+SR-CAPTURE-STATUS drop-no-room llvmpipe (LLVM 20.1.2, 256 bits) · 44 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 24 /tmp/tmp.qNiteKwViu
+=== NO-GO: FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp.qNiteKwViu/captions.json' ===
+
+==== 2026-11-08T18:26:25-05:00 capture · plant capture-edge-ignored · a fresh scratch copy of the tree
+planted capture-edge-ignored: tests/plants/capture-edge-ignored.patch -> crates/sr-app/src/desktop.rs
+== 2026-11-08T18:26:25-05:00 capture[smoke] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:26:25-05:00 capture[refuse] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:26:25-05:00 capture[actions] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 5.63 s
+capture refuse: a malformed hover, select, glow_white, range, fit, display_reset, zoom and preset (a bad or extra key beside it), an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 8.14 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.0CmRYDTEql
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=1 · 30.99 s
+SR-CAPTURE-STATUS star-heat-fit llvmpipe (LLVM 20.1.2, 256 bits) · 30 fps · 129 steps per frame · 600 × 400 cells
+SR-CAPTURE star-zoom star-zoom.png 1760x940
+SR-CAPTURE-STATUS star-zoom llvmpipe (LLVM 20.1.2, 256 bits) · 35 fps · 129 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-at drop-at.png 1760x940
+SR-CAPTURE-STATUS drop-at llvmpipe (LLVM 20.1.2, 256 bits) · 39 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-no-room drop-no-room.png 1760x940
+SR-CAPTURE-STATUS drop-no-room llvmpipe (LLVM 20.1.2, 256 bits) · 44 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 24 /tmp/tmp.HJacC3Ycmo
+=== NO-GO: the top bar of edge-leave is the same as edge's: the action did not reach the bar ===
+
+==== 2026-11-08T18:26:56-05:00 capture · plant capture-paint-ignored · a fresh scratch copy of the tree
+planted capture-paint-ignored: tests/plants/capture-paint-ignored.patch -> crates/sr-app/src/desktop.rs
+== 2026-11-08T18:26:56-05:00 capture[smoke] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:26:56-05:00 capture[refuse] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:26:56-05:00 capture[actions] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 6.63 s
+capture refuse: a malformed hover, select, glow_white, range, fit, display_reset, zoom and preset (a bad or extra key beside it), an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 9.04 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.xWu0qA5r7Q
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=1 · 38.91 s
+SR-CAPTURE-STATUS star-heat-fit llvmpipe (LLVM 20.1.2, 256 bits) · 29 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE star-zoom star-zoom.png 1760x940
+SR-CAPTURE-STATUS star-zoom llvmpipe (LLVM 20.1.2, 256 bits) · 34 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-at drop-at.png 1760x940
+SR-CAPTURE-STATUS drop-at llvmpipe (LLVM 20.1.2, 256 bits) · 39 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-no-room drop-no-room.png 1760x940
+SR-CAPTURE-STATUS drop-no-room llvmpipe (LLVM 20.1.2, 256 bits) · 42 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 24 /tmp/tmp.H6k9xtTaga
+=== NO-GO: the world's upper-left corner of paint differs from element's in 26 pixels: the paint did not reach the world ===
+
+==== 2026-11-08T18:27:35-05:00 capture · plant capture-star-panel-blank · a fresh scratch copy of the tree
+planted capture-star-panel-blank: tests/plants/capture-star-panel-blank.patch -> crates/sr-app/src/desktop.rs
+== 2026-11-08T18:27:36-05:00 capture[smoke] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:27:36-05:00 capture[actions] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:27:36-05:00 capture[refuse] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 6.48 s
+capture refuse: a malformed hover, select, glow_white, range, fit, display_reset, zoom and preset (a bad or extra key beside it), an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 9.08 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.hq9Ylb4Z0c
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=1 · 32.25 s
+SR-CAPTURE-STATUS star-heat-fit llvmpipe (LLVM 20.1.2, 256 bits) · 30 fps · 129 steps per frame · 600 × 400 cells
+SR-CAPTURE star-zoom star-zoom.png 1760x940
+SR-CAPTURE-STATUS star-zoom llvmpipe (LLVM 20.1.2, 256 bits) · 34 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-at drop-at.png 1760x940
+SR-CAPTURE-STATUS drop-at llvmpipe (LLVM 20.1.2, 256 bits) · 39 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-no-room drop-no-room.png 1760x940
+SR-CAPTURE-STATUS drop-no-room llvmpipe (LLVM 20.1.2, 256 bits) · 44 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 24 /tmp/tmp.LdH5FwC4QD
+=== NO-GO: the right panel of select holds 3835 lit pixels, start's note 4222: no star readout ===
+
+==== 2026-11-08T18:28:08-05:00 capture · plant capture-hover-ignored · a fresh scratch copy of the tree
+planted capture-hover-ignored: tests/plants/capture-hover-ignored.patch -> crates/sr-app/src/desktop.rs
+== 2026-11-08T18:28:09-05:00 capture[smoke] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:28:09-05:00 capture[refuse] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:28:09-05:00 capture[actions] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 7.58 s
+capture refuse: a malformed hover, select, glow_white, range, fit, display_reset, zoom and preset (a bad or extra key beside it), an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 9.94 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.gm8ZOGIoCv
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=1 · 41.54 s
+SR-CAPTURE-STATUS star-heat-fit llvmpipe (LLVM 20.1.2, 256 bits) · 29 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE star-zoom star-zoom.png 1760x940
+SR-CAPTURE-STATUS star-zoom llvmpipe (LLVM 20.1.2, 256 bits) · 34 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-at drop-at.png 1760x940
+SR-CAPTURE-STATUS drop-at llvmpipe (LLVM 20.1.2, 256 bits) · 4 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-no-room drop-no-room.png 1760x940
+SR-CAPTURE-STATUS drop-no-room llvmpipe (LLVM 20.1.2, 256 bits) · 7 fps · 0 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 24 /tmp/tmp.vXVqU9swov
+=== NO-GO: the right panel of hover is the same as select's: the Cell inspector never read the hovered cell ===
+
+==== 2026-11-08T18:28:51-05:00 capture · plant capture-hover-off-world · a fresh scratch copy of the tree
+planted capture-hover-off-world: tests/plants/capture-hover-off-world.patch -> crates/sr-app/src/desktop.rs
+== 2026-11-08T18:28:52-05:00 capture[smoke] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:28:52-05:00 capture[refuse] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:28:52-05:00 capture[actions] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 7.04 s
+capture refuse: a malformed hover, select, glow_white, range, fit, display_reset, zoom and preset (a bad or extra key beside it), an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 10.35 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.l4CMl3ihpG
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=1 · 40.09 s
+SR-CAPTURE-STATUS star-heat-fit llvmpipe (LLVM 20.1.2, 256 bits) · 29 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE star-zoom star-zoom.png 1760x940
+SR-CAPTURE-STATUS star-zoom llvmpipe (LLVM 20.1.2, 256 bits) · 34 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-at drop-at.png 1760x940
+SR-CAPTURE-STATUS drop-at llvmpipe (LLVM 20.1.2, 256 bits) · 32 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-no-room drop-no-room.png 1760x940
+SR-CAPTURE-STATUS drop-no-room llvmpipe (LLVM 20.1.2, 256 bits) · 32 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 24 /tmp/tmp.kWDKAznbRx
+=== NO-GO: the right panel of hover-outside holds 10126 lit pixels, hover's 10126: a cell off the world left the inspector on the last cell it read ===
+
+==== 2026-11-08T18:29:32-05:00 capture · plant capture-glow-white-ignored · a fresh scratch copy of the tree
+planted capture-glow-white-ignored: tests/plants/capture-glow-white-ignored.patch -> crates/sr-app/src/desktop.rs
+== 2026-11-08T18:29:32-05:00 capture[smoke] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:29:32-05:00 capture[refuse] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:29:32-05:00 capture[actions] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 5.08 s
+capture refuse: a malformed hover, select, glow_white, range, fit, display_reset, zoom and preset (a bad or extra key beside it), an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 7.08 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.wvBYHTqIM5
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=1 · 26.54 s
+SR-CAPTURE-STATUS star-heat-fit llvmpipe (LLVM 20.1.2, 256 bits) · 30 fps · 129 steps per frame · 600 × 400 cells
+SR-CAPTURE star-zoom star-zoom.png 1760x940
+SR-CAPTURE-STATUS star-zoom llvmpipe (LLVM 20.1.2, 256 bits) · 35 fps · 129 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-at drop-at.png 1760x940
+SR-CAPTURE-STATUS drop-at llvmpipe (LLVM 20.1.2, 256 bits) · 39 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-no-room drop-no-room.png 1760x940
+SR-CAPTURE-STATUS drop-no-room llvmpipe (LLVM 20.1.2, 256 bits) · 44 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 24 /tmp/tmp.jTD23ZSBB9
+=== NO-GO: the world of star-glow-white is the same as star-glow-reset's: glow_white did not reach the renderer ===
+
+==== 2026-11-08T18:29:59-05:00 capture · plant capture-zoom-ignored · a fresh scratch copy of the tree
+planted capture-zoom-ignored: tests/plants/capture-zoom-ignored.patch -> crates/sr-app/src/desktop.rs
+== 2026-11-08T18:29:59-05:00 capture[smoke] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:29:59-05:00 capture[refuse] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:29:59-05:00 capture[actions] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 5.28 s
+capture refuse: a malformed hover, select, glow_white, range, fit, display_reset, zoom and preset (a bad or extra key beside it), an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 7.33 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.Acfqcp3J3t
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=1 · 27.38 s
+SR-CAPTURE-STATUS star-heat-fit llvmpipe (LLVM 20.1.2, 256 bits) · 30 fps · 129 steps per frame · 600 × 400 cells
+SR-CAPTURE star-zoom star-zoom.png 1760x940
+SR-CAPTURE-STATUS star-zoom llvmpipe (LLVM 20.1.2, 256 bits) · 35 fps · 129 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-at drop-at.png 1760x940
+SR-CAPTURE-STATUS drop-at llvmpipe (LLVM 20.1.2, 256 bits) · 39 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-no-room drop-no-room.png 1760x940
+SR-CAPTURE-STATUS drop-no-room llvmpipe (LLVM 20.1.2, 256 bits) · 44 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 24 /tmp/tmp.iZq3TauNIO
+=== NO-GO: the world of star-zoom is the same as star-heat-fit's: zoom did not reach the view ===
+
+==== 2026-11-08T18:30:26-05:00 capture · plant capture-preset-at-ignored · a fresh scratch copy of the tree
+planted capture-preset-at-ignored: tests/plants/capture-preset-at-ignored.patch -> crates/sr-app/src/desktop.rs
+== 2026-11-08T18:30:27-05:00 capture[smoke] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:30:27-05:00 capture[refuse] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+== 2026-11-08T18:30:27-05:00 capture[actions] · task M0-V14-lpc · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 5.23 s
+capture refuse: a malformed hover, select, glow_white, range, fit, display_reset, zoom and preset (a bad or extra key beside it), an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+-- capture[smoke] · exit=0 · 7.18 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE paused paused.png 1760x940
+SR-CAPTURE-STATUS paused llvmpipe (LLVM 20.1.2, 256 bits) · 6 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 13 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 2 /tmp/tmp.9R1l7rHUzR
+2 PNGs of (1760, 940) with different pixels, captions.json valid
+capture smoke: ok
+=== GO ===
+
+-- capture[actions] · exit=1 · 27.18 s
+SR-CAPTURE-STATUS star-heat-fit llvmpipe (LLVM 20.1.2, 256 bits) · 30 fps · 129 steps per frame · 600 × 400 cells
+SR-CAPTURE star-zoom star-zoom.png 1760x940
+SR-CAPTURE-STATUS star-zoom llvmpipe (LLVM 20.1.2, 256 bits) · 35 fps · 129 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-at drop-at.png 1760x940
+SR-CAPTURE-STATUS drop-at llvmpipe (LLVM 20.1.2, 256 bits) · 40 fps · 86 steps per frame · 600 × 400 cells
+SR-CAPTURE drop-no-room drop-no-room.png 1760x940
+SR-CAPTURE-STATUS drop-no-room llvmpipe (LLVM 20.1.2, 256 bits) · 44 fps · 1 steps per frame · 600 × 400 cells
+SR-CAPTURE DONE 24 /tmp/tmp.grnEUlD9VW
+=== NO-GO: the dropped star spans x 424..457, y 228..261 px (centre 440, 244, 33 wide): expected a cloud about (400, 204), over 120 px wide ===
+

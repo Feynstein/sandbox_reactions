@@ -1,0 +1,23 @@
+dest=/tmp/d161v · files=14675 · size=292M · linked=none · excluded=13
+=== GO ===
+b68cfb2695807aa9
+c0bb3e2d67f2b588
+3c93e5d7c83e4f47
+5541e1ce559b1b91
+   Compiling sr-physics v0.0.0 (/tmp/d161v/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/d161v/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 11.29s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test stage_order::precheck_d161_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+PRE step=200016 t=2633.867 raw=white_dwarf shown=white_dwarf tau=38.017
+SR-HEADLESS DONE steps=200016 sim_time=2633.867300 until=met
+precheck exit 0: ["SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA", "SR-HEADLESS DONE steps=200016 sim_time=2633.867300 until=met"]
+EVENTS {"detail":{"by":"light","mass_sb":3490.7435655854642},"kind":"ignition","object":1,"sim_time":4.360733508132398,"step":289}
+{"detail":{"held_t":55.53357300721109,"hold_t":10.0,"mass_sb":1460.9408557368442,"stage":"white_dwarf"},"kind":"ending","object":1,"sim_time":2633.8673000303097,"step":200016}
+
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 507 filtered out; finished in 0.79s
+

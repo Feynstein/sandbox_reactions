@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/stages.rs
++++ b/crates/sr-physics/src/observe/stages.rs
+@@ -154,7 +154,7 @@
+ /// 2(P + K_t)/|W| ≥ 0.8 — §0.5 [M0-D160]: m_up_sb's light end leaves a cold iron core inside a Keplerian disk, 2P/|W| 0.356
+ /// and 2(P + K_t)/|W| 0.93–0.95, where the Sun-like re-expanding after its flash has K_t ≈ 10⁻⁵ |W| (RTX 4090).
+ fn settled(c: &Ctx) -> bool {
+-    c.o.v_r.abs() <= 0.05 * c.v_dyn && c.o.potential != 0.0 && 2.0 * (c.o.pressure + c.o.kinetic_t) / c.o.potential.abs() >= 0.8
++    c.o.v_r.abs() <= 0.05 * c.v_dyn && c.o.potential != 0.0 && 2.0 * c.o.pressure / c.o.potential.abs() >= 0.8
+ }
+ 
+ fn carbon_burns(o: &Object) -> bool {

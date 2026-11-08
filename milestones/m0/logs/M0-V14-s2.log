@@ -1,0 +1,20 @@
+M0-V14 trail, session 2 — linux-pc (laserax-ai), started 2026-11-07 17:16 EST (plan.py show baseline kept: M0-V14, 846 files, 2026-11-06T16:10:37-05:00)
+rung_record.py now at launch: model=claude-opus-5-5 level=max plugin=installed (the heading's rung: Opus 5.5, max — match)
+17:17 server: tmux v14 and v14s2 up; the chain log ends «=== calibration STOPPED (exit 6) — nothing after it ran» at 2026-11-06T17:31:36-0500:
+  item 4 (m_up_sb) life 01, mass 3351.032: SR-ERROR «reached no ending within --max-steps 600000 — reported, not guessed» (record build/calibrate_runs/2026-11-06T21-28-41Z/m_up_sb-01);
+  at step 600,000 (t 13,942.3): stage iron_core (raw iron_core), M 309.1, sigma_c 1.623, T_c 0.054, X_Fe,c 0.9962, L_nuc 0, escaped 2,973.
+  1c: all 9 dumps «same» (t98a/sun_base 4, t99a/giant_base 5) — the re-runs reproduce by their recorded commands.
+17:2x cause (read-only, linux-pc numpy on a scp'd copy; checkpoint s_600000.bin sha256 a124fd69335cf3a0): the white_dwarf row's terms at step 600,000 — ignited (object 1 since step 673), d_c 0.996, L_nuc 0, M_unb 0, X_n,c 0, M 309.05 <= m_ch_sb 3216.42, |v_r| 1.3e-4 sqrt(GM/R) all pass; 2P/|W| = 2 x 383.77 / 2155.67 = 0.356 < 0.8 fails ([M0-D140]'s settled test) -> iron_core.
+  the remnant is rotation-supported (lives.md's dumpread.py + scratch probe spin.py): K 678.4 of which tangential 672.0 (99.1 %) about the max-Sigma cell, L_z 28,186, v_t = sqrt(M(<r)/r) within 4 % from r 10 to 120; 2(K+P)/|W| 0.964; X_H,c 1.9e-3, X_Fe,c 0.9962.
+  V9 (2026-10-26, before [M0-D140]): this life (3,351.032) ended white_dwarf at step 139,379 (t 1544.07, 1,880.1 sb); 3,492.101 at 123,658; preset_sun (3,136.718) white_dwarf at 177,762 (t 1990.42, 1,885.6 sb). No dumps kept.
+  ledger over the life: momentum invariant (0,0) -> (-103.2, 116.2) — for G-CONS (M0-T106), not graded here.
+17:3x S2 re-read (v14s2 done: s2_0.05 exit 0, 5,189 steps; s2_0.1 exit 0, 5,222 steps; no SR-WARN): core_collapse step 897 (t 7.684), supernova 913 in both; unbound at s_5000 (t 28.84) f_dep 0.1: 77.2-77.5 % vs the final remnant 3,658.5, 100.8-101.1 % vs the object then; 0.05: 77.1-77.3 % / 100.3-100.7 % — S2 stays off (< 50 % enables).
+17:4x server paths re-read for the register: /tmp holds only r14 (reboot 2026-11-06 10:34); every build/ keep present; the 2026-10-21 stamps are linux-pc's (present); linux-pc /tmp/pb-redarm-* gone.
+  chain log home: logs/M0-V14.chain.log (988 lines, scp). Server build/v14 343 MB.
+plan: M0-D160 appended after M0-V14 (plan.py append: GO, one WARN — above the Phase 16 commit-gate trailer, the right side); retitled by hand (its |W| split the Flow row: lint FAIL "Flow row M0-D160 says None") to 2P/(−W), its Deliver made one item (;-split WARN), option (b)'s value corrected to ≈ 0.96 (object-consistent K); plan.py flag M0-T106 (O1): GO; plan.py close M0-V14 --status BLOCKED (+ Next task, Open D/BLOCKED register, Awaiting lead): GO; plan.py lint: GO (827 checks, 13 WARN: 8 lives.md-whole Read lines, 5 Phase-15 stubs; header 618/600).
+  observed, not mine: M0-D155's Flow row is split the same way by its title's |v| (the lint does not catch it).
+reports/v14.md written (partial); tasks/M0-V14.md § Session 2, § Do not, § Restart, § Next after M0-D160.
+claim: rsync up (R18) then verify.py --changed --task M0-V14-claim on laserax-ai-server, RTX 4090.
+17:44 handoff updated with the claim's tag (plan.py handoff); plan_lint re-run on linux-pc as M0-V14-lint (the plan changed after the claim)
+17:44 plan_lint --task M0-V14-lint on linux-pc: GO 827/0. Session 2 ends: M0-V14 BLOCKED on M0-D160 (Next: M0-D160, then M0-V14 session 3 — tasks/M0-V14.md § Next after M0-D160).
+17:47 the lead: «move it above V14 if I have to re-run V14 after D160» — rung_record now: model=claude-opus-5-5 level=max (match); plan.py move M0-D160 --after M0-R14: GO (46 lines, byte-identical; the Phase 16 commit gate stays after M0-V14); ordering note in M0-D160's heading and its Flow row's order (AFTER M0-R14), by hand (no plan.py call for it); M0-V14's handoff names the move (plan.py handoff); reports/v14.md F1 and tasks/M0-V14.md § Session 2 say so.

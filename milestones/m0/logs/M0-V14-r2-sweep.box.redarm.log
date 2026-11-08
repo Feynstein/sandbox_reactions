@@ -1,0 +1,211 @@
+==== 2026-11-08T12:17:07-05:00 box · clean · a fresh scratch copy of the tree
+== 2026-11-08T12:17:07-05:00 box · task M0-V14-r2-sweep · box laserax-ai-server :: bash tests/gpu.sh box physics
+-- box · exit=0 · 15.40 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-n09rvhzh/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-n09rvhzh/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 11.06s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 8 tests
+test r#box::a_blob_at_the_box_edge_loses_no_mass_in_bounce_mode ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-BOX box_blob chunk 0: centroid at 294.256, 0.3277 cells per step leftward
+SR-BOX box_blob chunk 1: centroid at 289.109, 0.3217 cells per step leftward
+SR-BOX box_blob chunk 2: centroid at 284.044, 0.3166 cells per step leftward
+SR-BOX box_blob chunk 3: centroid at 279.076, 0.3105 cells per step leftward
+SR-BOX box_blob chunk 4: centroid at 274.062, 0.3134 cells per step leftward
+SR-BOX box_blob chunk 5: centroid at 269.040, 0.3138 cells per step leftward
+SR-BOX box_blob, masses sigma: 2.560023887231e2 vs 2.560023974409e2, |Δ| 8.718e-6 = 3.41e-8 of scale 2.5600e2
+SR-BOX box_blob, masses x_H: 2.560023887231e2 vs 2.560023974409e2, |Δ| 8.718e-6 = 3.41e-8 of scale 2.5600e2
+SR-BOX box_blob, masses x_He: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_C: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_O: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_Ne: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_Mg: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_Si: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_S: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_Fe: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_n: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+ok
+test r#box::an_edit_outside_the_box_refits_it_in_p0_and_the_flag_clears ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+step 4, edit flagged: box [192, 88, 24, 24], from step 4, 3 fits
+ok
+test r#box::sun_disk_in_the_box_matches_the_whole_world_at_step_100_and_its_masses_at_2000 ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-BOX sun_disk step 100: box [232, 136, 136, 128] FFT [512, 256]; vacuum_reset 7.306544660096392e-3 vs 7.306552987422776e-3, escaped.mass 0e0 vs 0e0
+SR-BOX sun_disk step 100 sigma: 3.351034504908e3 vs 3.351034507334e3, |Δ| 2.426e-6 = 7.24e-10 of scale 3.3510e3
+SR-BOX sun_disk step 100 mom_x: 9.209147216893e-5 vs -3.530934308031e-4, |Δ| 4.452e-4 = 5.19e-8 of scale 8.5854e3
+SR-BOX sun_disk step 100 mom_y: 6.437659203584e-5 vs -1.625635627533e-4, |Δ| 2.269e-4 = 2.64e-8 of scale 8.5854e3
+SR-BOX sun_disk step 100 energy: 1.167109116852e5 vs 1.167109503796e5, |Δ| 3.869e-2 = 3.32e-7 of scale 1.1671e5
+SR-BOX sun_disk step 100 x_H: 2.461672658272e3 vs 2.461672660668e3, |Δ| 2.396e-6 = 9.73e-10 of scale 2.4617e3
+SR-BOX sun_disk step 100 x_He: 8.327296462377e2 vs 8.327296465668e2, |Δ| 3.291e-7 = 3.95e-10 of scale 8.3273e2
+SR-BOX sun_disk step 100 x_C: 3.082942958331e1 vs 3.082942923885e1, |Δ| 3.445e-7 = 1.12e-8 of scale 3.0829e1
+SR-BOX sun_disk step 100 x_O: 2.580288984449e1 vs 2.580288955714e1, |Δ| 2.874e-7 = 1.11e-8 of scale 2.5803e1
+SR-BOX sun_disk step 100 x_Ne: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 100 x_Mg: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 100 x_Si: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 100 x_S: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 100 x_Fe: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 100 x_n: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 2000: box [0, 0, 600, 400] FFT [2048, 1024]; vacuum_reset 5.877350266593879e-1 vs 5.885884952142177e-1, escaped.mass 1.3717290776531854e0 vs 1.3748902351145489e0
+SR-BOX sun_disk step 2000, masses sigma: 3.351034465106e3 vs 3.351034594981e3, |Δ| 1.299e-4 = 3.88e-8 of scale 3.3491e3
+SR-BOX sun_disk step 2000, masses x_H: 2.461828025551e3 vs 2.461828322165e3, |Δ| 2.966e-4 = 1.21e-7 of scale 2.4602e3
+SR-BOX sun_disk step 2000, masses x_He: 8.325840584344e2 vs 8.325839073056e2, |Δ| 1.511e-4 = 1.82e-7 of scale 8.3224e2
+SR-BOX sun_disk step 2000, masses x_C: 3.082409032470e1 vs 3.082408365923e1, |Δ| 6.665e-6 = 2.16e-7 of scale 3.0811e1
+SR-BOX sun_disk step 2000, masses x_O: 2.579837828578e1 vs 2.579837166130e1, |Δ| 6.624e-6 = 2.57e-7 of scale 2.5788e1
+SR-BOX sun_disk step 2000, masses x_Ne: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 2000, masses x_Mg: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 2000, masses x_Si: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 2000, masses x_S: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 2000, masses x_Fe: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 2000, masses x_n: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+ok
+test r#box::the_box_is_refit_after_p9_at_step_indices_0_mod_16_and_never_between ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+after 1 steps: box [32, 32, 24, 24], from step 1, 2 fits
+after 16 steps: box [32, 32, 24, 24], from step 1, 2 fits
+after 17 steps: box [192, 88, 24, 24], from step 17, 3 fits
+after 32 steps: box [192, 88, 24, 24], from step 17, 3 fits
+after 33 steps: box [32, 32, 24, 24], from step 33, 4 fits
+ok
+test r#box::the_box_is_the_non_vacuum_cells_grown_by_8_rounded_to_8_and_clamped_at_known_places_edges_and_corners ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+empty world: box [0, 0, 0, 0]
+one cell, middle: box [288, 192, 24, 24]
+on the 8-grid: box [0, 0, 24, 24]
+on the 8-grid, inside: box [8, 8, 24, 24]
+one off the grid: box [0, 0, 16, 16]
+corner (0, 0): box [0, 0, 16, 16]
+corner (599, 399): box [584, 384, 16, 16]
+left edge: box [0, 192, 16, 24]
+right edge: box [584, 192, 16, 24]
+top edge: box [288, 0, 24, 16]
+a 100 × 10 block: box [88, 40, 120, 32]
+two far corners: box [0, 0, 600, 400]
+ok
+test r#box::the_fft_size_per_axis_is_the_smallest_power_of_two_at_least_twice_the_box_and_32 ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+600 × 400, gas on []: box [0, 0, 0, 0], FFT [32, 32]
+600 × 400, gas on [(4, 4)]: box [0, 0, 16, 16], FFT [32, 32]
+600 × 400, gas on [(300, 200)]: box [288, 192, 24, 24], FFT [64, 64]
+600 × 400, gas on [(0, 0), (599, 399)]: box [0, 0, 600, 400], FFT [2048, 1024]
+2048 × 64, gas on [(0, 0), (2047, 63)]: box [0, 0, 2048, 64], FFT [4096, 128]
+ok
+test r#box::the_passes_read_their_dispatch_sizes_from_the_box ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+Fit: box [88, 40, 40, 32], tiles [5, 4, 1], cells [5, 1, 1], Δt_0 9.108400344848633e-1 (want 9.108400612990104e-1)
+WholeWorld: box [0, 0, 256, 128], tiles [32, 16, 1], cells [128, 1, 1], Δt_0 4.4721364974975586e-1 (want 4.4721359216795703e-1)
+ok
+test r#box::the_whole_world_switch_holds_the_box_at_the_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 499 filtered out; finished in 4.23s
+
+
+==== 2026-11-08T12:17:23-05:00 box · plant margin-zero · a fresh scratch copy of the tree
+planted margin-zero: tests/plants/margin-zero.patch -> crates/sr-engine/shaders/reduce.wgsl
+== 2026-11-08T12:17:23-05:00 box · task M0-V14-r2-sweep · box laserax-ai-server :: bash tests/gpu.sh box physics
+-- box · exit=101 · 13.04 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-n09rvhzh/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-n09rvhzh/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 11.13s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 8 tests
+test r#box::a_blob_at_the_box_edge_loses_no_mass_in_bounce_mode ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-BOX box_blob chunk 0: centroid at 294.576, 0.3078 cells per step leftward
+SR-BOX box_blob chunk 1: centroid at 291.663, 0.1820 cells per step leftward
+SR-BOX box_blob chunk 2: centroid at 289.014, 0.1656 cells per step leftward
+SR-BOX box_blob chunk 3: centroid at 290.552, -0.0962 cells per step leftward
+SR-BOX box_blob chunk 4: centroid at 292.309, -0.1098 cells per step leftward
+SR-BOX box_blob chunk 5: centroid at 293.127, -0.0511 cells per step leftward
+SR-BOX box_blob, masses sigma: 5.798291628379e-2 vs 2.560023974409e2, |Δ| 2.559e2 = 1.00e0 of scale 2.5600e2
+SR-BOX box_blob, masses x_H: 5.798291628379e-2 vs 2.560023974409e2, |Δ| 2.559e2 = 1.00e0 of scale 2.5600e2
+SR-BOX box_blob, masses x_He: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_C: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_O: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_Ne: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_Mg: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_Si: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_S: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_Fe: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_n: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+
+thread 'r#box::a_blob_at_the_box_edge_loses_no_mass_in_bounce_mode' (222879) panicked at crates/sr-engine/tests/gpu/box.rs:380:5:
+box_blob, masses: outside the 1e-6 band: sigma (1.00e0 of scale), x_H (1.00e0 of scale)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test r#box::an_edit_outside_the_box_refits_it_in_p0_and_the_flag_clears ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'r#box::an_edit_outside_the_box_refits_it_in_p0_and_the_flag_clears' (222885) panicked at crates/sr-engine/tests/gpu/box.rs:223:5:
+assertion `left == right` failed
+  left: ([40, 40, 8, 8], 2)
+ right: ([32, 32, 24, 24], 2)
+FAILED
+test r#box::sun_disk_in_the_box_matches_the_whole_world_at_step_100_and_its_masses_at_2000 ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-BOX sun_disk step 100: box [256, 160, 88, 80] FFT [256, 256]; vacuum_reset 2.1676181710219566e-3 vs 7.306552987422776e-3, escaped.mass 0e0 vs 0e0
+SR-BOX sun_disk step 100 sigma: 3.333060469354e3 vs 3.351034507334e3, |Δ| 1.797e1 = 5.36e-3 of scale 3.3510e3
+SR-BOX sun_disk step 100 mom_x: -5.111742757435e-5 vs -3.530934308031e-4, |Δ| 3.020e-4 = 3.52e-8 of scale 8.5854e3
+SR-BOX sun_disk step 100 mom_y: -1.325198509221e-4 vs -1.625635627533e-4, |Δ| 3.004e-5 = 3.50e-9 of scale 8.5854e3
+SR-BOX sun_disk step 100 energy: 1.151123141913e5 vs 1.167109503796e5, |Δ| 1.599e3 = 1.37e-2 of scale 1.1671e5
+SR-BOX sun_disk step 100 x_H: 2.448467600672e3 vs 2.461672660668e3, |Δ| 1.321e1 = 5.36e-3 of scale 2.4617e3
+SR-BOX sun_disk step 100 x_He: 8.282643475694e2 vs 8.327296465668e2, |Δ| 4.465e0 = 5.36e-3 of scale 8.3273e2
+SR-BOX sun_disk step 100 x_C: 3.066411520226e1 vs 3.082942923885e1, |Δ| 1.653e-1 = 5.36e-3 of scale 3.0829e1
+SR-BOX sun_disk step 100 x_O: 2.566452839833e1 vs 2.580288955714e1, |Δ| 1.384e-1 = 5.36e-3 of scale 2.5803e1
+SR-BOX sun_disk step 100 x_Ne: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 100 x_Mg: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 100 x_Si: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 100 x_S: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 100 x_Fe: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 100 x_n: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+
+thread 'r#box::sun_disk_in_the_box_matches_the_whole_world_at_step_100_and_its_masses_at_2000' (222890) panicked at crates/sr-engine/tests/gpu/box.rs:380:5:
+sun_disk step 100: outside the 1e-6 band: sigma (5.36e-3 of scale), energy (1.37e-2 of scale), x_H (5.36e-3 of scale), x_He (5.36e-3 of scale), x_C (5.36e-3 of scale), x_O (5.36e-3 of scale)
+FAILED
+test r#box::the_box_is_refit_after_p9_at_step_indices_0_mod_16_and_never_between ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+after 1 steps: box [40, 40, 8, 8], from step 1, 2 fits
+
+thread 'r#box::the_box_is_refit_after_p9_at_step_indices_0_mod_16_and_never_between' (222895) panicked at crates/sr-engine/tests/gpu/box.rs:208:9:
+assertion `left == right` failed: after 1 steps
+  left: ([40, 40, 8, 8], 1, 2)
+ right: ([32, 32, 24, 24], 1, 2)
+FAILED
+test r#box::the_box_is_the_non_vacuum_cells_grown_by_8_rounded_to_8_and_clamped_at_known_places_edges_and_corners ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+empty world: box [0, 0, 0, 0]
+one cell, middle: box [296, 200, 8, 8]
+
+thread 'r#box::the_box_is_the_non_vacuum_cells_grown_by_8_rounded_to_8_and_clamped_at_known_places_edges_and_corners' (222900) panicked at crates/sr-engine/tests/gpu/box.rs:153:9:
+assertion `left == right` failed: one cell, middle
+  left: [296, 200, 8, 8]
+ right: [288, 192, 24, 24]
+FAILED
+test r#box::the_fft_size_per_axis_is_the_smallest_power_of_two_at_least_twice_the_box_and_32 ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+600 × 400, gas on []: box [0, 0, 0, 0], FFT [32, 32]
+600 × 400, gas on [(4, 4)]: box [0, 0, 8, 8], FFT [32, 32]
+600 × 400, gas on [(300, 200)]: box [296, 200, 8, 8], FFT [32, 32]
+
+thread 'r#box::the_fft_size_per_axis_is_the_smallest_power_of_two_at_least_twice_the_box_and_32' (222905) panicked at crates/sr-engine/tests/gpu/box.rs:178:9:
+assertion `left == right` failed: the formula against the hand-worked sizes
+  left: [32, 32]
+ right: [64, 64]
+FAILED
+test r#box::the_passes_read_their_dispatch_sizes_from_the_box ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+Fit: box [96, 48, 24, 16], tiles [3, 2, 1], cells [2, 1, 1], Δt_0 9.108400344848633e-1 (want 9.108400612990104e-1)
+
+thread 'r#box::the_passes_read_their_dispatch_sizes_from_the_box' (222910) panicked at crates/sr-engine/tests/gpu/box.rs:264:9:
+assertion `left == right` failed: Fit
+  left: [96, 48, 24, 16]
+ right: [88, 40, 40, 32]
+FAILED
+test r#box::the_whole_world_switch_holds_the_box_at_the_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+
+failures:
+
+failures:
+    r#box::a_blob_at_the_box_edge_loses_no_mass_in_bounce_mode
+    r#box::an_edit_outside_the_box_refits_it_in_p0_and_the_flag_clears
+    r#box::sun_disk_in_the_box_matches_the_whole_world_at_step_100_and_its_masses_at_2000
+    r#box::the_box_is_refit_after_p9_at_step_indices_0_mod_16_and_never_between
+    r#box::the_box_is_the_non_vacuum_cells_grown_by_8_rounded_to_8_and_clamped_at_known_places_edges_and_corners
+    r#box::the_fft_size_per_axis_is_the_smallest_power_of_two_at_least_twice_the_box_and_32
+    r#box::the_passes_read_their_dispatch_sizes_from_the_box
+
+test result: FAILED. 1 passed; 7 failed; 0 ignored; 0 measured; 499 filtered out; finished in 1.81s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

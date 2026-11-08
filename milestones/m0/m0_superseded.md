@@ -398,3 +398,14 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   [M0-D159]: 128 passes or 4,096 rounds, every tolerance unchanged (measured by M0-D159 on the RTX 4090, tasks/M0-D159.md: the Massive
   disk's step 930 needs 97 passes on the f64 twin and 94 on the GPU from the same P5 start; at 128 the life ends with no warning; the
   lead at M0-D159, 2026-11-06: «128 passes (Recommended)»).
+- Contract §1.9.3's settled test on pressure alone («2P/|W| ≥ 0.8», the protostar's, failed_star's by [M0-D134], white_dwarf's and
+  planetary_nebula's by [M0-D140]) — superseded by contract §0.5 [M0-D160]: the support counts the ordered rotation about c,
+  2(P + K_t)/|W| ≥ 0.8, one test for the four rows, the observers' snapshot carrying K_t (an older one restores with K_t 0) (measured
+  by M0-D160 on the RTX 4090: m_up_sb's light end, a cold iron core in a Keplerian disk, 2P/|W| 0.356 and 2(P + K_t)/|W| 0.93–0.95;
+  the lead at M0-D160, 2026-11-07: «(b) Rotation counted (Recommended)», «All four rows (Recommended)», «Read missing as 0
+  (Recommended)»).
+- Contract §0.5 [M0-D78]'s ending hold «max(10 t.u., 20 τ_dyn), τ_dyn the object's at that frame» — superseded by contract §0.5
+  [M0-D161]: τ is the degenerate centre's, √(r_deg³ / G M_in) over the blocks whose densest cell has Π_cold / Π ≥ 0.5, else τ_dyn;
+  the snapshot carries `tau_deg` (an older one restores with none) (measured by M0-D161 on the RTX 4090: m_up_sb's life 08, a cold
+  core mostly of 4–5 cells in a Keplerian disk of R₉₀ 76–148, τ_deg 0.28–12 against τ_dyn 20–50 — it ends at step 201,248 of its
+  s_200000 resume, never before; the lead at M0-D161, 2026-11-08: «(a) Core's τ (Recommended)», «R₉₀ as today (Recommended)»).

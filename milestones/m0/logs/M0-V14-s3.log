@@ -1,0 +1,174 @@
+# M0-V14 session 3 trail — linux-pc (laserax-ai) + laserax-ai-server (RTX 4090, R18); model=claude-opus-5-5 level=max (rung_record now at launch)
+2026-11-08T09:39:42-05:00 start: grep heading, rung_record now (model=claude-opus-5-5 level=max plugin=installed), plan.py show M0-V14
+2026-11-08T09:39:48-05:00 probe: server state (read-only ssh)
+Sun Nov  8 09:39:48 AM EST 2026
+ 09:39:48 up 1 day, 23:05,  4 users,  load average: 0.00, 0.00, 0.11
+v14: 1 windows (created Fri Nov  6 16:24:56 2026)
+v14s2: 1 windows (created Fri Nov  6 16:26:31 2026)
+NVIDIA GeForce RTX 3060, 13 MiB, 0 %
+NVIDIA GeForce RTX 4090, 19 MiB, 0 %
+total 52
+drwxrwxr-x  6 ybelanger ybelanger 4096 Nov  6 16:31 .
+drwxrwxr-x 17 ybelanger ybelanger 4096 Nov  8 08:33 ..
+-rw-rw-r--  1 ybelanger ybelanger 5672 Nov  6 16:24 chain.sh
+drwxrwxr-x  3 ybelanger ybelanger 4096 Nov  6 16:31 s2_0.05
+-rw-rw-r--  1 ybelanger ybelanger  126 Nov  6 16:31 s2_0.05.out
+drwxrwxr-x  3 ybelanger ybelanger 4096 Nov  6 16:36 s2_0.1
+-rw-rw-r--  1 ybelanger ybelanger  126 Nov  6 16:36 s2_0.1.out
+-rw-rw-r--  1 ybelanger ybelanger   29 Nov  6 16:36 s2.done
+drwxrwxr-x  3 ybelanger ybelanger 4096 Nov  6 16:30 t98a_sun_base
+-rw-rw-r--  1 ybelanger ybelanger  128 Nov  6 16:30 t98a_sun_base.out
+drwxrwxr-x  3 ybelanger ybelanger 4096 Nov  6 16:37 t99a_giant_base
+-rw-rw-r--  1 ybelanger ybelanger  127 Nov  6 16:37 t99a_giant_base.out
+36ad6b214739099b73d462ca1036fbe481b1fbc5e1728ac293dc323c2b010acc  build/v14/chain.sh
+2026-11-08T13-33-47Z
+2026-11-07T23-14-54Z
+2026-11-06T21-28-41Z
+2026-11-06T21-24-57Z
+2026-11-04T01-17-08Z
+53d692bb20d0bc4af3cc074bb6cc4c70e642814965498eedd8fef7bc300ecf9a  assets/calibration.json
+a495b6fc4fb0aea4b99fdb3c269cf552fc926ceb7b20ea41b7ae882e935f9fae  assets/elements.json
+8ad6c983791e170bc2bc5b767eafa1ba7b4ba27c0a2ee9d50cfa93e760947827  assets/physics.json
+885275c3f125004367e12e18f2bb582dff8591b605010fb3f37171360cb94c9e  assets/reactions.json
+/dev/nvme2n1p2  937G  360G  531G  41% /
+-rwxrwxr-x 2 ybelanger ybelanger 23320376 Nov  8 08:33 build/target/release/sandbox-reactions
+2026-11-08T09:41:00-05:00 bring home (R18, before any rsync up): the server's logs/ into scratch /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/35a68523-fba6-45eb-ae3d-f7d467aea6fa/scratchpad/srvlogs
+same: 13390
+only on server: 336 ['M0-D101-decoy.launch.web.log', 'M0-D101-race.launch.game-xvfb.log', 'M0-D102-decoy.launch.web.log', 'M0-D102-race.launch.game-xvfb.log', 'M0-D110-decoy.launch.web.log', 'M0-D110-race.launch.game-xvfb.log', 'M0-D112.adapter.log', 'M0-D112.blackbody.log', 'M0-D112.booking.log', 'M0-D112.boot.log', 'M0-D112.box.log', 'M0-D112.build.log', 'M0-D112.burn_cell.log', 'M0-D112.burn_order.log', 'M0-D112.calibrate_bisect.log', 'M0-D112.calibrate_cold.log', 'M0-D112.calibrate_order.log', 'M0-D112.calibration.log', 'M0-D112.cold_core.log', 'M0-D112.collapse.log', 'M0-D112.cpu_gpu.log', 'M0-D112.dt.log', 'M0-D112.dump.log', 'M0-D112.edges.log', 'M0-D112.edits.log', 'M0-D112.edits_file.log', 'M0-D112.fft.log', 'M0-D112.floors.log', 'M0-D112.frames.log', 'M0-D112.glow.log', 'M0-D112.glow.redarm.log', 'M0-D112.grav_force.log', 'M0-D112.grav_selfforce.log', 'M0-D112.heat_gauss.log', 'M0-D112.heat_implicit.log', 'M0-D112.heat_limiter.log', 'M0-D112.heat_multigrid.log', 'M0-D112.heat_stiff.log', 'M0-D112.jeans.log', 'M0-D112.latch.log', 'M0-D112.launch.headless-boot.log', 'M0-D112.ledger.log', 'M0-D112.multi.log', 'M0-D112.neutrino.log', 'M0-D112.nu_heat.log', 'M0-D112.observe_run.log', 'M0-D112.plan_lint.log', 'M0-D112.preset_cloud.log', 'M0-D112.radiation_force.log', 'M0-D112.readouts.log', 'M0-D112.scene.log', 'M0-D112.sink.log', 'M0-D112.sod.log', 'M0-D112.state.log', 'M0-D112.strings.log', 'M0-D112.summary.log', 'M0-D112.timing.log', 'M0-D112.twin.log', 'M0-D112.views.log', 'M0-D112.watch_only.log', 'M0-D122-srv.boot.log', 'M0-D122-srv.launch.headless-boot.log', 'M0-D130.edges.redarm.log', 'M0-D150-cedges.edges.log', 'M0-D150-cstate.state.log', 'M0-D150-edges.edges.redarm.log', 'M0-D150-state.state.redarm.log', 'M0-D154.adapter.log', 'M0-D154.age_clock.log', 'M0-D154.booking.log', 'M0-D154.boot.log', 'M0-D154.box.log', 'M0-D154.build.log', 'M0-D154.burn_cell.log', 'M0-D154.burn_order.log', 'M0-D154.calibrate_bisect.log', 'M0-D154.calibrate_cold.log', 'M0-D154.calibrate_order.log', 'M0-D154.calibration.log', 'M0-D154.classify.log', 'M0-D154.cold_core.log', 'M0-D154.collapse.log', 'M0-D154.cpu_gpu.log', 'M0-D154.dt.log', 'M0-D154.dump.log', 'M0-D154.edges.log', 'M0-D154.edits.log', 'M0-D154.edits_file.log', 'M0-D154.ending.log', 'M0-D154.eos.log', 'M0-D154.extents.log', 'M0-D154.fft.log', 'M0-D154.fft_twin.log', 'M0-D154.floors.log', 'M0-D154.frames.log', 'M0-D154.glow.log', 'M0-D154.grav_force.log', 'M0-D154.grav_selfforce.log', 'M0-D154.heat_gauss.log', 'M0-D154.heat_limiter.log', 'M0-D154.heat_multigrid.log', 'M0-D154.jeans.log', 'M0-D154.latch.log', 'M0-D154.launch.headless-boot.log', 'M0-D154.ledger.log', 'M0-D154.multi.log', 'M0-D154.neutrino.log', 'M0-D154.nu_heat.log', 'M0-D154.objects.log', 'M0-D154.observe_run.log', 'M0-D154.preset_cloud.log', 'M0-D154.radiation_force.log', 'M0-D154.rates.log', 'M0-D154.readouts.log', 'M0-D154.registry.log', 'M0-D154.riemann.log', 'M0-D154.scene.log', 'M0-D154.sheet.log', 'M0-D154.sink.log', 'M0-D154.sod.log', 'M0-D154.stage_order.log', 'M0-D154.state.log', 'M0-D154.summary.log', 'M0-D154.timing.log', 'M0-D154.twin.log', 'M0-D154.ui_banner.log', 'M0-D154.ui_display.log', 'M0-D154.ui_inspect.log', 'M0-D154.ui_legend.log', 'M0-D154.ui_presets.log', 'M0-D154.ui_remnant.log', 'M0-D154.ui_star.log', 'M0-D154.ui_tools.log', 'M0-D154.ui_topbar.log', 'M0-D154.ui_world.log', 'M0-D154.ui_zoom.log', 'M0-D154.views.log', 'M0-D154.watch_only.log', 'M0-D156-try4.heat_gauss.log', 'M0-D156-try4.heat_implicit.log', 'M0-D156-try4.heat_limiter.log', 'M0-D156-try4.heat_multigrid.log', 'M0-D156-try5.heat_gauss.log', 'M0-D156-try5.heat_implicit.log', 'M0-D156-try5.heat_limiter.log', 'M0-D156-try5.heat_multigrid.log', 'M0-D156-try6.heat_gauss.log', 'M0-D156-try6.heat_implicit.log', 'M0-D156-try6.heat_limiter.log', 'M0-D156-try6.heat_multigrid.log', 'M0-D156-try7.heat_gauss.log', 'M0-D156-try7.heat_implicit.log', 'M0-D156-try7.heat_limiter.log', 'M0-D156-try7.heat_multigrid.log', 'M0-D156-try8.heat_gauss.log', 'M0-D156-try8.heat_implicit.log', 'M0-D156-try8.heat_limiter.log', 'M0-D156-try8.heat_multigrid.log', 'M0-D161.adapter.log', 'M0-D161.age_clock.log', 'M0-D161.booking.log', 'M0-D161.boot.log', 'M0-D161.box.log', 'M0-D161.burn_cell.log', 'M0-D161.burn_order.log', 'M0-D161.calibrate_bisect.log', 'M0-D161.calibrate_cold.log', 'M0-D161.calibrate_order.log', 'M0-D161.calibration.log', 'M0-D161.cold_core.log', 'M0-D161.collapse.log', 'M0-D161.cpu_gpu.log', 'M0-D161.dt.log', 'M0-D161.dump.log', 'M0-D161.edges.log', 'M0-D161.edits.log', 'M0-D161.edits_file.log', 'M0-D161.ending.log', 'M0-D161.eos.log', 'M0-D161.extents.log', 'M0-D161.fft.log', 'M0-D161.floors.log', 'M0-D161.frames.log', 'M0-D161.glow.log', 'M0-D161.grav_force.log', 'M0-D161.grav_selfforce.log', 'M0-D161.heat_gauss.log', 'M0-D161.heat_implicit.log', 'M0-D161.heat_limiter.log', 'M0-D161.heat_multigrid.log', 'M0-D161.heat_stiff.log', 'M0-D161.held_core.log', 'M0-D161.jeans.log', 'M0-D161.latch.log', 'M0-D161.launch.headless-boot.log', 'M0-D161.ledger.log', 'M0-D161.multi.log', 'M0-D161.neutrino.log', 'M0-D161.nu_heat.log', 'M0-D161.observe_run.log']
+server extends linux-pc: [('M0-D161.classify.redarm.log', 95727, 191530), ('M0-D161.objects.redarm.log', 38836, 77725), ('loop_times.jsonl', 3320329, 3329310)]
+linux-pc extends server: 1 ['M0-D161.sync.log']
+conflict: [('M0-D161.build.log', 534, 198)]
+only on linux-pc: 4 ['M0-D161.claim_stdout.log', 'M0-D161.verify2.log', 'M0-D161.verify2_compare.log', 'M0-V14-s3.log']
+2026-11-08T09:41:35-05:00 brought home M0-D161's claim record (it ran on the server 09:04-09:08 and stayed there): 72 server-only M0-D161.* logs copied in; classify.redarm and objects.redarm (server's extend linux-pc's) copied over; the server's M0-D161.build.log (the claim's build scope) appended to linux-pc's (D161's own build note); loop_times.jsonl +1 line (M0-D161 changed 09:07:13); tools/pb/verify.anchor.json = the server's (every differing entry newer there: 157, M0-D161's claim; none newer on linux-pc)
+3446f20b1a670247db7a48e12e2d80e7cc4c3a5428db59156c590c5997d773bf  tools/pb/verify.anchor.json
+17c7ffb67579fab7fa567e3351c6ce0c6936d3d4d7f95e655e67ad62d67f5978  milestones/m0/logs/loop_times.jsonl
+loop_times.jsonl = the server's
+2026-11-08T09:42:35-05:00 R18 rsync up (the route): rsync -a --exclude .git --exclude build --exclude .venv ./ ybelanger@192.168.1.134:workspace/sandbox_reactions/
+rsync exit=0
+after the sync: linux-pc 15059 files, every one on the server: False (missing 24), differing 2 ['./milestones/m0/logs/M0-V14-s3.log', './milestones/m0/logs/M0-V14-s3.sync.log']; server-only files 435 (older blocks' logs, kept)
+2026-11-08T09:43:01-05:00 sync check: every linux-pc file on the server, same sha256 (the 24 'missing' are crates/sr-engine/build/ test leftovers, rsync's --exclude build; the 2 differing are this trail and the sync log, written during the check)
+2026-11-08T09:43:01-05:00 chain2.sh written on the server (cp chain.sh + 3 renames); its diff:
+5c5
+< # milestones/m0/logs/M0-V14.chain.log. Watch: `tmux attach -t v14` (detach: Ctrl-b d); where a calibrate item stands:
+---
+> # milestones/m0/logs/M0-V14.chain2.log. Watch: `tmux attach -t v14` (detach: Ctrl-b d); where a calibrate item stands:
+16c16
+< LOG=milestones/m0/logs/M0-V14.chain.log
+---
+> LOG=milestones/m0/logs/M0-V14.chain2.log
+76,79c76,79
+<   if todo 10; then stamp "10 Verify 1: verify.py --all --task M0-V14"
+<     SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --all --task M0-V14; echo "--all exit=$?"; fi
+<   if todo 11; then stamp "11 the sweep: verify.py --redarm --moved --task M0-V14-sweep"
+<     SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm --moved --task M0-V14-sweep; echo "sweep exit=$?"; fi
+---
+>   if todo 10; then stamp "10 Verify 1: verify.py --all --task M0-V14-r2"
+>     SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --all --task M0-V14-r2; echo "--all exit=$?"; fi
+>   if todo 11; then stamp "11 the sweep: verify.py --redarm --moved --task M0-V14-r2-sweep"
+>     SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm --moved --task M0-V14-r2-sweep; echo "sweep exit=$?"; fi
+36ad6b214739099b73d462ca1036fbe481b1fbc5e1728ac293dc323c2b010acc  chain.sh
+8aa060c10924982ef5d22cae6750e7840c705ce79e958cdb9db3f435c81627a5  chain2.sh
+bash -n: syntax ok
+2:# M0-V14 — the recalibration chain on laserax-ai-server's RTX 4090 (R18). The lead, 2026-11-06, question tool:
+3:# «I launch the chain now (Recommended)»; then «just make sure it survives a disconnect». Launched by the M0-V14 agent in
+5:# milestones/m0/logs/M0-V14.chain2.log. Watch: `tmux attach -t v14` (detach: Ctrl-b d); where a calibrate item stands:
+16:LOG=milestones/m0/logs/M0-V14.chain2.log
+44:  stamp "M0-V14 chain start on $(hostname) (START=$START${RESUME:+, RESUME=$RESUME})"
+76:  if todo 10; then stamp "10 Verify 1: verify.py --all --task M0-V14-r2"
+77:    SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --all --task M0-V14-r2; echo "--all exit=$?"; fi
+78:  if todo 11; then stamp "11 the sweep: verify.py --redarm --moved --task M0-V14-r2-sweep"
+79:    SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --redarm --moved --task M0-V14-r2-sweep; echo "sweep exit=$?"; fi
+80:  stamp "M0-V14 chain end"
+2026-11-08T09:44:31-05:00 the lead: «You launch it now (Recommended)» (question tool) — launching tmux v14b on the server: START=2 bash build/v14/chain2.sh
+launched exit=0
+Sun Nov  8 09:44:35 AM EST 2026
+v14: 1 windows (created Fri Nov  6 16:24:56 2026)
+v14b: 1 windows (created Sun Nov  8 09:44:31 2026)
+v14s2: 1 windows (created Fri Nov  6 16:26:31 2026)
+=== M0-V14 chain start on laserax-ai-server (START=2) · 2026-11-08T09:44:31-0500
+NVIDIA GeForce RTX 3060, 13 MiB, 0 %
+NVIDIA GeForce RTX 4090, 19 MiB, 0 %
+a495b6fc4fb0aea4b99fdb3c269cf552fc926ceb7b20ea41b7ae882e935f9fae  assets/elements.json
+885275c3f125004367e12e18f2bb582dff8591b605010fb3f37171360cb94c9e  assets/reactions.json
+8ad6c983791e170bc2bc5b767eafa1ba7b4ba27c0a2ee9d50cfa93e760947827  assets/physics.json
+53d692bb20d0bc4af3cc074bb6cc4c70e642814965498eedd8fef7bc300ecf9a  assets/calibration.json
+=== 1 build · 2026-11-08T09:44:31-0500
+    Finished `release` profile [optimized] target(s) in 0.08s
+=== 1 skipped (START=2) · 2026-11-08T09:44:31-0500
+=== 2 calibrate items 1-2 (CPU) · 2026-11-08T09:44:31-0500
+SR-WARN assets/calibration.json holds another physics_hash: its items are dropped
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE DONE out=assets/calibration.json wall_s=0.1
+=== 3 calibrate m_ign_sb · 2026-11-08T09:44:31-0500
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ 161079       00:04 build/target/release/sandbox-reactions calibrate --adapter RTX 4090 --out assets/calibration.json --checkpoint-every 3000 --only m_ign_sb --progress-every 1000
+NVIDIA GeForce RTX 3060, 24 MiB, 0 %
+NVIDIA GeForce RTX 4090, 665 MiB, 17 %
+2026-11-08T09:44:52-05:00 chain2 running (tmux v14b, started 09:44:31; items 1-2 = session 1's: m_ch_sb 3216.419921, m_tov_sb 4853.169982; item 3 on the RTX 4090); survives a disconnect: a fresh ssh lists v14b and the calibrate process
+2026-11-08T09:48:46-05:00 plan: status IN PROGRESS, register (Next task, Awaiting lead), handoff; tasks/M0-V14.md § Session 3 + § Next — session 4; reports/v14.md header+verdict. Claim: plan_lint (the one scope these edits touch) as M0-V14-s3
+anchor: 1 path×scope entries moved by this run
+anchor: 177 paths checked · 415 skipped (3 classes) · 263 never checked · 0 stale · 0 unclassified · 0 owed · 440 covered of 855 visible
+verify: 828 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 1.92->1.92
+=== GO ===
+verify: 828 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 1.8->1.8
+=== GO ===
+2026-11-08T09:49:25-05:00 handoff: IN PROGRESS; claim plan_lint 828/0 GO (twice, after the handoff edit); chain2 at:
+v14b: 1 windows (created Sun Nov  8 09:44:31 2026)
+SR-CALIBRATE progress item=m_up_sb mass=3351.032 step=50001 sim_time=570.966 heat_unconverged=0 stage=main_sequence | raw=main_sequence
+2026-11-08T09:49:26-05:00 session 3 ends; next: M0-V14 session 4 once chain2's log ends (tasks/M0-V14.md § Next — session 4)
+2026-11-08T10:16:27-05:00 the lead: «How far along is it» — rung_record now: model=claude-opus-5-5 level=max plugin=installed; chain2 read:
+Sun Nov  8 10:16:28 AM EST 2026
+v14b: 1 windows (created Sun Nov  8 09:44:31 2026)
+=== 4 calibrate m_up_sb · 2026-11-08T09:45:53-0500
+SR-CALIBRATE run item=m_up_sb side=Light mass=3351.032 ignited=true core_collapse=false ending=white_dwarf steps=133681 sim_time=1483.844 wall_s=590.8 record=build/calibrate_runs/2026-11-08T14-45-53Z/m_up_sb-01
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=46914.450 ignited=true core_collapse=true ending=none steps=1553 sim_time=10.808 wall_s=19.1 record=build/calibrate_runs/2026-11-08T14-45-53Z/m_up_sb-02
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=12538.414 ignited=true core_collapse=true ending=none steps=1169 sim_time=8.694 wall_s=11.1 record=build/calibrate_runs/2026-11-08T14-45-53Z/m_up_sb-03
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=6482.024 ignited=true core_collapse=true ending=none steps=913 sim_time=7.697 wall_s=6.7 record=build/calibrate_runs/2026-11-08T14-45-53Z/m_up_sb-04
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=4660.630 ignited=true core_collapse=true ending=none steps=817 sim_time=7.411 wall_s=6.0 record=build/calibrate_runs/2026-11-08T14-45-53Z/m_up_sb-05
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=3951.951 ignited=true core_collapse=true ending=none steps=817 sim_time=7.581 wall_s=6.3 record=build/calibrate_runs/2026-11-08T14-45-53Z/m_up_sb-06
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=3639.109 ignited=true core_collapse=true ending=none steps=913 sim_time=8.529 wall_s=5.8 record=build/calibrate_runs/2026-11-08T14-45-53Z/m_up_sb-07
+SR-CALIBRATE run item=m_up_sb side=Light mass=3492.101 ignited=true core_collapse=false ending=white_dwarf steps=102513 sim_time=1142.176 wall_s=470.3 record=build/calibrate_runs/2026-11-08T14-45-53Z/m_up_sb-08
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=3564.848 ignited=true core_collapse=true ending=none steps=897 sim_time=8.712 wall_s=5.7 record=build/calibrate_runs/2026-11-08T14-45-53Z/m_up_sb-09
+SR-CALIBRATE run item=m_up_sb side=Heavy mass=3528.287 ignited=true core_collapse=true ending=none steps=961 sim_time=9.185 wall_s=6.1 record=build/calibrate_runs/2026-11-08T14-45-53Z/m_up_sb-10
+SR-CALIBRATE item=m_up_sb value=3510.148 bracket=3492.101..3528.287 runs=10 wall_s=1132.6
+SR-CALIBRATE item=max_gas_speed value=50.1296
+=== 5 calibrate m_bh_sb · 2026-11-08T10:04:46-0500
+SR-CALIBRATE run item=m_bh_sb side=Light mass=4387.684 ignited=true core_collapse=true ending=neutron_star steps=4387 sim_time=25.913 wall_s=121.6 record=build/calibrate_runs/2026-11-08T15-04-46Z/m_bh_sb-01
+SR-CALIBRATE run item=m_bh_sb side=Heavy mass=67020.643 ignited=true core_collapse=true ending=black_hole steps=7179 sim_time=27.926 wall_s=324.0 record=build/calibrate_runs/2026-11-08T15-04-46Z/m_bh_sb-02
+-- last progress:
+SR-CALIBRATE progress item=m_bh_sb mass=17148.336 step=9001 sim_time=35.279 heat_unconverged=0 stage=black_hole | raw=black_hole
+NVIDIA GeForce RTX 4090, 96 %
+2026-11-08T18:01:46-05:00 the lead: «is it done?» — rung_record now: model=claude-opus-5-5 level=max plugin=installed; chain2 read:
+Sun Nov  8 06:01:47 PM EST 2026
+v14: 1 windows (created Fri Nov  6 16:24:56 2026)
+v14b: 1 windows (created Sun Nov  8 09:44:31 2026)
+v14s2: 1 windows (created Fri Nov  6 16:26:31 2026)
+=== 5 calibrate m_bh_sb · 2026-11-08T10:04:46-0500
+SR-CALIBRATE item=m_bh_sb value=9003.592 bracket=8955.779..9051.661 runs=10 wall_s=2485.1
+SR-CALIBRATE item=max_gas_speed value=127.9062
+=== 6 calibrate the presets (item 6) · 2026-11-08T10:46:11-0500
+SR-CALIBRATE item=presets preset_mass_sb=3113.6/5902.2/13278.9 t_eff_sun_sb=11.54418 life_sun_sb=1993.454 top_rung=200 stages=7 wall_s=1016.7
+SR-CALIBRATE item=max_gas_speed value=127.9062
+=== 6b rebuild (embeds the calibration) · 2026-11-08T11:03:08-0500
+=== 7 dump C4a: preset:sun to t 800, a dump every 10,000 · 2026-11-08T11:03:14-0500
+sun_ms exit=0
+=== 8 dump C3a: preset:massive to t 30, a dump every 100 · 2026-11-08T11:07:38-0500
+massive_d exit=0
+=== 9 S1: preset:sun to its ending, a dump every 1,000 · 2026-11-08T11:09:39-0500
+sun_life exit=0
+=== 10 Verify 1: verify.py --all --task M0-V14-r2 · 2026-11-08T11:21:41-0500
+verify: 1755 passed, 0 failed, 0 skipped · 83/83 scopes GO · 0 skipped · 5 owed · 0 NOT RUN · 0 not impacted · 236.40 s + loop 84.48 s · mode all · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.74->1.89 · base: M0-D161's start 2026-11-08T
+=== GO ===
+--all exit=0
+=== 11 the sweep: verify.py --redarm --moved --task M0-V14-r2-sweep · 2026-11-08T11:27:03-0500
+=== GO ===
+sweep exit=0
+=== M0-V14 chain end · 2026-11-08T13:22:29-0500
+-- tail:
+moved: 78 of 83 armed scopes, plants RED 200, GREEN 0, ERROR 0 · 6926.32 s · box laserax-ai-server
+=== GO ===
+sweep exit=0
+=== M0-V14 chain end · 2026-11-08T13:22:29-0500
+NVIDIA GeForce RTX 4090, 0 %

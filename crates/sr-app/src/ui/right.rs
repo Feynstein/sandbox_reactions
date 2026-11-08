@@ -19,6 +19,7 @@ use sr_engine::watch::report;
 use sr_physics::calibration::Calibration;
 use sr_physics::observe::age::AgeClock;
 use sr_physics::observe::ending::{Ending, Prediction, Predictor, Readout, Remnant};
+use sr_physics::observe::stages::hold_tau;
 use sr_physics::observe::tracker::SUN_MASS_NOMINAL;
 use sr_physics::eos::Eos;
 use sr_physics::observe::translate::Translations;
@@ -231,7 +232,8 @@ impl Stars {
     pub fn facts(&self, wall: f64) -> Option<Facts> {
         let o = self.current()?;
         let shown = self.stages.stage(o.id).and_then(|s| s.shown);
-        let remnant = self.remnants.get(&o.id).map(|&(stage, since)| Remnant { stage, held_t: self.last_sim - since, tau_dyn: o.tau_dyn });
+        // The hold reads the degenerate centre's τ, else τ_dyn — as the engine's `ending` does (§0.5 [M0-D161]).
+        let remnant = self.remnants.get(&o.id).map(|&(stage, since)| Remnant { stage, held_t: self.last_sim - since, tau_dyn: hold_tau(o) });
         Some(Facts {
             // Until a stage has held (§1.9.3) the star is the cold cloud it began as.
             stage: shown.unwrap_or(Stage::Cloud),

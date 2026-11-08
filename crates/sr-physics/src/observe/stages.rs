@@ -5,7 +5,7 @@
 //! flag, the last time its row said core collapse, the most hydrogen its centre has shown), applies the display hold, and
 //! returns the events (§1.9.4), each once per object. The classifier never reads the rung, the frame or the engine — the
 //! object, its history and m_ch_sb, the heaviest object a white dwarf may hold and a collapsing core's must pass, only
-//! (I2; G-WATCH keeps this module out of the step). [`ending_hold`] is how long a remnant stage must show before it is the object's ending (§1.9.5 as §0.5 [M0-D78] reads it), for the engine's `ending` event and the
+//! (I2; G-WATCH keeps this module out of the step). [`ending_hold`] is how long a remnant stage must show before it is the object's ending (§1.9.5 as §0.5 [M0-D78] reads it), of [`hold_tau`] — the degenerate centre's τ, else τ_dyn (§0.5 [M0-D161]) — for the engine's `ending` event and the
 //! readout's.
 
 use std::collections::BTreeMap;
@@ -150,9 +150,11 @@ fn burns(c: &Ctx, g: usize, fuel: usize) -> bool {
 /// At rest and pressure-supported, near virial: |v_r| ≤ 0.05 √(GM/R) and 2P/|W| ≥ 0.8 — the protostar's test, the failed
 /// star's since §0.5 [M0-D134] and the white dwarf's and planetary nebula's since §0.5 [M0-D140]: a cold cloud's centre is held
 /// mostly by the cold pressure (d_c 0.55–0.65 at the drop) while it falls in, and the Sun-like's still does while it re-expands
-/// after its flash, so d_c alone makes no remnant.
+/// after its flash, so d_c alone makes no remnant. The support counts the ordered rotation about c beside the pressure,
+/// 2(P + K_t)/|W| ≥ 0.8 — §0.5 [M0-D160]: m_up_sb's light end leaves a cold iron core inside a Keplerian disk, 2P/|W| 0.356
+/// and 2(P + K_t)/|W| 0.93–0.95, where the Sun-like re-expanding after its flash has K_t ≈ 10⁻⁵ |W| (RTX 4090).
 fn settled(c: &Ctx) -> bool {
-    c.o.v_r.abs() <= 0.05 * c.v_dyn && c.o.potential != 0.0 && 2.0 * c.o.pressure / c.o.potential.abs() >= 0.8
+    c.o.v_r.abs() <= 0.05 * c.v_dyn && c.o.potential != 0.0 && 2.0 * (c.o.pressure + c.o.kinetic_t) / c.o.potential.abs() >= 0.8
 }
 
 fn carbon_burns(o: &Object) -> bool {
@@ -284,6 +286,15 @@ pub fn steps_back(stage: Stage, shown: Option<Stage>, ignited: bool) -> bool {
         Some(s) => rank(s).is_some_and(|q| r < q),
         None => false,
     }
+}
+
+/// The τ an object's ending hold reads: its degenerate centre's τ_deg, else its τ_dyn (§0.5 [M0-D161]; the lead at M0-D161,
+/// «(a) Core's τ (Recommended)», «R₉₀ as today (Recommended)»). m_up_sb's light end is a cold core of 4–5 cells inside a
+/// Keplerian disk: τ_dyn of the disk's R₉₀ held the white dwarf 420–990 t.u., which the disk's |v_r| crossing 0.05 √(GM/R)
+/// every few hundred steps never let it reach. The engine's `ending` event, summary.json's readout and the app's readout read
+/// [`ending_hold`] of this.
+pub fn hold_tau(o: &Object) -> f64 {
+    o.tau_deg.unwrap_or(o.tau_dyn)
 }
 
 /// How long (t.u.) a remnant stage must show before it is the object's ending: max(10 t.u., 20 τ_dyn), τ_dyn the object's at
@@ -484,12 +495,14 @@ mod tests {
             v_r: 0.0,
             thermal: 1.0,
             kinetic: 0.0,
+            kinetic_t: 0.0,
             pressure: 1.0,
             potential: -10.0,
             unbound: 0.0,
             core_group: None,
             r_core: None,
             envelope_mass: None,
+            tau_deg: None,
         }
     }
 
@@ -826,6 +839,49 @@ mod tests {
         o.v_r = 0.0;
         o.pressure = 3.99;
         assert_ne!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "2P/|W| 0.798");
+    }
+
+    /// m_up_sb's light end at step 600,000 (the 3,351.032 life, RTX 4090, laserax-ai-server, 2026-11-06): the checkpoint's
+    /// snapshot of object 1, its K_t read 16 steps on (logs/M0-D160.probe_remnant.log) — a cold iron core inside a Keplerian
+    /// disk, 2P/|W| 0.356, 2(P + K_t)/|W| 0.934.
+    fn spinning_remnant() -> Object {
+        let mut o = cloud();
+        (o.mass, o.gas_mass, o.centre, o.radius, o.tau_dyn) = (309.054, 309.054, [299.5, 201.5], 85.2209, 44.7509);
+        (o.luminosity, o.luminosity_own, o.sigma_c, o.t_c, o.d_c, o.v_r) = (0.42997, 0.0, 1.6228, 0.053935, 0.99604, 2.4358e-4);
+        (o.thermal, o.kinetic, o.kinetic_t, o.pressure, o.potential) = (96.797, 655.23, 622.38, 383.77, -2155.67);
+        o.x_c = [1.9083e-3, 9.087e-4, 4.017e-5, 9.141e-4, 9.6e-11, 2.5e-11, 5.5e-7, 2.4e-7, 0.99623, 0.0];
+        o
+    }
+
+    #[test]
+    fn a_spinning_remnant_is_settled() {
+        // §0.5 [M0-D160]: held by its rotation, a white dwarf — before, iron_core for 467,455 steps and calibrate's exit 6.
+        let mut o = spinning_remnant();
+        assert_eq!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "2(P + K_t)/|W| 0.934");
+        o.kinetic_t = 0.0;
+        assert_eq!(stage_of(&o, &ignited()), Stage::IronCore, "its rotation left out: 2P/|W| 0.356");
+        // Each edge: 2(P + K_t)/|W| = 0.8 is within, a hair under is not, and motion that is no rotation counts for nothing.
+        let mut o = degenerate();
+        (o.pressure, o.kinetic_t) = (1.0, 3.0);
+        assert_eq!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "2(P + K_t)/|W| = 0.8");
+        o.unbound = 5.0;
+        assert_eq!(stage_of(&o, &ignited()), Stage::PlanetaryNebula, "the nebula's row reads the same test");
+        o.unbound = 0.0;
+        assert_eq!(stage_of(&o, &fresh()), Stage::FailedStar, "the failed star's too");
+        o.d_c = 0.0;
+        assert_eq!(stage_of(&o, &fresh()), Stage::Protostar, "and the protostar's");
+        o.d_c = 0.5;
+        (o.kinetic_t, o.kinetic) = (2.99, 100.0);
+        assert_ne!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "2(P + K_t)/|W| 0.798, whatever K");
+    }
+
+    #[test]
+    fn the_sun_like_s_false_white_dwarf_has_no_rotation() {
+        // §0.5 [M0-D160] on M0-D140's frames (RTX 4090, logs/M0-D160.probe_lives.log): near rest at step 577, 2P/|W| 0.7979,
+        // K 0.00452 |W| — all motion counted it read 0.807, a white dwarf with its hydrogen unburnt — and K_t 10⁻⁵ |W|.
+        let mut o = re_expanding(0.6061, -0.0376, 0.7979, 410.7);
+        (o.kinetic, o.kinetic_t) = (0.0452, 1.0e-4);
+        assert_ne!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "step 577: 2(P + K_t)/|W| 0.7979");
     }
 
     #[test]
@@ -1366,6 +1422,28 @@ mod tests {
         assert_eq!(ending_hold(0.5), 10.0, "20 τ_dyn = 10 t.u.");
         assert_eq!(ending_hold(1.0), 20.0, "τ_dyn 1: 20 t.u.");
         assert_eq!(ending_hold(0.0), 10.0);
+    }
+
+    #[test]
+    fn the_spun_up_remnant_holds_for_its_degenerate_centre_s_time() {
+        // §0.5 [M0-D161]: m_up_sb's life 08 (3,492.101), s_200000 resumed 16 steps on the RTX 4090 (logs/M0-D161.probe_remnant.log):
+        // white_dwarf, a cold core of r_deg 4.119 holding 357.96 inside a disk of R₉₀ 128.29 — τ_dyn 38.02, τ_deg 0.4418 (W scaled
+        // to −1,000, 2P/|W| 0.3685 and 2(P + K_t)/|W| 0.9030 as read).
+        let mut o = cloud();
+        (o.mass, o.gas_mass, o.radius, o.tau_dyn, o.tau_deg) = (1460.94, 1460.94, 128.292, 38.0173, Some(4.119 / 9.32242));
+        (o.luminosity, o.luminosity_own, o.l_nuc, o.d_c) = (267.4, 267.4, 0.0, 0.9985);
+        (o.pressure, o.kinetic_t, o.potential) = (184.25, 267.25, -1000.0);
+        o.v_r = 0.02027 * o.radius / o.tau_dyn;
+        o.x_c = [2.972e-6, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7986, 0.2014];
+        assert_eq!(stage_of(&o, &ignited()), Stage::WhiteDwarf);
+        assert_eq!(ending_hold(hold_tau(&o)), 10.0, "20 τ_deg = 8.8 t.u.: the 10 t.u. floor");
+        assert!((ending_hold(o.tau_dyn) - 760.346).abs() < 1e-9, "the disk's R₉₀ held it 760 t.u.");
+        // At step 206,016 the cold disk's inner part read degenerate too: r_deg 35.3, τ_deg 8.03.
+        o.tau_deg = Some(8.03);
+        assert!((ending_hold(hold_tau(&o)) - 160.6).abs() < 1e-9);
+        // No degenerate block: τ_dyn, as before (the lead, «R₉₀ as today»).
+        o.tau_deg = None;
+        assert_eq!(hold_tau(&o), 38.0173);
     }
 
     #[test]

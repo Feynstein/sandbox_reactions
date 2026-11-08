@@ -1,0 +1,13 @@
+desktop     5/0/0       61.65 s  GO · step 1/5, 4 left
+web         5/0/0      323.38 s  GO · step 2/5, 3 left
+capture     3/0/0       25.94 s  GO · step 3/5, 2 left
+toolchain   3/0/0        0.39 s  GO · step 4/5, 1 left
+measure_ui  1/1/0        7.15 s  NO-GO · step 5/5, 0 left
+logs: milestones/m0/logs/M0-V14-lpc.<scope>.log · record: loop_times.jsonl · tree faedad8dae58+de6d00812c7b
+anchor: 461 path×scope entries moved by this run
+anchor: 299 paths checked · 415 skipped (3 classes) · 141 never checked · 0 stale · 0 unclassified · 0 owed · 440 covered of 855 visible
+FAILED:
+  measure_ui: measure_ui[run]: 1 failed; measure_ui[run]: its own verdict NO-GO: the copy does not hold p95 + 0.5 and nothing else new · log milestones/m0/logs/M0-V14-lpc.measure_ui.log
+verify: 17 passed, 1 failed, 0 skipped · 4/5 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 142.98 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 4.46->2.12
+=== NO-GO: measure_ui: measure_ui[run]: 1 failed; measure_ui[run]: its own verdict NO-GO: the copy does not hold p95 + 0.5 and nothing else new · log milestones/m0/logs/M0-V14-lpc.measure_ui.log ===
+exit=1

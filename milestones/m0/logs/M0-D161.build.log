@@ -1,0 +1,13 @@
+build native: 1.99.0 in 8 s, target /home/ybelanger/workspace/sandbox_reactions/build/target (1.7G)
+=== GO ===
+-rwxrwxr-x 2 ybelanger ybelanger 23320376 08:33 build/target/release/sandbox-reactions
+== 2026-11-08T09:04:22-05:00 build[native] · task M0-D161 · box laserax-ai-server :: bash tests/cargo.sh build {case}
+== 2026-11-08T09:04:22-05:00 build[wasm] · task M0-D161 · box laserax-ai-server :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 1.07 s
+build wasm: 1.99.0 in 1 s, target /home/ybelanger/workspace/sandbox_reactions/build/target (1.7G)
+=== GO ===
+
+-- build[native] · exit=0 · 13.04 s
+build native: 1.99.0 in 13 s, target /home/ybelanger/workspace/sandbox_reactions/build/target (1.7G)
+=== GO ===
+

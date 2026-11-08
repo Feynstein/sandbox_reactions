@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/tracker.rs
++++ b/crates/sr-physics/src/observe/tracker.rs
+@@ -655,7 +655,7 @@
+         let (dx, dy) = (at_[0] - centre[0], at_[1] - centre[1]);
+         let d = dx.hypot(dy);
+         if b.mass > 0.0 && d > 1e-12 {
+-            let p_t = (b.momentum[1] * dx - b.momentum[0] * dy) / d;
++            let p_t = (b.momentum[0] * dx + b.momentum[1] * dy) / d;
+             p_t * p_t / (2.0 * b.mass)
+         } else {
+             0.0

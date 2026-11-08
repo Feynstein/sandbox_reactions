@@ -1,0 +1,21 @@
+# M0-D160 — 2026-11-07T17:50:41-05:00 linux-pc
+rung: model=claude-opus-5-5 level=high plugin=installed (heading: Opus 5.5, high)
+baseline: M0-D160, 848 files, 2026-11-07T17:48:13-05:00
+server idle 17:50 (load 0.00, RTX 4090 0 %)
+2026-11-07T17:51:24-05:00 probe: scratch copy (scratch_copy.sh) + K_t/K probe patch → server /tmp/d160, build gpu test
+2026-11-07 probe (scratch /tmp/d160 on laserax-ai-server, RTX 4090; patch: Object.kinetic_t = Σ_blocks (p·t̂)²/2m about c, Star prints K, K_t, P, W):
+  remnant: s_600000 resumed --continue 480 steps (16-step frames, 30): 2P/|W| 0.350–0.357, K/|W| 0.304–0.315, K_t/|W| 0.288–0.299 →
+    (a) 2(P+K)/|W| 0.965–0.983 ✓ · (b) 2(P+K_t)/|W| 0.932–0.951 ✓ · (c) X_H,c 1.908e-3 ✗ — logs/M0-D160.probe_remnant.log
+  stage_order lives (V9's preset masses read past G-CAL's hash in the scratch only; today's physics): sun 125 frames, massive — grade GO;
+    sun near rest 529–577 (other terms hold): 2P/|W| 0.787–0.798, K/|W| 0.0042–0.0061, K_t/|W| ≈ 1e-5 → (a) admits step 577 (0.807) ✗,
+    (b) none (0.787–0.798), (c) none (X_H,c 0.7318); massive: none under any option — logs/M0-D160.probe_lives.log
+  stage_order on today's tree: G-CAL OutOfDate (embedded 56df8ade… vs assets 05b52c15…), both lives — the known red routed to M0-V14
+2026-11-07 the lead's ruling (§12, four questions): «(b) Rotation counted (Recommended)» · «All four rows (Recommended)» · «Read missing as 0 (Recommended)» · «classify GO, stage_order → V14 (Recommended)»
+2026-11-07T17:57:53-05:00 iterate: classify, objects (linux-pc, CPU)
+2026-11-07T17:59:33-05:00 redarm: classify, objects (linux-pc, CPU)
+2026-11-07T18:02:14-05:00 claim: rsync up (R18) + SR_TEST_ADAPTER="RTX 4090" verify.py --changed --task M0-D160 on laserax-ai-server
+2026-11-07T18:07:14-05:00 claim [ALREADY RUN — FAIL (G-CAL only) on laserax-ai-server, RTX 4090]: 756 passed, 38 failed · 54/70 GO · 176.64 s + loop 75.79 s — the 16 red scopes and counts identical to M0-V14's claim (logs/M0-V14-s2.claim_stdout.log), each red 'calibration out of date' / exit 6; observe_run 14/14, objects 26/26, classify 54/54 GO — logs/M0-D160.claim_stdout.log
+2026-11-07T18:09:56-05:00 the lead: «I run it now, then close (Recommended)» — Verify 2 handed over [NOT RUN — for you]; status IN PROGRESS (awaiting: Verify 2)
+2026-11-08 Verify 2 [ALREADY RUN — PASS (life 01) on laserax-ai-server, RTX 4090, the lead's run]: build/calibrate_runs/2026-11-07T23-14-54Z — life 01 (3,351.032) ending white_dwarf at step 137,329 (t 1,522.36, 2,000.5 sb, held 48.54 ≥ hold 48.29), shown white_dwarf from 132,545; lives 02–07 (46,914.450 … 3,639.109) collapse|ending by 1,553 steps; life 08 (3,492.101) no ending by 200,000 → SR-ERROR exit (the lead's paste)
+2026-11-08 probe life 08 (scratch /tmp/d160, the fixed stages.rs; s_200000 --continue 3,200 steps, 200 frames): raw white_dwarf 186, iron_core 14 — every one |v_r| 0.050–0.061 √(GM/R); 2(P+K_t)/|W| 0.832–0.905 throughout; R 109–128, τ_dyn 30.1–38.0 → hold 603–760 t.u.; the life's longest shown white_dwarf ≈ 128 t.u. (141,377→149,889) — logs/M0-D160.probe_life08.log → filed M0-D161
+2026-11-08T07:49:24-05:00 closed DONE; filed M0-D161 (after M0-D160); flag → M0-V14; register: Next task, open-D, Awaiting lead; re-verify after the claim: plan_lint
