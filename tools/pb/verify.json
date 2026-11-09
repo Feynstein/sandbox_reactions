@@ -477,7 +477,7 @@
       ]
     },
     "preset_cloud": {
-      "desc": "the preset cloud at a given mass (contract §2.1, §2.10; M0-T61): crates/sr-engine/src/scene.rs's cloud_shape and Object::Preset { mass }, Scene::preset_mass; `bash tests/gpu.sh preset` — no GPU, the scene's own planes at 0.3, 1, 3, 9, 20 and 60 M₀ in the 600 × 400 world: the cells hold M within 1e-6 (the centre-sampled disk scaled to the mass it is named for); a = 40√(M/M₀) capped at 150 and Σc = 3M/(2πa²) per formula (1 at M₀, growing past the cap), read back from the planes (the cloud's span 2a within 2 cells, the centre cell's Σ within the edge bound 2√2 a^-3/2 of Σc); U_th/|W| = 0.1 within 1e-4 with W = ½ Σ m φ from one solve of the stored planes through the CPU twin's gravity (the grid's own W, never the Maclaurin closed form); the Sun's composition summing to 1 in every covered cell, at rest, T uniform over the dense core, vacuum x_H = 1; scene-file presets staying the nominal M₀, a non-positive, NaN or infinite mass and an unknown preset refused. preset-uth-half sets U_th = 0.05|W|",
+      "desc": "the preset cloud at a given mass (contract §2.1, §2.10; M0-T61): crates/sr-engine/src/scene.rs's cloud_shape and Object::Preset { mass }, Scene::preset_mass; `bash tests/gpu.sh preset` — no GPU, the scene's own planes at 0.3, 1, 1.5, 2, 3, 9, 20 and 60 M₀ in the 600 × 400 world: the cells hold M within 1e-6 (the centre-sampled disk scaled to the mass it is named for); a = 40√(M/M₀) capped at 150 and Σc = 3M/(2πa²) per formula (1 at M₀, growing past the cap), read back from the planes (the cloud's span 2a within 2 cells, the centre cell's Σ within the edge bound 2√2 a^-3/2 of Σc); U_th/|W| = min(0.5, 0.1 · max(1, M/M₀)²) within 1e-4 (contract §2.10 [M0-D163]: 0.1 up to M₀, 0.225 and 0.4 at 1.5 and 2 M₀, 0.5 from √5 M₀; the rule written in the test from the contract, not read from the scene module) with W = ½ Σ m φ from one solve of the stored planes through the CPU twin's gravity (the grid's own W, never the Maclaurin closed form); the Sun's composition summing to 1 in every covered cell, at rest, T uniform over the dense core, vacuum x_H = 1; scene-file presets staying the nominal M₀, a non-positive, NaN or infinite mass and an unknown preset refused. preset-uth-half sets the rule's base 0.1 to 0.05 (re-cut by M0-D163 on scene.rs's new lines)",
       "cmd": "bash tests/gpu.sh preset",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
@@ -2351,11 +2351,11 @@
       ]
     },
     "calibration": {
-      "desc": "G-CAL, the calibration file and its physics hash (contract §2.11, §3.1, §3.3, §5.4; M0-T65): SHA-256 against FIPS 180-4's vectors (empty, abc, the 448- and 896-bit messages, a million a's, the padding edges); the physics hash over the canonical bytes (keys sorted, compact, numbers as f64) of elements.json + reactions.json + physics.json — a small triple by hand, a reformatted or re-ordered physics.json keeping its hash, a changed constant, key, element or reaction not; §2.11's schema parsed (every key, unknown and missing keys and bad values refused naming the key) and K9's order checked; a calibration written from the embedded assets accepted and a stale one refused with exit 6 (`SR-ERROR calibration out of date`), a scene with no preset running on it, a preset with none refused as missing, c_sb ≤ 2 × max_gas_speed refused; assets/calibration.json (once M0-V9 writes it) against the assets' hash, the assets' hash against its pin until then — NOT PROVEN against a real calibration; headless on a scene with no preset running with none; [M0-D62] a calibration without render_reserve_ms (before the drawing lot's item 7) accepted, written back without the key, a preset run's gate open on it and its time control on §1.8.3's 3.0, a present reserve still finite and ≥ 0; the file embedded whenever it exists (build.rs's choice on a folder with and without it, and this binary following the tree's file). Plant render-reserve-required: the key required again",
+      "desc": "G-CAL, the calibration file and its physics hash (contract §2.11, §3.1, §3.3, §5.4; M0-T65): SHA-256 against FIPS 180-4's vectors (empty, abc, the 448- and 896-bit messages, a million a's, the padding edges); the physics hash over the canonical bytes (keys sorted, compact, numbers as f64) of elements.json + reactions.json + physics.json — a small triple by hand, a reformatted or re-ordered physics.json keeping its hash, a changed constant, key, element or reaction not; §2.11's schema parsed (every key, unknown and missing keys and bad values refused naming the key) and K9's order checked; a calibration written from the embedded assets accepted and a stale one refused with exit 6 (`SR-ERROR calibration out of date`), a scene with no preset running on it, a preset with none refused as missing, c_sb ≤ 2 × max_gas_speed refused; assets/calibration.json (once M0-V9 writes it) against the assets' hash, the assets' hash against its pin until then — NOT PROVEN against a real calibration; headless on a scene with no preset running with none; [M0-D62] a calibration without render_reserve_ms (before the drawing lot's item 7) accepted, written back without the key, a preset run's gate open on it and its time control on §1.8.3's 3.0, a present reserve still finite and ≥ 0; the file embedded whenever it exists (build.rs's choice on a folder with and without it, and this binary following the tree's file); [M0-D162] every number read back as written — assets/calibration.json written back byte for byte, 2,000 shortest-form doubles over twenty decades bit for bit at a float key and in a stage pair. Plant render-reserve-required: the key required again. Plant calibration-lossy-parse: the parse's literals left to serde_json's best-effort read",
       "cmd": "bash tests/gpu.sh calibration",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 12,
+      "expected": 13,
       "timeout_s": 900,
       "arms_at_once": 1,
       "paths": [
@@ -2370,7 +2370,8 @@
         ".cargo/**",
         "tests/cargo.sh",
         "tests/plants/const-drift.patch",
-        "tests/plants/render-reserve-required.patch"
+        "tests/plants/render-reserve-required.patch",
+        "tests/plants/calibration-lossy-parse.patch"
       ],
       "plants": [
         {
@@ -2380,6 +2381,10 @@
         {
           "id": "render-reserve-required",
           "patch": "tests/plants/render-reserve-required.patch"
+        },
+        {
+          "id": "calibration-lossy-parse",
+          "patch": "tests/plants/calibration-lossy-parse.patch"
         }
       ]
     },

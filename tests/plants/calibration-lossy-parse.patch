@@ -1,0 +1,10 @@
+--- a/crates/sr-physics/src/calibration.rs
++++ b/crates/sr-physics/src/calibration.rs
+@@ -392,7 +392,6 @@
+     /// lowercase hex digits, and the order the procedure's item 5 demands (K9).
+     pub fn parse(text: &str) -> Result<Calibration, CalibrationError> {
+         let mut root: Value = serde_json::from_str(text).map_err(|e| CalibrationError::invalid("<json>", e.to_string()))?;
+-        read_as_written(&mut root, text)?;
+         let top = Fields::new(&root, "", &KEYS)?;
+         match top.get("version")?.as_u64() {
+             Some(VERSION) => {}

@@ -149,7 +149,7 @@ mod tests {
     }
 
     /// M0-TC's ladder (§2.5.1 before §0.5 [M0-D50]), the temperatures the hand values below were written at: T_thr 50, the
-    /// crossing 119.5, He_burn's slope at 140, ω at T_k 100 … 420. f reads T/T_k alone, so the law graded at it is the
+    /// crossing 180.3 (§0.5 [M0-D163]; 119.5 at 1.15 T_H), He_burn's slope at 140, ω at T_k 100 … 420. f reads T/T_k alone, so the law graded at it is the
     /// shipped law; the table's cases (its budget at every node and past the span) read the shipped ladder.
     const TC_LADDER: [(&str, f64); 6] = [("t_h", 100.0), ("t_he", 140.0), ("t_c", 196.0), ("t_ne", 274.0), ("t_o", 300.0), ("t_si", 420.0)];
 
@@ -204,7 +204,8 @@ mod tests {
     }
 
     /// The table against the direct form at every node and at every segment's midpoint and third-points, for every
-    /// record with terms. H_burn's two terms make the midpoints bend; the budget is 1e-4 and the worst is recorded. One
+    /// record with terms. H_burn's second term bends it only past the span (§0.5 [M0-D163]); the budget is 1e-4 and the worst
+    /// is recorded. One
     /// Gamow term errs by its curvature alone: ln f's second derivative in ln T is −(τ/9)(T_k/T)^{1/3}, largest at T_thr =
     /// T_k/2, so the worst midpoint reads h²/8 · (τ/9) · 2^{1/3} (h the node spacing; 2.76e-5 for ν 40) — asserted from
     /// both sides, so the bound is the error's, not a loose ceiling.
@@ -235,8 +236,10 @@ mod tests {
         }
     }
 
-    /// The check is not vacuous: H_burn's interpolation does err between its nodes (two power laws, ν 4 and 18), and the
-    /// error sits near its bend, where the terms cross — measured, not assumed.
+    /// The check is not vacuous: H_burn's interpolation does err between its nodes, by its first term's curvature (ν 4),
+    /// largest at T_thr — the one-term bound h²/8 · (τ/9) · 2^{1/3}, 3.16e-6, asserted from both sides — and its second
+    /// term (ν 18) bends the law only past the table: the two cross at 1.6 T_H (§0.5 [M0-D163]; at 1.15 T_H, inside the
+    /// span, the worst sat at that bend), where f is the direct form — measured, not assumed.
     #[test]
     fn two_terms_are_not_exact() {
         let r = pinned();
@@ -250,14 +253,19 @@ mod tests {
                 worst = (e, t);
             }
         }
+        let bound = Omega::step().powi(2) / 8.0 * 14.0 / 9.0 * 2f64.cbrt();
         assert!(worst.0 > 1e-6, "the midpoints should show the bend, worst {:e}", worst.0);
         assert!(worst.0 <= TABLE_TOLERANCE, "worst {:e} at T = {}", worst.0, worst.1);
-        // The terms cross where their logs agree: −(2/3) ln(T/100) + 14 (1 − (100/T)^{1/3}) = −(2/3) ln(T/115) + 56 (1 −
-        // (115/T)^{1/3}), so T^{−1/3} (56 · 115^{1/3} − 14 · 100^{1/3}) = 42 + (2/3) ln 1.15 (hand-solved): T ≈ 119.5.
-        let y = (42.0 + 2.0 / 3.0 * 1.15_f64.ln()) / (56.0 * 115_f64.cbrt() - 14.0 * 100_f64.cbrt());
+        assert!(worst.0 <= bound * 1.01 && worst.0 >= bound * 0.9, "worst {:e}, ν 4's curvature {bound:e}", worst.0);
+        assert!(worst.1 < 1.01 * t_thr, "the worst midpoint {} is not at T_thr {t_thr}", worst.1);
+        // The terms cross where their logs agree: −(2/3) ln(T/100) + 14 (1 − (100/T)^{1/3}) = −(2/3) ln(T/160) + 56 (1 −
+        // (160/T)^{1/3}), so T^{−1/3} (56 · 160^{1/3} − 14 · 100^{1/3}) = 42 + (2/3) ln 1.6 (hand-solved): T ≈ 180.3, past the
+        // table's last node 2.5 T_thr = 125, so f there is the direct form.
+        let y = (42.0 + 2.0 / 3.0 * 1.6_f64.ln()) / (56.0 * 160_f64.cbrt() - 14.0 * 100_f64.cbrt());
         let crossing = y.powi(-3);
-        assert!((crossing - 119.5).abs() < 0.05 && rel(law(&r, "H_burn").f_direct(crossing), 2.0 * gamow(crossing, 100.0, 4.0)) < 1e-9);
-        assert!((worst.1 - crossing).abs() < 5.0, "the worst midpoint {} is not at the crossing {crossing}", worst.1);
+        let last = Omega::node_t(t_thr, TABLE_POINTS - 1);
+        assert!((crossing - 180.28).abs() < 0.05 && crossing > last, "the crossing {crossing}, the table's last node {last}");
+        assert!(h.f(crossing) == h.f_direct(crossing) && rel(h.f_direct(crossing), 2.0 * gamow(crossing, 100.0, 4.0)) < 1e-9);
         eprintln!("H_burn worst midpoint error {:e} at T = {:.3}", worst.0, worst.1);
     }
 
@@ -277,9 +285,10 @@ mod tests {
             let just_above = t_thr * (1.0 + 1e-9);
             assert!(rel(omega.f(just_above), omega.f_direct(just_above)) < TABLE_TOLERANCE, "{} just above T_thr", rec.id);
         }
-        // H_burn's top of the step is 0.5^{−2/3} e^{14 (1 − 2^{1/3})} + (50/115)^{−2/3} e^{56 (1 − 2.3^{1/3})} ≈ 0.0417 by hand.
+        // H_burn's top of the step is 0.5^{−2/3} e^{14 (1 − 2^{1/3})} + (50/160)^{−2/3} e^{56 (1 − 3.2^{1/3})} ≈ 0.0417 by hand
+        // (the second term 6.6e-12 at the crossing's 1.6 T_H, §0.5 [M0-D163]).
         let h = law(&r, "H_burn");
-        let hand = 0.5_f64.powf(-2.0 / 3.0) * (14.0 * (1.0 - 2_f64.cbrt())).exp() + (50.0_f64 / 115.0).powf(-2.0 / 3.0) * (56.0 * (1.0 - 2.3_f64.cbrt())).exp();
+        let hand = 0.5_f64.powf(-2.0 / 3.0) * (14.0 * (1.0 - 2_f64.cbrt())).exp() + (50.0_f64 / 160.0).powf(-2.0 / 3.0) * (56.0 * (1.0 - 3.2_f64.cbrt())).exp();
         assert!((hand - 0.041719).abs() < 1e-6, "{hand}");
         assert!(rel(h.f(50.0), hand) < 1e-12);
     }
@@ -333,7 +342,7 @@ mod tests {
         let x = x_of(&r, &[("H", 0.6), ("He", 0.3), ("C", 0.2), ("Ne", 0.15), ("O", 0.25), ("Mg", 0.1), ("Si", 0.4), ("S", 0.05), ("Fe", 0.7)]);
         // (id, T, ω by hand)
         let cases: Vec<(&str, f64, f64)> = vec![
-            ("H_burn", 114.0, 5e-4 * sigma * 0.6_f64.powi(2) * (gamow(114.0, 100.0, 4.0) + gamow(114.0, 115.0, 18.0))),
+            ("H_burn", 114.0, 5e-4 * sigma * 0.6_f64.powi(2) * (gamow(114.0, 100.0, 4.0) + gamow(114.0, 160.0, 18.0))),
             ("He_burn", 150.0, 1e-3 * sigma.powi(2) * 0.3_f64.powi(3) * gamow(150.0, 140.0, 40.0)),
             ("C_alpha", 150.0, 1e-3 * sigma * 0.2 * 0.3 * gamow(150.0, 140.0, 40.0)),
             ("C_burn", 210.0, 1e-3 * sigma * 0.2_f64.powi(2) * gamow(210.0, 196.0, 30.0)),

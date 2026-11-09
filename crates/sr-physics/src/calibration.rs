@@ -15,7 +15,7 @@
 //! control and the app do, so a run whose scene names no preset needs none (and `calibrate` itself must run on a
 //! stale one).
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashMap};
 use std::fmt;
 
 use serde_json::{json, Map, Value};
@@ -321,6 +321,63 @@ impl<'a> Fields<'a> {
     }
 }
 
+/// serde_json reads a number best-effort (§1.2's features unchanged, [M0-D76]): a literal can come back as its neighbouring
+/// double — `t_eff_sun_sb` 11.544176535966779 read as 11.54417653596678, so `--measure-ui`, which parses the file and writes
+/// it back to add one key, moved another (M0-D162). Every number literal of `text` is read again by the standard library,
+/// which rounds correctly, and each float of `root` takes the value its literal names. serde_json's `float_roundtrip`
+/// feature would do it for every parse in the build and so move the physics hash (reactions.json's `q_ratio` reads one ULP
+/// apart; tasks/M0-D162.md) — this is the calibration's parse alone. Two literals serde_json reads as one double, each
+/// naming another, are refused: which float is which cannot be told.
+fn read_as_written(root: &mut Value, text: &str) -> Result<(), CalibrationError> {
+    let mut exact: HashMap<u64, f64> = HashMap::new();
+    for literal in number_literals(text) {
+        let lossy = serde_json::from_str::<Value>(literal).ok().and_then(|v| v.as_f64());
+        let (Some(lossy), Ok(written)) = (lossy, literal.parse::<f64>()) else { continue };
+        if exact.insert(lossy.to_bits(), written).is_some_and(|other| other.to_bits() != written.to_bits()) {
+            return Err(CalibrationError::invalid("<json>", format!("two numbers read as one double, {lossy}")));
+        }
+    }
+    fn restore(v: &mut Value, exact: &HashMap<u64, f64>) {
+        match v {
+            Value::Number(n) if n.is_f64() => {
+                let written = n.as_f64().and_then(|x| exact.get(&x.to_bits())).and_then(|&x| serde_json::Number::from_f64(x));
+                if let Some(written) = written {
+                    *n = written;
+                }
+            }
+            Value::Array(items) => items.iter_mut().for_each(|x| restore(x, exact)),
+            Value::Object(map) => map.values_mut().for_each(|x| restore(x, exact)),
+            _ => {}
+        }
+    }
+    restore(root, &exact);
+    Ok(())
+}
+
+/// The number literals of a JSON text, outside its strings.
+fn number_literals(text: &str) -> Vec<&str> {
+    let bytes = text.as_bytes();
+    let (mut out, mut i, mut in_string) = (Vec::new(), 0, false);
+    while i < bytes.len() {
+        match (in_string, bytes[i]) {
+            (true, b'\\') => i += 2,
+            (true, b'"') | (false, b'"') => {
+                in_string = !in_string;
+                i += 1;
+            }
+            (false, b'-' | b'0'..=b'9') => {
+                let start = i;
+                while i < bytes.len() && matches!(bytes[i], b'0'..=b'9' | b'-' | b'+' | b'.' | b'e' | b'E') {
+                    i += 1;
+                }
+                out.push(&text[start..i]);
+            }
+            _ => i += 1,
+        }
+    }
+    out
+}
+
 fn join(at: &str, key: &str) -> String {
     if at.is_empty() {
         key.to_string()
@@ -334,7 +391,8 @@ impl Calibration {
     /// the drawing lot's item 7 writes it (M0-D62) — each number finite and > 0 (the render reserve ≥ 0), the hash 64
     /// lowercase hex digits, and the order the procedure's item 5 demands (K9).
     pub fn parse(text: &str) -> Result<Calibration, CalibrationError> {
-        let root: Value = serde_json::from_str(text).map_err(|e| CalibrationError::invalid("<json>", e.to_string()))?;
+        let mut root: Value = serde_json::from_str(text).map_err(|e| CalibrationError::invalid("<json>", e.to_string()))?;
+        read_as_written(&mut root, text)?;
         let top = Fields::new(&root, "", &KEYS)?;
         match top.get("version")?.as_u64() {
             Some(VERSION) => {}

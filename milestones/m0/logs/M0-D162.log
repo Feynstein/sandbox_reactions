@@ -1,0 +1,8 @@
+== 2026-11-09T08:38:42-05:00 M0-D162 on linux-pc (laserax-ai): Verify 1 — verify.py calibration
+== 2026-11-09T08:40:00-05:00 Verify 2 — verify.py measure_ui on linux-pc
+== 2026-11-09T08:40:39-05:00 claim — rsync up (R18), then verify.py --changed on laserax-ai-server, RTX 4090
+== 2026-11-09T08:45:49-05:00 the claim's owed box scopes on linux-pc: desktop web capture toolchain
+== the server's M0-D162.log (laserax-ai-server, RTX 4090 — the claim), appended 2026-11-09T08:48:45-05:00
+== 2026-11-09T08:38:42-05:00 M0-D162 on linux-pc (laserax-ai): Verify 1 — verify.py calibration
+== 2026-11-09T08:40:00-05:00 Verify 2 — verify.py measure_ui on linux-pc
+== 2026-11-09T08:40:39-05:00 claim — rsync up (R18), then verify.py --changed on laserax-ai-server, RTX 4090

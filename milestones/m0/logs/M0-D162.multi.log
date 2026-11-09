@@ -1,0 +1,38 @@
+== 2026-11-09T08:41:07-05:00 multi · task M0-D162 · box laserax-ai-server :: bash tests/gpu.sh multi physics
+-- multi · exit=0 · 53.84 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 5 tests
+test multi::clouds_one_empty_block_apart_are_two_objects ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.032126 until=none
+[{"age_years":null,"ending":null,"id":1,"mass_sb":576.0000045150518,"mass_suns":5.900573232581838e-9,"predicted_ending":["failed_star"],"stage":null,"stages":[]},{"age_years":null,"ending":null,"id":2,"mass_sb":576.0000004768372,"mass_suns":5.9005727680662215e-9,"predicted_ending":["failed_star"],"stage":null,"stages":[]}]
+ok
+test multi::headless_presets_start_at_calibrations_masses ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.030462 until=none
+preset:sun: ledger start mass 3113.652 against calibration's 3113.649
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.028619 until=none
+preset:massive: ledger start mass 5902.209 against calibration's 5902.206
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.025968 until=none
+preset:giant: ledger start mass 13278.867 against calibration's 13278.865
+ok
+test multi::the_three_presets_hold_calibrations_masses ... preset:sun: calibrated mass 3113.649, the cells hold 3113.652, a = 38.56
+preset:massive: calibrated mass 5902.206, the cells hold 5902.209, a = 53.09
+preset:giant: calibrated mass 13278.865, the cells hold 13278.867, a = 79.63
+ok
+test multi::the_two_suns_are_far_enough_apart_not_to_be_one_cloud ... two_suns: 240 cells apart, a = 38.56 and 38.56: 162.89 cells of vacuum between the edges
+ok
+test multi::two_suns_stay_two_objects_with_stable_ids ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=32 sim_time=0.766508 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3444 sim_time=40.007569 until=met
+two_suns to t = 40.008 in 3444 steps
+object 1: 3100.5 sb = 0.953 Suns, Some(Sure(WhiteDwarf)), age Some(1000000.0) years, stage "main_sequence"
+object 2: 3100.5 sb = 0.953 Suns, Some(Sure(WhiteDwarf)), age Some(1000000.0) years, stage "main_sequence"
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 503 filtered out; finished in 53.66s
+
+

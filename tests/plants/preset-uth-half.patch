@@ -1,7 +1,7 @@
 --- a/crates/sr-engine/src/scene.rs
 +++ b/crates/sr-engine/src/scene.rs
-@@ -37,3 +37,3 @@
- /// §2.10: the uniform temperature is set so that U_th = 0.1 |W|.
+@@ -41,3 +41,3 @@
+ /// §2.10: the uniform temperature is set so that U_th = 0.1 |W| up to the unit mass ([`thermal_over_w`] above it).
 -const THERMAL_OVER_W: f64 = 0.1;
 +const THERMAL_OVER_W: f64 = 0.05;
- /// A composition's fractions must sum to 1 within this.
+ /// §2.10 [M0-D163]: the ratio's cap — U_th = ½|W|, the sheet's virial ratio (2U_th + W = 0).

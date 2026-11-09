@@ -1031,6 +1031,39 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     from step 200,000, never held — under τ_deg it ends at step 201,248 (10.3 t.u.); |v_r| about the core or a wider bound would admit
     the Sun-like's post-flash step 497 (2(P + K_t)/|W| 0.8003, refused today by |v_r| 0.094 alone) and still left no ending at 0.075 —
     the lead at M0-D161, 2026-11-08: «(a) Core's τ (Recommended)», «R₉₀ as today (Recommended)».
+  - [M0-D163] §1.6.2's H_burn terms «(T_H, 4, 1) + (1.15 T_H, 18, 1)» and physics.json's T_He 78.4 ([M0-D50]'s ladder) · **the
+    second term's T_k 1.6 T_H (= 89.6) and T_He 100** — the term's ν 18 and weight, every other T_k, A and ν, K6's order and every
+    bound unchanged; T_ν 93 now sits below T_He ([M0-D50]'s «still between T_He and T_C» and §2.5.3's description no longer hold;
+    no bound is at stake, and every life below was measured at 93) · measured on laserax-ai-server's RTX 4090 (2026-11-09,
+    tasks/M0-D163.md): the cold Massive's centre went from H at T 82 to Fe at T 731 in one P6 pass at the bounce, the 1.15 term
+    ~16 × the first there (e-folding 0.004 t.u. against a 0.0087 step); on warmer clouds (§2.10 [M0-D163]) the Giant still flashed
+    to iron mid-main-sequence with it (t 20.5 at 0.4 |W|, 34.5 at 0.5, T_c creeping 66 → 82 while the core expanded); at 1.6 T_H
+    the term stays under 0.1 of the first to T 85 and the Giant's main sequence holds; 1.6 alone broke §5.1 G-ORDER (H passed ε*
+    at T 114, He at 92 — burn_order red), so T_He 100 restores it (H 114 < He 117 < C 137); the alternative 1.25 T_H with T_He
+    78.4 kept G-ORDER (H 89.5 < He 92) but its Giant went main_sequence → iron_core with no he_core. Lives to first iron on the
+    chosen pair: the Massive main_sequence 407 t.u. → he_core 101 → iron_core; the Giant protostar → main_sequence 192 → he_core
+    24 → iron_core; the Sun-like ignited by light at t 4.27, main_sequence to t 1,835, he_core, white_dwarf ending at t 2,111 —
+    the lead at M0-D163, 2026-11-09: «Crossing 1.6·T_H (Recommended)», then «A: 1.6 + T_He 100 (Recommended)».
+  - [M0-D163] §2.10's «a uniform temperature set so U_th = 0.1|W| (a cold cloud that collapses — opinion)» · **U_th = min(0.5,
+    0.1 · max(1, M/M₀)²) |W|, M₀ §2.1's unit mass, M the preset's own mass (calibration's `preset_mass_sb`, or M₀ before
+    calibration), whatever its cells sum to** — the shape, composition and rest unchanged, the Sun-like and every lighter cloud at
+    0.1 exactly · measured on the same box: with no burning the cold Massive bounces at T_c 91 and the Giant at 153 (the Sun-like
+    49), past both H's runaway and the primordial helium's (with the H law's steep term off, the bounce lit the helium, X_Fe 0.265
+    everywhere, and both blew apart); warmer, the Massive holds a main sequence at 0.2–0.5 and the Giant at 0.3–0.5 with the H law
+    above, while the Sun-like takes only 0.1 (at 0.2–0.5 it lit late or never, showed white_dwarf after lighting, and an ending
+    fired at 0.4 and 0.5) — the lead at M0-D163, 2026-11-09: «0.1·max(1,M/M₀)², cap 0.5 (Recommended)».
+  - [M0-D163] §2.7's «a_r, c_sb, κ₀, k_cond 4 × 10⁻⁷, 200, 1, 0» as [M0-D94] left it (a_r 2 × 10⁻⁵, c_sb 400) · **c_sb 800 and a_r
+    1 × 10⁻⁵ — a_r c_sb held at 8 × 10⁻³ [M0-D50]'s, so the light, the heat and T_eff (σ = a_r c_sb / 4) stand, and c_sb alone
+    halves the radiation push f = κΣF/c_sb (§2.4.4)**; the bound c_sb > 2 × calibration's `max_gas_speed` unchanged (now 800 against
+    a gas of 400) · measured on laserax-ai-server's RTX 4090 (2026-11-09, tasks/M0-D163.md § The recalibration stopped…, § c_sb): on
+    the H law and cloud rule above, the long main sequences let the Massive and Giant swell on helium burning and lose most of
+    their mass through the edge — at c_sb 400 the Massive 5,902 → 2,960 sb at first iron (−50 %), the Giant 13,279 → 5,787 (−56 %),
+    so the calibration's thresholds moved (m_up_sb 3,510 → 6,449; item 5's first life at 1.25 m_up core-collapsed at 3,260 sb and
+    ended a white dwarf, on neither side of §2.11 item 5, exit 6); c_sb × 2 (a_r ÷ 2): Massive main_sequence 306 t.u. → he_core →
+    iron_core at 4,790 sb, Giant main_sequence 125 t.u. → he_core → iron_core at 9,564, the Sun-like igniting by light at t 32.4
+    and holding a main sequence to t 500 (mass 3,099); × 3 loses the Giant's he_core (main_sequence → iron_core, t 104), × 4 loses
+    it too (t 90), × 16 flashes it again (iron at t 7) — the lead at M0-D163, 2026-11-09: «Curb the mass loss first
+    (Recommended)», then «Adopt c_sb 800 (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1192,7 +1225,7 @@ holds it). Chemistry later adds records, never code (B23).
 
 | id | group | inputs → outputs | a; orders | f(T) terms (T_k, ν, w) | q_ratio | source |
 |---|---|---|---|---|---|---|
-| H_burn | H | H → He | 1; [2] | (T_H, 4, 1) + (1.15 T_H, 18, 1) | 1 | SP-E4: pp ν ≈ 4, CNO ν 13–23; SP-E10: pp and CNO equal at 18 MK against the Sun's 15.7 MK centre, ratio 1.15 (my arithmetic) |
+| H_burn | H | H → He | 1; [2] | (T_H, 4, 1) + (~~1.15~~ [M0-D163] 1.6 T_H, 18, 1) | 1 | SP-E4: pp ν ≈ 4, CNO ν 13–23; SP-E10: pp and CNO equal at 18 MK against the Sun's 15.7 MK centre, ratio 1.15 (my arithmetic) |
 | He_burn | He | He → C | 2; [3] | (T_He, 40, 1) | 1/10.8 | SP-E4, SP-E17 (ν ≈ 40, ∝ ρ²); SP-E1: "smaller by a factor 10 or more"; the ratio is my arithmetic from 3α's 7.275 MeV per 12 u (from memory — UNVERIFIED) against H's 6.29 × 10¹⁸ erg/g (SP-E1's φ = 0.007 × c²) |
 | C_alpha | He | C 0.75 + He 0.25 → O | 1; [1, 1] | (T_He, 40, 1) | 1/14.6 | SM M5 (C + He → O); the ratio is my arithmetic from ¹²C(α,γ)¹⁶O's 7.16 MeV per 16 u (from memory — UNVERIFIED) |
 | C_burn | C | C → Ne 0.8 + Mg 0.2 | 1; [2] | (T_C, 30, 1) | 1/15.7 | SP-E3 (4.0 × 10¹⁷ erg/g), K8 |
@@ -1346,7 +1379,7 @@ follow the stage; "Supergiant" replaces "Red giant" for objects with M ≥ M_up 
 | main_sequence | L_H ≥ 0.5 L and X_H,c ≥ 10⁻³ | H |
 | collapsing | never ignited and v_r ≤ −0.1 √(GM/R) | — |
 | protostar | never ignited, \|v_r\| ≤ 0.05 √(GM/R) and 2P/\|W\| ≥ 0.8 (pressure-supported, near virial) | — |
-| cloud | otherwise (a cold cloud at rest has 2P/\|W\| ≈ 0.2, §2.10) | — |
+| cloud | otherwise (a cold cloud at rest has 2P/\|W\| ≈ 0.2, §2.10 — [M0-D163] a preset up to M₀; a heavier one starts warmer, 2U_th/\|W\| up to 1 from √5 M₀, where it reads protostar from the drop) | — |
 Collapsing precedes protostar on purpose: a cloud in free fall passes 2(U + K)/|W| = 1 halfway
 down, so only the pressure integral and a small v_r mark a protostar (my arithmetic).
 
@@ -1713,7 +1746,9 @@ the twin's P8 and the GPU's alike (the lead at M0-TG2: «Code now, move later (R
 - **The cloud:** a Maclaurin disk Σ(r) = Σc√(1 − r²/a²) (SM-E6) with a = 40√(M / M_sun) cells
   (Σc = 1 at the Sun-like mass), capped at 150 cells (Σc then grows); the Sun's composition by mass —
   H 0.7346, He 0.2485, O 0.0077 (SP-E22) and the remaining 0.0092 as C (opinion: the traces lumped);
-  a uniform temperature set so U_th = 0.1|W| (a cold cloud that collapses — opinion); at rest.
+  a uniform temperature set so U_th = ~~0.1|W|~~ [M0-D163] min(0.5, 0.1 · max(1, M/M₀)²) |W|, M₀ §2.1's unit mass — 0.1 |W|
+  up to M₀ (a cold cloud that collapses — opinion), warmer above it, ½|W| (the sheet's virial ratio) from √5 M₀, so a heavier
+  cloud's bounce no longer overshoots into a flash (§0.5 [M0-D163]); at rest.
 - **No preset below ignition** (D3): a failed star comes only from painting too little; the physics
   shows it and the readout names it (§1.9.3).
 

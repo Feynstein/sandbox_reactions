@@ -841,19 +841,19 @@ mod tests {
     }
 
     /// §2.7's initial values as amended by §0.5 [M0-D50]: the ladder × 0.56, a_r 4 × 10⁻⁵ and T_ν 93; a_n_fe 100 by §0.5
-    /// [M0-D79]; c_sb 400 and a_r 2 × 10⁻⁵ (a_r c_sb held) by §0.5 [M0-D94]; the hold's σ_hold 10, η_hold 0.1 and r_hold
-    /// 24 by §2.7 [M0-D71g].
+    /// [M0-D79]; c_sb 800 and a_r 1 × 10⁻⁵ (a_r c_sb held: 400 and 2 × 10⁻⁵ by §0.5 [M0-D94]) by §0.5 [M0-D163]; the hold's σ_hold 10, η_hold 0.1 and r_hold
+    /// 24 by §2.7 [M0-D71g]; T_He 100 by §0.5 [M0-D163].
     #[test]
     fn physics_initial_values_verbatim() {
         let expected: [(&str, f64); 55] = [
-            ("t_h", 56.0), ("t_he", 78.4), ("t_c", 109.8), ("t_ne", 153.4), ("t_o", 168.0), ("t_si", 235.2),
+            ("t_h", 56.0), ("t_he", 100.0), ("t_c", 109.8), ("t_ne", 153.4), ("t_o", 168.0), ("t_si", 235.2),
             ("q_h", 8700.0), ("a_h_burn", 5e-4), ("a_he_burn", 1e-3), ("a_c_alpha", 1e-3), ("a_c_burn", 1e-3),
             ("a_ne_burn", 1e-3), ("a_o_burn", 1e-3), ("a_mg_burn", 1e-3), ("a_si_burn", 1e-3), ("a_s_burn", 1e-3),
             ("a_n_fe", 100.0), ("nu_c_burn", 30.0), ("nu_ne_burn", 30.0), ("nu_o_burn", 30.0), ("nu_mg_burn", 30.0),
             ("nu_si_burn", 30.0), ("nu_s_burn", 30.0), ("sigma_n", 160.0), ("burn_dx", 0.1), ("burn_dt", 0.05),
             ("sigma_floor", 1e-8), ("sigma_vac", 1e-6), ("t_floor", 0.05), ("sigma_obj", 1e-3), ("paint_sigma", 0.02),
             ("paint_t", 2.0), ("heat_factor", 1.05), ("cool_factor", 0.95), ("k1e", 21.3), ("k2e", 134.0),
-            ("k1n", 2.67), ("k2n", 58.2), ("a_r", 2e-5), ("c_sb", 400.0), ("kappa0", 1.0), ("k_cond", 0.0),
+            ("k1n", 2.67), ("k2n", 58.2), ("a_r", 1e-5), ("c_sb", 800.0), ("kappa0", 1.0), ("k_cond", 0.0),
             ("a_nu", 1e-3), ("t_nu", 93.0), ("m_nu", 8.0), ("f_dep", 0.05), ("sigma_bh", 6000.0), ("cfl", 0.4),
             ("eta_g", 0.3), ("kappa_dust", 0.0), ("t_dust", 0.0), ("block", 4.0),
             ("sigma_hold", 10.0), ("eta_hold", 0.1), ("r_hold", 24.0),
@@ -1066,7 +1066,7 @@ mod tests {
         type Shares = &'static [(&'static str, f64)];
         type Row = (&'static str, &'static str, Shares, Shares, f64, f64, &'static [f64], &'static [(&'static str, f64, f64)]);
         let table: [Row; 10] = [
-            ("H_burn", "H", &[("H", 1.0)], &[("He", 1.0)], 1.0, 1.0, &[2.0], &[("t_h", 1.0, 4.0), ("t_h", 1.15, 18.0)]),
+            ("H_burn", "H", &[("H", 1.0)], &[("He", 1.0)], 1.0, 1.0, &[2.0], &[("t_h", 1.0, 4.0), ("t_h", 1.6, 18.0)]),
             ("He_burn", "He", &[("He", 1.0)], &[("C", 1.0)], 1.0 / 10.8, 2.0, &[3.0], &[("t_he", 1.0, 40.0)]),
             ("C_alpha", "He", &[("C", 0.75), ("He", 0.25)], &[("O", 1.0)], 1.0 / 14.6, 1.0, &[1.0, 1.0], &[("t_he", 1.0, 40.0)]),
             ("C_burn", "C", &[("C", 1.0)], &[("Ne", 0.8), ("Mg", 0.2)], 1.0 / 15.7, 1.0, &[2.0], &[("t_c", 1.0, 30.0)]),
@@ -1111,13 +1111,14 @@ mod tests {
         let p = phys();
         let r = reactions();
         let h = r.get("H_burn").unwrap();
-        // T_k = t_factor · T_H; T_thr = 0.5 · the first term's T_k; A from a_h_burn (§0.5 [M0-D50]'s T_H 56, T_Si 235.2).
-        assert_eq!((h.rate.terms[0].t_k, h.rate.terms[1].t_k), (56.0, 1.15 * 56.0));
+        // T_k = t_factor · T_H; T_thr = 0.5 · the first term's T_k; A from a_h_burn (§0.5 [M0-D50]'s T_H 56, T_Si 235.2); the
+        // second term's crossing at 1.6 T_H (§0.5 [M0-D163]).
+        assert_eq!((h.rate.terms[0].t_k, h.rate.terms[1].t_k), (56.0, 1.6 * 56.0));
         assert_eq!((h.rate.t_thr, h.rate.a_key.as_str(), h.rate.a_coef), (Some(28.0), "a_h_burn", 5e-4));
         let si = r.get("Si_burn").unwrap();
         assert_eq!((si.rate.terms[0].t_k, si.rate.t_thr, si.rate.a_coef, si.rate.terms[0].nu), (235.2, Some(0.5 * 235.2), 1e-3, 30.0));
         assert_eq!(r.get("N_Fe").unwrap().rate.t_thr, None);
-        // A scene's overrides reach the records: a tuned ν and A and a moved temperature (between T_He 78.4 and T_Ne 153.4).
+        // A scene's overrides reach the records: a tuned ν and A and a moved temperature (between T_He 100 and T_Ne 153.4).
         let tuned = p.with(&[("nu_c_burn", 35.0), ("a_c_burn", 2e-3), ("t_c", 120.0)]).unwrap();
         let r = Reactions::shipped(&Elements::shipped().unwrap(), &tuned).unwrap();
         let c = r.get("C_burn").unwrap();

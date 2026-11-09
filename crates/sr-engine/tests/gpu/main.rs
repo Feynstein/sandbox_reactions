@@ -286,7 +286,7 @@ mod ledger;
 /// M0-T60 — the observers in headless runs (contract §1.9, §2.12.2, §3.3): `--until`, events.jsonl, summary.json's events and objects.
 mod observe;
 
-/// M0-T61 — the preset cloud at a given mass (contract §2.1, §2.10): its mass, radius and cap, U_th = 0.1 |W|, composition.
+/// M0-T61 — the preset cloud at a given mass (contract §2.1, §2.10): its mass, radius and cap, U_th / |W| by mass ([M0-D163]), composition.
 mod preset;
 
 /// M0-T62 — no artificial fragmentation: the rippled disk cloud collapsing to 100 × its central Σ (contract §2.3.5, §1.9.2, §5.1's G-JEANS).

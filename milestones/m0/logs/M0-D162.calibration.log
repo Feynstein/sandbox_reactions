@@ -1,0 +1,53 @@
+== 2026-11-09T08:38:42-05:00 calibration · task M0-D162 · box laserax-ai :: bash tests/gpu.sh calibration
+-- calibration · exit=101 · 0.57 s
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+error[E0308]: mismatched types
+   --> crates/sr-physics/src/calibration.rs:353:19
+    |
+353 |     restore(root, exact);
+    |     -------       ^^^^^ expected `&HashMap<u64, f64>`, found `HashMap<u64, f64>`
+    |     |
+    |     arguments to this function are incorrect
+    |
+    = note: expected reference `&HashMap<_, _>`
+                  found struct `HashMap<_, _>`
+note: function defined here
+   --> crates/sr-physics/src/calibration.rs:340:8
+    |
+340 |     fn restore(v: &mut Value, exact: &HashMap<u64, f64>) {
+    |        ^^^^^^^                -------------------------
+help: consider borrowing here
+    |
+353 |     restore(root, &exact);
+    |                   +
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `sr-physics` (lib) due to 1 previous error
+
+== 2026-11-09T08:38:50-05:00 calibration · task M0-D162 · box laserax-ai :: bash tests/gpu.sh calibration
+-- calibration · exit=0 · 10.84 s
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 10.49s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 13 tests
+test calibration::a_calibration_without_the_render_reserve_is_accepted_and_written_back_without_it ... ok
+test calibration::a_calibration_written_from_the_embedded_assets_is_accepted ... ok
+test calibration::a_mismatched_calibration_is_refused_with_exit_6 ... ok
+test calibration::a_reformatted_physics_json_keeps_its_hash_and_a_changed_constant_does_not ... ok
+test calibration::every_number_of_the_calibration_is_read_back_as_written ... ok
+test calibration::headless_runs_without_a_calibration_when_the_scene_names_no_preset ... SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference
+SR-HEADLESS DONE steps=1 sim_time=0.075718 until=none
+ok
+test calibration::sha256_fips_180_4_long_vectors_and_the_padding_edges ... ok
+test calibration::sha256_fips_180_4_short_vectors ... ok
+test calibration::the_binary_embeds_the_calibration_file_whenever_it_exists ... ok
+test calibration::the_calibration_the_binary_embeds_matches_the_assets ... ok
+test calibration::the_hash_is_over_the_canonical_bytes ... ok
+test calibration::the_order_of_the_ceilings_is_k9 ... ok
+test calibration::the_schema_is_parsed_and_every_refusal_names_its_key ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 495 filtered out; finished in 0.28s
+
+

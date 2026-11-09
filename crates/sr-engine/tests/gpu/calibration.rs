@@ -214,6 +214,35 @@ fn a_calibration_without_the_render_reserve_is_accepted_and_written_back_without
 }
 
 #[test]
+fn every_number_of_the_calibration_is_read_back_as_written() {
+    // M0-D162: serde_json reads a number best-effort, and assets/calibration.json's t_eff_sun_sb 11.544176535966779 came
+    // back as its neighbour 11.54417653596678 — `--measure-ui`, which parses the file and writes it back to add one key,
+    // moved another. The shipped file is written back byte for byte.
+    let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../assets/calibration.json");
+    let text = std::fs::read_to_string(&path).expect("assets/calibration.json exists (M0-V14's)");
+    let cal = Calibration::parse(&text).expect("assets/calibration.json is §2.11's");
+    assert_eq!(cal.t_eff_sun_sb.to_bits(), 11.544176535966779f64.to_bits(), "t_eff_sun_sb read as {}", cal.t_eff_sun_sb);
+    assert!(cal.to_json() == text, "assets/calibration.json written back byte for byte:\n{}", cal.to_json());
+    // A sweep of doubles over twenty decades, each written in its shortest form, read back bit for bit — at a float key
+    // and inside a stage pair; plain serde_json misreads some of them, so the sweep reaches the fault.
+    let (mut seed, mut misread) = (0x9e37_79b9_7f4a_7c15u64, 0);
+    for _ in 0..2000 {
+        seed = seed.wrapping_mul(6_364_136_223_846_793_005).wrapping_add(1_442_695_040_888_963_407);
+        let x = 10f64.powf((seed >> 11) as f64 / (1u64 << 53) as f64 * 20.0 - 10.0);
+        let literal = serde_json::to_string(&x).unwrap();
+        misread += usize::from(serde_json::from_str::<f64>(&literal).unwrap().to_bits() != x.to_bits());
+        let cal = Calibration::parse(&file_with(|v| {
+            v["t_eff_sun_sb"] = json!(x);
+            v["stage_durations_sb"]["main_sequence"] = json!([[1.0, x]]);
+        }))
+        .expect("a valid calibration");
+        assert_eq!(cal.t_eff_sun_sb.to_bits(), x.to_bits(), "{literal} read as {}", cal.t_eff_sun_sb);
+        assert_eq!(cal.stage_durations_sb["main_sequence"][0].1.to_bits(), x.to_bits(), "{literal} in a stage pair");
+    }
+    assert!(misread > 0, "plain serde_json read every literal of the sweep right: the sweep no longer reaches the fault");
+}
+
+#[test]
 fn the_binary_embeds_the_calibration_file_whenever_it_exists() {
     // M0-D62: build.rs embeds assets/calibration.json when the crate builds with it, else nothing — no hand edit after a
     // calibration. The choice, on a folder without the file and with it:
@@ -274,9 +303,10 @@ fn a_mismatched_calibration_is_refused_with_exit_6() {
     assert!(fast.check_against(&hash(), 2.0 * fast.max_gas_speed).is_err());
     assert!(fast.check_against(&hash(), 2.0 * fast.max_gas_speed + 0.01).is_ok());
     assert_eq!(invalid_key(&file_with(|v| v["max_gas_speed"] = json!(0))), "max_gas_speed");
-    match resolve(Some(&file_with(|v| v["max_gas_speed"] = json!(C_SB))), true) {
+    // The shipped c_sb is 800 (§0.5 [M0-D163]; 400 before it): a gas of half its speed is the bound, and equal is refused.
+    match resolve(Some(&file_with(|v| v["max_gas_speed"] = json!(400.0))), true) {
         Err(CalibrationError::Invalid { key, .. }) => assert_eq!(key, "max_gas_speed"),
-        other => panic!("a gas as fast as c_sb must be refused, got {other:?}"),
+        other => panic!("a gas of half the shipped c_sb's speed must be refused, got {other:?}"),
     }
 }
 

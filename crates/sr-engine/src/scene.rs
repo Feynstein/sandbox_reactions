@@ -38,8 +38,10 @@ const SUN_RADIUS: f64 = 40.0;
 pub const MAX_RADIUS: f64 = 150.0;
 /// §2.1's unit mass M₀ = 2πΣc a²/3 (≈ 3,351): the nominal cloud's, and what a preset loads until calibration.
 pub const UNIT_MASS: f64 = 2.0 * std::f64::consts::PI * SUN_SIGMA_C * SUN_RADIUS * SUN_RADIUS / 3.0;
-/// §2.10: the uniform temperature is set so that U_th = 0.1 |W|.
+/// §2.10: the uniform temperature is set so that U_th = 0.1 |W| up to the unit mass ([`thermal_over_w`] above it).
 const THERMAL_OVER_W: f64 = 0.1;
+/// §2.10 [M0-D163]: the ratio's cap — U_th = ½|W|, the sheet's virial ratio (2U_th + W = 0).
+const THERMAL_OVER_W_MAX: f64 = 0.5;
 /// A composition's fractions must sum to 1 within this.
 const COMPOSITION_TOLERANCE: f64 = 1e-6;
 
@@ -440,7 +442,7 @@ impl Scene {
                 continue;
             }
             let gas = match object {
-                Object::Preset { .. } => sun_gas(&cells, physics, elements)?,
+                Object::Preset { mass, .. } => sun_gas(&cells, *mass, physics, elements)?,
                 Object::Disk { gas, .. } | Object::Rect { gas, .. } => *gas,
             };
             let comp = elements.composition(&gas.composition);
@@ -584,10 +586,20 @@ pub fn cloud_shape(mass: f64) -> CloudShape {
     CloudShape { a, sigma_c: 3.0 * mass / (2.0 * std::f64::consts::PI * a * a) }
 }
 
-/// The preset's gas (§2.10): the Sun's mix, at rest, at the uniform temperature that makes U_th = Σ m ε_th = 0.1 |W|
-/// over its own cells. W = ½ Σ m φ is the grid's own: φ is one solve of §1.4.2's kernel over the cloud's cells, vacuum
-/// (Σ < σ_vac) no source, as P2 solves it — never the Maclaurin disk's closed form, which the grid's W differs from.
-fn sun_gas(cells: &[(usize, usize, f64)], physics: &Physics, elements: &Elements) -> Result<Gas, String> {
+/// §2.10 [M0-D163]: a preset cloud's U_th / |W| at mass `mass` (sandbox units) — min(0.5, 0.1 · max(1, M/M₀)²): exactly 0.1
+/// up to the unit mass, so the Sun-like and every lighter cloud keep their cold collapse, and warmer above it, so a heavier
+/// cloud's bounce no longer overshoots past hydrogen's and the primordial helium's runaway (M0-D163: the cold Massive's
+/// no-burn bounce reaches T_c 91, the Giant's 153).
+pub fn thermal_over_w(mass: f64) -> f64 {
+    let ratio = (mass / UNIT_MASS).max(1.0);
+    (THERMAL_OVER_W * ratio * ratio).min(THERMAL_OVER_W_MAX)
+}
+
+/// The preset's gas (§2.10): the Sun's mix, at rest, at the uniform temperature that makes U_th = Σ m ε_th =
+/// [`thermal_over_w`] (`mass`) |W| over its own cells, `mass` the preset's own (its cells may sum a little off it). W = ½ Σ m φ
+/// is the grid's own: φ is one solve of §1.4.2's kernel over the cloud's cells, vacuum (Σ < σ_vac) no source, as P2 solves
+/// it — never the Maclaurin disk's closed form, which the grid's W differs from.
+fn sun_gas(cells: &[(usize, usize, f64)], preset_mass: f64, physics: &Physics, elements: &Elements) -> Result<Gas, String> {
     let sigma_vac = physics.get("sigma_vac").ok_or("physics.json has no sigma_vac")?;
     let (x0, x1) = cells.iter().fold((usize::MAX, 0), |(lo, hi), c| (lo.min(c.0), hi.max(c.0)));
     let (y0, y1) = cells.iter().fold((usize::MAX, 0), |(lo, hi), c| (lo.min(c.1), hi.max(c.1)));
@@ -601,7 +613,7 @@ fn sun_gas(cells: &[(usize, usize, f64)], physics: &Physics, elements: &Elements
     let phi = Gravity::new(1.0).potential(&source, bw, bh).map_err(|e| e.to_string())?;
     let w_sum: f64 = 0.5 * source.iter().zip(&phi).map(|(m, p)| m * p).sum::<f64>();
     let mass: f64 = cells.iter().map(|c| c.2).sum();
-    let eps_th = THERMAL_OVER_W * w_sum.abs() / mass;
+    let eps_th = thermal_over_w(preset_mass) * w_sum.abs() / mass;
     let mu = 1.0 / elements.composition(&SUN_MIX).inv_mu;
     Ok(Gas { heat: Heat::T(mu * eps_th), composition: SUN_MIX, v: [0.0, 0.0] })
 }
@@ -652,7 +664,7 @@ pub fn preset_cloud(
     if cells.is_empty() || cells.len() < disk_samples(centre[0], centre[1], a, sigma_c).count() {
         return Err(CloudError::NoRoom);
     }
-    let gas = sun_gas(&cells, physics, elements).map_err(CloudError::Invalid)?;
+    let gas = sun_gas(&cells, mass, physics, elements).map_err(CloudError::Invalid)?;
     let Heat::T(t) = gas.heat else { unreachable!("a preset's gas is set by its temperature") };
     let (x0, x1) = cells.iter().fold((usize::MAX, 0), |(lo, hi), c| (lo.min(c.0), hi.max(c.0)));
     let (y0, y1) = cells.iter().fold((usize::MAX, 0), |(lo, hi), c| (lo.min(c.1), hi.max(c.1)));

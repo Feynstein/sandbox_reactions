@@ -13,7 +13,7 @@
 //! The oracles are written here from the contract: f(T) from §1.6.2's terms with §2.5.1's temperatures, k from A, Σ and f,
 //! q = q_ratio · Q_H from the table, T from E with the cold pressure off and the gas at rest (T = E/Σ/(1/μ)). G-BURN's closed
 //! forms were written at M0-TC's ladder (T_H 100, T_He 140, T_Ne 274) and pin it (`cell::LADDER`, M0-D55); G-ORDER grades
-//! the shipped ladder, §0.5 [M0-D50]'s (T_H 56, T_He 78.4).
+//! the shipped ladder, §0.5 [M0-D50]'s (T_H 56) with §0.5 [M0-D163]'s T_He 100.
 //!
 //! Tolerances: the contract's own — X within 1e-4 absolute, heat within 1e-5 relative, ΣX = 1 within 1e-6, the order exact.
 //! G-BURN's runs set `burn_dx` to 1e-4 (physics.json's key, a scene's `overrides`): backward Euler is first order, and a
@@ -98,12 +98,12 @@ fn gamow(t: f64, t_k: f64, nu: f64) -> f64 {
     (t / t_k).powf(-2.0 / 3.0) * ((3.0 * nu + 2.0) * (1.0 - (t_k / t).cbrt())).exp()
 }
 
-/// f(T) of H_burn from §1.6.2's terms (T_H, 4) and (1.15 T_H, 18), each Gamow-shaped, above 0.5 T_H.
+/// f(T) of H_burn from §1.6.2's terms (T_H, 4) and (1.6 T_H, 18) (§0.5 [M0-D163]), each Gamow-shaped, above 0.5 T_H.
 fn f_h(t: f64, t_h: f64) -> f64 {
     if t < 0.5 * t_h {
         return 0.0;
     }
-    gamow(t, t_h, 4.0) + gamow(t, 1.15 * t_h, 18.0)
+    gamow(t, t_h, 4.0) + gamow(t, 1.6 * t_h, 18.0)
 }
 
 fn sum_x(st: &State, i: usize) -> f64 {
@@ -928,7 +928,7 @@ mod order {
     /// The shipped ladder's T_H and T_He (§0.5 [M0-D50]): G-ORDER grades the order the game's constants give, H's power at
     /// its crossing by hand at them.
     const T_H: f64 = 56.0;
-    const T_HE: f64 = 78.4;
+    const T_HE: f64 = 100.0;
     /// The ramp: T = T₀ + rate · t, sampled every `DT_RAMP` t.u.; each sample reads the power of a fresh cell of equal parts
     /// from one pass of `DT_BURN`, short enough that no fuel is spent in it (the rate over the fraction, times 10⁻⁹, is far
     /// under 1 at every crossing): the instantaneous power at the sample's T. A cell left to burn along the ramp would not

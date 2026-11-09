@@ -1,6 +1,6 @@
 //! M0-T61 — the preset cloud at a given mass (contract §2.1, §2.10): the mass the cells hold against M, the radius and
-//! central Σ per formula including the 150-cell cap, the uniform temperature that makes U_th = 0.1 |W| with W from one
-//! gravity solve of the cloud's own cells, and the Sun's composition at rest. No GPU: the planes are the scene's own
+//! central Σ per formula including the 150-cell cap, the uniform temperature that makes U_th = min(0.5, 0.1 · max(1, M/M₀)²)
+//! |W| ([M0-D163]; 0.1 |W| before it) with W from one gravity solve of the cloud's own cells, and the Sun's composition at rest. No GPU: the planes are the scene's own
 //! (what a drop uploads), so no `SR-ADAPTER` line.
 
 use sr_engine::scene::{cloud_shape, Scene, MAX_RADIUS, SUN_MIX, UNIT_MASS};
@@ -9,8 +9,9 @@ use sr_physics::eos::Eos;
 use sr_physics::reference::grav::Gravity;
 use sr_physics::registry::{Elements, Physics};
 
-/// In units of M₀: below the cap (a < 150 up to 14.06 M₀), at it, and well past it.
-const MASSES: [f64; 6] = [0.3, 1.0, 3.0, 9.0, 20.0, 60.0];
+/// In units of M₀: below the cap (a < 150 up to 14.06 M₀), at it, and well past it; 1.5 and 2 on the thermal ratio's rise
+/// ([M0-D163]: 0.225 and 0.4, its cap 0.5 from √5 M₀).
+const MASSES: [f64; 8] = [0.3, 1.0, 1.5, 2.0, 3.0, 9.0, 20.0, 60.0];
 
 fn world() -> WorldConfig {
     WorldConfig::new(600, 400).unwrap()
@@ -75,8 +76,13 @@ fn the_radius_and_central_sigma_follow_the_formula_and_the_cap() {
     assert!(capped.a == MAX_RADIUS && heavier.a == MAX_RADIUS && heavier.sigma_c > capped.sigma_c && capped.sigma_c > 1.0);
 }
 
+/// §2.10 [M0-D163]'s ratio, written here from the contract's formula, not read from the scene module.
+fn thermal_ratio(m: f64) -> f64 {
+    (0.1 * m.max(1.0).powi(2)).min(0.5)
+}
+
 #[test]
-fn the_thermal_energy_is_a_tenth_of_the_grids_own_binding_energy() {
+fn the_thermal_energy_follows_the_mass_rule_of_the_grids_own_binding_energy() {
     let (physics, elements) = (Physics::shipped().unwrap(), Elements::shipped().unwrap());
     let eos = Eos::from_physics(&physics).unwrap();
     let comp = elements.composition(&SUN_MIX);
@@ -96,8 +102,9 @@ fn the_thermal_energy_is_a_tenth_of_the_grids_own_binding_energy() {
             .map(|i| f64::from(p[3 * cells + i]) - s[i] * eos.eps_cold(s[i], comp.y_e, 0.0))
             .sum();
         let ratio = u_th / big_w.abs();
-        println!("M = {m} M0: W = {big_w:.2}, U_th = {u_th:.3}, U_th/|W| = {ratio:.6}");
-        assert!((ratio / 0.1 - 1.0).abs() <= 1e-4, "U_th/|W| = {ratio}, not 0.1");
+        let want = thermal_ratio(m);
+        println!("M = {m} M0: W = {big_w:.2}, U_th = {u_th:.3}, U_th/|W| = {ratio:.6} (rule {want})");
+        assert!((ratio / want - 1.0).abs() <= 1e-4, "U_th/|W| = {ratio} at {m} M0, not {want}");
     }
 }
 

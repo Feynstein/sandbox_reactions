@@ -2,7 +2,7 @@
   "version": 1,
   "records": [
     {"id": "H_burn", "group": "H", "inputs": [["H", 1.0]], "outputs": [["He", 1.0]], "q_ratio": 1.0,
-     "rate": {"a": 1, "orders": [2], "terms": [["t_h", 1.0, 4, 1.0], ["t_h", 1.15, 18, 1.0]], "t_thr_factor": 0.5, "gate": null, "a_coef": "a_h_burn"},
+     "rate": {"a": 1, "orders": [2], "terms": [["t_h", 1.0, 4, 1.0], ["t_h", 1.6, 18, 1.0]], "t_thr_factor": 0.5, "gate": null, "a_coef": "a_h_burn"},
      "enabled": true, "standin": false},
     {"id": "He_burn", "group": "He", "inputs": [["He", 1.0]], "outputs": [["C", 1.0]], "q_ratio": 0.09259259259259259,
      "rate": {"a": 2, "orders": [3], "terms": [["t_he", 1.0, 40, 1.0]], "t_thr_factor": 0.5, "gate": null, "a_coef": "a_he_burn"},

@@ -409,3 +409,16 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   the snapshot carries `tau_deg` (an older one restores with none) (measured by M0-D161 on the RTX 4090: m_up_sb's life 08, a cold
   core mostly of 4–5 cells in a Keplerian disk of R₉₀ 76–148, τ_deg 0.28–12 against τ_dyn 20–50 — it ends at step 201,248 of its
   s_200000 resume, never before; the lead at M0-D161, 2026-11-08: «(a) Core's τ (Recommended)», «R₉₀ as today (Recommended)»).
+- Contract §1.6.2's H_burn terms «(T_H, 4, 1) + (1.15 T_H, 18, 1)» and physics.json's T_He 78.4 (§0.5 [M0-D50]) — superseded by
+  contract §0.5 [M0-D163]: the second term at 1.6 T_H and T_He 100 (measured by M0-D163 on the RTX 4090: the 1.15 term ran the
+  Massive's centre to iron in one pass and flashed the Giant mid-main-sequence; 1.6 alone broke G-ORDER, T_He 100 restores it; the
+  lead at M0-D163, 2026-11-09: «Crossing 1.6·T_H (Recommended)», «A: 1.6 + T_He 100 (Recommended)»).
+- Contract §2.10's «a uniform temperature set so U_th = 0.1|W|» — superseded by contract §0.5 [M0-D163]: U_th = min(0.5, 0.1 ·
+  max(1, M/M₀)²) |W| (measured by M0-D163 on the RTX 4090: the cold Massive and Giant overshoot at the bounce to T_c 91 and 153
+  and flash; warmer they hold a main sequence, the Sun-like only cold; the lead at M0-D163, 2026-11-09: «0.1·max(1,M/M₀)², cap
+  0.5 (Recommended)»).
+- Contract §2.7's «a_r, c_sb, κ₀, k_cond 4 × 10⁻⁷, 200, 1, 0» as §0.5 [M0-D94] left it (a_r 2 × 10⁻⁵, c_sb 400) — superseded by
+  contract §0.5 [M0-D163]: c_sb 800 and a_r 1 × 10⁻⁵, a_r c_sb held (measured by M0-D163 on the RTX 4090: at c_sb 400 the long
+  main sequences lost 50–56 % of the Massive's and Giant's mass through the edge and moved every calibrated threshold; at ×2 each
+  keeps main_sequence → he_core → iron_core with 4,790 and 9,564 sb left; the lead at M0-D163, 2026-11-09: «Curb the mass loss
+  first (Recommended)», «Adopt c_sb 800 (Recommended)»).

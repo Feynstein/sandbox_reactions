@@ -337,12 +337,12 @@ fn render_reserve_ms_is_kept_across_a_rerun_and_the_gas_speed_bound_is_enforced_
     assert_eq!(file["life_sun_sb"], json!(1200.0));
     assert_eq!(file["max_gas_speed"], json!(20.0), "no life ran: the file's gas speed stands");
     assert!(file["m_ch_sb"].as_f64().is_some_and(|m| m > 3000.0));
-    // c_sb = 400 must beat twice the file's gas speed: 200 does not, and nothing is written.
-    base(&path, json!({"render_reserve_ms": 4.25, "max_gas_speed": 200.0}));
+    // c_sb = 800 ([M0-D163]; 400 before it) must beat twice the file's gas speed: 400 does not, and nothing is written.
+    base(&path, json!({"render_reserve_ms": 4.25, "max_gas_speed": 400.0}));
     let before = std::fs::read_to_string(&path).unwrap();
     let (code, lines) = calibrate(&["--out", out, "--only", "m_ch_sb"]);
     assert_eq!(code, 6, "{lines:?}");
-    assert!(lines.iter().any(|l| l.contains("max_gas_speed 200.000") && l.contains("c_sb 400 must exceed twice it")), "{lines:?}");
+    assert!(lines.iter().any(|l| l.contains("max_gas_speed 400.000") && l.contains("c_sb 800 must exceed twice it")), "{lines:?}");
     assert_eq!(std::fs::read_to_string(&path).unwrap(), before);
     let _ = std::fs::remove_dir_all(&dir);
 }
