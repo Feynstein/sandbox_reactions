@@ -1,0 +1,74 @@
+== 2026-11-10T14:03:19-05:00 calibration · task M0-D169 · box laserax-ai-server :: bash tests/gpu.sh calibration
+-- calibration · exit=101 · 0.41 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 13 tests
+test calibration::a_calibration_without_the_render_reserve_is_accepted_and_written_back_without_it ... ok
+test calibration::a_calibration_written_from_the_embedded_assets_is_accepted ... ok
+test calibration::a_mismatched_calibration_is_refused_with_exit_6 ... ok
+test calibration::a_reformatted_physics_json_keeps_its_hash_and_a_changed_constant_does_not ... ok
+test calibration::every_number_of_the_calibration_is_read_back_as_written ... ok
+test calibration::headless_runs_without_a_calibration_when_the_scene_names_no_preset ... SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference
+SR-HEADLESS DONE steps=1 sim_time=0.075718 until=none
+ok
+test calibration::sha256_fips_180_4_long_vectors_and_the_padding_edges ... ok
+test calibration::sha256_fips_180_4_short_vectors ... ok
+test calibration::the_binary_embeds_the_calibration_file_whenever_it_exists ... ok
+test calibration::the_calibration_the_binary_embeds_matches_the_assets ... 
+thread 'calibration::the_calibration_the_binary_embeds_matches_the_assets' (515642) panicked at crates/sr-engine/tests/gpu/calibration.rs:333:13:
+assertion `left == right` failed: calibration.json is out of date: change a constant, calibrate again
+  left: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74"
+ right: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibration::the_hash_is_over_the_canonical_bytes ... ok
+test calibration::the_order_of_the_ceilings_is_k9 ... ok
+test calibration::the_schema_is_parsed_and_every_refusal_names_its_key ... ok
+
+failures:
+
+failures:
+    calibration::the_calibration_the_binary_embeds_matches_the_assets
+
+test result: FAILED. 12 passed; 1 failed; 0 ignored; 0 measured; 497 filtered out; finished in 0.33s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+== 2026-11-10T14:08:51-05:00 calibration · task M0-D169 · box laserax-ai-server :: bash tests/gpu.sh calibration
+-- calibration · exit=101 · 0.41 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 13 tests
+test calibration::a_calibration_without_the_render_reserve_is_accepted_and_written_back_without_it ... ok
+test calibration::a_calibration_written_from_the_embedded_assets_is_accepted ... ok
+test calibration::a_mismatched_calibration_is_refused_with_exit_6 ... ok
+test calibration::a_reformatted_physics_json_keeps_its_hash_and_a_changed_constant_does_not ... ok
+test calibration::every_number_of_the_calibration_is_read_back_as_written ... ok
+test calibration::headless_runs_without_a_calibration_when_the_scene_names_no_preset ... SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference
+SR-HEADLESS DONE steps=1 sim_time=0.075718 until=none
+ok
+test calibration::sha256_fips_180_4_long_vectors_and_the_padding_edges ... ok
+test calibration::sha256_fips_180_4_short_vectors ... ok
+test calibration::the_binary_embeds_the_calibration_file_whenever_it_exists ... ok
+test calibration::the_calibration_the_binary_embeds_matches_the_assets ... 
+thread 'calibration::the_calibration_the_binary_embeds_matches_the_assets' (528098) panicked at crates/sr-engine/tests/gpu/calibration.rs:333:13:
+assertion `left == right` failed: calibration.json is out of date: change a constant, calibrate again
+  left: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74"
+ right: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibration::the_hash_is_over_the_canonical_bytes ... ok
+test calibration::the_order_of_the_ceilings_is_k9 ... ok
+test calibration::the_schema_is_parsed_and_every_refusal_names_its_key ... ok
+
+failures:
+
+failures:
+    calibration::the_calibration_the_binary_embeds_matches_the_assets
+
+test result: FAILED. 12 passed; 1 failed; 0 ignored; 0 measured; 497 filtered out; finished in 0.33s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

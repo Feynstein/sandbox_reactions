@@ -1,0 +1,62 @@
+== 2026-11-10T09:48:28-05:00 ui_legend · task M0-D163 · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::legend::legend_tests
+-- ui_legend · exit=0 · 0.26 s
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 21 tests
+test ui::legend::legend_tests::a_mark_at_the_bars_left_end_puts_its_label_right_of_the_title ... ok
+test ui::legend::legend_tests::a_label_that_would_overlap_its_left_neighbour_is_left_out_and_its_tick_kept ... ok
+test ui::legend::legend_tests::density_ticks_follow_the_inspectors_rule ... ok
+test ui::legend::legend_tests::a_tick_label_has_no_trailing_zeros ... ok
+test ui::legend::legend_tests::a_narrow_range_ticks_only_the_powers_inside_or_both_ends ... ok
+test ui::legend::legend_tests::element_is_the_ten_swatches_with_their_names ... ok
+test ui::legend::legend_tests::the_first_and_last_labels_stay_inside_the_bar ... ok
+test ui::legend::legend_tests::the_glow_ticks_are_ten_powers_of_ten_in_the_units ... ok
+test ui::legend::legend_tests::the_scale_gives_way_when_the_strip_would_not_fit ... ok
+test ui::legend::legend_tests::the_hint_and_the_refusal_together_stay_clear_of_the_legend_and_inside_the_slot ... ok
+test ui::legend::legend_tests::the_world_the_legend_and_the_hint_fit_the_centre_of_the_default_window ... ok
+test ui::legend::legend_tests::no_cursor_mark_over_vacuum_off_the_world_or_in_element ... ok
+test ui::legend::legend_tests::ticks_stand_at_each_decade_not_linearly_in_t ... ok
+test ui::legend::legend_tests::the_heat_and_density_bars_are_the_maps_and_the_ranges_move_the_ticks_only ... ok
+test ui::legend::legend_tests::the_title_is_the_views_and_the_strings_are_the_tables ... ok
+test ui::legend::legend_tests::the_cursor_mark_stands_at_the_cells_value_on_the_shown_range ... ok
+test ui::legend::legend_tests::the_glow_bar_dims_with_the_setting ... ok
+test ui::legend::legend_tests::the_glow_setting_is_marked_in_glow_only_at_its_place_on_the_bar ... ok
+test ui::legend::legend_tests::the_bars_cache_follows_the_setting ... ok
+test ui::legend::legend_tests::the_glow_bar_is_the_cpu_formula_at_three_settings ... ok
+test ui::legend::legend_tests::a_marks_label_never_meets_the_title_or_the_other_label_wherever_the_cursor_stands ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 142 filtered out; finished in 0.13s
+
+
+== 2026-11-10T09:53:07-05:00 ui_legend · task M0-D163 · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::legend::legend_tests
+-- ui_legend · exit=0 · 0.31 s
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 21 tests
+test ui::legend::legend_tests::a_mark_at_the_bars_left_end_puts_its_label_right_of_the_title ... ok
+test ui::legend::legend_tests::a_label_that_would_overlap_its_left_neighbour_is_left_out_and_its_tick_kept ... ok
+test ui::legend::legend_tests::a_tick_label_has_no_trailing_zeros ... ok
+test ui::legend::legend_tests::a_narrow_range_ticks_only_the_powers_inside_or_both_ends ... ok
+test ui::legend::legend_tests::density_ticks_follow_the_inspectors_rule ... ok
+test ui::legend::legend_tests::element_is_the_ten_swatches_with_their_names ... ok
+test ui::legend::legend_tests::the_first_and_last_labels_stay_inside_the_bar ... ok
+test ui::legend::legend_tests::no_cursor_mark_over_vacuum_off_the_world_or_in_element ... ok
+test ui::legend::legend_tests::the_glow_ticks_are_ten_powers_of_ten_in_the_units ... ok
+test ui::legend::legend_tests::the_scale_gives_way_when_the_strip_would_not_fit ... ok
+test ui::legend::legend_tests::the_hint_and_the_refusal_together_stay_clear_of_the_legend_and_inside_the_slot ... ok
+test ui::legend::legend_tests::the_world_the_legend_and_the_hint_fit_the_centre_of_the_default_window ... ok
+test ui::legend::legend_tests::ticks_stand_at_each_decade_not_linearly_in_t ... ok
+test ui::legend::legend_tests::the_heat_and_density_bars_are_the_maps_and_the_ranges_move_the_ticks_only ... ok
+test ui::legend::legend_tests::the_title_is_the_views_and_the_strings_are_the_tables ... ok
+test ui::legend::legend_tests::the_cursor_mark_stands_at_the_cells_value_on_the_shown_range ... ok
+test ui::legend::legend_tests::the_glow_bar_dims_with_the_setting ... ok
+test ui::legend::legend_tests::the_bars_cache_follows_the_setting ... ok
+test ui::legend::legend_tests::the_glow_setting_is_marked_in_glow_only_at_its_place_on_the_bar ... ok
+test ui::legend::legend_tests::the_glow_bar_is_the_cpu_formula_at_three_settings ... ok
+test ui::legend::legend_tests::a_marks_label_never_meets_the_title_or_the_other_label_wherever_the_cursor_stands ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 142 filtered out; finished in 0.16s
+
+

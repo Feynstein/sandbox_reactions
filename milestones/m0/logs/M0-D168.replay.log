@@ -1,0 +1,193 @@
+m0-d168/noheat/start                                         frames      1 flips     1  raw main_sequence:1
+    first: step 450001 t 3464.13 raw main_sequence shown main_sequence M 2489 R 2.0 d_c 1.000 2(P+Kt)/|W| 0.779 vr/vd -0.043 Lnuc/L 2.9e-05 X_H,c 0.0279 T_c 0.05
+    last: step 450001 t 3464.13 raw main_sequence shown main_sequence M 2489 R 2.0 d_c 1.000 2(P+Kt)/|W| 0.779 vr/vd -0.043 Lnuc/L 2.9e-05 X_H,c 0.0279 T_c 0.05
+m0-d168/nohydro/run/dumps                                    frames     21 flips    21  raw main_sequence:21
+    first: step 450016 t 3464.23 raw main_sequence shown main_sequence M 2489 R 2.0 d_c 0.997 2(P+Kt)/|W| 0.768 vr/vd -0.043 Lnuc/L 2.2e-05 X_H,c 0.0279 T_c 2.45
+    last: step 450321 t 3466.15 raw main_sequence shown main_sequence M 2489 R 2.0 d_c 0.962 2(P+Kt)/|W| 0.733 vr/vd -0.043 Lnuc/L 0.0022 X_H,c 0.0279 T_c 32.1
+m0-d168/nohydro/start                                        frames      1 flips     1  raw main_sequence:1
+    first: step 450001 t 3464.13 raw main_sequence shown main_sequence M 2489 R 2.0 d_c 1.000 2(P+Kt)/|W| 0.779 vr/vd -0.043 Lnuc/L 2.9e-05 X_H,c 0.0279 T_c 0.05
+    last: step 450001 t 3464.13 raw main_sequence shown main_sequence M 2489 R 2.0 d_c 1.000 2(P+Kt)/|W| 0.779 vr/vd -0.043 Lnuc/L 2.9e-05 X_H,c 0.0279 T_c 0.05
+m0-d168/p1/dumps                                             frames    126 flips   126  raw main_sequence:126
+    first: step 450016 t 3464.23 raw main_sequence shown main_sequence M 2489 R 2.0 d_c 1.000 2(P+Kt)/|W| 0.779 vr/vd -0.043 Lnuc/L 2.9e-05 X_H,c 0.0279 T_c 0.05
+    last: step 452001 t 3476.88 raw main_sequence shown main_sequence M 2489 R 2.0 d_c 1.000 2(P+Kt)/|W| 0.779 vr/vd -0.043 Lnuc/L 2.8e-05 X_H,c 0.0279 T_c 0.05
+m0-d168/start                                                frames      1 flips     1  raw main_sequence:1
+    first: step 450001 t 3464.13 raw main_sequence shown main_sequence M 2489 R 2.0 d_c 1.000 2(P+Kt)/|W| 0.779 vr/vd -0.043 Lnuc/L 2.9e-05 X_H,c 0.0279 T_c 0.05
+    last: step 450001 t 3464.13 raw main_sequence shown main_sequence M 2489 R 2.0 d_c 1.000 2(P+Kt)/|W| 0.779 vr/vd -0.043 Lnuc/L 2.9e-05 X_H,c 0.0279 T_c 0.05
+m0-d168/zfe/run/dumps                                        frames    126 flips    39  raw main_sequence:126
+    first: step 450016 t 3464.23 raw main_sequence shown main_sequence M 2489 R 2.0 d_c 0.997 2(P+Kt)/|W| 0.770 vr/vd -0.042 Lnuc/L 1.5e-05 X_H,c 0.0279 T_c 2.06
+    last: step 450672 t 3468.34 raw main_sequence shown main_sequence M 2489 R 2.0 d_c 0.956 2(P+Kt)/|W| 0.729 vr/vd -0.009 Lnuc/L 0.0098 X_H,c 0.0279 T_c 37.6
+m0-d168/zfe/start                                            frames      1 flips     1  raw main_sequence:1
+    first: step 450001 t 3464.13 raw main_sequence shown main_sequence M 2489 R 2.0 d_c 1.000 2(P+Kt)/|W| 0.779 vr/vd -0.043 Lnuc/L 2.9e-05 X_H,c 0.0279 T_c 0.05
+    last: step 450001 t 3464.13 raw main_sequence shown main_sequence M 2489 R 2.0 d_c 1.000 2(P+Kt)/|W| 0.779 vr/vd -0.043 Lnuc/L 2.9e-05 X_H,c 0.0279 T_c 0.05
+m0-d168/zfe2/run/dumps                                       frames     26 flips     0  raw main_sequence:26
+m0-d168/zfe2/start                                           frames      1 flips     0  raw main_sequence:1
+m0-d163/flash/dumps                                          frames    140 flips     0  raw collapsing:40 he_core:9 he_shell:9 iron_core:82
+m0-d163/gmap/m24910/dumps                                    frames      1 flips     0  raw black_hole:1
+m0-d163/gmap/m28918/dumps                                    frames      2 flips     0  raw black_hole:1 iron_core:1
+m0-d163/gmap/m43461/dumps                                    frames      1 flips     0  raw black_hole:1
+m0-d163/map/m100000/dumps                                    frames      1 flips     0  raw black_hole:1
+m0-d163/map/m10500/dumps                                     frames      1 flips     0  raw neutron_star:1
+m0-d163/map/m12500/dumps                                     frames      1 flips     0  raw neutron_star:1
+m0-d163/map/m15000/dumps                                     frames      1 flips     0  raw neutron_star:1
+m0-d163/map/m20000/dumps                                     frames      1 flips     0  raw neutron_star:1
+m0-d163/map/m30000/dumps                                     frames      1 flips     0  raw neutron_star:1
+m0-d163/map/m46000/dumps                                     frames      1 flips     0  raw black_hole:1
+m0-d163/map/m7000/dumps                                      frames      1 flips     0  raw white_dwarf:1
+m0-d163/map/m8061/dumps                                      frames      1 flips     0  raw white_dwarf:1
+m0-d163/map/m9000/dumps                                      frames      1 flips     0  raw neutron_star:1
+m0-d163/opts/L_A_giant/dumps                                 frames     12 flips     0  raw he_core:1 iron_core:1 main_sequence:10
+m0-d163/opts/L_A_massive/dumps                               frames     25 flips     0  raw he_core:5 iron_core:1 main_sequence:19
+m0-d163/opts/L_A_sun/dumps                                   frames     97 flips     0  raw he_core:13 iron_core:1 main_sequence:81 white_dwarf:2
+m0-d163/opts/L_B_giant/dumps                                 frames      7 flips     0  raw iron_core:1 main_sequence:6
+m0-d163/opts/L_B_massive/dumps                               frames     15 flips     0  raw iron_core:1 main_sequence:14
+m0-d163/opts/L_B_sun/dumps                                   frames     93 flips     0  raw he_core:21 main_sequence:70 white_dwarf:2
+m0-d163/opts/L_cs16_w31_massive/dumps                        frames      5 flips     0  raw iron_core:1 main_sequence:4
+m0-d163/opts/L_cs16_w5_giant/dumps                           frames      1 flips     0  raw iron_core:1
+m0-d163/opts/L_cs2_w1_sun/dumps                              frames      9 flips     0  raw main_sequence:9
+m0-d163/opts/L_cs2_w31_massive/dumps                         frames      7 flips     0  raw he_core:1 iron_core:1 main_sequence:5
+m0-d163/opts/L_cs2_w5_giant/dumps                            frames      3 flips     0  raw iron_core:1 main_sequence:2
+m0-d163/opts/L_cs3_w31_massive/dumps                         frames      6 flips     0  raw iron_core:1 main_sequence:5
+m0-d163/opts/L_cs3_w5_giant/dumps                            frames      3 flips     0  raw iron_core:1 main_sequence:2
+m0-d163/opts/L_cs4_w1_sun/dumps                              frames      9 flips     0  raw main_sequence:9
+m0-d163/opts/L_cs4_w31_massive/dumps                         frames      6 flips     0  raw iron_core:1 main_sequence:5
+m0-d163/opts/L_cs4_w5_giant/dumps                            frames      2 flips     0  raw iron_core:1 main_sequence:1
+m0-d163/opts/init_giant/dumps                                frames      1 flips     0  raw cloud:1
+m0-d163/opts/init_massive/dumps                              frames      1 flips     0  raw cloud:1
+m0-d163/opts/init_sun/dumps                                  frames      1 flips     0  raw cloud:1
+m0-d163/opts/m16_w1_sun_he100/dumps                          frames     24 flips     0  raw cloud:2 collapsing:1 main_sequence:21
+m0-d163/opts/m16_w31_massive/dumps                           frames     24 flips     0  raw collapsing:1 main_sequence:23
+m0-d163/opts/m16_w31_massive_he100/dumps                     frames     24 flips     0  raw collapsing:1 main_sequence:23
+m0-d163/opts/m16_w5_giant_he100/dumps                        frames     24 flips     0  raw cloud:1 main_sequence:17 protostar:6
+m0-d163/opts/norx_giant/dumps                                frames     69 flips     0  raw cloud:17 collapsing:28 failed_star:23 protostar:1
+m0-d163/opts/norx_massive/dumps                              frames     59 flips     0  raw cloud:14 collapsing:21 failed_star:24
+m0-d163/opts/norx_sun/dumps                                  frames     48 flips     0  raw cloud:15 collapsing:16 failed_star:17
+m0-d163/opts/p_ah20_giant/dumps                              frames      2 flips     0  raw collapsing:1 iron_core:1
+m0-d163/opts/p_ah20_massive/dumps                            frames      2 flips     0  raw he_core:1 iron_core:1
+m0-d163/opts/p_ah20_sun/dumps                                frames     14 flips     0  raw cloud:1 collapsing:1 main_sequence:8 white_dwarf:4
+m0-d163/opts/p_ah4_giant/dumps                               frames      2 flips     0  raw collapsing:1 iron_core:1
+m0-d163/opts/p_ah4_massive/dumps                             frames      2 flips     0  raw he_core:1 iron_core:1
+m0-d163/opts/p_ah4_sun/dumps                                 frames     14 flips     0  raw cloud:1 collapsing:1 main_sequence:11 white_dwarf:1
+m0-d163/opts/p_th70_giant/dumps                              frames      2 flips     0  raw collapsing:1 iron_core:1
+m0-d163/opts/p_th70_massive/dumps                            frames      2 flips     0  raw he_core:1 iron_core:1
+m0-d163/opts/p_th70_sun/dumps                                frames     14 flips     0  raw cloud:2 collapsing:1 white_dwarf:11
+m0-d163/opts/ppL_w4_sun/dumps                                frames     22 flips     0  raw cloud:3 main_sequence:10 white_dwarf:9
+m0-d163/opts/ppL_w5_sun/dumps                                frames     22 flips     0  raw cloud:2 failed_star:18 protostar:2
+m0-d163/opts/pp_w1_giant/dumps                               frames     10 flips     0  raw cloud:8 collapsing:1 main_sequence:1
+m0-d163/opts/pp_w1_massive/dumps                             frames      9 flips     0  raw cloud:8 he_core:1
+m0-d163/opts/pp_w1_sun/dumps                                 frames     14 flips     0  raw cloud:2 collapsing:1 main_sequence:11
+m0-d163/opts/pp_w2_giant/dumps                               frames     11 flips     0  raw cloud:9 collapsing:1 main_sequence:1
+m0-d163/opts/pp_w2_massive/dumps                             frames     24 flips     0  raw collapsing:1 main_sequence:23
+m0-d163/opts/pp_w2_sun/dumps                                 frames     14 flips     0  raw cloud:2 collapsing:1 failed_star:1 protostar:10
+m0-d163/opts/pp_w3_giant/dumps                               frames     24 flips     0  raw collapsing:1 main_sequence:23
+m0-d163/opts/pp_w3_massive/dumps                             frames     24 flips     0  raw collapsing:1 main_sequence:23
+m0-d163/opts/pp_w3_sun/dumps                                 frames     14 flips     0  raw cloud:3 main_sequence:7 white_dwarf:4
+m0-d163/opts/pp_w4_giant/dumps                               frames     24 flips     0  raw cloud:2 main_sequence:22
+m0-d163/opts/pp_w4_massive/dumps                             frames     24 flips     0  raw cloud:1 main_sequence:23
+m0-d163/opts/pp_w5_giant/dumps                               frames     24 flips     0  raw cloud:1 main_sequence:17 protostar:6
+m0-d163/opts/pp_w5_massive/dumps                             frames     24 flips     0  raw cloud:1 main_sequence:13 protostar:10
+m0-d163/opts/same_massive/dumps                              frames      1 flips     0  raw he_shell:1
+m0-d163/opts/w1_massive/dumps                                frames      2 flips     0  raw he_shell:1 iron_core:1
+m0-d163/opts/w2_giant/dumps                                  frames      3 flips     0  raw collapsing:1 he_shell:1 iron_core:1
+m0-d163/opts/w2_massive/dumps                                frames      2 flips     0  raw collapsing:1 iron_core:1
+m0-d163/opts/w2_sun/dumps                                    frames     14 flips     0  raw cloud:2 collapsing:1 failed_star:1 protostar:10
+m0-d163/opts/w3_giant/dumps                                  frames      3 flips     0  raw collapsing:1 iron_core:1 main_sequence:1
+m0-d163/opts/w3_massive/dumps                                frames     24 flips     0  raw collapsing:1 main_sequence:23
+m0-d163/opts/w3_sun/dumps                                    frames     14 flips     0  raw cloud:3 main_sequence:7 white_dwarf:4
+m0-d163/opts/w4_giant/dumps                                  frames     11 flips     0  raw cloud:2 iron_core:1 main_sequence:8
+m0-d163/opts/w4_massive/dumps                                frames     24 flips     0  raw cloud:1 main_sequence:23
+m0-d163/opts/w4_sun/dumps                                    frames     15 flips     0  raw cloud:6 main_sequence:2 protostar:1 white_dwarf:6
+m0-d163/opts/w4g_fine/dumps                                  frames     41 flips     0  raw he_shell:3 iron_core:3 main_sequence:35
+m0-d163/opts/w5_giant/dumps                                  frames     17 flips     0  raw cloud:1 iron_core:2 main_sequence:8 protostar:6
+m0-d163/opts/w5_massive/dumps                                frames     24 flips     0  raw cloud:1 main_sequence:13 protostar:10
+m0-d163/opts/w5_sun/dumps                                    frames     15 flips     0  raw cloud:3 failed_star:6 protostar:6
+m0-d163/opts/x125_w1_sun/dumps                               frames     14 flips     0  raw cloud:2 collapsing:1 main_sequence:11
+m0-d163/opts/x125_w31_massive/dumps                          frames     24 flips     0  raw collapsing:1 main_sequence:23
+m0-d163/opts/x125_w4_giant/dumps                             frames     24 flips     0  raw cloud:2 main_sequence:22
+m0-d163/opts/x125_w5_giant/dumps                             frames     24 flips     0  raw cloud:1 main_sequence:17 protostar:6
+m0-d163/opts/x16_w1_massive/dumps                            frames      2 flips     0  raw he_core:1 iron_core:1
+m0-d163/opts/x16_w1_sun/dumps                                frames     14 flips     0  raw cloud:2 collapsing:1 main_sequence:11
+m0-d163/opts/x16_w2_massive/dumps                            frames     24 flips     0  raw collapsing:1 main_sequence:23
+m0-d163/opts/x16_w3_massive/dumps                            frames     24 flips     0  raw collapsing:1 main_sequence:23
+m0-d163/opts/x16_w4_giant/dumps                              frames     24 flips     0  raw cloud:2 main_sequence:22
+m0-d163/opts/x16_w5_giant/dumps                              frames     24 flips     0  raw cloud:1 main_sequence:17 protostar:6
+m0-d163/v1/giant/dumps                                       frames    157 flips     0  raw black_hole:130 cloud:13 iron_core:8 main_sequence:6
+m0-d163/v1/massive/dumps                                     frames      1 flips     0  raw iron_core:1
+m0-d163/v1/massive_rows/dumps                                frames     17 flips     0  raw iron_core:1 main_sequence:16
+m0-d163/v1/sun/dumps                                         frames      1 flips     0  raw main_sequence:1
+m0-d165/cfl_0.04/dumps                                       frames    600 flips     0  raw he_core:23 he_shell:21 iron_core:430 main_sequence:126
+m0-d165/cfl_0.1/dumps                                        frames    240 flips     0  raw he_core:9 he_shell:17 iron_core:161 main_sequence:53
+m0-d165/cfl_0.4/dumps                                        frames     60 flips     0  raw he_core:1 he_shell:12 iron_core:31 main_sequence:16
+m0-d165/giant_flash/dumps                                    frames    110 flips     0  raw he_core:1 he_shell:12 iron_core:81 main_sequence:16
+m0-d165/massive_flash/dumps                                  frames    170 flips     0  raw he_core:60 he_shell:9 iron_core:61 main_sequence:40
+m0-d165/opts/g_ar4/dumps                                     frames      2 flips     0  raw iron_core:1 main_sequence:1
+m0-d165/opts/g_cno/dumps                                     frames      4 flips     0  raw iron_core:1 main_sequence:3
+m0-d165/opts/g_cnoar4/dumps                                  frames      2 flips     0  raw iron_core:1 main_sequence:1
+m0-d165/opts/g_ctl/dumps                                     frames      2 flips     0  raw iron_core:1 main_sequence:1
+m0-d165/opts/g_h8_ctl/dumps                                  frames      2 flips     0  raw he_core:1 iron_core:1
+m0-d165/opts/g_h8he20_ctl/dumps                              frames      3 flips     0  raw iron_core:1 main_sequence:2
+m0-d165/opts/g_h8he20_lad/dumps                              frames     36 flips     0  raw cloud:1 iron_core:1 main_sequence:34
+m0-d165/opts/g_h8he20_nu10/dumps                             frames      5 flips     0  raw cloud:1 iron_core:1 main_sequence:3
+m0-d165/opts/g_he20_ctl/dumps                                frames      1 flips     0  raw iron_core:1
+m0-d165/opts/g_lad/dumps                                     frames      2 flips     0  raw iron_core:1 main_sequence:1
+m0-d165/opts/g_lim10/dumps                                   frames    273 flips     0  raw cloud:29 he_core:41 he_shell:5 main_sequence:198
+m0-d165/opts/g_lim40/dumps                                   frames    272 flips     0  raw cloud:5 collapsing:10 core_collapse:26 he_core:43 main_sequence:188
+m0-d165/opts/hash_h8/dumps                                   frames      1 flips     0  raw cloud:1
+m0-d165/opts/hash_h8he20/dumps                               frames      1 flips     0  raw cloud:1
+m0-d165/opts/hash_he20/dumps                                 frames      1 flips     0  raw cloud:1
+m0-d165/opts/m_ar4/dumps                                     frames      1 flips     0  raw iron_core:1
+m0-d165/opts/m_cno/dumps                                     frames     15 flips     0  raw he_core:1 iron_core:1 main_sequence:13
+m0-d165/opts/m_cnoar4/dumps                                  frames     69 flips     0  raw he_core:3 iron_core:2 main_sequence:64
+m0-d165/opts/m_ctl/dumps                                     frames      5 flips     0  raw iron_core:1 main_sequence:4
+m0-d165/opts/m_h8_ctl/dumps                                  frames      4 flips     0  raw he_core:1 iron_core:1 main_sequence:2
+m0-d165/opts/m_h8he20_ctl/dumps                              frames     17 flips     0  raw he_core:14 iron_core:1 main_sequence:2
+m0-d165/opts/m_h8he20_lad/dumps                              frames     57 flips     0  raw he_core:12 main_sequence:45
+m0-d165/opts/m_h8he20_lad_bounce/dumps                       frames     33 flips     0  raw he_core:12 main_sequence:9 neutron_star:12
+m0-d165/opts/m_h8he20_ladnu10/dumps                          frames     41 flips     0  raw he_core:9 main_sequence:32
+m0-d165/opts/m_h8he20_nu10/dumps                             frames     32 flips     0  raw he_core:14 main_sequence:5 white_dwarf:13
+m0-d165/opts/m_he20_ctl/dumps                                frames      5 flips     0  raw he_core:3 iron_core:1 main_sequence:1
+m0-d165/opts/m_he20_ladnu10/dumps                            frames      7 flips     0  raw he_core:2 iron_core:1 main_sequence:4
+m0-d165/opts/m_lad/dumps                                     frames     10 flips     0  raw iron_core:1 main_sequence:9
+m0-d165/opts/m_lad_bounce/dumps                              frames      6 flips     0  raw iron_core:2 main_sequence:4
+m0-d165/opts/m_lim10/dumps                                   frames     22 flips     2  raw he_core:7 he_shell:3 main_sequence:12
+    first: step 35000 t 311.09 raw main_sequence shown main_sequence M 2813 R 2.0 d_c 1.000 2(P+Kt)/|W| 0.766 vr/vd -0.044 Lnuc/L 0.0069 X_H,c 0.0302 T_c 0.05
+    last: step 36000 t 317.05 raw main_sequence shown main_sequence M 2813 R 2.0 d_c 1.000 2(P+Kt)/|W| 0.766 vr/vd -0.044 Lnuc/L 0.0046 X_H,c 0.0300 T_c 0.05
+m0-d165/opts/m_lim40/dumps                                   frames     23 flips     0  raw he_core:12 main_sequence:11
+m0-d165/opts/s_ctl/dumps                                     frames      6 flips     0  raw main_sequence:6
+m0-d165/opts/s_h8he20_lad/dumps                              frames      6 flips     0  raw main_sequence:6
+m0-d165/opts/s_lim10/dumps                                   frames      6 flips     0  raw main_sequence:6
+m0-d165/opts/s_lim40/dumps                                   frames      6 flips     0  raw main_sequence:6
+r15/d15k/dumps                                               frames     55 flips     0  raw cloud:1 he_core:10 he_shell:5 main_sequence:38 protostar:1
+r15/d15kb/dumps                                              frames     53 flips     0  raw he_core:13 he_shell:3 main_sequence:36 protostar:1
+r15/d22k/dumps                                               frames     49 flips     1  raw cloud:3 collapsing:1 he_core:9 he_shell:7 main_sequence:29
+    first: step 23000 t 199.16 raw main_sequence shown main_sequence M 3012 R 2.0 d_c 1.000 2(P+Kt)/|W| 0.732 vr/vd -0.024 Lnuc/L 0.0049 X_H,c 0.0147 T_c 0.05
+    last: step 23000 t 199.16 raw main_sequence shown main_sequence M 3012 R 2.0 d_c 1.000 2(P+Kt)/|W| 0.732 vr/vd -0.024 Lnuc/L 0.0049 X_H,c 0.0147 T_c 0.05
+r15/d22kb/dumps                                              frames     50 flips     0  raw cloud:3 core_collapse:3 he_core:10 he_shell:6 main_sequence:27 o_burn:1
+r15/g_ar4_leave/dumps                                        frames     41 flips     0  raw cloud:25 he_core:4 main_sequence:12
+r15/g_clk_bounce/dumps                                       frames    210 flips     0  raw cloud:15 he_core:10 main_sequence:185
+r15/g_dn2_leave/dumps                                        frames    210 flips     0  raw cloud:29 he_core:10 main_sequence:171
+r15/g_k3_leave/dumps                                         frames     34 flips     0  raw cloud:19 he_core:1 main_sequence:14
+r15/g_tall/dumps                                             frames     55 flips     0  raw cloud:35 he_core:1 main_sequence:19
+r15/m_ar4_bounce/dumps                                       frames     71 flips     0  raw he_core:26 he_shell:2 main_sequence:43
+r15/m_ar4_leave/dumps                                        frames     72 flips     0  raw he_core:29 main_sequence:43
+r15/m_clk_bounce/dumps                                       frames     43 flips     0  raw cloud:3 he_core:17 he_shell:7 main_sequence:11 o_burn:4 protostar:1
+r15/m_clk_leave/dumps                                        frames     38 flips     0  raw he_core:16 he_shell:4 main_sequence:18
+r15/m_dn1_bounce/dumps                                       frames     38 flips     0  raw cloud:1 he_core:21 main_sequence:16
+r15/m_dn1_leave/dumps                                        frames     37 flips     0  raw cloud:1 he_core:18 main_sequence:18
+r15/m_dn2_bounce/dumps                                       frames     39 flips     0  raw cloud:2 he_core:17 he_shell:8 main_sequence:12
+r15/m_dn2_leave/dumps                                        frames     37 flips     0  raw collapsing:2 he_core:14 he_shell:7 main_sequence:14
+r15/m_k3_bounce/dumps                                        frames     66 flips     0  raw cloud:6 core_collapse:3 he_core:3 he_shell:1 main_sequence:53
+r15/m_k3_leave/dumps                                         frames     87 flips    48  raw cloud:3 he_core:1 he_shell:1 main_sequence:82
+    first: step 33000 t 319.77 raw main_sequence shown main_sequence M 2292 R 2.0 d_c 1.000 2(P+Kt)/|W| 0.785 vr/vd -0.047 Lnuc/L 0.0089 X_H,c 0.0238 T_c 0.05
+    last: step 56500 t 475.38 raw main_sequence shown main_sequence M 2293 R 2.0 d_c 1.000 2(P+Kt)/|W| 0.784 vr/vd -0.043 Lnuc/L 0.0054 X_H,c 0.0189 T_c 0.0501
+r15/m_k3dn2_leave/dumps                                      frames     35 flips     0  raw cloud:1 he_core:3 he_shell:2 iron_core:1 main_sequence:28
+r15/m_k40_bounce/dumps                                       frames     56 flips     0  raw core_collapse:4 he_core:26 main_sequence:26
+r15/m_tall/dumps                                             frames     17 flips     0  raw he_core:1 main_sequence:16
+r15/s_ar4/dumps                                              frames      5 flips     0  raw main_sequence:5
+v14/giant_d/dumps                                            frames    109 flips     0  raw black_hole:97 collapsing:3 core_collapse:1 iron_core:8
+v14/massive_d/dumps                                          frames     69 flips     0  raw collapsing:2 iron_core:23 neutron_star:20 supernova:24
+v14/s2_0.05/dumps                                            frames      8 flips     0  raw iron_core:2 neutron_star:3 supernova:3
+v14/s2_0.1/dumps                                             frames      8 flips     0  raw iron_core:2 neutron_star:3 supernova:3
+v14/sun_life/dumps                                           frames    179 flips     0  raw he_core:36 iron_core:2 main_sequence:139 white_dwarf:2
+v14/sun_ms/dumps                                             frames      8 flips     0  raw main_sequence:8
+v14/t98a_sun_base/dumps                                      frames      4 flips     0  raw main_sequence:4
+v14/t99a_giant_base/dumps                                    frames      5 flips     0  raw black_hole:5

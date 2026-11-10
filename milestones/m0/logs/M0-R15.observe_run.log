@@ -1,0 +1,91 @@
+== 2026-11-10T12:56:18-05:00 observe_run · task M0-R15 · box laserax-ai :: bash tests/gpu.sh observe physics
+-- observe_run · exit=0 · 91.23 s
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 14 tests
+test observe::a_black_hole_that_eats_its_whole_cloud_meets_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.251946 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=785 sim_time=16.183833 until=met
+T 3: ending at step 825 (t 16.184), object 1 of 1799.987060546875 sb, the sink at (36.26, 29.60), 2 events; the box empty, Δt 0.447214
+ok
+test observe::a_cloud_over_a_hundredth_of_the_calibrated_sun_is_listed ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.096945 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.096945 until=none
+ok
+test observe::a_continued_lifes_ages_are_the_unbroken_lifes ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1626 sim_time=20.000981 until=met
+unbroken: 1626 steps, events [{"detail":{"by":"light","mass_sb":3345.0364439394325},"kind":"ignition","object":1,"sim_time":8.68452464044094,"step":672}]
+stages [{"from_step":65,"sim_time":1.5109540279954672,"stage":"collapsing"},{"from_step":704,"sim_time":9.087943702936172,"stage":"main_sequence"}]
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=768 sim_time=9.847722 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1626 sim_time=20.000981 until=met
+ages at the cut [Number(1507096.6230193758)], unbroken and continued [Number(10380508.91176868)]
+ok
+test observe::a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary ... SR-ERROR bad dump: --continue: /tmp/sr-observe-3643584-continue/cut/dumps/s_768.observers.json is step 512 at 6.646574217826128, the dump's 768 at 9.84772193711251
+SR-ERROR bad dump: --continue: /tmp/sr-observe-3643584-continue/cut/dumps/s_768.observers.json: No such file or directory (os error 2)
+SR-ERROR bad arguments: --continue needs --load-dump (the dump it goes on from)
+ok
+test observe::a_lighter_objects_ending_never_ends_the_life ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.460412 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=2.933265 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2600 sim_time=13.088635 until=met
+two clouds: object 2 (306.0) ended at step 2432 (t 11.96), the life on object 1 (1520.7) at step 2640 (t 13.09)
+ok
+test observe::a_sink_outside_the_box_is_an_object_of_its_own ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.431139 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.897064 until=met
+lone sink: object 2 black_hole at step 73 beside the cloud
+ok
+test observe::a_watch_with_no_calibration_writes_the_four_as_null ... ok
+test observe::an_unmet_condition_is_exit_2_with_until_unmet ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=100 sim_time=2.837738 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=1.328021 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=1.328021 until=none
+ok
+test observe::events_jsonl_and_the_ending_of_a_black_hole ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.431139 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1905 sim_time=11.985699 until=met
+ending at step 1945: black_hole shown from step 73, held 10.089 t.u. of 10.000
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1889 sim_time=11.894252 until=unmet
+ok
+test observe::the_age_never_decreases_over_the_frames ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1603 sim_time=20.002533 until=met
+readouts life: 1603 steps, 107 frames, objects [{"age_years":26539438.30557431,"ending":null,"id":1,"mass_sb":3112.796035436914,"mass_suns":0.894711843849866,"predicted_ending":["white_dwarf"],"stage":"main_sequence","stages":[{"from_step":65,"sim_time":1.539169343188405,"stage":"collapsing"},{"from_step":705,"sim_time":9.240424830466509,"stage":"main_sequence"}]}]
+age over 103 frames: 102 rises, the largest 9.1287e5 of 2.6539e7 years
+ok
+test observe::the_four_readouts_are_the_librarys_for_the_last_frame ... readouts: 0.894711843849866 Suns, ["white_dwarf"], age 2.653944e7 years ("main_sequence" shown)
+ok
+test observe::until_a_stage_stops_at_the_frame_that_shows_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=49 sim_time=2.087824 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.721125 until=unmet
+ok
+test observe::until_is_checked_before_a_device_is_touched ... SR-ERROR bad arguments: give --steps N or --until <condition>, one of the two
+SR-ERROR bad arguments: give --steps N or --until <condition>, one of the two
+SR-ERROR bad arguments: --until "later": expected sim_time:<t>, event:<kind>, stage:<id> or ending
+SR-ERROR bad arguments: --until "stage:nova": a stage is one of black_hole|supernova|neutron_star|core_collapse|white_dwarf|failed_star|planetary_nebula|iron_core|si_burn|o_burn|ne_burn|c_burn|he_core|he_shell|h_shell|main_sequence|collapsing|protostar|cloud, got "nova"
+SR-ERROR bad arguments: --until "event:ending": an event is one of ignition|core_collapse|supernova|sink_formed, got "ending"
+SR-ERROR bad arguments: --until "sim_time:-3": sim_time takes a time of 0 or more, got "-3"
+SR-ERROR bad arguments: --until is the GPU's: it has no meaning with --cpu-reference
+ok
+test observe::until_sim_time_stops_at_the_first_step_past_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1273 sim_time=5.001476 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1272 sim_time=4.996164 until=none
+sim_time:5 met at step 1273, sim time 5.001475690; the step before: 4.996163824
+ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 496 filtered out; finished in 91.02s
+
+

@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/tracker.rs
++++ b/crates/sr-physics/src/observe/tracker.rs
+@@ -740,7 +740,7 @@
+     let sum = |f: &dyn Fn(&BlockData) -> f64| -> f64 { list.iter().map(|&i| f(at(i))).sum() };
+     let l_group: [f64; 7] = std::array::from_fn(|g| per_time(sum(&|b| b.nuclear[g])));
+     let l_nuc: f64 = l_group.iter().filter(|l| **l > 0.0).sum();
+-    let q_c = burning_at(config, cb.max_sigma, &cb.max_x, cb.max_t);
++    let q_c: [f64; 7] = std::array::from_fn(|g| per_time(cb.nuclear[g]));
+     // The light credited from outside the object is added by `credit_light` once every object is known.
+     let luminosity_own = per_time(sum(&|b| b.radiated));
+ 

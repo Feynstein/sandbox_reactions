@@ -1,0 +1,22 @@
+--- a/crates/sr-physics/src/observe/stages.rs
++++ b/crates/sr-physics/src/observe/stages.rs
+@@ -174,8 +174,8 @@
+ /// whole late life, and c's own block burns its H and He shells too.
+ fn core_burns(c: &Ctx, g: usize, fuel: usize) -> bool {
+     let o = c.o;
+-    let q = o.q_c[g];
+-    let largest = (0..G_N).all(|k| o.q_c[k] <= q);
++    let q = o.l_group[g];
++    let largest = (0..G_N).all(|k| o.l_group[k] <= q);
+     q > 0.0 && largest && o.x_c[fuel] >= SPENT
+ }
+ 
+@@ -185,7 +185,7 @@
+ 
+ /// Some fuel still burns at c: a group lit there (q̇_c > 0) with one of its fuels at c ≥ 10⁻³ (§0.5 [M0-D169]).
+ fn centre_burns(o: &Object) -> bool {
+-    GROUP_FUELS.iter().enumerate().any(|(g, fuels)| o.q_c[g] > 0.0 && fuels.iter().any(|&f| o.x_c[f] >= SPENT))
++    GROUP_FUELS.iter().enumerate().any(|(g, fuels)| o.l_group[g] > 0.0 && fuels.iter().any(|&f| o.x_c[f] >= SPENT))
+ }
+ 
+ fn carbon_burns(o: &Object) -> bool {

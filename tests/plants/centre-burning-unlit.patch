@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/tracker.rs
++++ b/crates/sr-physics/src/observe/tracker.rs
+@@ -630,7 +630,7 @@
+     let y_e = electron_fraction(x);
+     let mut q = [0.0; 7];
+     for (g, q_r, omega) in &config.burning {
+-        if *g == GROUP_N || t >= config.ladder[*g] {
++        if *g == GROUP_N || t >= 0.0 {
+             q[*g] += q_r * omega.omega(sigma, x, t, y_e);
+         }
+     }

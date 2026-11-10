@@ -422,3 +422,27 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   main sequences lost 50–56 % of the Massive's and Giant's mass through the edge and moved every calibrated threshold; at ×2 each
   keeps main_sequence → he_core → iron_core with 4,790 and 9,564 sb left; the lead at M0-D163, 2026-11-09: «Curb the mass loss
   first (Recommended)», «Adopt c_sb 800 (Recommended)»).
+- Contract §2.5.2's sub-cycling with no bound on a cell's heating but the sub-step limits (burn_dx, burn_dt) — superseded by
+  contract §0.5 [M0-D165]: the burn clock, a cell's specific nuclear heating held to q_max = ε_th c_s / K_burn per unit time
+  (K_burn = physics.json's `burn_k`, 10; 0 turns it off), the reactions and heat per unit mass unchanged (measured by M0-D165 on
+  the RTX 4090: the Giant's centre went H → Fe inside one P6 pass at T 128.5 with X_H,c 0.72, the Massive's at T 115 with X_H,c
+  0.17, whatever the step; with the clock neither life made iron to the cap and the Sun-like's ignition and main sequence were
+  unchanged; the lead at M0-D165, 2026-11-10: «Burn limiter (Recommended)», «Rescope + file 2 Ds (Recommended)»).
+- Contract §1.9.3's white_dwarf row settled by the settled test alone (as §0.5 [M0-D140] and [M0-D160] read it) — superseded by
+  contract §0.5 [M0-D168]: settled, or at rest (|v_r| ≤ 0.05 √(GM/R)) on a wholly degenerate centre (d_c ≥ 0.9); the other three
+  rows keep the test alone (measured by M0-D168 on the RTX 4090: m_up_sb's 3,351 sb life on the burn clock leaves a 7 × 7-cell C/O
+  remnant at d_c 1.000 and rest whose 2(P + K_t)/|W| reads 0.779, shown main_sequence to the cap; the lead at M0-D168, 2026-11-10:
+  «Degenerate at rest (Recommended)»).
+- Contract §1.9.3's si/o/ne/c_burn rows on the star's L_g («the largest L_g and ≥ 0.1 L_nuc») and iron_core on its L_nuc, [M0-D50]'s
+  T_Ne 153.4, T_O 168, T_Si 235.2 and §5.2 G-STAGES' massive c_burn and ne_burn — superseded by contract §0.5 [M0-D169]: the rows
+  read what c itself burns, q̇_c,g by the rate laws (the largest, its fuel at c ≥ 10⁻³; iron_core once no fuel burns at c), the
+  ladder T_Ne 118, T_O 122, T_Si 135, c_burn and ne_burn parenthesised (measured by M0-R15 and M0-D169 on the RTX 4090: the
+  Massive's centre burns O, Si and to X_Fe,c 0.999 under a hydrogen shell that always leads — and that also burns in c's own
+  4 × 4 block —, shown he_core / main_sequence / he_shell; on the new rows he_core → o_burn → si_burn → iron_core; the lead at
+  M0-R15, 2026-11-10: «Ladder down + core labels (Recommended)»; at M0-D169: «Centre block (Recommended)», then «Centre cell's
+  rates (Recommended)»).
+- Contract §2.7's a_r 1 × 10⁻⁵ and c_sb 800 (§0.5 [M0-D163]) and §2.5.1's K_burn 10 ([M0-D165]) — superseded by contract §0.5
+  [M0-D166]: a_r 6.25 × 10⁻⁷, c_sb 12,800 (a_r c_sb held, the push per unit flux ÷ 16) and K_burn 40 (measured by M0-D166 on the
+  RTX 4090: the Massive reaches X_Fe,c 0.61 with 7,168 sb against 3,252, the Giant keeps 41,836 through its he_core against an
+  eruption to 18,098, the Sun-like's collapse and main sequence to t 60 unchanged; the lead at M0-D166, 2026-11-10: «Push ÷16 +
+  burn_k 40 (Recommended)»).

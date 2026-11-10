@@ -157,6 +157,37 @@ fn settled(c: &Ctx) -> bool {
     c.o.v_r.abs() <= 0.05 * c.v_dyn && c.o.potential != 0.0 && 2.0 * (c.o.pressure + c.o.kinetic_t) / c.o.potential.abs() >= 0.8
 }
 
+/// A white dwarf's centre at or above this degeneracy is held by the cold pressure alone (§0.5 [M0-D168]).
+const DEGENERATE_AT_REST: f64 = 0.9;
+
+/// At rest on a wholly degenerate centre: |v_r| ≤ 0.05 √(GM/R) and d_c ≥ 0.9 — the white dwarf's other way to be settled, §0.5
+/// [M0-D168] (the lead, «Degenerate at rest (Recommended)»): a remnant of a few cells reads 2P/|W| 0.70–0.79 on the grid however
+/// still it is — m_up_sb's 3,351 sb life on the burn clock leaves a 7 × 7-cell C/O remnant at d_c 1.000, |v_r| 0.043 √(GM/R),
+/// 2(P + K_t)/|W| 0.779 — where M0-D140's false white dwarf, the Sun-like re-expanding after its flash, has d_c 0.59–0.61.
+fn degenerate_at_rest(c: &Ctx) -> bool {
+    c.o.v_r.abs() <= 0.05 * c.v_dyn && c.o.d_c >= DEGENERATE_AT_REST
+}
+
+/// Group `g` is the largest burning group at c itself (q̇_c, lit only from its ladder temperature on), its fuel at the
+/// centre still there — §0.5 [M0-D169] (the lead, «Ladder down + core labels», then «Centre cell's rates»): the star's L_g let
+/// the hydrogen shell (L_H 0.6–1.8 × 10⁵) hide the Massive's oxygen and silicon burning centre (L_O to 5.5 × 10⁴) for its
+/// whole late life, and c's own block burns its H and He shells too.
+fn core_burns(c: &Ctx, g: usize, fuel: usize) -> bool {
+    let o = c.o;
+    let q = o.q_c[g];
+    let largest = (0..G_N).all(|k| o.q_c[k] <= q);
+    q > 0.0 && largest && o.x_c[fuel] >= SPENT
+}
+
+/// The species each burning group's records burn, H … Si (assets/reactions.json: O_burn and Mg_burn book into O, Si_burn and
+/// S_burn into Si).
+const GROUP_FUELS: [&[usize]; 6] = [&[0], &[1], &[2], &[4], &[3, 5], &[6, 7]];
+
+/// Some fuel still burns at c: a group lit there (q̇_c > 0) with one of its fuels at c ≥ 10⁻³ (§0.5 [M0-D169]).
+fn centre_burns(o: &Object) -> bool {
+    GROUP_FUELS.iter().enumerate().any(|(g, fuels)| o.q_c[g] > 0.0 && fuels.iter().any(|&f| o.x_c[f] >= SPENT))
+}
+
 fn carbon_burns(o: &Object) -> bool {
     let l = o.l_group[G_C];
     l > 0.0 && l >= BURN_SHARE * o.l_nuc
@@ -179,8 +210,10 @@ type Row = (Stage, fn(&Ctx) -> bool);
 /// core on the way to collapse, never a remnant whose hold races the collapse — §0.5 [M0-D81]. Core collapse reads one of more
 /// (none refused where the run has no ceiling): a lighter remnant whose cold iron centre overshoots into N_Fe's gate bounces
 /// back to a white dwarf — §0.5 [M0-D92]. White dwarf and planetary nebula are also settled: the Sun-like, re-expanding at
-/// +0.2 √(GM/R) after its flash with its hydrogen unburnt, is no remnant — §0.5 [M0-D140].
-/// Main sequence reads an ignited object whose largest burning group is hydrogen, as the other burning rows read theirs: the
+/// +0.2 √(GM/R) after its flash with its hydrogen unburnt, is no remnant — §0.5 [M0-D140]; a white dwarf may instead be at rest
+/// on a wholly degenerate centre — §0.5 [M0-D168].
+/// Iron core and the c/ne/o/si_burn rows read the burning at c itself, not the whole star's — §0.5 [M0-D169].
+/// Main sequence reads an ignited object whose largest burning group, over the whole object, is hydrogen: the
 /// Sun-like after its flash burns from nothing to 86 times what it shines for 1,700 steps, never inside [0.5 L, 2 L], which now
 /// holds the ignition event alone — §0.5 [M0-D141].
 const ROWS: [Row; 19] = [
@@ -199,7 +232,7 @@ const ROWS: [Row; 19] = [
             && c.o.unbound < 0.05 * c.o.mass
             && c.o.x_c[X_N] < 0.5
             && c.o.mass <= c.m_ch
-            && settled(c)
+            && (settled(c) || degenerate_at_rest(c))
     }),
     (Stage::FailedStar, |c| !c.h.ignited && c.o.d_c >= 0.5 && c.o.l_group[G_H] < 0.01 * c.o.luminosity && settled(c)),
     (Stage::PlanetaryNebula, |c| {
@@ -210,11 +243,11 @@ const ROWS: [Row; 19] = [
             && c.o.mass <= c.m_ch
             && settled(c)
     }),
-    (Stage::IronCore, |c| c.o.x_c[X_FE] >= 0.5 && c.o.l_nuc < 0.1 * c.o.luminosity),
-    (Stage::SiBurn, |c| burns(c, G_SI, FUEL_SI)),
-    (Stage::OBurn, |c| burns(c, G_O, FUEL_O)),
-    (Stage::NeBurn, |c| burns(c, G_NE, FUEL_NE)),
-    (Stage::CBurn, |c| burns(c, G_C, FUEL_C)),
+    (Stage::IronCore, |c| c.o.x_c[X_FE] >= 0.5 && !centre_burns(c.o)),
+    (Stage::SiBurn, |c| core_burns(c, G_SI, FUEL_SI)),
+    (Stage::OBurn, |c| core_burns(c, G_O, FUEL_O)),
+    (Stage::NeBurn, |c| core_burns(c, G_NE, FUEL_NE)),
+    (Stage::CBurn, |c| core_burns(c, G_C, FUEL_C)),
     (Stage::HeCore, |c| c.o.l_group[G_HE] > 0.0 && c.o.l_group[G_HE] >= 0.1 * c.o.luminosity && c.o.x_c[X_HE] >= SPENT),
     (Stage::HeShell, |c| c.h.ignited && c.o.x_c[X_HE] < SPENT && c.o.x_c[X_H] < SPENT && !carbon_burns(c.o)),
     (Stage::HShell, |c| c.h.ignited && c.o.x_c[X_H] < SPENT && c.o.l_group[G_HE] < 0.1 * c.o.luminosity),
@@ -482,6 +515,7 @@ mod tests {
             luminosity_own: 10.0,
             l_group: [0.0; 7],
             l_nuc: 0.0,
+            q_c: [0.0; 7],
             l_nu: 0.0,
             l_nu_deposited: 0.0,
             sigma_c: 1.0,
@@ -524,10 +558,11 @@ mod tests {
         o.x_c[species] = x;
     }
 
-    /// An object whose burning is `l` in each group, L = their sum, H and He fuel gone.
+    /// An object whose burning is `l` in each group, at c as much as over the object, L = their sum, H and He fuel gone.
     fn burning(l: [f64; 7]) -> Object {
         let mut o = cloud();
         o.l_group = l;
+        o.q_c = l;
         o.l_nuc = l.iter().filter(|v| **v > 0.0).sum();
         o.luminosity = o.l_nuc.max(1.0);
         o.x_c = [0.0; 10];
@@ -858,6 +893,9 @@ mod tests {
         // §0.5 [M0-D160]: held by its rotation, a white dwarf — before, iron_core for 467,455 steps and calibrate's exit 6.
         let mut o = spinning_remnant();
         assert_eq!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "2(P + K_t)/|W| 0.934");
+        // Its centre under §0.5 [M0-D168]'s d_c 0.9, so only the support can make it a remnant.
+        o.d_c = 0.89;
+        assert_eq!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "2(P + K_t)/|W| 0.934 at d_c 0.89");
         o.kinetic_t = 0.0;
         assert_eq!(stage_of(&o, &ignited()), Stage::IronCore, "its rotation left out: 2P/|W| 0.356");
         // Each edge: 2(P + K_t)/|W| = 0.8 is within, a hair under is not, and motion that is no rotation counts for nothing.
@@ -882,6 +920,43 @@ mod tests {
         let mut o = re_expanding(0.6061, -0.0376, 0.7979, 410.7);
         (o.kinetic, o.kinetic_t) = (0.0452, 1.0e-4);
         assert_ne!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "step 577: 2(P + K_t)/|W| 0.7979");
+    }
+
+    /// m_up_sb's 3,351.032 life on the burn clock at step 450,001 (t 3,464.13; M0-D165's stopped calibration, RTX 4090,
+    /// laserax-ai-server): the checkpoint's snapshot of object 1 (tasks/M0-D168.md) — a 7 × 7-cell C/O remnant, at rest and wholly
+    /// degenerate, 2(P + K_t)/|W| 0.779, a hydrogen trace burning 3.85 against L 1.79 × 10⁵.
+    fn compact_remnant() -> Object {
+        let mut o = cloud();
+        (o.mass, o.gas_mass, o.centre, o.radius, o.tau_dyn) = (2489.2328, 2489.2328, [299.5, 199.5], 2.0, 0.05669075);
+        (o.luminosity, o.luminosity_own, o.sigma_c, o.t_c, o.d_c, o.v_r) = (178969.36, 178969.36, 243.0163, 0.050049, 0.99994, -1.524513);
+        o.l_group = [3.854963, 0.872294, 9.504e-4, 0.0688577, 0.356757, 0.0, 0.0];
+        o.l_nuc = 5.153822;
+        (o.thermal, o.kinetic, o.kinetic_t, o.pressure, o.potential) = (127169.44, 4608.346, 17.26895, 829872.33, -2131445.5);
+        o.x_c = [0.0279036, 0.0362437, 0.0223456, 0.861197, 0.0308624, 0.0129707, 0.0059885, 0.0024883, 2.348e-9, 0.0];
+        o
+    }
+
+    #[test]
+    fn a_compact_remnant_at_rest_is_a_white_dwarf() {
+        // §0.5 [M0-D168]: short of virial but at rest on a wholly degenerate centre — before, main_sequence on its hydrogen trace.
+        let mut o = compact_remnant();
+        assert_eq!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "d_c 0.99994, |v_r| 0.043 √(GM/R), 2(P + K_t)/|W| 0.779");
+        o.d_c = 0.9;
+        assert_eq!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "d_c 0.9 is within");
+        o.d_c = 0.8999;
+        assert_eq!(stage_of(&o, &ignited()), Stage::MainSequence, "d_c 0.8999: settled() alone, which it fails");
+        o.d_c = 0.99994;
+        o.v_r = -0.0501 * o.radius / o.tau_dyn;
+        assert_eq!(stage_of(&o, &ignited()), Stage::MainSequence, "falling at 0.0501 √(GM/R)");
+        o.v_r = 0.05 * o.radius / o.tau_dyn;
+        assert_eq!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "|v_r| = 0.05 √(GM/R) is within");
+        o.v_r = 0.0;
+        o.l_nuc = 0.01 * o.luminosity;
+        assert_ne!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "burning 0.01 L");
+        // The other remnant rows keep settled() alone: the same object shedding 5 % of its mass is no planetary nebula.
+        let mut o = compact_remnant();
+        o.unbound = 0.05 * o.mass;
+        assert_ne!(stage_of(&o, &ignited()), Stage::PlanetaryNebula, "planetary_nebula reads settled() alone");
     }
 
     #[test]
@@ -955,8 +1030,51 @@ mod tests {
         let mut o = cloud();
         with_x(&mut o, X_FE, 0.5);
         assert_eq!(stage_of(&o, &ignited()), Stage::IronCore);
-        o.l_nuc = 1.0;
-        assert_ne!(stage_of(&o, &ignited()), Stage::IronCore, "L_nuc at 0.1 L");
+        // §0.5 [M0-D169]: an iron centre while a fuel still burns at c is not yet an iron core; the star's L_nuc is not read.
+        (o.l_nuc, o.luminosity) = (10.0, 10.0);
+        assert_eq!(stage_of(&o, &ignited()), Stage::IronCore, "the star burning its shells");
+        o.q_c[5] = 1.0;
+        o.x_c[FUEL_SI] = 0.001;
+        assert_eq!(stage_of(&o, &ignited()), Stage::SiBurn, "silicon lit at c, its fuel at 10⁻³");
+        o.x_c[FUEL_SI] = 0.0009;
+        assert_eq!(stage_of(&o, &ignited()), Stage::IronCore, "silicon spent at c");
+        o.x_c[7] = 0.001;
+        assert_ne!(stage_of(&o, &ignited()), Stage::IronCore, "sulphur still burning in the silicon group");
+        o.x_c[7] = 0.0;
+        o.q_c[6] = -5.0;
+        assert_eq!(stage_of(&o, &ignited()), Stage::IronCore, "N_Fe absorbing burns no fuel");
+    }
+
+    #[test]
+    fn the_burning_rows_read_the_centre_under_a_brighter_shell() {
+        // §0.5 [M0-D169]: the Massive's centre burning oxygen (L_O to 5.5 × 10⁴) under a hydrogen shell of 1.2 × 10⁵ (RTX 4090,
+        // reports/heavy_end.md § 1.2) — shown he_shell on the star's L_g, o_burn on what c itself burns.
+        let mut o = cloud();
+        o.l_group = [1.2e5, 2.0e3, 0.0, 0.0, 5.5e4, 1.0e3, 0.0];
+        o.l_nuc = 1.78e5;
+        o.luminosity = 1.8e5;
+        o.q_c = [0.0, 0.0, 0.0, 0.0, 3.0, 0.6, 0.0];
+        o.x_c = [0.0; 10];
+        o.x_c[FUEL_O] = 0.6;
+        o.x_c[FUEL_SI] = 0.3;
+        assert_eq!(stage_of(&o, &ignited()), Stage::OBurn);
+        // Silicon leads at c: si_burn, the shell still the star's largest.
+        o.q_c[5] = 3.5;
+        assert_eq!(stage_of(&o, &ignited()), Stage::SiBurn);
+        // A centre that burns nothing (cold, or under every lit rung): no burning row.
+        o.q_c = [0.0; 7];
+        assert_eq!(stage_of(&o, &ignited()), Stage::HeShell);
+        // Helium leads at c: not a late burning row, whatever the star's oxygen does.
+        o.q_c = [0.0, 5.0, 0.0, 0.0, 2.0, 0.0, 0.0];
+        o.l_group[1] = 3.0e4;
+        o.x_c[X_HE] = 0.2;
+        assert_eq!(stage_of(&o, &ignited()), Stage::HeCore);
+        // The iron centre (X_Fe,c 0.999 from t 250 under dn2) with nothing left to burn at c: iron_core, the shells burning on.
+        o.x_c = [0.0; 10];
+        o.x_c[X_FE] = 0.999;
+        o.x_c[FUEL_SI] = 0.0009;
+        o.q_c = [0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0];
+        assert_eq!(stage_of(&o, &ignited()), Stage::IronCore, "the star's L_nuc is not read");
     }
 
     /// Powers H, He, C, Ne, O, Si, N.

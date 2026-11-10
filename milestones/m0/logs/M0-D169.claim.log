@@ -1,0 +1,41 @@
+exit 1
+NEVER CHECKED  tests/plants/inspect-mix-four.patch  (no entry for ui_inspect)
+NEVER CHECKED  tests/plants/main-sequence-light-window.patch  (no entry for stage_order)
+NEVER CHECKED  tests/plants/neutron-hold-ungated.patch  (no entry for held_core)
+NEVER CHECKED  tests/plants/newton-one-pass.patch  (no entry for heat_stiff)
+NEVER CHECKED  tests/plants/one-object.patch  (no entry for multi)
+NEVER CHECKED  tests/plants/overflow-converged.patch  (no entry for heat_stiff)
+NEVER CHECKED  tests/plants/preset-no-disarm.patch  (no entry for ui_presets)
+NEVER CHECKED  tests/plants/preset-uth-half.patch  (no entry for ui_presets)
+NEVER CHECKED  tests/plants/ratio-unscaled.patch  (no entry for heat_stiff)
+NEVER CHECKED  tests/plants/registry-order-unchecked.patch  (no entry for registry)
+NEVER CHECKED  tests/plants/registry-shares-unchecked.patch  (no entry for registry)
+NEVER CHECKED  tests/plants/remnant-unsettled.patch  (no entry for stage_order)
+NEVER CHECKED  tests/plants/render-reserve-required.patch  (no entry for calibration)
+NEVER CHECKED  tests/plants/scene-refuse.patch  (no entry for scene, boot)
+NEVER CHECKED  tests/plants/scene-unknown-key.patch  (no entry for scene, boot)
+NEVER CHECKED  tests/plants/shift-every-heat-free.patch  (no entry for heat_stiff)
+NEVER CHECKED  tests/plants/stage-steps-back.patch  (no entry for stage_order)
+NEVER CHECKED  tests/plants/stall-constants.patch  (no entry for sun_burn)
+NEVER CHECKED  tests/plants/star-rate-while-paused.patch  (no entry for ui_star)
+NEVER CHECKED  tests/plants/timing-skip-pass.patch  (no entry for timing)
+NEVER CHECKED  tests/plants/twin-skip-floors.patch  (no entry for twin)
+NEVER CHECKED  tests/plants/vcycle-carry-restart.patch  (no entry for heat_stiff)
+NEVER CHECKED  tests/plants/warm-rate-not-dumped.patch  (no entry for dump)
+NEVER CHECKED  tests/smoke.sh  (no entry for boot, desktop)
+NEVER CHECKED  tools/pb/launch.json  (no entry for boot, desktop, web)
+UNCLASSIFIED   g_h8he20_lad.out  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   m_ctl_bounce.out  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   m_h8he20_lad.out  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   m_h8he20_lad_bounce.out  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   s_ctl.out  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   s_h8he20_lad.out  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   screen3.done  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   screen3.status  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   tests/plants/core-power-whole-object.patch  (no scope's `paths` match it and no skip class names it - declare one)
+skipped   415  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+verify: 1628 passed, 40 failed, 0 skipped · 55/72 scopes GO · 0 skipped · 5 owed · 0 NOT RUN · 11 not impacted · 168.98 s + loop 98.80 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.19->1.95 · base: M0-D169's start 2026-11-10T13:41:48-05:00
+=== NO-GO: registry: 2 failed · log milestones/m0/logs/M0-D169.registry.log; stage_order: 2 failed · log milestones/m0/logs/M0-D169.stage_order.log; multi: 2 failed · log milestones/m0/logs/M0-D169.multi.log; sun_burn: 3 failed · log milestones/m0/logs/M0-D169.sun_burn.log; twin: 2 failed · log milestones/m0/logs/M0-D169.twin.log; heat_stiff: 1 failed · log milestones/m0/logs/M0-D169.heat_stiff.log... ===

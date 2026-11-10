@@ -1,0 +1,72 @@
+== 2026-11-10T09:47:46-05:00 state · task M0-D163 · box laserax-ai-server :: bash tests/gpu.sh state physics
+-- state · exit=0 · 4.27 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 12 tests
+test state::a_cell_outside_the_world_is_refused_and_asks_nothing ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test state::a_step_is_p0_to_p9_with_p1s_dt_p8s_floors_and_renormalisation_and_p9s_dt_reduction_its_only_dispatches_today ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test state::an_empty_cell_reads_zero_sigma_and_the_floor_temperature_and_a_cold_cell_the_floor ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test state::inspect_replies_with_the_dumps_cell_sigma_u_t_and_x ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test state::one_step_renormalises_the_species_and_leaves_the_other_channels_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+4096 cells: worst |Σ X − 1| = 1.8719583749771118e-7, worst |X − oracle| = 6.857620882261273e-8 (tolerance 1e-6)
+ok
+test state::round_trip_600x400_is_bit_exact_with_a_distinct_value_per_channel_and_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+round trip 600 × 400: 3360000 values bit-exact
+ok
+test state::several_requests_answer_in_order_each_with_its_own_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test state::the_reply_arrives_within_2_frames_and_poll_never_waits ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+inspect: reply in frame 2
+ok
+test state::the_reply_is_the_cell_as_it_stood_at_the_request_not_at_the_poll ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test state::two_runs_from_the_same_state_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test state::upload_refuses_anything_but_14_planes_of_the_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test state::world_config_takes_multiples_of_8_within_64_to_2048 ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 496 filtered out; finished in 4.09s
+
+
+== 2026-11-10T09:52:29-05:00 state · task M0-D163 · box laserax-ai-server :: bash tests/gpu.sh state physics
+-- state · exit=0 · 5.92 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 12 tests
+test state::a_cell_outside_the_world_is_refused_and_asks_nothing ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test state::a_step_is_p0_to_p9_with_p1s_dt_p8s_floors_and_renormalisation_and_p9s_dt_reduction_its_only_dispatches_today ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test state::an_empty_cell_reads_zero_sigma_and_the_floor_temperature_and_a_cold_cell_the_floor ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test state::inspect_replies_with_the_dumps_cell_sigma_u_t_and_x ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test state::one_step_renormalises_the_species_and_leaves_the_other_channels_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+4096 cells: worst |Σ X − 1| = 1.8719583749771118e-7, worst |X − oracle| = 6.857620882261273e-8 (tolerance 1e-6)
+ok
+test state::round_trip_600x400_is_bit_exact_with_a_distinct_value_per_channel_and_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+round trip 600 × 400: 3360000 values bit-exact
+ok
+test state::several_requests_answer_in_order_each_with_its_own_cell ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test state::the_reply_arrives_within_2_frames_and_poll_never_waits ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+inspect: reply in frame 2
+ok
+test state::the_reply_is_the_cell_as_it_stood_at_the_request_not_at_the_poll ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test state::two_runs_from_the_same_state_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test state::upload_refuses_anything_but_14_planes_of_the_world ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test state::world_config_takes_multiples_of_8_within_64_to_2048 ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 496 filtered out; finished in 5.76s
+
+

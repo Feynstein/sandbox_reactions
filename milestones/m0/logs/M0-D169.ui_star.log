@@ -1,0 +1,152 @@
+== 2026-11-10T14:03:33-05:00 ui_star · task M0-D169 · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::right::star_tests
+-- ui_star · exit=101 · 0.21 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 0.15s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 13 tests
+test ui::right::star_tests::a_close_call_names_both_fates ... ok
+test ui::right::star_tests::each_line_is_byte_exact_in_the_contracts_order ... ok
+test ui::right::star_tests::no_object_reads_star_none_and_several_add_the_hint ... ok
+test ui::right::star_tests::the_ending_replaces_the_fate ... ok
+test ui::right::star_tests::the_rate_is_hidden_while_paused_and_before_it_exists ... ok
+test ui::right::star_tests::a_new_world_starts_with_no_object_and_no_selection ... FAILED
+test ui::right::star_tests::a_click_on_empty_space_keeps_the_selection ... FAILED
+test ui::right::star_tests::every_stage_has_a_label_row ... ok
+test ui::right::star_tests::a_right_click_selects_the_object_under_the_cursor ... FAILED
+test ui::right::star_tests::a_star_that_has_held_a_stage_reads_it_and_ages ... FAILED
+test ui::right::star_tests::the_default_is_the_heaviest_object ... FAILED
+test ui::right::star_tests::the_selection_holds_the_id_when_the_list_reorders ... FAILED
+test ui::right::star_tests::the_supergiant_rows_switch_at_m_up ... FAILED
+
+failures:
+
+---- ui::right::star_tests::a_new_world_starts_with_no_object_and_no_selection stdout ----
+
+thread 'ui::right::star_tests::a_new_world_starts_with_no_object_and_no_selection' (517002) panicked at crates/sr-app/src/ui/right.rs:504:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ui::right::star_tests::a_click_on_empty_space_keeps_the_selection stdout ----
+
+thread 'ui::right::star_tests::a_click_on_empty_space_keeps_the_selection' (517000) panicked at crates/sr-app/src/ui/right.rs:504:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+
+---- ui::right::star_tests::a_right_click_selects_the_object_under_the_cursor stdout ----
+
+thread 'ui::right::star_tests::a_right_click_selects_the_object_under_the_cursor' (517003) panicked at crates/sr-app/src/ui/right.rs:504:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+
+---- ui::right::star_tests::a_star_that_has_held_a_stage_reads_it_and_ages stdout ----
+
+thread 'ui::right::star_tests::a_star_that_has_held_a_stage_reads_it_and_ages' (517004) panicked at crates/sr-app/src/ui/right.rs:504:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+
+---- ui::right::star_tests::the_default_is_the_heaviest_object stdout ----
+
+thread 'ui::right::star_tests::the_default_is_the_heaviest_object' (517008) panicked at crates/sr-app/src/ui/right.rs:504:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+
+---- ui::right::star_tests::the_selection_holds_the_id_when_the_list_reorders stdout ----
+
+thread 'ui::right::star_tests::the_selection_holds_the_id_when_the_list_reorders' (517011) panicked at crates/sr-app/src/ui/right.rs:504:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+
+---- ui::right::star_tests::the_supergiant_rows_switch_at_m_up stdout ----
+
+thread 'ui::right::star_tests::the_supergiant_rows_switch_at_m_up' (517012) panicked at crates/sr-app/src/ui/right.rs:504:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+
+
+failures:
+    ui::right::star_tests::a_click_on_empty_space_keeps_the_selection
+    ui::right::star_tests::a_new_world_starts_with_no_object_and_no_selection
+    ui::right::star_tests::a_right_click_selects_the_object_under_the_cursor
+    ui::right::star_tests::a_star_that_has_held_a_stage_reads_it_and_ages
+    ui::right::star_tests::the_default_is_the_heaviest_object
+    ui::right::star_tests::the_selection_holds_the_id_when_the_list_reorders
+    ui::right::star_tests::the_supergiant_rows_switch_at_m_up
+
+test result: FAILED. 6 passed; 7 failed; 0 ignored; 0 measured; 150 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+
+== 2026-11-10T14:09:04-05:00 ui_star · task M0-D169 · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::right::star_tests
+-- ui_star · exit=101 · 0.21 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 0.13s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 13 tests
+test ui::right::star_tests::a_close_call_names_both_fates ... ok
+test ui::right::star_tests::each_line_is_byte_exact_in_the_contracts_order ... ok
+test ui::right::star_tests::no_object_reads_star_none_and_several_add_the_hint ... ok
+test ui::right::star_tests::a_new_world_starts_with_no_object_and_no_selection ... FAILED
+test ui::right::star_tests::a_click_on_empty_space_keeps_the_selection ... FAILED
+test ui::right::star_tests::a_right_click_selects_the_object_under_the_cursor ... FAILED
+test ui::right::star_tests::the_ending_replaces_the_fate ... ok
+test ui::right::star_tests::every_stage_has_a_label_row ... ok
+test ui::right::star_tests::a_star_that_has_held_a_stage_reads_it_and_ages ... FAILED
+test ui::right::star_tests::the_rate_is_hidden_while_paused_and_before_it_exists ... ok
+test ui::right::star_tests::the_default_is_the_heaviest_object ... FAILED
+test ui::right::star_tests::the_selection_holds_the_id_when_the_list_reorders ... FAILED
+test ui::right::star_tests::the_supergiant_rows_switch_at_m_up ... FAILED
+
+failures:
+
+---- ui::right::star_tests::a_new_world_starts_with_no_object_and_no_selection stdout ----
+
+thread 'ui::right::star_tests::a_new_world_starts_with_no_object_and_no_selection' (529499) panicked at crates/sr-app/src/ui/right.rs:504:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ui::right::star_tests::a_click_on_empty_space_keeps_the_selection stdout ----
+
+thread 'ui::right::star_tests::a_click_on_empty_space_keeps_the_selection' (529497) panicked at crates/sr-app/src/ui/right.rs:504:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+
+---- ui::right::star_tests::a_right_click_selects_the_object_under_the_cursor stdout ----
+
+thread 'ui::right::star_tests::a_right_click_selects_the_object_under_the_cursor' (529500) panicked at crates/sr-app/src/ui/right.rs:504:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+
+---- ui::right::star_tests::a_star_that_has_held_a_stage_reads_it_and_ages stdout ----
+
+thread 'ui::right::star_tests::a_star_that_has_held_a_stage_reads_it_and_ages' (529501) panicked at crates/sr-app/src/ui/right.rs:504:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+
+---- ui::right::star_tests::the_default_is_the_heaviest_object stdout ----
+
+thread 'ui::right::star_tests::the_default_is_the_heaviest_object' (529506) panicked at crates/sr-app/src/ui/right.rs:504:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+
+---- ui::right::star_tests::the_selection_holds_the_id_when_the_list_reorders stdout ----
+
+thread 'ui::right::star_tests::the_selection_holds_the_id_when_the_list_reorders' (529509) panicked at crates/sr-app/src/ui/right.rs:504:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+
+---- ui::right::star_tests::the_supergiant_rows_switch_at_m_up stdout ----
+
+thread 'ui::right::star_tests::the_supergiant_rows_switch_at_m_up' (529510) panicked at crates/sr-app/src/ui/right.rs:504:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+
+
+failures:
+    ui::right::star_tests::a_click_on_empty_space_keeps_the_selection
+    ui::right::star_tests::a_new_world_starts_with_no_object_and_no_selection
+    ui::right::star_tests::a_right_click_selects_the_object_under_the_cursor
+    ui::right::star_tests::a_star_that_has_held_a_stage_reads_it_and_ages
+    ui::right::star_tests::the_default_is_the_heaviest_object
+    ui::right::star_tests::the_selection_holds_the_id_when_the_list_reorders
+    ui::right::star_tests::the_supergiant_rows_switch_at_m_up
+
+test result: FAILED. 6 passed; 7 failed; 0 ignored; 0 measured; 150 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+

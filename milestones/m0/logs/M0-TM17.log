@@ -1,0 +1,200 @@
+# M0-TM17 — the rating pass — raw runs (linux-pc, laserax-ai), 2026-11-10
+# Opened before the first command (AGENTS.md). Each section: the command, then its output.
+
+## rung_record.py now (on the launch prompt, right after the heading's grep)
+model=claude-opus-5-5 level=max plugin=installed
+
+## the probe (PLAYBOOK §B.3)
+CLAUDECODE=1
+CLAUDE_EFFORT=high
+AI_AGENT=claude-code_2-1-319_agent
+
+## plan.py show M0-TM17 (tail)
+baseline: M0-TM17, 869 files, 2026-11-10T11:44:43-05:00
+show: checks=2 failed=0 warnings=0 · header=194 · flow_left_out=410 · block=18 · total=213
+=== GO ===
+
+## plan.py status M0-TM17 "IN PROGRESS"
+status: checks=2 failed=0 warnings=0 · flow=per-task
+=== GO ===
+
+## plan.py lint at the start (after plan.py status)
+lint: checks=852 failed=0 warnings=9 · blocks=406 · flow_rows=406 · verify_fences=0 · history=0 · flow=per-task · header=605/600 · pipeline=9/60 · ladder=6 rungs · refresh=9/5
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T103: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T106: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: a line in 3 blocks (M0-D166 · M0-D167 · M0-D164): '- Rating: (usual) — a D whose cause is not measured (§0's rule (3) list ...' - state it once in Rules and cite it
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-TM17 1 · M0-R15 1 · M0-D167 1
+=== GO ===
+exit=0
+
+## the model pages — the claude-api skill (Claude Code 2.1.319 bundle: /tmp/claude-1000/bundled-skills/2.1.319/24101f80b2d91c1260280bace908124e/claude-api)
+sha256 shared/models.md (raw, CR-stripped):
+34d72be05f1316672368eba38681a4502be83e437eece1eaf852a325c857274c
+34d72be05f1316672368eba38681a4502be83e437eece1eaf852a325c857274c
+M0-TM16's: 34d72be05f1316672368eba38681a4502be83e437eece1eaf852a325c857274c
+rows naming the ladder's models (and Haiku 5.5):
+60:| Claude Fable 5.1    | `claude-fable-5-1`      | -                             | 1M             | 128K       | Active |
+64:| Claude Opus 5.5 | `claude-opus-5-5` | -                             | 1M             | 128K       | Active |
+69:| Claude Sonnet 5.5 | `claude-sonnet-5-5` | -                     | 1M             | 128K       | Active |
+72:| Claude Haiku 5.5 | `claude-haiku-5-5` | -                             | 1M             | 128K       | Active |
+76:- **Claude Fable 5.1** - Anthropic's most capable widely released model, for the most demanding reasoning and long-horizon agentic work. Successor to Claude Fable 5 in the same tier at the same per-token price ($10/$50 per MTok; cache reads $0.25/MTok - 0.025x, a quarter of Claude Fable 5's; batch $5/$25); stronger long-running agentic coding, knowledge work with documents/spreadsheets/slides, multistep research, vision, long-context retrieval, and computer use. Same API surface as Claude Fable 5 (thinking always on, no prefill, no sampling params, `refusal` stop reason, 512-token cache minimum) with three breaking changes: forced tool use (`tool_choice` `any` / `tool`) returns a 400; thinking blocks are bound to the producing model (only Claude Mythos 5.1 can read them - other models drop them); and editing earlier turns invalidates thinking blocks ("preserved thinking"; new accounts created on/after 2026-08-31 get a 400 on edited history on every platform, and enforcement scope is decided per model; the opt-in controls beta is on the Claude API, Claude Platform on AWS, Bedrock, and Vertex - Foundry unconfirmed, `shared/platform-availability.md`). Adds per-message `effort`, turn-scoped `clear_at` system messages, `thinking.display: "updates"` progress updates, and content provenance. Same tokenizer as Claude Fable 5; 1M context (default), 128K max output. Covered Model: 30-day retention required (ZDR only if expressly authorized by Anthropic) - ZDR orgs get `400 invalid_request_error`, as on Claude Fable 5. No Priority Tier; shares the Fable 5.x rate-limit pool. See `shared/model-migration.md` -> Migrating to Claude Fable 5.1 from Claude Fable 5.
+77:- **Claude Fable 5** / **Claude Mythos 5** (`claude-fable-5` / `claude-mythos-5`) - the previous Fable / Mythos release: same tier, limits and per-token pricing as Claude Fable 5.1, which adds three breaking API changes over them (see above; cache reads here are $1/MTok rather than Claude Fable 5.1's $0.25); still served and selectable by id. Claude Mythos 5 ran no safety classifiers, so `stop_reason: "refusal"` does not occur on it. Prefer claude-fable-5-1 for new work.
+78:- **Claude Mythos 5.1** - The same model as Claude Fable 5.1 (same capabilities, limits, per-token pricing, API behavior - except that the API enforces its history-editing check by default whatever the account's age), offered only to approved Project Glasswing customers; successor to Claude Mythos 5 (which itself succeeded the invitation-only `claude-mythos-preview`). Unlike Claude Mythos 5 it runs safeguards that depend on the access program, so handle `stop_reason: "refusal"`. Not offered on Claude Platform on AWS. Use it only when the org participates in Project Glasswing; otherwise use `claude-fable-5-1`.
+79:- **Claude Opus 5.5** - Successor to Claude Opus 5 in the Opus line for long-running agentic coding and knowledge work, at a lower price ($4 / $20 per MTok; cache reads $0.20). Same 1M context, 128K output, tokenizer, and feature set as Claude Opus 5, with four breaking changes: thinking can't be disabled (effort is the only control, default `medium`), forced `tool_choice` 400s, thinking blocks are tied to the model and the conversation, and computer use needs the `computer_toolset_20260801` toolset. Broader safety classifiers (`bio` joins `cyber` and `reasoning_extraction`). The current Opus and the default model; see `shared/model-migration.md` -> Migrating to Claude Opus 5.5.
+80:- **Claude Opus 5** - For complex agentic coding and enterprise work; a step-change over Claude Opus 4.8, strongest on deep reasoning, agentic and long-horizon work, and test-time compute scaling, at half the cost of Claude Fable 5.1 (Claude Fable 5.1 remains the highest-capability tier). Safety classifiers can return `stop_reason: "refusal"` - handle it before reading `content`. A drop-in upgrade at Opus 4.8's pricing ($5/$25 per MTok) with the same feature set. Thinking is on by default (omitting `thinking` runs adaptive; `{type: "adaptive"}` is equivalent), and `thinking: {type: "disabled"}` is available only at effort `high` or lower - pairing it with `xhigh`/`max` returns a 400. Raw thinking tokens are never returned. Full effort ladder through `max`; 512-token prompt-cache minimum (down from 1024 on Opus 4.8); fast mode on the Claude API only. Elevated cybersecurity safeguards. Separate rate-limit bucket from the combined Opus 4.x pool. 1M context window (default and maximum), 128K max output. See `shared/model-migration.md` -> Migrating to Claude Opus 5.
+85:- **Claude Sonnet 5.5** - Successor to Claude Sonnet 5 in the Sonnet line, at the same prices ($2 / $10 per MTok; cache reads $0.20). Same tokenizer as Claude Sonnet 5; 1M context, 128K max output. Adaptive thinking on by default; effort default `high`, with recalibrated levels. Five breaking changes: `thinking: {type: "disabled"}` returns a 400 (send `{type: "between_tools"}` at effort `high` or below to turn thinking off), forced `tool_choice` 400s, thinking blocks are tied to the model and the conversation, computer use on the Claude API and Google Cloud needs the `computer_toolset_20260801` toolset, and the advisor tool rejects Claude Opus 4.8, Claude Opus 4.7, and Claude Sonnet 5 advisors. See `shared/model-migration.md` -> Migrating to Claude Sonnet 5.5.
+87:- **Claude Haiku 5.5** - The current Haiku and the default when the user asks for Haiku: the fast, low-cost model for high-volume, latency-sensitive work such as classification, routing, extraction, and sub-agent tasks. Successor to Claude Haiku 4.5 with a 1M context window and 128K max output, at $0.10 / $0.50 per MTok when the prompt is 100K tokens or fewer and $0.50 / $2.50 above that. Adaptive thinking only, on by default (`{type: "disabled"}` is accepted at effort `high` or below); `effort` from `low` through `max`, default `medium`. Breaking for code written for Claude Haiku 4.5: `budget_tokens`, non-default sampling parameters (on API version `2026-10-21`, any value is rejected), and assistant prefill return a 400, on the Claude API and Google Cloud computer use needs the `computer_toolset_20260801` toolset, and editing earlier turns invalidates replayed thinking blocks (preserved thinking). Thinking text is omitted by default (`display: "summarized"` to see summaries). A newer tokenizer counts the same text as about 30% more tokens. Safety classifiers can return `stop_reason: "refusal"`, and there is no server-side fallback for this model. See `shared/model-migration.md` -> Migrating to Claude Haiku 5.5.
+128:| "fable", "most capable model"             | `claude-fable-5-1`                 |
+129:| "most powerful"                           | `claude-fable-5-1`                 |
+130:| "mythos", "mythos 5.1"                    | `claude-mythos-5-1` (Project Glasswing participants only; otherwise use `claude-fable-5-1`) |
+131:| "fable 5", "mythos 5" (previous version) | `claude-fable-5` / `claude-mythos-5` (still served; prefer `claude-fable-5-1` for new work) |
+133:| "opus"                                    | `claude-opus-5-5`                   |
+135:| "opus 5.5"                                | `claude-opus-5-5` |
+140:| "opus 4.1"                                | Retired - suggest `claude-opus-5-5` |
+141:| "opus 4", "opus 4.0"                      | Retired - suggest `claude-opus-5-5` |
+142:| "sonnet", "balanced"                      | `claude-sonnet-5-5`           |
+144:| "sonnet 5.5"                              | `claude-sonnet-5-5` |
+145:| "cheapest sonnet", "newest sonnet", "latest sonnet" (any attribute phrasing) | `claude-sonnet-5-5` |
+147:| "sonnet 4.5"                              | `claude-sonnet-4-5` (deprecated, retires 2026-11-30 - suggest `claude-sonnet-5-5`) |
+148:| "sonnet 4", "sonnet 4.0"                  | Retired - suggest `claude-sonnet-5-5` |
+149:| "sonnet 3.7"                              | Retired - suggest `claude-sonnet-5-5` |
+150:| "sonnet 3.5"                              | Retired - suggest `claude-sonnet-5-5` |
+151:| "haiku", "fast", "cheap"                  | `claude-haiku-5-5`             |
+152:| "haiku 5.5"                               | `claude-haiku-5-5` |
+153:| "newest haiku", "latest haiku" (any attribute phrasing) | `claude-haiku-5-5` |
+155:| "haiku 3.5"                               | Retired - suggest `claude-haiku-5-5` |
+156:| "haiku 3"                                 | Retired - suggest `claude-haiku-5-5` |
+deprecated/retired rows:
+98:## Deprecated Models (retiring soon)
+100:| Friendly Name     | Alias (use this)    | Full ID                       | Status     | Retires      |
+102:| Claude Sonnet 4.5 | `claude-sonnet-4-5` | `claude-sonnet-4-5-20250929`  | Deprecated | Nov 30, 2026 |
+103:| Claude Mythos Preview | -               | `claude-mythos-preview`       | Deprecated | TBA          |
+105:## Retired Models (no longer available)
+107:| Friendly Name     | Full ID                       | Retired     |
+140:| "opus 4.1"                                | Retired - suggest `claude-opus-5-5` |
+141:| "opus 4", "opus 4.0"                      | Retired - suggest `claude-opus-5-5` |
+147:| "sonnet 4.5"                              | `claude-sonnet-4-5` (deprecated, retires 2026-11-30 - suggest `claude-sonnet-5-5`) |
+148:| "sonnet 4", "sonnet 4.0"                  | Retired - suggest `claude-sonnet-5-5` |
+149:| "sonnet 3.7"                              | Retired - suggest `claude-sonnet-5-5` |
+150:| "sonnet 3.5"                              | Retired - suggest `claude-sonnet-5-5` |
+155:| "haiku 3.5"                               | Retired - suggest `claude-haiku-5-5` |
+156:| "haiku 3"                                 | Retired - suggest `claude-haiku-5-5` |
+2.1.318
+2.1.319
+24101f80b2d91c1260280bace908124e
+741cd537b3f2343c332ed71f96019344
+
+## the contract's FROZEN lines (M0-TM16: 11 lines, md5 1bfe58e3f7e6a59a7316075c3318bbb0)
+HEAD: lines=11 md5=1bfe58e3f7e6a59a7316075c3318bbb0
+tree: lines=11 md5=1bfe58e3f7e6a59a7316075c3318bbb0
+d412c91 md5 (no line numbers): 1bfe58e3f7e6a59a7316075c3318bbb0
+tree md5 (no line numbers): 1bfe58e3f7e6a59a7316075c3318bbb0
+ 1 file changed, 63 insertions(+), 4 deletions(-)
+
+## scan.py over the open blocks (rule (1)'s trail, Sizing:, switch, Rating: lines)
+trail-scan M0-TZ: …became \r\r\n on Windows) and probe whether the file system keeps the trailing-space name 'trail ' (Win32 strips it), dropping it from wfiles/ign…
+trail-scan M0-TZ: …ows) and probe whether the file system keeps the trailing-space name 'trail ' (Win32 strips it), dropping it from wfiles/ignored_by_rule when not…
+trail-scan hits=2
+Sizing: [('M0-T111', '- Sizing: E')]
+switch: 30 of 30
+Rating-line M0-D166: - Rating: (usual) — a D whose cause is not measured (§0's rule (3) list → rule (5))
+Rating-line M0-D167: - Rating: (usual) — a D whose cause is not measured (§0's rule (3) list → rule (5))
+Rating-line M0-D164: - Rating: (usual) — a D whose cause is not measured (§0's rule (3) list → rule (5))
+Rating-line M0-T124: - Rating: (usual) — rule (3): a design the spec leaves open (which lever, an algorithm with no reference) and numeric
+
+## the edits — the Models: line re-dated (file-edit tool, 1 token: 2026-11-08 -> 2026-11-10), then the register
+register: checks=1 failed=0 warnings=0 · set=1 · replaced=1 · appended=0
+=== GO ===
+exit=0
+600:- Model ratings: 2026-11-10 by M0-TM17
+
+## plan.py lint after the edits
+lint: checks=852 failed=0 warnings=9 · blocks=406 · flow_rows=406 · verify_fences=0 · history=0 · flow=per-task · header=605/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+exit=0
+
+## checkdiff.py — red test on a mutant (T103's rating changed, T104's ' · switch' dropped, T105's Read: edited) against the edited plan
+rating:   M0-T103: Sonnet 5.5, high -> Opus 5.5, high
+OTHER (heading) - ## M0-T104 · Each ending as predicted (G-END) · **BUILD** · Sonnet 5.5, high · switch · (AFTER M0-T103)
+OTHER (heading) + ## M0-T104 · Each ending as predicted (G-END) · **BUILD** · Sonnet 5.5, high · (AFTER M0-T103)
+OTHER - - Read: this file (rules + this task) + milestones/m0/m0_contrat.md §1.12, §2.12.5, §5.2 (G-TOUCH), §5.5 +
+OTHER + - Read: MUTATED this file (rules + this task) + milestones/m0/m0_contrat.md §1.12, §2.12.5, §5.2 (G-TOUCH), §5.5 +
+checkdiff: models=0 · register=0 · rating=1 · own=0 · other=2
+=== NO-GO: bytes changed outside rating segments, the Models: line, the register's line and own lines ===
+exit=1
+
+## checkdiff.py — the edited plan against the post-status snapshot
+models:   Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonnet 5.5, hi …
+register: - Model ratings: 2026-11-10 by M0-TM17
+checkdiff: models=1 · register=1 · rating=0 · own=0 · other=0
+=== GO ===
+exit=0
+
+## verify.py touched --task M0-TM17 (what this task changed since its start)
+touched: 0 task(s) · 0 path(s) · 352 claim record(s) naming their files · 71 without (before the field) · 0 foreign
+=== NO-GO: no claim record of M0-TM17 names its files ===
+exit=1
+
+## Verify 1 — python3 tools/pb/verify.py plan_lint --task M0-TM17 (linux-pc)
+plan_lint  852/0/0      0.07 s  GO
+logs: milestones/m0/logs/M0-TM17.<scope>.log · record: loop_times.jsonl · tree 1ad93970be06+d293a38d04ec
+anchor: 1 path×scope entries moved by this run
+anchor: 312 paths checked · 419 skipped (3 classes) · 1 never checked · 129 stale · 8 unclassified · 0 owed · 442 covered of 869 visible
+verify: 852 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.07 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 3.37->3.9
+=== GO ===
+exit=0
+
+## the anchor read (data only): stale entries by scope — sha1(content)[:16] against each entry's sha1
+paths in anchor=442 · missing on disk=1 · stale paths=62 · stale path×scope=953
+stale scopes: {'heat_rkl2': 51, 'calibrate_order': 16, 'capture': 16, 'desktop': 16, 'measure_ui': 16, 'ui_presets': 16, 'web': 16, 'calibrate_bisect': 15, 'calibrate_cold': 15, 'calibration': 15, 'cold_core': 15, 'held_core': 15, 'multi': 15, 'readouts': 15, 'stage_order': 15, 'ui_inspect': 15, 'boot': 14, 'burn_cell': 14, 'burn_order': 14, 'neutrino': 14, 'preset_cloud': 14, 'box': 13, 'collapse': 13, 'cpu_gpu': 13, 'dt': 13, 'dump': 13, 'edges': 13, 'edits': 13, 'edits_file': 13, 'extents': 13, 'floors': 13, 'frames': 13, 'glow': 13, 'grav_force': 13, 'grav_selfforce': 13, 'heat_gauss': 13, 'heat_implicit': 13, 'heat_limiter': 13, 'heat_multigrid': 13, 'heat_stiff': 13, 'jeans': 13, 'latch': 13, 'ledger': 13, 'nu_heat': 13, 'observe_run': 13, 'radiation_force': 13, 'scene': 13, 'sink': 13, 'sod': 13, 'state': 13, 'summary': 13, 'timing': 13, 'twin': 13, 'views': 13, 'build': 13, 'ui_banner': 13, 'ui_display': 13, 'ui_legend': 13, 'ui_remnant': 13, 'ui_tools': 13, 'ui_zoom': 13, 'fft': 12, 'adapter': 9, 'booking': 9, 'ui_star': 6, 'age_clock': 4, 'classify': 4, 'ending': 4, 'eos': 4, 'objects': 4, 'ui_topbar': 4, 'ui_world': 4, 'rates': 3, 'sheet': 3, 'sun_burn': 3, 'watch_only': 3, 'ui_theme': 1, 'calibrate_status': 1, 'fft_twin': 1, 'riemann': 1, 'strings': 1}
+stale entries' boxes: {'laserax-ai': 630, 'laserax-ai-server': 323}
+stale entries' tasks (last GO): {'M0-R13': 279, 'M0-V14-r2': 179, 'M0-T99a': 134, 'M0-D162': 92, 'M0-V14-lpc': 45, 'M0-T42': 29, 'M0-D161': 19, 'M0-D103': 19}
+stale paths by folder: {'crates/sr-engine': 42, 'crates/sr-physics': 11, 'tests/plants': 3, 'assets/reactions.json': 1, 'assets/physics.json': 1, 'assets/calibration.json': 1, 'Cargo.lock': 1, 'crates/sr-app': 1, 'milestones/m0': 1}
+
+## the anchors (read-only): linux-pc vs laserax-ai-server, entries by task for M0-D16x
+[local]
+bytes=1643862 paths=442 entries=8955
+{'M0-D163@laserax-ai': 49, 'M0-D165@laserax-ai': 38, 'M0-TM17@laserax-ai': 1}
+[server]
+bytes=1262308 paths=404 entries=6886
+{'M0-D163@laserax-ai': 34, 'M0-D165@laserax-ai': 38, 'M0-D165@laserax-ai-server': 744}
+
+## the two 2.1.319 bundle folders (M0-TM16 read 741cd537…, this task 24101f80…)
+741cd537b3f2343c332ed71f96019344: SKILL.md absent · shared/models.md 34d72be05f131667 · files 111
+24101f80b2d91c1260280bace908124e: SKILL.md absent · shared/models.md 34d72be05f131667 · files 111
+diff -rq: identical
+
+## plan.py close M0-TM17 --status DONE
+close: checks=3 failed=0 warnings=0 · handoff_lines=1 · flow=per-task
+=== GO ===
+exit=0
+1:- Status: DONE (2026-11-10 11:56, started 11:45)
+412:| M0-TM17 | PLAN | Rating pass - 7 carried flags | AFTER M0-D165 | DONE (2026-11-10 11:56, started 11:45) |
+
+## after the close — checkdiff.py (post-status snapshot -> the plan, --own M0-TM17)
+models:   Models: Claude Code — Fable 5.1, high · Opus 5.5, max (gate) · Opus 5.5, xhigh · Opus 5.5, high (usual) · Sonnet 5.5, hi …
+own:      Flow row | M0-TM17 | PLAN | Rating pass - 7 carried flags | AFTER M0-D165 | DONE (2026-11-10 11:56, started 11:45) |
+register: - Model ratings: 2026-11-10 by M0-TM17
+own:      M0-TM17 - Status: DONE (2026-11-10 11:56, started 11:45) …
+own:      M0-TM17 - Handoff: linux-pc (laserax-ai); model=claude-opus-5-5 level=max (rung_record now; the he …
+checkdiff: models=1 · register=1 · rating=0 · own=3 · other=0
+=== GO ===
+exit=0
+
+## after the close — plan.py lint
+lint: checks=851 failed=0 warnings=9 · blocks=406 · flow_rows=406 · verify_fences=0 · history=0 · flow=per-task · header=605/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+exit=0
+
+## after the close — python3 tools/pb/verify.py plan_lint --task M0-TM17-close (R9 step 7, scoped)
+plan_lint  851/0/0      0.22 s  GO
+logs: milestones/m0/logs/M0-TM17-close.<scope>.log · record: loop_times.jsonl · tree 1ad93970be06+26857fc48191
+anchor: 1 path×scope entries moved by this run
+anchor: 312 paths checked · 420 skipped (3 classes) · 1 never checked · 129 stale · 8 unclassified · 0 owed · 442 covered of 870 visible
+verify: 851 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.22 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 5.32->5.32
+=== GO ===
+exit=0

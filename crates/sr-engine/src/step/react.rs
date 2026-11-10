@@ -96,7 +96,8 @@ fn params_words(physics: &Physics, reactions: &Reactions, test: TestSettings, ne
     let f = |v: f64| (v as f32).to_bits();
     let flags = u32::from(test.pin_temperature) * PIN_TEMPERATURE + u32::from(neutrinos) * NEUTRINOS;
     let mut words = vec![recs.len() as u32, flags, get("burn_dx").to_bits(), get("burn_dt").to_bits()];
-    words.extend([f(1.0 / Omega::step()), f((TABLE_POINTS - 1) as f64), 0, 0]);
+    // inv_step, last_node, `zero` (0, opaque to the compiler) and §2.5.2 [M0-D165]'s K_burn.
+    words.extend([f(1.0 / Omega::step()), f((TABLE_POINTS - 1) as f64), 0, get("burn_k").to_bits()]);
     words.extend([get("a_nu").to_bits(), get("t_nu").to_bits(), get("m_nu").to_bits(), 0]);
     assert_eq!(words.len(), HEADER_WORDS);
     let mut tables = vec![0u32; MAX_RECORDS * TABLE_POINTS];

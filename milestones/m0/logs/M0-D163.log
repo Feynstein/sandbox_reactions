@@ -697,3 +697,151 @@ L_cs4_w1_sun last: step 44138 t 500.000 main_sequence R 14.8 M 3099
 [glow] verify: 7 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.12 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.8->0.8 === GO === 
 [nu_heat] verify: 15 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 2.62 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.8->0.82 === GO === 
 ## 2026-11-09T13:57:24-05:00 recalibration restarted from item 2 on c_sb 800 / a_r 1e-5 (server tmux d163cal, log milestones/m0/logs/M0-D163.recal.log appended)
+=== session 2 2026-11-10T08:41:35-05:00 linux-pc: read the recalibration's end ===
+-rw-rw-r-- 1 ybelanger ybelanger 0 Nov  9 16:27 build/m0-d163/recal.done
+=== M0-D163 recalibration start on laserax-ai-server (START=2) · 2026-11-09T10:35:00-0500
+=== 2 calibrate items 1-2 (CPU) · 2026-11-09T10:35:05-0500
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+=== 3 calibrate m_ign_sb · 2026-11-09T10:35:05-0500
+SR-CALIBRATE item=m_ign_sb value=2486.473 bracket=2471.967..2501.064 runs=10 wall_s=81.3
+SR-CALIBRATE item=max_gas_speed value=21.3000
+=== 4 calibrate m_up_sb · 2026-11-09T10:36:26-0500
+SR-CALIBRATE item=m_up_sb value=6448.699 bracket=6415.545..6482.024 runs=10 wall_s=3132.0
+SR-CALIBRATE item=max_gas_speed value=62.6654
+=== 5 calibrate m_bh_sb · 2026-11-09T11:28:38-0500
+SR-ERROR calibration failed: m_bh_sb: the run at mass 8060.873 is on neither side of the threshold (mass=8060.873 ignited=true core_collapse=true ending=white_dwarf steps=42610 sim_time=425.529 wall_s=258.4) — reported, not guessed
+=== calibration STOPPED (exit 6) · 2026-11-09T11:32:57-0500
+=== RESTART for c_sb 800 / a_r 1e-5 · 2026-11-09T13:57:24-05:00
+=== M0-D163 recalibration start on laserax-ai-server (START=2) · 2026-11-09T13:57:24-0500
+=== 2 calibrate items 1-2 (CPU) · 2026-11-09T13:57:29-0500
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+=== 3 calibrate m_ign_sb · 2026-11-09T13:57:29-0500
+SR-CALIBRATE item=m_ign_sb value=2636.298 bracket=2620.918..2651.769 runs=10 wall_s=94.8
+SR-CALIBRATE item=max_gas_speed value=21.0294
+=== 4 calibrate m_up_sb · 2026-11-09T13:59:04-0500
+SR-CALIBRATE item=m_up_sb value=4449.363 bracket=4426.488..4472.356 runs=10 wall_s=2979.8
+SR-CALIBRATE item=max_gas_speed value=65.4226
+=== 5 calibrate m_bh_sb · 2026-11-09T14:48:44-0500
+SR-CALIBRATE item=m_bh_sb value=22338.196 bracket=22122.054..22556.450 runs=9 wall_s=4180.7
+SR-CALIBRATE item=max_gas_speed value=208.7006
+=== 6 calibrate the presets · 2026-11-09T15:58:25-0500
+SR-CALIBRATE item=presets preset_mass_sb=3136.7/10836.6/43461.0 t_eff_sun_sb=11.63563 life_sun_sb=1872.557 top_rung=190 stages=8 wall_s=1721.2
+SR-CALIBRATE item=max_gas_speed value=208.7006
+=== 7 rebuild (embeds the calibration) · 2026-11-09T16:27:06-0500
+=== M0-D163 recalibration end · 2026-11-09T16:27:12-0500
+d163cal: 1 windows (created Mon Nov  9 13:57:24 2026)
+v14: 1 windows (created Fri Nov  6 16:24:56 2026)
+v14b: 1 windows (created Sun Nov  8 09:44:31 2026)
+v14g: 1 windows (created Sun Nov  8 18:11:23 2026)
+v14s2: 1 windows (created Fri Nov  6 16:26:31 2026)
+=== 2026-11-10T08:42:43-05:00 linux-pc: cargo build --release --locked (embeds a6c041b1 calibration)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 4.60s
+anchor: 10 path×scope entries moved by this run
+anchor: 283 paths checked · 418 skipped (3 classes) · 154 never checked · 4 stale · 0 unclassified · 0 owed · 441 covered of 859 visible
+verify: 16 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 17.50 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.69->0.92
+=== GO ===
+FAILED:
+  calibration: 1 failed · log milestones/m0/logs/M0-D163.calibration.log
+verify: 12 passed, 1 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.17 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.92->0.92
+=== NO-GO: calibration: 1 failed · log milestones/m0/logs/M0-D163.calibration.log ===
+verify: 13 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 12.29 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 1.32->1.5
+=== GO ===
+-- sun_burn
+anchor: 425 paths checked · 418 skipped (3 classes) · 0 never checked · 16 stale · 0 unclassified · 0 owed · 441 covered of 859 visible
+verify: 4 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 93.43 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 1.57->2.47
+=== GO ===
+-- preset_cloud
+anchor: 425 paths checked · 418 skipped (3 classes) · 0 never checked · 16 stale · 0 unclassified · 0 owed · 441 covered of 859 visible
+verify: 5 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 48.42 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 2.47->2.76
+=== GO ===
+-- burn_cell
+anchor: 425 paths checked · 418 skipped (3 classes) · 0 never checked · 16 stale · 0 unclassified · 0 owed · 441 covered of 859 visible
+verify: 18 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 3.57 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 2.76->2.62
+=== GO ===
+-- burn_order
+anchor: 425 paths checked · 418 skipped (3 classes) · 0 never checked · 16 stale · 0 unclassified · 0 owed · 441 covered of 859 visible
+verify: 4 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.87 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 2.62->2.62
+=== GO ===
+massive          steps  16161 t   160.35 wall  222.6 | protostar@33(0.29) main_sequence@913(5.29) he_core@15873(157.41) main_sequence@16001(158.70) he_core@16081(159.50) iron_core@16161(160.35) | ev: ignition@881(5.10)
+=== 2026-11-10T08:47:13-05:00 linux-pc: --redarm registry
+redarm: refused - nothing run
+=== NO-GO: NOT RUN (M0-D163.registry.redarm.log: git already tracks it - another task's evidence is never appended to; pass --task <YOUR-TASK-ID>) ===
+sun              steps  44063 t   500.01 wall  380.2 | collapsing@65(1.54) main_sequence@705(9.24) | ev: ignition@673(8.85)
+{"detail":{"by":"light","mass_sb":3130.853655320592},"kind":"ignition","object":1,"sim_time":8.845200950279832,"step":673}
+registry · plant registry-shares-unchecked · RED (proven: 2 failed) · arm 3/3, 0 left
+redarm: 2 plants · 2 red · 0 green · 0 errors · scope registry · 10.27 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-D163.registry.redarm.log
+=== GO ===
+m24910  t    93.6 ending black_hole   final 13537.5 sb | pred ['supernova'] | escaped 11373 | ev {'ignition': (1041, 5.1), 'core_collapse': (8513, 78.8), 'supernova': (8529, 78.9), 'sink_formed': (8545, 78.9), 'ending': (12913, 93.6)} | stages protostar main_sequence iron_core core_collapse supernova black_hole
+m43461  t    28.9 ending black_hole   final 36346.4 sb | pred ['black_hole'] | escaped 7115 | ev {'ignition': (1329, 6.1), 'core_collapse': (2737, 16.9), 'sink_formed': (2753, 16.9), 'ending': (7457, 28.9)} | stages protostar main_sequence iron_core core_collapse black_hole
+m43461 exit=4 SR-ERROR bad scene: scene "map_43461.json": map_43461.json: No such file or directory (os error 2)
+m24910 exit=0 SR-HEADLESS DONE steps=12913 sim_time=93.585209 until=met
+m43461 exit=0 SR-HEADLESS DONE steps=7457 sim_time=28.888349 until=met
+step 1300   t 5.90    shown protostar     raw cloud         | X_H,c 0.731 He 0.253 C 0.0092 O 0.0077 Ne 3.49e-11 Si 6.61e-18 Fe 0 | T_c 59.69 d_c 0.133 | L 8.325e+04 L_nuc 4.064e+04 | M 43143
+step 1400   t 6.52    shown main_sequence raw main_sequence | X_H,c 0.73 He 0.253 C 0.0092 O 0.0077 Ne 3.49e-11 Si 6.61e-18 Fe 0 | T_c 60.94 d_c 0.137 | L 8.082e+04 L_nuc 4.47e+04 | M 43050
+step 1500   t 7.20    shown main_sequence raw main_sequence | X_H,c 0.73 He 0.253 C 0.0092 O 0.0077 Ne 3.49e-11 Si 6.61e-18 Fe 0 | T_c 63.44 d_c 0.141 | L 8.269e+04 L_nuc 5.379e+04 | M 42941
+step 1600   t 7.93    shown main_sequence raw main_sequence | X_H,c 0.73 He 0.254 C 0.0092 O 0.0077 Ne 3.49e-11 Si 6.61e-18 Fe 0 | T_c 67.77 d_c 0.146 | L 9.158e+04 L_nuc 7.277e+04 | M 42818
+step 1700   t 8.72    shown main_sequence raw main_sequence | X_H,c 0.729 He 0.254 C 0.0092 O 0.0077 Ne 3.5e-11 Si 6.61e-18 Fe 0 | T_c 74.83 d_c 0.151 | L 1.149e+05 L_nuc 1.14e+05 | M 42682
+step 1800   t 9.57    shown main_sequence raw main_sequence | X_H,c 0.727 He 0.256 C 0.0092 O 0.0077 Ne 4.52e-11 Si 7.62e-18 Fe 0 | T_c 85.94 d_c 0.156 | L 1.761e+05 L_nuc 2.141e+05 | M 42536
+step 1900   t 10.45   shown main_sequence raw main_sequence | X_H,c 0.721 He 0.262 C 0.00927 O 0.0077 Ne 5.49e-09 Si 2.61e-15 Fe 0 | T_c 106.7 d_c 0.15 | L 3.532e+05 L_nuc 6.672e+05 | M 42381
+step 2000   t 11.23   shown iron_core     raw iron_core     | X_H,c 1.15e-06 He 3.76e-08 C 1.54e-16 O 2.51e-06 Ne 4.21e-18 Si 2.32e-07 Fe 1 | T_c 67.72 d_c 0.203 | L 5.066e+05 L_nuc 10.23 | M 42159
+step 2100   t 12.11   shown iron_core     raw iron_core     | X_H,c 1.67e-06 He 5.34e-08 C 2.71e-13 O 1.23e-06 Ne 1.77e-18 Si 1e-07 Fe 1 | T_c 50.01 d_c 0.257 | L 1.35e+05 L_nuc 0.005392 | M 41827
+step 2200   t 13.06   shown iron_core     raw iron_core     | X_H,c 7.87e-05 He 3.11e-06 C 3.92e-10 O 0.000197 Ne 5.05e-15 Si 2.22e-05 Fe 1 | T_c 51.12 d_c 0.322 | L 7.703e+04 L_nuc 0.003841 | M 41427
+giant            steps  15696 t    48.38 wall 3067.1 | protostar@33(0.22) main_sequence@1364(6.29) iron_core@1980(11.06) core_collapse@2780(17.16) black_hole@2816(17.32) | ev: ignition@1332(6.09) core_collapse@2780(17.16) sink_formed@2796(17.23) ending@15696(48.38)
+2.5G	giant/dumps
+157
+nec nearest at 1e-2: 0.5 step 900 t 3.89 | under 16 cells: steps 600 .. 15696 ( 152 dumps) densest band 0.07751103490591049
+suf nearest at 1e-2: 0.5 step 900 t 3.89 | under 16 cells: steps 600 .. 15696 ( 152 dumps) densest band 0.07751103490591049
+on the edge from 900 3.89 to 15696 48.38 148
+m43461 exit=4 SR-ERROR bad scene: scene "map_43461.json": map_43461.json: No such file or directory (os error 2)
+m24910 exit=0 SR-HEADLESS DONE steps=12913 sim_time=93.585209 until=met
+m43461 exit=0 SR-HEADLESS DONE steps=7457 sim_time=28.888349 until=met
+m28918 exit=0 SR-HEADLESS DONE steps=8737 sim_time=31.035479 until=met
+m35973 exit=124 
+m33097 exit=124 
+SR-HEADLESS DONE steps=16160 sim_time=160.334213 until=met
+exit=0
+m24910  t    93.6 ending black_hole   final 13537.5 sb | pred ['supernova'] | escaped 11373 | ev {'ignition': (1041, 5.1), 'core_collapse': (8513, 78.8), 'supernova': (8529, 78.9), 'sink_formed': (8545, 78.9), 'ending': (12913, 93.6)} | stages protostar main_sequence iron_core core_collapse supernova black_hole
+m28918  t    31.0 ending black_hole   final 19320.1 sb | pred ['supernova'] | escaped 8293 | ev {'ignition': (1089, 5.1), 'core_collapse': (2657, 15.9), 'supernova': (2673, 15.9), 'sink_formed': (2689, 15.9), 'ending': (8737, 31.0)} | stages protostar main_sequence iron_core core_collapse supernova black_hole
+m33097 no summary
+m35973 no summary
+m43461  t    28.9 ending black_hole   final 36346.4 sb | pred ['black_hole'] | escaped 7115 | ev {'ignition': (1329, 6.1), 'core_collapse': (2737, 16.9), 'sink_formed': (2753, 16.9), 'ending': (7457, 28.9)} | stages protostar main_sequence iron_core core_collapse black_hole
+
+[exited with code 0]
+step 1000   t 5.81    shown main_sequence raw main_sequence | X_H,c 0.733 He 0.25 C 0.0092 O 0.0077 Ne 6.04e-17 Si 0 Fe 0 | T_c 59.05 d_c 0.265 | L 3.15e+04 L_nuc 1.638e+04 | M 10815
+step 2000   t 12.65   shown main_sequence raw main_sequence | X_H,c 0.724 He 0.26 C 0.0092 O 0.0077 Ne 7.48e-15 Si 0 Fe 0 | T_c 64.02 d_c 0.338 | L 4.731e+04 L_nuc 3.486e+04 | M 10733
+step 3000   t 22.80   shown main_sequence raw main_sequence | X_H,c 0.695 He 0.288 C 0.0092 O 0.0077 Ne 1.18e-12 Si 0 Fe 0 | T_c 71.32 d_c 0.339 | L 6.364e+04 L_nuc 5.958e+04 | M 10476
+step 4000   t 33.51   shown main_sequence raw main_sequence | X_H,c 0.662 He 0.321 C 0.0092 O 0.0077 Ne 5.44e-12 Si 0 Fe 0 | T_c 72.75 d_c 0.344 | L 6.192e+04 L_nuc 6.218e+04 | M 10222
+step 5000   t 44.21   shown main_sequence raw main_sequence | X_H,c 0.627 He 0.356 C 0.0092 O 0.0077 Ne 1.41e-11 Si 0 Fe 0 | T_c 73.89 d_c 0.352 | L 6.307e+04 L_nuc 6.352e+04 | M 10060
+step 6000   t 54.90   shown main_sequence raw main_sequence | X_H,c 0.591 He 0.392 C 0.0092 O 0.0077 Ne 3.03e-11 Si 0 Fe 0 | T_c 75.16 d_c 0.362 | L 6.406e+04 L_nuc 6.498e+04 | M 9943
+step 7000   t 65.57   shown main_sequence raw main_sequence | X_H,c 0.555 He 0.428 C 0.0092 O 0.0077 Ne 6.18e-11 Si 0 Fe 0 | T_c 76.48 d_c 0.373 | L 6.477e+04 L_nuc 6.619e+04 | M 9945
+step 8000   t 76.21   shown main_sequence raw main_sequence | X_H,c 0.517 He 0.466 C 0.0092 O 0.0077 Ne 1.25e-10 Si 0 Fe 0 | T_c 77.9 d_c 0.385 | L 6.535e+04 L_nuc 6.726e+04 | M 9876
+step 9000   t 86.81   shown main_sequence raw main_sequence | X_H,c 0.479 He 0.504 C 0.0092 O 0.0077 Ne 2.57e-10 Si 0 Fe 0 | T_c 79.45 d_c 0.4 | L 6.581e+04 L_nuc 6.82e+04 | M 9778
+step 10000  t 97.36   shown main_sequence raw main_sequence | X_H,c 0.44 He 0.543 C 0.00922 O 0.0077 Ne 5.49e-10 Si 0 Fe 0 | T_c 81.17 d_c 0.415 | L 6.611e+04 L_nuc 6.9e+04 | M 9647
+step 11000  t 107.83  shown main_sequence raw main_sequence | X_H,c 0.4 He 0.583 C 0.00927 O 0.0077 Ne 1.24e-09 Si 0 Fe 0 | T_c 83.08 d_c 0.432 | L 6.62e+04 L_nuc 6.968e+04 | M 9479
+step 12000  t 118.22  shown main_sequence raw main_sequence | X_H,c 0.359 He 0.624 C 0.0095 O 0.0077 Ne 3.03e-09 Si 1.71e-16 Fe 0 | T_c 85.28 d_c 0.451 | L 6.609e+04 L_nuc 7.02e+04 | M 9278
+step 13000  t 128.50  shown main_sequence raw main_sequence | X_H,c 0.317 He 0.664 C 0.0107 O 0.0077 Ne 8.98e-09 Si 1.21e-15 Fe 0 | T_c 87.88 d_c 0.47 | L 6.579e+04 L_nuc 7.056e+04 | M 9043
+step 14000  t 138.66  shown main_sequence raw main_sequence | X_H,c 0.275 He 0.699 C 0.0182 O 0.00772 Ne 4.8e-08 Si 5.2e-15 Fe 0 | T_c 91.02 d_c 0.489 | L 6.54e+04 L_nuc 7.09e+04 | M 8768
+step 15000  t 148.68  shown main_sequence raw main_sequence | X_H,c 0.23 He 0.682 C 0.0798 O 0.00806 Ne 2.22e-06 Si 2.83e-14 Fe 0 | T_c 95.8 d_c 0.505 | L 6.469e+04 L_nuc 7.16e+04 | M 8452
+step 16000  t 158.69  shown main_sequence raw main_sequence | X_H,c 0.177 He 0.354 C 0.437 O 0.0312 Ne 0.000783 Si 2.31e-12 Fe 0 | T_c 102.6 d_c 0.524 | L 6.271e+04 L_nuc 6.835e+04 | M 8086
+step 16160  t 160.33  shown iron_core     raw iron_core     | X_H,c 6.74e-09 He 4.95e-11 C 4.86e-20 O 1.27e-10 Ne 0 Si 1.06e-17 Fe 1 | T_c 57.02 d_c 0.548 | L 1.129e+05 L_nuc 9.982 | M 8018
+=== 2026-11-10T09:51:13-05:00 linux-pc: ui_star after the f32 fixture fix, then --redarm ui_star
+verify: 13 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.62 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 4.94->4.79
+=== GO ===
+ui_star · clean · GO · arm 1/2, 1 left
+ui_star · plant star-rate-while-paused · RED (proven: 1 failed) · arm 2/2, 0 left
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope ui_star · 12.48 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D163.ui_star.redarm.log
+=== GO ===
+FLAG oracle: tests/plants/preset-uth-half.patch changed since M0-D163's start - a test, case or check M0-D163's Deliver: does not name
+FLAG oracle: tests/plants/stall-constants.patch changed since M0-D163's start - a test, case or check M0-D163's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-D163's start - a test, case or check M0-D163's Deliver: does not name
+logs: milestones/m0/logs/M0-D163.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+8e2625d50682
+anchor: 645 path×scope entries moved by this run
+anchor: 428 paths checked · 418 skipped (3 classes) · 0 never checked · 0 stale · 0 unclassified · 13 owed · 441 covered of 859 visible
+verify: 1645 passed, 0 failed, 0 skipped · 74/74 scopes GO · 0 skipped · 5 owed · 0 NOT RUN · 9 not impacted · 222.50 s + loop 0.24 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.64->1.81 · base: M0-D163's start 2026-11-09T09:03:24-05:00
+=== GO ===

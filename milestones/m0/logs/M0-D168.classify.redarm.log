@@ -1,0 +1,2797 @@
+==== 2026-11-10T13:30:50-05:00 classify · clean · a fresh scratch copy of the tree
+== 2026-11-10T13:30:50-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=0 · 2.32 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5uaae356/arm0/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.25s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+
+test result: ok. 56 passed; 0 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+
+==== 2026-11-10T13:30:52-05:00 classify · plant classify-order · a fresh scratch copy of the tree
+planted classify-order: tests/plants/classify-order.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:30:53-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.32 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5uaae356/arm1/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.26s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... FAILED
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... FAILED
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts stdout ----
+
+thread 'observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts' (3824719) panicked at crates/sr-physics/src/observe/stages.rs:1202:9:
+assertion failed: pos(Stage::Collapsing) < pos(Stage::Protostar)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::the_rows_are_in_the_contracts_order stdout ----
+
+thread 'observe::stages::tests::the_rows_are_in_the_contracts_order' (3824747) panicked at crates/sr-physics/src/observe/stages.rs:567:9:
+assertion `left == right` failed
+  left: ["black_hole", "supernova", "neutron_star", "core_collapse", "white_dwarf", "failed_star", "planetary_nebula", "iron_core", "si_burn", "o_burn", "ne_burn", "c_burn", "he_core", "he_shell", "h_shell", "main_sequence", "protostar", "collapsing", "cloud"]
+ right: ["black_hole", "supernova", "neutron_star", "core_collapse", "white_dwarf", "failed_star", "planetary_nebula", "iron_core", "si_burn", "o_burn", "ne_burn", "c_burn", "he_core", "he_shell", "h_shell", "main_sequence", "collapsing", "protostar", "cloud"]
+
+
+failures:
+    observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts
+    observe::stages::tests::the_rows_are_in_the_contracts_order
+
+test result: FAILED. 54 passed; 2 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:30:55-05:00 classify · plant ignite-on-a-flash · a fresh scratch copy of the tree
+planted ignite-on-a-flash: tests/plants/ignite-on-a-flash.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:30:56-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.32 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5uaae356/arm2/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.25s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... FAILED
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... FAILED
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... FAILED
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... FAILED
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... FAILED
+
+failures:
+
+---- observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite stdout ----
+
+thread 'observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite' (3824913) panicked at crates/sr-physics/src/observe/stages.rs:1457:9:
+assertion failed: !t.stage(1).unwrap().history.ignited
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite stdout ----
+
+thread 'observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite' (3824914) panicked at crates/sr-physics/src/observe/stages.rs:1149:9:
+no ignition event
+
+---- observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star stdout ----
+
+thread 'observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star' (3824915) panicked at crates/sr-physics/src/observe/stages.rs:1399:9:
+L_H > 2 L: no ignition by the light
+
+---- observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite stdout ----
+
+thread 'observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite' (3824932) panicked at crates/sr-physics/src/observe/stages.rs:1441:9:
+assertion failed: t.update(&[flashing(0.0009)], 1.0).is_empty()
+
+---- observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it stdout ----
+
+thread 'observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it' (3824959) panicked at crates/sr-physics/src/observe/stages.rs:1511:55:
+index out of bounds: the len is 0 but the index is 0
+
+
+failures:
+    observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite
+    observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite
+    observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star
+    observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite
+    observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it
+
+test result: FAILED. 51 passed; 5 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:30:58-05:00 classify · plant ignite-light-only · a fresh scratch copy of the tree
+planted ignite-light-only: tests/plants/ignite-light-only.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:30:58-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.22 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5uaae356/arm3/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.14s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... FAILED
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... FAILED
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star stdout ----
+
+thread 'observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star' (3825111) panicked at crates/sr-physics/src/observe/stages.rs:1404:9:
+assertion `left == right` failed: 0.66 ≤ 0.9 × 0.7346
+  left: []
+ right: [Event { object: 1, kind: Ignition, time: 4.2, by: Some(Fuel) }]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it stdout ----
+
+thread 'observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it' (3825155) panicked at crates/sr-physics/src/observe/stages.rs:1511:55:
+index out of bounds: the len is 0 but the index is 0
+
+
+failures:
+    observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star
+    observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it
+
+test result: FAILED. 54 passed; 2 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:31:00-05:00 classify · plant ending-hold-ten-tu · a fresh scratch copy of the tree
+planted ending-hold-ten-tu: tests/plants/ending-hold-ten-tu.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:31:01-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.17 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5uaae356/arm4/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.10s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... FAILED
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... FAILED
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times stdout ----
+
+thread 'observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times' (3825326) panicked at crates/sr-physics/src/observe/stages.rs:1476:9:
+assertion `left == right` failed: τ_dyn 1: 20 t.u.
+  left: 10.0
+ right: 20.0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time stdout ----
+
+thread 'observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time' (3825333) panicked at crates/sr-physics/src/observe/stages.rs:1493:9:
+the disk's R₉₀ held it 760 t.u.
+
+
+failures:
+    observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times
+    observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time
+
+test result: FAILED. 54 passed; 2 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:31:03-05:00 classify · plant snapshot-x-h-max-left-out · a fresh scratch copy of the tree
+planted snapshot-x-h-max-left-out: tests/plants/snapshot-x-h-max-left-out.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:31:03-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.22 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5uaae356/arm5/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.16s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... FAILED
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+
+failures:
+
+---- observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it stdout ----
+
+thread 'observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it' (3825515) panicked at crates/sr-physics/src/observe/stages.rs:1506:63:
+its own snapshot: "stages.x_h_max: not an f64 written as a string: null"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it
+
+test result: FAILED. 55 passed; 1 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:31:06-05:00 classify · plant neutron-star-old-row · a fresh scratch copy of the tree
+planted neutron-star-old-row: tests/plants/neutron-star-old-row.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:31:06-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.22 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5uaae356/arm6/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.17s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... FAILED
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... FAILED
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... FAILED
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... FAILED
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... FAILED
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+
+failures:
+
+---- observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes stdout ----
+
+thread 'observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes' (3825646) panicked at crates/sr-physics/src/observe/stages.rs:1330:9:
+assertion `left == right` failed: the remnant after the blast
+  left: Some(CoreCollapse)
+ right: Some(NeutronStar)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse stdout ----
+
+thread 'observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse' (3825656) panicked at crates/sr-physics/src/observe/stages.rs:628:9:
+assertion `left == right` failed: passed core collapse: the remnant
+  left: CoreCollapse
+ right: NeutronStar
+
+---- observe::stages::tests::a_supernova_shows_before_the_neutron_star stdout ----
+
+thread 'observe::stages::tests::a_supernova_shows_before_the_neutron_star' (3825662) panicked at crates/sr-physics/src/observe/stages.rs:661:9:
+assertion `left == right` failed: past the window the remnant shows
+  left: IronCore
+ right: NeutronStar
+
+---- observe::stages::tests::row_neutron_star stdout ----
+
+thread 'observe::stages::tests::row_neutron_star' (3825681) panicked at crates/sr-physics/src/observe/stages.rs:604:9:
+assertion `left == right` failed: the gate's centre, moving: no |v_r| term
+  left: IronCore
+ right: NeutronStar
+
+---- observe::stages::tests::the_neutron_star_shows_before_core_collapse stdout ----
+
+thread 'observe::stages::tests::the_neutron_star_shows_before_core_collapse' (3825694) panicked at crates/sr-physics/src/observe/stages.rs:670:9:
+assertion `left == right` failed
+  left: CoreCollapse
+ right: NeutronStar
+
+
+failures:
+    observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes
+    observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse
+    observe::stages::tests::a_supernova_shows_before_the_neutron_star
+    observe::stages::tests::row_neutron_star
+    observe::stages::tests::the_neutron_star_shows_before_core_collapse
+
+test result: FAILED. 51 passed; 5 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:31:08-05:00 classify · plant white-dwarf-any-mass · a fresh scratch copy of the tree
+==== 2026-11-10T13:31:08-05:00 classify · plant neutron-star-without-collapse · a fresh scratch copy of the tree
+planted neutron-star-without-collapse: tests/plants/neutron-star-without-collapse.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:31:09-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.22 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5uaae356/arm8/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.16s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... FAILED
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... FAILED
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes stdout ----
+
+thread 'observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes' (3825831) panicked at crates/sr-physics/src/observe/stages.rs:1320:9:
+assertion `left == right` failed
+  left: []
+ right: [CoreCollapse]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse stdout ----
+
+thread 'observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse' (3825841) panicked at crates/sr-physics/src/observe/stages.rs:626:9:
+assertion `left == right` failed: never collapsed: the collapse shows first
+  left: NeutronStar
+ right: CoreCollapse
+
+
+failures:
+    observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes
+    observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse
+
+test result: FAILED. 54 passed; 2 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:31:11-05:00 classify · plant core-collapse-any-mass · a fresh scratch copy of the tree
+planted core-collapse-any-mass: tests/plants/core-collapse-any-mass.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:31:11-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.22 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5uaae356/arm9/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.14s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... FAILED
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... FAILED
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::a_core_collapses_only_past_m_ch_sb stdout ----
+
+thread 'observe::stages::tests::a_core_collapses_only_past_m_ch_sb' (3826012) panicked at crates/sr-physics/src/observe/stages.rs:702:9:
+assertion `left != right` failed: exactly m_ch_sb is a white dwarf's, no collapsing core
+  left: CoreCollapse
+ right: CoreCollapse
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::row_main_sequence stdout ----
+
+thread 'observe::stages::tests::row_main_sequence' (3826044) panicked at crates/sr-physics/src/observe/stages.rs:1118:9:
+assertion `left == right` failed: L_N absorbs, it burns nothing
+  left: CoreCollapse
+ right: MainSequence
+
+
+failures:
+    observe::stages::tests::a_core_collapses_only_past_m_ch_sb
+    observe::stages::tests::row_main_sequence
+
+test result: FAILED. 54 passed; 2 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:31:14-05:00 classify · plant failed-star-unsettled · a fresh scratch copy of the tree
+==== 2026-11-10T13:31:14-05:00 classify · plant stage-steps-back · a fresh scratch copy of the tree
+planted stage-steps-back: tests/plants/stage-steps-back.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:31:14-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.32 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5uaae356/arm11/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.24s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... FAILED
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::the_shown_stage_never_steps_back stdout ----
+
+thread 'observe::stages::tests::the_shown_stage_never_steps_back' (3826271) panicked at crates/sr-physics/src/observe/stages.rs:791:9:
+assertion `left == right` failed: a cloud after the collapse
+  left: Some(Cloud)
+ right: Some(Collapsing)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::stages::tests::the_shown_stage_never_steps_back
+
+test result: FAILED. 55 passed; 1 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:31:17-05:00 classify · plant remnant-unsettled · a fresh scratch copy of the tree
+==== 2026-11-10T13:31:17-05:00 classify · plant main-sequence-light-window · a fresh scratch copy of the tree
+planted main-sequence-light-window: tests/plants/main-sequence-light-window.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:31:17-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.22 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5uaae356/arm13/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.13s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... FAILED
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_main_sequence ... FAILED
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... FAILED
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf stdout ----
+
+thread 'observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf' (3826405) panicked at crates/sr-physics/src/observe/stages.rs:924:9:
+assertion `left == right` failed: d_c 0.8999: settled() alone, which it fails
+  left: Cloud
+ right: MainSequence
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::row_main_sequence stdout ----
+
+thread 'observe::stages::tests::row_main_sequence' (3826438) panicked at crates/sr-physics/src/observe/stages.rs:1101:9:
+assertion `left != right` failed: never ignited
+  left: MainSequence
+ right: MainSequence
+
+---- observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light stdout ----
+
+thread 'observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light' (3826451) panicked at crates/sr-physics/src/observe/stages.rs:1132:9:
+assertion `left == right` failed: step 289, L_H 0.21 L
+  left: Cloud
+ right: MainSequence
+
+
+failures:
+    observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf
+    observe::stages::tests::row_main_sequence
+    observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light
+
+test result: FAILED. 53 passed; 3 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:31:20-05:00 classify · plant settled-no-rotation · a fresh scratch copy of the tree
+==== 2026-11-10T13:31:20-05:00 classify · plant hold-tau-dyn · a fresh scratch copy of the tree
+planted hold-tau-dyn: tests/plants/hold-tau-dyn.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:31:20-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.27 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5uaae356/arm15/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.20s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... FAILED
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time stdout ----
+
+thread 'observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time' (3826637) panicked at crates/sr-physics/src/observe/stages.rs:1491:9:
+assertion `left == right` failed: 20 τ_deg = 8.8 t.u.: the 10 t.u. floor
+  left: 760.346
+ right: 10.0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time
+
+test result: FAILED. 55 passed; 1 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:31:23-05:00 classify · plant white-dwarf-virial-only · a fresh scratch copy of the tree
+planted white-dwarf-virial-only: tests/plants/white-dwarf-virial-only.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:31:23-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.17 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-5uaae356/arm16/crates/sr-physics)
+warning: constant `DEGENERATE_AT_REST` is never used
+   --> crates/sr-physics/src/observe/stages.rs:161:7
+    |
+161 | const DEGENERATE_AT_REST: f64 = 0.9;
+    |       ^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `degenerate_at_rest` is never used
+   --> crates/sr-physics/src/observe/stages.rs:167:4
+    |
+167 | fn degenerate_at_rest(c: &Ctx) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^
+
+warning: `sr-physics` (lib test) generated 2 warnings
+    Finished `release` profile [optimized] target(s) in 2.10s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... FAILED
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf stdout ----
+
+thread 'observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf' (3826762) panicked at crates/sr-physics/src/observe/stages.rs:920:9:
+assertion `left == right` failed: d_c 0.99994, |v_r| 0.043 √(GM/R), 2(P + K_t)/|W| 0.779
+  left: MainSequence
+ right: WhiteDwarf
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf
+
+test result: FAILED. 55 passed; 1 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:31:47-05:00 classify · clean · a fresh scratch copy of the tree
+== 2026-11-10T13:31:48-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=0 · 2.27 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jnhehmsh/arm0/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.17s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+test result: ok. 56 passed; 0 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+
+==== 2026-11-10T13:31:50-05:00 classify · plant classify-order · a fresh scratch copy of the tree
+planted classify-order: tests/plants/classify-order.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:31:50-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.22 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jnhehmsh/arm1/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.15s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... FAILED
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... FAILED
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts stdout ----
+
+thread 'observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts' (3827502) panicked at crates/sr-physics/src/observe/stages.rs:1202:9:
+assertion failed: pos(Stage::Collapsing) < pos(Stage::Protostar)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::the_rows_are_in_the_contracts_order stdout ----
+
+thread 'observe::stages::tests::the_rows_are_in_the_contracts_order' (3827530) panicked at crates/sr-physics/src/observe/stages.rs:567:9:
+assertion `left == right` failed
+  left: ["black_hole", "supernova", "neutron_star", "core_collapse", "white_dwarf", "failed_star", "planetary_nebula", "iron_core", "si_burn", "o_burn", "ne_burn", "c_burn", "he_core", "he_shell", "h_shell", "main_sequence", "protostar", "collapsing", "cloud"]
+ right: ["black_hole", "supernova", "neutron_star", "core_collapse", "white_dwarf", "failed_star", "planetary_nebula", "iron_core", "si_burn", "o_burn", "ne_burn", "c_burn", "he_core", "he_shell", "h_shell", "main_sequence", "collapsing", "protostar", "cloud"]
+
+
+failures:
+    observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts
+    observe::stages::tests::the_rows_are_in_the_contracts_order
+
+test result: FAILED. 54 passed; 2 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:31:53-05:00 classify · plant ignite-on-a-flash · a fresh scratch copy of the tree
+planted ignite-on-a-flash: tests/plants/ignite-on-a-flash.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:31:53-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.17 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jnhehmsh/arm2/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.09s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... FAILED
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... FAILED
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... FAILED
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... FAILED
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... FAILED
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite stdout ----
+
+thread 'observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite' (3827672) panicked at crates/sr-physics/src/observe/stages.rs:1457:9:
+assertion failed: !t.stage(1).unwrap().history.ignited
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite stdout ----
+
+thread 'observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite' (3827673) panicked at crates/sr-physics/src/observe/stages.rs:1149:9:
+no ignition event
+
+---- observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star stdout ----
+
+thread 'observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star' (3827674) panicked at crates/sr-physics/src/observe/stages.rs:1399:9:
+L_H > 2 L: no ignition by the light
+
+---- observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite stdout ----
+
+thread 'observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite' (3827691) panicked at crates/sr-physics/src/observe/stages.rs:1441:9:
+assertion failed: t.update(&[flashing(0.0009)], 1.0).is_empty()
+
+---- observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it stdout ----
+
+thread 'observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it' (3827718) panicked at crates/sr-physics/src/observe/stages.rs:1511:55:
+index out of bounds: the len is 0 but the index is 0
+
+
+failures:
+    observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite
+    observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite
+    observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star
+    observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite
+    observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it
+
+test result: FAILED. 51 passed; 5 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:31:55-05:00 classify · plant ignite-light-only · a fresh scratch copy of the tree
+planted ignite-light-only: tests/plants/ignite-light-only.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:31:55-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.17 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jnhehmsh/arm3/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.11s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... FAILED
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... FAILED
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star stdout ----
+
+thread 'observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star' (3827856) panicked at crates/sr-physics/src/observe/stages.rs:1404:9:
+assertion `left == right` failed: 0.66 ≤ 0.9 × 0.7346
+  left: []
+ right: [Event { object: 1, kind: Ignition, time: 4.2, by: Some(Fuel) }]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it stdout ----
+
+thread 'observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it' (3827900) panicked at crates/sr-physics/src/observe/stages.rs:1511:55:
+index out of bounds: the len is 0 but the index is 0
+
+
+failures:
+    observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star
+    observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it
+
+test result: FAILED. 54 passed; 2 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:31:58-05:00 classify · plant ending-hold-ten-tu · a fresh scratch copy of the tree
+planted ending-hold-ten-tu: tests/plants/ending-hold-ten-tu.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:31:58-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.22 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jnhehmsh/arm4/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.14s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... FAILED
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... FAILED
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times stdout ----
+
+thread 'observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times' (3828087) panicked at crates/sr-physics/src/observe/stages.rs:1476:9:
+assertion `left == right` failed: τ_dyn 1: 20 t.u.
+  left: 10.0
+ right: 20.0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time stdout ----
+
+thread 'observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time' (3828094) panicked at crates/sr-physics/src/observe/stages.rs:1493:9:
+the disk's R₉₀ held it 760 t.u.
+
+
+failures:
+    observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times
+    observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time
+
+test result: FAILED. 54 passed; 2 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:32:00-05:00 classify · plant snapshot-x-h-max-left-out · a fresh scratch copy of the tree
+planted snapshot-x-h-max-left-out: tests/plants/snapshot-x-h-max-left-out.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:32:01-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.22 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jnhehmsh/arm5/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.16s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... FAILED
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+
+failures:
+
+---- observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it stdout ----
+
+thread 'observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it' (3828275) panicked at crates/sr-physics/src/observe/stages.rs:1506:63:
+its own snapshot: "stages.x_h_max: not an f64 written as a string: null"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it
+
+test result: FAILED. 55 passed; 1 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:32:03-05:00 classify · plant neutron-star-old-row · a fresh scratch copy of the tree
+planted neutron-star-old-row: tests/plants/neutron-star-old-row.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:32:03-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.27 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jnhehmsh/arm6/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.20s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... FAILED
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... FAILED
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... FAILED
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... FAILED
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... FAILED
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes stdout ----
+
+thread 'observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes' (3828480) panicked at crates/sr-physics/src/observe/stages.rs:1330:9:
+assertion `left == right` failed: the remnant after the blast
+  left: Some(CoreCollapse)
+ right: Some(NeutronStar)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse stdout ----
+
+thread 'observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse' (3828490) panicked at crates/sr-physics/src/observe/stages.rs:628:9:
+assertion `left == right` failed: passed core collapse: the remnant
+  left: CoreCollapse
+ right: NeutronStar
+
+---- observe::stages::tests::a_supernova_shows_before_the_neutron_star stdout ----
+
+thread 'observe::stages::tests::a_supernova_shows_before_the_neutron_star' (3828496) panicked at crates/sr-physics/src/observe/stages.rs:661:9:
+assertion `left == right` failed: past the window the remnant shows
+  left: IronCore
+ right: NeutronStar
+
+---- observe::stages::tests::row_neutron_star stdout ----
+
+thread 'observe::stages::tests::row_neutron_star' (3828515) panicked at crates/sr-physics/src/observe/stages.rs:604:9:
+assertion `left == right` failed: the gate's centre, moving: no |v_r| term
+  left: IronCore
+ right: NeutronStar
+
+---- observe::stages::tests::the_neutron_star_shows_before_core_collapse stdout ----
+
+thread 'observe::stages::tests::the_neutron_star_shows_before_core_collapse' (3828528) panicked at crates/sr-physics/src/observe/stages.rs:670:9:
+assertion `left == right` failed
+  left: CoreCollapse
+ right: NeutronStar
+
+
+failures:
+    observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes
+    observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse
+    observe::stages::tests::a_supernova_shows_before_the_neutron_star
+    observe::stages::tests::row_neutron_star
+    observe::stages::tests::the_neutron_star_shows_before_core_collapse
+
+test result: FAILED. 51 passed; 5 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:32:05-05:00 classify · plant white-dwarf-any-mass · a fresh scratch copy of the tree
+planted white-dwarf-any-mass: tests/plants/white-dwarf-any-mass.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:32:06-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.27 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jnhehmsh/arm7/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.19s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... FAILED
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... FAILED
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb stdout ----
+
+thread 'observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb' (3828665) panicked at crates/sr-physics/src/observe/stages.rs:983:9:
+assertion `left == right` failed
+  left: WhiteDwarf
+ right: IronCore
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb stdout ----
+
+thread 'observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb' (3828671) panicked at crates/sr-physics/src/observe/stages.rs:970:9:
+assertion `left != right` failed: past m_ch_sb
+  left: WhiteDwarf
+ right: WhiteDwarf
+
+
+failures:
+    observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb
+    observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb
+
+test result: FAILED. 54 passed; 2 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:32:08-05:00 classify · plant neutron-star-without-collapse · a fresh scratch copy of the tree
+planted neutron-star-without-collapse: tests/plants/neutron-star-without-collapse.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:32:08-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.22 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jnhehmsh/arm8/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.17s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... FAILED
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... FAILED
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+
+failures:
+
+---- observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes stdout ----
+
+thread 'observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes' (3828840) panicked at crates/sr-physics/src/observe/stages.rs:1320:9:
+assertion `left == right` failed
+  left: []
+ right: [CoreCollapse]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse stdout ----
+
+thread 'observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse' (3828850) panicked at crates/sr-physics/src/observe/stages.rs:626:9:
+assertion `left == right` failed: never collapsed: the collapse shows first
+  left: NeutronStar
+ right: CoreCollapse
+
+
+failures:
+    observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes
+    observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse
+
+test result: FAILED. 54 passed; 2 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:32:11-05:00 classify · plant core-collapse-any-mass · a fresh scratch copy of the tree
+planted core-collapse-any-mass: tests/plants/core-collapse-any-mass.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:32:11-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.27 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jnhehmsh/arm9/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.19s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... FAILED
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_main_sequence ... FAILED
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+
+failures:
+
+---- observe::stages::tests::a_core_collapses_only_past_m_ch_sb stdout ----
+
+thread 'observe::stages::tests::a_core_collapses_only_past_m_ch_sb' (3829021) panicked at crates/sr-physics/src/observe/stages.rs:702:9:
+assertion `left != right` failed: exactly m_ch_sb is a white dwarf's, no collapsing core
+  left: CoreCollapse
+ right: CoreCollapse
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::row_main_sequence stdout ----
+
+thread 'observe::stages::tests::row_main_sequence' (3829053) panicked at crates/sr-physics/src/observe/stages.rs:1118:9:
+assertion `left == right` failed: L_N absorbs, it burns nothing
+  left: CoreCollapse
+ right: MainSequence
+
+
+failures:
+    observe::stages::tests::a_core_collapses_only_past_m_ch_sb
+    observe::stages::tests::row_main_sequence
+
+test result: FAILED. 54 passed; 2 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:32:13-05:00 classify · plant failed-star-unsettled · a fresh scratch copy of the tree
+planted failed-star-unsettled: tests/plants/failed-star-unsettled.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:32:14-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.27 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jnhehmsh/arm10/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.20s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_failed_star_is_settled ... FAILED
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::a_failed_star_is_settled stdout ----
+
+thread 'observe::stages::tests::a_failed_star_is_settled' (3829205) panicked at crates/sr-physics/src/observe/stages.rs:763:9:
+assertion `left == right` failed: falling in: a collapse, however cold
+  left: FailedStar
+ right: Collapsing
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::stages::tests::a_failed_star_is_settled
+
+test result: FAILED. 55 passed; 1 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:32:16-05:00 classify · plant stage-steps-back · a fresh scratch copy of the tree
+planted stage-steps-back: tests/plants/stage-steps-back.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:32:16-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.27 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jnhehmsh/arm11/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.22s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... FAILED
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::the_shown_stage_never_steps_back stdout ----
+
+thread 'observe::stages::tests::the_shown_stage_never_steps_back' (3829439) panicked at crates/sr-physics/src/observe/stages.rs:791:9:
+assertion `left == right` failed: a cloud after the collapse
+  left: Some(Cloud)
+ right: Some(Collapsing)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::stages::tests::the_shown_stage_never_steps_back
+
+test result: FAILED. 55 passed; 1 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:32:19-05:00 classify · plant remnant-unsettled · a fresh scratch copy of the tree
+planted remnant-unsettled: tests/plants/remnant-unsettled.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:32:19-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.17 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jnhehmsh/arm12/crates/sr-physics)
+warning: constant `DEGENERATE_AT_REST` is never used
+   --> crates/sr-physics/src/observe/stages.rs:161:7
+    |
+161 | const DEGENERATE_AT_REST: f64 = 0.9;
+    |       ^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `degenerate_at_rest` is never used
+   --> crates/sr-physics/src/observe/stages.rs:167:4
+    |
+167 | fn degenerate_at_rest(c: &Ctx) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^
+
+warning: `sr-physics` (lib test) generated 2 warnings
+    Finished `release` profile [optimized] target(s) in 2.12s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... FAILED
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... FAILED
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... FAILED
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... FAILED
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... FAILED
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... FAILED
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... FAILED
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf stdout ----
+
+thread 'observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf' (3829584) panicked at crates/sr-physics/src/observe/stages.rs:922:9:
+assertion `left == right` failed: d_c 0.8999: settled() alone, which it fails
+  left: WhiteDwarf
+ right: MainSequence
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf stdout ----
+
+thread 'observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf' (3829592) panicked at crates/sr-physics/src/observe/stages.rs:998:9:
+assertion `left != right` failed: pulsing: not settled
+  left: WhiteDwarf
+ right: WhiteDwarf
+
+---- observe::stages::tests::a_planetary_nebula_is_settled stdout ----
+
+thread 'observe::stages::tests::a_planetary_nebula_is_settled' (3829595) panicked at crates/sr-physics/src/observe/stages.rs:945:9:
+assertion `left != right` failed: moving at 0.0501 √(GM/R)
+  left: PlanetaryNebula
+ right: PlanetaryNebula
+
+---- observe::stages::tests::a_spinning_remnant_is_settled stdout ----
+
+thread 'observe::stages::tests::a_spinning_remnant_is_settled' (3829597) panicked at crates/sr-physics/src/observe/stages.rs:875:9:
+assertion `left == right` failed: its rotation left out: 2P/|W| 0.356
+  left: WhiteDwarf
+ right: IronCore
+
+---- observe::stages::tests::a_white_dwarf_is_settled stdout ----
+
+thread 'observe::stages::tests::a_white_dwarf_is_settled' (3829601) panicked at crates/sr-physics/src/observe/stages.rs:842:9:
+assertion `left != right` failed: step 433, +0.18 √(GM/R)
+  left: WhiteDwarf
+ right: WhiteDwarf
+
+---- observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light stdout ----
+
+thread 'observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light' (3829630) panicked at crates/sr-physics/src/observe/stages.rs:1131:9:
+assertion `left == right` failed: step 401, L_H 0.007 L
+  left: WhiteDwarf
+ right: MainSequence
+
+---- observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation stdout ----
+
+thread 'observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation' (3829636) panicked at crates/sr-physics/src/observe/stages.rs:897:9:
+assertion `left != right` failed: step 577: 2(P + K_t)/|W| 0.7979
+  left: WhiteDwarf
+ right: WhiteDwarf
+
+
+failures:
+    observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf
+    observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf
+    observe::stages::tests::a_planetary_nebula_is_settled
+    observe::stages::tests::a_spinning_remnant_is_settled
+    observe::stages::tests::a_white_dwarf_is_settled
+    observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light
+    observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation
+
+test result: FAILED. 49 passed; 7 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:32:21-05:00 classify · plant main-sequence-light-window · a fresh scratch copy of the tree
+planted main-sequence-light-window: tests/plants/main-sequence-light-window.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:32:21-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.27 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jnhehmsh/arm13/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.20s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... FAILED
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... FAILED
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... FAILED
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf stdout ----
+
+thread 'observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf' (3829776) panicked at crates/sr-physics/src/observe/stages.rs:924:9:
+assertion `left == right` failed: d_c 0.8999: settled() alone, which it fails
+  left: Cloud
+ right: MainSequence
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::stages::tests::row_main_sequence stdout ----
+
+thread 'observe::stages::tests::row_main_sequence' (3829809) panicked at crates/sr-physics/src/observe/stages.rs:1101:9:
+assertion `left != right` failed: never ignited
+  left: MainSequence
+ right: MainSequence
+
+---- observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light stdout ----
+
+thread 'observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light' (3829822) panicked at crates/sr-physics/src/observe/stages.rs:1132:9:
+assertion `left == right` failed: step 289, L_H 0.21 L
+  left: Cloud
+ right: MainSequence
+
+
+failures:
+    observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf
+    observe::stages::tests::row_main_sequence
+    observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light
+
+test result: FAILED. 53 passed; 3 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:32:24-05:00 classify · plant settled-no-rotation · a fresh scratch copy of the tree
+planted settled-no-rotation: tests/plants/settled-no-rotation.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:32:24-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.27 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jnhehmsh/arm14/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.21s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... FAILED
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::a_spinning_remnant_is_settled stdout ----
+
+thread 'observe::stages::tests::a_spinning_remnant_is_settled' (3829984) panicked at crates/sr-physics/src/observe/stages.rs:875:9:
+assertion `left == right` failed: 2(P + K_t)/|W| 0.934 at d_c 0.89
+  left: IronCore
+ right: WhiteDwarf
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::stages::tests::a_spinning_remnant_is_settled
+
+test result: FAILED. 55 passed; 1 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:32:26-05:00 classify · plant hold-tau-dyn · a fresh scratch copy of the tree
+planted hold-tau-dyn: tests/plants/hold-tau-dyn.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:32:27-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.22 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jnhehmsh/arm15/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.17s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... FAILED
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time stdout ----
+
+thread 'observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time' (3830220) panicked at crates/sr-physics/src/observe/stages.rs:1491:9:
+assertion `left == right` failed: 20 τ_deg = 8.8 t.u.: the 10 t.u. floor
+  left: 760.346
+ right: 10.0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time
+
+test result: FAILED. 55 passed; 1 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-10T13:32:29-05:00 classify · plant white-dwarf-virial-only · a fresh scratch copy of the tree
+planted white-dwarf-virial-only: tests/plants/white-dwarf-virial-only.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-10T13:32:29-05:00 classify · task M0-D168 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::stages
+-- classify · exit=101 · 2.17 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-jnhehmsh/arm16/crates/sr-physics)
+warning: constant `DEGENERATE_AT_REST` is never used
+   --> crates/sr-physics/src/observe/stages.rs:161:7
+    |
+161 | const DEGENERATE_AT_REST: f64 = 0.9;
+    |       ^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `degenerate_at_rest` is never used
+   --> crates/sr-physics/src/observe/stages.rs:167:4
+    |
+167 | fn degenerate_at_rest(c: &Ctx) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^
+
+warning: `sr-physics` (lib test) generated 2 warnings
+    Finished `release` profile [optimized] target(s) in 2.08s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... FAILED
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+failures:
+
+---- observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf stdout ----
+
+thread 'observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf' (3830376) panicked at crates/sr-physics/src/observe/stages.rs:920:9:
+assertion `left == right` failed: d_c 0.99994, |v_r| 0.043 √(GM/R), 2(P + K_t)/|W| 0.779
+  left: MainSequence
+ right: WhiteDwarf
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf
+
+test result: FAILED. 55 passed; 1 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+

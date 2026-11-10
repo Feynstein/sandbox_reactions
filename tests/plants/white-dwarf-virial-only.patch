@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/stages.rs
++++ b/crates/sr-physics/src/observe/stages.rs
+@@ -211,7 +211,7 @@
+             && c.o.unbound < 0.05 * c.o.mass
+             && c.o.x_c[X_N] < 0.5
+             && c.o.mass <= c.m_ch
+-            && (settled(c) || degenerate_at_rest(c))
++            && settled(c)
+     }),
+     (Stage::FailedStar, |c| !c.h.ignited && c.o.d_c >= 0.5 && c.o.l_group[G_H] < 0.01 * c.o.luminosity && settled(c)),
+     (Stage::PlanetaryNebula, |c| {

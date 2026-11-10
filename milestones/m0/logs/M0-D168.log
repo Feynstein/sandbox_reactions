@@ -1,0 +1,261 @@
+M0-D168 log — opened 2026-11-10T13:09:22-05:00 on linux-pc; probes on laserax-ai-server (RTX 4090)
+
+real	0m10.945s
+user	0m6.483s
+sys	0m0.751s
+exit=2
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=452001 sim_time=3476.877488 until=unmet
+252
+2.0G	build/m0-d168/p1
+   step         t raw           shown         |   d_c        L    L_nuc Lnuc/L  vr/vd   2P/W   sett |     L_H  LH/Ln    X_H     R | dfloor/st   drad/st   dnuc/st       dt
+ 450016  3464.228 main_sequence main_sequence | 1.000 1.79e+05     5.15 2.9e-05 -0.043  0.779     no |    3.85   0.75 0.0279   2.0 |       nan       nan       nan  0.00637
+ 450176  3465.248 main_sequence main_sequence | 1.000 1.79e+05     5.15 2.9e-05 -0.043  0.779     no |    3.85   0.75 0.0279   2.0 |      1141      1141   0.03281  0.00637
+ 450336  3466.267 main_sequence main_sequence | 1.000 1.79e+05     5.14 2.9e-05 -0.043  0.779     no |    3.85   0.75 0.0279   2.0 |      1141      1141   0.03278  0.00637
+ 450496  3467.287 main_sequence main_sequence | 1.000 1.79e+05     5.14 2.9e-05 -0.043  0.779     no |    3.84   0.75 0.0279   2.0 |      1141      1141   0.03275  0.00637
+ 450656  3468.306 main_sequence main_sequence | 1.000 1.79e+05     5.13 2.9e-05 -0.043  0.779     no |    3.84   0.75 0.0279   2.0 |      1141      1141   0.03272  0.00637
+ 450816  3469.326 main_sequence main_sequence | 1.000 1.79e+05     5.13 2.9e-05 -0.043  0.779     no |    3.83   0.75 0.0279   2.0 |      1141      1141   0.03269  0.00637
+ 450976  3470.346 main_sequence main_sequence | 1.000 1.79e+05     5.13 2.9e-05 -0.043  0.779     no |    3.83   0.75 0.0279   2.0 |      1140      1141   0.03267  0.00637
+ 451136  3471.365 main_sequence main_sequence | 1.000 1.79e+05     5.12 2.9e-05 -0.043  0.779     no |    3.83   0.75 0.0279   2.0 |      1141      1141   0.03264  0.00637
+ 451296  3472.385 main_sequence main_sequence | 1.000 1.79e+05     5.12 2.9e-05 -0.043  0.779     no |    3.82   0.75 0.0279   2.0 |      1141      1140   0.03261  0.00637
+ 451456  3473.404 main_sequence main_sequence | 1.000 1.79e+05     5.11 2.9e-05 -0.043  0.779     no |    3.82   0.75 0.0279   2.0 |      1140      1140   0.03259  0.00637
+ 451616  3474.424 main_sequence main_sequence | 1.000 1.79e+05     5.11 2.9e-05 -0.043  0.779     no |    3.82   0.75 0.0279   2.0 |      1141      1141   0.03256  0.00637
+ 451776  3475.444 main_sequence main_sequence | 1.000 1.79e+05      5.1 2.9e-05 -0.043  0.779     no |    3.81   0.75 0.0279   2.0 |      1140      1141   0.03253  0.00637
+ 451936  3476.463 main_sequence main_sequence | 1.000 1.79e+05      5.1 2.8e-05 -0.043  0.779     no |    3.81   0.75 0.0279   2.0 |      1141      1141    0.0325  0.00637
+ 452001  3476.877 main_sequence main_sequence | 1.000 1.79e+05      5.1 2.8e-05 -0.043  0.779     no |    3.81   0.75 0.0279   2.0 |      1141      1141   0.03249  0.00637
+noheat exit=4 0 warns; SR-ERROR bad dump: dump holds F, and this step runs no P5 to keep it (heat off)
+SR-ERROR bad dump: dump holds F, and this step runs no P5 to keep it (heat off)
+nohydro exit=2 0 warns; SR-HEADLESS DONE steps=450321 sim_time=3466.147592 until=unmet
+zfe exit=2 0 warns; SR-HEADLESS DONE steps=452001 sim_time=3476.589420 until=unmet
+== nohydro
+   step         t raw           shown         |   d_c        L    L_nuc Lnuc/L  vr/vd   2P/W   sett |     L_H  LH/Ln    X_H     R | dfloor/st   drad/st   dnuc/st       dt
+ 450016  3464.228 main_sequence main_sequence | 0.997 1.18e+05     2.65 2.2e-05 -0.043  0.768     no |    2.27   0.86 0.0279   2.0 |       nan       nan       nan  0.00636
+ 450080  3464.634 main_sequence main_sequence | 0.985 2.81e+04    0.555 2.0e-05 -0.043  0.752     no |   0.555   1.00 0.0279   2.0 |         0     177.7  0.003516  0.00632
+ 450144  3465.038 main_sequence main_sequence | 0.976 1.67e+04    0.362 2.2e-05 -0.043  0.744     no |   0.362   1.00 0.0279   2.0 |         0       105   0.00228  0.00630
+ 450208  3465.440 main_sequence main_sequence | 0.970 1.19e+04    0.272 2.3e-05 -0.043  0.739     no |   0.272   1.00 0.0279   2.0 |         0     74.75  0.001708  0.00628
+ 450272  3465.841 main_sequence main_sequence | 0.965 9.22e+03     10.2 1.1e-03 -0.043  0.735     no |    10.2   1.00 0.0279   2.0 |         0     57.73   0.06378  0.00626
+ 450321  3466.148 main_sequence main_sequence | 0.962 7.65e+03     16.9 2.2e-03 -0.043  0.733     no |    16.9   1.00 0.0279   2.0 |         0     47.79    0.1054  0.00625
+== zfe
+   step         t raw           shown         |   d_c        L    L_nuc Lnuc/L  vr/vd   2P/W   sett |     L_H  LH/Ln    X_H     R | dfloor/st   drad/st   dnuc/st       dt
+ 450016  3464.228 main_sequence main_sequence | 0.997 1.52e+05      2.3 1.5e-05 -0.042  0.770     no |    1.99   0.87 0.0279   2.0 |       nan       nan       nan  0.00636
+ 450208  3465.442 main_sequence main_sequence | 0.975 8.16e+03    0.238 2.9e-05 -0.008  0.742     no |   0.238   1.00 0.0279   2.0 |  5.29e-07     51.34    0.0015  0.00629
+ 450400  3466.646 main_sequence main_sequence | 0.964 4.53e+03     11.8 2.6e-03 -0.009  0.736     no |    11.8   1.00 0.0279   2.0 | 1.069e-06     28.32   0.07387  0.00626
+ 450592  3467.845 main_sequence main_sequence | 0.958 3.34e+03     27.7 8.3e-03 -0.009  0.731     no |    27.7   1.00 0.0279   2.0 | 1.185e-06     20.86     0.173  0.00624
+ 450784  3469.041 main_sequence main_sequence | 0.953 2.78e+03     44.8 1.6e-02 -0.009  0.728     no |    44.8   1.00 0.0279   2.0 | 9.574e-07     17.27    0.2791  0.00622
+ 450976  3470.235 main_sequence main_sequence | 0.950 2.07e+03     60.7 2.9e-02 -0.009  0.725     no |    60.7   1.00 0.0278   2.0 | 1.162e-06     12.83    0.3772  0.00621
+ 451168  3471.427 main_sequence main_sequence | 0.948 1.76e+03     74.3 4.2e-02 -0.009  0.723     no |    74.3   1.00 0.0278   2.0 |    0.4848     10.93     0.461  0.00621
+ 451360  3472.618 main_sequence main_sequence | 0.946 1.54e+03     85.3 5.5e-02 -0.009  0.722     no |    85.3   1.00 0.0278   2.0 |    0.8699     9.549    0.5292  0.00620
+ 451552  3473.808 main_sequence main_sequence | 0.945 1.47e+03     93.9 6.4e-02 -0.009  0.720     no |    93.9   1.00 0.0277   2.0 |     1.193      9.14     0.582  0.00620
+ 451744  3474.998 main_sequence main_sequence | 0.944 1.26e+03      100 7.9e-02 -0.009  0.719     no |     100   1.00 0.0277   2.0 |     1.731     7.836    0.6211  0.00619
+ 451936  3476.187 main_sequence main_sequence | 0.944 1.34e+03      105 7.8e-02 -0.009  0.718     no |     105   1.00 0.0276   2.0 |     1.958     8.301    0.6484  0.00619
+ 452001  3476.589 main_sequence main_sequence | 0.944 1.17e+03      106 9.0e-02 -0.009  0.718     no |     106   1.00 0.0276   2.0 |     3.066     7.271    0.6562  0.00619
+s_452001.bin
+s_452001.observers.json
+== map/m7000
+  49153   491.166 white_dwarf   white_dwarf   | 1.000 2.29e+03       -0 -0.0e+00  0.006  0.840    yes |       0    nan 0.0025  15.4 |       nan       nan       nan  0.00950
+== map/m8061
+  45985   455.900 white_dwarf   white_dwarf   | 1.000 1.86e+03       -0 -0.0e+00  0.005  0.868    yes |       0    nan 0.0024  20.4 |       nan       nan       nan  0.01013
+== opts/ppL_w4_sun
+  10717   120.007 white_dwarf   white_dwarf   | 0.778      756       -0 -0.0e+00 -0.003  0.987    yes |       0    nan 0.7273  11.4 |         0      8.11         0  0.01038
+== opts/p_th70_sun
+   3333    40.007 white_dwarf   white_dwarf   | 0.705 1.84e+03       -0 -0.0e+00 -0.005  0.986    yes |       0    nan 0.7289  14.2 |         0     20.27         0  0.01097
+== opts/L_A_sun
+   step         t raw           shown         |   d_c        L    L_nuc Lnuc/L  vr/vd   2P/W   sett |     L_H  LH/Ln    X_H     R | dfloor/st   drad/st   dnuc/st       dt
+  14000   157.687 main_sequence main_sequence | 0.647 1.28e+03 1.38e+03 1.1e+00 -0.001  0.987    yes | 1.38e+03   1.00 0.6922  14.1 | -0.001693     14.11     14.85  0.01103
+  30000   337.006 main_sequence main_sequence | 0.613 1.64e+03 1.67e+03 1.0e+00 -0.001  0.986    yes | 1.67e+03   1.00 0.6257  14.4 | -0.004244     18.38     18.81  0.01134
+  46000   519.960 main_sequence main_sequence | 0.592 1.96e+03 1.98e+03 1.0e+00 -0.001  0.984    yes | 1.98e+03   1.00 0.5495  14.6 |  -0.00529     22.39     22.58  0.01153
+  62000   705.217 main_sequence main_sequence | 0.586 2.34e+03 2.34e+03 1.0e+00 -0.001  0.983    yes | 2.34e+03   1.00 0.4659  15.0 |  -0.00634     26.95     26.69  0.01160
+  78000   890.325 main_sequence main_sequence | 0.597 2.83e+03 2.79e+03 9.9e-01 -0.001  0.981    yes | 2.79e+03   1.00 0.4128  15.2 | -0.007594     32.16     31.94  0.01154
+  94000  1075.541 main_sequence main_sequence | 0.597 3.45e+03 3.41e+03 9.9e-01 -0.001  0.978    yes | 3.41e+03   1.00 0.3440  15.2 | -0.009423     39.46     38.91  0.01155
+ 110000  1259.545 main_sequence main_sequence | 0.595 4.32e+03 4.26e+03 9.9e-01 -0.001  0.974    yes | 4.26e+03   1.00 0.2762  15.5 |  -0.01139     48.64     48.29  0.01147
+ 126000  1441.191 main_sequence main_sequence | 0.604 5.67e+03 5.56e+03 9.8e-01 -0.002  0.968    yes | 5.56e+03   1.00 0.1888  15.3 |  -0.01814     62.66     61.35  0.01122
+ 142000  1617.446 main_sequence main_sequence | 0.622 7.83e+03 7.61e+03 9.7e-01 -0.002  0.958    yes | 7.61e+03   1.00 0.1147  14.7 |  -0.03183     82.76     80.53  0.01077
+ 158000  1784.488 main_sequence main_sequence | 0.637 1.13e+04  1.1e+04 9.7e-01 -0.002  0.944    yes | 1.08e+04   0.99 0.0648  14.2 | -0.001314     111.8     108.9  0.01010
+ 174000  1941.644 he_core       he_core       | 0.703 1.87e+04 1.85e+04 9.9e-01 -0.002  0.920    yes | 1.47e+04   0.79 0.0323  13.3 |         0       172     169.7  0.00950
+ 190000  2085.448 iron_core     iron_core     | 1.000 1.69e+05 1.87e+03 1.1e-02 -0.034  0.722     no | 1.15e+03   0.62 0.0050   2.0 |     301.9      1036      4385  0.00542
+ 192000  2100.614 white_dwarf   white_dwarf   | 1.000 3.21e+03       -0 -0.0e+00  0.028  0.831    yes |       0    nan 0.0033  12.3 |     807.6     196.7    -179.7  0.00845
+ 193184  2111.457 white_dwarf   white_dwarf   | 1.000 1.79e+03       -0 -0.0e+00  0.006  0.880    yes |       0    nan 0.0033  16.9 |     92.46     16.39 6.678e-07  0.00974
+== opts/L_B_sun
+   step         t raw           shown         |   d_c        L    L_nuc Lnuc/L  vr/vd   2P/W   sett |     L_H  LH/Ln    X_H     R | dfloor/st   drad/st   dnuc/st       dt
+  14000   157.703 main_sequence main_sequence | 0.648 1.29e+03 1.37e+03 1.1e+00 -0.001  0.987    yes | 1.37e+03   1.00 0.6921  14.1 | -0.001725     14.13     14.82  0.01103
+  30000   337.057 main_sequence main_sequence | 0.612 1.64e+03 1.68e+03 1.0e+00 -0.001  0.986    yes | 1.68e+03   1.00 0.6264  14.4 |  -0.00424     18.39     18.83  0.01135
+  46000   520.137 main_sequence main_sequence | 0.593 1.97e+03 1.98e+03 1.0e+00 -0.001  0.984    yes | 1.98e+03   1.00 0.5495  14.6 | -0.005351     22.47      22.5  0.01152
+  62000   705.188 main_sequence main_sequence | 0.590 2.34e+03 2.33e+03 1.0e+00 -0.001  0.983    yes | 2.33e+03   1.00 0.4707  15.0 | -0.006329     26.82      26.7  0.01158
+  78000   890.228 main_sequence main_sequence | 0.597 2.81e+03 2.78e+03 9.9e-01 -0.001  0.981    yes | 2.78e+03   1.00 0.4113  15.2 |  -0.00769     32.16     31.99  0.01159
+  94000  1076.058 main_sequence main_sequence | 0.598 3.46e+03 3.42e+03 9.9e-01 -0.001  0.978    yes | 3.42e+03   1.00 0.3365  15.2 | -0.009172     39.63     38.91  0.01158
+ 110000  1261.212 main_sequence main_sequence | 0.593 4.31e+03 4.25e+03 9.9e-01 -0.001  0.973    yes | 4.25e+03   1.00 0.2553  15.5 |  -0.01062     49.11     48.43  0.01155
+ 126000  1444.307 main_sequence main_sequence | 0.606 5.72e+03  5.6e+03 9.8e-01 -0.001  0.967    yes | 5.6e+03   1.00 0.1744  15.4 |  -0.01831     63.44     62.26  0.01130
+ 142000  1622.977 he_core       he_core       | 0.637 8.24e+03 8.28e+03 1.0e+00 -0.001  0.956    yes | 7.19e+03   0.87 0.0629  16.8 |  -0.02346     89.03     88.81  0.01108
+ 158000  1795.402 he_core       he_core       | 0.681 1.22e+04 1.23e+04 1.0e+00  0.002  0.938    yes | 9.96e+03   0.81 0.0106  18.4 |         0       125     125.7  0.01046
+ 174000  1958.789 he_core       he_core       | 0.748 1.73e+04 1.71e+04 9.9e-01  0.002  0.909    yes | 1.29e+04   0.75 0.0104  14.1 |         0     164.1     163.2  0.00976
+ 184000  2050.742 white_dwarf   white_dwarf   | 1.000 2.62e+03       -0 -0.0e+00  0.017  0.829    yes |       0    nan 0.0023   7.3 |     479.1     624.3      3298  0.00874
+ 184656  2056.702 white_dwarf   white_dwarf   | 1.000 1.52e+03       -0 -0.0e+00  0.011  0.852    yes |       0    nan 0.0023  12.1 |     111.8     17.46 3.627e-07  0.00919
+
+real	2m18.437s
+user	1m47.687s
+sys	0m0.641s
+zfe2 exit=2 SR-HEADLESS DONE steps=472001 sim_time=3601.254648 until=unmet
+   step         t raw           shown         |   d_c        L    L_nuc Lnuc/L  vr/vd   2P/W   sett |     L_H  LH/Ln    X_H     R | dfloor/st   drad/st   dnuc/st       dt
+ 452800  3481.537 main_sequence main_sequence | 0.943 1.12e+03      109 9.7e-02 -0.009  0.715     no |     109   1.00 0.0273   2.0 |       nan       nan       nan  0.00619
+ 454400  3491.449 main_sequence main_sequence | 0.945      754     91.4 1.2e-01 -0.009  0.712     no |    91.4   1.00 0.0268   2.0 |     3.301     5.849    0.5973  0.00620
+ 456000  3501.377 main_sequence main_sequence | 0.947      700     72.2 1.0e-01 -0.009  0.710     no |    72.2   1.00 0.0265   2.0 |     3.579     5.395    0.4755  0.00621
+ 457600  3511.321 main_sequence main_sequence | 0.950      857     57.5 6.7e-02 -0.009  0.708     no |    57.5   1.00 0.0262   2.0 |     3.803     5.201    0.3775  0.00622
+ 459200  3521.278 main_sequence main_sequence | 0.952      863     46.6 5.4e-02 -0.009  0.707     no |    46.6   1.00 0.0259   2.0 |     3.886     5.082    0.3047  0.00623
+ 460800  3531.246 main_sequence main_sequence | 0.953      985     38.4 3.9e-02 -0.009  0.706     no |    38.4   1.00 0.0257   2.0 |     3.945     4.897    0.2509  0.00623
+ 462400  3541.225 main_sequence main_sequence | 0.955      555     32.3 5.8e-02 -0.009  0.705     no |    32.3   1.00 0.0256   2.0 |     3.997     4.761      0.21  0.00624
+ 464000  3551.212 main_sequence main_sequence | 0.956      692     27.5 4.0e-02 -0.009  0.704     no |    27.5   1.00 0.0254   2.0 |     4.078     4.763    0.1786  0.00624
+ 465600  3561.207 main_sequence main_sequence | 0.957      764     23.8 3.1e-02 -0.009  0.704     no |    23.8   1.00 0.0253   2.0 |     4.166     4.749    0.1541  0.00625
+ 467200  3571.209 main_sequence main_sequence | 0.959      870     20.9 2.4e-02 -0.009  0.703     no |    20.9   1.00 0.0252   2.0 |     4.147     4.704    0.1347  0.00625
+ 468800  3581.217 main_sequence main_sequence | 0.959      872     18.5 2.1e-02 -0.009  0.703     no |    18.5   1.00 0.0251   2.0 |     4.144     4.591     0.119  0.00626
+ 470400  3591.230 main_sequence main_sequence | 0.960      482     16.5 3.4e-02 -0.009  0.702     no |    16.5   1.00 0.0250   2.0 |     4.174     4.554    0.1062  0.00626
+ 472000  3601.248 main_sequence main_sequence | 0.961      695     14.8 2.1e-02 -0.009  0.702     no |    14.8   1.00 0.0249   2.0 |     4.239     4.583   0.09534  0.00626
+ 472001  3601.255 main_sequence main_sequence | 0.961      677     14.8 2.2e-02 -0.009  0.702     no |    14.8   1.00 0.0249   2.0 |     5.609     4.239   0.09287  0.00626
+== classify iteration 2026-11-10T13:30:13-05:00 linux-pc
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.19s
+     Running unittests src/lib.rs (build/target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 56 tests
+test observe::stages::tests::a_burn_stage_needs_the_largest_group_and_its_fuel ... ok
+test observe::stages::tests::a_centre_neutronized_inside_one_frame_still_collapses_then_explodes ... ok
+test observe::stages::tests::a_compact_remnant_at_rest_is_a_white_dwarf ... ok
+test observe::stages::tests::a_different_result_restarts_the_hold ... ok
+test observe::stages::tests::a_failed_star_is_settled ... ok
+test observe::stages::tests::a_flash_burning_under_a_tenth_does_not_ignite ... ok
+test observe::stages::tests::a_flash_inside_a_dark_cloud_does_not_ignite ... ok
+test observe::stages::tests::a_core_collapses_only_past_m_ch_sb ... ok
+test observe::stages::tests::a_flashed_centre_ignites_by_its_burnt_fuel_and_its_core_is_no_failed_star ... ok
+test observe::stages::tests::a_frame_with_ignition_classifies_with_the_flag_on ... ok
+test observe::stages::tests::a_heavy_stars_flashed_iron_core_is_no_white_dwarf ... ok
+test observe::stages::tests::a_neutron_star_needs_a_passed_core_collapse ... ok
+test observe::stages::tests::a_planetary_nebula_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_planetary_nebula_is_settled ... ok
+test observe::stages::tests::a_sink_makes_the_black_hole_before_the_neutron_star ... ok
+test observe::stages::tests::a_spinning_remnant_is_settled ... ok
+test observe::stages::tests::a_stage_shows_after_three_identical_results ... ok
+test observe::stages::tests::a_supernova_shows_before_the_neutron_star ... ok
+test observe::stages::tests::a_white_dwarf_holds_at_most_m_ch_sb ... ok
+test observe::stages::tests::a_white_dwarf_is_settled ... ok
+test observe::stages::tests::a_white_dwarf_never_matches_the_neutron_star_row ... ok
+test observe::stages::tests::burn_rows_come_in_si_o_ne_c_order_on_a_tie ... ok
+test observe::stages::tests::collapsing_and_protostar_do_not_overlap_so_the_table_order_is_the_contracts ... ok
+test observe::stages::tests::core_collapse_and_supernova_fire_once_each_in_order ... ok
+test observe::stages::tests::core_collapse_and_supernova_show_at_once ... ok
+test observe::stages::tests::hydrogen_gone_without_burning_does_not_ignite ... ok
+test observe::stages::tests::ignition_fires_once_and_the_flag_stays_on ... ok
+test observe::stages::tests::row_black_hole_a_sink_inside ... ok
+test observe::stages::tests::row_collapsing ... ok
+test observe::stages::tests::row_core_collapse_n_fe_converting ... ok
+test observe::stages::tests::row_failed_star_only_when_never_ignited ... ok
+test observe::stages::tests::row_h_shell ... ok
+test observe::stages::tests::row_he_core ... ok
+test observe::stages::tests::row_he_shell ... ok
+test observe::stages::tests::row_iron_core ... ok
+test observe::stages::tests::row_main_sequence ... ok
+test observe::stages::tests::row_neutron_star ... ok
+test observe::stages::tests::row_planetary_nebula ... ok
+test observe::stages::tests::row_protostar_and_the_cloud ... ok
+test observe::stages::tests::row_supernova_inside_the_window_with_unbound_mass ... ok
+test observe::stages::tests::row_white_dwarf ... ok
+test observe::stages::tests::rows_si_o_ne_c_burn ... ok
+test observe::stages::tests::sink_formed_fires_once_per_object_and_events_are_per_object ... ok
+test observe::stages::tests::steps_back_reads_only_the_three_early_labels ... ok
+test observe::stages::tests::supernova_before_core_collapse ... ok
+test observe::stages::tests::the_classifier_reads_no_rung_or_frame ... ok
+test observe::stages::tests::the_ending_hold_is_ten_tu_or_twenty_dynamical_times ... ok
+test observe::stages::tests::the_light_window_still_ignites_by_light ... ok
+test observe::stages::tests::the_main_sequence_reads_its_burning_not_its_light ... ok
+test observe::stages::tests::the_neutron_star_shows_before_core_collapse ... ok
+test observe::stages::tests::the_rows_are_in_the_contracts_order ... ok
+test observe::stages::tests::the_shown_stage_never_steps_back ... ok
+test observe::stages::tests::the_spun_up_remnant_holds_for_its_degenerate_centre_s_time ... ok
+test observe::stages::tests::the_snapshot_round_trips_the_history_and_refuses_one_without_it ... ok
+test observe::stages::tests::the_sun_like_s_false_white_dwarf_has_no_rotation ... ok
+test observe::stages::tests::the_supernova_needs_a_collapse_in_the_last_20_tu ... ok
+
+test result: ok. 56 passed; 0 failed; 0 ignored; 0 measured; 155 filtered out; finished in 0.00s
+
+== verify classify 2026-11-10T13:30:49-05:00 linux-pc
+classify  56/0/0       0.11 s  GO
+logs: milestones/m0/logs/M0-D168.<scope>.log · record: loop_times.jsonl · tree 1ad93970be06+c7bd85805c7f
+anchor: 50 path×scope entries moved by this run
+anchor: 178 paths checked · 423 skipped (3 classes) · 264 never checked · 1 stale · 8 unclassified · 0 owed · 443 covered of 874 visible
+verify: 56 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 1.29->1.29
+=== GO ===
+== redarm classify 2026-11-10T13:30:50-05:00 linux-pc
+classify · clean · GO · arm 1/17, 16 left
+classify · plant classify-order · RED (proven: 2 failed) · arm 2/17, 15 left
+classify · plant ignite-on-a-flash · RED (proven: 5 failed) · arm 3/17, 14 left
+classify · plant ignite-light-only · RED (proven: 2 failed) · arm 4/17, 13 left
+classify · plant ending-hold-ten-tu · RED (proven: 2 failed) · arm 5/17, 12 left
+classify · plant snapshot-x-h-max-left-out · RED (proven: 1 failed) · arm 6/17, 11 left
+classify · plant neutron-star-old-row · RED (proven: 5 failed) · arm 7/17, 10 left
+classify · plant white-dwarf-any-mass · ERROR (the patch tests/plants/white-dwarf-any-mass.patch does not apply: crates/sr-physics/src/observe/stages.rs @@ -193,7 +193,7 @@: its old lines appear 0 times in the file, not once) · arm 8/17, 9 left
+classify · plant neutron-star-without-collapse · RED (proven: 2 failed) · arm 9/17, 8 left
+classify · plant core-collapse-any-mass · RED (proven: 2 failed) · arm 10/17, 7 left
+classify · plant failed-star-unsettled · ERROR (the patch tests/plants/failed-star-unsettled.patch does not apply: crates/sr-physics/src/observe/stages.rs @@ -196,7 +196,7 @@: its old lines appear 0 times in the file, not once) · arm 11/17, 6 left
+classify · plant stage-steps-back · RED (proven: 1 failed) · arm 12/17, 5 left
+classify · plant remnant-unsettled · ERROR (the patch tests/plants/remnant-unsettled.patch does not apply: crates/sr-physics/src/observe/stages.rs @@ -194,7 +194,6 @@: its old lines appear 0 times in the file, not once) · arm 13/17, 4 left
+classify · plant main-sequence-light-window · RED (proven: 3 failed) · arm 14/17, 3 left
+classify · plant settled-no-rotation · ERROR (the patch tests/plants/settled-no-rotation.patch does not apply: crates/sr-physics/src/observe/stages.rs @@ -154,7 +154,7 @@: its old lines appear 0 times in the file, not once) · arm 15/17, 2 left
+classify · plant hold-tau-dyn · RED (proven: 1 failed) · arm 16/17, 1 left
+classify · plant white-dwarf-virial-only · RED (proven: 1 failed) · arm 17/17, 0 left
+FAILED:
+  plant white-dwarf-any-mass: the patch tests/plants/white-dwarf-any-mass.patch does not apply: crates/sr-physics/src/observe/stages.rs @@ -193,7 +193,7 @@: its old lines appear 0 times in the file, not once - an error, not a red
+  plant failed-star-unsettled: the patch tests/plants/failed-star-unsettled.patch does not apply: crates/sr-physics/src/observe/stages.rs @@ -196,7 +196,7 @@: its old lines appear 0 times in the file, not once - an error, not a red
+  plant remnant-unsettled: the patch tests/plants/remnant-unsettled.patch does not apply: crates/sr-physics/src/observe/stages.rs @@ -194,7 +194,6 @@: its old lines appear 0 times in the file, not once - an error, not a red
+  plant settled-no-rotation: the patch tests/plants/settled-no-rotation.patch does not apply: crates/sr-physics/src/observe/stages.rs @@ -154,7 +154,7 @@: its old lines appear 0 times in the file, not once - an error, not a red
+redarm: 16 plants · 12 red · 0 green · 4 errors · scope classify · 36.73 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D168.classify.redarm.log
+=== NO-GO: plant white-dwarf-any-mass: the patch tests/plants/white-dwarf-any-mass.patch does not apply: crates/sr-physics/src/observe/stages.rs @@ -193,7 +193,7 @@: its old lines appear 0 times in the file, not once - an error, not a red; plant failed-star-unsettled: the patch tests/plants/failed-star-unsettled.patch does not apply: crates/sr-physics/src/observe/stages.rs @@ -196,7 +196,7 @@: its ... ===
+== redarm classify (re-cut plants) 2026-11-10T13:31:47-05:00 linux-pc
+classify · clean · GO · arm 1/17, 16 left
+classify · plant classify-order · RED (proven: 2 failed) · arm 2/17, 15 left
+classify · plant ignite-on-a-flash · RED (proven: 5 failed) · arm 3/17, 14 left
+classify · plant ignite-light-only · RED (proven: 2 failed) · arm 4/17, 13 left
+classify · plant ending-hold-ten-tu · RED (proven: 2 failed) · arm 5/17, 12 left
+classify · plant snapshot-x-h-max-left-out · RED (proven: 1 failed) · arm 6/17, 11 left
+classify · plant neutron-star-old-row · RED (proven: 5 failed) · arm 7/17, 10 left
+classify · plant white-dwarf-any-mass · RED (proven: 2 failed) · arm 8/17, 9 left
+classify · plant neutron-star-without-collapse · RED (proven: 2 failed) · arm 9/17, 8 left
+classify · plant core-collapse-any-mass · RED (proven: 2 failed) · arm 10/17, 7 left
+classify · plant failed-star-unsettled · RED (proven: 1 failed) · arm 11/17, 6 left
+classify · plant stage-steps-back · RED (proven: 1 failed) · arm 12/17, 5 left
+classify · plant remnant-unsettled · RED (proven: 7 failed) · arm 13/17, 4 left
+classify · plant main-sequence-light-window · RED (proven: 3 failed) · arm 14/17, 3 left
+classify · plant settled-no-rotation · RED (proven: 1 failed) · arm 15/17, 2 left
+classify · plant hold-tau-dyn · RED (proven: 1 failed) · arm 16/17, 1 left
+classify · plant white-dwarf-virial-only · RED (proven: 1 failed) · arm 17/17, 0 left
+redarm: 16 plants · 16 red · 0 green · 0 errors · scope classify · 45.56 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D168.classify.redarm.log
+=== GO ===
+exit=0
+build native: 1.99.0 in 7 s, target /home/ybelanger/workspace/sandbox_reactions/build/target (1.7G)
+=== GO ===
+-rwxrwxr-x 2 ybelanger ybelanger 23325424 Nov 10 13:33 build/target/release/sandbox-reactions
+== Verify 1 2026-11-10T13:33:30-05:00: checkpoint continued 2,000 steps, rebuilt binary, laserax-ai-server RTX 4090
+exit=0
+SR-HEADLESS DONE steps=450048 sim_time=3464.431830 until=met
+until {"condition": "stage:white_dwarf", "met": true}
+stage white_dwarf ending None
+[('he_core', 136577, 1465.85), ('main_sequence', 139137, 1483.65), ('white_dwarf', 450048, 3464.43)]
+   step         t raw           shown         |   d_c        L    L_nuc Lnuc/L  vr/vd   2P/W   sett |     L_H  LH/Ln    X_H     R | dfloor/st   drad/st   dnuc/st       dt
+ 450016  3464.228 white_dwarf   main_sequence | 1.000 1.79e+05     5.15 2.9e-05 -0.043  0.779     no |    3.85   0.75 0.0279   2.0 |       nan       nan       nan  0.00637
+ 450032  3464.330 white_dwarf   main_sequence | 1.000 1.79e+05     5.15 2.9e-05 -0.043  0.779     no |    3.85   0.75 0.0279   2.0 |      1141      1141   0.03284  0.00637
+ 450048  3464.432 white_dwarf   white_dwarf   | 1.000 1.79e+05     5.15 2.9e-05 -0.043  0.779     no |    3.85   0.75 0.0279   2.0 |      1140      1141   0.03283  0.00637
+exit=0
+SR-HEADLESS DONE steps=451633 sim_time=3474.532379 until=met
+until {"condition": "ending", "met": true, "object": 1}
+stage white_dwarf ending white_dwarf
+== Verify 2 (claim) 2026-11-10T13:35:01-05:00 laserax-ai-server RTX 4090
+exit=1
+  dump: 2 failed · log milestones/m0/logs/M0-D168.dump.log
+  boot: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO · log milestones/m0/logs/M0-D168.boot.log
+  calibration: 1 failed · log milestones/m0/logs/M0-D168.calibration.log
+  held_core: 1 failed · log milestones/m0/logs/M0-D168.held_core.log
+  frames: 5 failed · log milestones/m0/logs/M0-D168.frames.log
+  ui_banner: 3 failed · log milestones/m0/logs/M0-D168.ui_banner.log
+  ui_presets: 1 failed · log milestones/m0/logs/M0-D168.ui_presets.log
+  ui_star: 7 failed · log milestones/m0/logs/M0-D168.ui_star.log
+  ui_inspect: 5 failed · log milestones/m0/logs/M0-D168.ui_inspect.log
+  anchor: 222 never checked, 0 stale, 8 unclassified - every one named above
+verify: 1622 passed, 38 failed, 0 skipped · 55/71 scopes GO · 0 skipped · 5 owed · 0 NOT RUN · 12 not impacted · 168.98 s + loop 56.00 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.06->2.2 · base: M0-D168's start 2026-11-10T13:06:58-05:00
+=== NO-GO: stage_order: 2 failed · log milestones/m0/logs/M0-D168.stage_order.log; multi: 2 failed · log milestones/m0/logs/M0-D168.multi.log; sun_burn: 3 failed · log milestones/m0/logs/M0-D168.sun_burn.log; twin: 2 failed · log milestones/m0/logs/M0-D168.twin.log; heat_stiff: 1 failed · log milestones/m0/logs/M0-D168.heat_stiff.log; timing: 1 failed · log milestones/m0/logs/M0-D168.timing.log; sc... ===

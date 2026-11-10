@@ -1064,6 +1064,75 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     and holding a main sequence to t 500 (mass 3,099); × 3 loses the Giant's he_core (main_sequence → iron_core, t 104), × 4 loses
     it too (t 90), × 16 flashes it again (iron at t 7) — the lead at M0-D163, 2026-11-09: «Curb the mass loss first
     (Recommended)», then «Adopt c_sb 800 (Recommended)».
+  - [M0-D165] §2.5.2's sub-cycling, whose heating had no bound but the sub-step limits · **plus the burn clock: where a cell's
+    specific nuclear heating q̇ = Σ_r q_r ω_r passes q_max = ε_th c_s / K_burn (c_s = √(2ε_th), the sheet's thermal sound speed,
+    cold pressure left out; the cell one wide), each sub-step runs on a clock q̇/q_max times slower than the pass's — its reactions
+    and heat those of its burn time h, its share of Δt h q̇/q_max, its neutrino loss that real time's; K_burn = physics.json's
+    `burn_k`, 10, bound ≥ 0 (0 turns it off); T pinned is exempt** — the records, every q, the sub-step limits and the energy
+    booking unchanged; a cell under q_max (every measured main sequence, the Sun-like's included) passes bit for bit as before.
+    The form is Kushnir et al.'s burning limiter (2013, ApJL 778 L37 — from memory, UNVERIFIED: the energy release held to the
+    hydro's sound-crossing time, so burning cannot outrun the flow), taken per cell. Measured on laserax-ai-server's RTX 4090 (2026-11-10, tasks/M0-D165.md):
+    the Giant's centre at T 107 with X_H,c 0.72 (Σ_c 2.4, d_c 0.15) heated isochorically to T 128.5 in 16 steps and then went
+    H → Fe inside one P6 pass (2 × 10⁻⁵ t.u. of a 0.009 step; 273 attempts, none unfinished), the Massive's at T 115 with X_H,c
+    0.17 likewise, He-led; the burn's e-fold (0.076 and 0.033 t.u.) under the core's sound crossing (0.22) — at cfl 0.4, 0.1 and
+    0.04 iron came at t 10.616, 10.603, 10.597, so the step was not the cause. No physics.json value within its bound removed the
+    flash (the ladder raised, H's steep term moved up through T_H with A_H, a_r ÷ 4); cutting H's steep ν to 8 and He's to 20 with
+    the ladder raised moved the Giant's to t 41 and left it (a pulsation peak from X_H,c 0.6); the clock at K_burn 10 and 40 left
+    no iron flash in either life to the 570 s cap (the Giant to t 275, the Massive to t 317) and the Sun-like's ignition (by light,
+    t 8.85) and main sequence (from 9.24) as before. What it does not give, measured and carried by their own D blocks: the
+    long-lived heavy stars swell past the world's half-height and lose 50–90 % of their mass through the edge, and the C/O centre
+    left goes cold and degenerate before carbon lights — the lead at M0-D165, 2026-11-10: «Burn limiter (Recommended)», «Rescope +
+    file 2 Ds (Recommended)».
+  - [M0-D168] §1.9.3's white_dwarf row as [M0-D140] and [M0-D160] read it (the settled test, |v_r| ≤ 0.05 √(GM/R) and
+    2(P + K_t)/|W| ≥ 0.8) · **the white dwarf is settled by that test, or at rest on a wholly degenerate centre: |v_r| ≤ 0.05 √(GM/R)
+    and d_c ≥ 0.9** — the row's other terms, the order, planetary_nebula, failed_star and protostar (settled test alone), the display
+    hold and §1.9.5 unchanged · measured on laserax-ai-server's RTX 4090 (2026-11-10, tasks/M0-D168.md): m_up_sb's 3,351.032 life on
+    the burn clock ([M0-D165]) leaves a 2,489 sb C/O remnant of 7 × 7 cells (R₉₀ 2, d_c 1.000, |v_r| 0.043 √(GM/R), L_nuc 3 × 10⁻⁵ L)
+    whose 2(P + K_t)/|W| reads 0.779 — every R₉₀ 2 remnant reads 0.70–0.79 on the grid, M0-D163's extended white dwarfs (R₉₀ 7–20)
+    0.83–0.88 — so it showed main_sequence on a hydrogen trace (L_H 3.85, the largest group) from t 1,484 to the 600,000-step cap's
+    t 3,464 and calibrate's item 4 could not end; the rows replayed over 5,901 stored frames of 173 lives relabel only R₉₀ 2 remnants
+    at d_c 1.000, and M0-D140's false white dwarf (the Sun-like re-expanding after its flash) has d_c 0.59–0.61 — the lead at M0-D168,
+    2026-11-10: «Degenerate at rest (Recommended)». Its light (L 1.79 × 10⁵, the floor's — P4 takes the centre under T_floor, P8
+    puts it back, the hot rim radiates it; §2.7's hold, which would stop it, refused by a trace of iron) is not this entry's: «File a
+    D near D167 (Recommended)».
+  - [M0-D169] §1.9.3's si/o/ne/c_burn rows («that group is the largest L_g and ≥ 0.1 L_nuc, its fuel at c ≥ 10⁻³») and iron_core
+    row («X_Fe,c ≥ 0.5 and L_nuc < 0.1 L»), [M0-D50]'s «T_Ne 153.4, T_O 168, T_Si 235.2» and §5.2 G-STAGES' massive row («he_core,
+    c_burn, ne_burn and o_burn in either order, si_burn») · **the burning rows read what c itself burns: q̇_c,g, each group's
+    specific power at c, Σ_r q_r ω_r(Σ_c, X_c, T_c, Y_e,c) over its enabled records by §1.6.1's law, 0 while T_c is under the
+    group's ladder temperature (§1.9.2; the burn clock slows a cell's reactions alike, so their ratio holds) — si/o/ne/c_burn when
+    that group is the largest q̇_c,g and > 0, its fuel at c ≥ 10⁻³; iron_core when X_Fe,c ≥ 0.5 and no fuel still burns at c (no
+    group with q̇_c,g > 0 and one of its fuels at c ≥ 10⁻³: O_burn and Mg_burn book into O, Si_burn and S_burn into Si);
+    physics.json's T_Ne 118, T_O 122, T_Si 135 (K6's order and §1.6.3's T_Si/T_H ≤ 10 hold — 2.4; G-ORDER's cell crosses H 114 ·
+    He 117 · C 137 · Ne 144.5 · O 151 · Si 162); G-STAGES' massive row with c_burn and ne_burn parenthesised** — main_sequence,
+    he_core, he_shell and h_shell (the star's L_g), the table's order, the display hold and every other row unchanged; the physics
+    hash moves and the one recalibration waits on the endings (the lead at M0-R15), so the presets refuse until M0-D167's ·
+    measured on laserax-ai-server's RTX 4090 (2026-11-10, reports/heavy_end.md § 1.2, § 2.3; tasks/M0-D169.md): the Massive's
+    centre burns He → O → Si/S (L_O to 5.5 × 10⁴) and, with this ladder, on to X_Fe,c 0.999 from t 250, all of it shown he_core /
+    main_sequence / he_shell because the hydrogen shell (L_H 0.6–1.8 × 10⁵) is always the star's largest L_g; carbon has no phase
+    of its own (C_alpha turns it to oxygen as it forms, X_C,c ≤ 0.13) — the lead at M0-R15, 2026-11-10: «Ladder down + core labels
+    (Recommended)». The ruled block's «largest power inside 2 R_core» reads the shell too (R_core is the largest group's own 90 %
+    radius, so ≥ 0.9 L_H lies inside it) — the lead at M0-D169: «Centre block (Recommended)»; but c's own 4 × 4 block burns the H
+    and He shells as well (L_H 1–2.4 × 10⁴, L_He 7–12 × 10³ against its O ≤ 7.3 × 10³ and Si ≤ 4.6 × 10³ on the same
+    continuation), so it still showed he_core / main_sequence / he_shell to X_Fe,c 0.97 — the lead at M0-D169, 2026-11-10: «Centre
+    cell's rates (Recommended)». On it the continuation of `massive_rows/dumps/s_14000.bin` (bounce, the shipped physics.json)
+    shows he_core → o_burn (t 205.7) → si_burn (233.9) → he_shell (251.9, a hydrogen trace at c) → iron_core (258.6, X_Fe,c 0.999).
+  - [M0-D166] §2.7's «a_r, c_sb … 1 × 10⁻⁵, 800» as [M0-D163] set them and §2.5.1's K_burn 10 ([M0-D165]) · **a_r 6.25 × 10⁻⁷,
+    c_sb 12,800 (a_r c_sb held at 8 × 10⁻³, so the transport's conductivity and T_eff's σ = a_r c_sb / 4 stand, and the push
+    f = κΣF/c_sb per unit flux ÷ 16) and K_burn 40** — every law, bound and the c_sb > 2 max_gas_speed test unchanged; r_acc =
+    max(2, 2GM/c_sb²) is 2 cells for any sink under ~8 × 10⁴ sb; the physics hash moves, the one recalibration rides M0-D167's
+    (the lead at M0-R15) · measured on laserax-ai-server's RTX 4090 (2026-11-10, tasks/M0-D166.md): the Massive's main-sequence
+    loss is a steady ~7 sb/t.u. outflow of a halo held near the radiation's own temperature (∝ r^−¼), the same with the push ÷ 16
+    or the halo cooled by √2 (κ₀ 4, c_sb 3,200); after its main sequence the envelope swells to R₉₀ 0.8–1.0 of the half-height and
+    loses ~45 sb/t.u. in every variant, a 600 × 640 world included, so only a shorter late life keeps the mass — the push ÷ 16 holds
+    ~9 % less of the inner envelope, the star sits more compact and 2–3 × brighter; the Giant's «helium event» is 1.1 × 10⁷ of burning
+    (0.8 |W|) inside ~1 t.u. at τ_KH/τ_dyn 0.2, the clock at K_burn 10 letting a cell's heat e-fold every K_burn/c_s ≈ 0.4 t.u., under
+    the burning region's expansion time, and K_burn 20–40 turns it into pulses the star survives; on both together, from M0-D163's
+    dumps (600 × 400, leave): the Massive reaches X_Fe,c 0.61 at t 194.4 with 7,168 sb (3,252 on the shipped values), the Giant
+    keeps 41,836 through its he_core and becomes a black hole at t 56.4 with 27,444 (18,098 at t 80 before), and the Sun-like disk's
+    collapse and main sequence to t 60 match the shipped values' (τ_KH 160 against 173); the light × 2 or × 4 alone (c_sb 1,600,
+    3,200) also kept the Massive but left the Sun-like a failed star — the lead at M0-D166, 2026-11-10: «Push ÷16 + burn_k 40
+    (Recommended)». The Sun-like's planetary nebula, pushed by its light (G-STAGES' plant `no-push`), is not measured here (its whole
+    life is over 10 minutes; M0-D167's recalibration lives it).
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1352,7 +1421,9 @@ previous frame's object with which it shares the most block mass (≥ 25 %), els
 on a merge the heavier id survives. Per object: M (gas + sinks); centre c (the max-Σ cell, or the
 heaviest sink inside); R (the radius about c holding 90 % of M, from block masses); τ_dyn =
 √(R³/GM); L (radiated ÷ the frame's sim time); L_g per group (L_N, neutronization, is an absorbed
-power ≤ 0); L_nuc = the sum of the positive L_g; L_ν; Σ_c, T_c, X_c at c; degeneracy
+power ≤ 0); L_nuc = the sum of the positive L_g; [M0-D169] q̇_c,g, each group's specific nuclear power at c itself,
+Σ_r q_r ω_r(Σ_c, X_c, T_c, Y_e,c) over its enabled records (§1.6.1), 0 while T_c is under the group's ladder temperature (§2.5.1;
+N_Fe as its law gives it; none for a lone sink); L_ν; Σ_c, T_c, X_c at c; degeneracy
 d_c = Π_cold / Π at c; v_r (the mass-weighted radial velocity about c); U (thermal), K (kinetic),
 P = ∫Π dA, W = ½Σmφ; M_unb; the
 envelope mass (outside 2 R_core, R_core the radius where the group of the dominant burning stage
@@ -1371,8 +1442,8 @@ follow the stage; "Supergiant" replaces "Red giant" for objects with M ≥ M_up 
 | white_dwarf | ignited, d_c ≥ 0.5, L_nuc < 0.01 L, M_unb < 0.05 M, X_n,c < 0.5 | remnant |
 | failed_star | never ignited, d_c ≥ 0.5, L_H < 0.01 L | remnant |
 | planetary_nebula | ignited, d_c ≥ 0.5, L_nuc < 0.1 L, M_unb ≥ 0.05 M | — |
-| iron_core | X_Fe,c ≥ 0.5 and L_nuc < 0.1 L | — |
-| si_burn · o_burn · ne_burn · c_burn | that group is the largest L_g and ≥ 0.1 L_nuc, its fuel at c ≥ 10⁻³ | Si · O · Ne · C |
+| iron_core | X_Fe,c ≥ 0.5 and ~~L_nuc < 0.1 L~~ [M0-D169] no fuel still burns at c (no group with q̇_c,g > 0 and one of its fuels at c ≥ 10⁻³) | — |
+| si_burn · o_burn · ne_burn · c_burn | ~~that group is the largest L_g and ≥ 0.1 L_nuc~~ [M0-D169] that group is the largest q̇_c,g (what c itself burns, §1.9.2) and > 0, its fuel at c ≥ 10⁻³ | Si · O · Ne · C |
 | he_core | L_He ≥ 0.1 L and Y_c ≥ 10⁻³ | He |
 | he_shell | ignited, Y_c < 10⁻³, X_H,c < 10⁻³, no carbon burning | — |
 | h_shell | ignited, X_H,c < 10⁻³, L_He < 0.1 L | — |
@@ -1618,10 +1689,15 @@ buffers per shader stage (TW-E15), which binds native builds too (§6.2.2). Not 
 | ν of C_burn, Ne_burn, O_burn, Mg_burn, Si_burn, S_burn | 30 | ≥ 4 (K7) | steepness |
 | Σ_N (the N_Fe gate, on Y_eΣ) | 160 | ≥ 2 (K₂ₑ/K₁ₑ)², the relativistic regime | iron neutronizes only once its electrons are relativistic |
 | burn_dx, burn_dt | 0.1, 0.05 | — | a sub-cycle changes no X by more than 0.1 (absolute) and T by no more than 5 % |
+| K_burn (`burn_k`) [M0-D165] | ~~10~~ [M0-D166] 40 | ≥ 0 (0: off) | the burn clock (§2.5.2): a cell's nuclear heating at most ε_th c_s / K_burn per t.u. |
 
 - **2.5.2 Sub-cycling** (SM M5): per cell, after the flow step, linearised backward-Euler
   sub-steps under burn_dx and burn_dt; fractions clamped ≥ 0 and renormalised; q·ω into ε_th at each
-  sub-step; the nuclear energy booked per group in the frame accumulator.
+  sub-step; the nuclear energy booked per group in the frame accumulator. [M0-D165] **The burn clock:** where a sub-step's
+  specific heating q̇ = Σ_r q_r ω_r passes q_max = ε_th c_s / K_burn (c_s = √(2ε_th), cold pressure left out, Δx = 1), the
+  sub-step's h is burn time and it takes h q̇/q_max of the pass's Δt — the same reactions and heat per unit mass, at most q_max
+  per unit time, the neutrino loss over that real time; elsewhere, with T pinned and at K_burn = 0 the scheme is as above, bit for
+  bit (§0.5 [M0-D165]).
 - **2.5.3 Neutrino cooling** (SM M4 flag (c), SM-E24): ε_ν = A_ν (T/T_ν)^m per unit mass for
   T ≥ T_ν, else 0; m = 8 (photo-neutrinos, SM-E20: "roughly ε_ν ∝ T⁸"); bound m < ν of every late
   record, so burning stays stable where ε_nuc = ε_ν and the late stages race (SM-E24); T_ν initial
@@ -1665,7 +1741,7 @@ buffers per shader stage (TW-E15), which binds native builds too (§6.2.2). Not 
 | heat_factor, cool_factor | 1.05, 0.95 per frame held | the heat and cool tools |
 | K₁ₑ, K₂ₑ | 21.3, 134 | [M0-R4] electrons: with Y_e = 0.5, M_ch = 1.4331 × (134 × 0.5^{3/2})² ≈ 3,217 ≈ 0.96 × the Sun-like mass (§2.3.2); a cold disk's radius 3K₁Y_e²/(4G) ≈ 4.0 cells at low mass, its R₉₀ under one cell from M ≈ 0.5 M_ch (reports/cold_ceiling.md M2) |
 | K₁ₙ, K₂ₙ | 2.67, 58.2 | [M0-R4] neutron matter: M_tov = 1.4331 × 58.2² ≈ 4,854 ≈ 1.51 M_ch, radius ≈ 2.0 cells at low mass; bound m_tov/m_ch ∈ [1.4, 2.0] (K9's real 1.4–2: SP-E12, SP-E13) |
-| a_r, c_sb, κ₀, k_cond | 4 × 10⁻⁷, 200, 1, 0 | heat and light; tuned for K1's gaps (G-SQUEEZE); c_sb > 2 × calibration's `max_gas_speed` |
+| a_r, c_sb, κ₀, k_cond | 4 × 10⁻⁷, 200, 1, 0 — [M0-D166] a_r 6.25 × 10⁻⁷, c_sb 12,800 (§0.5) | heat and light; tuned for K1's gaps (G-SQUEEZE); c_sb > 2 × calibration's `max_gas_speed` |
 | A_ν, T_ν, m | 1 × 10⁻³, 166, 8 | neutrino cooling (§2.5.3) |
 | f_dep | 0.05 | ≤ 0.1 (§2.5.4); ≤ 1.0 under S2 |
 | sigma_bh | 6,000 [M0-R4] | ≥ calibration's ns_sigma_max_sb (§2.6, §2.11 item 5) |
@@ -2385,8 +2461,8 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
 - **G-STAGES · the visible life** (B4–B6). The displayed stage ids contain these as a subsequence,
   in this order (parenthesised ones may be missing; other stages may appear between): sun — cloud,
   (collapsing), protostar, main_sequence, h_shell, he_core, he_shell, planetary_nebula, white_dwarf;
-  massive — cloud, (collapsing), protostar, main_sequence, (h_shell), he_core, c_burn, ne_burn and
-  o_burn in either order, si_burn, iron_core, core_collapse, supernova, neutron_star — its h_shell
+  massive — cloud, (collapsing), protostar, main_sequence, (h_shell), he_core, ~~c_burn, ne_burn and
+  o_burn in either order~~ [M0-D169] (c_burn), (ne_burn) and o_burn in either order, si_burn, iron_core, core_collapse, supernova, neutron_star — its h_shell
   and he_core labels the "Supergiant" ones (§1.9.3); giant — cloud, (collapsing), protostar,
   main_sequence, he_core, core_collapse, (supernova), black_hole. *UNVERIFIED*. Scope `stages` ⏱.
   Plant `no-push`: the radiation force zeroed (no planetary nebula while S1 is off).

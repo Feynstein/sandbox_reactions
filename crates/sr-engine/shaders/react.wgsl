@@ -9,7 +9,9 @@
 // h = min(time left, burn_dx / max|S_i|, burn_dt T / |dT/dt|, 2 × the last h); the step is checked (ΔX ≤ burn_dx, ΔT/T ≤
 // burn_dt, no fraction below zero) and halved on failure; fractions clamped ≥ 0 and renormalised. A cell where every ω is 0
 // is left bit for bit; a cell below Σ_vac, or a NaN Σ, is not touched. With `pin_temperature` the rates read the step's
-// initial T and E is rewritten to that T with the new composition's μ and cold energy.
+// initial T and E is rewritten to that T with the new composition's μ and cold energy. The burn clock (§2.5.2 [M0-D165], the
+// twin's): where the sub-step's heating Σ qω passes ε_th √(2ε_th) / burn_k, h is burn time and the sub-step takes h k of Δt_n,
+// k the ratio — same reactions and heat, at most that heating per unit time, neutrino loss over the real time; elsewhere unslowed.
 //
 // f32 where the twin is f64. Four sums are compensated (Knuth's two-sum): the time done, so a sub-step far under f32's
 // resolution of Δt_n still counts (a runaway's sub-steps reach 1e-9 Δt_n); each fraction, rounded to f32 once when it is
@@ -97,7 +99,8 @@ struct ReactParams {
     // 0, unknown to the compiler: `opaque` XORs a value's bits with it, so `add2`'s error terms are not folded away
     // (measured: on the RTX 5090 they were, even multiplied by a uniform 1.0).
     zero: u32,
-    _a: u32,
+    // §2.5.2 [M0-D165]'s K_burn: the burn clock slows where the heating passes ε_th c_s / burn_k; 0 turns it off.
+    burn_k: f32,
     // ε_ν = a_nu (T / t_nu)^m_nu for T ≥ t_nu (physics.json's A_ν, T_ν, m).
     a_nu: f32,
     t_nu: f32,
@@ -620,12 +623,22 @@ fn react_cells(@builtin(global_invocation_id) id: vec3<u32>) {
         let up = select(exp(shift), 1.0, shift == 0.0);
         let down = select(exp(-shift), 1.0, shift == 0.0);
         let eps = eps_true * down;
+        // §2.5.2 [M0-D165]'s burn clock, the twin's k = q̇/q_max past q_max = ε_th c_s / burn_k (c_s = √(2ε_th)), carried as
+        // ln k so e^shift and k stay in f32's range: h is then burn time (in the scale), the sub-step takes h k of the pass, and
+        // its neutrino loss is the real time's, ε_ν k. Below q_max (and pinned, or burn_k 0) every expression is the unslowed one.
+        var k_ln = 0.0;
+        if (!pin && params.burn_k > 0.0 && rate.x > 0.0) {
+            let e_th = t * comp.inv_mu;
+            k_ln = max(0.0, log(rate.x) + shift - log(e_th * sqrt(2.0 * e_th) / params.burn_k));
+        }
+        let slowed = k_ln > 0.0;
+        let eps_b = select(eps, eps_true * exp(k_ln - shift), slowed);
         // The sub-step's size, in scaled time.
         var s_max = 0.0;
         for (var i = 0u; i < N_SPECIES; i++) {
             s_max = max(s_max, abs(src[i]));
         }
-        var h = t_rem * up;
+        var h = select(t_rem * up, t_rem * exp(shift - k_ln), slowed);
         if (s_max > 0.0) {
             h = min(h, params.burn_dx / s_max);
         }
@@ -635,14 +648,14 @@ fn react_cells(@builtin(global_invocation_id) id: vec3<u32>) {
                 dinv_mu += src[i] * eos.inv_mu_coef[i / 4u][i % 4u];
             }
             let mu = 1.0 / comp.inv_mu;
-            let dt_dt = mu * (rate.x - eps) - t * mu * dinv_mu;
+            let dt_dt = mu * (rate.x - eps_b) - t * mu * dinv_mu;
             if (dt_dt != 0.0) {
                 h = min(h, params.burn_dt * t / abs(dt_dt));
             }
         }
         // The last 2h carried to this sub-step's scale, floored as the twin's (f64::MIN_POSITIVE there, f32's here).
         h = min(h, max(h_try * select(exp(shift - shift_try), 1.0, shift == shift_try), MIN_POSITIVE));
-        let t_rem_scaled = t_rem * up;
+        let t_rem_scaled = select(t_rem * up, t_rem * exp(shift - k_ln), slowed);
         // Take it, check it, halve until it holds.
         loop {
             attempts++;
@@ -676,7 +689,7 @@ fn react_cells(@builtin(global_invocation_id) id: vec3<u32>) {
                 de += heat;
                 by_group[params.recs[r].head.x] += heat;
             }
-            let lost = eps * h_use;
+            let lost = eps_b * h_use;
             // Clamped ≥ 0, then x / Σx = x − x e/(1 + e), e = Σx − 1 from the compensated sum.
             var total = vec2<f32>(0.0, 0.0);
             for (var i = 0u; i < N_SPECIES; i++) {
@@ -716,7 +729,7 @@ fn react_cells(@builtin(global_invocation_id) id: vec3<u32>) {
             if (last) {
                 t_done = vec2<f32>(dt, 0.0);
             } else {
-                t_done = add2(t_done, h_use * down);
+                t_done = add2(t_done, select(h_use * down, h_use * exp(k_ln - shift), slowed));
             }
             h_try = 2.0 * h_use;
             shift_try = shift;

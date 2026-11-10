@@ -1,0 +1,222 @@
+== 2026-11-09T13:56:14-05:00 radiation_force · task M0-D163 · box laserax-ai-server :: bash tests/gpu.sh radforce physics
+-- radiation_force · exit=0 · 3.97 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 11 tests
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.194345 until=none
+SR-RADFORCE gpu block: 50 steps, sim time 0.1943453617859632, mass invariant 5000.000040320 → 4999.999724492 (6.32e-8), floor_added 1926732.94340808, 0 non-finite values in the final dump
+ok
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.194346 until=none
+SR-RADFORCE gpu block: 50 steps, sim time 0.19434589706361297, mass invariant 5000.000040320 → 5000.000034129 (1.24e-9), floor_added 1927785.697657267, 0 non-finite values in the final dump
+ok
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained -1.454528807e-1, Σ Δt·f -1.454528895e-1, relative 5.99e-8
+SR-RADFORCE gpu x, right: gained 1.454528843e-1, Σ Δt·f 1.454528890e-1, relative 3.21e-8
+SR-RADFORCE gpu y, top: gained -1.073701904e-2, Σ Δt·f -1.073701875e-2, relative 2.72e-8
+SR-RADFORCE gpu y, bottom: gained 1.073701920e-2, Σ Δt·f 1.073701875e-2, relative 4.17e-8
+SR-RADFORCE gpu cells: worst |gained − Δt·f| 6.66e-11 of the largest Δt·f 2.08e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained -1.454528807e-1, Σ Δt·f -1.454528895e-1, relative 5.99e-8
+SR-RADFORCE gpu x, right: gained 1.454528843e-1, Σ Δt·f 1.454528890e-1, relative 3.21e-8
+SR-RADFORCE gpu y, top: gained -1.073701904e-2, Σ Δt·f -1.073701875e-2, relative 2.72e-8
+SR-RADFORCE gpu y, bottom: gained 1.073701920e-2, Σ Δt·f 1.073701875e-2, relative 4.17e-8
+SR-RADFORCE gpu cells: worst |gained − Δt·f| 6.66e-11 of the largest Δt·f 2.08e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::gpu_p4_reads_the_previous_steps_flux::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 1.858049144e-2, the hand F's 1.858049210e-2 (3.55e-8), P5's F after -1.712895507e-2 (2.08e0)
+SR-RADFORCE by-hand [0][1]: gained -1.858049144e-2, the hand F's -1.858049210e-2 (3.55e-8), P5's F after 1.712895507e-2 (2.08e0)
+SR-RADFORCE by-hand [1][0]: gained 1.351723283e-3, the hand F's 1.351723320e-3 (2.74e-8), P5's F after -1.341114953e-3 (2.01e0)
+SR-RADFORCE by-hand [1][1]: gained -1.351723283e-3, the hand F's -1.351723320e-3 (2.74e-8), P5's F after 1.341114953e-3 (2.01e0)
+ok
+test radforce::gpu_p4_reads_the_previous_steps_flux::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 1.858049144e-2, the hand F's 1.858049210e-2 (3.55e-8), P5's F after -1.712895507e-2 (2.08e0)
+SR-RADFORCE by-hand [0][1]: gained -1.858049144e-2, the hand F's -1.858049210e-2 (3.55e-8), P5's F after 1.712895507e-2 (2.08e0)
+SR-RADFORCE by-hand [1][0]: gained 1.351723283e-3, the hand F's 1.351723320e-3 (2.74e-8), P5's F after -1.341114953e-3 (2.01e0)
+SR-RADFORCE by-hand [1][1]: gained -1.351723283e-3, the hand F's -1.351723320e-3 (2.74e-8), P5's F after 1.341114953e-3 (2.01e0)
+ok
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu cap, x left: gained -1.178538245e3, Σ s·Δt·f -1.178538180e3 (5.53e-8), uncapped Σ Δt·f -1.251e5
+SR-RADFORCE gpu cap, x right: gained 1.178538245e3, Σ s·Δt·f 1.178538180e3 (5.53e-8), uncapped Σ Δt·f 1.251e5
+SR-RADFORCE gpu cap: 408 cells capped below half the impulse; E's largest relative gap from the free step 2.29e-7
+ok
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu cap, x left: gained -1.178538245e3, Σ s·Δt·f -1.178538180e3 (5.53e-8), uncapped Σ Δt·f -1.251e5
+SR-RADFORCE gpu cap, x right: gained 1.178538245e3, Σ s·Δt·f 1.178538180e3 (5.53e-8), uncapped Σ Δt·f 1.251e5
+SR-RADFORCE gpu cap: 408 cells capped below half the impulse; E's largest relative gap from the free step 2.29e-7
+ok
+test radforce::twin_a_dense_hot_block_stays_finite_and_keeps_its_mass ... SR-RADFORCE twin block: 50 steps to sim time 0.19449, E 5.3108e6, floor_added 4.9612e6, mass invariant 5000.000040920 → 5000.000040935 (3.10e-12)
+ok
+test radforce::twin_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-RADFORCE twin x, left: gained -1.650350651e-1, Σ Δt·f -1.650350651e-1, relative 0.00e0
+SR-RADFORCE twin x, right: gained 1.650350651e-1, Σ Δt·f 1.650350651e-1, relative 0.00e0
+SR-RADFORCE twin y, top: gained -1.091212647e-2, Σ Δt·f -1.091212647e-2, relative 0.00e0
+SR-RADFORCE twin y, bottom: gained 1.091212647e-2, Σ Δt·f 1.091212647e-2, relative 0.00e0
+SR-RADFORCE twin cells: worst |gained − Δt·f| 1.08e-19 of the largest Δt·f 4.70e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::twin_the_push_spends_no_more_than_the_heat_above_the_floor ... SR-RADFORCE twin cap, x left: gained -7.698094182e2, Σ s·Δt·f -7.698094182e2 (0.00e0), uncapped Σ Δt·f -3.311e5
+SR-RADFORCE twin cap, x right: gained 7.698094182e2, Σ s·Δt·f 7.698094182e2 (0.00e0), uncapped Σ Δt·f 3.311e5
+SR-RADFORCE twin cap: 284 cells capped below half the impulse; E's largest relative gap from the free step 0.00e0
+ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 497 filtered out; finished in 3.84s
+
+
+== 2026-11-10T09:47:40-05:00 radiation_force · task M0-D163 · box laserax-ai-server :: bash tests/gpu.sh radforce physics
+-- radiation_force · exit=0 · 11.88 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 11 tests
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.194345 until=none
+SR-RADFORCE gpu block: 50 steps, sim time 0.1943453617859632, mass invariant 5000.000040320 → 4999.999724492 (6.32e-8), floor_added 1926732.94340808, 0 non-finite values in the final dump
+ok
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.194346 until=none
+SR-RADFORCE gpu block: 50 steps, sim time 0.19434589706361297, mass invariant 5000.000040320 → 5000.000034129 (1.24e-9), floor_added 1927785.697657267, 0 non-finite values in the final dump
+ok
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained -1.454528807e-1, Σ Δt·f -1.454528895e-1, relative 5.99e-8
+SR-RADFORCE gpu x, right: gained 1.454528843e-1, Σ Δt·f 1.454528890e-1, relative 3.21e-8
+SR-RADFORCE gpu y, top: gained -1.073701904e-2, Σ Δt·f -1.073701875e-2, relative 2.72e-8
+SR-RADFORCE gpu y, bottom: gained 1.073701920e-2, Σ Δt·f 1.073701875e-2, relative 4.17e-8
+SR-RADFORCE gpu cells: worst |gained − Δt·f| 6.66e-11 of the largest Δt·f 2.08e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained -1.454528807e-1, Σ Δt·f -1.454528895e-1, relative 5.99e-8
+SR-RADFORCE gpu x, right: gained 1.454528843e-1, Σ Δt·f 1.454528890e-1, relative 3.21e-8
+SR-RADFORCE gpu y, top: gained -1.073701904e-2, Σ Δt·f -1.073701875e-2, relative 2.72e-8
+SR-RADFORCE gpu y, bottom: gained 1.073701920e-2, Σ Δt·f 1.073701875e-2, relative 4.17e-8
+SR-RADFORCE gpu cells: worst |gained − Δt·f| 6.66e-11 of the largest Δt·f 2.08e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::gpu_p4_reads_the_previous_steps_flux::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 1.858049144e-2, the hand F's 1.858049210e-2 (3.55e-8), P5's F after -1.712895507e-2 (2.08e0)
+SR-RADFORCE by-hand [0][1]: gained -1.858049144e-2, the hand F's -1.858049210e-2 (3.55e-8), P5's F after 1.712895507e-2 (2.08e0)
+SR-RADFORCE by-hand [1][0]: gained 1.351723283e-3, the hand F's 1.351723320e-3 (2.74e-8), P5's F after -1.341114953e-3 (2.01e0)
+SR-RADFORCE by-hand [1][1]: gained -1.351723283e-3, the hand F's -1.351723320e-3 (2.74e-8), P5's F after 1.341114953e-3 (2.01e0)
+ok
+test radforce::gpu_p4_reads_the_previous_steps_flux::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 1.858049144e-2, the hand F's 1.858049210e-2 (3.55e-8), P5's F after -1.712895507e-2 (2.08e0)
+SR-RADFORCE by-hand [0][1]: gained -1.858049144e-2, the hand F's -1.858049210e-2 (3.55e-8), P5's F after 1.712895507e-2 (2.08e0)
+SR-RADFORCE by-hand [1][0]: gained 1.351723283e-3, the hand F's 1.351723320e-3 (2.74e-8), P5's F after -1.341114953e-3 (2.01e0)
+SR-RADFORCE by-hand [1][1]: gained -1.351723283e-3, the hand F's -1.351723320e-3 (2.74e-8), P5's F after 1.341114953e-3 (2.01e0)
+ok
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu cap, x left: gained -1.178538245e3, Σ s·Δt·f -1.178538180e3 (5.53e-8), uncapped Σ Δt·f -1.251e5
+SR-RADFORCE gpu cap, x right: gained 1.178538245e3, Σ s·Δt·f 1.178538180e3 (5.53e-8), uncapped Σ Δt·f 1.251e5
+SR-RADFORCE gpu cap: 408 cells capped below half the impulse; E's largest relative gap from the free step 2.29e-7
+ok
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu cap, x left: gained -1.178538245e3, Σ s·Δt·f -1.178538180e3 (5.53e-8), uncapped Σ Δt·f -1.251e5
+SR-RADFORCE gpu cap, x right: gained 1.178538245e3, Σ s·Δt·f 1.178538180e3 (5.53e-8), uncapped Σ Δt·f 1.251e5
+SR-RADFORCE gpu cap: 408 cells capped below half the impulse; E's largest relative gap from the free step 2.29e-7
+ok
+test radforce::twin_a_dense_hot_block_stays_finite_and_keeps_its_mass ... SR-RADFORCE twin block: 50 steps to sim time 0.19449, E 5.3108e6, floor_added 4.9612e6, mass invariant 5000.000040920 → 5000.000040935 (3.10e-12)
+ok
+test radforce::twin_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-RADFORCE twin x, left: gained -1.650350651e-1, Σ Δt·f -1.650350651e-1, relative 0.00e0
+SR-RADFORCE twin x, right: gained 1.650350651e-1, Σ Δt·f 1.650350651e-1, relative 0.00e0
+SR-RADFORCE twin y, top: gained -1.091212647e-2, Σ Δt·f -1.091212647e-2, relative 0.00e0
+SR-RADFORCE twin y, bottom: gained 1.091212647e-2, Σ Δt·f 1.091212647e-2, relative 0.00e0
+SR-RADFORCE twin cells: worst |gained − Δt·f| 1.08e-19 of the largest Δt·f 4.70e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::twin_the_push_spends_no_more_than_the_heat_above_the_floor ... SR-RADFORCE twin cap, x left: gained -7.698094182e2, Σ s·Δt·f -7.698094182e2 (0.00e0), uncapped Σ Δt·f -3.311e5
+SR-RADFORCE twin cap, x right: gained 7.698094182e2, Σ s·Δt·f 7.698094182e2 (0.00e0), uncapped Σ Δt·f 3.311e5
+SR-RADFORCE twin cap: 284 cells capped below half the impulse; E's largest relative gap from the free step 0.00e0
+ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 497 filtered out; finished in 11.69s
+
+
+== 2026-11-10T09:52:23-05:00 radiation_force · task M0-D163 · box laserax-ai-server :: bash tests/gpu.sh radforce physics
+-- radiation_force · exit=0 · 12.53 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 11 tests
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.194345 until=none
+SR-RADFORCE gpu block: 50 steps, sim time 0.1943453617859632, mass invariant 5000.000040320 → 4999.999724492 (6.32e-8), floor_added 1926732.94340808, 0 non-finite values in the final dump
+ok
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.194346 until=none
+SR-RADFORCE gpu block: 50 steps, sim time 0.19434589706361297, mass invariant 5000.000040320 → 5000.000034129 (1.24e-9), floor_added 1927785.697657267, 0 non-finite values in the final dump
+ok
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained -1.454528807e-1, Σ Δt·f -1.454528895e-1, relative 5.99e-8
+SR-RADFORCE gpu x, right: gained 1.454528843e-1, Σ Δt·f 1.454528890e-1, relative 3.21e-8
+SR-RADFORCE gpu y, top: gained -1.073701904e-2, Σ Δt·f -1.073701875e-2, relative 2.72e-8
+SR-RADFORCE gpu y, bottom: gained 1.073701920e-2, Σ Δt·f 1.073701875e-2, relative 4.17e-8
+SR-RADFORCE gpu cells: worst |gained − Δt·f| 6.66e-11 of the largest Δt·f 2.08e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained -1.454528807e-1, Σ Δt·f -1.454528895e-1, relative 5.99e-8
+SR-RADFORCE gpu x, right: gained 1.454528843e-1, Σ Δt·f 1.454528890e-1, relative 3.21e-8
+SR-RADFORCE gpu y, top: gained -1.073701904e-2, Σ Δt·f -1.073701875e-2, relative 2.72e-8
+SR-RADFORCE gpu y, bottom: gained 1.073701920e-2, Σ Δt·f 1.073701875e-2, relative 4.17e-8
+SR-RADFORCE gpu cells: worst |gained − Δt·f| 6.66e-11 of the largest Δt·f 2.08e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::gpu_p4_reads_the_previous_steps_flux::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 1.858049144e-2, the hand F's 1.858049210e-2 (3.55e-8), P5's F after -1.712895507e-2 (2.08e0)
+SR-RADFORCE by-hand [0][1]: gained -1.858049144e-2, the hand F's -1.858049210e-2 (3.55e-8), P5's F after 1.712895507e-2 (2.08e0)
+SR-RADFORCE by-hand [1][0]: gained 1.351723283e-3, the hand F's 1.351723320e-3 (2.74e-8), P5's F after -1.341114953e-3 (2.01e0)
+SR-RADFORCE by-hand [1][1]: gained -1.351723283e-3, the hand F's -1.351723320e-3 (2.74e-8), P5's F after 1.341114953e-3 (2.01e0)
+ok
+test radforce::gpu_p4_reads_the_previous_steps_flux::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 1.858049144e-2, the hand F's 1.858049210e-2 (3.55e-8), P5's F after -1.712895507e-2 (2.08e0)
+SR-RADFORCE by-hand [0][1]: gained -1.858049144e-2, the hand F's -1.858049210e-2 (3.55e-8), P5's F after 1.712895507e-2 (2.08e0)
+SR-RADFORCE by-hand [1][0]: gained 1.351723283e-3, the hand F's 1.351723320e-3 (2.74e-8), P5's F after -1.341114953e-3 (2.01e0)
+SR-RADFORCE by-hand [1][1]: gained -1.351723283e-3, the hand F's -1.351723320e-3 (2.74e-8), P5's F after 1.341114953e-3 (2.01e0)
+ok
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu cap, x left: gained -1.178538245e3, Σ s·Δt·f -1.178538180e3 (5.53e-8), uncapped Σ Δt·f -1.251e5
+SR-RADFORCE gpu cap, x right: gained 1.178538245e3, Σ s·Δt·f 1.178538180e3 (5.53e-8), uncapped Σ Δt·f 1.251e5
+SR-RADFORCE gpu cap: 408 cells capped below half the impulse; E's largest relative gap from the free step 2.29e-7
+ok
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu cap, x left: gained -1.178538245e3, Σ s·Δt·f -1.178538180e3 (5.53e-8), uncapped Σ Δt·f -1.251e5
+SR-RADFORCE gpu cap, x right: gained 1.178538245e3, Σ s·Δt·f 1.178538180e3 (5.53e-8), uncapped Σ Δt·f 1.251e5
+SR-RADFORCE gpu cap: 408 cells capped below half the impulse; E's largest relative gap from the free step 2.29e-7
+ok
+test radforce::twin_a_dense_hot_block_stays_finite_and_keeps_its_mass ... SR-RADFORCE twin block: 50 steps to sim time 0.19449, E 5.3108e6, floor_added 4.9612e6, mass invariant 5000.000040920 → 5000.000040935 (3.10e-12)
+ok
+test radforce::twin_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-RADFORCE twin x, left: gained -1.650350651e-1, Σ Δt·f -1.650350651e-1, relative 0.00e0
+SR-RADFORCE twin x, right: gained 1.650350651e-1, Σ Δt·f 1.650350651e-1, relative 0.00e0
+SR-RADFORCE twin y, top: gained -1.091212647e-2, Σ Δt·f -1.091212647e-2, relative 0.00e0
+SR-RADFORCE twin y, bottom: gained 1.091212647e-2, Σ Δt·f 1.091212647e-2, relative 0.00e0
+SR-RADFORCE twin cells: worst |gained − Δt·f| 1.08e-19 of the largest Δt·f 4.70e-4; Σ, E, species 0e0 from the free step
+ok
+test radforce::twin_the_push_spends_no_more_than_the_heat_above_the_floor ... SR-RADFORCE twin cap, x left: gained -7.698094182e2, Σ s·Δt·f -7.698094182e2 (0.00e0), uncapped Σ Δt·f -3.311e5
+SR-RADFORCE twin cap, x right: gained 7.698094182e2, Σ s·Δt·f 7.698094182e2 (0.00e0), uncapped Σ Δt·f 3.311e5
+SR-RADFORCE twin cap: 284 cells capped below half the impulse; E's largest relative gap from the free step 0.00e0
+ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 497 filtered out; finished in 12.33s
+
+

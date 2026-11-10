@@ -435,7 +435,10 @@ mod star_tests {
         // And the star's own mass crosses at M_up exactly.
         let (physics, cal) = (Physics::shipped().unwrap(), shipped());
         let mut stars = Stars::new(&physics, &cal, 600, 0.0).unwrap();
-        stars.update(&summary(&[(0, 0, cal.m_up_sb as f32)]), At { step: 1, sim_time: 0.1 }, 0.0);
+        // M0-D163: the summary's mass is f32 — the first f32 at or above M_up (4,449.36279400508 rounds down to below it).
+        let m_up = cal.m_up_sb as f32;
+        let m_up = if f64::from(m_up) < cal.m_up_sb { m_up.next_up() } else { m_up };
+        stars.update(&summary(&[(0, 0, m_up)]), At { step: 1, sim_time: 0.1 }, 0.0);
         assert!(stars.facts(0.0).unwrap().supergiant, "M = M_up reads Supergiant");
         stars.restart(0.0);
         stars.update(&summary(&[(0, 0, (cal.m_up_sb * 0.99) as f32)]), At { step: 1, sim_time: 0.1 }, 0.0);

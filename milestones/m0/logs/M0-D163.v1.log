@@ -1,0 +1,14 @@
+=== V1 start 2026-11-10T08:42:33-05:00 SR-ERROR unknown argument "--version"; usage: sandbox-reactions [--adapter <name substring>] [--status-port <port>] [--offscreen-window] [--capture <script.json> --out <dir>] [--measure-ui <frames> [--calibration <file>]]
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=16161 sim_time=160.347401 until=met
+massive wall 223.69 s exit 0
+massive exit 0
+SR-HEADLESS DONE steps=44063 sim_time=500.005431 until=met
+sun wall 381.26 s exit 0
+sun exit 0
+SR-HEADLESS DONE steps=15696 sim_time=48.379642 until=met
+giant wall 3068.17 s exit 0
+giant exit 0
+=== V1 end 2026-11-10T09:33:41-05:00

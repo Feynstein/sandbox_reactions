@@ -1,0 +1,402 @@
+# M0-D165 log — opened 2026-11-10T10:00:36-05:00 on linux-pc (laserax-ai); rung_record now: model=claude-opus-5-5 level=high
+Traceback (most recent call last):
+  File "/home/ybelanger/scratch/d165/flash.py", line 7, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+## (1) Giant flash rows (flash.py, assets a6c041b1, build/m0-d165/giant_flash, RTX 4090)
+Traceback (most recent call last):
+  File "/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/2a93923f-708c-4bcd-85a7-ad0f7fdd15c4/scratchpad/probe/flash.py", line 113, in <module>
+    r = row(p, None)
+        ^^^^^^^^^^^^
+  File "/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/2a93923f-708c-4bcd-85a7-ad0f7fdd15c4/scratchpad/probe/flash.py", line 80, in row
+    h, pl = read_dump(path)
+            ^^^^^^^^^^^^^^^
+  File "/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/2a93923f-708c-4bcd-85a7-ad0f7fdd15c4/scratchpad/probe/flash.py", line 50, in read_dump
+    b = open(path, 'rb').read()
+        ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/2a93923f-708c-4bcd-85a7-ad0f7fdd15c4/scratchpad/giant/s_1900.bin'
+1901 t 10.4624 dt 0.00903 | c (299, 199) sig   2.415 T  107.15 d 0.149 | X H 0.721 He 0.262 C 0.00928 O 0.0077 Ne 6.05e-09 Mg 1.51e-09 Si 2.92e-15 S 1.25e-15 Fe 0 | eps_c H 178 He 1.35 C 5.52e-05 Ne 2.37e-14 O 4.61e-11 Si 0 nu 0.0031 | t_heat 0.985 t_sc 0.221 vr -0.207 | hot (300, 200) T 107.1 sig 2.41 d 0.15 eps 179 | L H 7.38e+05 He 1.25e+03 C 0.0686 Ne 1.49e-11 O 4.99e-08 Si 0 nu 11.2 | m_hot 26272.7 m_fe 0.0 m_core 166.3
+1905 t 10.4985 dt 0.00904 | c (299, 199) sig   2.426 T  109.29 d 0.147 | X H 0.72 He 0.262 C 0.00934 O 0.00771 Ne 9.22e-09 Mg 2.3e-09 Si 4.79e-15 S 2.05e-15 Fe 0 | eps_c H 231 He 2.96 C 0.000102 Ne 7.09e-14 O 9.24e-11 Si 0 nu 0.00364 | t_heat 0.769 t_sc 0.219 vr -0.180 | hot (300, 200) T 109.3 sig 2.43 d 0.15 eps 234 | L H 8.42e+05 He 2.5e+03 C 0.115 Ne 4.08e-11 O 9.1e-08 Si 0 nu 13 | m_hot 26476.5 m_fe 0.0 m_core 167.0
+1910 t 10.5438 dt 0.00905 | c (299, 199) sig   2.437 T  113.04 d 0.144 | X H 0.719 He 0.264 C 0.00955 O 0.00772 Ne 1.77e-08 Mg 4.43e-09 Si 1.03e-14 S 4.41e-15 Fe 0 | eps_c H 369 He 11.1 C 0.000293 Ne 4.24e-13 O 2.98e-10 Si 0 nu 0.00476 | t_heat 0.489 t_sc 0.216 vr -0.134 | hot (300, 200) T 113.0 sig 2.44 d 0.14 eps 380 | L H 1.06e+06 He 7.75e+03 C 0.269 Ne 2.05e-10 O 2.42e-07 Si 0 nu 16.2 | m_hot 26741.7 m_fe 0.0 m_core 167.8
+1912 t 10.5619 dt 0.00906 | c (299, 199) sig   2.441 T  115.20 d 0.141 | X H 0.718 He 0.264 C 0.00975 O 0.00773 Ne 2.49e-08 Mg 6.21e-09 Si 1.52e-14 S 6.49e-15 Fe 0 | eps_c H 485 He 23.1 C 0.000537 Ne 1.12e-12 O 5.73e-10 Si 0 nu 0.00554 | t_heat 0.373 t_sc 0.214 vr -0.110 | hot (300, 200) T 115.2 sig 2.44 d 0.14 eps 508 | L H 1.21e+06 He 1.43e+04 C 0.428 Ne 4.81e-10 O 4.11e-07 Si 0 nu 18 | m_hot 26844.5 m_fe 0.0 m_core 168.1
+1914 t 10.5800 dt 0.00906 | c (299, 199) sig   2.444 T  118.16 d 0.138 | X H 0.717 He 0.265 C 0.0102 O 0.00776 Ne 3.81e-08 Mg 9.52e-09 Si 2.44e-14 S 1.04e-14 Fe 0 | eps_c H 705 He 61.2 C 0.00123 Ne 3.95e-12 O 1.37e-09 Si 1.76e-24 nu 0.00679 | t_heat 0.254 t_sc 0.212 vr -0.080 | hot (300, 200) T 118.2 sig 2.44 d 0.14 eps 766 | L H 1.44e+06 He 3.16e+04 C 0.794 Ne 1.44e-09 O 8.18e-07 Si 1.22e-22 nu 20.3 | m_hot 26959.6 m_fe 0.0 m_core 168.3
+1915 t 10.5891 dt 0.00907 | c (299, 199) sig   2.445 T  120.18 d 0.136 | X H 0.717 He 0.265 C 0.0106 O 0.00778 Ne 5.01e-08 Mg 1.25e-08 Si 3.26e-14 S 1.4e-14 Fe 0 | eps_c H 908 He 116 C 0.00217 Ne 9.02e-12 O 2.43e-09 Si 4.45e-24 nu 0.00777 | t_heat 0.193 t_sc 0.21 vr -0.062 | hot (300, 200) T 120.2 sig 2.44 d 0.14 eps 1.02e+03 | L H 1.61e+06 He 5.29e+04 C 1.2 Ne 2.91e-09 O 1.28e-06 Si 8.89e-22 nu 21.8 | m_hot 27006.4 m_fe 0.0 m_core 168.4
+1916 t 10.5981 dt 0.00907 | c (299, 199) sig   2.445 T  122.84 d 0.134 | X H 0.716 He 0.265 C 0.0112 O 0.00783 Ne 7.08e-08 Mg 1.77e-08 Si 4.63e-14 S 1.98e-14 Fe 1.23e-28 | eps_c H 1.27e+03 He 266 C 0.00465 Ne 2.6e-11 O 5.14e-09 Si 1.44e-23 nu 0.00927 | t_heat 0.132 t_sc 0.209 vr -0.040 | hot (300, 200) T 122.8 sig 2.45 d 0.13 eps 1.53e+03 | L H 1.88e+06 He 1.02e+05 C 2.07 Ne 7.09e-09 O 2.26e-06 Si 3.16e-21 nu 23.7 | m_hot 27052.9 m_fe 0.0 m_core 168.4
+1917 t 10.6072 dt 0.00907 | c (299, 199) sig   2.446 T  128.54 d 0.129 | X H 0.715 He 0.263 C 0.0136 O 0.00802 Ne 1.44e-07 Mg 3.59e-08 Si 8.99e-14 S 3.85e-14 Fe 8.94e-28 | eps_c H 2.53e+03 He 1.41e+03 C 0.0249 Ne 2.26e-10 O 2.42e-08 Si 1.51e-22 nu 0.0133 | t_heat 0.0534 t_sc 0.205 vr -0.014 | hot (300, 200) T 128.5 sig 2.45 d 0.13 eps 3.95e+03 | L H 2.33e+06 He 2.58e+05 C 4.69 Ne 2.56e-08 O 5.11e-06 Si 1.46e-20 nu 26.5 | m_hot 27105.7 m_fe 0.0 m_core 168.5
+1918 t 10.6163 dt 0.00907 | c (300, 200) sig   2.446 T  815.27 d 0.024 | X H 4.62e-08 He 1.4e-10 C 6.21e-20 O 3.32e-10 Ne 2.58e-37 Mg 8.43e-28 Si 3.71e-17 S 1.59e-17 Fe 1 | eps_c H 0.0245 He 0.00289 C 4.1e-20 Ne 3.63e-21 O 0.00147 Si 0.000534 nu 3.49e+04 | t_heat inf t_sc 0.159 vr 0.022 | hot (298, 197) T 988.1 sig 2.44 d 0.02 eps 0.183 | L H 4.17e+06 He 9.6e+06 C 308 Ne 6.46e-06 O 0.34 Si 0.121 nu 6.61e+06 | m_hot 27152.2 m_fe 78.2 m_core 168.5
+1919 t 10.6227 dt 0.00641 | c (300, 199) sig   2.446 T  192.74 d 0.094 | X H 4.63e-08 He 1.39e-10 C 6.18e-20 O 3.29e-10 Ne 2.54e-37 Mg 2.81e-28 Si 3.64e-17 S 1.56e-17 Fe 1 | eps_c H 4.14e-09 He 4.23e-19 C 2.43e-32 Ne 6.9e-35 O 1.02e-17 Si 6.95e-20 nu 0.34 | t_heat inf t_sc 0.314 vr 0.374 | hot (292, 192) T 1007.4 sig 2.40 d 0.02 eps 0.228 | L H 3.5e+06 He 1.54e+07 C 521 Ne 1.22e-05 O 0.561 Si 0.2 nu 1.33e+07 | m_hot 27195.5 m_fe 873.0 m_core 168.5
+1920 t 10.6290 dt 0.00634 | c (297, 197) sig   2.450 T  247.98 d 0.074 | X H 4.12e-08 He 2.92e-10 C 2.75e-19 O 7.24e-10 Ne 1.72e-34 Mg 6.17e-29 Si 2.94e-16 S 1.26e-16 Fe 1 | eps_c H 9.12e-08 He 8.98e-15 C 1.9e-28 Ne 3.81e-29 O 4.99e-14 Si 1.31e-15 nu 2.56 | t_heat inf t_sc 0.28 vr 0.420 | hot (308, 182) T 1164.0 sig 2.28 d 0.02 eps 0.976 | L H 2.59e+06 He 5.65e+06 C 140 Ne 2.31e-05 O 1.83 Si 0.656 nu 3.14e+07 | m_hot 27246.6 m_fe 2821.9 m_core 168.2
+1921 t 10.6349 dt 0.00583 | c (302, 203) sig   2.448 T  266.94 d 0.069 | X H 4.11e-08 He 2.76e-10 C 2.45e-19 O 7.24e-10 Ne 1.23e-34 Mg 5.43e-28 Si 2.72e-16 S 1.17e-16 Fe 1 | eps_c H 2.27e-07 He 6.4e-14 C 7.85e-28 Ne 1.73e-28 O 3.37e-13 Si 1.03e-14 nu 4.61 | t_heat inf t_sc 0.271 vr 0.874 | hot (271, 198) T 1137.9 sig 2.05 d 0.01 eps 0.828 | L H 1.83e+06 He 1.32e+06 C 23.9 Ne 0.000352 O 123 Si 0.631 nu 3.72e+07 | m_hot 27275.4 m_fe 5815.8 m_core 167.9
+1925 t 10.6545 dt 0.00393 | c (302, 204) sig   2.426 T  272.16 d 0.068 | X H 4.11e-08 He 2.95e-10 C 2.82e-19 O 7.23e-10 Ne 1.54e-34 Mg 7.68e-33 Si 3.08e-16 S 1.32e-16 Fe 1 | eps_c H 2.86e-07 He 1.34e-13 C 1.57e-27 Ne 3.47e-28 O 5.47e-13 Si 2.01e-14 nu 5.38 | t_heat inf t_sc 0.268 vr 0.708 | hot (263, 263) T 1529.8 sig 0.72 d 0.00 eps 41.3 | L H 1.37e+07 He 1.65e+07 C 450 Ne 0.000219 O 2.28e+06 Si 6.49e+05 nu 7.06e+07 | m_hot 28949.9 m_fe 23466.9 m_core 166.3
+## (1) Massive flash rows (flash.py, build/m0-d165/massive_flash, RTX 4090)
+16001 t 158.6961 dt 0.01003 | c (300, 199) sig  21.418 T  102.63 d 0.524 | X H 0.177 He 0.353 C 0.437 O 0.0313 Ne 0.000786 Mg 0.000196 Si 2.33e-12 S 7.9e-13 Fe 0 | eps_c H 56.9 He 51.5 C 0.293 Ne 6.29e-09 O 1.78e-09 Si 0 nu 0.0022 | t_heat 0.842 t_sc 0.229 vr -0.131 | hot (300, 199) T 102.6 sig 21.42 d 0.52 eps 109 | L H 6.41e+04 He 7.47e+03 C 25 Ne 5.19e-07 O 1.48e-07 Si 0 nu 0.39 | m_hot 2918.3 m_fe 0.0 m_core 1064.3
+16080 t 159.4875 dt 0.01000 | c (300, 199) sig  21.723 T  105.52 d 0.522 | X H 0.172 He 0.323 C 0.465 O 0.0378 Ne 0.00111 Mg 0.000278 Si 4.05e-12 S 1.36e-12 Fe 0 | eps_c H 75.6 He 124 C 0.785 Ne 2.33e-08 O 6.98e-09 Si 0 nu 0.00275 | t_heat 0.464 t_sc 0.228 vr -0.085 | hot (300, 199) T 105.5 sig 21.72 d 0.52 eps 200 | L H 6.8e+04 He 1.68e+04 C 67.7 Ne 1.95e-06 O 5.85e-07 Si 0 nu 0.551 | m_hot 2922.4 m_fe 0.0 m_core 1076.4
+16088 t 159.5674 dt 0.01000 | c (300, 199) sig  21.671 T  106.67 d 0.519 | X H 0.172 He 0.316 C 0.471 O 0.0393 Ne 0.00118 Mg 0.000295 Si 4.48e-12 S 1.51e-12 Fe 0 | eps_c H 85.5 He 179 C 1.11 Ne 3.56e-08 O 1.09e-08 Si 0 nu 0.00299 | t_heat 0.353 t_sc 0.228 vr -0.064 | hot (300, 199) T 106.7 sig 21.67 d 0.52 eps 265 | L H 6.99e+04 He 2.34e+04 C 95.8 Ne 2.98e-06 O 9.14e-07 Si 0 nu 0.59 | m_hot 2923.1 m_fe 0.0 m_core 1076.2
+16092 t 159.6074 dt 0.01000 | c (300, 199) sig  21.628 T  107.63 d 0.517 | X H 0.171 He 0.312 C 0.475 O 0.0402 Ne 0.00122 Mg 0.000305 Si 4.78e-12 S 1.61e-12 Fe 0 | eps_c H 95.3 He 244 C 1.48 Ne 4.99e-08 O 1.56e-08 Si 0 nu 0.00322 | t_heat 0.277 t_sc 0.228 vr -0.049 | hot (300, 199) T 107.6 sig 21.63 d 0.52 eps 341 | L H 7.15e+04 He 3.09e+04 C 127 Ne 4.17e-06 O 1.31e-06 Si 0 nu 0.622 | m_hot 2923.4 m_fe 0.0 m_core 1075.9
+16094 t 159.6274 dt 0.00999 | c (300, 199) sig  21.599 T  108.33 d 0.515 | X H 0.171 He 0.31 C 0.477 O 0.0408 Ne 0.00125 Mg 0.000312 Si 4.97e-12 S 1.68e-12 Fe 0 | eps_c H 103 He 307 C 1.82 Ne 6.35e-08 O 2.02e-08 Si 0 nu 0.00339 | t_heat 0.23 t_sc 0.227 vr -0.039 | hot (300, 199) T 108.3 sig 21.60 d 0.51 eps 412 | L H 7.27e+04 He 3.79e+04 C 156 Ne 5.3e-06 O 1.68e-06 Si 0 nu 0.647 | m_hot 2923.5 m_fe 0.0 m_core 1075.7
+16095 t 159.6374 dt 0.00999 | c (300, 199) sig  21.582 T  108.79 d 0.514 | X H 0.171 He 0.308 C 0.478 O 0.0412 Ne 0.00126 Mg 0.000315 Si 5.08e-12 S 1.71e-12 Fe 0 | eps_c H 109 He 356 C 2.07 Ne 7.39e-08 O 2.37e-08 Si 0 nu 0.00351 | t_heat 0.204 t_sc 0.227 vr -0.033 | hot (300, 199) T 108.8 sig 21.58 d 0.51 eps 467 | L H 7.35e+04 He 4.32e+04 C 177 Ne 6.17e-06 O 1.98e-06 Si 0 nu 0.662 | m_hot 2923.5 m_fe 0.0 m_core 1075.5
+16096 t 159.6474 dt 0.00999 | c (300, 199) sig  21.564 T  109.35 d 0.512 | X H 0.171 He 0.306 C 0.479 O 0.0416 Ne 0.00128 Mg 0.000319 Si 5.21e-12 S 1.76e-12 Fe 0 | eps_c H 117 He 428 C 2.42 Ne 8.89e-08 O 2.88e-08 Si 0 nu 0.00365 | t_heat 0.175 t_sc 0.227 vr -0.027 | hot (300, 199) T 109.3 sig 21.56 d 0.51 eps 547 | L H 7.45e+04 He 5.08e+04 C 208 Ne 7.42e-06 O 2.4e-06 Si 0 nu 0.682 | m_hot 2923.6 m_fe 0.0 m_core 1075.4
+16097 t 159.6574 dt 0.00999 | c (300, 199) sig  21.543 T  110.06 d 0.511 | X H 0.171 He 0.305 C 0.481 O 0.042 Ne 0.0013 Mg 0.000324 Si 5.36e-12 S 1.81e-12 Fe 0 | eps_c H 127 He 541 C 2.96 Ne 1.12e-07 O 3.68e-08 Si 0 nu 0.00385 | t_heat 0.144 t_sc 0.227 vr -0.020 | hot (300, 200) T 110.1 sig 21.53 d 0.51 eps 690 | L H 7.59e+04 He 6.24e+04 C 254 Ne 9.36e-06 O 3.07e-06 Si 0 nu 0.708 | m_hot 2923.6 m_fe 0.0 m_core 1075.2
+16098 t 159.6674 dt 0.00999 | c (300, 199) sig  21.520 T  111.01 d 0.508 | X H 0.171 He 0.302 C 0.483 O 0.0426 Ne 0.00132 Mg 0.000329 Si 5.53e-12 S 1.87e-12 Fe 0 | eps_c H 143 He 738 C 3.85 Ne 1.52e-07 O 5.06e-08 Si 0 nu 0.00412 | t_heat 0.11 t_sc 0.226 vr -0.011 | hot (300, 200) T 111.0 sig 21.51 d 0.51 eps 914 | L H 7.79e+04 He 8.22e+04 C 330 Ne 1.27e-05 O 4.23e-06 Si 0 nu 0.883 | m_hot 2923.7 m_fe 0.0 m_core 1075.0
+16099 t 159.6774 dt 0.00998 | c (300, 199) sig  21.493 T  112.37 d 0.505 | X H 0.171 He 0.3 C 0.485 O 0.0432 Ne 0.00134 Mg 0.000336 Si 5.76e-12 S 1.94e-12 Fe 0 | eps_c H 169 He 1.15e+03 C 5.59 Ne 2.32e-07 O 7.94e-08 Si 0 nu 0.00454 | t_heat 0.0742 t_sc 0.226 vr -0.002 | hot (300, 200) T 112.4 sig 21.48 d 0.50 eps 1.38e+03 | L H 8.09e+04 He 1.22e+05 C 479 Ne 1.94e-05 O 6.64e-06 Si 0 nu 0.937 | m_hot 2923.7 m_fe 0.0 m_core 1074.8
+16100 t 159.6873 dt 0.00996 | c (300, 199) sig  21.462 T  115.02 d 0.499 | X H 0.171 He 0.295 C 0.488 O 0.0443 Ne 0.00138 Mg 0.000344 Si 6.1e-12 S 2.06e-12 Fe 0 | eps_c H 235 He 2.7e+03 C 11.3 Ne 5.16e-07 O 1.84e-07 Si 0 nu 0.00547 | t_heat 0.0341 t_sc 0.225 vr 0.011 | hot (300, 200) T 115.6 sig 21.45 d 0.50 eps 3.58e+03 | L H 8.83e+04 He 2.82e+05 C 1.02e+03 Ne 4.59e-05 O 1.64e-05 Si 0 nu 1.05 | m_hot 2923.7 m_fe 0.0 m_core 1074.5
+16101 t 159.6972 dt 0.00990 | c (300, 199) sig  21.424 T  739.73 d 0.155 | X H 5.12e-09 He 2.19e-11 C 1.35e-20 O 5.2e-11 Ne 1.2e-38 Mg 1.55e-29 Si 1.17e-18 S 5.02e-19 Fe 1 | eps_c H 0.00116 He 0.000124 C 3.84e-21 Ne 2.77e-22 O 5.63e-05 Si 2.13e-05 nu 1.6e+04 | t_heat inf t_sc 0.155 vr 0.027 | hot (300, 199) T 739.7 sig 21.42 d 0.16 eps 0.00136 | L H 6.97e+04 He 4.81e+04 C 7.08 Ne 3.94e-08 O 0.00454 Si 0.00169 nu 1.27e+06 | m_hot 2923.8 m_fe 85.6 m_core 1074.3
+== cfl 0.4
+  1901 t   10.462 None           main_sequence  sig_c   2.415 T_c  107.15 d_c 0.149 X_H 0.721 X_He 0.262 X_Fe 0.000 vr -0.135 R  154.9 L 3.6e+05 L_H 7.1e+05 L_nuc 7.11e+05 M 42380
+== cfl 0.1
+  1901 t   10.462 None           main_sequence  sig_c   2.415 T_c  107.15 d_c 0.149 X_H 0.721 X_He 0.262 X_Fe 0.000 vr -0.135 R  154.9 L 3.6e+05 L_H 7.1e+05 L_nuc 7.11e+05 M 42380
+== cfl 0.04
+  1901 t   10.462 None           main_sequence  sig_c   2.415 T_c  107.15 d_c 0.149 X_H 0.721 X_He 0.262 X_Fe 0.000 vr -0.135 R  154.9 L 3.6e+05 L_H 7.1e+05 L_nuc 7.11e+05 M 42380
+== cfl 0.4
+  1916 t   10.598 main_sequence  main_sequence  sig_c   2.445 T_c  122.84 d_c 0.134 X_H 0.716 X_He 0.265 X_Fe 0.000 vr -0.121 R  154.8 L 4.08e+05 L_H 1.52e+06 L_nuc 1.55e+06 M 42356
+  1917 t   10.607 main_sequence  he_core        sig_c   2.446 T_c  128.54 d_c 0.129 X_H 0.715 X_He 0.263 X_Fe 0.000 vr -0.119 R  154.8 L 4.12e+05 L_H 1.73e+06 L_nuc 1.8e+06 M 42354
+  1918 t   10.616 main_sequence  he_shell       sig_c   2.446 T_c  815.27 d_c 0.024 X_H 0.000 X_He 0.000 X_Fe 1.000 vr -0.118 R  154.8 L 4.15e+05 L_H 5.58e+07 L_nuc 7.44e+07 M 42353
+== cfl 0.1
+  1961 t   10.598 he_core        he_core        sig_c   2.441 T_c  132.13 d_c 0.125 X_H 0.714 X_He 0.260 X_Fe 0.000 vr -0.120 R  154.8 L 4.08e+05 L_H 2.35e+06 L_nuc 2.63e+06 M 42356
+  1962 t   10.600 he_core        he_core        sig_c   2.441 T_c  139.33 d_c 0.120 X_H 0.713 X_He 0.252 X_Fe 0.000 vr -0.119 R  154.8 L 4.09e+05 L_H 2.66e+06 L_nuc 3.16e+06 M 42355
+  1963 t   10.603 he_core        he_shell       sig_c   2.440 T_c  842.63 d_c 0.023 X_H 0.000 X_He 0.000 X_Fe 1.000 vr -0.119 R  154.8 L 4.1e+05 L_H 3.06e+08 L_nuc 4.11e+08 M 42355
+== cfl 0.04
+  2048 t   10.595 he_core        he_core        sig_c   2.440 T_c  136.45 d_c 0.122 X_H 0.713 X_He 0.253 X_Fe 0.000 vr -0.120 R  154.8 L 4.07e+05 L_H 2.75e+06 L_nuc 3.4e+06 M 42356
+  2049 t   10.596 he_core        he_core        sig_c   2.439 T_c  142.47 d_c 0.117 X_H 0.713 X_He 0.246 X_Fe 0.000 vr -0.120 R  154.8 L 4.07e+05 L_H 3.03e+06 L_nuc 4.05e+06 M 42356
+  2050 t   10.597 he_core        he_shell       sig_c   2.439 T_c  968.66 d_c 0.020 X_H 0.000 X_He 0.000 X_Fe 1.000 vr -0.120 R  154.8 L 4.08e+05 L_H 4.2e+08 L_nuc 5.64e+08 M 42356
+  1901 t   10.462 M    42380 W -1.303e+07 U_th  4.534e+06 K  3.12e+05 2(U+K)/|W| 0.744 R90  155.0 L   3.6e+05 tau_dyn   9.37 tau_KH   18.07 KH/dyn   1.93
+ 16001 t  158.696 M     8085 W -1.602e+06 U_th  5.087e+05 K  2.49e+04 2(U+K)/|W| 0.666 R90  149.4 L       nan tau_dyn  20.30 tau_KH     nan KH/dyn    nan
+## (1) P6 twin probe (scratch p6probe: the densest cell of the dump through sr_physics::reference::react, f64, neutrinos on, fixed Σ — the next pass's input before P1–P5 moved it)
+dump /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/2a93923f-708c-4bcd-85a7-ad0f7fdd15c4/scratchpad/giant/s_1916.bin step 1916 t 10.598148516379297 cell (299, 199) Σ 2.4454 dt 0.00907
+start       T   122.841 X H 0.7161 He 0.2648 C 0.0112 O 0.0078 Ne 7.081e-8 Mg 1.770e-8 Si 4.627e-14 S 1.983e-14 Fe 0.0000 n 0.000e0
+one pass    T   150.978 X H 0.7137 He 0.2399 C 0.0340 O 0.0124 Ne 1.367e-6 Mg 3.418e-7 Si 6.310e-13 S 2.698e-13 Fe 0.0000 n 0.000e0
+one pass: substeps 5 retried 1 attempts 6 max_substeps 5 unfinished 0 max_dx 0.008 max_dT/T 0.050 nuclear ["5.170e1", "5.821e1", "2.196e-3", "3.959e-11", "1.409e-9", "3.117e-23", "0.000e0"]
+
+thread 'main' (2268109) panicked at /rustc/b940084d7eb6a299eb4bfeb8e34901bc051e7ac4/library/std/src/io/stdio.rs:1168:9:
+failed printing to stdout: Broken pipe (os error 32)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+dump /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/2a93923f-708c-4bcd-85a7-ad0f7fdd15c4/scratchpad/giant/s_1917.bin step 1917 t 10.607218579389157 cell (299, 199) Σ 2.4458 dt 0.00907
+start       T   128.536 X H 0.7149 He 0.2635 C 0.0136 O 0.0080 Ne 1.436e-7 Mg 3.589e-8 Si 8.987e-14 S 3.850e-14 Fe 0.0000 n 0.000e0
+one pass    T   668.982 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 8.072e-36 Mg 3.578e-35 Si 1.993e-16 S 8.541e-17 Fe 1.0000 n 0.000e0
+one pass: substeps 229 retried 44 attempts 273 max_substeps 229 unfinished 0 max_dx 0.054 max_dT/T 0.050 nuclear ["1.521e4", "2.885e3", "2.023e-2", "4.511e-3", "1.689e3", "6.448e2", "0.000e0"]
+slice   40/400 t+0.000907 att   1 T   131.381 X H 0.7146 He 0.2616 C 0.0156 O 0.0082 Ne 1.942e-7 Mg 4.856e-8 Si 1.219e-13 S 5.222e-14 Fe 0.0000 n 0.000e0
+slice   80/400 t+0.001814 att   1 T   138.037 X H 0.7141 He 0.2547 C 0.0221 O 0.0090 Ne 4.106e-7 Mg 1.027e-7 Si 2.296e-13 S 9.832e-14 Fe 0.0000 n 0.000e0
+slice   94/400 t+0.002131 att   1 T   152.584 X H 0.7137 He 0.2335 C 0.0392 O 0.0137 Ne 1.616e-6 Mg 4.039e-7 Si 7.389e-13 S 3.160e-13 Fe 0.0000 n 0.000e0
+slice   96/400 t+0.002177 att 235 T  1537.915 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 1.612e-40 Mg 4.705e-40 Si 1.945e-19 S 8.334e-20 Fe 1.0000 n 0.000e0
+slice  120/400 t+0.002721 att   1 T   938.958 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 8.423e-38 Mg 3.158e-37 Si 1.118e-17 S 4.791e-18 Fe 1.0000 n 0.000e0
+slice  160/400 t+0.003628 att   1 T   822.142 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 5.999e-37 Mg 2.416e-36 Si 3.975e-17 S 1.704e-17 Fe 1.0000 n 0.000e0
+slice  200/400 t+0.004535 att   1 T   768.652 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 1.689e-36 Mg 7.060e-36 Si 7.679e-17 S 3.291e-17 Fe 1.0000 n 0.000e0
+slice  240/400 t+0.005442 att   1 T   734.485 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 3.455e-36 Mg 1.482e-35 Si 1.202e-16 S 5.151e-17 Fe 1.0000 n 0.000e0
+slice  280/400 t+0.006349 att   1 T   709.646 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 5.989e-36 Mg 2.619e-35 Si 1.686e-16 S 7.227e-17 Fe 1.0000 n 0.000e0
+slice  320/400 t+0.007256 att   1 T   690.267 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 9.369e-36 Mg 4.162e-35 Si 2.211e-16 S 9.478e-17 Fe 1.0000 n 0.000e0
+slice  360/400 t+0.008163 att   1 T   674.455 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 1.367e-35 Mg 6.152e-35 Si 2.770e-16 S 1.187e-16 Fe 1.0000 n 0.000e0
+slice  400/400 t+0.009070 att   1 T   661.147 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 1.895e-35 Mg 8.628e-35 Si 3.355e-16 S 1.438e-16 Fe 1.0000 n 0.000e0
+
+dump /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/2a93923f-708c-4bcd-85a7-ad0f7fdd15c4/scratchpad/massive/s_16099.bin step 16099 t 159.67735712556168 cell (300, 199) Σ 21.4930 dt 0.00996
+start       T   112.371 X H 0.1707 He 0.2996 C 0.4848 O 0.0432 Ne 1.342e-3 Mg 3.356e-4 Si 5.759e-12 S 1.944e-12 Fe 0.0000 n 0.000e0
+one pass    T   667.142 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 1.324e-37 Mg 5.909e-37 Si 2.917e-18 S 1.250e-18 Fe 1.0000 n 0.000e0
+one pass: substeps 220 retried 29 attempts 249 max_substeps 220 unfinished 0 max_dx 0.088 max_dT/T 0.050 nuclear ["3.193e4", "1.327e4", "4.176e3", "9.246e2", "1.484e4", "5.666e3", "0.000e0"]
+
+thread 'main' (2268112) panicked at /rustc/b940084d7eb6a299eb4bfeb8e34901bc051e7ac4/library/std/src/io/stdio.rs:1168:9:
+failed printing to stdout: Broken pipe (os error 32)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+dump /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/2a93923f-708c-4bcd-85a7-ad0f7fdd15c4/scratchpad/massive/s_16100.bin step 16100 t 159.6873151906766 cell (300, 199) Σ 21.4617 dt 0.0099
+start       T   115.020 X H 0.1706 He 0.2954 C 0.4880 O 0.0443 Ne 1.378e-3 Mg 3.445e-4 Si 6.105e-12 S 2.062e-12 Fe 0.0000 n 0.000e0
+one pass    T   633.305 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 3.201e-37 Mg 1.475e-36 Si 4.794e-18 S 2.055e-18 Fe 1.0000 n 0.000e0
+one pass: substeps 219 retried 29 attempts 248 max_substeps 219 unfinished 0 max_dx 0.087 max_dT/T 0.050 nuclear ["3.185e4", "1.316e4", "4.169e3", "9.232e2", "1.482e4", "5.658e3", "0.000e0"]
+slice   39/400 t+0.000965 att   1 T   126.533 X H 0.1706 He 0.2850 C 0.4957 O 0.0470 Ne 1.419e-3 Mg 3.549e-4 Si 6.745e-12 S 2.283e-12 Fe 0.0000 n 0.000e0
+slice   40/400 t+0.000990 att   1 T   129.086 X H 0.1706 He 0.2826 C 0.4974 O 0.0476 Ne 1.426e-3 Mg 3.565e-4 Si 6.882e-12 S 2.331e-12 Fe 0.0000 n 0.000e0
+slice   42/400 t+0.001040 att 230 T  1560.868 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 2.091e-42 Mg 6.064e-42 Si 2.562e-21 S 1.098e-21 Fe 1.0000 n 0.000e0
+slice   80/400 t+0.001980 att   1 T   872.164 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 3.452e-39 Mg 1.346e-38 Si 3.085e-19 S 1.322e-19 Fe 1.0000 n 0.000e0
+slice  120/400 t+0.002970 att   1 T   790.174 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 1.531e-38 Mg 6.303e-38 Si 8.024e-19 S 3.439e-19 Fe 1.0000 n 0.000e0
+slice  160/400 t+0.003960 att   1 T   745.925 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 3.760e-38 Mg 1.598e-37 Si 1.414e-18 S 6.060e-19 Fe 1.0000 n 0.000e0
+slice  200/400 t+0.004950 att   1 T   716.039 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 7.203e-38 Mg 3.133e-37 Si 2.116e-18 S 9.067e-19 Fe 1.0000 n 0.000e0
+slice  240/400 t+0.005940 att   1 T   693.677 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 1.201e-37 Mg 5.319e-37 Si 2.888e-18 S 1.238e-18 Fe 1.0000 n 0.000e0
+slice  280/400 t+0.006930 att   1 T   675.920 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 1.831e-37 Mg 8.232e-37 Si 3.718e-18 S 1.593e-18 Fe 1.0000 n 0.000e0
+slice  320/400 t+0.007920 att   1 T   661.258 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 2.622e-37 Mg 1.194e-36 Si 4.594e-18 S 1.969e-18 Fe 1.0000 n 0.000e0
+slice  360/400 t+0.008910 att   1 T   648.810 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 3.586e-37 Mg 1.651e-36 Si 5.507e-18 S 2.360e-18 Fe 1.0000 n 0.000e0
+slice  400/400 t+0.009900 att   1 T   638.023 X H 0.0000 He 0.0000 C 0.0000 O 0.0000 Ne 4.732e-37 Mg 2.200e-36 Si 6.451e-18 S 2.765e-18 Fe 1.0000 n 0.000e0
+## (1) radii.py — the iron front (Giant, then Massive)
+1917 t 10.6072 M 42354 r50 66.7 r90 154.9 r99 249.6 r_Fe 0.0 | T(+x 0,5,10,15,20,30,40,60) 129 125 119 113 108 98 89 73 | sig 2.4 2.4 2.4 2.4 2.3 2 1.7 1.1
+1918 t 10.6163 M 42353 r50 66.6 r90 154.9 r99 249.6 r_Fe 3.6 | T(+x 0,5,10,15,20,30,40,60) 815 134 121 114 108 97 88 72 | sig 2.4 2.4 2.4 2.3 2.3 2 1.7 1
+1919 t 10.6227 M 42351 r50 66.6 r90 154.9 r99 249.6 r_Fe 11.3 | T(+x 0,5,10,15,20,30,40,60) 193 651 887 116 109 98 88 72 | sig 2.4 2.4 2.4 2.3 2.3 2 1.7 1
+1920 t 10.6290 M 42350 r50 66.7 r90 154.9 r99 249.7 r_Fe 22.8 | T(+x 0,5,10,15,20,30,40,60) 248 248 239 651 659 102 91 75 | sig 2.4 2.4 2.4 2.4 2.3 2.1 1.8 1.1
+1921 t 10.6349 M 42349 r50 66.7 r90 155.0 r99 249.8 r_Fe 32.8 | T(+x 0,5,10,15,20,30,40,60) 267 268 267 250 660 103 87 71 | sig 2.4 2.4 2.4 2.3 2.2 1.9 1.6 0.97
+1922 t 10.6407 M 42348 r50 66.6 r90 155.0 r99 249.8 r_Fe 42.5 | T(+x 0,5,10,15,20,30,40,60) 270 270 270 271 268 659 99 71 | sig 2.4 2.4 2.4 2.3 2.2 1.9 1.6 0.97
+1923 t 10.6458 M 42347 r50 66.6 r90 155.0 r99 249.8 r_Fe 52.7 | T(+x 0,5,10,15,20,30,40,60) 273 273 273 274 274 269 673 72 | sig 2.4 2.4 2.4 2.3 2.2 1.9 1.6 0.97
+1924 t 10.6506 M 42346 r50 66.6 r90 155.0 r99 249.9 r_Fe 64.8 | T(+x 0,5,10,15,20,30,40,60) 273 273 273 277 273 272 263 104 | sig 2.4 2.4 2.4 2.3 2.2 1.9 1.6 0.95
+1925 t 10.6545 M 42346 r50 66.6 r90 155.0 r99 249.9 r_Fe 78.2 | T(+x 0,5,10,15,20,30,40,60) 272 272 272 272 272 272 272 698 | sig 2.4 2.4 2.4 2.3 2.2 1.9 1.6 0.97
+1926 t 10.6594 M 42345 r50 66.6 r90 155.0 r99 249.9 r_Fe 96.0 | T(+x 0,5,10,15,20,30,40,60) 266 266 266 265 264 262 259 251 | sig 2.4 2.4 2.4 2.3 2.2 1.9 1.6 0.97
+1927 t 10.6637 M 42344 r50 66.6 r90 155.0 r99 250.0 r_Fe 119.0 | T(+x 0,5,10,15,20,30,40,60) 259 259 258 257 256 253 250 243 | sig 2.4 2.4 2.4 2.3 2.2 1.9 1.6 0.97
+1928 t 10.6675 M 42343 r50 66.6 r90 155.0 r99 250.0 r_Fe 146.1 | T(+x 0,5,10,15,20,30,40,60) 252 252 251 250 249 245 241 232 | sig 2.4 2.4 2.4 2.3 2.2 1.9 1.6 0.97
+1929 t 10.6716 M 42343 r50 66.6 r90 155.0 r99 250.0 r_Fe 159.0 | T(+x 0,5,10,15,20,30,40,60) 243 243 242 240 238 234 227 214 | sig 2.4 2.4 2.4 2.3 2.2 1.9 1.6 0.98
+16100 t 159.6873 M 8046 r50 17.8 r90 150.5 r99 285.9 r_Fe 0.0 | T(+x 0,5,10,15,20,30,40,60) 115 77 58 46 39 30 26 21 | sig 21 9.5 3.4 1.5 0.8 0.29 0.14 0.055
+16101 t 159.6972 M 8046 r50 17.8 r90 150.5 r99 285.9 r_Fe 1.4 | T(+x 0,5,10,15,20,30,40,60) 740 77 58 46 39 30 26 21 | sig 21 9.5 3.4 1.5 0.8 0.29 0.14 0.055
+16102 t 159.7041 M 8046 r50 17.8 r90 150.5 r99 286.0 r_Fe 3.2 | T(+x 0,5,10,15,20,30,40,60) 245 77 58 46 39 30 26 21 | sig 21 9.5 3.4 1.5 0.8 0.29 0.14 0.055
+16103 t 159.7113 M 8045 r50 17.8 r90 150.6 r99 286.0 r_Fe 5.4 | T(+x 0,5,10,15,20,30,40,60) 282 93 58 46 39 30 26 21 | sig 21 9.5 3.4 1.5 0.8 0.29 0.14 0.055
+2000 t 12.6492 dt 0.00862
+    c (300, 200) sig   4.484 T   64.02 d 0.338
+    X H 0.724 He 0.26 C 0.0092 O 0.0077 Ne 7.48e-15 Mg 1.87e-15 Si 0 S 0 Fe 0
+    eps_c H 17.2 He 1.26e-09 C 4.06e-12 Ne 0 O 0 Si 0 nu 0
+    t_heat 6.14 t_sc 0.252 vr -0.099
+8000 t 76.2067 dt 0.01062
+    c (299, 199) sig   7.686 T   77.90 d 0.385
+    X H 0.517 He 0.466 C 0.0092 O 0.0077 Ne 1.25e-10 Mg 3.12e-11 Si 0 S 0 Fe 0
+    eps_c H 31.6 He 0.000143 C 6.51e-09 Ne 1.72e-20 O 0 Si 0 nu 0
+    t_heat 3.44 t_sc 0.239 vr -0.021
+14000 t 138.6587 dt 0.01009
+    c (300, 200) sig  16.661 T   91.02 d 0.489
+    X H 0.275 He 0.699 C 0.0182 O 0.00772 Ne 4.8e-08 Mg 1.2e-08 Si 5.2e-15 S 2.23e-15 Fe 0
+    eps_c H 39.4 He 1.67 C 9.18e-06 Ne 4.4e-15 O 9.04e-13 Si 0 nu 0
+    t_heat 2.41 t_sc 0.228 vr -0.077
+15000 t 148.6838 dt 0.00998
+    c (300, 200) sig  19.163 T   95.80 d 0.505
+    X H 0.23 He 0.682 C 0.0798 O 0.00806 Ne 2.22e-06 Mg 5.56e-07 Si 2.83e-14 S 1.21e-14 Fe 0
+    eps_c H 45.2 He 16.8 C 0.00103 Ne 1.45e-12 O 7.47e-12 Si 0 nu 0.00127
+    t_heat 1.58 t_sc 0.226 vr -0.089
+m_cnoar4 exit 0 SR-HEADLESS DONE steps=34032 sim_time=484.720593 until=met
+g_ar4            steps    572 t     9.27 wall   27.1 | main_sequence@1233(5.51) iron_core@1772(9.27) | ev: ignition@1201(5.33)
+g_cno            steps   1780 t    21.42 wall   53.3 | cloud@1233(5.51) main_sequence@1425(6.69) iron_core@2980(21.42) | ev: ignition@1393(6.48)
+g_cnoar4         steps    636 t     9.86 wall   28.5 | main_sequence@1233(5.51) iron_core@1836(9.86) | ev: ignition@1201(5.33)
+g_ctl            steps    780 t    11.06 wall   33.0 | cloud@1233(5.51) main_sequence@1361(6.27) iron_core@1980(11.06) | ev: ignition@1329(6.07)
+g_lad            steps    780 t    11.07 wall   33.1 | cloud@1233(5.51) main_sequence@1361(6.27) iron_core@1980(11.07) | ev: ignition@1329(6.07)
+m_ar4            steps     97 t   139.66 wall    6.5 | iron_core@14097(139.66) | ev: ignition@14033(138.94)
+m_cno            steps   7480 t   207.83 wall  117.8 | main_sequence@14033(138.99) he_core@20948(203.22) iron_core@21480(207.83) | ev: ignition@14001(138.67)
+m_cnoar4         steps  34032 t   484.72 wall  259.7 | cloud@14033(138.99) main_sequence@14257(141.29) he_core@46160(468.18) iron_core@48032(484.72) | ev: ignition@14225(140.92)
+m_ctl            steps   2160 t   160.33 wall   58.8 | main_sequence@14033(138.99) he_core@15868(157.36) main_sequence@16000(158.69) he_core@16080(159.49) iron_core@16160(160.33) | ev: ignition@14001(138.67)
+m_lad            steps   5000 t   187.36 wall   91.7 | main_sequence@14033(138.99) he_core@18804(185.45) main_sequence@18900(186.36) iron_core@19000(187.36) | ev: ignition@14001(138.67)
+shipped      H 114.0 He 117.0 C 137.0 Ne 188.0 O 208.0 Si 282.5  G-ORDER holds
+h8           H 151.5 He 117.0 C 137.0 Ne 188.0 O 208.0 Si 282.5  G-ORDER BROKEN
+he20         H 114.0 He 138.0 C 137.0 Ne 188.0 O 208.0 Si 282.5  G-ORDER BROKEN
+h8he20       H 151.5 He 138.0 C 137.0 Ne 188.0 O 208.0 Si 282.5  G-ORDER BROKEN
+lad          H 114.0 He 152.0 C 199.5 Ne 269.5 O 296.5 Si 396.0  G-ORDER holds
+h8+lad       H 151.5 He 152.0 C 199.5 Ne 269.5 O 296.5 Si 396.0  G-ORDER holds
+he20+lad     H 114.0 He 179.5 C 199.5 Ne 269.5 O 296.5 Si 396.0  G-ORDER holds
+h8he20+lad   H 151.5 He 179.5 C 199.5 Ne 269.5 O 296.5 Si 396.0  G-ORDER holds
+g_he20_ctl exit 0 SR-HEADLESS DONE steps=785 sim_time=11.104573 until=met
+g_h8_ctl exit 0 SR-HEADLESS DONE steps=880 sim_time=11.788452 until=met
+g_h8he20_ctl exit 0 SR-HEADLESS DONE steps=2648 sim_time=30.626146 until=met
+m_h8_ctl exit 0 SR-HEADLESS DONE steps=3288 sim_time=171.210624 until=met
+m_he20_ctl exit 0 SR-HEADLESS DONE steps=4432 sim_time=183.184778 until=met
+g_h8he20_nu10 exit 0 SR-HEADLESS DONE steps=4296 sim_time=39.702278 until=met
+m_he20_ladnu10 exit 0 SR-HEADLESS DONE steps=6720 sim_time=203.641686 until=met
+m_h8he20_ctl exit 0 SR-HEADLESS DONE steps=16304 sim_time=279.987781 until=met
+m_h8he20_ladnu10 exit 124 
+m_h8he20_nu10 exit 124 
+g_h8_ctl         steps    880 t    11.79 wall   46.9 | cloud@1233(5.51) main_sequence@1361(6.27) iron_core@2080(11.79) | ev: ignition@1329(6.07)
+g_h8he20_ctl     steps   2648 t    30.63 wall   88.5 | cloud@1233(5.51) main_sequence@1361(6.27) he_core@3784(30.35) iron_core@3848(30.63) | ev: ignition@1329(6.07)
+g_h8he20_nu10    steps   4296 t    39.70 wall  141.2 | cloud@1233(5.51) main_sequence@1361(6.27) he_core@3784(30.35) main_sequence@3864(30.67) iron_core@5496(39.70) | ev: ignition@1329(6.07)
+g_he20_ctl       steps    785 t    11.10 wall   35.8 | cloud@1233(5.51) main_sequence@1361(6.27) iron_core@1985(11.10) | ev: ignition@1329(6.07)
+m_h8_ctl         steps   3288 t   171.21 wall  104.4 | main_sequence@14033(138.99) he_core@16112(159.77) iron_core@17288(171.21) | ev: ignition@14001(138.67)
+m_h8he20_ctl     steps  16304 t   279.99 wall  295.4 | main_sequence@14033(138.99) he_core@15768(156.51) main_sequence@29832(276.55) iron_core@30304(279.99) | ev: ignition@14001(138.67)
+m_h8he20_ladnu10 no summary; last dump s_55000
+m_h8he20_nu10 no summary; last dump s_46000
+m_he20_ctl       steps   4432 t   183.18 wall  131.6 | main_sequence@14033(138.99) he_core@15576(154.57) iron_core@18432(183.18) | ev: ignition@14001(138.67)
+m_he20_ladnu10   steps   6720 t   203.64 wall  172.0 | main_sequence@14033(138.99) he_core@18384(181.59) iron_core@20720(203.64) | ev: ignition@14001(138.67)
+== m_h8he20_nu10
+ 15000 t  148.783 main_sequence  main_sequence  sig_c  18.504 T_c   94.59 d_c 0.505 X_H 0.235 X_He 0.583 X_Fe 0.000 vr +0.145 R  137.6 L 6.33e+04 L_H 6.61e+04 L_nuc 7.03e+04 M 8449
+ 18000 t  178.518 he_core        he_core        sig_c  29.659 T_c  109.80 d_c 0.587 X_H 0.127 X_He 0.132 X_Fe 0.000 vr +0.266 R  172.6 L 6.18e+04 L_H 5.65e+04 L_nuc 6.92e+04 M 7206
+ 21000 t  206.497 he_core        he_core        sig_c  47.307 T_c  128.20 d_c 0.654 X_H 0.056 X_He 0.015 X_Fe 0.000 vr +0.383 R  193.3 L 6.86e+04 L_H 5.24e+04 L_nuc 7.25e+04 M 5639
+ 24000 t  232.094 he_core        he_core        sig_c  73.113 T_c  142.11 d_c 0.711 X_H 0.024 X_He 0.004 X_Fe 0.000 vr +0.349 R  186.7 L 8.78e+04 L_H 5.92e+04 L_nuc 8.6e+04 M 4234
+ 27000 t  255.571 he_core        he_core        sig_c 103.051 T_c  151.32 d_c 0.752 X_H 0.014 X_He 0.003 X_Fe 0.002 vr +0.122 R   90.7 L 1.23e+05 L_H 7.71e+04 L_nuc 1.18e+05 M 3399
+ 30000 t  277.406 main_sequence  main_sequence  sig_c 132.700 T_c  173.12 d_c 0.765 X_H 0.007 X_He 0.001 X_Fe 0.027 vr -0.013 R    4.2 L 1.89e+05 L_H 1.14e+05 L_nuc 1.8e+05 M 2960
+ 33000 t  296.599 main_sequence  main_sequence  sig_c 359.958 T_c   56.03 d_c 0.944 X_H 0.039 X_He 0.022 X_Fe 0.003 vr -0.054 R    2.0 L 2.09e+05 L_H 6.01e+03 L_nuc 6.52e+03 M 2961
+ 36000 t  316.738 white_dwarf    white_dwarf    sig_c  79.079 T_c    0.05 d_c 1.000 X_H 0.039 X_He 0.020 X_Fe 0.017 vr -0.005 R   13.8 L 2.6e+03 L_H 0 L_nuc -0 M 2954
+ 39000 t  342.503 white_dwarf    white_dwarf    sig_c  53.345 T_c    0.05 d_c 1.000 X_H 0.039 X_He 0.020 X_Fe 0.017 vr +0.014 R   21.0 L 1.02e+03 L_H 0 L_nuc -0 M 2952
+ 42000 t  371.677 white_dwarf    white_dwarf    sig_c  41.484 T_c    0.05 d_c 1.000 X_H 0.039 X_He 0.020 X_Fe 0.017 vr +0.022 R   28.9 L 910 L_H 0 L_nuc -0 M 2951
+ 45000 t  403.184 white_dwarf    white_dwarf    sig_c  35.458 T_c    0.08 d_c 1.000 X_H 0.039 X_He 0.020 X_Fe 0.017 vr +0.013 R   31.4 L 681 L_H 0 L_nuc -0 M 2947
+== m_h8he20_ladnu10
+ 15000 t  148.704 main_sequence  main_sequence  sig_c  19.339 T_c   93.75 d_c 0.510 X_H 0.234 X_He 0.740 X_Fe 0.000 vr +0.144 R  137.6 L 6.45e+04 L_H 7.05e+04 L_nuc 7.05e+04 M 8451
+ 18000 t  177.560 main_sequence  main_sequence  sig_c  31.728 T_c  110.70 d_c 0.566 X_H 0.125 X_He 0.766 X_Fe 0.000 vr +0.259 R  171.5 L 6.65e+04 L_H 7.05e+04 L_nuc 7.28e+04 M 7231
+ 21000 t  204.591 he_core        he_core        sig_c  49.839 T_c  136.55 d_c 0.637 X_H 0.048 X_He 0.135 X_Fe 0.000 vr +0.369 R  189.1 L 7.53e+04 L_H 6.26e+04 L_nuc 7.93e+04 M 5722
+ 24000 t  229.518 he_core        he_core        sig_c  81.056 T_c  146.92 d_c 0.715 X_H 0.019 X_He 0.024 X_Fe 0.000 vr +0.364 R  182.0 L 1.01e+05 L_H 7.04e+04 L_nuc 9.9e+04 M 4341
+ 27000 t  252.423 he_core        he_core        sig_c 116.405 T_c  161.27 d_c 0.754 X_H 0.009 X_He 0.002 X_Fe 0.000 vr +0.103 R   70.7 L 1.45e+05 L_H 9.54e+04 L_nuc 1.36e+05 M 3485
+ 30000 t  273.389 main_sequence  main_sequence  sig_c 157.139 T_c  198.39 d_c 0.758 X_H 0.005 X_He 0.000 X_Fe 0.000 vr -0.016 R    2.4 L 2.85e+05 L_H 1.62e+05 L_nuc 2.55e+05 M 3094
+ 33000 t  290.794 main_sequence  main_sequence  sig_c 344.731 T_c    0.05 d_c 1.000 X_H 0.043 X_He 0.072 X_Fe 0.000 vr -0.060 R    2.0 L 3.03e+05 L_H 9.56e+03 L_nuc 1.08e+04 M 3094
+ 36000 t  307.598 main_sequence  main_sequence  sig_c 344.731 T_c    0.05 d_c 1.000 X_H 0.043 X_He 0.072 X_Fe 0.000 vr -0.056 R    2.0 L 3.52e+05 L_H 5.28e+03 L_nuc 6.67e+03 M 3094
+ 39000 t  324.401 main_sequence  main_sequence  sig_c 344.731 T_c    0.05 d_c 1.000 X_H 0.043 X_He 0.072 X_Fe 0.000 vr -0.056 R    2.0 L 4.01e+05 L_H 3.39e+03 L_nuc 4.93e+03 M 3094
+ 42000 t  341.205 main_sequence  main_sequence  sig_c 344.731 T_c    0.05 d_c 1.000 X_H 0.043 X_He 0.072 X_Fe 0.000 vr -0.056 R    2.0 L 4.24e+05 L_H 2.8e+03 L_nuc 4.04e+03 M 3094
+ 45000 t  358.008 main_sequence  main_sequence  sig_c 344.731 T_c    0.05 d_c 1.000 X_H 0.043 X_He 0.072 X_Fe 0.000 vr -0.057 R    2.0 L 4.19e+05 L_H 3.31e+03 L_nuc 4.34e+03 M 3094
+ 48000 t  374.812 main_sequence  main_sequence  sig_c 344.731 T_c    0.05 d_c 1.000 X_H 0.043 X_He 0.072 X_Fe 0.000 vr -0.058 R    2.0 L 4.14e+05 L_H 3.42e+03 L_nuc 4.41e+03 M 3094
+ 51000 t  391.615 main_sequence  main_sequence  sig_c 344.731 T_c    0.05 d_c 1.000 X_H 0.043 X_He 0.072 X_Fe 0.000 vr -0.058 R    2.0 L 4.2e+05 L_H 3.01e+03 L_nuc 3.99e+03 M 3094
+ 54000 t  408.419 main_sequence  main_sequence  sig_c 344.731 T_c    0.05 d_c 1.000 X_H 0.043 X_He 0.072 X_Fe 0.000 vr -0.059 R    2.0 L 4.28e+05 L_H 2.62e+03 L_nuc 3.58e+03 M 3094
+== m_h8he20_ctl
+ 15000 t  148.785 main_sequence  main_sequence  sig_c  18.473 T_c   94.65 d_c 0.504 X_H 0.235 X_He 0.582 X_Fe 0.000 vr +0.145 R  137.6 L 6.33e+04 L_H 6.61e+04 L_nuc 7.03e+04 M 8449
+ 18000 t  178.517 he_core        he_core        sig_c  29.602 T_c  109.91 d_c 0.586 X_H 0.128 X_He 0.132 X_Fe 0.000 vr +0.266 R  172.5 L 6.19e+04 L_H 5.68e+04 L_nuc 6.92e+04 M 7207
+ 21000 t  206.534 he_core        he_core        sig_c  47.322 T_c  127.93 d_c 0.656 X_H 0.055 X_He 0.022 X_Fe 0.000 vr +0.385 R  193.3 L 6.84e+04 L_H 5.16e+04 L_nuc 7.24e+04 M 5640
+ 24000 t  232.230 he_core        he_core        sig_c  74.850 T_c  136.27 d_c 0.723 X_H 0.025 X_He 0.008 X_Fe 0.000 vr +0.365 R  186.7 L 8.79e+04 L_H 5.94e+04 L_nuc 8.7e+04 M 4226
+ 27000 t  255.870 he_core        he_core        sig_c 105.421 T_c  151.18 d_c 0.754 X_H 0.013 X_He 0.003 X_Fe 0.000 vr +0.116 R   89.8 L 1.22e+05 L_H 8.04e+04 L_nuc 1.16e+05 M 3384
+ 30000 t  277.744 main_sequence  main_sequence  sig_c 129.663 T_c  175.05 d_c 0.760 X_H 0.005 X_He 0.001 X_Fe 0.000 vr -0.016 R    4.7 L 2.11e+05 L_H 1.13e+05 L_nuc 2.14e+05 M 2963
+== g_h8he20_ctl
+  2000 t   11.364 main_sequence  main_sequence  sig_c   2.520 T_c  117.15 d_c 0.143 X_H 0.713 X_He 0.269 X_Fe 0.000 vr -0.007 R  154.5 L 7.57e+05 L_H 9.6e+05 L_nuc 9.65e+05 M 42216
+== g_h8he20_nu10
+  2000 t   11.364 main_sequence  main_sequence  sig_c   2.520 T_c  117.15 d_c 0.143 X_H 0.713 X_He 0.269 X_Fe 0.000 vr -0.007 R  154.5 L 7.57e+05 L_H 9.6e+05 L_nuc 9.65e+05 M 42216
+  5000 t   36.635 main_sequence  cloud          sig_c   0.852 T_c   16.95 d_c 0.290 X_H 0.364 X_He 0.004 X_Fe 0.192 vr +3.461 R  555.8 L 1.28e+05 L_H 0 L_nuc -0 M 19128
+g_h8he20_lad exit 0 SR-HEADLESS DONE steps=3600 sim_time=40.947642 until=met
+m_lad_bounce exit 0 SR-HEADLESS DONE steps=5032 sim_time=187.669180 until=met
+s_h8he20_lad exit 0 SR-HEADLESS DONE steps=5122 sim_time=60.000185 until=met
+s_ctl exit 0 SR-HEADLESS DONE steps=5123 sim_time=60.005104 until=met
+m_h8he20_lad_bounce exit 124 
+m_h8he20_lad exit 124 
+g_h8he20_lad     steps   3600 t    40.95 wall   92.1 | cloud@1233(5.51) main_sequence@1348(6.19) he_core@4764(40.78) iron_core@4800(40.95) | ev: ignition@1316(5.99)
+m_h8he20_lad no summary
+ 68000 t  495.116 main_sequence  main_sequence  sig_c 316.347 T_c   20.13 d_c 0.980 X_H 0.011 X_He 0.009 X_Fe 0.000 vr -0.068 R    2.0 L 3.04e+05 L_H 631 L_nuc 771 M 3093
+ 69000 t  500.968 main_sequence  main_sequence  sig_c 316.347 T_c   19.96 d_c 0.980 X_H 0.011 X_He 0.009 X_Fe 0.000 vr -0.068 R    2.0 L 3.05e+05 L_H 616 L_nuc 757 M 3093
+ 70000 t  506.821 main_sequence  main_sequence  sig_c 316.347 T_c   19.79 d_c 0.980 X_H 0.011 X_He 0.009 X_Fe 0.000 vr -0.068 R    2.0 L 3.06e+05 L_H 602 L_nuc 743 M 3093
+ 71000 t  512.674 main_sequence  main_sequence  sig_c 316.347 T_c   19.62 d_c 0.981 X_H 0.011 X_He 0.009 X_Fe 0.000 vr -0.068 R    2.0 L 3.06e+05 L_H 588 L_nuc 730 M 3093
+m_h8he20_lad_bounce no summary
+ 44000 t  355.250 neutron_star   neutron_star   sig_c 717.063 T_c   94.45 d_c 0.881 X_H 0.006 X_He 0.004 X_Fe 0.448 vr +0.238 R  275.7 L 1.29e+04 L_H 585 L_nuc 585 M 8768
+ 45000 t  361.020 neutron_star   neutron_star   sig_c 717.063 T_c   81.22 d_c 0.895 X_H 0.005 X_He 0.005 X_Fe 0.448 vr -0.021 R  271.7 L 1.42e+04 L_H 291 L_nuc 291 M 8768
+ 46000 t  366.829 neutron_star   neutron_star   sig_c 717.063 T_c   73.24 d_c 0.905 X_H 0.005 X_He 0.005 X_Fe 0.448 vr -0.090 R  269.5 L 1.5e+04 L_H 281 L_nuc 281 M 8768
+ 47000 t  372.665 neutron_star   neutron_star   sig_c 717.063 T_c   67.43 d_c 0.912 X_H 0.005 X_He 0.005 X_Fe 0.448 vr -0.183 R  267.2 L 2.76e+04 L_H 480 L_nuc 480 M 8768
+m_lad_bounce     steps   5032 t   187.67 wall  118.5 | main_sequence@14033(138.99) he_core@18832(185.71) main_sequence@18928(186.62) iron_core@19032(187.67) | ev: ignition@14001(138.67)
+s_h8he20_lad     steps   5122 t    60.00 wall  122.4 | collapsing@65(1.54) main_sequence@705(9.25) | ev: ignition@673(8.85)
+s_ctl            steps   5123 t    60.01 wall  122.5 | collapsing@65(1.54) main_sequence@705(9.24) | ev: ignition@673(8.85)
+
+[exited with code 0]
+== m_h8he20_lad_bounce
+ 15000 t  148.704 main_sequence  main_sequence  sig_c  19.354 T_c   93.73 d_c 0.510 X_H 0.234 X_He 0.740 X_Fe 0.000 vr +0.152 R  173.0 L 6.57e+04 L_H 7.05e+04 L_nuc 7.05e+04 M 8768
+ 16000 t  158.552 main_sequence  main_sequence  sig_c  22.938 T_c   98.09 d_c 0.531 X_H 0.195 X_He 0.777 X_Fe 0.000 vr +0.185 R  206.8 L 6.61e+04 L_H 7.06e+04 L_nuc 7.07e+04 M 8768
+ 17000 t  168.170 main_sequence  main_sequence  sig_c  27.184 T_c  103.52 d_c 0.550 X_H 0.158 X_He 0.800 X_Fe 0.000 vr +0.219 R  247.5 L 6.7e+04 L_H 7.08e+04 L_nuc 7.12e+04 M 8768
+ 18000 t  177.550 main_sequence  main_sequence  sig_c  31.729 T_c  110.71 d_c 0.566 X_H 0.124 X_He 0.765 X_Fe 0.000 vr +0.242 R  280.8 L 6.83e+04 L_H 7.01e+04 L_nuc 7.24e+04 M 8768
+ 19000 t  186.733 he_core        he_core        sig_c  36.490 T_c  119.39 d_c 0.584 X_H 0.094 X_He 0.566 X_Fe 0.000 vr +0.244 R  290.8 L 7e+04 L_H 6.67e+04 L_nuc 7.4e+04 M 8768
+ 20000 t  195.759 he_core        he_core        sig_c  42.339 T_c  128.49 d_c 0.610 X_H 0.069 X_He 0.294 X_Fe 0.000 vr +0.232 R  294.6 L 7.28e+04 L_H 6.34e+04 L_nuc 7.54e+04 M 8768
+ 21000 t  204.579 he_core        he_core        sig_c  49.180 T_c  136.71 d_c 0.634 X_H 0.049 X_He 0.138 X_Fe 0.000 vr +0.209 R  296.8 L 7.7e+04 L_H 6.17e+04 L_nuc 7.79e+04 M 8768
+ 22000 t  213.142 he_core        he_core        sig_c  57.209 T_c  144.19 d_c 0.655 X_H 0.034 X_He 0.064 X_Fe 0.000 vr +0.175 R  297.9 L 8.27e+04 L_H 6.21e+04 L_nuc 8.13e+04 M 8768
+ 23000 t  221.417 he_core        he_core        sig_c  66.123 T_c  151.13 d_c 0.674 X_H 0.024 X_He 0.026 X_Fe 0.000 vr +0.129 R  298.8 L 8.97e+04 L_H 6.4e+04 L_nuc 8.65e+04 M 8768
+ 24000 t  229.411 he_core        he_core        sig_c  75.834 T_c  156.69 d_c 0.692 X_H 0.018 X_He 0.009 X_Fe 0.000 vr +0.075 R  299.4 L 9.83e+04 L_H 6.62e+04 L_nuc 9.37e+04 M 8768
+ 25000 t  237.141 he_core        he_core        sig_c  88.245 T_c  158.50 d_c 0.715 X_H 0.013 X_He 0.004 X_Fe 0.000 vr +0.023 R  299.5 L 1.09e+05 L_H 6.98e+04 L_nuc 1.01e+05 M 8768
+ 26000 t  244.678 he_core        he_core        sig_c  97.268 T_c  163.85 d_c 0.725 X_H 0.010 X_He 0.002 X_Fe 0.000 vr -0.023 R  299.3 L 1.19e+05 L_H 7.69e+04 L_nuc 1.13e+05 M 8768
+ 27000 t  252.044 main_sequence  main_sequence  sig_c 104.390 T_c  174.08 d_c 0.725 X_H 0.008 X_He 0.001 X_Fe 0.000 vr -0.061 R  299.0 L 1.35e+05 L_H 8.77e+04 L_nuc 1.28e+05 M 8768
+ 28000 t  259.301 he_core        he_core        sig_c 109.793 T_c  171.78 d_c 0.734 X_H 0.012 X_He 0.006 X_Fe 0.000 vr -0.057 R  298.7 L 1.83e+05 L_H 1.41e+05 L_nuc 1.91e+05 M 8768
+ 29000 t  266.426 he_core        he_core        sig_c 128.153 T_c  175.76 d_c 0.751 X_H 0.011 X_He 0.005 X_Fe 0.000 vr -0.014 R  298.9 L 2.33e+05 L_H 1.5e+05 L_nuc 2.11e+05 M 8768
+ 30000 t  273.244 he_core        he_core        sig_c 154.457 T_c  188.24 d_c 0.764 X_H 0.007 X_He 0.003 X_Fe 0.000 vr +0.028 R  300.3 L 2.76e+05 L_H 1.73e+05 L_nuc 2.49e+05 M 8768
+ 31000 t  279.589 he_core        he_core        sig_c 206.556 T_c  152.43 d_c 0.825 X_H 0.040 X_He 0.032 X_Fe 0.000 vr +0.032 R  303.0 L 3.72e+05 L_H 1.84e+05 L_nuc 2.61e+05 M 8768
+ 32000 t  285.326 main_sequence  main_sequence  sig_c 304.185 T_c   35.33 d_c 0.963 X_H 0.052 X_He 0.078 X_Fe 0.000 vr -0.108 R  305.8 L 2.08e+05 L_H 2e+04 L_nuc 2.05e+04 M 8768
+ 33000 t  291.009 main_sequence  main_sequence  sig_c 304.185 T_c   39.57 d_c 0.958 X_H 0.051 X_He 0.078 X_Fe 0.000 vr -0.211 R  307.8 L 1.91e+05 L_H 1.01e+04 L_nuc 1.02e+04 M 8767
+ 34000 t  296.676 main_sequence  main_sequence  sig_c 304.185 T_c   47.68 d_c 0.950 X_H 0.051 X_He 0.079 X_Fe 0.000 vr -0.267 R  308.5 L 2.06e+05 L_H 9.17e+03 L_nuc 9.29e+03 M 8767
+ 35000 t  302.305 main_sequence  main_sequence  sig_c 304.185 T_c   77.18 d_c 0.922 X_H 0.048 X_He 0.082 X_Fe 0.000 vr -0.290 R  307.6 L 2.01e+05 L_H 1.17e+04 L_nuc 1.18e+04 M 8768
+ 36000 t  307.732 neutron_star   neutron_star   sig_c 717.063 T_c    0.94 d_c 0.999 X_H 0.008 X_He 0.002 X_Fe 0.448 vr +0.132 R  305.5 L 2.02e+04 L_H 0.358 L_nuc 0.358 M 8768
+ 37000 t  313.828 neutron_star   neutron_star   sig_c 717.063 T_c    6.19 d_c 0.991 X_H 0.008 X_He 0.002 X_Fe 0.448 vr -0.022 R  301.2 L 6.4e+04 L_H 16 L_nuc 16 M 8768
+ 38000 t  319.889 neutron_star   neutron_star   sig_c 717.063 T_c   14.37 d_c 0.980 X_H 0.008 X_He 0.002 X_Fe 0.448 vr +0.020 R  296.9 L 1.93e+04 L_H 0 L_nuc -0 M 8768
+ 39000 t  325.933 neutron_star   neutron_star   sig_c 717.063 T_c   14.55 d_c 0.980 X_H 0.008 X_He 0.002 X_Fe 0.448 vr -0.205 R  291.5 L 2.42e+04 L_H 2.81 L_nuc 2.81 M 8768
+ 40000 t  331.976 neutron_star   neutron_star   sig_c 717.063 T_c   14.82 d_c 0.979 X_H 0.008 X_He 0.002 X_Fe 0.448 vr -0.249 R  286.1 L 4.79e+04 L_H 0.412 L_nuc 0.412 M 8768
+ 41000 t  338.018 neutron_star   neutron_star   sig_c 717.063 T_c   14.96 d_c 0.979 X_H 0.008 X_He 0.002 X_Fe 0.448 vr -0.419 R  280.3 L 5.58e+04 L_H 20.3 L_nuc 20.3 M 8768
+ 42000 t  343.808 neutron_star   neutron_star   sig_c 717.063 T_c   94.58 d_c 0.880 X_H 0.008 X_He 0.003 X_Fe 0.448 vr +0.161 R  277.1 L 3.17e+04 L_H 1.04e+03 L_nuc 1.04e+03 M 8768
+ 43000 t  349.548 neutron_star   neutron_star   sig_c 717.063 T_c  117.90 d_c 0.855 X_H 0.007 X_He 0.003 X_Fe 0.448 vr +0.264 R  276.5 L 1.95e+05 L_H 2.13e+03 L_nuc 2.13e+03 M 8768
+ 44000 t  355.250 neutron_star   neutron_star   sig_c 717.063 T_c   94.45 d_c 0.881 X_H 0.006 X_He 0.004 X_Fe 0.448 vr +0.238 R  275.7 L 1.29e+04 L_H 585 L_nuc 585 M 8768
+ 45000 t  361.020 neutron_star   neutron_star   sig_c 717.063 T_c   81.22 d_c 0.895 X_H 0.005 X_He 0.005 X_Fe 0.448 vr -0.021 R  271.7 L 1.42e+04 L_H 291 L_nuc 291 M 8768
+ 46000 t  366.829 neutron_star   neutron_star   sig_c 717.063 T_c   73.24 d_c 0.905 X_H 0.005 X_He 0.005 X_Fe 0.448 vr -0.090 R  269.5 L 1.5e+04 L_H 281 L_nuc 281 M 8768
+ 47000 t  372.665 neutron_star   neutron_star   sig_c 717.063 T_c   67.43 d_c 0.912 X_H 0.005 X_He 0.005 X_Fe 0.448 vr -0.183 R  267.2 L 2.76e+04 L_H 480 L_nuc 480 M 8768
+== g_h8he20_lad
+  1300 t    5.897 cloud          cloud          sig_c   1.101 T_c   59.71 d_c 0.133 X_H 0.731 X_He 0.253 X_Fe 0.000 vr -0.015 R  151.5 L 8.32e+04 L_H 4.12e+04 L_nuc 4.12e+04 M 43143
+  3800 t   30.386 main_sequence  main_sequence  sig_c   3.259 T_c  148.90 d_c 0.138 X_H 0.624 X_He 0.358 X_Fe 0.000 vr +0.033 R  153.0 L 1.18e+06 L_H 2.65e+06 L_nuc 2.65e+06 M 38620
+  4600 t   39.461 main_sequence  main_sequence  sig_c   2.589 T_c   85.85 d_c 0.183 X_H 0.605 X_He 0.375 X_Fe 0.000 vr -0.334 R  154.6 L 2.76e+04 L_H 1.55e+05 L_nuc 1.55e+05 M 37371
+  4700 t   40.353 main_sequence  main_sequence  sig_c   4.163 T_c  138.24 d_c 0.175 X_H 0.596 X_He 0.384 X_Fe 0.000 vr -0.288 R  151.1 L 8e+04 L_H 1.49e+06 L_nuc 1.49e+06 M 37305
+  4800 t   40.948 iron_core      iron_core      sig_c   3.167 T_c   82.99 d_c 0.219 X_H 0.153 X_He 0.005 X_Fe 0.839 vr +1.848 R  154.1 L 1.29e+06 L_H 4.46e+04 L_nuc 4.46e+04 M 37192
+s_lim40 exit 0 SR-HEADLESS DONE steps=5123 sim_time=60.005104 until=met
+s_lim10 exit 0 SR-HEADLESS DONE steps=5123 sim_time=60.005104 until=met
+m_lim40 exit 124 
+m_lim10 exit 124 
+g_lim40 exit 124 
+g_lim10 exit 124 
+g_lim10 no summary
+ 22800 t  224.269 he_core        he_core        sig_c  24.799 T_c  120.52 d_c 0.533 X_H 0.139 X_He 0.059 X_Fe 0.000 vr +0.290 R  182.5 L 7.13e+04 L_H 1.29e+05 L_nuc 1.76e+05 M 9474
+ 23300 t  229.316 main_sequence  main_sequence  sig_c  25.861 T_c  105.26 d_c 0.578 X_H 0.119 X_He 0.041 X_Fe 0.000 vr +0.338 R  190.6 L 9.91e+04 L_H 5.17e+04 L_nuc 5.2e+04 M 9070
+ 23800 t  234.306 he_core        he_core        sig_c  27.125 T_c  120.21 d_c 0.559 X_H 0.096 X_He 0.021 X_Fe 0.000 vr +0.418 R  197.2 L 1.03e+05 L_H 1.08e+05 L_nuc 1.29e+05 M 8628
+ 24300 t  239.284 he_core        he_core        sig_c  32.518 T_c  127.40 d_c 0.584 X_H 0.070 X_He 0.012 X_Fe 0.000 vr +0.429 R  202.0 L 8.01e+04 L_H 1.07e+05 L_nuc 1.5e+05 M 8146
+ 24800 t  244.235 he_core        he_core        sig_c  36.196 T_c  129.29 d_c 0.605 X_H 0.042 X_He 0.009 X_Fe 0.000 vr +0.462 R  206.7 L 8.24e+04 L_H 9.29e+04 L_nuc 1.22e+05 M 7644
+ 25300 t  249.151 he_core        he_core        sig_c  41.401 T_c  128.84 d_c 0.635 X_H 0.019 X_He 0.005 X_Fe 0.000 vr +0.523 R  210.3 L 9.72e+04 L_H 8.74e+04 L_nuc 1.09e+05 M 7137
+ 25800 t  253.946 he_core        he_core        sig_c  50.056 T_c  130.03 d_c 0.668 X_H 0.011 X_He 0.003 X_Fe 0.000 vr +0.572 R  214.5 L 1.03e+05 L_H 8.67e+04 L_nuc 1.11e+05 M 6638
+ 26300 t  258.541 he_core        he_core        sig_c  59.412 T_c  131.50 d_c 0.695 X_H 0.007 X_He 0.002 X_Fe 0.000 vr +0.616 R  216.9 L 1.11e+05 L_H 8.81e+04 L_nuc 1.15e+05 M 6159
+ 26800 t  262.947 he_core        he_core        sig_c  69.333 T_c  134.50 d_c 0.715 X_H 0.004 X_He 0.001 X_Fe 0.000 vr +0.648 R  218.8 L 1.21e+05 L_H 9.2e+04 L_nuc 1.22e+05 M 5706
+ 27300 t  267.182 main_sequence  main_sequence  sig_c  78.921 T_c  138.18 d_c 0.730 X_H 0.002 X_He 0.001 X_Fe 0.000 vr +0.667 R  221.9 L 1.33e+05 L_H 9.96e+04 L_nuc 1.31e+05 M 5272
+ 27800 t  271.265 main_sequence  main_sequence  sig_c  88.862 T_c  142.28 d_c 0.742 X_H 0.001 X_He 0.000 X_Fe 0.000 vr +0.660 R  223.2 L 1.47e+05 L_H 1.07e+05 L_nuc 1.42e+05 M 4863
+ 28300 t  275.210 he_shell       he_shell       sig_c  99.063 T_c  147.29 d_c 0.750 X_H 0.001 X_He 0.000 X_Fe 0.000 vr +0.615 R  220.3 L 1.6e+05 L_H 1.13e+05 L_nuc 1.51e+05 M 4485
+m_lim10 no summary
+ 15000 t  148.684 main_sequence  main_sequence  sig_c  19.163 T_c   95.80 d_c 0.505 X_H 0.230 X_He 0.682 X_Fe 0.000 vr +0.144 R  137.6 L 6.47e+04 L_H 6.99e+04 L_nuc 7.16e+04 M 8452
+ 20000 t  198.410 he_core        he_core        sig_c  35.175 T_c  128.15 d_c 0.602 X_H 0.041 X_He 0.007 X_Fe 0.000 vr +0.362 R  187.9 L 6.1e+04 L_H 6.52e+04 L_nuc 9.54e+04 M 6137
+ 25000 t  243.802 main_sequence  main_sequence  sig_c  82.357 T_c  134.22 d_c 0.742 X_H 0.003 X_He 0.001 X_Fe 0.000 vr +0.348 R  176.7 L 1.07e+05 L_H 7.37e+04 L_nuc 1.03e+05 M 3748
+ 30000 t  281.002 he_core        he_core        sig_c 230.684 T_c   24.15 d_c 0.969 X_H 0.069 X_He 0.067 X_Fe 0.000 vr -0.037 R    2.0 L 2.56e+05 L_H 1.19e+05 L_nuc 1.66e+05 M 2813
+ 35000 t  311.090 main_sequence  main_sequence  sig_c 294.835 T_c    0.05 d_c 1.000 X_H 0.030 X_He 0.031 X_Fe 0.000 vr -0.044 R    2.0 L 2.99e+05 L_H 1.6e+03 L_nuc 2.07e+03 M 2813
+s_lim10          steps   5123 t    60.01 wall  130.6 | collapsing@65(1.54) main_sequence@705(9.24) | ev: ignition@673(8.85)
+  1000 t   12.761 main_sequence  main_sequence  sig_c   6.575 T_c   29.16 d_c 0.611 X_H 0.731 X_He 0.252 X_Fe 0.000 vr +0.016 R   18.8 L 3.17e+03 L_H 143 L_nuc 143 M 3132
+  5123 t   60.005 main_sequence  main_sequence  sig_c   9.672 T_c   34.09 d_c 0.650 X_H 0.720 X_He 0.263 X_Fe 0.000 vr -0.001 R   14.3 L 1.51e+03 L_H 1.3e+03 L_nuc 1.3e+03 M 3126
+g_lim40 no summary
+ 21300 t  158.593 main_sequence  main_sequence  sig_c 184.157 T_c    0.05 d_c 1.000 X_H 0.139 X_He 0.002 X_Fe 0.000 vr -0.021 R   12.7 L 1.51e+04 L_H 60.1 L_nuc 60.1 M 6667
+ 21800 t  161.185 main_sequence  main_sequence  sig_c 170.540 T_c    0.05 d_c 1.000 X_H 0.139 X_He 0.002 X_Fe 0.000 vr +0.002 R   13.8 L 1.45e+04 L_H 366 L_nuc 366 M 6666
+ 22300 t  163.846 main_sequence  main_sequence  sig_c 149.797 T_c    0.05 d_c 1.000 X_H 0.139 X_He 0.002 X_Fe 0.000 vr +0.021 R   15.0 L 1.41e+04 L_H 214 L_nuc 214 M 6667
+ 22800 t  166.635 main_sequence  main_sequence  sig_c 148.805 T_c    0.05 d_c 1.000 X_H 0.139 X_He 0.002 X_Fe 0.000 vr -0.003 R   16.4 L 1.36e+04 L_H 98.6 L_nuc 98.6 M 6668
+ 23300 t  169.499 main_sequence  main_sequence  sig_c 127.814 T_c    0.05 d_c 1.000 X_H 0.139 X_He 0.002 X_Fe 0.000 vr +0.027 R   17.4 L 1.22e+04 L_H 70.5 L_nuc 70.5 M 6665
+ 23800 t  172.459 main_sequence  main_sequence  sig_c 124.247 T_c    0.05 d_c 1.000 X_H 0.139 X_He 0.002 X_Fe 0.000 vr -0.001 R   18.6 L 9.38e+03 L_H 31.6 L_nuc 31.6 M 6661
+ 24300 t  175.487 main_sequence  main_sequence  sig_c 121.703 T_c    0.05 d_c 1.000 X_H 0.139 X_He 0.002 X_Fe 0.000 vr -0.019 R   19.1 L 8.1e+03 L_H 23.7 L_nuc 23.7 M 6659
+ 24800 t  178.530 main_sequence  main_sequence  sig_c 114.707 T_c    0.05 d_c 1.000 X_H 0.139 X_He 0.002 X_Fe 0.000 vr -0.010 R   20.8 L 6.03e+03 L_H 17.2 L_nuc 17.2 M 6656
+ 25300 t  181.606 main_sequence  main_sequence  sig_c 111.219 T_c    0.05 d_c 1.000 X_H 0.139 X_He 0.002 X_Fe 0.000 vr +0.021 R   23.5 L 5.9e+03 L_H 34.2 L_nuc 34.2 M 6657
+ 25800 t  184.763 main_sequence  main_sequence  sig_c 103.319 T_c    0.05 d_c 1.000 X_H 0.139 X_He 0.002 X_Fe 0.000 vr +0.053 R   23.7 L 6.59e+03 L_H 17.3 L_nuc 17.3 M 6659
+ 26300 t  187.966 main_sequence  main_sequence  sig_c 102.990 T_c    0.05 d_c 1.000 X_H 0.139 X_He 0.002 X_Fe 0.000 vr +0.022 R   24.8 L 7.23e+03 L_H 31.3 L_nuc 31.3 M 6660
+ 26800 t  191.214 main_sequence  main_sequence  sig_c  98.724 T_c    0.05 d_c 1.000 X_H 0.139 X_He 0.002 X_Fe 0.000 vr -0.011 R   26.7 L 6.2e+03 L_H 22.7 L_nuc 22.7 M 6661
+m_lim40 no summary
+ 15000 t  148.632 main_sequence  main_sequence  sig_c  19.815 T_c   94.38 d_c 0.515 X_H 0.241 X_He 0.699 X_Fe 0.000 vr +0.142 R  137.6 L 6.56e+04 L_H 7.01e+04 L_nuc 7.1e+04 M 8453
+ 20000 t  194.556 he_core        he_core        sig_c  42.344 T_c  120.30 d_c 0.635 X_H 0.164 X_He 0.044 X_Fe 0.000 vr +0.285 R  179.4 L 7.53e+04 L_H 5.81e+04 L_nuc 7.77e+04 M 6330
+ 25000 t  234.291 he_core        he_core        sig_c  77.814 T_c  172.46 d_c 0.673 X_H 0.066 X_He 0.001 X_Fe 0.000 vr +0.152 R  127.3 L 1.05e+05 L_H 6.8e+04 L_nuc 9.85e+04 M 4478
+ 30000 t  269.243 he_core        he_core        sig_c 159.858 T_c   34.82 d_c 0.938 X_H 0.276 X_He 0.224 X_Fe 0.000 vr -0.015 R    2.6 L 1.76e+05 L_H 6.11e+04 L_nuc 1.02e+05 M 3715
+ 35000 t  297.483 main_sequence  main_sequence  sig_c 237.630 T_c    0.05 d_c 1.000 X_H 0.214 X_He 0.121 X_Fe 0.000 vr -0.025 R    2.1 L 2.34e+05 L_H 8.44e+04 L_nuc 1.07e+05 M 3719
+s_lim40          steps   5123 t    60.01 wall  130.6 | collapsing@65(1.54) main_sequence@705(9.24) | ev: ignition@673(8.85)
+  1000 t   12.761 main_sequence  main_sequence  sig_c   6.575 T_c   29.16 d_c 0.611 X_H 0.731 X_He 0.252 X_Fe 0.000 vr +0.016 R   18.8 L 3.17e+03 L_H 143 L_nuc 143 M 3132
+  5123 t   60.005 main_sequence  main_sequence  sig_c   9.672 T_c   34.09 d_c 0.650 X_H 0.720 X_He 0.263 X_Fe 0.000 vr -0.001 R   14.3 L 1.51e+03 L_H 1.3e+03 L_nuc 1.3e+03 M 3126
+
+[exited with code 0]
+== g_lim10
+  1300 t    5.897 cloud          cloud          sig_c   1.101 T_c   59.69 d_c 0.133 X_H 0.731 X_He 0.253 X_Fe 0.000 vr -0.015 R  151.5 L 8.32e+04 L_H 4.06e+04 L_nuc 4.06e+04 M 43143
+  1400 t    6.521 main_sequence  main_sequence  sig_c   1.166 T_c   60.94 d_c 0.137 X_H 0.730 X_He 0.253 X_Fe 0.000 vr -0.046 R  153.4 L 8.08e+04 L_H 4.47e+04 L_nuc 4.47e+04 M 43050
+  2000 t   11.262 he_core        he_core        sig_c   2.008 T_c  162.40 d_c 0.090 X_H 0.712 X_He 0.097 X_Fe 0.000 vr +0.258 R  157.7 L 3.28e+06 L_H 4.31e+06 L_nuc 1.08e+07 M 42235
+  2100 t   11.871 main_sequence  main_sequence  sig_c   1.421 T_c  103.81 d_c 0.101 X_H 0.698 X_He 0.139 X_Fe 0.000 vr +0.651 R  169.7 L 1.86e+06 L_H 3.26e+06 L_nuc 3.27e+06 M 42091
+  4000 t   32.719 main_sequence  cloud          sig_c   0.960 T_c   18.55 d_c 0.303 X_H 0.716 X_He 0.228 X_Fe 0.000 vr +0.462 R  574.1 L 2.12e+04 L_H 0 L_nuc -0 M 24755
+  6000 t   55.506 main_sequence  main_sequence  sig_c   4.441 T_c   31.96 d_c 0.505 X_H 0.714 X_He 0.214 X_Fe 0.000 vr -0.346 R  583.1 L 2.78e+04 L_H 1.73e+03 L_nuc 1.73e+03 M 18327
+  8000 t   75.300 main_sequence  main_sequence  sig_c   7.675 T_c   44.75 d_c 0.539 X_H 0.703 X_He 0.188 X_Fe 0.000 vr -0.437 R  431.3 L 4.56e+04 L_H 2.41e+04 L_nuc 2.41e+04 M 18117
+  8700 t   81.338 he_core        he_core        sig_c  10.697 T_c  116.91 d_c 0.372 X_H 0.698 X_He 0.187 X_Fe 0.000 vr -0.617 R  386.4 L 2.55e+05 L_H 1.42e+06 L_nuc 2.27e+06 M 18092
+  8900 t   82.603 main_sequence  main_sequence  sig_c   3.716 T_c   50.45 d_c 0.356 X_H 0.670 X_He 0.105 X_Fe 0.000 vr +0.191 R  367.5 L 2.71e+05 L_H 3.72e+04 L_nuc 3.72e+04 M 18083
+ 10000 t   92.357 main_sequence  main_sequence  sig_c   3.623 T_c   61.01 d_c 0.309 X_H 0.676 X_He 0.127 X_Fe 0.000 vr -0.158 R  274.7 L 9.84e+04 L_H 1.11e+04 L_nuc 1.11e+04 M 14908
+ 12000 t  113.365 main_sequence  main_sequence  sig_c   6.027 T_c   62.47 d_c 0.405 X_H 0.668 X_He 0.120 X_Fe 0.000 vr -0.272 R  253.6 L 5.21e+04 L_H 3.01e+04 L_nuc 3.01e+04 M 14014
+ 14000 t  133.717 main_sequence  main_sequence  sig_c   6.136 T_c   76.75 d_c 0.357 X_H 0.628 X_He 0.175 X_Fe 0.000 vr -0.177 R  183.9 L 7.72e+04 L_H 6.99e+04 L_nuc 6.99e+04 M 13197
+ 16000 t  154.100 main_sequence  main_sequence  sig_c   7.090 T_c   84.86 d_c 0.356 X_H 0.532 X_He 0.269 X_Fe 0.000 vr +0.041 R  149.6 L 9.89e+04 L_H 9.82e+04 L_nuc 9.82e+04 M 12408
+ 18000 t  174.964 main_sequence  main_sequence  sig_c   9.478 T_c   90.93 d_c 0.390 X_H 0.421 X_He 0.380 X_Fe 0.000 vr +0.048 R  117.5 L 1.05e+05 L_H 1.09e+05 L_nuc 1.09e+05 M 11593
+ 20000 t  195.606 main_sequence  main_sequence  sig_c  13.877 T_c   98.86 d_c 0.441 X_H 0.290 X_He 0.472 X_Fe 0.000 vr +0.127 R  152.3 L 1.02e+05 L_H 1.11e+05 L_nuc 1.12e+05 M 11185
+ 21100 t  206.911 he_core        main_sequence  sig_c  16.568 T_c  104.92 d_c 0.472 X_H 0.200 X_He 0.244 X_Fe 0.000 vr +0.192 R  164.3 L 9.82e+04 L_H 9.85e+04 L_nuc 1.04e+05 M 10632
+ 21200 t  207.945 main_sequence  main_sequence  sig_c  18.964 T_c  105.86 d_c 0.497 X_H 0.196 X_He 0.247 X_Fe 0.000 vr +0.173 R  165.4 L 9.01e+04 L_H 9.88e+04 L_nuc 1.06e+05 M 10573
+ 21300 t  208.960 he_core        main_sequence  sig_c  15.820 T_c  107.24 d_c 0.460 X_H 0.188 X_He 0.182 X_Fe 0.000 vr +0.232 R  166.5 L 1.06e+05 L_H 1.08e+05 L_nuc 1.17e+05 M 10514
+ 21400 t  210.015 main_sequence  main_sequence  sig_c  19.934 T_c  100.62 d_c 0.523 X_H 0.188 X_He 0.199 X_Fe 0.000 vr +0.174 R  167.4 L 8.45e+04 L_H 7.3e+04 L_nuc 7.39e+04 M 10451
+ 21500 t  211.017 he_core        he_core        sig_c  18.074 T_c  115.68 d_c 0.470 X_H 0.183 X_He 0.151 X_Fe 0.000 vr +0.229 R  168.5 L 8.99e+04 L_H 1.44e+05 L_nuc 1.99e+05 M 10389
+ 21600 t  212.071 main_sequence  main_sequence  sig_c  19.172 T_c   96.24 d_c 0.529 X_H 0.181 X_He 0.152 X_Fe 0.000 vr +0.208 R  169.6 L 1e+05 L_H 5.34e+04 L_nuc 5.35e+04 M 10323
+ 21700 t  213.084 he_core        he_core        sig_c  21.044 T_c  116.81 d_c 0.500 X_H 0.177 X_He 0.142 X_Fe 0.000 vr +0.196 R  170.5 L 6.99e+04 L_H 1.34e+05 L_nuc 1.86e+05 M 10259
+ 21800 t  214.111 main_sequence  main_sequence  sig_c  17.917 T_c   95.99 d_c 0.517 X_H 0.173 X_He 0.117 X_Fe 0.000 vr +0.255 R  171.4 L 1.23e+05 L_H 5.28e+04 L_nuc 5.29e+04 M 10192
+ 22000 t  216.141 he_core        main_sequence  sig_c  17.585 T_c  104.72 d_c 0.494 X_H 0.165 X_He 0.094 X_Fe 0.000 vr +0.287 R  173.5 L 1.21e+05 L_H 8.66e+04 L_nuc 8.84e+04 M 10057
+ 22100 t  217.186 main_sequence  main_sequence  sig_c  22.960 T_c  104.11 d_c 0.549 X_H 0.167 X_He 0.110 X_Fe 0.000 vr +0.208 R  174.5 L 7.54e+04 L_H 7.27e+04 L_nuc 7.36e+04 M 9985
+ 22200 t  218.178 he_core        he_core        sig_c  19.866 T_c  115.68 d_c 0.495 X_H 0.160 X_He 0.081 X_Fe 0.000 vr +0.286 R  175.5 L 9.82e+04 L_H 1.37e+05 L_nuc 1.67e+05 M 9917
+ 22300 t  219.222 main_sequence  main_sequence  sig_c  22.809 T_c  101.60 d_c 0.555 X_H 0.160 X_He 0.091 X_Fe 0.000 vr +0.236 R  176.5 L 8.71e+04 L_H 5.91e+04 L_nuc 5.94e+04 M 9843
+ 22400 t  220.215 he_core        he_core        sig_c  21.953 T_c  118.77 d_c 0.510 X_H 0.154 X_He 0.073 X_Fe 0.000 vr +0.280 R  177.7 L 8.15e+04 L_H 1.4e+05 L_nuc 1.87e+05 M 9773
+ 22500 t  221.250 main_sequence  main_sequence  sig_c  22.752 T_c  100.85 d_c 0.558 X_H 0.152 X_He 0.076 X_Fe 0.000 vr +0.265 R  178.7 L 9.68e+04 L_H 5.29e+04 L_nuc 5.3e+04 M 9698
+ 22600 t  222.245 he_core        he_core        sig_c  23.564 T_c  119.95 d_c 0.523 X_H 0.147 X_He 0.066 X_Fe 0.000 vr +0.281 R  179.8 L 7.39e+04 L_H 1.35e+05 L_nuc 1.84e+05 M 9625
+ 22700 t  223.273 main_sequence  main_sequence  sig_c  22.951 T_c  101.20 d_c 0.560 X_H 0.143 X_He 0.064 X_Fe 0.000 vr +0.290 R  181.2 L 1.03e+05 L_H 5.08e+04 L_nuc 5.09e+04 M 9549
+ 22800 t  224.269 he_core        he_core        sig_c  24.799 T_c  120.52 d_c 0.533 X_H 0.139 X_He 0.059 X_Fe 0.000 vr +0.290 R  182.5 L 7.13e+04 L_H 1.29e+05 L_nuc 1.76e+05 M 9474
+ 22900 t  225.291 main_sequence  main_sequence  sig_c  23.501 T_c  102.21 d_c 0.564 X_H 0.135 X_He 0.055 X_Fe 0.000 vr +0.311 R  183.8 L 1.05e+05 L_H 5.06e+04 L_nuc 5.08e+04 M 9396
+ 23000 t  226.287 he_core        he_core        sig_c  25.747 T_c  121.16 d_c 0.540 X_H 0.131 X_He 0.051 X_Fe 0.000 vr +0.306 R  185.5 L 7.13e+04 L_H 1.26e+05 L_nuc 1.72e+05 M 9318
+ 23100 t  227.306 main_sequence  main_sequence  sig_c  24.465 T_c  103.53 d_c 0.570 X_H 0.127 X_He 0.047 X_Fe 0.000 vr +0.327 R  187.5 L 1.03e+05 L_H 5.08e+04 L_nuc 5.1e+04 M 9238
+ 23200 t  228.299 he_core        he_core        sig_c  26.454 T_c  121.92 d_c 0.546 X_H 0.123 X_He 0.042 X_Fe 0.000 vr +0.329 R  188.6 L 7.31e+04 L_H 1.24e+05 L_nuc 1.7e+05 M 9156
+ 23300 t  229.316 main_sequence  main_sequence  sig_c  25.861 T_c  105.26 d_c 0.578 X_H 0.119 X_He 0.041 X_Fe 0.000 vr +0.338 R  190.6 L 9.91e+04 L_H 5.17e+04 L_nuc 5.2e+04 M 9070
+ 23400 t  230.305 he_core        he_core        sig_c  26.864 T_c  122.31 d_c 0.549 X_H 0.114 X_He 0.034 X_Fe 0.000 vr +0.358 R  192.4 L 7.8e+04 L_H 1.23e+05 L_nuc 1.67e+05 M 8986
+ 23500 t  231.322 main_sequence  main_sequence  sig_c  27.641 T_c  107.98 d_c 0.586 X_H 0.111 X_He 0.036 X_Fe 0.000 vr +0.345 R  193.0 L 9.25e+04 L_H 5.53e+04 L_nuc 5.59e+04 M 8896
+ 23600 t  232.307 he_core        he_core        sig_c  27.037 T_c  121.89 d_c 0.553 X_H 0.105 X_He 0.026 X_Fe 0.000 vr +0.389 R  195.0 L 8.84e+04 L_H 1.19e+05 L_nuc 1.55e+05 M 8810
+== m_lim10
+ 15000 t  148.684 main_sequence  main_sequence  sig_c  19.163 T_c   95.80 d_c 0.505 X_H 0.230 X_He 0.682 X_Fe 0.000 vr +0.144 R  137.6 L 6.47e+04 L_H 6.99e+04 L_nuc 7.16e+04 M 8452
+ 16000 t  158.686 main_sequence  main_sequence  sig_c  21.411 T_c  102.64 d_c 0.524 X_H 0.177 X_He 0.354 X_Fe 0.000 vr +0.179 R  149.5 L 6.27e+04 L_H 6.28e+04 L_nuc 6.84e+04 M 8086
+ 17000 t  168.712 he_core        he_core        sig_c  25.327 T_c  111.65 d_c 0.549 X_H 0.139 X_He 0.150 X_Fe 0.000 vr +0.204 R  160.0 L 5.37e+04 L_H 6.62e+04 L_nuc 8.31e+04 M 7669
+ 18000 t  178.688 main_sequence  main_sequence  sig_c  27.731 T_c  107.65 d_c 0.585 X_H 0.106 X_He 0.063 X_Fe 0.000 vr +0.260 R  171.4 L 6.46e+04 L_H 4.48e+04 L_nuc 4.64e+04 M 7208
+ 20000 t  198.410 he_core        he_core        sig_c  35.175 T_c  128.15 d_c 0.602 X_H 0.041 X_He 0.007 X_Fe 0.000 vr +0.362 R  187.9 L 6.1e+04 L_H 6.52e+04 L_nuc 9.54e+04 M 6137
+ 22000 t  217.555 he_core        he_core        sig_c  48.225 T_c  129.55 d_c 0.663 X_H 0.009 X_He 0.003 X_Fe 0.000 vr +0.405 R  194.4 L 7.36e+04 L_H 5.8e+04 L_nuc 7.52e+04 M 5039
+ 24000 t  235.364 he_core        he_core        sig_c  70.032 T_c  129.48 d_c 0.725 X_H 0.005 X_He 0.002 X_Fe 0.000 vr +0.405 R  188.8 L 9.35e+04 L_H 6.3e+04 L_nuc 9.28e+04 M 4121
+ 25000 t  243.802 main_sequence  main_sequence  sig_c  82.357 T_c  134.22 d_c 0.742 X_H 0.003 X_He 0.001 X_Fe 0.000 vr +0.348 R  176.7 L 1.07e+05 L_H 7.37e+04 L_nuc 1.03e+05 M 3748
+ 26000 t  251.844 main_sequence  main_sequence  sig_c  96.614 T_c  138.93 d_c 0.758 X_H 0.002 X_He 0.000 X_Fe 0.000 vr +0.259 R  154.8 L 1.25e+05 L_H 8.58e+04 L_nuc 1.17e+05 M 3453
+ 27000 t  259.541 he_shell       he_shell       sig_c 109.525 T_c  146.51 d_c 0.765 X_H 0.001 X_He 0.000 X_Fe 0.000 vr +0.141 R  101.7 L 1.5e+05 L_H 8.98e+04 L_nuc 1.4e+05 M 3226
+ 28000 t  267.009 he_shell       he_shell       sig_c 117.038 T_c  159.27 d_c 0.759 X_H 0.001 X_He 0.000 X_Fe 0.000 vr -0.009 R    5.1 L 1.87e+05 L_H 9.23e+04 L_nuc 1.82e+05 M 2860
+ 30000 t  281.002 he_core        he_core        sig_c 230.684 T_c   24.15 d_c 0.969 X_H 0.069 X_He 0.067 X_Fe 0.000 vr -0.037 R    2.0 L 2.56e+05 L_H 1.19e+05 L_nuc 1.66e+05 M 2813
+ 32000 t  293.141 main_sequence  main_sequence  sig_c 267.697 T_c    0.05 d_c 1.000 X_H 0.053 X_He 0.056 X_Fe 0.000 vr -0.045 R    2.0 L 3.05e+05 L_H 1.45e+04 L_nuc 1.91e+04 M 2813
+ 34000 t  305.135 main_sequence  main_sequence  sig_c 294.236 T_c    0.05 d_c 1.000 X_H 0.031 X_He 0.032 X_Fe 0.000 vr -0.043 R    2.0 L 3.02e+05 L_H 2.24e+03 L_nuc 3.17e+03 M 2813
+ 36000 t  317.048 main_sequence  main_sequence  sig_c 295.014 T_c    0.05 d_c 1.000 X_H 0.030 X_He 0.031 X_Fe 0.000 vr -0.044 R    2.0 L 3.01e+05 L_H 1.11e+03 L_nuc 1.39e+03 M 2813

@@ -1,0 +1,26 @@
+== 2026-11-10T09:46:57-05:00 plan_lint · task M0-D163 · box laserax-ai-server :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.12 s
+lint: checks=842 failed=0 warnings=8 · blocks=402 · flow_rows=402 · verify_fences=0 · history=0 · flow=per-task · header=601/600 · pipeline=9/60 · ladder=6 rungs · refresh=4/5
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T103: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T106: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: a line in 3 blocks (M0-D163 · M0-D165 · M0-D164): '- Rating: (usual) — a D whose cause is not measured (§0's rule (3) list ...' - state it once in Rules and cite it
+=== GO ===
+
+== 2026-11-10T09:51:42-05:00 plan_lint · task M0-D163 · box laserax-ai-server :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.11 s
+lint: checks=842 failed=0 warnings=8 · blocks=402 · flow_rows=402 · verify_fences=0 · history=0 · flow=per-task · header=601/600 · pipeline=9/60 · ladder=6 rungs · refresh=4/5
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T103: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T106: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: a line in 3 blocks (M0-D163 · M0-D165 · M0-D164): '- Rating: (usual) — a D whose cause is not measured (§0's rule (3) list ...' - state it once in Rules and cite it
+=== GO ===
+

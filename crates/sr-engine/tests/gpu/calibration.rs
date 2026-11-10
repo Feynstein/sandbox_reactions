@@ -221,8 +221,18 @@ fn every_number_of_the_calibration_is_read_back_as_written() {
     let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../assets/calibration.json");
     let text = std::fs::read_to_string(&path).expect("assets/calibration.json exists (M0-V14's)");
     let cal = Calibration::parse(&text).expect("assets/calibration.json is §2.11's");
-    assert_eq!(cal.t_eff_sun_sb.to_bits(), 11.544176535966779f64.to_bits(), "t_eff_sun_sb read as {}", cal.t_eff_sun_sb);
+    // M0-D163: the shipped file's own literal, read by std's correctly rounded parse — every recalibration moves the value.
+    let written: f64 = text
+        .split("\"t_eff_sun_sb\":")
+        .nth(1)
+        .and_then(|s| s.split([',', '\n', '}']).next())
+        .map(|s| s.trim().parse().expect("a number literal"))
+        .expect("the file writes t_eff_sun_sb");
+    assert_eq!(cal.t_eff_sun_sb.to_bits(), written.to_bits(), "t_eff_sun_sb read as {}", cal.t_eff_sun_sb);
     assert!(cal.to_json() == text, "assets/calibration.json written back byte for byte:\n{}", cal.to_json());
+    // M0-D162's own literal, the one serde_json read as its neighbour 11.54417653596678.
+    let cal = Calibration::parse(&file_with(|v| v["t_eff_sun_sb"] = json!(11.544176535966779f64))).expect("a valid calibration");
+    assert_eq!(cal.t_eff_sun_sb.to_bits(), 11.544176535966779f64.to_bits(), "M0-D162's literal read as {}", cal.t_eff_sun_sb);
     // A sweep of doubles over twenty decades, each written in its shortest form, read back bit for bit — at a float key
     // and inside a stage pair; plain serde_json misreads some of them, so the sweep reaches the fault.
     let (mut seed, mut misread) = (0x9e37_79b9_7f4a_7c15u64, 0);
@@ -303,8 +313,9 @@ fn a_mismatched_calibration_is_refused_with_exit_6() {
     assert!(fast.check_against(&hash(), 2.0 * fast.max_gas_speed).is_err());
     assert!(fast.check_against(&hash(), 2.0 * fast.max_gas_speed + 0.01).is_ok());
     assert_eq!(invalid_key(&file_with(|v| v["max_gas_speed"] = json!(0))), "max_gas_speed");
-    // The shipped c_sb is 800 (§0.5 [M0-D163]; 400 before it): a gas of half its speed is the bound, and equal is refused.
-    match resolve(Some(&file_with(|v| v["max_gas_speed"] = json!(400.0))), true) {
+    // The shipped c_sb is 12,800 (§0.5 [M0-D166]; 800 by [M0-D163], 400 before it): a gas of half its speed is the bound, and
+    // equal is refused.
+    match resolve(Some(&file_with(|v| v["max_gas_speed"] = json!(6400.0))), true) {
         Err(CalibrationError::Invalid { key, .. }) => assert_eq!(key, "max_gas_speed"),
         other => panic!("a gas of half the shipped c_sb's speed must be refused, got {other:?}"),
     }

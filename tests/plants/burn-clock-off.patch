@@ -1,0 +1,24 @@
+--- a/crates/sr-engine/shaders/react.wgsl
++++ b/crates/sr-engine/shaders/react.wgsl
+@@ -627,7 +627,7 @@
+         // ln k so e^shift and k stay in f32's range: h is then burn time (in the scale), the sub-step takes h k of the pass, and
+         // its neutrino loss is the real time's, ε_ν k. Below q_max (and pinned, or burn_k 0) every expression is the unslowed one.
+         var k_ln = 0.0;
+-        if (!pin && params.burn_k > 0.0 && rate.x > 0.0) {
++        if (false && !pin && params.burn_k > 0.0 && rate.x > 0.0) { // planted: the burn clock never slows
+             let e_th = t * comp.inv_mu;
+             k_ln = max(0.0, log(rate.x) + shift - log(e_th * sqrt(2.0 * e_th) / params.burn_k));
+         }
+--- a/crates/sr-physics/src/reference/react.rs
++++ b/crates/sr-physics/src/reference/react.rs
+@@ -450,8 +450,8 @@
+     /// §2.5.2 [M0-D165]'s clock ratio: k = q̇/q_max where the specific heating q̇ passes q_max = ε_th c_s / K_burn, c_s = √(2ε_th)
+     /// (ε_th = T/μ, the floored one the rates read), else exactly 1 — and 1 with T pinned or K_burn = 0.
+     fn stretch(&self, qdot: f64, t: f64, mu: f64) -> f64 {
+-        if self.test.pin_temperature || self.burn_k <= 0.0 {
+-            return 1.0;
++        if self.test.pin_temperature || self.burn_k <= 0.0 || true {
++            return 1.0; // planted: the burn clock never slows
+         }
+         let eps_th = t / mu;
+         let q_max = eps_th * (2.0 * eps_th).sqrt() / self.burn_k;

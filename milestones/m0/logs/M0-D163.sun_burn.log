@@ -1,0 +1,126 @@
+== 2026-11-09T10:34:38-05:00 sun_burn · task M0-D163 · box laserax-ai-server :: bash tests/gpu.sh sunburn physics
+-- sun_burn · exit=101 · 0.16 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 4 tests
+test sunburn::hydrogen_burns_steadily_at_the_centre ... SR-ERROR calibration out of date: its physics_hash is 05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3, the assets' is f082fd712483242e130d75d6d52f80fb8625fc7e5455731e3917a33a81505fc0 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'sunburn::hydrogen_burns_steadily_at_the_centre' (326785) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-326784-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration out of date: its physics_hash is 05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3, the assets' is f082fd712483242e130d75d6d52f80fb8625fc7e5455731e3917a33a81505fc0 (change a constant, calibrate again: sandbox-reactions calibrate)")
+  left: 6
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test sunburn::it_shines_what_it_burns_and_only_hydrogen_burns ... SR-ERROR calibration out of date: its physics_hash is 05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3, the assets' is f082fd712483242e130d75d6d52f80fb8625fc7e5455731e3917a33a81505fc0 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'sunburn::it_shines_what_it_burns_and_only_hydrogen_burns' (326786) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-326784-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration out of date: its physics_hash is 05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3, the assets' is f082fd712483242e130d75d6d52f80fb8625fc7e5455731e3917a33a81505fc0 (change a constant, calibrate again: sandbox-reactions calibrate)")
+  left: 6
+ right: 0
+FAILED
+test sunburn::the_readings_see_what_the_planes_hold ... SR-SUNBURN reading on hand-made planes: Reading { cell: (30, 31), sigma_c: 2.0, x_h_c: 0.6000000238418579, t_c: 6.999998954475347, t_max: 6.999998954475347, mass: 317.0099999997765, bound: 317.0 } (NOT PROVEN on the star)
+ok
+test sunburn::the_star_stays_bound ... SR-ERROR calibration out of date: its physics_hash is 05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3, the assets' is f082fd712483242e130d75d6d52f80fb8625fc7e5455731e3917a33a81505fc0 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'sunburn::the_star_stays_bound' (326788) panicked at crates/sr-engine/tests/gpu/sunburn.rs:133:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--out", "/tmp/sr-sunburn-326784-run/settle", "--steps", "3000", "--adapter", "RTX 4090"]: Some("SR-ERROR calibration out of date: its physics_hash is 05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3, the assets' is f082fd712483242e130d75d6d52f80fb8625fc7e5455731e3917a33a81505fc0 (change a constant, calibrate again: sandbox-reactions calibrate)")
+  left: 6
+ right: 0
+FAILED
+
+failures:
+
+failures:
+    sunburn::hydrogen_burns_steadily_at_the_centre
+    sunburn::it_shines_what_it_burns_and_only_hydrogen_burns
+    sunburn::the_star_stays_bound
+
+test result: FAILED. 1 passed; 3 failed; 0 ignored; 0 measured; 504 filtered out; finished in 0.05s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+== 2026-11-10T08:44:06-05:00 sun_burn · task M0-D163 · box laserax-ai-server :: bash tests/gpu.sh sunburn physics
+-- sun_burn · exit=0 · 93.43 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 4 tests
+test sunburn::hydrogen_burns_steadily_at_the_centre ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3000 sim_time=36.152580 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=58.633504 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-SUNBURN step 3000 t 36.153: centre (300, 200) Σ 8.938 T 33.408 X_H 0.72634; T_max 33.408; bound 3129.78 of 3133.22 (0.9978 of the preset's 3136.72); sinks 0
+SR-SUNBURN step 4000 t 47.452: centre (299, 200) Σ 9.379 T 33.753 X_H 0.72354; T_max 33.756; bound 3129.35 of 3130.82 (0.9976 of the preset's 3136.72); sinks 0
+SR-SUNBURN step 5000 t 58.634: centre (299, 200) Σ 9.645 T 34.049 X_H 0.72055; T_max 34.050; bound 3129.02 of 3129.61 (0.9975 of the preset's 3136.72); sinks 0
+SR-SUNBURN X_H,c: [0.72634, 0.72354, 0.72055]; falls [0.00280, 0.00299] (each ≥ 0.001), 0.00579 over the window (≥ 0.002); least ≥ 0.5
+ok
+test sunburn::it_shines_what_it_burns_and_only_hydrogen_burns ... SR-SUNBURN window: Δt 22.470, L 1736.5, L_nuc 1205.8, L_nuc/L 0.6944 (band (0.5, 2.0)); T_max [33.408, 33.756, 34.050] against 0.5 T_He = 50
+ok
+test sunburn::the_readings_see_what_the_planes_hold ... SR-SUNBURN reading on hand-made planes: Reading { cell: (30, 31), sigma_c: 2.0, x_h_c: 0.6000000238418579, t_c: 6.999998954475347, t_max: 6.999998954475347, mass: 317.0099999997765, bound: 317.0 } (NOT PROVEN on the star)
+ok
+test sunburn::the_star_stays_bound ... SR-SUNBURN bound at step 3000: 3129.78 of the preset's 3136.72 (0.9978), grid 3133.22, sinks 0
+SR-SUNBURN bound at step 4000: 3129.35 of the preset's 3136.72 (0.9976), grid 3130.82, sinks 0
+SR-SUNBURN bound at step 5000: 3129.02 of the preset's 3136.72 (0.9975), grid 3129.61, sinks 0
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 504 filtered out; finished in 93.18s
+
+
+== 2026-11-10T09:47:25-05:00 sun_burn · task M0-D163 · box laserax-ai-server :: bash tests/gpu.sh sunburn physics
+-- sun_burn · exit=0 · 84.34 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 4 tests
+test sunburn::hydrogen_burns_steadily_at_the_centre ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3000 sim_time=36.152580 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=58.633504 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-SUNBURN step 3000 t 36.153: centre (300, 200) Σ 8.938 T 33.408 X_H 0.72634; T_max 33.408; bound 3129.78 of 3133.22 (0.9978 of the preset's 3136.72); sinks 0
+SR-SUNBURN step 4000 t 47.452: centre (299, 200) Σ 9.379 T 33.753 X_H 0.72354; T_max 33.756; bound 3129.35 of 3130.82 (0.9976 of the preset's 3136.72); sinks 0
+SR-SUNBURN step 5000 t 58.634: centre (299, 200) Σ 9.645 T 34.049 X_H 0.72055; T_max 34.050; bound 3129.02 of 3129.61 (0.9975 of the preset's 3136.72); sinks 0
+SR-SUNBURN X_H,c: [0.72634, 0.72354, 0.72055]; falls [0.00280, 0.00299] (each ≥ 0.001), 0.00579 over the window (≥ 0.002); least ≥ 0.5
+ok
+test sunburn::it_shines_what_it_burns_and_only_hydrogen_burns ... SR-SUNBURN window: Δt 22.470, L 1736.5, L_nuc 1205.8, L_nuc/L 0.6944 (band (0.5, 2.0)); T_max [33.408, 33.756, 34.050] against 0.5 T_He = 50
+ok
+test sunburn::the_readings_see_what_the_planes_hold ... SR-SUNBURN reading on hand-made planes: Reading { cell: (30, 31), sigma_c: 2.0, x_h_c: 0.6000000238418579, t_c: 6.999998954475347, t_max: 6.999998954475347, mass: 317.0099999997765, bound: 317.0 } (NOT PROVEN on the star)
+ok
+test sunburn::the_star_stays_bound ... SR-SUNBURN bound at step 3000: 3129.78 of the preset's 3136.72 (0.9978), grid 3133.22, sinks 0
+SR-SUNBURN bound at step 4000: 3129.35 of the preset's 3136.72 (0.9976), grid 3130.82, sinks 0
+SR-SUNBURN bound at step 5000: 3129.02 of the preset's 3136.72 (0.9975), grid 3129.61, sinks 0
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 504 filtered out; finished in 84.06s
+
+
+== 2026-11-10T09:52:08-05:00 sun_burn · task M0-D163 · box laserax-ai-server :: bash tests/gpu.sh sunburn physics
+-- sun_burn · exit=0 · 83.94 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 4 tests
+test sunburn::hydrogen_burns_steadily_at_the_centre ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3000 sim_time=36.152580 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=58.633504 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-SUNBURN step 3000 t 36.153: centre (300, 200) Σ 8.938 T 33.408 X_H 0.72634; T_max 33.408; bound 3129.78 of 3133.22 (0.9978 of the preset's 3136.72); sinks 0
+SR-SUNBURN step 4000 t 47.452: centre (299, 200) Σ 9.379 T 33.753 X_H 0.72354; T_max 33.756; bound 3129.35 of 3130.82 (0.9976 of the preset's 3136.72); sinks 0
+SR-SUNBURN step 5000 t 58.634: centre (299, 200) Σ 9.645 T 34.049 X_H 0.72055; T_max 34.050; bound 3129.02 of 3129.61 (0.9975 of the preset's 3136.72); sinks 0
+SR-SUNBURN X_H,c: [0.72634, 0.72354, 0.72055]; falls [0.00280, 0.00299] (each ≥ 0.001), 0.00579 over the window (≥ 0.002); least ≥ 0.5
+ok
+test sunburn::it_shines_what_it_burns_and_only_hydrogen_burns ... SR-SUNBURN window: Δt 22.470, L 1736.5, L_nuc 1205.8, L_nuc/L 0.6944 (band (0.5, 2.0)); T_max [33.408, 33.756, 34.050] against 0.5 T_He = 50
+ok
+test sunburn::the_readings_see_what_the_planes_hold ... SR-SUNBURN reading on hand-made planes: Reading { cell: (30, 31), sigma_c: 2.0, x_h_c: 0.6000000238418579, t_c: 6.999998954475347, t_max: 6.999998954475347, mass: 317.0099999997765, bound: 317.0 } (NOT PROVEN on the star)
+ok
+test sunburn::the_star_stays_bound ... SR-SUNBURN bound at step 3000: 3129.78 of the preset's 3136.72 (0.9978), grid 3133.22, sinks 0
+SR-SUNBURN bound at step 4000: 3129.35 of the preset's 3136.72 (0.9976), grid 3130.82, sinks 0
+SR-SUNBURN bound at step 5000: 3129.02 of the preset's 3136.72 (0.9975), grid 3129.61, sinks 0
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 504 filtered out; finished in 83.54s
+
+

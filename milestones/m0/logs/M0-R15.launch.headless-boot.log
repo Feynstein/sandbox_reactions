@@ -1,0 +1,3 @@
+# M0-R15 | launch headless-boot | 2026-11-10T12:57:01-0500
+$ build/target/release/sandbox-reactions headless --scene preset:sun --steps 200 --out /tmp/pb-launch-headless-boot-j5kzvf7_
+SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 92961849ad99bca350f0a42f7eea8262052db8d49c8782253605a1bc2b964a07 (change a constant, calibrate again: sandbox-reactions calibrate)

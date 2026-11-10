@@ -1,0 +1,108 @@
+== 2026-11-10T14:03:33-05:00 ui_banner · task M0-D169 · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::banner
+-- ui_banner · exit=101 · 0.57 s
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.45s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 18 tests
+test ui::banner::tests::a_collapse_the_latch_did_not_cut_still_slows_the_clock ... ok
+test ui::banner::tests::a_core_collapse_named_two_frames_after_the_latch_is_not_a_second_banner ... ok
+test ui::banner::tests::a_second_latch_slows_the_clock_again ... ok
+test ui::banner::tests::each_event_fires_once_per_object ... ok
+test ui::banner::tests::events_that_are_not_the_slow_downs_do_nothing ... ok
+test ui::banner::tests::ignition_slows_to_one_and_says_so ... ok
+test ui::banner::tests::nothing_slowed_nothing_shown ... ok
+test ui::banner::tests::only_ever_slower ... ok
+test ui::banner::tests::supernova_slows_to_a_tenth_with_its_text ... ok
+test ui::banner::tests::the_banner_stays_until_the_player_changes_the_rung ... ok
+test ui::banner::tests::a_frame_submitted_before_a_clear_books_nothing_after_it ... FAILED
+test ui::banner::tests::a_main_sequence_frame_of_the_current_world_ignites ... FAILED
+test ui::banner::tests::the_latch_slows_to_a_tenth_with_the_core_collapse_text ... ok
+test ui::banner::tests::a_clear_ends_the_notice ... FAILED
+test ui::banner::tests::the_pass_that_reads_an_event_draws_the_bar_and_the_banner_from_the_slowed_clock ... ok
+test ui::banner::tests::the_setting_off_means_no_slow_down_and_no_banner ... ok
+test ui::banner::tests::with_the_setting_on_the_slow_down_banner_is_unchanged_and_the_notice_fills_only_its_silence ... ok
+test ui::banner::tests::with_the_setting_off_an_ignition_shows_the_notice_and_keeps_the_speed ... ok
+
+failures:
+
+---- ui::banner::tests::a_frame_submitted_before_a_clear_books_nothing_after_it stdout ----
+
+thread 'ui::banner::tests::a_frame_submitted_before_a_clear_books_nothing_after_it' (516848) panicked at crates/sr-app/src/ui/banner.rs:457:83:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ui::banner::tests::a_main_sequence_frame_of_the_current_world_ignites stdout ----
+
+thread 'ui::banner::tests::a_main_sequence_frame_of_the_current_world_ignites' (516849) panicked at crates/sr-app/src/ui/banner.rs:457:83:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+
+---- ui::banner::tests::a_clear_ends_the_notice stdout ----
+
+thread 'ui::banner::tests::a_clear_ends_the_notice' (516845) panicked at crates/sr-app/src/ui/banner.rs:457:83:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+
+
+failures:
+    ui::banner::tests::a_clear_ends_the_notice
+    ui::banner::tests::a_frame_submitted_before_a_clear_books_nothing_after_it
+    ui::banner::tests::a_main_sequence_frame_of_the_current_world_ignites
+
+test result: FAILED. 15 passed; 3 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+
+== 2026-11-10T14:09:03-05:00 ui_banner · task M0-D169 · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::banner
+-- ui_banner · exit=101 · 1.27 s
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 1.18s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 18 tests
+test ui::banner::tests::a_collapse_the_latch_did_not_cut_still_slows_the_clock ... ok
+test ui::banner::tests::a_core_collapse_named_two_frames_after_the_latch_is_not_a_second_banner ... ok
+test ui::banner::tests::a_second_latch_slows_the_clock_again ... ok
+test ui::banner::tests::each_event_fires_once_per_object ... ok
+test ui::banner::tests::events_that_are_not_the_slow_downs_do_nothing ... ok
+test ui::banner::tests::ignition_slows_to_one_and_says_so ... ok
+test ui::banner::tests::nothing_slowed_nothing_shown ... ok
+test ui::banner::tests::only_ever_slower ... ok
+test ui::banner::tests::supernova_slows_to_a_tenth_with_its_text ... ok
+test ui::banner::tests::the_banner_stays_until_the_player_changes_the_rung ... ok
+test ui::banner::tests::the_latch_slows_to_a_tenth_with_the_core_collapse_text ... ok
+test ui::banner::tests::the_pass_that_reads_an_event_draws_the_bar_and_the_banner_from_the_slowed_clock ... ok
+test ui::banner::tests::a_main_sequence_frame_of_the_current_world_ignites ... FAILED
+test ui::banner::tests::the_setting_off_means_no_slow_down_and_no_banner ... ok
+test ui::banner::tests::with_the_setting_off_an_ignition_shows_the_notice_and_keeps_the_speed ... ok
+test ui::banner::tests::a_clear_ends_the_notice ... FAILED
+test ui::banner::tests::with_the_setting_on_the_slow_down_banner_is_unchanged_and_the_notice_fills_only_its_silence ... ok
+test ui::banner::tests::a_frame_submitted_before_a_clear_books_nothing_after_it ... FAILED
+
+failures:
+
+---- ui::banner::tests::a_main_sequence_frame_of_the_current_world_ignites stdout ----
+
+thread 'ui::banner::tests::a_main_sequence_frame_of_the_current_world_ignites' (529346) panicked at crates/sr-app/src/ui/banner.rs:457:83:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ui::banner::tests::a_clear_ends_the_notice stdout ----
+
+thread 'ui::banner::tests::a_clear_ends_the_notice' (529342) panicked at crates/sr-app/src/ui/banner.rs:457:83:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+
+---- ui::banner::tests::a_frame_submitted_before_a_clear_books_nothing_after_it stdout ----
+
+thread 'ui::banner::tests::a_frame_submitted_before_a_clear_books_nothing_after_it' (529345) panicked at crates/sr-app/src/ui/banner.rs:457:83:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "9f39c04e30577396bccf0fed2c9625e19cb6f4a311976be911ab9c1490c9c402" }
+
+
+failures:
+    ui::banner::tests::a_clear_ends_the_notice
+    ui::banner::tests::a_frame_submitted_before_a_clear_books_nothing_after_it
+    ui::banner::tests::a_main_sequence_frame_of_the_current_world_ignites
+
+test result: FAILED. 15 passed; 3 failed; 0 ignored; 0 measured; 145 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+

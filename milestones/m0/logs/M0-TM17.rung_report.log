@@ -1,0 +1,20 @@
+# M0-TM17 — python3 tools/pb/rung_record.py report — linux-pc (laserax-ai), 2026-11-10T11:46:14-05:00
+report: 372 DONE blocks · 16 class/rung rows · 2 session folder(s) (-home-ybelanger-private-sandbox-reactions, -home-ybelanger) · 113 block(s) with no session file readable (rung from the handoff, cost null) · 0 block(s) priced from tokens (a session file with no cost line) · 0 priced from list prices · 14 D block(s) naming no cause in the record · $1348.19 read from the sessions' own cost
+BUILD on Haiku 5.5, high: 1 block(s) · first-try 0/1 · $3.20 per DONE block · off the ladder
+BUILD on Opus 5.5, high: 135 block(s) · first-try 61/127 · $13.56 per DONE block · usual
+BUILD on Opus 5.5, xhigh: 5 block(s) · first-try 1/5 · $5.79 per DONE block · above (usual)
+BUILD on Sonnet 5.5, high: 120 block(s) · first-try 78/115 · $2.84 per DONE block · cheaper on Sonnet 5.5, high · vs same class on (usual)
+BUILD on Sonnet 5.5, medium: 1 block(s) · first-try 0/1 · $0.36 per DONE block · n<10
+BUILD on unknown: 23 block(s) · first-try 15/18 · n/a per DONE block · off the ladder
+BUILD·E on Haiku 5.5, high: 11 block(s) · first-try 8/10 · $0.77 per DONE block · off the ladder
+BUILD·E on Opus 5.5, high: 1 block(s) · first-try 1/1 · n/a per DONE block · usual
+BUILD·E on Sonnet 5.5, medium: 14 block(s) · first-try 12/12 · $0.80 per DONE block · cheaper on Sonnet 5.5, medium · vs (usual) BUILD blocks, all classes
+CHECK on Opus 5.5, max: 19 block(s) · first-try 11/18 · $24.80 per DONE block · above (usual)
+MOVE on Haiku 5.5, high: 5 block(s) · first-try 4/5 · $0.11 per DONE block · off the ladder
+MOVE on Opus 5.5, high: 1 block(s) · first-try 0/1 · $1.59 per DONE block · usual
+MOVE on Sonnet 5.5, medium: 6 block(s) · first-try 5/5 · $0.24 per DONE block · n<10
+MOVE on unknown: 2 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+PLAN on Opus 5.5, max: 25 block(s) · first-try 17/25 · $9.58 per DONE block · above (usual)
+PLAN on unknown: 3 block(s) · first-try n/a · n/a per DONE block · off the ladder
+=== GO ===
+exit=0

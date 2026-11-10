@@ -1,15 +1,15 @@
 --- a/crates/sr-physics/src/observe/stages.rs
 +++ b/crates/sr-physics/src/observe/stages.rs
-@@ -193,7 +193,7 @@
+@@ -210,7 +210,7 @@
              && c.o.l_nuc < 0.01 * c.o.luminosity
              && c.o.unbound < 0.05 * c.o.mass
              && c.o.x_c[X_N] < 0.5
 -            && c.o.mass <= c.m_ch
 +            && c.m_ch > 0.0
-             && settled(c)
+             && (settled(c) || degenerate_at_rest(c))
      }),
      (Stage::FailedStar, |c| !c.h.ignited && c.o.d_c >= 0.5 && c.o.l_group[G_H] < 0.01 * c.o.luminosity && settled(c)),
-@@ -202,7 +202,7 @@
+@@ -219,7 +219,7 @@
              && c.o.d_c >= 0.5
              && c.o.l_nuc < 0.1 * c.o.luminosity
              && c.o.unbound >= 0.05 * c.o.mass
@@ -17,4 +17,4 @@
 +            && c.m_ch > 0.0
              && settled(c)
      }),
-     (Stage::IronCore, |c| c.o.x_c[X_FE] >= 0.5 && c.o.l_nuc < 0.1 * c.o.luminosity),
+     (Stage::IronCore, |c| c.o.x_c[X_FE] >= 0.5 && !centre_burns(c.o)),

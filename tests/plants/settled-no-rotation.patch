@@ -8,4 +8,4 @@
 +    c.o.v_r.abs() <= 0.05 * c.v_dyn && c.o.potential != 0.0 && 2.0 * c.o.pressure / c.o.potential.abs() >= 0.8
  }
  
- fn carbon_burns(o: &Object) -> bool {
+ /// A white dwarf's centre at or above this degeneracy is held by the cold pressure alone (§0.5 [M0-D168]).

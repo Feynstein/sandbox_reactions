@@ -1,0 +1,76 @@
+== 2026-11-10T09:47:06-05:00 multi · task M0-D163 · box laserax-ai-server :: bash tests/gpu.sh multi physics
+-- multi · exit=0 · 71.16 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 5 tests
+test multi::clouds_one_empty_block_apart_are_two_objects ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.032126 until=none
+[{"age_years":null,"ending":null,"id":1,"mass_sb":576.0000045150518,"mass_suns":2.0112598031084477e-11,"predicted_ending":["failed_star"],"stage":null,"stages":[]},{"age_years":null,"ending":null,"id":2,"mass_sb":576.0000004768372,"mass_suns":2.011259598195698e-11,"predicted_ending":["failed_star"],"stage":null,"stages":[]}]
+ok
+test multi::headless_presets_start_at_calibrations_masses ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.030443 until=none
+preset:sun: ledger start mass 3136.720 against calibration's 3136.718
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.015351 until=none
+preset:massive: ledger start mass 10836.555 against calibration's 10836.553
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.011321 until=none
+preset:giant: ledger start mass 43460.989 against calibration's 43460.987
+ok
+test multi::the_three_presets_hold_calibrations_masses ... preset:sun: calibrated mass 3136.718, the cells hold 3136.720, a = 38.70
+preset:massive: calibrated mass 10836.553, the cells hold 10836.555, a = 71.93
+preset:giant: calibrated mass 43460.987, the cells hold 43460.989, a = 144.05
+ok
+test multi::the_two_suns_are_far_enough_apart_not_to_be_one_cloud ... two_suns: 240 cells apart, a = 38.70 and 38.70: 162.60 cells of vacuum between the edges
+ok
+test multi::two_suns_stay_two_objects_with_stable_ids ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=32 sim_time=0.770710 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3452 sim_time=40.003253 until=met
+two_suns to t = 40.003 in 3452 steps
+object 1: 3124.4 sb = 0.944 Suns, Some(Sure(WhiteDwarf)), age Some(1000000.0) years, stage "main_sequence"
+object 2: 3124.4 sb = 0.945 Suns, Some(Sure(WhiteDwarf)), age Some(1000000.0) years, stage "main_sequence"
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 503 filtered out; finished in 71.01s
+
+
+== 2026-11-10T09:51:50-05:00 multi · task M0-D163 · box laserax-ai-server :: bash tests/gpu.sh multi physics
+-- multi · exit=0 · 64.00 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 5 tests
+test multi::clouds_one_empty_block_apart_are_two_objects ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.032126 until=none
+[{"age_years":null,"ending":null,"id":1,"mass_sb":576.0000045150518,"mass_suns":2.0112598031084477e-11,"predicted_ending":["failed_star"],"stage":null,"stages":[]},{"age_years":null,"ending":null,"id":2,"mass_sb":576.0000004768372,"mass_suns":2.011259598195698e-11,"predicted_ending":["failed_star"],"stage":null,"stages":[]}]
+ok
+test multi::headless_presets_start_at_calibrations_masses ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.030443 until=none
+preset:sun: ledger start mass 3136.720 against calibration's 3136.718
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.015351 until=none
+preset:massive: ledger start mass 10836.555 against calibration's 10836.553
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.011321 until=none
+preset:giant: ledger start mass 43460.989 against calibration's 43460.987
+ok
+test multi::the_three_presets_hold_calibrations_masses ... preset:sun: calibrated mass 3136.718, the cells hold 3136.720, a = 38.70
+preset:massive: calibrated mass 10836.553, the cells hold 10836.555, a = 71.93
+preset:giant: calibrated mass 43460.987, the cells hold 43460.989, a = 144.05
+ok
+test multi::the_two_suns_are_far_enough_apart_not_to_be_one_cloud ... two_suns: 240 cells apart, a = 38.70 and 38.70: 162.60 cells of vacuum between the edges
+ok
+test multi::two_suns_stay_two_objects_with_stable_ids ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=32 sim_time=0.770710 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3452 sim_time=40.003253 until=met
+two_suns to t = 40.003 in 3452 steps
+object 1: 3124.4 sb = 0.944 Suns, Some(Sure(WhiteDwarf)), age Some(1000000.0) years, stage "main_sequence"
+object 2: 3124.4 sb = 0.945 Suns, Some(Sure(WhiteDwarf)), age Some(1000000.0) years, stage "main_sequence"
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 503 filtered out; finished in 63.84s
+
+

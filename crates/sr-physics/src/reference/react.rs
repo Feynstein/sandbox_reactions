@@ -18,6 +18,14 @@
 //! rate, the implicit step is not bound by it). Fractions are clamped ≥ 0 and renormalised to Σ X = 1 after each accepted
 //! sub-step. A cell where no record converts anything (every ω is 0 — below T_thr, or its inputs absent) is left bit for bit.
 //!
+//! The burn clock (§2.5.2 [M0-D165]): where the sub-step's specific heating q̇ = Σ_r q_r ω_r passes q_max = ε_th c_s / K_burn —
+//! one ε_th per K_burn of the cell's own sound crossings, c_s = √(2ε_th) the sheet's thermal sound speed (cold pressure left out),
+//! the cell 1 wide — the sub-step runs on a burn clock k = q̇/q_max times slower than the pass's: h is burn time, its reactions
+//! and heat are h's, it takes h·k of the pass's Δt, and its neutrino loss is that real time's. The same reactions and the same
+//! heat per unit mass, at most q_max per unit time: a hot core then burns over its sound crossings instead of in one pass
+//! (M0-D165: the Giant's centre went H → Fe in 2 × 10⁻⁵ t.u. of one pass, the core's crossing 0.22). k is exactly 1 below
+//! q_max, with T pinned and with K_burn = 0 (physics.json's `burn_k`), so those passes are the scheme above bit for bit.
+//!
 //! Energy: E changes by Σ · Σ_r q_r Δξ_r, exactly the nuclear energy booked; the thermal part is whatever E leaves once the
 //! kinetic energy and the cold energy of the *new* composition (Y_e and X_n change as species convert) are taken out, so the
 //! cold energy a changed composition shifts comes out of the thermal energy, never from nowhere (§2.9's invariant). T for the
@@ -160,6 +168,8 @@ pub struct React {
     sigma_vac: f64,
     burn_dx: f64,
     burn_dt: f64,
+    /// §2.5.2 [M0-D165]'s K_burn: the burn clock slows where the heating passes ε_th c_s / K_burn (0: off).
+    burn_k: f64,
     a_nu: f64,
     t_nu: f64,
     m_nu: f64,
@@ -245,6 +255,7 @@ impl React {
             sigma_vac: get("sigma_vac"),
             burn_dx: get("burn_dx"),
             burn_dt: get("burn_dt"),
+            burn_k: get("burn_k"),
             a_nu: get("a_nu"),
             t_nu: get("t_nu"),
             m_nu: get("m_nu"),
@@ -341,6 +352,10 @@ impl React {
             if eps_nu == 0.0 && omegas.iter().all(|&w| w == 0.0) {
                 break;
             }
+            // §2.5.2 [M0-D165]: the burn clock. Past q_max a sub-step of burn time h takes h·k of the pass (k = q̇/q_max): its
+            // reactions and heat are h's, its neutrino loss the real time's; k is exactly 1 elsewhere, so those passes are unchanged.
+            let k = self.stretch(qdot, t, mu);
+            let (t_rem, eps_nu) = if k == 1.0 { (t_rem, eps_nu) } else { (t_rem / k, eps_nu * k) };
             // The sub-step's size.
             let s_max = s.iter().fold(0.0f64, |m, v| m.max(v.abs()));
             let mut h = t_rem;
@@ -416,7 +431,7 @@ impl React {
                 cell.changed = true;
                 cell.max_dx = cell.max_dx.max(worst);
                 cell.max_dt_rel = cell.max_dt_rel.max(dt_rel);
-                t_done = if last { dt } else { t_done + h_use };
+                t_done = if last { dt } else if k == 1.0 { t_done + h_use } else { t_done + h_use * k };
                 h_try = (2.0 * h_use).max(f64::MIN_POSITIVE);
                 break;
             }
@@ -430,6 +445,21 @@ impl React {
             cell.pinned_e = Some(t0 / mu + self.eos.eps_cold(sigma, y_e, x[ID_N]));
         }
         cell
+    }
+
+    /// §2.5.2 [M0-D165]'s clock ratio: k = q̇/q_max where the specific heating q̇ passes q_max = ε_th c_s / K_burn, c_s = √(2ε_th)
+    /// (ε_th = T/μ, the floored one the rates read), else exactly 1 — and 1 with T pinned or K_burn = 0.
+    fn stretch(&self, qdot: f64, t: f64, mu: f64) -> f64 {
+        if self.test.pin_temperature || self.burn_k <= 0.0 {
+            return 1.0;
+        }
+        let eps_th = t / mu;
+        let q_max = eps_th * (2.0 * eps_th).sqrt() / self.burn_k;
+        if qdot > q_max {
+            qdot / q_max
+        } else {
+            1.0
+        }
     }
 
     /// (1/μ)'s derivative with respect to X_i: (Z_i + 1)/A_i.

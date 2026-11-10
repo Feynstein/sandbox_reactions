@@ -1,0 +1,330 @@
+== 2026-11-10T09:47:58-05:00 boot · task M0-D163 · box laserax-ai-server :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 8.73 s
+headless-boot: ready - exit 0, 2.5s (log /home/ybelanger/workspace/sandbox_reactions/milestones/m0/logs/M0-D163.launch.headless-boot.log)
+headless-boot: pid 424520 not signalled - gone
+headless-boot: log /home/ybelanger/workspace/sandbox_reactions/milestones/m0/logs/M0-D163.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of §2.12.2, steps = 200
+git revision: a clean tree -> ddf2ecb
+git revision: only assets/calibration.json rewritten and a log written -> ddf2ecb
+git revision: a source changed -> ddf2ecb-dirty
+git revision: a new source untracked -> ddf2ecb-dirty
+git revision: no repository -> unknown
+--- summary.json (verbatim, as checked) ---
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "NVIDIA GeForce RTX 3060"
+  },
+  "events": [],
+  "git": "255ec37-dirty",
+  "ledger": {
+    "end": {
+      "energy": {
+        "cold": 161377.0826852398,
+        "edit_potential": 0.0,
+        "escaped": 0.0,
+        "floor_added": -0.46915733596664977,
+        "invariant": -180582.99992304912,
+        "kinetic": 60368.756678109625,
+        "neutrino_deposited": 0.0,
+        "neutrino_lost": 0.0,
+        "nuclear_released": 584.6890603303909,
+        "potential": -513311.7480318787,
+        "radiated": 61.55970415987895,
+        "swallowed": 0.0,
+        "thermal": 111505.56894431474,
+        "tools": 0.0
+      },
+      "mass": {
+        "cleared": 0.0,
+        "erased": 0.0,
+        "escaped": 0.0,
+        "grid": 3136.7052271447037,
+        "invariant": 3136.720199506058,
+        "painted": 0.0,
+        "preset_dropped": 0.0,
+        "sinks": 0.0,
+        "vacuum_reset": 0.014972361354680608
+      },
+      "momentum": {
+        "escaped": [
+          0.0,
+          0.0
+        ],
+        "grid": [
+          0.0007386324723483995,
+          0.00022366440134646837
+        ],
+        "held": [
+          0.0,
+          0.0
+        ],
+        "invariant": [
+          0.0007386324723483995,
+          0.00022366440134646837
+        ],
+        "sinks": [
+          0.0,
+          0.0
+        ]
+      },
+      "sim_time": 3.537878072820604,
+      "step": 200
+    },
+    "start": {
+      "energy": {
+        "cold": 34684.23563502729,
+        "edit_potential": 0.0,
+        "escaped": 0.0,
+        "floor_added": 0.0,
+        "invariant": -180591.62877490063,
+        "kinetic": 10.412091037258506,
+        "neutrino_deposited": 0.0,
+        "neutrino_lost": 0.0,
+        "nuclear_released": 0.0,
+        "potential": -239193.30447845458,
+        "radiated": 0.0,
+        "swallowed": 0.0,
+        "thermal": 23907.02797748939,
+        "tools": 0.0
+      },
+      "mass": {
+        "cleared": 0.0,
+        "erased": 0.0,
+        "escaped": 0.0,
+        "grid": 3136.7201981313733,
+        "invariant": 3136.7201981313733,
+        "painted": 0.0,
+        "preset_dropped": 0.0,
+        "sinks": 0.0,
+        "vacuum_reset": 0.0
+      },
+      "momentum": {
+        "escaped": [
+          0.0,
+          0.0
+        ],
+        "grid": [
+          4.410743713378906e-6,
+          4.837289452552795e-6
+        ],
+        "held": [
+          0.0,
+          0.0
+        ],
+        "invariant": [
+          4.410743713378906e-6,
+          4.837289452552795e-6
+        ],
+        "sinks": [
+          0.0,
+          0.0
+        ]
+      },
+      "sim_time": 0.030442580580711365,
+      "step": 1
+    }
+  },
+  "max_gas_speed": 9.42200960823771,
+  "objects": [
+    {
+      "age_years": null,
+      "ending": null,
+      "id": 1,
+      "mass_sb": 3136.1816729707643,
+      "mass_suns": 0.9975187703027512,
+      "predicted_ending": [
+        "white_dwarf"
+      ],
+      "stage": null,
+      "stages": []
+    }
+  ],
+  "scene": "preset:sun",
+  "sim_time": 3.537878072820604,
+  "steps": 200,
+  "tool": "sandbox-reactions 0.0.0",
+  "until": {
+    "condition": "steps:200",
+    "met": true
+  },
+  "version": 1,
+  "wall_s": 1.465492495,
+  "world": {
+    "edge": "leave",
+    "height": 400,
+    "width": 600
+  }
+}
+
+--- end summary.json ---
+boot headless-boot: built in 0 s, booted and checked in 8 s
+=== GO ===
+
+== 2026-11-10T09:52:41-05:00 boot · task M0-D163 · box laserax-ai-server :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 8.38 s
+headless-boot: ready - exit 0, 2.5s (log /home/ybelanger/workspace/sandbox_reactions/milestones/m0/logs/M0-D163.launch.headless-boot.log)
+headless-boot: pid 432290 not signalled - gone
+headless-boot: log /home/ybelanger/workspace/sandbox_reactions/milestones/m0/logs/M0-D163.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of §2.12.2, steps = 200
+git revision: a clean tree -> b509a47
+git revision: only assets/calibration.json rewritten and a log written -> b509a47
+git revision: a source changed -> b509a47-dirty
+git revision: a new source untracked -> b509a47-dirty
+git revision: no repository -> unknown
+--- summary.json (verbatim, as checked) ---
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "NVIDIA GeForce RTX 3060"
+  },
+  "events": [],
+  "git": "255ec37-dirty",
+  "ledger": {
+    "end": {
+      "energy": {
+        "cold": 161377.0826852398,
+        "edit_potential": 0.0,
+        "escaped": 0.0,
+        "floor_added": -0.46915733596664977,
+        "invariant": -180582.99992304912,
+        "kinetic": 60368.756678109625,
+        "neutrino_deposited": 0.0,
+        "neutrino_lost": 0.0,
+        "nuclear_released": 584.6890603303909,
+        "potential": -513311.7480318787,
+        "radiated": 61.55970415987895,
+        "swallowed": 0.0,
+        "thermal": 111505.56894431474,
+        "tools": 0.0
+      },
+      "mass": {
+        "cleared": 0.0,
+        "erased": 0.0,
+        "escaped": 0.0,
+        "grid": 3136.7052271447037,
+        "invariant": 3136.720199506058,
+        "painted": 0.0,
+        "preset_dropped": 0.0,
+        "sinks": 0.0,
+        "vacuum_reset": 0.014972361354680608
+      },
+      "momentum": {
+        "escaped": [
+          0.0,
+          0.0
+        ],
+        "grid": [
+          0.0007386324723483995,
+          0.00022366440134646837
+        ],
+        "held": [
+          0.0,
+          0.0
+        ],
+        "invariant": [
+          0.0007386324723483995,
+          0.00022366440134646837
+        ],
+        "sinks": [
+          0.0,
+          0.0
+        ]
+      },
+      "sim_time": 3.537878072820604,
+      "step": 200
+    },
+    "start": {
+      "energy": {
+        "cold": 34684.23563502729,
+        "edit_potential": 0.0,
+        "escaped": 0.0,
+        "floor_added": 0.0,
+        "invariant": -180591.62877490063,
+        "kinetic": 10.412091037258506,
+        "neutrino_deposited": 0.0,
+        "neutrino_lost": 0.0,
+        "nuclear_released": 0.0,
+        "potential": -239193.30447845458,
+        "radiated": 0.0,
+        "swallowed": 0.0,
+        "thermal": 23907.02797748939,
+        "tools": 0.0
+      },
+      "mass": {
+        "cleared": 0.0,
+        "erased": 0.0,
+        "escaped": 0.0,
+        "grid": 3136.7201981313733,
+        "invariant": 3136.7201981313733,
+        "painted": 0.0,
+        "preset_dropped": 0.0,
+        "sinks": 0.0,
+        "vacuum_reset": 0.0
+      },
+      "momentum": {
+        "escaped": [
+          0.0,
+          0.0
+        ],
+        "grid": [
+          4.410743713378906e-6,
+          4.837289452552795e-6
+        ],
+        "held": [
+          0.0,
+          0.0
+        ],
+        "invariant": [
+          4.410743713378906e-6,
+          4.837289452552795e-6
+        ],
+        "sinks": [
+          0.0,
+          0.0
+        ]
+      },
+      "sim_time": 0.030442580580711365,
+      "step": 1
+    }
+  },
+  "max_gas_speed": 9.42200960823771,
+  "objects": [
+    {
+      "age_years": null,
+      "ending": null,
+      "id": 1,
+      "mass_sb": 3136.1816729707643,
+      "mass_suns": 0.9975187703027512,
+      "predicted_ending": [
+        "white_dwarf"
+      ],
+      "stage": null,
+      "stages": []
+    }
+  ],
+  "scene": "preset:sun",
+  "sim_time": 3.537878072820604,
+  "steps": 200,
+  "tool": "sandbox-reactions 0.0.0",
+  "until": {
+    "condition": "steps:200",
+    "met": true
+  },
+  "version": 1,
+  "wall_s": 1.504053099,
+  "world": {
+    "edge": "leave",
+    "height": 400,
+    "width": 600
+  }
+}
+
+--- end summary.json ---
+boot headless-boot: built in 0 s, booted and checked in 9 s
+=== GO ===
+

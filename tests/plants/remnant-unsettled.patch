@@ -1,18 +1,18 @@
 --- a/crates/sr-physics/src/observe/stages.rs
 +++ b/crates/sr-physics/src/observe/stages.rs
-@@ -194,7 +194,6 @@
+@@ -211,7 +211,6 @@
              && c.o.unbound < 0.05 * c.o.mass
              && c.o.x_c[X_N] < 0.5
              && c.o.mass <= c.m_ch
--            && settled(c)
+-            && (settled(c) || degenerate_at_rest(c))
      }),
      (Stage::FailedStar, |c| !c.h.ignited && c.o.d_c >= 0.5 && c.o.l_group[G_H] < 0.01 * c.o.luminosity && settled(c)),
      (Stage::PlanetaryNebula, |c| {
-@@ -203,7 +202,6 @@
+@@ -220,7 +219,6 @@
              && c.o.l_nuc < 0.1 * c.o.luminosity
              && c.o.unbound >= 0.05 * c.o.mass
              && c.o.mass <= c.m_ch
 -            && settled(c)
      }),
-     (Stage::IronCore, |c| c.o.x_c[X_FE] >= 0.5 && c.o.l_nuc < 0.1 * c.o.luminosity),
-     (Stage::SiBurn, |c| burns(c, G_SI, FUEL_SI)),
+     (Stage::IronCore, |c| c.o.x_c[X_FE] >= 0.5 && !centre_burns(c.o)),
+     (Stage::SiBurn, |c| core_burns(c, G_SI, FUEL_SI)),

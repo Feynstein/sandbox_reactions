@@ -1,0 +1,91 @@
+== 2026-11-10T11:39:27-05:00 held_core · task M0-D165 · box laserax-ai-server :: bash tests/gpu.sh held_core physics
+-- held_core · exit=101 · 115.05 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 25 tests
+test held_core::a_held_core_books_none_of_its_own_pull ... SR-HELD-OWN-PULL held [0.0, 0.0]; P2's whole field summed over the core [1.5134560271690134e-12, -4.483524662646232e-12]
+ok
+test held_core::a_held_core_books_the_free_gas_pull_as_its_reaction ... SR-HELD-GAS-PULL held [1.0128070249507397, 0.3840593557873474]; minus the core's pull on the gas [1.0128070249707597, 0.3840593557936977] (off 1.939e-11)
+ok
+test held_core::a_held_wall_reflects_and_passes_nothing ... SR-HELD-WALL Δp of the free cell -4.069482e-2 (Δt 1.3896e-1); held [0.04208447174097868, 0.0]; momentum drift [1.7290918461473528e-16, 0.0] of 6.4208e-1
+ok
+test held_core::a_neutron_core_is_held_under_m_tov_sb ... SR-HELD-NEUTRON twin: disks [0.95, 1.05, 0.95, 0.95] of m_tov_sb 4853.17 → mask [true, false, false, true] (2 held)
+SR-HELD-NEUTRON twin: disks [0.95, 1.05, 0.95, 1.05] of m_tov_sb 4853.17 → mask [true, false, false, false] (1 held)
+ok
+test held_core::disk_m1800_rests_held ... SR-HELD-CORE disk M 1800: held 12 at step 0, 12 at 10000 (M0-R11: 12); floor_added -6.1736e-4 over 1000–10000; KE 0.0000e0 → 0.0000e0; held momentum (2.5846e-22, 5.1709e-22); momentum drift 5.781e-22 of Σm|u| 0.0000e0; held cells moving 0
+ok
+test held_core::disk_m900_rests_held ... SR-HELD-CORE disk M 900: held 16 at step 0, 16 at 10000 (M0-R11: 16); floor_added 2.2610e0 over 1000–10000; KE 1.5546e2 → 1.5418e2; held momentum (-6.3714e-1, 9.7478e-3); momentum drift 7.879e-1 of Σm|u| 6.3185e1; held cells moving 0
+ok
+test held_core::gpu_a_held_core_books_none_of_its_own_pull ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HELD-OWN-PULL-GPU held [0.0, 0.0]; Σ Σ·g over the core, P2's whole field [-0.0157470703125, 0.08740234375]
+ok
+test held_core::gpu_a_held_core_books_the_free_gas_pull_as_the_twins ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HELD-GAS-PULL-GPU held [1.012807510793209, 0.38406047131866217]; twin [1.0128070249507406, 0.3840593557873472] (off 1.123e-6, band 1e-4)
+ok
+test held_core::gpu_a_held_edge_cell_lets_nothing_escape ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HELD-EDGE-GPU 0 held slots booked, 63 of the free cells' y = 0 slots booked
+ok
+test held_core::gpu_a_held_wall_reflects_as_the_twins ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HELD-WALL-GPU Δp of the free cells -4.624269e-1; held GPU [0.4650440514087677, 0.0], twin [0.46504330196506083, 0.0] (off 1.612e-6); drift [3.104408535792303e-9, 0.0] of 9.6000e0
+ok
+test held_core::gpu_a_neutron_core_is_held_under_m_tov_sb ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HELD-NEUTRON GPU: masks [true, false, false, true] (2 held) then [true, false, false, false] (1 held), m_tov_sb 4853.17
+ok
+test held_core::gpu_an_overridden_sigma_hold_reaches_the_twin_and_the_gpu ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HELD-KEYS disk M 900, step 1: shipped σ_hold 10 → held twin 16, GPU 16 (0 on one side only); sigma_hold 1.1497e3 (10 × the densest Σ 1.1497e2) → twin 0, GPU 0 (0)
+ok
+test held_core::gpu_clear_leaves_p4_no_stale_wall ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HELD-CLEAR-GPU 16 held before the Clear; 8 of the core's cells moving after it; 0 values differ
+ok
+test held_core::gpu_disk_m1800_agrees_with_the_twin_at_step_200 ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HELD-REF disk M 1800, step 200: relative L1 Σ 0.000e0, E 1.802e-6 (band 1e-3); held 12, 0 cells held on one side only; held momentum GPU [-1.4210854715202004e-14, -7.105427357601002e-15] (Σ|slot| 3.7750e-7), twin [5.131104737243e-24, 1.0443155233481974e-23]
+ok
+test held_core::gpu_disk_m1800_rests_held ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HELD-CORE-GPU disk M 1800: held 12 at step 50, 12 at 10000 (M0-R11: 12); floor_added -6.1738e-4 over 1000–10000; KE 0.0000e0 → 0.0000e0; held momentum (0.0000e0, 0.0000e0); momentum drift 0.000e0 of Σm|u| 0.0000e0; held cells moving 0
+ok
+test held_core::gpu_disk_m900_agrees_with_the_twin_at_step_200 ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HELD-REF disk M 900, step 200: relative L1 Σ 3.187e-8, E 9.671e-7 (band 1e-3); held 16, 0 cells held on one side only; held momentum GPU [0.0004100799560546875, 0.0001697540283203125] (Σ|slot| 3.5588e3), twin [1.0296277719312741e-13, -4.3000325522513094e-14]
+ok
+test held_core::gpu_disk_m900_rests_held ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HELD-CORE-GPU disk M 900: held 16 at step 50, 16 at 10000 (M0-R11: 16); floor_added 2.3401e0 over 1000–10000; KE 1.5545e2 → 1.5407e2; held momentum (4.8401e-1, -7.7521e-1); momentum drift 9.850e-1 of Σm|u| 6.3163e1; held cells moving 0
+ok
+test held_core::gpu_no_iron_is_held ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HELD-NO-IRON GPU: masks [false, false, true, true, false] (2 held) then [false, false, true, false, false] (1 held)
+ok
+test held_core::gpu_no_work_crosses_a_held_wall_and_the_kick_is_booked ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HELD-WORK-GPU the wall's neighbours' E off the twin's by 1.245e-7 (band 1e-5; E moved by up to 1.350e-2); held GPU [-13.860383719205856, 4.909932613372803e-6], twin [-13.860353670542606, 1.1102230246251565e-14] (off 2.197e-6)
+ok
+test held_core::gpu_nothing_crosses_a_held_cell_either_way ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HELD-NO-INFLOW-GPU columns [40]: held GPU [386.4552917480469, 0.0], twin [386.45538934284434, 0.0] (off 2.525e-7); drift [1.5894571940104168e-9, 0.0] of 4.8000e3
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HELD-NO-INFLOW-GPU columns [40, 41]: held GPU [386.45556640625, 0.0], twin [386.4553893428449, 0.0] (off 4.582e-7); drift [6.953875223795573e-8, 0.0] of 3.8400e3
+ok
+test held_core::gpu_the_remnant_window_shines_on_its_own_heat ... SR-HELD-WINDOW scenes/remnant_window.bin is the cut of build/v9-sun-life/dumps/s_450000.bin
+SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 92961849ad99bca350f0a42f7eea8262052db8d49c8782253605a1bc2b964a07 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'held_core::gpu_the_remnant_window_shines_on_its_own_heat' (469586) panicked at crates/sr-engine/tests/gpu/held_core.rs:1211:5:
+assertion `left == right` failed: headless ["--scene", "preset:sun", "--load-dump", "/home/ybelanger/workspace/sandbox_reactions/crates/sr-engine/../../scenes/remnant_window.bin", "--edge", "leave", "--steps", "10000", "--dump-every", "5000", "--out", "/tmp/sr-held-core-466835-window", "--adapter", "RTX 4090"]
+  left: 6
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test held_core::gravity_kick_on_a_held_cell_is_booked ... SR-HELD-GRAVITY Δt g M 1.753625e-1 (the held column's share 1.131371e-1); held [0.11426902152517097, 0.0]; drift [0.0, 0.0]
+ok
+test held_core::no_iron_is_held ... SR-HELD-NO-IRON twin: iron never held at Σ 310.2 or 379.1, a trace of 1e-30 neither; C/O held, released at X_Fe 1e-4
+ok
+test held_core::nothing_crosses_a_held_cell_either_way ... SR-HELD-NO-INFLOW held [27.605306515736036, 0.0]; momentum drift [0.0, 0.0] of 3.2761e2
+ok
+test held_core::the_hold_has_its_hysteresis ... ok
+
+failures:
+
+failures:
+    held_core::gpu_the_remnant_window_shines_on_its_own_heat
+
+test result: FAILED. 24 passed; 1 failed; 0 ignored; 0 measured; 485 filtered out; finished in 114.90s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

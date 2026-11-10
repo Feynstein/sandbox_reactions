@@ -1,0 +1,57 @@
+== 2026-11-10T15:43:04-05:00 ui_inspect · task M0-D166 · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::right::inspect_tests
+-- ui_inspect · exit=101 · 0.16 s
+    Blocking waiting for file lock on package cache
+    Finished `release` profile [optimized] target(s) in 0.09s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 9 tests
+test ui::right::inspect_tests::hovering_every_frame_keeps_one_request_in_flight ... ok
+test ui::right::inspect_tests::nothing_is_asked_off_the_world_and_a_refusal_frees_the_slot ... ok
+test ui::right::inspect_tests::a_gas_cell_reads_each_line_in_the_contracts_numbers ... ok
+test ui::right::inspect_tests::outside_the_world_the_panel_asks_for_a_hover ... ok
+test ui::right::inspect_tests::the_temperature_is_translated_to_kelvins_as_the_star_readout_does ... FAILED
+test ui::right::inspect_tests::the_mix_is_never_more_than_three_species ... FAILED
+test ui::right::inspect_tests::the_mix_lists_the_largest_shares_first_and_cuts_at_half_a_percent ... FAILED
+test ui::right::inspect_tests::a_cell_below_sigma_vac_is_empty_space ... FAILED
+test ui::right::inspect_tests::the_mach_number_is_the_speed_over_the_wave_speed ... FAILED
+
+failures:
+
+---- ui::right::inspect_tests::the_temperature_is_translated_to_kelvins_as_the_star_readout_does stdout ----
+
+thread 'ui::right::inspect_tests::the_temperature_is_translated_to_kelvins_as_the_star_readout_does' (562166) panicked at crates/sr-app/src/ui/right.rs:654:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "f585b4e2c1a10829a98617310981a7f464bf790bc5375ba1f0cb9d60f70c3deb" }
+
+---- ui::right::inspect_tests::the_mix_is_never_more_than_three_species stdout ----
+
+thread 'ui::right::inspect_tests::the_mix_is_never_more_than_three_species' (562164) panicked at crates/sr-app/src/ui/right.rs:654:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "f585b4e2c1a10829a98617310981a7f464bf790bc5375ba1f0cb9d60f70c3deb" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ui::right::inspect_tests::the_mix_lists_the_largest_shares_first_and_cuts_at_half_a_percent stdout ----
+
+thread 'ui::right::inspect_tests::the_mix_lists_the_largest_shares_first_and_cuts_at_half_a_percent' (562165) panicked at crates/sr-app/src/ui/right.rs:654:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "f585b4e2c1a10829a98617310981a7f464bf790bc5375ba1f0cb9d60f70c3deb" }
+
+---- ui::right::inspect_tests::a_cell_below_sigma_vac_is_empty_space stdout ----
+
+thread 'ui::right::inspect_tests::a_cell_below_sigma_vac_is_empty_space' (562158) panicked at crates/sr-app/src/ui/right.rs:654:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "f585b4e2c1a10829a98617310981a7f464bf790bc5375ba1f0cb9d60f70c3deb" }
+
+---- ui::right::inspect_tests::the_mach_number_is_the_speed_over_the_wave_speed stdout ----
+
+thread 'ui::right::inspect_tests::the_mach_number_is_the_speed_over_the_wave_speed' (562163) panicked at crates/sr-app/src/ui/right.rs:654:59:
+called `Result::unwrap()` on an `Err` value: OutOfDate { file: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", assets: "f585b4e2c1a10829a98617310981a7f464bf790bc5375ba1f0cb9d60f70c3deb" }
+
+
+failures:
+    ui::right::inspect_tests::a_cell_below_sigma_vac_is_empty_space
+    ui::right::inspect_tests::the_mach_number_is_the_speed_over_the_wave_speed
+    ui::right::inspect_tests::the_mix_is_never_more_than_three_species
+    ui::right::inspect_tests::the_mix_lists_the_largest_shares_first_and_cuts_at_half_a_percent
+    ui::right::inspect_tests::the_temperature_is_translated_to_kelvins_as_the_star_readout_does
+
+test result: FAILED. 4 passed; 5 failed; 0 ignored; 0 measured; 154 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-app --bin sandbox-reactions`
+

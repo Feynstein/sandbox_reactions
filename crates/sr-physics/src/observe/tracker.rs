@@ -37,7 +37,8 @@ use std::collections::BTreeMap;
 use serde_json::{json, Map, Value};
 
 use super::{BlockData, Report, SinkData, GROUPS, GROUP_N};
-use crate::registry::Physics;
+use crate::rates::Omega;
+use crate::registry::{electron_fraction, Elements, Physics, Reactions};
 
 /// An f64 as the observers' snapshot writes it (contract §0.5 [M0-D76]): Rust's shortest round-trip form, as a JSON string.
 /// serde_json reads a number best-effort (its `float_roundtrip` feature is off, §1.2's table unchanged), so a 17-digit f64
@@ -78,7 +79,8 @@ const LINK: i64 = 1;
 const R_ACC_MIN: f64 = 2.0;
 
 /// What the tracker needs of the constants: Σ_obj and the block edge (§2.7), G (§2.1), the light speed c_sb of the
-/// accretion radius (§2.6), the wisp mass (§1.9.2).
+/// accretion radius (§2.6), the wisp mass (§1.9.2), and the burning at c (§0.5 [M0-D169]): each enabled record's group, q and
+/// rate law, and the ladder's temperatures T_H … T_Si by group.
 #[derive(Clone, Debug, PartialEq)]
 pub struct TrackerConfig {
     pub sigma_obj: f64,
@@ -86,7 +88,12 @@ pub struct TrackerConfig {
     pub g: f64,
     pub c_sb: f64,
     pub wisp_mass: f64,
+    pub burning: Vec<(usize, f64, Omega)>,
+    pub ladder: [f64; 6],
 }
+
+/// The physics.json temperature of each group's rung, H … Si (§1.6.3's ladder).
+const LADDER_KEYS: [&str; 6] = ["t_h", "t_he", "t_c", "t_ne", "t_o", "t_si"];
 
 impl TrackerConfig {
     /// `physics`' Σ_obj, block edge and c_sb, G = 1, wisps under 1 % of `sun_mass` (calibration's `preset_mass_sb.sun`).
@@ -97,6 +104,14 @@ impl TrackerConfig {
             g: 1.0,
             c_sb: physics.get("c_sb").expect("c_sb is a physics.json key"),
             wisp_mass: WISP_FRACTION * sun_mass,
+            burning: Reactions::shipped(&Elements::shipped().expect("the shipped elements load"), physics)
+                .expect("the shipped reactions load against the run's physics")
+                .records()
+                .iter()
+                .filter(|r| r.enabled)
+                .map(|r| (GROUPS.iter().position(|g| *g == r.group).expect("a record books into a §1.9.1 group"), r.q(physics), Omega::new(r)))
+                .collect(),
+            ladder: LADDER_KEYS.map(|k| physics.get(k).expect("the ladder's temperatures are physics.json keys")),
         }
     }
 
@@ -130,6 +145,10 @@ pub struct Object {
     pub l_group: [f64; 7],
     /// L_nuc: the sum of the positive L_g.
     pub l_nuc: f64,
+    /// q̇_c by group: the specific nuclear power at c itself, Σ_r q_r ω_r(Σ_c, X_c, T_c, Y_e,c) over the group's enabled
+    /// records (§1.6.1's law), 0 while T_c is under the group's ladder temperature (N, which absorbs, has none) — the core's
+    /// burning, which §1.9.3's c/ne/o/si_burn and iron_core rows read (§0.5 [M0-D169]); zeros for a lone sink.
+    pub q_c: [f64; 7],
     /// L_ν: the neutrino power lost, and the part deposited back.
     pub l_nu: f64,
     pub l_nu_deposited: f64,
@@ -412,6 +431,7 @@ impl Object {
             m.insert(k.into(), exact(*x));
         }
         m.insert("kinetic_t".into(), exact(o.kinetic_t));
+        m.insert("q_c".into(), o.q_c.iter().map(|x| exact(*x)).collect());
         for (k, xs) in o.lists() {
             m.insert(k.into(), xs.iter().map(|x| exact(*x)).collect());
         }
@@ -445,6 +465,16 @@ impl Object {
         }
         // One written before §0.5 [M0-D161] has no τ_deg: none, so the hold reads τ_dyn until the next frame measures it.
         o.tau_deg = optional("tau_deg")?;
+        // One written before §0.5 [M0-D169] has no q̇_c: zeros — no core burning row — until the next frame measures it.
+        if !v["q_c"].is_null() {
+            let list = read_list(v, "q_c")?;
+            if list.len() != o.q_c.len() {
+                return Err(format!("objects.q_c: {} values, expected {}", list.len(), o.q_c.len()));
+            }
+            for (x, s) in o.q_c.iter_mut().zip(list) {
+                *x = read_exact(s, "q_c")?;
+            }
+        }
         Ok(o)
     }
 }
@@ -591,6 +621,22 @@ fn measure_sink(config: &TrackerConfig, report: &Report, k: usize) -> Found {
 }
 
 /// One component's object (id 0 until the tracker names it), with its blocks' gas for the next frame's identity.
+/// q̇ by group at a cell of density `sigma`, fractions `x`, temperature `t` (§0.5 [M0-D169]): Σ_r q_r ω_r over each group's
+/// enabled records, a group counted only once `t` reaches its ladder temperature; N_Fe (absorbing) as its law gives it. The
+/// burn clock ([M0-D165]) slows a cell's reactions all alike, so it leaves the groups' ratio — what the rows compare — as is.
+/// The Massive's centre block also burns its hydrogen and helium shells (RTX 4090, M0-D169: L_H 1–2.4 × 10⁴, L_He 7–12 × 10³
+/// against the centre's O ≤ 7.3 × 10³ and Si ≤ 4.6 × 10³), so the core is read at c itself.
+fn burning_at(config: &TrackerConfig, sigma: f64, x: &[f64; 10], t: f64) -> [f64; 7] {
+    let y_e = electron_fraction(x);
+    let mut q = [0.0; 7];
+    for (g, q_r, omega) in &config.burning {
+        if *g == GROUP_N || t >= config.ladder[*g] {
+            q[*g] += q_r * omega.omega(sigma, x, t, y_e);
+        }
+    }
+    q
+}
+
 fn measure(config: &TrackerConfig, report: &Report, members: Vec<usize>) -> Found {
     let list: &[usize] = &members;
     let block = config.block as f64;
@@ -694,6 +740,7 @@ fn measure(config: &TrackerConfig, report: &Report, members: Vec<usize>) -> Foun
     let sum = |f: &dyn Fn(&BlockData) -> f64| -> f64 { list.iter().map(|&i| f(at(i))).sum() };
     let l_group: [f64; 7] = std::array::from_fn(|g| per_time(sum(&|b| b.nuclear[g])));
     let l_nuc: f64 = l_group.iter().filter(|l| **l > 0.0).sum();
+    let q_c = burning_at(config, cb.max_sigma, &cb.max_x, cb.max_t);
     // The light credited from outside the object is added by `credit_light` once every object is known.
     let luminosity_own = per_time(sum(&|b| b.radiated));
 
@@ -728,6 +775,7 @@ fn measure(config: &TrackerConfig, report: &Report, members: Vec<usize>) -> Foun
         luminosity_own,
         l_group,
         l_nuc,
+        q_c,
         l_nu: per_time(sum(&|b| b.neutrino_lost)),
         l_nu_deposited: per_time(sum(&|b| b.neutrino_deposited)),
         sigma_c: cb.max_sigma,
@@ -754,7 +802,7 @@ mod tests {
     use super::*;
 
     fn cfg() -> TrackerConfig {
-        TrackerConfig { sigma_obj: 1e-3, block: 4, g: 1.0, c_sb: 400.0, wisp_mass: WISP_FRACTION * SUN_MASS_NOMINAL }
+        TrackerConfig { sigma_obj: 1e-3, block: 4, g: 1.0, c_sb: 400.0, wisp_mass: WISP_FRACTION * SUN_MASS_NOMINAL, burning: vec![], ladder: [0.0; 6] }
     }
 
     /// An empty report of `cols` × `rows` blocks over a world as wide as the box, one sim time unit.
@@ -1270,6 +1318,50 @@ mod tests {
         }
         let o = Tracker::new(cfg()).update(&r).to_vec();
         assert_eq!((o[0].core_group, o[0].r_core, o[0].envelope_mass), (None, None, None));
+    }
+
+    #[test]
+    fn the_core_s_burning_is_c_s_own() {
+        // §0.5 [M0-D169]: q̇_c, each group's specific power at c itself by the rate laws — the Massive's centre at t 231.6 of
+        // the dn2 continuation (RTX 4090: Σ_c ≈ 100, X_O 0.13, X_Si 0.40, X_Fe 0.30) under blocks burning a hydrogen shell.
+        let physics = Physics::shipped().unwrap();
+        let config = TrackerConfig { sigma_obj: 1e-3, ..TrackerConfig::from_physics(&physics, SUN_MASS_NOMINAL) };
+        let reactions = Reactions::shipped(&Elements::shipped().unwrap(), &physics).unwrap();
+        let (t_o, t_si) = (physics.get("t_o").unwrap(), physics.get("t_si").unwrap());
+        let mut x = [0.0; 10];
+        (x[3], x[5], x[6], x[7], x[8]) = (0.13, 0.02, 0.40, 0.15, 0.30); // O, Mg, Si, S, Fe
+        let y_e = electron_fraction(&x);
+        let direct = |ids: &[&str], t: f64| -> f64 {
+            ids.iter().map(|id| reactions.get(id).unwrap()).map(|r| r.q(&physics) * Omega::new(r).omega(100.0, &x, t, y_e)).sum()
+        };
+        let mut r = report(5, 5);
+        rect(&mut r, 0..5, 0..5, 50.0);
+        let c = 2 * 5 + 2;
+        r.blocks[c].max_sigma = 100.0;
+        (r.blocks[c].max_x, r.blocks[c].max_t) = (x, 0.5 * (t_o + t_si));
+        r.blocks[c].nuclear = [3.0e4, 1.0e4, 0.0, 0.0, 5.0e3, 1.0e3, 0.0]; // the block's shells outshine its centre
+        for i in [6, 7, 8, 11, 13, 16, 17, 18] {
+            r.blocks[i].nuclear[0] = 1.0e4;
+        }
+        let o = Tracker::new(config.clone()).update(&r).to_vec();
+        let want_o = direct(&["O_burn", "Mg_burn"], 0.5 * (t_o + t_si));
+        assert!(want_o > 0.0 && (o[0].q_c[4] - want_o).abs() <= 1e-12 * want_o, "{:?} against {want_o}", o[0].q_c);
+        assert_eq!(o[0].q_c[5], 0.0, "silicon at c, T_c under T_Si: not lit");
+        assert_eq!((o[0].q_c[0], o[0].q_c[1]), (0.0, 0.0), "no hydrogen or helium at c, whatever the block burns");
+        // At T_Si exactly silicon is lit, by its two records.
+        r.blocks[c].max_t = t_si;
+        let o = Tracker::new(config.clone()).update(&r).to_vec();
+        let want_si = direct(&["Si_burn", "S_burn"], t_si);
+        assert!(want_si > 0.0 && (o[0].q_c[5] - want_si).abs() <= 1e-12 * want_si, "{:?} against {want_si}", o[0].q_c);
+        // A cold centre burns nothing.
+        r.blocks[c].max_t = 0.1;
+        assert_eq!(Tracker::new(config).update(&r)[0].q_c, [0.0; 7]);
+        // The snapshot carries it; one written before it restores with zeros.
+        let snap = o[0].snapshot();
+        assert_eq!(Object::restore(&snap), Ok(o[0].clone()), "round trip");
+        let mut old = snap;
+        old.as_object_mut().unwrap().remove("q_c");
+        assert_eq!(Object::restore(&old), Ok(Object { q_c: [0.0; 7], ..o[0].clone() }));
     }
 
     /// A sink at (`x`, `y`) moving at (`vx`, `vy`).

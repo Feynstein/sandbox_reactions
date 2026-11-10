@@ -1,0 +1,192 @@
+== 2026-11-09T13:56:32-05:00 calibration · task M0-D163 · box laserax-ai-server :: bash tests/gpu.sh calibration
+-- calibration · exit=101 · 0.42 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 13 tests
+test calibration::a_calibration_without_the_render_reserve_is_accepted_and_written_back_without_it ... ok
+test calibration::a_calibration_written_from_the_embedded_assets_is_accepted ... ok
+test calibration::a_mismatched_calibration_is_refused_with_exit_6 ... 
+thread 'calibration::a_mismatched_calibration_is_refused_with_exit_6' (345641) panicked at crates/sr-engine/tests/gpu/calibration.rs:308:18:
+a gas as fast as c_sb must be refused, got Ok(Some(Calibration { physics_hash: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74", measured: Measured { date: "1970-01-01T00:00:00Z", git: "test", adapter: "test", machine: "test" }, m_ch_sb: 3970.0, m_tov_sb: 6000.0, ns_sigma_max_sb: 3200.0, m_ign_sb: 270.0, m_up_sb: 26800.0, m_bh_sb: 83800.0, preset_mass_sb: PresetMasses { sun: 3351.0, massive: 50265.0, giant: 134040.0 }, t_eff_sun_sb: 0.3, life_sun_sb: 1200.0, top_rung: 1000.0, stage_durations_sb: {"main_sequence": [(3351.0, 900.0)]}, render_reserve_ms: Some(3.0), max_gas_speed: 200.0 }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibration::a_reformatted_physics_json_keeps_its_hash_and_a_changed_constant_does_not ... ok
+test calibration::every_number_of_the_calibration_is_read_back_as_written ... ok
+test calibration::headless_runs_without_a_calibration_when_the_scene_names_no_preset ... SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference
+SR-HEADLESS DONE steps=1 sim_time=0.075718 until=none
+ok
+test calibration::sha256_fips_180_4_long_vectors_and_the_padding_edges ... ok
+test calibration::sha256_fips_180_4_short_vectors ... ok
+test calibration::the_binary_embeds_the_calibration_file_whenever_it_exists ... ok
+test calibration::the_calibration_the_binary_embeds_matches_the_assets ... 
+thread 'calibration::the_calibration_the_binary_embeds_matches_the_assets' (345648) panicked at crates/sr-engine/tests/gpu/calibration.rs:322:13:
+assertion `left == right` failed: calibration.json is out of date: change a constant, calibrate again
+  left: "05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3"
+ right: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74"
+FAILED
+test calibration::the_hash_is_over_the_canonical_bytes ... ok
+test calibration::the_order_of_the_ceilings_is_k9 ... ok
+test calibration::the_schema_is_parsed_and_every_refusal_names_its_key ... ok
+
+failures:
+
+failures:
+    calibration::a_mismatched_calibration_is_refused_with_exit_6
+    calibration::the_calibration_the_binary_embeds_matches_the_assets
+
+test result: FAILED. 11 passed; 2 failed; 0 ignored; 0 measured; 495 filtered out; finished in 0.32s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+== 2026-11-09T13:57:13-05:00 calibration · task M0-D163 · box laserax-ai-server :: bash tests/gpu.sh calibration
+-- calibration · exit=101 · 0.42 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 13 tests
+test calibration::a_calibration_without_the_render_reserve_is_accepted_and_written_back_without_it ... ok
+test calibration::a_calibration_written_from_the_embedded_assets_is_accepted ... ok
+test calibration::a_mismatched_calibration_is_refused_with_exit_6 ... ok
+test calibration::a_reformatted_physics_json_keeps_its_hash_and_a_changed_constant_does_not ... ok
+test calibration::every_number_of_the_calibration_is_read_back_as_written ... ok
+test calibration::headless_runs_without_a_calibration_when_the_scene_names_no_preset ... SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference
+SR-HEADLESS DONE steps=1 sim_time=0.075718 until=none
+ok
+test calibration::sha256_fips_180_4_long_vectors_and_the_padding_edges ... ok
+test calibration::sha256_fips_180_4_short_vectors ... ok
+test calibration::the_binary_embeds_the_calibration_file_whenever_it_exists ... ok
+test calibration::the_calibration_the_binary_embeds_matches_the_assets ... 
+thread 'calibration::the_calibration_the_binary_embeds_matches_the_assets' (346191) panicked at crates/sr-engine/tests/gpu/calibration.rs:323:13:
+assertion `left == right` failed: calibration.json is out of date: change a constant, calibrate again
+  left: "05b52c1536ac046da0d6724f322a0e310c5e43f86b72069914c3bef734d777d3"
+ right: "a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibration::the_hash_is_over_the_canonical_bytes ... ok
+test calibration::the_order_of_the_ceilings_is_k9 ... ok
+test calibration::the_schema_is_parsed_and_every_refusal_names_its_key ... ok
+
+failures:
+
+failures:
+    calibration::the_calibration_the_binary_embeds_matches_the_assets
+
+test result: FAILED. 12 passed; 1 failed; 0 ignored; 0 measured; 495 filtered out; finished in 0.32s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+== 2026-11-10T08:43:12-05:00 calibration · task M0-D163 · box laserax-ai-server :: bash tests/gpu.sh calibration
+-- calibration · exit=101 · 0.16 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 13 tests
+test calibration::a_calibration_without_the_render_reserve_is_accepted_and_written_back_without_it ... ok
+test calibration::a_calibration_written_from_the_embedded_assets_is_accepted ... ok
+test calibration::a_mismatched_calibration_is_refused_with_exit_6 ... ok
+test calibration::a_reformatted_physics_json_keeps_its_hash_and_a_changed_constant_does_not ... ok
+test calibration::every_number_of_the_calibration_is_read_back_as_written ... 
+thread 'calibration::every_number_of_the_calibration_is_read_back_as_written' (398283) panicked at crates/sr-engine/tests/gpu/calibration.rs:224:5:
+assertion `left == right` failed: t_eff_sun_sb read as 11.635625151159196
+  left: 4622739892691631316
+ right: 4622688411697968301
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibration::headless_runs_without_a_calibration_when_the_scene_names_no_preset ... SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference
+SR-HEADLESS DONE steps=1 sim_time=0.075718 until=none
+ok
+test calibration::sha256_fips_180_4_long_vectors_and_the_padding_edges ... ok
+test calibration::sha256_fips_180_4_short_vectors ... ok
+test calibration::the_binary_embeds_the_calibration_file_whenever_it_exists ... ok
+test calibration::the_calibration_the_binary_embeds_matches_the_assets ... ok
+test calibration::the_hash_is_over_the_canonical_bytes ... ok
+test calibration::the_order_of_the_ceilings_is_k9 ... ok
+test calibration::the_schema_is_parsed_and_every_refusal_names_its_key ... ok
+
+failures:
+
+failures:
+    calibration::every_number_of_the_calibration_is_read_back_as_written
+
+test result: FAILED. 12 passed; 1 failed; 0 ignored; 0 measured; 495 filtered out; finished in 0.06s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+== 2026-11-10T08:43:47-05:00 calibration · task M0-D163 · box laserax-ai-server :: bash tests/gpu.sh calibration
+-- calibration · exit=0 · 12.29 s
+   Compiling sr-physics v0.0.0 (/home/ybelanger/workspace/sandbox_reactions/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/workspace/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 11.88s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 13 tests
+test calibration::a_calibration_without_the_render_reserve_is_accepted_and_written_back_without_it ... ok
+test calibration::a_calibration_written_from_the_embedded_assets_is_accepted ... ok
+test calibration::a_mismatched_calibration_is_refused_with_exit_6 ... ok
+test calibration::a_reformatted_physics_json_keeps_its_hash_and_a_changed_constant_does_not ... ok
+test calibration::every_number_of_the_calibration_is_read_back_as_written ... ok
+test calibration::headless_runs_without_a_calibration_when_the_scene_names_no_preset ... SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference
+SR-HEADLESS DONE steps=1 sim_time=0.075718 until=none
+ok
+test calibration::sha256_fips_180_4_long_vectors_and_the_padding_edges ... ok
+test calibration::sha256_fips_180_4_short_vectors ... ok
+test calibration::the_binary_embeds_the_calibration_file_whenever_it_exists ... ok
+test calibration::the_calibration_the_binary_embeds_matches_the_assets ... ok
+test calibration::the_hash_is_over_the_canonical_bytes ... ok
+test calibration::the_order_of_the_ceilings_is_k9 ... ok
+test calibration::the_schema_is_parsed_and_every_refusal_names_its_key ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 495 filtered out; finished in 0.33s
+
+
+== 2026-11-10T09:48:00-05:00 calibration · task M0-D163 · box laserax-ai-server :: bash tests/gpu.sh calibration
+-- calibration · exit=0 · 0.46 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 13 tests
+test calibration::a_calibration_without_the_render_reserve_is_accepted_and_written_back_without_it ... ok
+test calibration::a_calibration_written_from_the_embedded_assets_is_accepted ... ok
+test calibration::a_mismatched_calibration_is_refused_with_exit_6 ... ok
+test calibration::a_reformatted_physics_json_keeps_its_hash_and_a_changed_constant_does_not ... ok
+test calibration::every_number_of_the_calibration_is_read_back_as_written ... ok
+test calibration::headless_runs_without_a_calibration_when_the_scene_names_no_preset ... SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference
+SR-HEADLESS DONE steps=1 sim_time=0.075718 until=none
+ok
+test calibration::sha256_fips_180_4_long_vectors_and_the_padding_edges ... ok
+test calibration::sha256_fips_180_4_short_vectors ... ok
+test calibration::the_binary_embeds_the_calibration_file_whenever_it_exists ... ok
+test calibration::the_calibration_the_binary_embeds_matches_the_assets ... ok
+test calibration::the_hash_is_over_the_canonical_bytes ... ok
+test calibration::the_order_of_the_ceilings_is_k9 ... ok
+test calibration::the_schema_is_parsed_and_every_refusal_names_its_key ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 495 filtered out; finished in 0.33s
+
+
+== 2026-11-10T09:52:42-05:00 calibration · task M0-D163 · box laserax-ai-server :: bash tests/gpu.sh calibration
+-- calibration · exit=0 · 0.46 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 13 tests
+test calibration::a_calibration_without_the_render_reserve_is_accepted_and_written_back_without_it ... ok
+test calibration::a_calibration_written_from_the_embedded_assets_is_accepted ... ok
+test calibration::a_mismatched_calibration_is_refused_with_exit_6 ... ok
+test calibration::a_reformatted_physics_json_keeps_its_hash_and_a_changed_constant_does_not ... ok
+test calibration::every_number_of_the_calibration_is_read_back_as_written ... ok
+test calibration::headless_runs_without_a_calibration_when_the_scene_names_no_preset ... SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference
+SR-HEADLESS DONE steps=1 sim_time=0.075718 until=none
+ok
+test calibration::sha256_fips_180_4_long_vectors_and_the_padding_edges ... ok
+test calibration::sha256_fips_180_4_short_vectors ... ok
+test calibration::the_binary_embeds_the_calibration_file_whenever_it_exists ... ok
+test calibration::the_calibration_the_binary_embeds_matches_the_assets ... ok
+test calibration::the_hash_is_over_the_canonical_bytes ... ok
+test calibration::the_order_of_the_ceilings_is_k9 ... ok
+test calibration::the_schema_is_parsed_and_every_refusal_names_its_key ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 495 filtered out; finished in 0.34s
+
+

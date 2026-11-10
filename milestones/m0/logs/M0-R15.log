@@ -1,0 +1,570 @@
+=== M0-R15 start 2026-11-10T12:01:13-05:00 on laserax-ai — model=claude-opus-5-5 level=high
+ar4.json
+cnoar4.json
+cno.json
+ctl.json
+g_ar4
+g_ar4.out
+g_cno
+g_cnoar4
+g_cnoar4.out
+g_cno.out
+g_ctl
+g_ctl.out
+g_h8_ctl
+g_h8_ctl.out
+g_h8he20_ctl
+g_h8he20_ctl.out
+g_h8he20_lad
+g_h8he20_lad.out
+g_h8he20_nu10
+g_h8he20_nu10.out
+g_he20_ctl
+g_he20_ctl.out
+g_lad
+g_lad.out
+g_lim10
+g_lim10.out
+g_lim40
+g_lim40.out
+hash_h8
+hash_h8he20
+hash_h8he20.out
+hash_h8.out
+hash_he20
+hash_he20.out
+lad_bounce.json
+lad.json
+ladnu10.json
+m_ar4
+m_ar4.out
+m_cno
+m_cnoar4
+m_cnoar4.out
+m_cno.out
+m_ctl
+m_ctl.out
+m_h8_ctl
+m_h8_ctl.out
+m_h8he20_ctl
+m_h8he20_ctl.out
+m_h8he20_lad
+m_h8he20_lad_bounce
+m_h8he20_lad_bounce.out
+m_h8he20_ladnu10
+m_h8he20_ladnu10.out
+m_h8he20_lad.out
+m_h8he20_nu10
+m_h8he20_nu10.out
+m_he20_ctl
+m_he20_ctl.out
+m_he20_ladnu10
+m_he20_ladnu10.out
+m_lad
+m_lad_bounce
+m_lad_bounce.out
+m_lad.out
+m_lim10
+m_lim10.out
+m_lim40
+m_lim40.out
+nu10.json
+screen1.done
+screen1.sh
+screen1.status
+screen2.done
+screen2.sh
+screen2.status
+screen3.done
+screen3.sh
+screen3.status
+screen4.done
+endmap.sh
+flash
+flash.out
+gmap
+map
+opts
+recal.done
+recal.sh
+v1
+giant
+massive
+massive_rows
+massive_rows.out
+run.sh
+sun
+v1.done
+16G	m0-d165/opts
+2.8G	m0-d163/v1
+name, utilization.gpu [%], memory.used [MiB]
+NVIDIA GeForce RTX 3060, 0 %, 13 MiB
+NVIDIA GeForce RTX 4090, 0 %, 19 MiB
+d163cal: 1 windows (created Mon Nov  9 13:57:24 2026)
+v14: 1 windows (created Fri Nov  6 16:24:56 2026)
+v14b: 1 windows (created Sun Nov  8 09:44:31 2026)
+v14g: 1 windows (created Sun Nov  8 18:11:23 2026)
+v14s2: 1 windows (created Fri Nov  6 16:26:31 2026)
+tail: option used in invalid context -- 2
+shipped                      H 114.0 He 117.0 C 137.0 Ne 188.0 O 208.0 Si 282.5  G-ORDER holds
+dn1 ne125 o130 si150         H 114.0 He 117.0 C 137.0 Ne 153.0 O 161.0 Si 180.0  G-ORDER holds
+dn2 ne118 o122 si135         H 114.0 He 117.0 C 137.0 Ne 144.5 O 151.0 Si 162.0  G-ORDER holds
+dn3 ne130 o135 si160         H 114.0 He 117.0 C 137.0 Ne 159.0 O 167.0 Si 192.0  G-ORDER holds
+dn4 c105 ne120 o125 si140    H 114.0 He 117.0 C 131.0 Ne 147.0 O 154.5 Si 168.0  G-ORDER holds
+m_lim10/s_24000.bin                      step  24000 t  235.36 M    4121 | He-core    899 (r   2.5) | C/O+ core   1101 (r   2.8) | Si+ core      0 (r  0.0) | centre T  129.5 Sig   70.0 d 0.72 mu 1.76 Ye 0.502
+m_lim10/s_26000.bin                      step  26000 t  251.84 M    3453 | He-core   1309 (r   2.7) | C/O+ core   1412 (r   2.8) | Si+ core      0 (r  0.0) | centre T  138.9 Sig   96.6 d 0.76 mu 1.77 Ye 0.501
+m_lim10/s_27000.bin                      step  27000 t  259.54 M    3226 | He-core   1449 (r   2.7) | C/O+ core   1672 (r   3.1) | Si+ core      0 (r  0.0) | centre T  146.5 Sig  109.5 d 0.77 mu 1.78 Ye 0.500
+m_lim10/s_28000.bin                      step  28000 t  267.01 M    3056 | He-core   1571 (r   2.8) | C/O+ core   2014 (r   3.7) | Si+ core      0 (r  0.0) | centre T  159.3 Sig  117.0 d 0.76 mu 1.78 Ye 0.500
+m_lim10/s_29000.bin                      step  29000 t  274.27 M    2946 | He-core   1758 (r   2.9) | C/O+ core   2234 (r   4.1) | Si+ core    577 (r  1.4) | centre T  171.1 Sig  127.3 d 0.76 mu 1.81 Ye 0.500
+m_lim10/s_30000.bin                      step  30000 t  281.00 M    2879 | He-core   2675 (r   3.4) | C/O+ core   2813 (r   4.9) | Si+ core    351 (r  0.8) | centre T   24.1 Sig  230.7 d 0.97 mu 1.50 Ye 0.534
+m_lad_bounce_nu/s_26000.bin              step  26000 t  244.68 M    8768 | He-core   1319 (r   2.5) | C/O+ core   1319 (r   2.5) | Si+ core      0 (r  0.0) | centre T  163.8 Sig   97.3 d 0.72 mu 1.72 Ye 0.505
+m_lad_bounce_nu/s_29000.bin              step  29000 t  266.43 M    8768 | He-core   1842 (r   2.8) | C/O+ core   1948 (r   3.1) | Si+ core      0 (r  0.0) | centre T  175.7 Sig  128.2 d 0.75 mu 1.73 Ye 0.506
+m_lad_bounce_nu/s_30000.bin              step  30000 t  273.24 M    8768 | He-core   2247 (r   3.2) | C/O+ core   2397 (r   3.5) | Si+ core      0 (r  0.0) | centre T  188.2 Sig  154.5 d 0.76 mu 1.76 Ye 0.503
+m_lad_bounce_nu/s_31000.bin              step  31000 t  279.59 M    8768 | He-core   2858 (r   4.2) | C/O+ core   3142 (r   4.8) | Si+ core      0 (r  0.0) | centre T  152.4 Sig  206.6 d 0.82 mu 1.60 Ye 0.520
+m_lad_bounce_nu/s_32000.bin              step  32000 t  285.33 M    8768 | He-core   3213 (r   3.8) | C/O+ core   3213 (r   3.9) | Si+ core      0 (r  0.0) | centre T   35.3 Sig  304.2 d 0.96 mu 1.53 Ye 0.526
+  shown stages, object 1: main_sequence(139.0) he_core(157.7) main_sequence(159.0) he_core(159.6) main_sequence(161.1) he_core(162.1) main_sequence(163.2) he_core(164.3) main_sequence(165.6) he_core(1
+  shown stages, object 2: cloud(291.0) protostar(301.0)
+  stage(snaps)     t_from     t_to     dur     M_in    M_out R90max  R/hh tau_dyn   tau_KH        L  KH/dyn  T_cmx
+  main_sequence(3)   143.69   158.69   15.00     8768     8768  192.3  0.96   24.28    13.21 6.59e+04    0.54   99.5
+  he_core(1)       158.69   163.71    5.02     8768     8768  207.3  1.04   31.88    12.67 6.41e+04    0.40  103.1
+--
+  he_shell(6)      259.79   281.58   21.80     8768     8768  301.9  1.51   55.41     5.10 2.13e+05    0.09  177.2
+  he_core(3)       281.58   290.69    9.11     8768     8768  305.9  1.53   56.74     4.48 3.06e+05    0.08  167.9
+  main_sequence(1)   290.69   293.70    3.01     8766     8766  307.7  1.54   57.66     3.41  4.3e+05    0.06    0.1
+  cloud(3)         293.70   302.63    8.92     5824     5822  628.9  3.14  205.73     0.17 3.89e+05    0.00    7.8
+--
+  shown stages, object 1: cloud(5.5) main_sequence(7.2) he_core(10.9) main_sequence(11.9) he_core(60.1) main_sequence(61.0) he_core(67.4) main_sequence(67.8) he_core(96.2) main_sequence(97.1) he_core(
+  stage(snaps)     t_from     t_to     dur     M_in    M_out R90max  R/hh tau_dyn   tau_KH        L  KH/dyn  T_cmx
+  cloud(2)           5.90     7.19    1.30    43221    43230  154.6  0.77    9.24    56.38 1.02e+05    6.10   60.9
+  main_sequence(5)     7.19    11.21    4.02    43233    43238  164.6  0.82    9.84    47.42 1.28e+05    4.82  104.0
+  27000   259.79 he_shell          8768 1.31e+05 |  8.97e+04  2.98e+04       127       329  3.89e+03   0.00108         0 | 0.001 0.000 0.000 0.934 0.039 0.016 0.007 0.003 0.000 0.000 | 144.3 108.0 0.77
+  27500   263.55 he_shell          8768 1.54e+05 |  1.01e+05  3.54e+04      46.8       377  7.84e+03   0.00468         0 | 0.001 0.000 0.000 0.927 0.032 0.019 0.015 0.006 0.000 0.000 | 147.9 113.0 0.77
+  28000   267.27 he_shell          8768 1.72e+05 |  1.04e+05  4.54e+04       171       328  2.23e+04    0.0574         0 | 0.001 0.000 0.000 0.896 0.018 0.025 0.043 0.018 0.000 0.000 | 155.1 114.1 0.76
+  28500   270.96 he_shell          8768 2.13e+05 |  1.31e+05  4.75e+04       118       220  2.12e+04    0.0833         0 | 0.001 0.000 0.000 0.833 0.006 0.027 0.094 0.039 0.000 0.000 | 158.4 117.4 0.76
+  29000   274.60 he_shell          8768 2.42e+05 |  1.29e+05   4.7e+04       186      96.3  5.46e+04      1.05         0 | 0.000 0.000 0.000 0.693 0.000 0.023 0.201 0.082 0.000 0.000 | 166.1 122.0 0.76
+  29500   278.16 he_shell          8768  2.8e+05 |  1.57e+05  5.45e+04       161      84.5  5.16e+04      4.48         0 | 0.001 0.000 0.000 0.469 0.000 0.011 0.371 0.149 0.000 0.000 | 177.2 130.8 0.76
+  30000   281.58 he_core           8768 2.65e+05 |  1.19e+05  5.29e+04       110       104  2.15e+04      29.3         0 | 0.027 0.001 0.001 0.401 0.002 0.004 0.401 0.162 0.000 0.000 | 167.9 164.7 0.79
+  30500   284.67 he_core           8768 3.06e+05 |  1.41e+05  5.36e+04       228      2.69      62.8   0.00106         0 | 0.098 0.089 0.070 0.516 0.007 0.006 0.153 0.062 0.000 0.000 | 0.1 248.5 1.00
+  31000   287.69 he_core           8768 3.57e+05 |  1.64e+05  4.56e+04       226      1.75        31  0.000187         0 | 0.091 0.084 0.071 0.521 0.007 0.006 0.156 0.064 0.000 0.000 | 0.1 249.9 1.00
+  31500   290.69 main_sequence     8766  4.3e+05 |  2.11e+05  3.46e+04      39.9      85.5  1.92e+03    0.0156         0 | 0.084 0.075 0.066 0.527 0.007 0.006 0.167 0.068 0.000 0.000 | 0.1 250.2 1.00
+  32000   293.70 cloud             5824 4.39e+05 |     0.459         0         0         0         0         0         0 | 0.735 0.249 0.009 0.008 0.000 0.000 0.000 0.000 0.000 0.000 | 7.8 0.1 0.11
+  32500   296.69 cloud             5820 3.86e+05 |    0.0425         0         0         0         0         0         0 | 0.735 0.249 0.009 0.008 0.000 0.000 0.000 0.000 0.000 0.000 | 7.5 0.1 0.12
+  33000   299.66 cloud             5822 3.89e+05 |    0.0123         0         0         0         0         0         0 | 0.735 0.249 0.009 0.008 0.000 0.000 0.000 0.000 0.000 0.000 | 7.4 0.1 0.13
+  33500   302.63 protostar         5820 3.89e+05 |   0.00443         0         0         0         0         0         0 | 0.735 0.249 0.009 0.008 0.000 0.000 0.000 0.000 0.000 0.000 | 7.3 0.1 0.14
+m_clk_bounce/s_29500.bin                 step  29500 t  278.16 M    8768 | He-core   1797 (r   2.9) | C/O+ core   2451 (r   4.5) | Si+ core    723 (r  1.5) | centre T  177.2 Sig  130.8 d 0.76 mu 1.82 Ye 0.500
+m_clk_bounce/s_30500.bin                 step  30500 t  284.67 M    8768 | He-core   2583 (r   3.3) | C/O+ core   2892 (r   4.0) | Si+ core    755 (r  1.6) | centre T    0.1 Sig  248.5 d 1.00 mu 1.40 Ye 0.549
+m_clk_bounce/s_32000.bin                 step  32000 t  293.70 M    8768 | He-core   2939 (r   3.9) | C/O+ core   2939 (r   3.9) | Si+ core   1168 (r  1.5) | centre T    0.1 Sig  255.0 d 1.00 mu 1.47 Ye 0.539
+=== m_ar4_leave — 72 snapshots, steps 14500..50000, t 143.73..531.37, world height 400
+  shown stages, object 1: he_core(139.1) main_sequence(141.0) he_core(340.6) main_sequence(442.9) he_core(464.9) main_sequence(493.8) he_core(494.5) main_sequence(496.3) he_core(497.0) main_sequence(499.1) he_core(500.0) main_sequence(502.0) he_core(503.1) main_sequence(505.3) he_core(506.3) main_sequence(508.7) he_core(509.6) main_sequence(511.7) he_core(513.0) main_sequence(515.2) he_core(516.3) main_sequence(518.6) he_core(519.5) main_sequence(521.6) he_core(522.5) main_sequence(524.6) he_core(525.4) main_sequence(527.1) he_core(527.9) main_sequence(529.3) he_core(530.1) main_sequence(531.4)
+  stage(snaps)     t_from     t_to     dur     M_in    M_out R90max  R/hh tau_dyn   tau_KH        L  KH/dyn  T_cmx
+  main_sequence(35)   143.73   345.35  201.61     8615     5001  204.6  1.02   33.10    34.18 1.24e+04    1.03  103.1
+  he_core(19)      345.35   446.23  100.88     4957     4597  258.7  1.29   54.45    24.20 1.37e+04    0.44  120.0
+  main_sequence(4)   446.23   466.69   20.46     4597     4597  257.0  1.28   60.51    21.00 1.62e+04    0.35  121.2
+  he_core(6)       466.69   496.83   30.14     4597     4597  252.7  1.26   58.21    17.85 1.97e+04    0.31  121.1
+  main_sequence(1)   496.83   501.81    4.98     4597     4597  243.0  1.21   55.86    17.18 1.99e+04    0.31  118.8
+  he_core(2)       501.81   511.74    9.93     4597     4596  241.1  1.21   55.21    15.24 2.45e+04    0.28  123.2
+  main_sequence(1)   511.74   516.68    4.94     4596     4596  237.8  1.19   54.10    12.76  2.6e+04    0.24  118.1
+  he_core(1)       516.68   521.60    4.92     4596     4596  238.2  1.19   54.24    14.27 2.46e+04    0.26  124.1
+  main_sequence(1)   521.60   526.48    4.89     4593     4593  241.3  1.21   55.30    12.43  2.7e+04    0.22  119.2
+  he_core(1)       526.48   531.37    4.88     4586     4586  245.9  1.23   56.95    12.12 2.81e+04    0.21  126.6
+  main_sequence(1)   531.37   531.37    0.00     4571     4571  251.6  1.26   59.03    11.33 2.98e+04    0.19  120.7
+=== m_ar4_bounce — 71 snapshots, steps 14500..49500, t 143.73..523.33, world height 400
+  shown stages, object 1: he_core(139.1) main_sequence(141.0) he_core(296.4) main_sequence(349.3) he_core(352.9) main_sequence(355.1) he_core(358.8) main_sequence(361.1) he_core(364.8) main_sequence(367.1) he_core(370.9) main_sequence(373.1) he_core(376.9) main_sequence(379.0) he_core(382.8) main_sequence(384.8) he_core(388.3) main_sequence(390.4) he_core(393.7) main_sequence(395.6) he_core(398.8) main_sequence(400.6) he_core(403.5) main_sequence(405.3) he_core(407.9) main_sequence(409.6) he_core(412.2) main_sequence(413.8) he_core(416.2) main_sequence(417.8) he_core(420.1) main_sequence(421.6) he_core(423.9) main_sequence(425.3) he_core(427.6) main_sequence(428.9) he_core(431.0) main_sequence(432.4) he_core(434.4) main_sequence(435.7) he_core(437.6) main_sequence(439.0) he_core(440.8) main_sequence(442.2) he_core(444.0) main_sequence(445.4) he_core(446.9) main_sequence(448.4) he_core(449.8) main_sequence(451.2) he_core(452.7) main_sequence(454.0) he_core(455.5) main_sequence(456.8) he_core(458.1) main_sequence(459.3) he_core(460.6) main_sequence(461.7) he_core(463.1) main_sequence(464.2) he_core(465.3) main_sequence(466.5) he_core(467.5) main_sequence(468.8) he_core(469.8) main_sequence(470.9) he_core(471.9) main_sequence(473.0) he_core(474.0) main_sequence(475.0) he_core(475.9) main_sequence(476.9) he_core(477.7) main_sequence(478.8) he_core(479.6) main_sequence(480.7) he_core(481.5) main_sequence(482.4) he_core(483.3) main_sequence(484.3) he_core(485.0) main_sequence(486.0) he_core(486.9) main_sequence(487.7) he_core(488.5) main_sequence(489.5) he_core(490.2) main_sequence(491.2) he_core(491.8) main_sequence(492.7) he_core(493.3) main_sequence(494.0) he_core(494.9) main_sequence(495.3) he_core(496.4) main_sequence(496.8) he_shell(519.2)
+  stage(snaps)     t_from     t_to     dur     M_in    M_out R90max  R/hh tau_dyn   tau_KH        L  KH/dyn  T_cmx
+  main_sequence(27)   143.73   301.20  157.47     8768     8768  281.9  1.41   35.00    32.93 1.56e+04    0.94  106.4
+  he_core(9)       301.20   350.25   49.05     8768     8768  274.4  1.37   44.28    27.05 1.81e+04    0.61  119.2
+  main_sequence(3)   350.25   366.56   16.31     8768     8768  276.6  1.38   49.13    22.03 1.98e+04    0.45  108.5
+  he_core(8)       366.56   409.85   43.29     8768     8768  273.6  1.37   46.88    21.19 2.19e+04    0.45  131.2
+  main_sequence(2)   409.85   420.52   10.67     8768     8768  265.9  1.33   46.30    18.45 2.95e+04    0.40  119.6
+  he_core(1)       420.52   425.89    5.37     8768     8768  267.1  1.34   46.63    17.28 2.69e+04    0.37  135.7
+  main_sequence(1)   425.89   431.17    5.28     8768     8768  268.8  1.34   47.06    14.67 3.04e+04    0.31  114.8
+  he_core(1)       431.17   436.47    5.31     8768     8768  270.1  1.35   47.42    17.32 2.67e+04    0.37  134.3
+  main_sequence(1)   436.47   441.67    5.20     8768     8768  270.9  1.35   47.61    14.95 2.99e+04    0.31  118.4
+  he_core(2)       441.67   452.04   10.36     8768     8768  271.7  1.36   47.83    16.20 2.99e+04    0.34  128.5
+  main_sequence(4)   452.04   472.37   20.33     8768     8768  281.5  1.41   49.67    12.77 3.53e+04    0.26  127.9
+  he_core(1)       472.37   477.40    5.03     8768     8768  284.5  1.42   51.24    11.20 3.89e+04    0.22  131.6
+  main_sequence(2)   477.40   487.27    9.87     8768     8768  290.7  1.45   52.93    11.13 4.74e+04    0.21  128.2
+  he_core(2)       487.27   496.88    9.61     8768     8768  293.8  1.47   53.79     9.15 4.98e+04    0.17  138.1
+  main_sequence(5)   496.88   519.23   22.35     8768     8768  294.0  1.47   53.73     7.24 6.34e+04    0.13  142.6
+  he_shell(2)      519.23   523.33    4.09     8768     8768  295.0  1.48   54.12     6.62 9.34e+04    0.12  147.1
+=== g_ar4_leave — 41 snapshots, steps 1300..5300, t 5.90..45.37, world height 400
+  shown stages, object 1: main_sequence(5.5) he_core(9.0) main_sequence(10.8)
+  stage(snaps)     t_from     t_to     dur     M_in    M_out R90max  R/hh tau_dyn   tau_KH        L  KH/dyn  T_cmx
+  main_sequence(5)     5.90     9.56    3.66    43143    42689  154.6  0.77    9.23   616.92 9.36e+03   66.82  126.3
+  he_core(3)         9.56    10.95    1.40    42578    42326  196.4  0.98   11.00     2.12 2.45e+06    0.19  229.4
+  main_sequence(33)    10.95    45.37   34.42    42146      266  624.3  3.12  262.44    11.88 1.66e+03    0.05  100.1
+=== m_k40_bounce — 56 snapshots, steps 14500..42000, t 143.67..331.83, world height 400
+  shown stages, object 1: main_sequence(139.0) he_core(167.1) main_sequence(215.1) he_core(229.2) main_sequence(240.2) he_core(264.2) main_sequence(285.6) he_core(289.2) main_sequence(293.0) core_collapse(294.6) main_sequence(294.8) core_collapse(297.6) main_sequence(298.1) core_collapse(299.2) main_sequence(299.4) core_collapse(302.0) main_sequence(302.2) core_collapse(303.9) main_sequence(304.1) core_collapse(305.7) main_sequence(305.9) core_collapse(307.6) main_sequence(307.8) core_collapse(309.1) main_sequence(309.4) core_collapse(311.5) main_sequence(311.8) he_core(312.7) core_collapse(313.3) main_sequence(316.6) core_collapse(316.7) main_sequence(319.9) core_collapse(319.9)
+  stage(snaps)     t_from     t_to     dur     M_in    M_out R90max  R/hh tau_dyn   tau_KH        L  KH/dyn  T_cmx
+  main_sequence(5)   143.67   167.85   24.18     8768     8768  225.3  1.13   28.41    12.92 6.71e+04    0.45  100.5
+  he_core(11)      167.85   215.10   47.25     8768     8768  296.5  1.48   53.31    10.82 7.51e+04    0.20  136.0
+  main_sequence(4)   215.10   230.62   15.52     8768     8768  296.9  1.48   54.61     9.67 9.33e+04    0.18  156.5
+  he_core(3)       230.62   241.90   11.28     8768     8768  295.9  1.48   54.20     9.41 1.03e+05    0.17  169.5
+  main_sequence(7)   241.90   266.45   24.55     8768     8768  294.0  1.47   53.19     9.02 1.27e+05    0.17  202.2
+  he_core(7)       266.45   286.74   20.29     8768     8768  298.5  1.49   53.99     7.36 2.26e+05    0.14  118.3
+  main_sequence(1)   286.74   289.39    2.65     8768     8768  299.6  1.50   55.38     9.76 2.31e+05    0.18    6.9
+  he_core(2)       289.39   294.69    5.29     8768     8768  301.2  1.51   55.83     9.73  2.4e+05    0.17    0.1
+  core_collapse(1)   294.69   297.30    2.62     8768     8768  301.7  1.51   55.97     7.86 2.97e+05    0.14    1.6
+  main_sequence(4)   297.30   307.65   10.35     8768     8768  302.1  1.51   56.03    23.54 1.21e+05    0.42  107.3
+  core_collapse(1)   307.65   310.22    2.57     8768     8768  298.8  1.49   55.15    25.53 1.08e+05    0.46   83.1
+  main_sequence(1)   310.22   312.72    2.50     8768     8768  297.5  1.49   54.80    24.57 1.14e+05    0.45  113.5
+  he_core(1)       312.72   315.12    2.40     8768     8768  296.1  1.48   54.42    30.34  9.4e+04    0.56  102.6
+  core_collapse(2)   315.12   319.87    4.76     8768     8768  294.8  1.47   54.04    44.45  8.7e+04    0.82  145.2
+  main_sequence(1)   319.87   322.26    2.38     8768     8768  291.9  1.46   53.26    26.01 1.15e+05    0.49  118.0
+  core_collapse(5)   322.26   331.83    9.58     8768     8768  290.5  1.45   52.24    22.26 1.46e+05    0.43  117.0
+=== s_ar4 — 5 snapshots, steps 1000..4948, t 12.50..60.00, world height 400
+  shown stages, object 1: collapsing(1.6) protostar(11.4) main_sequence(12.5)
+  stage(snaps)     t_from     t_to     dur     M_in    M_out R90max  R/hh tau_dyn   tau_KH        L  KH/dyn  T_cmx
+  main_sequence(5)    12.50    60.00   47.50     3134     3082   21.6  0.11    1.53   302.38      751  197.21   34.5
+== m_ar4_leave
+   step        t stage                M        L |       L_H      L_He       L_C      L_Ne       L_O      L_Si       L_N | X_c H He C O Ne Mg Si S Fe n | T_c Sig_c d_c
+  14500   143.73 main_sequence     8615 1.07e+04 |      92.9         0         0         0         0         0         0 | 0.272 0.294 0.358 0.075 0.000 0.000 0.000 0.000 0.000 0.000 | 37.8 2.3 0.30
+  16500   169.63 main_sequence     7604 1.31e+04 |  1.31e+04   0.00277  0.000527         0         0         0         0 | 0.270 0.311 0.345 0.074 0.000 0.000 0.000 0.000 0.000 0.000 | 76.3 10.1 0.44
+  18500   193.30 main_sequence     6742 1.27e+04 |  1.39e+04    0.0232   0.00214  9.02e-12         0         0         0 | 0.243 0.340 0.343 0.074 0.000 0.000 0.000 0.000 0.000 0.000 | 79.4 11.2 0.45
+  20500   216.70 main_sequence     6382 1.21e+04 |  1.35e+04     0.111   0.00559  2.85e-11         0         0         0 | 0.216 0.369 0.341 0.073 0.000 0.000 0.000 0.000 0.000 0.000 | 81.6 12.5 0.47
+  22500   239.81 main_sequence     6077 1.19e+04 |   1.3e+04     0.578    0.0158  1.03e-10         0         0         0 | 0.190 0.397 0.340 0.073 0.000 0.000 0.000 0.000 0.000 0.000 | 84.0 14.1 0.49
+  24500   262.60 main_sequence     5815  1.2e+04 |  1.27e+04      3.25    0.0486  3.73e-10  7.04e-10         0         0 | 0.164 0.424 0.339 0.073 0.000 0.000 0.000 0.000 0.000 0.000 | 86.8 15.8 0.50
+  26500   285.08 main_sequence     5544 1.23e+04 |  1.29e+04      22.2      0.18  1.73e-09  3.95e-09         0         0 | 0.139 0.446 0.342 0.073 0.000 0.000 0.000 0.000 0.000 0.000 | 90.2 17.8 0.51
+  28500   307.22 main_sequence     5300 1.26e+04 |   1.3e+04       191     0.958  1.38e-08  2.57e-08         0         0 | 0.115 0.441 0.368 0.076 0.001 0.000 0.000 0.000 0.000 0.000 | 94.7 19.7 0.52
+  30500   329.09 main_sequence     5094 1.27e+04 |  1.25e+04  1.04e+03      11.3  4.48e-07  4.02e-07         0         0 | 0.089 0.282 0.519 0.106 0.003 0.001 0.000 0.000 0.000 0.000 | 100.9 21.4 0.54
+  32500   350.71 he_core           4914  1.3e+04 |   1.2e+04  1.61e+03      45.7  1.15e-05  7.69e-06         0         0 | 0.073 0.152 0.549 0.208 0.015 0.004 0.000 0.000 0.000 0.000 | 103.9 23.4 0.56
+  34500   372.01 he_core           4761 1.34e+04 |  1.14e+04  2.06e+03       101  3.89e-05  2.63e-05         0         0 | 0.068 0.095 0.531 0.277 0.023 0.006 0.000 0.000 0.000 0.000 | 106.5 25.8 0.57
+  36500   393.38 he_core           4643 1.37e+04 |  1.13e+04   2.7e+03       241  0.000715  0.000649         0         0 | 0.041 0.018 0.277 0.569 0.076 0.019 0.000 0.000 0.000 0.000 | 113.2 28.4 0.59
+  38500   414.80 he_core           4598 1.44e+04 |  1.11e+04  2.91e+03       395    0.0067   0.00673         0         0 | 0.022 0.004 0.113 0.711 0.120 0.030 0.000 0.000 0.000 0.000 | 116.6 31.5 0.61
+  40500   435.86 he_core           4597 1.52e+04 |  1.15e+04  3.26e+03       319    0.0509    0.0604  1.08e-12         0 | 0.012 0.001 0.045 0.767 0.139 0.035 0.000 0.000 0.000 0.000 | 119.5 35.0 0.62
+  42500   456.51 main_sequence     4597 1.62e+04 |  1.16e+04  4.24e+03       125     0.118     0.169  1.18e-11         0 | 0.008 0.001 0.016 0.800 0.140 0.035 0.000 0.000 0.000 0.000 | 121.1 38.2 0.64
+  44500   476.81 he_core           4597 1.91e+04 |  1.22e+04  6.13e+03       230     0.125     0.214  2.63e-11         0 | 0.006 0.001 0.004 0.824 0.132 0.033 0.000 0.000 0.000 0.000 | 121.1 40.8 0.65
+  46500   496.83 main_sequence     4597 1.99e+04 |   1.1e+04  3.11e+03       117    0.0521    0.0943  1.23e-11         0 | 0.006 0.002 0.002 0.844 0.116 0.029 0.000 0.000 0.000 0.000 | 118.8 43.9 0.67
+  48500   516.68 he_core           4596 2.46e+04 |  1.76e+04  6.63e+03       171     0.235     0.524  1.06e-10         0 | 0.007 0.002 0.002 0.866 0.098 0.025 0.000 0.000 0.000 0.000 | 124.1 45.6 0.66
+  50000   531.37 main_sequence     4571 2.98e+04 |   1.1e+04       788      39.4    0.0803     0.192  4.71e-11         0 | 0.006 0.002 0.001 0.879 0.089 0.022 0.000 0.000 0.000 0.000 | 120.7 44.1 0.66
+== m_ar4_bounce
+   step        t stage                M        L |       L_H      L_He       L_C      L_Ne       L_O      L_Si       L_N | X_c H He C O Ne Mg Si S Fe n | T_c Sig_c d_c
+  14500   143.73 main_sequence     8768  1.2e+04 |        93         0         0         0         0         0         0 | 0.272 0.294 0.358 0.075 0.000 0.000 0.000 0.000 0.000 0.000 | 37.8 2.3 0.30
+  16500   169.61 main_sequence     8768 1.48e+04 |  1.31e+04   0.00272  0.000519         0         0         0         0 | 0.270 0.311 0.345 0.074 0.000 0.000 0.000 0.000 0.000 0.000 | 76.3 10.1 0.44
+  18500   193.29 main_sequence     8768 1.54e+04 |  1.45e+04     0.029   0.00255  1.09e-11         0         0         0 | 0.243 0.340 0.343 0.074 0.000 0.000 0.000 0.000 0.000 0.000 | 79.8 11.2 0.45
+  20500   216.65 main_sequence     8768 1.45e+04 |  1.51e+04     0.231   0.00999  5.94e-11         0         0         0 | 0.215 0.370 0.341 0.073 0.000 0.000 0.000 0.000 0.000 0.000 | 83.0 12.4 0.46
+  22500   239.68 main_sequence     8768  1.9e+04 |  1.71e+04      3.41    0.0633  4.92e-10  8.18e-10         0         0 | 0.186 0.400 0.340 0.073 0.000 0.000 0.000 0.000 0.000 0.000 | 87.5 14.0 0.47
+  24500   262.29 main_sequence     8768 2.03e+04 |  1.96e+04      71.3     0.548  6.32e-09  1.44e-08         0         0 | 0.156 0.426 0.344 0.074 0.000 0.000 0.000 0.000 0.000 0.000 | 93.3 15.6 0.48
+  26500   284.55 main_sequence     8768 1.91e+04 |  1.99e+04  1.11e+03      9.64  3.21e-07  3.68e-07         0         0 | 0.120 0.337 0.449 0.093 0.002 0.000 0.000 0.000 0.000 0.000 | 101.0 17.4 0.49
+  28500   306.73 he_core           8768 1.79e+04 |  1.76e+04  2.19e+03       207  0.000292  0.000304         0         0 | 0.070 0.048 0.405 0.429 0.039 0.010 0.000 0.000 0.000 0.000 | 112.2 19.6 0.51
+  30500   328.61 he_core           8768 1.82e+04 |  1.61e+04  2.88e+03      94.8   0.00368   0.00695         0         0 | 0.046 0.028 0.074 0.786 0.053 0.013 0.000 0.000 0.000 0.000 | 117.7 23.2 0.54
+  32500   350.25 main_sequence     8768 1.87e+04 |  1.05e+04       158      9.19  0.000118  0.000259         0         0 | 0.034 0.014 0.054 0.825 0.059 0.015 0.000 0.000 0.000 0.000 | 108.5 26.1 0.58
+  34500   372.00 he_core           8768  2.1e+04 |  2.48e+04  3.29e+04       710    0.0309    0.0976   3.2e-12         0 | 0.026 0.004 0.023 0.877 0.056 0.014 0.000 0.000 0.000 0.000 | 129.5 25.8 0.54
+  36500   393.68 he_core           8768 2.29e+04 |  2.01e+04  3.96e+03       136   0.00782    0.0261  9.22e-13         0 | 0.024 0.007 0.020 0.885 0.051 0.013 0.000 0.000 0.000 0.000 | 122.0 30.7 0.59
+  38500   415.21 main_sequence     8768 2.51e+04 |  1.78e+04       984      37.6   0.00558    0.0217  1.26e-12         0 | 0.020 0.005 0.005 0.913 0.046 0.012 0.000 0.000 0.000 0.000 | 119.6 32.3 0.61
+  40500   436.47 main_sequence     8768 2.99e+04 |  1.43e+04       372      15.1   0.00603    0.0277  2.34e-12         0 | 0.014 0.003 0.001 0.930 0.041 0.010 0.000 0.000 0.000 0.000 | 118.4 34.7 0.62
+  42500   457.16 main_sequence     8768  3.5e+04 |  1.52e+04       715      21.7    0.0209     0.114  3.42e-11         0 | 0.010 0.002 0.000 0.941 0.037 0.009 0.000 0.000 0.000 0.000 | 120.9 38.3 0.64
+  44500   477.40 main_sequence     8768 4.01e+04 |  2.67e+04  5.23e+03      63.8     0.181      1.18  1.02e-09         0 | 0.007 0.002 0.000 0.948 0.034 0.009 0.000 0.000 0.000 0.000 | 128.2 43.2 0.65
+  46500   496.88 main_sequence     8768 5.67e+04 |  4.26e+04  7.62e+03      78.6      1.93        16   5.2e-08         0 | 0.004 0.001 0.000 0.956 0.030 0.008 0.001 0.000 0.000 0.000 | 135.4 46.1 0.65
+  48500   515.00 main_sequence     8768 8.32e+04 |  3.33e+04  9.13e+03      71.7      14.6       157  3.87e-06         0 | 0.001 0.000 0.000 0.960 0.025 0.008 0.004 0.002 0.000 0.000 | 138.6 67.9 0.71
+  49500   523.33 he_shell          8768 9.34e+04 |  5.01e+04  1.76e+04       142       199  3.49e+03   0.00068         0 | 0.001 0.000 0.000 0.954 0.021 0.010 0.010 0.004 0.000 0.000 | 147.1 85.0 0.73
+== m_k40_bounce
+   step        t stage                M        L |       L_H      L_He       L_C      L_Ne       L_O      L_Si       L_N | X_c H He C O Ne Mg Si S Fe n | T_c Sig_c d_c
+  14500   143.67 main_sequence     8768 6.66e+04 |  7.03e+04       404   0.00302  1.63e-12  2.19e-10         0         0 | 0.257 0.707 0.029 0.008 0.000 0.000 0.000 0.000 0.000 0.000 | 92.5 18.3 0.50
+  16500   163.15 main_sequence     8768 6.79e+04 |  6.63e+04   5.3e+03       1.5   6.1e-09  4.03e-09         0         0 | 0.208 0.530 0.250 0.012 0.000 0.000 0.000 0.000 0.000 0.000 | 100.5 25.3 0.56
+  18500   181.53 he_core           8768 7.19e+04 |  5.98e+04  1.38e+04      72.4  3.64e-06  1.46e-06         0         0 | 0.183 0.177 0.564 0.072 0.003 0.001 0.000 0.000 0.000 0.000 | 110.5 34.4 0.61
+  20500   198.80 he_core           8768 7.87e+04 |  5.72e+04  2.01e+04       645  0.000618  0.000576  1.68e-16         0 | 0.156 0.025 0.439 0.342 0.030 0.007 0.000 0.000 0.000 0.000 | 123.4 45.0 0.64
+  22500   215.10 main_sequence     8768 8.81e+04 |   5.9e+04  2.36e+04  1.88e+03    0.0492    0.0474   6.4e-13         0 | 0.122 0.001 0.174 0.580 0.099 0.025 0.000 0.000 0.000 0.000 | 140.8 57.0 0.66
+  24500   230.62 he_core           8768 9.91e+04 |   6.4e+04  2.71e+04  1.41e+03      1.91      2.54  1.66e-09         0 | 0.078 0.002 0.001 0.751 0.135 0.034 0.000 0.000 0.000 0.000 | 162.4 73.7 0.68
+  26500   245.59 main_sequence     8768 1.14e+05 |  7.24e+04  3.09e+04       950      22.1      45.1  6.98e-07         0 | 0.049 0.001 0.000 0.810 0.109 0.030 0.001 0.000 0.000 0.000 | 177.2 93.1 0.70
+  28500   259.84 main_sequence     8768 1.44e+05 |  8.57e+04  3.69e+04       359       187       761  0.000257         0 | 0.042 0.000 0.000 0.840 0.070 0.034 0.010 0.004 0.000 0.000 | 199.1 110.9 0.70
+  30500   272.53 he_core           8768 2.46e+05 |  8.77e+04  3.72e+04      99.7      30.6       200  0.000106         0 | 0.270 0.175 0.056 0.460 0.026 0.010 0.003 0.001 0.000 0.000 | 78.1 135.1 0.86
+  32500   284.04 he_core           8768 2.26e+05 |   9.3e+04  3.99e+04       117      5.06      37.9  1.13e-05         0 | 0.309 0.194 0.094 0.376 0.018 0.006 0.001 0.001 0.000 0.000 | 0.1 182.7 1.00
+  34500   294.69 core_collapse     8768 2.97e+05 |  9.43e+04  1.58e+04      64.7      3.59      27.9  5.22e-06         0 | 0.261 0.126 0.125 0.459 0.021 0.007 0.001 0.001 0.000 0.000 | 1.6 253.9 1.00
+  36500   305.08 main_sequence     8768 1.13e+05 |  4.38e+04  1.16e+03      3.35  0.000211  0.000791         0         0 | 0.153 0.044 0.056 0.701 0.027 0.012 0.005 0.002 0.000 0.000 | 107.3 277.1 0.88
+  38500   315.12 core_collapse     8768 6.57e+04 |  3.77e+04  1.78e+04       264   0.00285   0.00941   3.7e-10 -1.37e-08 | 0.236 0.015 0.197 0.519 0.023 0.008 0.002 0.001 0.000 0.000 | 145.2 294.8 0.85
+  40500   324.65 core_collapse     8768 1.46e+05 |  8.78e+04  1.54e+04       162   0.00232   0.00841  1.42e-10         0 | 0.194 0.026 0.180 0.563 0.026 0.009 0.002 0.001 0.000 0.000 | 112.9 334.4 0.89
+  42000   331.83 core_collapse     8768 1.47e+05 |  8.99e+04  1.77e+04       343    0.0084    0.0358  1.15e-09  -0.00457 | 0.169 0.024 0.183 0.585 0.027 0.009 0.002 0.001 0.000 0.000 | 107.8 344.6 0.90
+=== m_dn2_leave — 35 snapshots, steps 14500..31500, t 143.69..292.79, world height 400
+  shown stages, object 1: main_sequence(139.0) he_core(157.5) main_sequence(158.7) he_core(159.5) main_sequence(160.9) he_core(161.9) main_sequence(163.0) he_core(164.2) main_sequence(165.5) he_core(166.6) main_sequence(167.7) he_core(168.7) main_sequence(170.0) he_core(171.1) main_sequence(172.2) he_core(173.2) main_sequence(174.5) he_core(175.3) main_sequence(176.6) he_core(177.5) main_sequence(178.7) he_core(179.5) main_sequence(180.8) he_core(181.6) main_sequence(182.7) he_core(183.5) main_sequence(184.8) he_core(185.4) main_sequence(186.7) he_core(187.3) main_sequence(188.6) he_core(189.2) main_sequence(190.5) he_core(191.1) main_sequence(192.2) he_core(192.9) main_sequence(194.2) he_core(194.6) main_sequence(195.9) he_core(196.5) main_sequence(197.8) he_core(198.2) main_sequence(199.4) he_core(200.0) main_sequence(201.1) he_core(201.5) main_sequence(202.8) he_core(203.2) main_sequence(204.5) he_core(205.0) main_sequence(206.1) he_core(206.5) main_sequence(207.8) he_core(208.1) main_sequence(209.3) he_core(209.8) main_sequence(210.9) he_core(211.3) main_sequence(212.4) he_core(212.9) main_sequence(214.0) he_core(214.4) main_sequence(222.6) he_core(223.1) main_sequence(227.0) he_core(227.3) main_sequence(228.5) he_core(228.9) main_sequence(232.1) he_shell(241.8) main_sequence(272.1) he_core(273.6) main_sequence(279.9) he_core(282.0) main_sequence(282.9) he_core(286.6) main_sequence(288.4)
+  main_sequence(5)   143.69   168.72   25.03     8616     7883  154.7  0.77   18.89    13.37 6.38e+04    0.71  104.1
+  he_core(2)       168.72   178.70    9.98     7670     7446  165.4  0.83   24.65    13.86 6.26e+04    0.56  114.0
+  main_sequence(1)   178.70   183.66    4.96     7210     7210  171.4  0.86   26.42    10.42 6.47e+04    0.39  107.5
+  he_core(1)       183.66   188.61    4.95     6960     6960  177.8  0.89   28.41    11.80 5.58e+04    0.42  119.8
+  main_sequence(1)   188.61   193.52    4.92     6694     6694  182.1  0.91   30.03    10.00 6.23e+04    0.33  113.8
+  he_core(7)       193.52   227.00   33.48     6419     4774  195.2  0.98   35.86     8.70 6.31e+04    0.24  134.0
+  main_sequence(1)   227.00   231.64    4.64     4523     4523  194.2  0.97   40.24     7.35 6.93e+04    0.18  130.5
+  he_core(1)       231.64   236.25    4.61     4285     4285  192.5  0.96   40.78     6.77 7.54e+04    0.17  145.0
+  main_sequence(2)   236.25   245.29    9.04     4063     3857  189.5  0.95   40.94     5.23  9.8e+04    0.13  156.7
+  he_shell(7)      245.29   273.65   28.36     3668     2671  179.9  0.90   34.98     4.90 1.18e+05    0.14  182.0
+  he_core(2)       273.65   280.26    6.61     2639     2640    2.6  0.01    0.08     3.95 2.49e+05   48.62  171.0
+  main_sequence(5)   280.26   292.79   12.53     2641     2641    2.3  0.01    0.06     3.57 3.16e+05   64.95    0.1
+=== m_dn2_bounce — 37 snapshots, steps 14500..32500, t 143.69..299.51, world height 400
+  shown stages, object 1: main_sequence(139.0) he_core(157.5) main_sequence(158.7) he_core(159.5) main_sequence(160.8) he_core(161.7) main_sequence(163.0) he_core(164.2) main_sequence(165.3) he_core(166.4) main_sequence(167.7) he_core(168.7) main_sequence(170.0) he_core(171.0) main_sequence(172.2) he_core(173.2) main_sequence(174.4) he_core(175.3) main_sequence(176.6) he_core(177.4) main_sequence(178.7) he_core(179.5) main_sequence(180.6) he_core(181.4) main_sequence(182.7) he_core(183.5) main_sequence(184.6) he_core(185.4) main_sequence(186.7) he_core(187.3) main_sequence(188.6) he_core(189.2) main_sequence(190.3) he_core(191.0) main_sequence(192.2) he_core(192.9) main_sequence(194.2) he_core(194.6) main_sequence(195.9) he_core(196.3) main_sequence(197.6) he_core(198.2) main_sequence(199.4) he_core(199.8) main_sequence(201.1) he_core(201.5) main_sequence(202.8) he_core(203.2) main_sequence(204.5) he_core(205.0) main_sequence(206.1) he_core(206.5) main_sequence(207.8) he_core(208.1) main_sequence(209.3) he_core(209.8) main_sequence(210.9) he_core(211.3) main_sequence(212.4) he_core(212.9) main_sequence(214.0) he_core(214.4) main_sequence(215.5) he_core(215.9) main_sequence(218.4) he_core(218.8) main_sequence(222.5) he_core(222.9) main_sequence(226.8) he_core(227.1) main_sequence(232.7) he_shell(243.6) main_sequence(276.2) he_core(277.5) main_sequence(283.3) he_core(284.3) main_sequence(285.2) he_core(289.7) main_sequence(291.6) he_core(295.8)
+  shown stages, object 2: cloud(295.8)
+  main_sequence(5)   143.69   168.72   25.03     8768     8768  226.7  1.13   28.49    13.21 6.51e+04    0.46  105.2
+  he_core(2)       168.72   178.70    9.98     8768     8768  269.6  1.35   47.28    13.67 6.35e+04    0.29  113.4
+  main_sequence(1)   178.70   183.65    4.96     8768     8768  280.5  1.40   50.18    10.52 6.66e+04    0.21  107.8
+  he_core(1)       183.65   188.61    4.95     8768     8768  286.3  1.43   51.73    11.89 5.78e+04    0.23  119.6
+  main_sequence(1)   188.61   193.52    4.92     8768     8768  289.6  1.45   52.62    10.06 6.54e+04    0.19  114.5
+  he_core(7)       193.52   227.00   33.47     8768     8768  298.0  1.49   54.27     9.40 6.54e+04    0.17  134.0
+  main_sequence(1)   227.00   231.63    4.64     8768     8768  298.2  1.49   55.00     7.94 7.33e+04    0.14  137.8
+  he_core(1)       231.63   236.25    4.61     8768     8768  298.3  1.49   55.03     7.19 8.04e+04    0.13  143.7
+  main_sequence(2)   236.25   245.32    9.07     8768     8768  298.4  1.49   55.04     6.23 9.38e+04    0.11  156.2
+  he_shell(8)      245.32   277.71   32.39     8768     8768  300.1  1.50   55.19     5.49 1.33e+05    0.10  187.7
+  he_core(2)       277.71   284.11    6.40     8768     8768  302.0  1.51   56.05     4.44 2.93e+05    0.08  158.0
+  main_sequence(2)   284.11   290.28    6.17     8768     8768  305.2  1.53   56.93     4.26 3.15e+05    0.07    0.1
+  he_core(1)       290.28   293.36    3.08     8768     8768  307.0  1.54   57.46     4.11 3.12e+05    0.07    0.1
+  main_sequence(1)   293.36   296.45    3.09     8766     8766  309.3  1.55   58.10     4.06 3.21e+05    0.07    0.0
+  cloud(2)         296.45   299.51    3.06     6049     6047  626.2  3.13  201.50     0.20 4.52e+05    0.00    7.7
+=== m_dn1_bounce — 36 snapshots, steps 14500..32000, t 143.69..295.00, world height 400
+  shown stages, object 1: main_sequence(139.0) he_core(157.4) main_sequence(158.3) he_core(159.3) main_sequence(160.6) he_core(161.6) main_sequence(162.9) he_core(163.9) main_sequence(165.2) he_core(166.4) main_sequence(167.6) he_core(168.7) main_sequence(169.9) he_core(171.0) main_sequence(172.1) he_core(173.0) main_sequence(174.2) he_core(175.3) main_sequence(176.4) he_core(177.4) main_sequence(178.5) he_core(179.3) main_sequence(180.6) he_core(181.4) main_sequence(182.7) he_core(183.5) main_sequence(184.6) he_core(185.4) main_sequence(186.5) he_core(187.3) main_sequence(188.6) he_core(189.3) main_sequence(190.4) he_core(191.2) main_sequence(192.3) he_core(192.9) main_sequence(194.2) he_core(194.8) main_sequence(195.9) he_core(196.5) main_sequence(197.8) he_core(198.3) main_sequence(199.4) he_core(200.0) main_sequence(201.1) he_core(201.7) main_sequence(202.8) he_core(203.3) main_sequence(204.4) he_core(205.0) main_sequence(206.1) he_core(206.6) main_sequence(207.6) he_core(208.1) main_sequence(209.2) he_core(209.7) main_sequence(210.7) he_core(211.2) main_sequence(212.3) he_core(212.7) main_sequence(215.2) he_core(215.6) main_sequence(222.1) he_core(222.5) main_sequence(230.2) he_core(230.6) main_sequence(245.8) he_core(275.1) main_sequence(285.8) he_core(290.2)
+  shown stages, object 2: cloud(290.2) main_sequence(292.4)
+  main_sequence(5)   143.69   168.73   25.04     8768     8768  226.7  1.13   28.49    13.22  6.5e+04    0.46  107.2
+  he_core(2)       168.73   178.72    9.99     8768     8768  269.6  1.35   47.27    13.52 6.56e+04    0.29  113.0
+  main_sequence(1)   178.72   183.68    4.96     8768     8768  280.5  1.40   50.17    10.72 6.55e+04    0.21  107.9
+  he_core(1)       183.68   188.64    4.96     8768     8768  286.2  1.43   51.72    11.85 5.81e+04    0.23  119.3
+  main_sequence(1)   188.64   193.56    4.92     8768     8768  289.6  1.45   52.62    10.00 6.59e+04    0.19  113.2
+  he_core(6)       193.56   222.32   28.77     8768     8768  297.3  1.49   54.25     9.58 6.75e+04    0.18  132.8
+  main_sequence(1)   222.32   226.95    4.63     8768     8768  297.9  1.49   54.90     8.00 7.38e+04    0.15  132.2
+  he_core(5)       226.95   249.09   22.14     8768     8768  298.2  1.49   54.98     6.07 9.67e+04    0.11  132.7
+  main_sequence(7)   249.09   276.53   27.44     8768     8768  300.2  1.50   55.17     5.19  1.4e+05    0.09  158.9
+  he_core(3)       276.53   286.16    9.62     8768     8768  304.0  1.52   56.20     3.93 2.87e+05    0.07   48.3
+  main_sequence(2)   286.16   292.10    5.94     8768     8766  308.0  1.54   57.72     3.19 4.17e+05    0.06    0.1
+  cloud(1)         292.10   295.00    2.91     6036     6036  434.5  2.17  116.57     0.15 4.55e+05    0.00   19.0
+  main_sequence(1)   295.00   295.00    0.00     6032     6032  438.7  2.19  118.30     0.15 4.59e+05    0.00   17.8
+=== m_dn1_leave — 36 snapshots, steps 14500..32000, t 143.69..294.16, world height 400
+  shown stages, object 1: main_sequence(139.0) he_core(157.2) main_sequence(158.3) he_core(159.3) main_sequence(160.6) he_core(161.6) main_sequence(162.9) he_core(163.9) main_sequence(165.2) he_core(166.3) main_sequence(167.6) he_core(168.7) main_sequence(169.9) he_core(170.8) main_sequence(172.1) he_core(173.0) main_sequence(174.2) he_core(175.2) main_sequence(176.4) he_core(177.2) main_sequence(178.5) he_core(179.3) main_sequence(180.6) he_core(181.4) main_sequence(182.5) he_core(183.3) main_sequence(184.6) he_core(185.3) main_sequence(186.5) he_core(187.3) main_sequence(188.4) he_core(189.1) main_sequence(190.4) he_core(191.0) main_sequence(192.3) he_core(192.9) main_sequence(194.0) he_core(194.7) main_sequence(195.9) he_core(196.5) main_sequence(197.6) he_core(198.3) main_sequence(199.4) he_core(200.0) main_sequence(201.1) he_core(201.6) main_sequence(202.8) he_core(203.3) main_sequence(204.4) he_core(204.9) main_sequence(205.9) he_core(206.6) main_sequence(207.6) he_core(208.1) main_sequence(212.1) he_core(212.6) main_sequence(244.7) he_core(271.5) main_sequence(279.5) he_core(280.9) main_sequence(283.6) o_burn(293.0) main_sequence(293.7)
+  main_sequence(5)   143.69   168.73   25.04     8616     7883  154.6  0.77   18.89    13.38 6.37e+04    0.71  107.6
+  he_core(2)       168.73   178.72    9.99     7670     7447  165.3  0.83   24.64    13.35 6.71e+04    0.54  113.2
+  main_sequence(1)   178.72   183.68    4.96     7210     7210  171.1  0.86   26.37    11.12 6.09e+04    0.42  108.4
+  he_core(1)       183.68   188.64    4.96     6960     6960  177.7  0.89   28.39    11.18 5.89e+04    0.39  119.2
+  main_sequence(1)   188.64   193.56    4.92     6694     6694  181.9  0.91   29.97    10.40 6.02e+04    0.35  114.2
+  he_core(11)      193.56   244.71   51.14     6420     3905  194.1  0.97   38.05     7.01 7.66e+04    0.18  135.9
+  main_sequence(7)   244.71   272.46   27.76     3723     2965  178.2  0.89   31.92     4.69 1.35e+05    0.15  143.7
+  he_core(4)       272.46   285.33   12.87     2686     2688    2.5  0.01    0.06     3.80 3.27e+05   65.73  104.7
+  main_sequence(4)   285.33   294.16    8.82     2688     2688    2.0  0.01    0.05     3.10 4.23e+05   56.83    0.1
+=== g_dn2_leave — 210 snapshots, steps 1300..22200, t 5.90..217.98, world height 400
+  shown stages, object 1: cloud(5.5) main_sequence(6.3) he_core(11.0) main_sequence(11.9) he_core(81.5) main_sequence(82.3) he_core(204.5) main_sequence(205.3) he_core(206.7) main_sequence(207.6) he_core(209.0) main_sequence(209.8) he_core(211.3) main_sequence(212.4) he_core(213.7) main_sequence(214.7) he_core(215.9) main_sequence(216.9)
+  cloud(1)           5.90     6.52    0.62    43143    43143  151.5  0.76    8.98    67.95 8.32e+04    7.57   59.7
+  main_sequence(6)     6.52    11.26    4.74    43050    42381  155.7  0.78    9.37    63.82 1.15e+05    6.81  106.7
+  he_core(1)        11.26    11.87    0.61    42235    42235  157.7  0.79    9.64     2.00 3.28e+06    0.21  162.4
+  main_sequence(67)    11.87    81.97   70.10    42091    18092  656.4  3.28   80.98    37.57 4.16e+04    0.46  113.9
+  he_core(1)        81.97    82.61    0.64    18089    18089  375.6  1.88   54.12     1.16  2.4e+06    0.02  138.7
+  main_sequence(120)    82.61   204.68  122.07    18083    10779  365.0  1.83   19.30    12.63 9.99e+04    0.65  104.7
+  he_core(1)       204.68   205.72    1.04    10723    10723  164.2  0.82   20.32    11.06 9.74e+04    0.54  109.2
+  main_sequence(1)   205.72   206.73    1.01    10665    10665  165.4  0.83   20.59    10.87 9.75e+04    0.53  100.9
+  he_core(1)       206.73   207.78    1.05    10607    10607  166.5  0.83   20.86    11.91 8.92e+04    0.57  114.5
+  main_sequence(4)   207.78   211.86    4.08    10546    10356  170.4  0.85   21.63    14.02 1.09e+05    0.65  114.3
+  he_core(1)       211.86   212.91    1.05    10292    10292  171.1  0.86   22.07     9.02  1.1e+05    0.41  112.5
+  main_sequence(1)   212.91   213.91    0.99    10223    10223  172.3  0.86   22.37    11.37 8.48e+04    0.51  100.3
+  he_core(1)       213.91   214.95    1.04    10156    10156  173.3  0.87   22.63    12.04 8.14e+04    0.53  118.3
+  main_sequence(1)   214.95   215.95    1.00    10086    10086  174.2  0.87   22.90     9.15 1.02e+05    0.40   98.3
+  he_core(1)       215.95   216.98    1.03    10017    10017  175.1  0.88   23.15    13.70 7.01e+04    0.59  119.2
+  main_sequence(2)   216.98   217.98    1.01     9945     9874  177.2  0.89   23.73    13.75 1.14e+05    0.58  118.3
+== m_dn2_leave
+  16500   163.72 main_sequence     7883 5.65e+04 |  5.76e+04  4.11e+03      50.5    0.0212    0.0657  3.55e-07         0 | 0.156 0.235 0.522 0.083 0.004 0.001 0.000 0.000 0.000 0.000 | 104.1 23.9 0.55
+  17500   173.71 he_core           7446 6.26e+04 |  6.86e+04   2.1e+04       454      1.12      7.56  0.000229         0 | 0.121 0.082 0.475 0.294 0.022 0.005 0.000 0.000 0.000 0.000 | 114.0 25.0 0.55
+  18500   183.66 he_core           6960 5.58e+04 |  6.46e+04  2.68e+04       709      9.15      98.1    0.0149         0 | 0.089 0.035 0.274 0.540 0.046 0.012 0.002 0.001 0.000 0.000 | 119.8 29.6 0.58
+  19500   193.52 he_core           6419  6.9e+04 |  5.99e+04  1.36e+04       632        53       932     0.855         0 | 0.053 0.009 0.074 0.752 0.053 0.022 0.026 0.011 0.000 0.000 | 122.0 32.5 0.60
+  20500   203.28 he_core           5859 5.72e+04 |  5.72e+04   2.9e+04       663       121  4.04e+03      23.4         0 | 0.029 0.006 0.013 0.686 0.022 0.029 0.152 0.061 0.002 0.000 | 130.6 39.6 0.62
+  21500   212.89 he_core           5305 6.31e+04 |  5.68e+04  3.22e+04       686       102  6.64e+03       176         0 | 0.016 0.003 0.002 0.439 0.003 0.015 0.359 0.141 0.023 0.000 | 134.0 45.4 0.65
+  22500   222.33 he_core           4774 7.87e+04 |  4.41e+04  5.64e+03       223      46.5  2.68e+03       118         0 | 0.009 0.002 0.000 0.243 0.000 0.002 0.459 0.181 0.102 0.000 | 127.3 50.4 0.68
+  23500   231.64 he_core           4285 7.54e+04 |  5.54e+04  3.75e+04       585       131  1.17e+04  2.11e+03         0 | 0.006 0.001 0.000 0.122 0.000 0.000 0.380 0.152 0.338 0.000 | 145.0 59.1 0.68
+  24500   240.80 main_sequence     3857 9.68e+04 |  5.66e+04  2.17e+04       510       121  1.74e+04  2.73e+03         0 | 0.001 0.000 0.000 0.009 0.000 0.000 0.003 0.001 0.985 0.000 | 156.7 67.5 0.68
+  25500   249.68 he_shell          3497 1.12e+05 |  5.63e+04  2.58e+04       351      92.9  1.52e+04  4.82e+03         0 | 0.001 0.000 0.000 0.003 0.000 0.000 0.000 0.000 0.996 0.000 | 154.0 84.8 0.72
+  26500   258.05 he_shell          3201  1.3e+05 |  6.74e+04  2.69e+04       279       133  1.69e+04  1.16e+04         0 | 0.000 0.000 0.000 0.001 0.000 0.000 0.000 0.000 0.999 0.000 | 161.4 100.6 0.74
+  27500   266.03 he_shell          2961  1.5e+05 |  7.54e+04  3.74e+04       170       102  2.53e+04  8.46e+03         0 | 0.000 0.000 0.000 0.001 0.000 0.000 0.000 0.000 0.999 0.000 | 171.1 115.7 0.75
+  28500   273.65 he_core           2639 1.98e+05 |   9.5e+04  5.22e+04       388       138  2.55e+04  6.71e+03         0 | 0.027 0.002 0.001 0.085 0.000 0.000 0.018 0.007 0.860 0.000 | 171.0 125.4 0.75
+  29500   280.26 main_sequence     2641 3.16e+05 |  1.03e+05  2.69e+04      74.1      48.9  1.11e+04  1.78e+03         0 | 0.115 0.112 0.063 0.309 0.004 0.004 0.067 0.028 0.298 0.000 | 0.1 217.0 1.00
+  30500   286.51 main_sequence     2641 2.95e+05 |     1e+05  3.02e+04       283      65.1  1.38e+04  1.22e+03         0 | 0.092 0.078 0.055 0.331 0.004 0.004 0.076 0.031 0.330 0.000 | 0.1 227.4 1.00
+  31500   292.79 main_sequence     2641 3.31e+05 |  8.64e+04  1.91e+04       132       121  6.09e+04  2.02e+04         0 | 0.063 0.043 0.041 0.335 0.003 0.003 0.091 0.037 0.383 0.000 | 0.1 247.5 1.00
+== m_dn2_bounce
+  17500   173.71 he_core           8768 6.35e+04 |  6.76e+04  1.86e+04       442       1.1      7.46  0.000226         0 | 0.121 0.081 0.475 0.295 0.022 0.006 0.000 0.000 0.000 0.000 | 113.4 24.8 0.55
+  18500   183.65 he_core           8768 5.78e+04 |  6.45e+04  2.61e+04       710       9.3       100    0.0152         0 | 0.089 0.035 0.274 0.542 0.046 0.013 0.002 0.001 0.000 0.000 | 119.6 29.4 0.58
+  19500   193.52 he_core           8768 6.78e+04 |  5.77e+04  1.16e+04       563      51.2       903      0.83         0 | 0.053 0.010 0.075 0.752 0.053 0.021 0.026 0.010 0.000 0.000 | 121.3 32.4 0.60
+  20500   203.28 he_core           8768 6.11e+04 |  5.67e+04  2.89e+04       650       124  4.19e+03      24.3         0 | 0.030 0.006 0.014 0.688 0.022 0.028 0.150 0.060 0.002 0.000 | 130.6 39.3 0.62
+  21500   212.89 he_core           8768 6.54e+04 |  5.54e+04  3.01e+04       666       101  6.88e+03       185         0 | 0.016 0.003 0.002 0.436 0.003 0.014 0.361 0.142 0.023 0.000 | 134.0 44.9 0.65
+  22500   222.32 he_core           8768 7.96e+04 |  3.95e+04  4.19e+03       159      34.7  1.94e+03      84.7         0 | 0.010 0.002 0.001 0.258 0.000 0.003 0.452 0.179 0.095 0.000 | 125.8 50.9 0.69
+  23500   231.63 he_core           8768 8.04e+04 |   5.8e+04  3.61e+04       613       139  1.21e+04  1.88e+03         0 | 0.007 0.001 0.000 0.134 0.000 0.000 0.401 0.161 0.295 0.000 | 143.7 57.3 0.68
+  24500   240.81 main_sequence     8768  9.3e+04 |  5.67e+04  2.08e+04       447       115  1.26e+04  2.03e+03         0 | 0.002 0.000 0.000 0.015 0.000 0.000 0.010 0.004 0.969 0.000 | 156.2 66.6 0.68
+  25500   249.76 he_shell          8768  1.1e+05 |  5.33e+04  2.24e+04       263      98.9  1.44e+04  8.12e+03         0 | 0.001 0.000 0.000 0.004 0.000 0.000 0.000 0.000 0.994 0.000 | 152.1 80.4 0.72
+  26500   258.22 he_shell          8768 1.21e+05 |  6.26e+04  2.44e+04       305       111  1.51e+04  9.94e+03         0 | 0.000 0.000 0.000 0.001 0.000 0.000 0.000 0.000 0.999 0.000 | 159.9 97.9 0.74
+  27500   266.27 he_shell          8768 1.41e+05 |  8.62e+04  3.61e+04       173      87.3  2.96e+04  1.09e+04         0 | 0.000 0.000 0.000 0.001 0.000 0.000 0.000 0.000 0.999 0.000 | 170.8 113.7 0.75
+  28500   274.03 he_shell          8768 1.83e+05 |  9.82e+04  4.77e+04       313       109     2e+04  4.63e+03         0 | 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.999 0.000 | 187.7 122.6 0.74
+  29500   281.01 he_core           8768 2.93e+05 |     1e+05  3.99e+04       123      72.6  1.48e+04  4.29e+03         0 | 0.136 0.155 0.068 0.299 0.004 0.004 0.068 0.028 0.237 0.000 | 0.1 193.7 1.00
+  30500   287.21 main_sequence     8768 3.15e+05 |  9.26e+04  2.14e+04       105      44.4  1.43e+04  1.09e+03         0 | 0.107 0.098 0.052 0.303 0.003 0.003 0.083 0.034 0.317 0.000 | 0.1 227.8 1.00
+  31500   293.36 main_sequence     8766 3.21e+05 |  1.05e+05  2.44e+04        98       157  4.48e+04  3.84e+03         0 | 0.082 0.067 0.041 0.320 0.003 0.003 0.097 0.040 0.346 0.000 | 0.0 244.6 1.00
+  32500   299.51 cloud             6047 4.52e+05 |     0.639         0         0         0         0         0         0 | 0.735 0.249 0.009 0.008 0.000 0.000 0.000 0.000 0.000 0.000 | 7.7 0.1 0.12
+== m_dn1_bounce
+  17500   173.72 he_core           8768 6.56e+04 |  6.46e+04  1.24e+04       382     0.158     0.854  7.81e-07         0 | 0.122 0.082 0.479 0.290 0.021 0.005 0.000 0.000 0.000 0.000 | 112.0 24.4 0.55
+  18500   183.68 he_core           8768 5.81e+04 |  6.57e+04  2.61e+04       707      1.48      12.5  5.77e-05         0 | 0.091 0.037 0.286 0.530 0.045 0.012 0.000 0.000 0.000 0.000 | 119.3 29.1 0.57
+  19500   193.56 he_core           8768 6.75e+04 |  6.21e+04  1.48e+04       662      9.58       124   0.00328         0 | 0.056 0.010 0.086 0.765 0.062 0.017 0.003 0.001 0.000 0.000 | 121.7 32.0 0.59
+  20500   203.31 he_core           8768 6.14e+04 |     6e+04  2.95e+04       622      49.2       974     0.186         0 | 0.030 0.006 0.013 0.843 0.049 0.020 0.027 0.011 0.000 0.000 | 130.5 39.2 0.62
+  21500   212.91 he_core           8768 6.92e+04 |  6.25e+04  2.89e+04       742      85.7   2.6e+03      2.22         0 | 0.015 0.003 0.001 0.767 0.025 0.026 0.115 0.047 0.000 0.000 | 131.7 43.9 0.64
+  22500   222.32 main_sequence     8768 7.38e+04 |  5.63e+04  3.11e+04       524      89.7  3.41e+03      5.56         0 | 0.011 0.003 0.001 0.666 0.012 0.025 0.201 0.081 0.001 0.000 | 132.2 53.1 0.68
+  23500   231.54 he_core           8768 8.32e+04 |  5.07e+04  1.22e+04       250      44.3  2.03e+03      4.65         0 | 0.008 0.002 0.001 0.557 0.005 0.019 0.289 0.116 0.003 0.000 | 127.8 59.0 0.70
+  24500   240.49 he_core           8768 9.93e+04 |  6.05e+04  1.98e+04       589       160  1.14e+04      51.8         0 | 0.005 0.001 0.000 0.415 0.001 0.011 0.400 0.160 0.008 0.000 | 131.7 65.7 0.72
+  25500   249.09 main_sequence     8768 1.09e+05 |  5.88e+04  2.44e+04       276       100  1.72e+04       397         0 | 0.003 0.001 0.000 0.298 0.000 0.004 0.485 0.194 0.016 0.000 | 132.8 78.6 0.74
+  26500   257.32 main_sequence     8768 1.24e+05 |  6.56e+04  2.33e+04       129       107  2.14e+04  7.45e+03         0 | 0.002 0.001 0.000 0.178 0.000 0.000 0.555 0.223 0.041 0.000 | 135.2 92.4 0.76
+  27500   265.28 main_sequence     8768 1.48e+05 |  7.31e+04  2.61e+04      73.7      93.3  1.55e+04  2.24e+04         0 | 0.001 0.000 0.000 0.135 0.000 0.000 0.476 0.191 0.196 0.000 | 111.8 113.4 0.82
+  28500   272.93 main_sequence     8768  1.9e+05 |  9.98e+04  5.84e+04       254      75.8  2.95e+04  1.32e+04         0 | 0.002 0.000 0.000 0.051 0.000 0.000 0.332 0.134 0.481 0.000 | 158.9 123.6 0.77
+  29500   279.80 he_core           8768 2.87e+05 |  1.29e+05  3.88e+04       199      71.5  1.23e+04       668         0 | 0.147 0.184 0.069 0.343 0.005 0.004 0.052 0.021 0.175 0.000 | 0.1 179.9 1.00
+  30500   286.16 main_sequence     8768 3.89e+05 |  1.39e+05  3.28e+04       292       106  2.97e+04       881         0 | 0.125 0.136 0.064 0.375 0.005 0.004 0.057 0.024 0.209 0.000 | 0.1 206.5 1.00
+  31500   292.10 cloud             6036 4.55e+05 |     0.791         0         0         0         0         0         0 | 0.497 0.483 0.012 0.008 0.000 0.000 0.000 0.000 0.000 0.000 | 19.0 0.1 0.05
+  32000   295.00 main_sequence     6032 4.59e+05 |     0.491         0         0         0         0         0         0 | 0.514 0.467 0.011 0.008 0.000 0.000 0.000 0.000 0.000 0.000 | 17.8 0.1 0.06
+m_dn2_bounce/s_24500.bin                 step  24500 t  240.81 M    8768 | He-core    939 (r   2.6) | C/O+ core   1046 (r   2.8) | Si+ core    297 (r  1.3) | centre T  156.2 Sig   66.6 d 0.68 mu 2.06 Ye 0.466
+m_dn2_bounce/s_26500.bin                 step  26500 t  258.22 M    8768 | He-core   1174 (r   2.6) | C/O+ core   1369 (r   2.8) | Si+ core    698 (r  1.7) | centre T  159.9 Sig   97.9 d 0.74 mu 2.07 Ye 0.464
+m_dn2_bounce/s_28500.bin                 step  28500 t  274.03 M    8768 | He-core   1438 (r   2.6) | C/O+ core   2026 (r   3.8) | Si+ core    971 (r  1.9) | centre T  187.7 Sig  122.6 d 0.74 mu 2.07 Ye 0.464
+m_dn2_bounce/s_29500.bin                 step  29500 t  281.01 M    8768 | He-core   1538 (r   3.1) | C/O+ core   2682 (r   4.9) | Si+ core   1431 (r  2.8) | centre T    0.0 Sig  193.7 d 1.00 mu 1.30 Ye 0.560
+m_dn2_leave/s_26500.bin                  step  26500 t  258.05 M    3201 | He-core   1199 (r   2.6) | C/O+ core   1417 (r   2.9) | Si+ core    715 (r  1.7) | centre T  161.4 Sig  100.6 d 0.74 mu 2.07 Ye 0.464
+m_dn2_leave/s_28500.bin                  step  28500 t  273.65 M    2803 | He-core   1420 (r   2.6) | C/O+ core   2119 (r   4.1) | Si+ core   1039 (r  2.0) | centre T  170.9 Sig  125.4 d 0.75 mu 1.88 Ye 0.483
+m_dn2_leave/s_29500.bin                  step  29500 t  280.26 M    2728 | He-core   1864 (r   3.9) | C/O+ core   2641 (r   4.5) | Si+ core   1440 (r  3.8) | centre T    0.1 Sig  217.0 d 1.00 mu 1.38 Ye 0.547
+=== m_k3_leave — 85 snapshots, steps 14500..56500, t 143.69..475.38, world height 400
+  shown stages, object 1: main_sequence(139.0) he_core(157.4) main_sequence(158.7) he_core(159.5) main_sequence(160.9) he_core(204.7) main_sequence(205.3) he_core(206.2) main_sequence(207.3) he_core(227.0) main_sequence(228.0) he_core(228.4) main_sequence(229.7) he_core(238.1) main_sequence(238.5) he_core(241.1) main_sequence(242.2) he_core(244.7) main_sequence(245.2) he_core(246.2) main_sequence(246.9) he_core(249.8) main_sequence(250.4) he_core(255.9) main_sequence(256.6) he_core(259.0) main_sequence(259.5) he_core(260.5) main_sequence(261.3) he_core(264.6) main_sequence(265.4) he_core(267.5) main_sequence(268.0) he_core(272.8) main_sequence(273.3) he_shell(309.0) main_sequence(309.8)
+  main_sequence(16)   143.69   227.35   83.67     8616     4901  219.7  1.10   30.50    12.77 5.33e+04    0.42  125.9
+  he_core(1)       227.35   232.36    5.00     4807     4807  179.7  0.90   34.75     8.52  6.2e+04    0.25  128.7
+  main_sequence(2)   232.36   242.06    9.70     4648     4517  183.9  0.92   36.59     9.28 6.21e+04    0.25  122.7
+  he_core(1)       242.06   246.94    4.88     4369     4369  158.0  0.79   30.04     3.85 9.92e+04    0.13   91.1
+  main_sequence(65)   246.94   475.38  228.43     4228     2293  196.6  0.98    0.06     8.68 1.03e+05  147.03  154.0
+=== m_k3_bounce — 66 snapshots, steps 14500..47000, t 143.69..403.96, world height 400
+  shown stages, object 1: main_sequence(139.0) he_core(157.7) main_sequence(159.0) he_core(159.6) main_sequence(161.2) he_core(205.2) main_sequence(205.8) he_core(206.6) main_sequence(207.9) he_core(217.3) main_sequence(218.0) he_core(226.1) main_sequence(226.8) he_core(227.6) main_sequence(228.5) he_core(235.5) main_sequence(236.3) he_core(239.3) main_sequence(240.0) he_core(243.0) main_sequence(243.7) he_core(246.6) main_sequence(247.5) he_core(250.1) main_sequence(250.5) he_core(251.5) main_sequence(252.4) he_core(254.9) main_sequence(255.7) he_core(257.8) main_sequence(258.6) he_shell(300.2) main_sequence(303.9) he_core(354.4) main_sequence(355.7) he_core(357.6) main_sequence(359.5) core_collapse(374.9) main_sequence(383.9)
+  main_sequence(3)   143.69   158.69   15.00     8768     8768  192.3  0.96   24.28    13.21 6.59e+04    0.54   99.5
+  he_core(1)       158.69   163.57    4.88     8768     8768  207.3  1.04   31.88    12.67 6.41e+04    0.40  103.1
+  main_sequence(8)   163.57   207.11   43.55     8768     8768  298.2  1.49   50.71    13.32 4.62e+04    0.26  112.4
+  he_core(1)       207.11   212.32    5.21     8768     8768  299.0  1.50   55.22     9.50 6.05e+04    0.17  145.9
+  main_sequence(7)   212.32   246.66   34.33     8768     8768  299.9  1.50   54.43     9.48 6.38e+04    0.17  149.1
+  he_core(2)       246.66   256.35    9.69     8768     8768  271.3  1.36   47.73     9.26 6.49e+04    0.19  152.3
+  main_sequence(10)   256.35   301.48   45.13     8768     8768  303.5  1.52   50.80     4.90 1.35e+05    0.10  161.7
+  he_shell(1)      301.48   304.89    3.41     8768     8768  304.1  1.52   56.64     3.18  2.3e+05    0.06  153.5
+  main_sequence(24)   304.89   376.83   71.94     8768     8768  320.9  1.60   57.76     8.04 1.53e+05    0.14    0.1
+  core_collapse(3)   376.83   385.22    8.39     8768     8767  307.8  1.54   56.49     5.28 2.99e+05    0.09    0.1
+  main_sequence(6)   385.22   403.96   18.74     8765     8768  317.3  1.59   59.75   101.03 8.73e+03    1.69    0.1
+=== g_k3_leave — 34 snapshots, steps 1300..4600, t 5.90..30.71, world height 400
+  shown stages, object 1: cloud(5.5) main_sequence(6.3) he_core(10.9) main_sequence(11.5)
+  cloud(1)           5.90     6.52    0.62    43143    43143  151.5  0.76    8.98    67.95 8.32e+04    7.57   59.7
+  main_sequence(6)     6.52    11.09    4.57    43050    42381  155.7  0.78    9.37    63.82 1.15e+05    6.81  106.7
+  he_core(1)        11.09    11.50    0.41    42257    42257  161.8  0.81   10.01     0.44 1.43e+07    0.04  206.5
+  main_sequence(26)    11.50    30.71   19.21    42112      269  680.9  3.40  136.85     8.45 6.43e+04    0.06   81.0
+=== m_k3dn2_leave — 35 snapshots, steps 14500..31192, t 143.69..308.44, world height 400
+  shown stages, object 1: main_sequence(139.0) he_core(157.5) main_sequence(158.7) he_core(159.5) main_sequence(160.9) he_core(197.9) main_sequence(198.7) he_core(199.6) main_sequence(200.8) he_core(205.0) main_sequence(205.8) he_core(210.6) main_sequence(211.6) he_core(215.0) main_sequence(216.0) he_core(221.2) main_sequence(222.1) he_core(225.1) main_sequence(226.0) he_core(229.9) main_sequence(230.9) he_core(233.4) main_sequence(234.3) he_core(237.1) main_sequence(237.8) he_core(240.4) main_sequence(241.1) he_core(243.6) main_sequence(244.3) he_core(246.6) main_sequence(247.5) he_core(249.9) main_sequence(250.6) he_core(252.9) main_sequence(253.7) he_core(255.9) main_sequence(256.6) he_core(258.7) main_sequence(259.4) he_core(261.2) main_sequence(262.0) he_core(263.8) main_sequence(264.7) he_core(266.3) main_sequence(267.0) he_core(268.8) main_sequence(269.5) he_core(270.8) main_sequence(271.6) he_core(273.1) main_sequence(273.8) he_core(275.1) main_sequence(275.5) he_core(276.9) main_sequence(277.5) he_core(278.5) main_sequence(279.2) he_core(280.1) main_sequence(280.6) he_core(281.6) main_sequence(282.1) he_core(283.0) main_sequence(283.5) he_core(284.4) main_sequence(284.9) he_core(285.8) main_sequence(286.3) he_core(287.2) main_sequence(287.7) he_core(288.4) main_sequence(288.9) he_core(289.6) main_sequence(290.0) he_core(290.7) main_sequence(291.2) he_shell(302.2) main_sequence(307.5) iron_core(308.4)
+  main_sequence(15)   143.69   221.73   78.04     8616     4850  226.5  1.13   31.78    13.47 3.74e+04    0.42  112.6
+  he_core(1)       221.73   226.83    5.11     4733     4733  181.9  0.91   35.65     3.29 1.23e+05    0.09  104.6
+  main_sequence(6)   226.83   256.22   29.39     4579     3663  203.9  1.02   44.74    18.75 3.41e+04    0.42  137.2
+  he_core(1)       256.22   261.08    4.86     3483     3483  198.7  0.99   47.47     2.69 1.22e+05    0.06  104.9
+  main_sequence(4)   261.08   280.26   19.19     3330     2970  185.7  0.93   40.80     5.32 7.24e+04    0.13  141.4
+  he_core(1)       280.26   285.10    4.84     2870     2870  153.4  0.77   35.47     1.90 1.72e+05    0.05  126.6
+  main_sequence(1)   285.10   289.84    4.74     2775     2775  142.9  0.71   32.41    11.43 2.87e+04    0.35  107.7
+  he_core(1)       289.84   294.56    4.72     2687     2687  128.6  0.64   28.14     3.02 1.05e+05    0.11  102.3
+  main_sequence(2)   294.56   303.44    8.88     2604     2474  107.9  0.54   21.96     4.93 4.87e+05    0.22  195.4
+  he_shell(2)      303.44   308.44    5.00     2371     2191    5.6  0.03    0.27     2.66 2.73e+05    9.69  162.1
+  iron_core(1)     308.44   308.44    0.00     2192     2192    2.0  0.01    0.06     6.82 1.23e+05  112.93   58.3
+== m_k3_bounce
+  36500   338.39 main_sequence     8768 1.44e+05 |  5.57e+03       305      0.72  0.000117   0.00239         0         0 | 0.027 0.018 0.007 0.542 0.003 0.004 0.282 0.118 0.000 0.000 | 0.0 251.7 1.00
+  37500   344.44 main_sequence     8768 1.32e+05 |  7.04e+03       268     0.492  8.72e-05   0.00172         0         0 | 0.030 0.021 0.007 0.538 0.003 0.004 0.280 0.117 0.000 0.000 | 0.1 253.5 1.00
+  38500   350.49 main_sequence     8768 1.51e+05 |  1.97e+04   5.1e+03      30.4   0.00572     0.129  3.88e-07         0 | 0.037 0.028 0.009 0.529 0.003 0.004 0.275 0.115 0.000 0.000 | 0.1 251.4 1.00
+  39500   356.47 main_sequence     8768 2.33e+05 |  7.81e+04   1.8e+04      2.35      78.3  4.14e+03    0.0357         0 | 0.062 0.044 0.015 0.506 0.003 0.004 0.258 0.108 0.000 0.000 | 0.1 241.8 1.00
+  40500   362.44 main_sequence     8768 3.01e+05 |  6.36e+04  1.61e+04      8.19      20.9  2.68e+03     0.032         0 | 0.051 0.033 0.013 0.538 0.003 0.004 0.253 0.106 0.000 0.000 | 0.1 265.5 1.00
+  41500   368.28 main_sequence     8768 2.52e+05 |  8.35e+04  2.05e+04      9.83      9.72       547   0.00364         0 | 0.037 0.021 0.010 0.555 0.002 0.004 0.261 0.109 0.000 0.000 | 0.1 290.3 1.00
+  42500   374.06 main_sequence     8768 3.39e+05 |  1.78e+04  3.33e+03      2.83      3.18       237   0.00151         0 | 0.027 0.013 0.006 0.560 0.002 0.004 0.273 0.114 0.000 0.000 | 0.1 302.2 1.00
+  43500   379.56 core_collapse     8768 3.45e+05 |  9.38e+03       539     0.502    0.0746      4.18  1.74e-05     -49.4 | 0.016 0.006 0.003 0.580 0.002 0.004 0.274 0.115 0.000 0.000 | 0.1 325.8 1.00
+  44500   385.22 main_sequence     8765 2.94e+04 |      3.98  9.86e-11  6.67e-11         0         0         0         0 | 0.013 0.004 0.001 0.587 0.002 0.004 0.273 0.114 0.000 0.000 | 0.1 157.0 1.00
+  45500   392.25 main_sequence     8767 6.36e+03 |    0.0114         0         0         0         0         0         0 | 0.013 0.004 0.001 0.588 0.002 0.004 0.273 0.114 0.000 0.000 | 0.1 96.9 1.00
+  46500   399.97 main_sequence     8768 7.81e+03 |         0         0         0         0         0         0         0 | 0.013 0.004 0.001 0.588 0.002 0.004 0.273 0.114 0.000 0.000 | 0.1 72.7 1.00
+  47000   403.96 main_sequence     8768    1e+04 |         0         0         0         0         0         0         0 | 0.013 0.004 0.001 0.587 0.002 0.004 0.273 0.114 0.000 0.000 | 0.1 67.8 1.00
+== m_k3dn2_leave
+  20500   206.89 main_sequence     5236 2.46e+04 |  2.46e+04      13.3      4.91     0.281      5.13   0.00527         0 | 0.090 0.016 0.131 0.667 0.039 0.017 0.029 0.012 0.000 0.000 | 103.0 31.9 0.63
+  21500   216.90 main_sequence     4850 2.45e+04 |  2.41e+04      24.5       2.8     0.631        22    0.0675         0 | 0.074 0.013 0.051 0.714 0.025 0.018 0.074 0.030 0.001 0.000 | 106.6 34.3 0.64
+  22500   226.83 main_sequence     4579 2.17e+04 |  1.85e+04      8.25     0.893      0.16       8.6    0.0567         0 | 0.069 0.014 0.039 0.643 0.012 0.014 0.145 0.059 0.004 0.000 | 103.9 35.9 0.65
+  23500   236.69 main_sequence     4237  5.4e+04 |  5.11e+04  4.52e+03      60.3      14.9  1.03e+03      10.3         0 | 0.067 0.019 0.032 0.617 0.009 0.011 0.170 0.069 0.006 0.000 | 123.1 41.2 0.64
+  24500   246.48 main_sequence     3837  5.7e+04 |  8.17e+04  2.56e+04       194        68  6.28e+03      79.2         0 | 0.060 0.012 0.019 0.607 0.007 0.010 0.197 0.081 0.009 0.000 | 137.2 42.5 0.62
+  25500   256.22 he_core           3483 1.22e+05 |  1.84e+04      12.2     0.815     0.256      31.2     0.463         0 | 0.049 0.006 0.001 0.527 0.003 0.007 0.276 0.114 0.017 0.000 | 104.9 25.0 0.59
+  26500   265.92 main_sequence     3188 7.24e+04 |  4.17e+04  1.78e+03      12.1      5.61       709      12.6         0 | 0.063 0.016 0.016 0.539 0.004 0.006 0.241 0.100 0.016 0.000 | 121.1 48.2 0.67
+  27500   275.50 main_sequence     2970 5.72e+04 |  3.43e+03   0.00153  0.000212  0.000317    0.0812    0.0025         0 | 0.044 0.005 0.001 0.416 0.001 0.004 0.347 0.144 0.039 0.000 | 92.3 29.5 0.65
+  28500   285.10 main_sequence     2775 2.87e+04 |  6.85e+03     0.705    0.0112     0.033      9.27     0.593         0 | 0.042 0.005 0.001 0.337 0.001 0.002 0.378 0.157 0.077 0.000 | 107.7 42.9 0.68
+  29500   294.56 main_sequence     2604  7.7e+04 |  5.35e+04  3.02e+03      1.18      11.2  3.84e+03  1.03e+03         0 | 0.028 0.004 0.001 0.172 0.000 0.001 0.320 0.134 0.341 0.000 | 141.3 55.7 0.67
+  30500   303.44 he_shell          2371 2.11e+05 |  4.44e+04  4.46e+03      1.02      16.2  7.46e+03   8.5e+03         0 | 0.001 0.000 0.000 0.001 0.000 0.000 0.000 0.000 0.998 0.000 | 159.6 88.0 0.72
+  31192   308.44 iron_core         2192 1.23e+05 |  4.81e+03       622      0.12      2.38       892       739         0 | 0.003 0.000 0.000 0.017 0.000 0.000 0.009 0.004 0.966 0.000 | 58.3 220.5 0.93
+d15k exit 124 
+d15kb exit 124 
+d22kb exit 124 
+d22k exit 124 
+=== d15k — 54 snapshots, steps 500..27000, t 2.72..240.54, world height 400
+  shown stages, object 1: protostar(0.3) main_sequence(5.0) he_core(117.3) main_sequence(118.1) he_core(119.2) main_sequence(120.4) he_core(121.7) main_sequence(122.9) he_core(124.4) main_sequence(125.3) he_core(126.8) main_sequence(128.0) he_core(129.3) main_sequence(130.4) he_core(131.8) main_sequence(132.8) he_core(134.0) main_sequence(135.0) he_core(136.2) main_sequence(137.3) he_core(138.3) main_sequence(139.4) he_core(140.4) main_sequence(141.4) he_core(142.5) main_sequence(143.5) he_core(144.4) main_sequence(145.6) he_core(146.2) main_sequence(147.5) he_core(148.3) main_sequence(149.4) he_core(150.2) main_sequence(151.2) he_core(152.0) main_sequence(153.1) he_core(153.8) main_sequence(155.0) he_core(155.7) main_sequence(156.8) he_core(157.4) main_sequence(158.5) he_core(159.2) main_sequence(160.3) he_core(160.9) main_sequence(162.0) he_core(162.5) main_sequence(163.6) he_core(164.2) main_sequence(165.3) he_core(165.8) main_sequence(183.0) he_shell(193.0) main_sequence(199.6) he_shell(200.0) main_sequence(201.5) he_shell(202.1) main_sequence(202.7) he_shell(208.7) main_sequence(221.6) he_core(222.8) main_sequence(230.0) he_core(233.8) main_sequence(234.0)
+  protostar(1)       2.72     5.41    2.69    14992    14992   80.3  0.40    5.87    36.07 3.47e+04    6.14   50.3
+  main_sequence(26)     5.41   136.19  130.78    14977     9932  179.0  0.90   10.28    14.93 9.49e+04    1.45  105.3
+  he_core(3)       136.19   151.23   15.04     9548     8707  196.7  0.98   27.72    12.18 6.37e+04    0.44  120.7
+  main_sequence(1)   151.23   156.17    4.94     8251     8251  200.5  1.00   31.25     8.41 8.45e+04    0.27  111.3
+  he_core(6)       156.17   184.28   28.11     7786     5580  215.4  1.08   38.75     7.62 9.19e+04    0.20  136.7
+  main_sequence(3)   184.28   196.49   12.21     5201     4529  216.2  1.08   45.32     5.33 1.14e+05    0.12  147.1
+  he_shell(2)      196.49   204.20    7.71     4230     3958  212.5  1.06   47.64     4.84 1.48e+05    0.10  146.6
+  main_sequence(2)   204.20   211.66    7.46     3717     3517  194.7  0.97   44.57     4.54  1.8e+05    0.10  150.6
+  he_shell(3)      211.66   222.34   10.68     3358     2865  155.1  0.78   16.20     4.00 2.03e+05    0.25  169.1
+  main_sequence(1)   222.34   225.53    3.19     2865     2865    2.3  0.01    0.06     4.14 2.48e+05   63.77  173.5
+  he_core(2)       225.53   231.54    6.01     2866     2866    2.0  0.01    0.05     5.31 3.02e+05  100.42   19.2
+  main_sequence(4)   231.54   240.54    9.00     2867     2867    2.0  0.01    0.05     4.23 3.33e+05   80.07    0.1
+=== d15kb — 53 snapshots, steps 500..26500, t 2.72..234.32, world height 400
+  shown stages, object 2: protostar(226.4) main_sequence(228.2)
+  protostar(1)       2.72     5.40    2.68    14992    14992   80.3  0.40    5.87    36.07 3.47e+04    6.14   50.3
+  main_sequence(22)     5.40   115.71  110.30    14977    15000  209.9  1.05   21.11    15.32 1.03e+05    0.73  101.0
+  he_core(1)       115.71   120.89    5.18    15000    15000  219.3  1.10   26.51    14.02 9.72e+04    0.53  111.1
+  main_sequence(2)   120.89   131.16   10.27    15000    15000  244.4  1.22   31.20    16.90 8.02e+04    0.54  114.7
+  he_core(1)       131.16   136.27    5.11    15000    15000  258.2  1.29   33.87    15.12    8e+04    0.45  118.7
+  main_sequence(1)   136.27   141.33    5.06    15000    15000  267.3  1.34   35.68    10.79 1.04e+05    0.30  101.0
+  he_core(1)       141.33   146.37    5.04    15000    15000  271.1  1.36   36.45    12.58 8.76e+04    0.35  120.9
+  main_sequence(1)   146.37   151.35    4.98    15000    15000  275.0  1.38   37.24    10.15 1.01e+05    0.27  108.7
+  he_core(5)       151.35   174.99   23.64    15000    15000  296.4  1.48   40.18     9.63 9.38e+04    0.24  135.9
+  main_sequence(7)   174.99   202.69   27.70    15000    15000  309.7  1.55   43.85     6.75 1.39e+05    0.15  152.4
+  he_shell(3)      202.69   213.35   10.66    15000    15000  310.2  1.55   44.58     4.85 2.35e+05    0.11  178.0
+  he_core(3)       213.35   222.49    9.14    15000    15000  309.7  1.55   44.40     5.01 2.94e+05    0.11  137.0
+  main_sequence(5)   222.49   234.32   11.83    15000    15000  307.7  1.54   43.81     4.92 3.61e+05    0.11    0.1
+=== d22k — 46 snapshots, steps 500..23000, t 2.50..199.16, world height 400
+  shown stages, object 1: protostar(0.3) main_sequence(5.1) he_core(89.0) main_sequence(90.0) he_core(91.5) main_sequence(92.7) he_core(94.7) main_sequence(95.7) he_core(97.6) main_sequence(98.8) he_core(100.5) main_sequence(101.5) he_core(103.2) main_sequence(104.2) he_core(105.7) main_sequence(106.7) he_core(108.2) main_sequence(109.2) he_core(110.4) main_sequence(111.6) he_core(112.8) main_sequence(113.7) he_core(115.0) main_sequence(115.8) he_core(117.1) main_sequence(118.1) he_core(119.1) main_sequence(120.1) he_core(121.1) main_sequence(122.1) he_core(123.0) main_sequence(124.0) he_core(124.9) main_sequence(125.8) he_core(126.8) main_sequence(127.7) he_core(128.5) main_sequence(129.6) he_core(130.3) main_sequence(131.4) he_core(131.9) main_sequence(146.7) he_shell(156.0) main_sequence(181.2) he_core(182.7) main_sequence(188.5)
+  protostar(2)       2.50     7.78    5.27    21990    21972  104.1  0.52    7.16    42.74 7.46e+04    5.97   61.0
+  main_sequence(16)     7.78    89.51   81.73    21908    16350  167.7  0.84   10.81    15.15 1.49e+05    1.40  101.8
+  he_core(2)        89.51   100.03   10.52    15827    15267  178.9  0.89   19.37    22.56 1.24e+05    1.16  121.0
+  main_sequence(2)   100.03   110.39   10.36    14678    14069  188.9  0.94   21.88    19.05 7.96e+04    0.87  110.2
+  he_core(2)       110.39   120.61   10.22    13435    12733  204.0  1.02   25.83    16.94  1.2e+05    0.66  121.8
+  main_sequence(1)   120.61   125.64    5.02    11974    11974  210.6  1.05   27.93    10.61 9.55e+04    0.38  113.1
+  he_core(5)       125.64   149.39   23.76    11183     8059  232.4  1.16   34.50     7.20  1.1e+05    0.21  141.5
+  main_sequence(2)   149.39   157.53    8.13     7357     6691  238.8  1.19   45.10     5.31  1.4e+05    0.12  150.7
+  he_shell(7)      157.53   182.64   25.11     6060     3496  245.9  1.23   52.19     3.99 2.12e+05    0.08  189.2
+  main_sequence(1)   182.64   185.64    3.00     3011     3011    2.1  0.01    0.05      inf        0     inf  168.6
+  he_core(1)       185.64   188.49    2.85     3012     3012    2.0  0.01    0.05      inf        0     inf    0.1
+  main_sequence(5)   188.49   199.16   10.67     3012     3012    2.0  0.01    0.05     4.18  4.1e+05   81.10    1.7
+=== d22kb — 49 snapshots, steps 500..24500, t 2.50..205.94, world height 400
+  shown stages, object 2: cloud(197.4) main_sequence(197.8)
+  protostar(2)       2.50     7.73    5.23    21990    21981  104.2  0.52    7.18    40.32 7.44e+04    5.62   61.0
+  main_sequence(16)     7.73    89.35   81.62    21974    21998  230.1  1.15   21.73    15.42  1.6e+05    0.71  101.9
+  he_core(2)        89.35    99.90   10.55    21998    21998  227.2  1.14   23.09    21.22  1.4e+05    0.92  121.0
+  main_sequence(3)    99.90   115.53   15.63    21998    21998  245.3  1.23   24.78    13.15 1.42e+05    0.53  109.3
+  he_core(1)       115.53   120.70    5.17    21998    21998  252.1  1.26   26.98    15.87 1.15e+05    0.59  126.4
+  main_sequence(1)   120.70   125.76    5.06    21998    21998  259.7  1.30   28.21    11.12 1.52e+05    0.39   99.6
+  he_core(4)       125.76   145.00   19.25    21998    21998  283.2  1.42   31.41    12.21 1.34e+05    0.39  142.6
+  main_sequence(2)   145.00   153.15    8.15    21998    21998  291.9  1.46   33.63     9.22 1.66e+05    0.27  155.5
+  he_shell(6)      153.15   174.14   20.99    21998    21998  318.4  1.59   37.09     6.23 2.65e+05    0.17  196.8
+  he_core(2)       174.14   180.09    5.94    21998    21998  321.4  1.61   38.84     5.78 3.79e+05    0.15   98.0
+  main_sequence(2)   180.09   185.92    5.83    21998    21998  322.0  1.61   38.96     4.76 4.86e+05    0.12    0.1
+  o_burn(1)        185.92   188.80    2.88    21998    21998  321.1  1.61   38.79     5.16 4.52e+05    0.13    0.1
+  core_collapse(3)   188.80   197.38    8.58    21998    21997  319.7  1.60   38.24     5.04 4.75e+05    0.13    0.1
+  cloud(1)         197.38   200.23    2.85    18907    18907  589.2  2.95  104.00     1.59 4.05e+05    0.02   19.3
+  main_sequence(3)   200.23   205.94    5.71    21995    21997  312.8  1.56   36.92     7.16 3.59e+05    0.19    2.8
+== d15kb
+  12500   120.89 main_sequence    15000 7.77e+04 |  1.26e+05  4.23e+04       142  6.63e-06  4.12e-06         0         0 | 0.205 0.231 0.481 0.081 0.002 0.001 0.000 0.000 0.000 0.000 | 113.0 19.0 0.48
+  14500   141.33 he_core          15000 8.76e+04 |  1.09e+05  3.87e+04       831   0.00104   0.00164  5.25e-16         0 | 0.132 0.053 0.321 0.458 0.028 0.007 0.000 0.000 0.000 0.000 | 120.9 25.9 0.54
+  16500   161.21 he_core          15000 9.38e+04 |  8.68e+04  2.43e+04       955     0.252      1.02  8.23e-11         0 | 0.024 0.005 0.002 0.908 0.049 0.012 0.000 0.000 0.000 0.000 | 130.9 37.7 0.61
+  18500   179.23 main_sequence    15000 1.21e+05 |  8.42e+04  3.25e+04       871      16.8      87.7  4.58e-07         0 | 0.003 0.001 0.000 0.936 0.047 0.013 0.001 0.000 0.000 0.000 | 138.7 71.4 0.71
+  20500   195.22 main_sequence    15000 1.65e+05 |  1.06e+05   3.9e+04       241       387  4.13e+03  0.000908         0 | 0.001 0.000 0.000 0.936 0.035 0.016 0.008 0.003 0.000 0.000 | 146.3 104.7 0.76
+  22500   209.91 he_shell         15000 2.67e+05 |  1.32e+05  4.28e+04       161       156     8e+04      4.93         0 | 0.000 0.000 0.000 0.512 0.000 0.014 0.337 0.136 0.000 0.000 | 178.0 130.1 0.76
+  24500   222.49 main_sequence    15000  3.9e+05 |  1.67e+05   3.3e+04      64.6       149  3.12e+03    0.0373         0 | 0.080 0.071 0.064 0.560 0.008 0.006 0.150 0.061 0.000 0.000 | 0.1 254.8 1.00
+  26500   234.32 main_sequence    15000 3.61e+05 |  1.34e+04  3.63e+03     0.497        76  5.94e+03    0.0583         0 | 0.048 0.038 0.035 0.623 0.008 0.006 0.172 0.070 0.000 0.000 | 0.1 291.2 1.00
+== d22k
+  10500   100.03 main_sequence    14678 7.38e+04 |  1.28e+05  4.98e+03       101  9.19e-06   1.1e-05         0         0 | 0.239 0.164 0.434 0.158 0.004 0.001 0.000 0.000 0.000 0.000 | 108.6 17.1 0.47
+  12500   120.61 main_sequence    11974 9.55e+04 |  9.06e+04  3.39e+03       200  0.000255  0.000595         0         0 | 0.160 0.056 0.265 0.493 0.020 0.005 0.000 0.000 0.000 0.000 | 113.1 23.8 0.54
+  14500   140.39 he_core           8805  1.1e+05 |  9.86e+04  2.75e+04       892     0.768      4.65  1.28e-09         0 | 0.019 0.003 0.001 0.932 0.036 0.009 0.000 0.000 0.000 0.000 | 136.4 41.1 0.62
+  16500   157.53 he_shell          6060 1.54e+05 |  1.04e+05  4.01e+04       815       514  5.58e+03  0.000987         0 | 0.001 0.000 0.000 0.931 0.022 0.017 0.021 0.009 0.000 0.000 | 157.9 83.7 0.71
+  18500   172.31 he_shell          4030 2.43e+05 |  1.28e+05  4.95e+04       384       140  5.61e+04      1.77         0 | 0.000 0.000 0.000 0.526 0.000 0.013 0.328 0.133 0.000 0.000 | 167.3 124.5 0.76
+  20500   185.64 he_core           3012        0 |  1.12e+05   4.7e+04       180      6.21      89.8    0.0229         0 | 0.072 0.054 0.054 0.413 0.007 0.003 0.281 0.115 0.000 0.000 | 0.1 286.1 1.00
+  22500   196.53 main_sequence     3012 2.76e+05 |  2.11e+04  4.83e+03      2.22      1.61      21.2  0.000117 -5.57e+03 | 0.016 0.005 0.004 0.574 0.007 0.004 0.275 0.113 0.000 0.001 | 1.7 351.9 1.00
+  23000   199.16 main_sequence     3012 1.05e+05 |       510      6.45    0.0484  0.000445   0.00449         0      -430 | 0.015 0.004 0.003 0.577 0.007 0.004 0.276 0.114 0.000 0.001 | 0.0 332.7 1.00
+== d22kb
+  10500    99.90 main_sequence    21998 1.39e+05 |  8.12e+04       175      8.91  6.54e-07  8.41e-07         0         0 | 0.244 0.145 0.424 0.181 0.004 0.001 0.000 0.000 0.000 0.000 | 99.2 15.3 0.47
+  12500   120.70 main_sequence    21998 1.52e+05 |  4.95e+04      20.1      4.19  5.04e-06   1.4e-05         0         0 | 0.167 0.039 0.193 0.575 0.020 0.005 0.000 0.000 0.000 0.000 | 99.6 18.3 0.52
+  14500   140.52 he_core          21998  1.4e+05 |  1.27e+05  3.33e+04       817      2.57        22  2.15e-08         0 | 0.014 0.002 0.000 0.949 0.028 0.007 0.000 0.000 0.000 0.000 | 142.6 43.3 0.62
+  16500   156.92 he_shell         21998 2.07e+05 |  1.21e+05  3.87e+04       604       226  4.59e+04     0.232         0 | 0.000 0.000 0.000 0.641 0.000 0.015 0.244 0.100 0.000 0.000 | 173.8 93.0 0.71
+  18500   170.94 he_shell         21998 2.94e+05 |  1.34e+05  4.73e+04       173      88.2  2.32e+04       124         0 | 0.000 0.000 0.000 0.019 0.000 0.000 0.692 0.287 0.002 0.000 | 196.8 139.0 0.75
+  20500   183.01 main_sequence    21998 4.86e+05 |  1.33e+05   2.2e+04      1.13       457  7.31e+04      3.21         0 | 0.070 0.041 0.044 0.505 0.006 0.003 0.233 0.096 0.001 0.000 | 0.1 280.3 1.00
+  22500   194.52 core_collapse    21997  4.8e+05 |  5.72e+03  1.03e+03     0.114      12.3  1.63e+03    0.0534     -38.4 | 0.040 0.023 0.025 0.472 0.004 0.003 0.305 0.126 0.000 0.001 | 0.1 327.4 1.00
+  24500   205.94 main_sequence    21997 3.58e+05 |       183      3.64  0.000711   0.00143      0.13  1.67e-06         0 | 0.040 0.023 0.025 0.471 0.004 0.003 0.306 0.127 0.000 0.001 | 2.8 327.8 1.00
+=== claim 2026-11-10T12:56:02-05:00 linux-pc
+=== claim on laserax-ai-server 2026-11-10T13:02:54-05:00

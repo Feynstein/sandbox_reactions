@@ -364,6 +364,59 @@ mod cell {
         assert!((booked - Q_H * dm).abs() <= 1e-5 * Q_H * dm, "booked {booked}, q·Δm {}", Q_H * dm);
     }
 
+    /// M0-D165's Giant centre one step before its flash (RTX 4090, `build/m0-d165/giant_flash` step 1917: Σ 2.4458, T 128.54).
+    fn giant_centre() -> (f64, f64, [f64; NS]) {
+        (2.4458, 128.54, x_of(&[("H", 0.7149), ("He", 0.2635), ("C", 0.0136), ("O", 0.0080)]))
+    }
+
+    /// The Sun-like preset's centre on its main sequence (M0-D165's control life, t 60: Σ 9.67, T 34.1, X_H 0.720).
+    fn sun_centre() -> (f64, f64, [f64; NS]) {
+        (9.67, 34.1, x_of(&[("H", 0.7200), ("He", 0.2631), ("O", 0.0077), ("C", 0.0092)]))
+    }
+
+    /// §2.5.2 [M0-D165]'s q_max = ε_th c_s / K_burn, c_s = √(2ε_th), at a cell's T (cold pressure off: ε_th = T/μ).
+    fn q_max(t: f64, x: &[f64; NS], k_burn: f64) -> f64 {
+        let eps_th = t * inv_mu(x);
+        eps_th * (2.0 * eps_th).sqrt() / k_burn
+    }
+
+    /// §2.5.2 [M0-D165]'s burn clock on the twin, every record enabled. The law: over Δt 10⁻⁴ (T moves ~2 × 10⁻⁴) the Giant's
+    /// centre books q_max Δt Σ within 10⁻³ at the shipped K_burn 40 ([M0-D166]; 10 by [M0-D165]), where the clock off books
+    /// ~36 × that. Its step: over
+    /// the measured Δt 0.00907 the clock off climbs H → Fe in the pass (X_Fe > 0.99, M0-D165 § (1)); on, the centre stays
+    /// hydrogen (X_H > 0.7, X_Fe < 10⁻⁶). A cell under q_max — the Sun-like centre, q̇ ~ 3 against q_max ~ 15 at K_burn 40 —
+    /// passes bit for bit as with the clock off.
+    #[test]
+    fn burn_clock_caps_the_heating() {
+        let on = physics(&[]);
+        assert_eq!(on.get("burn_k"), Some(40.0));
+        let off = physics(&[("burn_k", 0.0)]);
+        let clocked = react(&on, &Reactions::shipped(&elements(), &on).unwrap(), false);
+        let free = react(&off, &Reactions::shipped(&elements(), &off).unwrap(), false);
+        let (sigma, t0, x) = giant_centre();
+        let (mut a, mut b) = (world(1, 1, &[(sigma, t0, x)]), world(1, 1, &[(sigma, t0, x)]));
+        let dt = 1e-4;
+        let (pa, pb) = (clocked.step(&mut a, dt), free.step(&mut b, dt));
+        let (got, unclocked) = (pa.nuclear.iter().sum::<f64>() / sigma, pb.nuclear.iter().sum::<f64>() / sigma);
+        let want = q_max(t0, &x, 40.0) * dt;
+        println!("burn clock, Δt {dt}: heat {got:.6e} against q_max Δt {want:.6e} (rel {:.2e}); clock off {unclocked:.6e} ({:.2} ×)", (got - want).abs() / want, unclocked / got);
+        assert!((got - want).abs() <= 1e-3 * want, "heat {got}, q_max Δt {want}");
+        assert!(unclocked > 5.0 * got, "the clock did not bind: off {unclocked}, on {got}");
+        let (mut a, mut b) = (world(1, 1, &[(sigma, t0, x)]), world(1, 1, &[(sigma, t0, x)]));
+        let dt = 0.00907;
+        let (pa, pb) = (clocked.step(&mut a, dt), free.step(&mut b, dt));
+        println!("burn clock, the step: on X_H {:.5} X_Fe {:.2e} T {:.2} ({} sub-steps); off X_Fe {:.6} T {:.1} ({} sub-steps)", frac(&a, "H", 0), frac(&a, "Fe", 0), temp(&a, 0), pa.substeps, frac(&b, "Fe", 0), temp(&b, 0), pb.substeps);
+        assert!(frac(&b, "Fe", 0) > 0.99, "the unclocked pass did not flash: X_Fe {}", frac(&b, "Fe", 0));
+        assert!(frac(&a, "H", 0) > 0.7 && frac(&a, "Fe", 0) < 1e-6, "the clocked pass flashed: X_H {}, X_Fe {}", frac(&a, "H", 0), frac(&a, "Fe", 0));
+        assert_eq!((pa.unfinished, pb.unfinished), (0, 0));
+        let (sigma, t, x) = sun_centre();
+        let (mut a, mut b) = (world(1, 1, &[(sigma, t, x)]), world(1, 1, &[(sigma, t, x)]));
+        let (pa, pb) = (clocked.step(&mut a, 0.0117), free.step(&mut b, 0.0117));
+        assert!(pa.substeps > 0, "the Sun-like centre burned");
+        assert!(a.planes.iter().zip(&b.planes).all(|(p, q)| p.to_bits() == q.to_bits()), "a cell under q_max moved with the clock on");
+        assert!(pa.nuclear.iter().zip(&pb.nuclear).all(|(p, q)| p.to_bits() == q.to_bits()), "a cell under q_max booked differently");
+    }
+
     /// The limits hold at the shipped values (§2.5.1): no fraction moves more than burn_dx = 0.1 and T no more than
     /// burn_dt = 5 % in any sub-step, in a runaway (H's heat is 8,700 against ε_th of ~200: T climbs by a factor 40 once it
     /// lights). The limit is read from the sub-steps the pass accepted (`max_dx`, `max_dt_rel`), and the run did sub-cycle.
@@ -753,12 +806,14 @@ mod cell {
     /// the energy f32 resolves: M0-D34's open NaN (T 47,000, iron with He 1e-13 and C 1e-25 — trace records with the largest
     /// f set the shift) and He_burn's peak (T 3.2 × 10⁷, ln f = 111.8, the largest shift any shipped record asks). Clipping
     /// each record's ln f at the scale's ceiling flattens the ratios between competing records (C_burn's e^69 against
-    /// C_alpha's e^95 at T 18,800) and moves the groups' shares — the burn-clip-ln-f plant.
+    /// C_alpha's e^95 at T 18,800) and moves the groups' shares — the burn-clip-ln-f plant. The burn clock is off here (K_burn
+    /// 0, §2.5.2 [M0-D165]): a pass that runs away to iron is this case's subject, and the clock holds a cell's heating to
+    /// its sound crossings; `gpu_burn_clock_as_the_twin` grades the clock under the scale.
     #[test]
     fn gpu_the_runaway_books_as_the_twin() {
         use sr_physics::eos::Eos;
         let gpu = super::super::device();
-        let physics = Physics::shipped().unwrap();
+        let physics = Physics::shipped().unwrap().with(&[("burn_k", 0.0)]).unwrap();
         let all = Reactions::shipped(&elements(), &physics).unwrap();
         let r = react(&physics, &all, false);
         let eos = Eos::from_physics(&physics).unwrap();
@@ -836,6 +891,65 @@ mod cell {
             let de_floor = if graded { 1e-5 * de_twin.abs() } else { (1e-5 * de_twin.abs()).max(resolved) };
             assert!((de_gpu - de_twin).abs() <= de_floor, "{name}: ΔE {de_gpu:e} on the GPU, {de_twin:e} in the twin");
         }
+    }
+
+    /// §2.5.2 [M0-D165]'s burn clock on the GPU, as the twin (`burn_clock_caps_the_heating`'s cells, every record): the Giant's
+    /// centre over Δt 10⁻⁴ and over its step's 0.00907 at K_burn 10 — the heat booked and ΔX_H within 10⁻⁴ of the twin's, no
+    /// iron; the clock off (K_burn 0), the GPU's pass runs away to iron as the twin's; the Sun-like centre under q_max passes
+    /// bit for bit as with the clock off.
+    #[test]
+    fn gpu_burn_clock_as_the_twin() {
+        let gpu = super::super::device();
+        let on = physics(&[]);
+        let off = physics(&[("burn_k", 0.0)]);
+        let (all_on, all_off) = (Reactions::shipped(&elements(), &on).unwrap(), Reactions::shipped(&elements(), &off).unwrap());
+        let twin = react(&on, &all_on, false);
+        let (sigma, t0, x) = giant_centre();
+        let block = world(1, 1, &[(sigma, t0, x)]);
+        for dt in [1e-4, 0.00907] {
+            let mut tw = block.clone();
+            let pass = twin.step(&mut tw, dt);
+            let g = rig::OnGpu::new(&gpu, &on, &all_on, false, &block);
+            let report = g.pass(dt);
+            let (st, nuclear) = (g.planes(), g.nuclear());
+            let (got, want) = (nuclear.iter().sum::<f64>(), pass.nuclear.iter().sum::<f64>());
+            let (dh_gpu, dh_twin) = (x[0] - frac(&st, "H", 0), x[0] - frac(&tw, "H", 0));
+            println!("GPU burn clock, Δt {dt}: heat GPU {got:.6e} twin {want:.6e} (rel {:.2e}); ΔX_H GPU {dh_gpu:.4e} twin {dh_twin:.4e}; X_Fe {:.2e}; sub-steps GPU {} twin {}", (got - want).abs() / want, frac(&st, "Fe", 0), report.substeps, pass.substeps);
+            assert_eq!(report.unfinished, 0);
+            assert!((got - want).abs() <= 1e-4 * want, "Δt {dt}: heat {got} on the GPU, {want} in the twin");
+            // ΔX_H is ~10⁻⁵ of X_H here: f32's two ulps of the stored X_H are its floor.
+            let ulps = 2.0 * f64::from(f32::EPSILON) * x[0];
+            assert!((dh_gpu - dh_twin).abs() <= 1e-4 * dh_twin.abs() + ulps, "Δt {dt}: ΔX_H {dh_gpu} on the GPU, {dh_twin} in the twin");
+            assert!(frac(&st, "Fe", 0) < 1e-6, "Δt {dt}: the clocked GPU pass made iron");
+        }
+        // The clock under the rate scale: G-REF's burning matter (Σ 30, X_H 0.75, X_He 0.25) at T 2,520, where He_burn's ln f
+        // ≈ 72 sets the shift from the first sub-step (`gpu_the_runaway_books_as_the_twin`) — ΔE and each group's booking
+        // within 10⁻⁵ of the twin's pass, the pass finished.
+        let hot = world(1, 1, &[(30.0, 2520.0, x_of(&[("H", 0.75), ("He", 0.25)]))]);
+        let dt = 6.3056e-3;
+        let mut tw = hot.clone();
+        let pass = twin.step(&mut tw, dt);
+        let g = rig::OnGpu::new(&gpu, &on, &all_on, false, &hot);
+        let report = g.pass(dt);
+        let (st, nuclear) = (g.planes(), g.nuclear());
+        let (de_gpu, de_twin) = (st.get(3, 0) - f64::from(hot.get(3, 0) as f32), tw.get(3, 0) - hot.get(3, 0));
+        let total: f64 = (0..N_GROUPS).map(|k| pass.nuclear_total(k).abs()).sum();
+        println!("GPU burn clock under the scale, T 2,520: ΔE GPU {de_gpu:.6e} twin {de_twin:.6e} (rel {:.2e}), T → {:.1}; sub-steps GPU {} twin {}", (de_gpu - de_twin).abs() / de_twin.abs(), temp(&tw, 0), report.substeps, pass.substeps);
+        assert_eq!((report.unfinished, pass.unfinished), (0, 0));
+        assert!((de_gpu - de_twin).abs() <= 1e-5 * de_twin.abs(), "T 2,520: ΔE {de_gpu} on the GPU, {de_twin} in the twin");
+        for k in 0..N_GROUPS {
+            assert!((nuclear[k] - pass.nuclear_total(k)).abs() <= 1e-5 * total, "T 2,520: group {} booked {} on the GPU, {} in the twin", GROUPS[k], nuclear[k], pass.nuclear_total(k));
+        }
+        let g = rig::OnGpu::new(&gpu, &off, &all_off, false, &block);
+        g.pass(0.00907);
+        assert!(frac(&g.planes(), "Fe", 0) > 0.99, "the unclocked GPU pass did not flash: X_Fe {}", frac(&g.planes(), "Fe", 0));
+        let (sigma, t, x) = sun_centre();
+        let sun = world(1, 1, &[(sigma, t, x)]);
+        let (a, b) = (rig::OnGpu::new(&gpu, &on, &all_on, false, &sun), rig::OnGpu::new(&gpu, &off, &all_off, false, &sun));
+        let (ra, rb) = (a.pass(0.0117), b.pass(0.0117));
+        assert!(ra.substeps > 0 && ra.substeps == rb.substeps, "sub-steps {} and {}", ra.substeps, rb.substeps);
+        let (pa, pb) = (a.planes(), b.planes());
+        assert!(pa.planes.iter().zip(&pb.planes).all(|(p, q)| p.to_bits() == q.to_bits()), "a cell under q_max moved with the clock on");
     }
 
     /// N_Fe in closed form on the GPU (§0.5 [M0-R10], M0-D87): `n_fe_steps_in_closed_form`'s four cells, every record
