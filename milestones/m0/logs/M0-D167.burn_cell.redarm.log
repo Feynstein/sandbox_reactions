@@ -1,0 +1,693 @@
+==== 2026-11-12T12:35:11-05:00 burn_cell · clean · a fresh scratch copy of the tree
+== 2026-11-12T12:35:12-05:00 burn_cell · task M0-D167 · box laserax-ai-server :: bash tests/gpu.sh burn::cell physics
+-- burn_cell · exit=0 · 14.40 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-_ee6ejp_/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-_ee6ejp_/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 11.37s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 20 tests
+test burn::cell::burn_clock_caps_the_heating ... burn clock, Δt 0.0001: heat 2.885219e-2 against q_max Δt 2.885298e-2 (rel 2.73e-5); clock off 3.948019e-1 (13.68 ×)
+burn clock, the step: on X_H 0.71471 X_Fe 1.84e-16 T 130.17 (1 sub-steps); off X_Fe 1.000000 T 17762.4 (169 sub-steps)
+ok
+test burn::cell::cells_burn_alone ... ok
+test burn::cell::fractions_stay_physical ... mixed cells: 680 sub-steps, max in one cell 177, retried 0
+ok
+test burn::cell::gpu_a_hot_core_in_a_cold_field ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU hot core: P6 3.0138 ms against 0.0297 ms all cold; 2688 sub-steps, at most 42 in one cell, retried 0
+ok
+test burn::cell::gpu_burn_clock_as_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU burn clock, Δt 0.0001: heat GPU 7.056668e-2 twin 7.056669e-2 (rel 1.45e-7); ΔX_H GPU 2.0694e-6 twin 2.1266e-6; X_Fe 2.19e-20; sub-steps GPU 1 twin 1
+GPU burn clock, Δt 0.00907: heat GPU 6.384835e0 twin 6.384835e0 (rel 1.88e-8); ΔX_H GPU 1.9280e-4 twin 1.9278e-4; X_Fe 1.84e-16; sub-steps GPU 1 twin 1
+GPU burn clock under the scale, T 2,520: ΔE GPU 2.286953e3 twin 2.286948e3 (rel 2.11e-6), T → 2588.6; sub-steps GPU 3 twin 3
+ok
+test burn::cell::gpu_cells_burn_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test burn::cell::gpu_fractions_stay_physical_at_the_shipped_limits ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU shipped limits: 686 + 395 sub-steps, most in one cell 177 / 194, retried 0, the runaway at T 17882.2
+ok
+test burn::cell::gpu_heat_booked_per_substep ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU H_burn: booked 782956.937500 for q·Δm = 782956.912816 (rel 3.15e-8), sub-steps 9005, retried 0
+GPU Ne_burn: booked 4807.542480 for q·Δm = 4807.542568 (rel 1.83e-8), sub-steps 6302, retried 0
+ok
+test burn::cell::gpu_heat_enters_the_energy ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU free H_burn: ΔX_H = 0.3000, T 90 → 3615.000, E gained 2610.000244, booked 2610.000244, q·Δm 2610.000104, sub-steps 491
+ok
+test burn::cell::gpu_n_fe_steps_in_closed_form ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU iron block: X_n after 20 steps 0.1384607, worst |ΔX_n| against the march 9.30e-8, against the twin 9.30e-8
+GPU a_Y = b: X_n after 20 steps 0.1463139, worst |ΔX_n| against the march 2.27e-8, against the twin 2.27e-8
+GPU gate closes: X_n after 20 steps 0.1343925, worst |ΔX_n| against the march 3.12e-8, against the twin 3.12e-8
+GPU iron runs out: X_n after 20 steps 0.1564060, worst |ΔX_n| against the march 3.04e-8, against the twin 3.04e-8
+GPU gate limit: Y_eΣ 159.999990463 (Σ_N 160), X_Fe 8.615384101867676e-1, X_n 0.138461575
+GPU iron limit: Y_eΣ 164.000002444 (Σ_N 160), X_Fe 0e0, X_n 0.200000003
+ok
+test burn::cell::gpu_the_runaway_books_as_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+the twin's field runs away in pass 2 at Δt 0.0063056, from T 114.77
+GPU runaway, pass 2: T 114.8 → twin 18830.2, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.599095e5 twin 2.599094e5, f32 resolves 1.8e-3; sub-steps GPU 199 twin 199, retried 25 / 25
+  group H: GPU 1.9508509e5 twin 1.9508509e5 (1.52e-8 of the group, 1.14e-8 of the pass)
+  group He: GPU 3.5615426e4 twin 3.5615430e4 (1.12e-7 of the group, 1.53e-8 of the pass)
+  group C: GPU 4.7982263e2 twin 4.7982257e2 (1.29e-7 of the group, 2.38e-10 of the pass)
+  group Ne: GPU 1.0572933e2 twin 1.0572932e2 (6.87e-8 of the group, 2.80e-11 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 2.15e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 3.42e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, T 2,520: T 2520.0 → twin 27283.3, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.603751e5 twin 2.603751e5, f32 resolves 1.6e-2; sub-steps GPU 155 twin 155, retried 0 / 0
+  group H: GPU 1.9575000e5 twin 1.9575000e5 (2.35e-14 of the group, 1.77e-14 of the pass)
+  group He: GPU 3.6001711e4 twin 3.6001712e4 (3.85e-8 of the group, 5.33e-9 of the pass)
+  group C: GPU 5.0997601e-6 twin 5.0997684e-6 (1.63e-6 of the group, 3.19e-17 of the pass)
+  group Ne: GPU 1.1237365e-6 twin 1.1237384e-6 (1.70e-6 of the group, 7.33e-18 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 2.14e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 3.41e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, trace He in iron, T 47,000: T 47000.0 → twin 47000.0, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 0.000000e0 twin 6.402843e-9, f32 resolves 8.1e-2; sub-steps GPU 1 twin 14, retried 13 / 0
+  group H: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+  group He: GPU -1.6479381e-8 twin 3.5874595e-9 (5.59e0 of the group, 3.12e0 of the pass)
+  group C: GPU -1.3173031e-24 twin -7.1151618e-22 (9.98e-1 of the group, 1.10e-13 of the pass)
+  group Ne: GPU 0.0000000e0 twin -1.5678322e-22 (1.00e0 of the group, 2.43e-14 of the pass)
+  group O: GPU 0.0000000e0 twin 2.0640391e-9 (1.00e0 of the group, 3.21e-1 of the pass)
+  group Si: GPU 0.0000000e0 twin 7.8806865e-10 (1.00e0 of the group, 1.22e-1 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, He_burn's peak, T 3.2e7: T 31777340.0 → twin 111239153.3, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.603520e5 twin 2.603751e5, f32 resolves 1.9e2; sub-steps GPU 171 twin 171, retried 0 / 0
+  group H: GPU 1.9575000e5 twin 1.9575000e5 (1.49e-15 of the group, 1.12e-15 of the pass)
+  group He: GPU 3.6001711e4 twin 3.6001712e4 (3.86e-8 of the group, 5.34e-9 of the pass)
+  group C: GPU 1.0944552e-9 twin 1.0944543e-9 (7.74e-7 of the group, 3.25e-21 of the pass)
+  group Ne: GPU 2.4116417e-10 twin 2.4116398e-10 (8.16e-7 of the group, 7.56e-22 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 2.14e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 3.41e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+ok
+test burn::cell::gpu_the_three_laws_follow_their_closed_forms ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU H_burn: worst |ΔX| 4.95e-5 (limit 1e-4), X = 0.100050, sub-steps 9008, T 100.0000
+GPU He_burn: worst |ΔX| 4.98e-5 (limit 1e-4), X = 0.100050, sub-steps 9009, T 140.0000
+GPU Ne_burn: worst |ΔX| 4.61e-5 (limit 1e-4), X = 0.070046, sub-steps 6304, T 274.0000
+ok
+test burn::cell::h_burn_second_order ... h_burn: k = 0.0500, X_H = 0.100050 (X₀/10 = 0.1), sub-steps 430, retried 0
+ok
+test burn::cell::he_burn_third_order ... he_burn: k = 0.1, X_He = 0.100050 (X₀/10 = 0.1), sub-steps 1003, retried 0
+ok
+test burn::cell::heat_booked_per_substep ... H_burn: booked 782956.910085 for q·Δm = 782956.910085 (rel 1.19e-15), sub-steps 9005
+Ne_burn: booked 4807.544398 for q·Δm = 4807.544398 (rel 3.22e-15), sub-steps 6302
+ok
+test burn::cell::heat_enters_the_energy ... free H_burn: ΔX_H = 0.3000, T 90 → 3615.000, E gained 2610.000000, booked 2610.000000, q·Δm 2610.000000, sub-steps 491
+ok
+test burn::cell::n_fe_steps_in_closed_form ... iron block: Σ 400, a_Y 0, b 0.4, X_n after 20 steps 0.138460588, worst |ΔX_n| against the march 3.83e-15
+a_Y = b: Σ 400, a_Y 0.4, b 0.4, X_n after 20 steps 0.146313872, worst |ΔX_n| against the march 7.77e-16
+gate closes: Σ 390, a_Y 0.4, b 0.41025641025641024, X_n after 20 steps 0.134392504, worst |ΔX_n| against the march 1.05e-15
+iron runs out: Σ 410, a_Y 0.4, b 0.3902439024390244, X_n after 20 steps 0.156405928, worst |ΔX_n| against the march 6.94e-16
+gate limit: Y_eΣ 160.000000000000000 (Σ_N 160), X_Fe 8.615384615384616e-1, X_n 0.138461538461538
+iron limit: Y_eΣ 164.000000000000000 (Σ_N 160), X_Fe 0e0, X_n 0.200000000000000
+ok
+test burn::cell::ne_burn_first_order ... ne_burn: k = 0.05, X_Ne = 0.070046 (X₀/10 = 0.06999999999999999), sub-steps 248, retried 0
+ok
+test burn::cell::shipped_limits_error ... shipped burn_dx: X_H = 0.12761, closed form 0.10000 (error 2.76e-2), sub-steps 13
+ok
+test burn::cell::shipped_limits_hold ... runaway at the shipped limits: max ΔX 0.0363, max ΔT/T 0.0500, sub-steps 185, retried 0, T 18034.2
+ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 492 filtered out; finished in 2.94s
+
+
+==== 2026-11-12T12:35:26-05:00 burn_cell · plant q-double · a fresh scratch copy of the tree
+planted q-double: tests/plants/q-double.patch -> crates/sr-physics/src/reference/react.rs, crates/sr-engine/src/step/react.rs
+== 2026-11-12T12:35:27-05:00 burn_cell · task M0-D167 · box laserax-ai-server :: bash tests/gpu.sh burn::cell physics
+-- burn_cell · exit=101 · 14.19 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-_ee6ejp_/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-_ee6ejp_/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 11.34s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 20 tests
+test burn::cell::burn_clock_caps_the_heating ... burn clock, Δt 0.0001: heat 2.885265e-2 against q_max Δt 2.885298e-2 (rel 1.15e-5); clock off 6.480423e-1 (22.46 ×)
+burn clock, the step: on X_H 0.71478 X_Fe 6.78e-17 T 130.15 (1 sub-steps); off X_Fe 1.000000 T 30662.4 (180 sub-steps)
+ok
+test burn::cell::cells_burn_alone ... ok
+test burn::cell::fractions_stay_physical ... mixed cells: 718 sub-steps, max in one cell 186, retried 0
+ok
+test burn::cell::gpu_a_hot_core_in_a_cold_field ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU hot core: P6 3.1091 ms against 0.0291 ms all cold; 2752 sub-steps, at most 43 in one cell, retried 0
+ok
+test burn::cell::gpu_burn_clock_as_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU burn clock, Δt 0.0001: heat GPU 7.056782e-2 twin 7.056780e-2 (rel 2.41e-7); ΔX_H GPU 1.2945e-6 twin 1.2958e-6; X_Fe 8.13e-21; sub-steps GPU 1 twin 1
+GPU burn clock, Δt 0.00907: heat GPU 6.393897e0 twin 6.393895e0 (rel 1.97e-7); ΔX_H GPU 1.1746e-4 twin 1.1749e-4; X_Fe 6.78e-17; sub-steps GPU 1 twin 1
+GPU burn clock under the scale, T 2,520: ΔE GPU 2.286953e3 twin 2.286948e3 (rel 2.11e-6), T → 2588.6; sub-steps GPU 3 twin 3
+ok
+test burn::cell::gpu_cells_burn_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test burn::cell::gpu_fractions_stay_physical_at_the_shipped_limits ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU shipped limits: 734 + 410 sub-steps, most in one cell 186 / 200, retried 0, the runaway at T 31137.7
+ok
+test burn::cell::gpu_heat_booked_per_substep ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU H_burn: booked 1565913.875000 for q·Δm = 782956.912816 (rel 1.00e0), sub-steps 9005, retried 0
+
+thread 'burn::cell::gpu_heat_booked_per_substep' (763797) panicked at crates/sr-engine/tests/gpu/burn.rs:673:13:
+GPU H_burn: booked 1565913.875, q·Δm 782956.9128155708
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test burn::cell::gpu_heat_enters_the_energy ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU free H_burn: ΔX_H = 0.3000, T 90 → 7095.000, E gained 5220.000000, booked 5220.000000, q·Δm 2610.000104, sub-steps 559
+
+thread 'burn::cell::gpu_heat_enters_the_energy' (763802) panicked at crates/sr-engine/tests/gpu/burn.rs:697:9:
+booked 5220, q·Δm 2610.0001037120783
+FAILED
+test burn::cell::gpu_n_fe_steps_in_closed_form ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU iron block: X_n after 20 steps 0.1384607, worst |ΔX_n| against the march 9.30e-8, against the twin 9.30e-8
+GPU a_Y = b: X_n after 20 steps 0.1463139, worst |ΔX_n| against the march 2.27e-8, against the twin 2.27e-8
+GPU gate closes: X_n after 20 steps 0.1343925, worst |ΔX_n| against the march 3.12e-8, against the twin 3.12e-8
+GPU iron runs out: X_n after 20 steps 0.1564060, worst |ΔX_n| against the march 3.04e-8, against the twin 3.04e-8
+GPU gate limit: Y_eΣ 159.999990463 (Σ_N 160), X_Fe 8.615384101867676e-1, X_n 0.138461575
+GPU iron limit: Y_eΣ 164.000002444 (Σ_N 160), X_Fe 0e0, X_n 0.200000003
+ok
+test burn::cell::gpu_the_runaway_books_as_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+the twin's field runs away in pass 1 at Δt 0.0063056, from T 115.04
+GPU runaway, pass 1: T 115.0 → twin 32363.6, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 4.556292e5 twin 4.556292e5, f32 resolves 1.8e-3; sub-steps GPU 212 twin 212, retried 27 / 27
+  group H: GPU 3.9078619e5 twin 3.9078618e5 (2.33e-8 of the group, 2.00e-8 of the pass)
+  group He: GPU 3.5631348e4 twin 3.5631348e4 (3.53e-9 of the group, 2.76e-10 of the pass)
+  group C: GPU 4.8208734e2 twin 4.8208565e2 (3.50e-6 of the group, 3.71e-9 of the pass)
+  group Ne: GPU 1.0622836e2 twin 1.0622800e2 (3.38e-6 of the group, 7.88e-10 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 1.22e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 1.95e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, T 2,520: T 2520.0 → twin 40816.6, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 4.561251e5 twin 4.561251e5, f32 resolves 1.6e-2; sub-steps GPU 164 twin 164, retried 0 / 0
+  group H: GPU 3.9150000e5 twin 3.9150000e5 (8.03e-15 of the group, 6.89e-15 of the pass)
+  group He: GPU 3.6001711e4 twin 3.6001712e4 (3.85e-8 of the group, 3.04e-9 of the pass)
+  group C: GPU 5.0997592e-6 twin 5.0997677e-6 (1.68e-6 of the group, 1.87e-17 of the pass)
+  group Ne: GPU 1.1237364e-6 twin 1.1237383e-6 (1.67e-6 of the group, 4.12e-18 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 1.22e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 1.95e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, trace He in iron, T 47,000: T 47000.0 → twin 47000.0, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 0.000000e0 twin 6.402843e-9, f32 resolves 8.1e-2; sub-steps GPU 1 twin 14, retried 13 / 0
+  group H: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+  group He: GPU -1.6479381e-8 twin 3.5874595e-9 (5.59e0 of the group, 3.12e0 of the pass)
+  group C: GPU -1.3173031e-24 twin -7.1151618e-22 (9.98e-1 of the group, 1.10e-13 of the pass)
+  group Ne: GPU 0.0000000e0 twin -1.5678322e-22 (1.00e0 of the group, 2.43e-14 of the pass)
+  group O: GPU 0.0000000e0 twin 2.0640391e-9 (1.00e0 of the group, 3.21e-1 of the pass)
+  group Si: GPU 0.0000000e0 twin 7.8806865e-10 (1.00e0 of the group, 1.22e-1 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, He_burn's peak, T 3.2e7: T 31777340.0 → twin 111252686.6, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 4.560640e5 twin 4.561251e5, f32 resolves 1.9e2; sub-steps GPU 171 twin 171, retried 0 / 0
+  group H: GPU 3.9150000e5 twin 3.9150000e5 (1.64e-15 of the group, 1.40e-15 of the pass)
+  group He: GPU 3.6001711e4 twin 3.6001712e4 (3.86e-8 of the group, 3.05e-9 of the pass)
+  group C: GPU 1.0944552e-9 twin 1.0944543e-9 (7.74e-7 of the group, 1.86e-21 of the pass)
+  group Ne: GPU 2.4116417e-10 twin 2.4116398e-10 (8.16e-7 of the group, 4.32e-22 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 1.22e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 1.95e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+ok
+test burn::cell::gpu_the_three_laws_follow_their_closed_forms ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU H_burn: worst |ΔX| 4.95e-5 (limit 1e-4), X = 0.100050, sub-steps 9008, T 100.0000
+GPU He_burn: worst |ΔX| 4.98e-5 (limit 1e-4), X = 0.100050, sub-steps 9009, T 140.0000
+GPU Ne_burn: worst |ΔX| 4.61e-5 (limit 1e-4), X = 0.070046, sub-steps 6304, T 274.0000
+ok
+test burn::cell::h_burn_second_order ... h_burn: k = 0.0500, X_H = 0.100050 (X₀/10 = 0.1), sub-steps 430, retried 0
+ok
+test burn::cell::he_burn_third_order ... he_burn: k = 0.1, X_He = 0.100050 (X₀/10 = 0.1), sub-steps 1003, retried 0
+ok
+test burn::cell::heat_booked_per_substep ... H_burn: booked 1565913.820170 for q·Δm = 782956.910085 (rel 1.00e0), sub-steps 9005
+
+thread 'burn::cell::heat_booked_per_substep' (763824) panicked at crates/sr-engine/tests/gpu/burn.rs:341:13:
+H_burn: booked 1565913.8201697508, q·Δm 782956.9100848745
+FAILED
+test burn::cell::heat_enters_the_energy ... free H_burn: ΔX_H = 0.3000, T 90 → 7095.000, E gained 5220.000000, booked 5220.000000, q·Δm 2610.000000, sub-steps 559
+
+thread 'burn::cell::heat_enters_the_energy' (763825) panicked at crates/sr-engine/tests/gpu/burn.rs:364:9:
+booked 5219.999999999986, q·Δm 2609.999999999996
+FAILED
+test burn::cell::n_fe_steps_in_closed_form ... iron block: Σ 400, a_Y 0, b 0.4, X_n after 20 steps 0.138460588, worst |ΔX_n| against the march 3.83e-15
+a_Y = b: Σ 400, a_Y 0.4, b 0.4, X_n after 20 steps 0.146313872, worst |ΔX_n| against the march 7.77e-16
+gate closes: Σ 390, a_Y 0.4, b 0.41025641025641024, X_n after 20 steps 0.134392504, worst |ΔX_n| against the march 1.05e-15
+iron runs out: Σ 410, a_Y 0.4, b 0.3902439024390244, X_n after 20 steps 0.156405928, worst |ΔX_n| against the march 6.94e-16
+gate limit: Y_eΣ 160.000000000000000 (Σ_N 160), X_Fe 8.615384615384616e-1, X_n 0.138461538461538
+iron limit: Y_eΣ 164.000000000000000 (Σ_N 160), X_Fe 0e0, X_n 0.200000000000000
+ok
+test burn::cell::ne_burn_first_order ... ne_burn: k = 0.05, X_Ne = 0.070046 (X₀/10 = 0.06999999999999999), sub-steps 248, retried 0
+ok
+test burn::cell::shipped_limits_error ... shipped burn_dx: X_H = 0.12761, closed form 0.10000 (error 2.76e-2), sub-steps 13
+ok
+test burn::cell::shipped_limits_hold ... runaway at the shipped limits: max ΔX 0.0360, max ΔT/T 0.0500, sub-steps 196, retried 0, T 31289.7
+ok
+
+failures:
+
+failures:
+    burn::cell::gpu_heat_booked_per_substep
+    burn::cell::gpu_heat_enters_the_energy
+    burn::cell::heat_booked_per_substep
+    burn::cell::heat_enters_the_energy
+
+test result: FAILED. 16 passed; 4 failed; 0 ignored; 0 measured; 492 filtered out; finished in 2.78s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-11-12T12:35:41-05:00 burn_cell · plant burn-clip-ln-f · a fresh scratch copy of the tree
+planted burn-clip-ln-f: tests/plants/burn-clip-ln-f.patch -> crates/sr-engine/shaders/react.wgsl
+== 2026-11-12T12:35:41-05:00 burn_cell · task M0-D167 · box laserax-ai-server :: bash tests/gpu.sh burn::cell physics
+-- burn_cell · exit=101 · 14.15 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-_ee6ejp_/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-_ee6ejp_/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 11.25s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 20 tests
+test burn::cell::burn_clock_caps_the_heating ... burn clock, Δt 0.0001: heat 2.885219e-2 against q_max Δt 2.885298e-2 (rel 2.73e-5); clock off 3.948019e-1 (13.68 ×)
+burn clock, the step: on X_H 0.71471 X_Fe 1.84e-16 T 130.17 (1 sub-steps); off X_Fe 1.000000 T 17762.4 (169 sub-steps)
+ok
+test burn::cell::cells_burn_alone ... ok
+test burn::cell::fractions_stay_physical ... mixed cells: 680 sub-steps, max in one cell 177, retried 0
+ok
+test burn::cell::gpu_a_hot_core_in_a_cold_field ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU hot core: P6 3.0996 ms against 0.0295 ms all cold; 2688 sub-steps, at most 42 in one cell, retried 0
+ok
+test burn::cell::gpu_burn_clock_as_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU burn clock, Δt 0.0001: heat GPU 7.056669e-2 twin 7.056669e-2 (rel 3.90e-8); ΔX_H GPU 2.0694e-6 twin 2.1266e-6; X_Fe 2.19e-20; sub-steps GPU 1 twin 1
+GPU burn clock, Δt 0.00907: heat GPU 6.384835e0 twin 6.384835e0 (rel 1.88e-8); ΔX_H GPU 1.9280e-4 twin 1.9278e-4; X_Fe 1.84e-16; sub-steps GPU 1 twin 1
+GPU burn clock under the scale, T 2,520: ΔE GPU 2.288938e3 twin 2.286948e3 (rel 8.70e-4), T → 2588.6; sub-steps GPU 3 twin 3
+
+thread 'burn::cell::gpu_burn_clock_as_the_twin' (764035) panicked at crates/sr-engine/tests/gpu/burn.rs:939:9:
+T 2,520: ΔE 2288.9375 on the GPU, 2286.9483016165177 in the twin
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test burn::cell::gpu_cells_burn_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test burn::cell::gpu_fractions_stay_physical_at_the_shipped_limits ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU shipped limits: 626 + 385 sub-steps, most in one cell 158 / 189, retried 0, the runaway at T 17882.3
+ok
+test burn::cell::gpu_heat_booked_per_substep ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU H_burn: booked 782956.937500 for q·Δm = 782956.912816 (rel 3.15e-8), sub-steps 9005, retried 0
+GPU Ne_burn: booked 4807.542480 for q·Δm = 4807.542568 (rel 1.83e-8), sub-steps 6302, retried 0
+ok
+test burn::cell::gpu_heat_enters_the_energy ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU free H_burn: ΔX_H = 0.3000, T 90 → 3615.000, E gained 2610.000244, booked 2610.000244, q·Δm 2610.000104, sub-steps 491
+ok
+test burn::cell::gpu_n_fe_steps_in_closed_form ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU iron block: X_n after 20 steps 0.1384607, worst |ΔX_n| against the march 9.30e-8, against the twin 9.30e-8
+GPU a_Y = b: X_n after 20 steps 0.1463139, worst |ΔX_n| against the march 2.27e-8, against the twin 2.27e-8
+GPU gate closes: X_n after 20 steps 0.1343925, worst |ΔX_n| against the march 3.12e-8, against the twin 3.12e-8
+GPU iron runs out: X_n after 20 steps 0.1564060, worst |ΔX_n| against the march 3.04e-8, against the twin 3.04e-8
+GPU gate limit: Y_eΣ 159.999990463 (Σ_N 160), X_Fe 8.615384101867676e-1, X_n 0.138461575
+GPU iron limit: Y_eΣ 164.000002444 (Σ_N 160), X_Fe 0e0, X_n 0.200000003
+ok
+test burn::cell::gpu_the_runaway_books_as_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+the twin's field runs away in pass 2 at Δt 0.0063056, from T 114.77
+GPU runaway, pass 2: T 114.8 → twin 18830.2, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.599248e5 twin 2.599094e5, f32 resolves 1.8e-3; sub-steps GPU 214 twin 199, retried 65 / 25
+  group H: GPU 1.9508508e5 twin 1.9508509e5 (6.49e-8 of the group, 4.87e-8 of the pass)
+  group He: GPU 3.5593871e4 twin 3.5615430e4 (6.05e-4 of the group, 8.29e-5 of the pass)
+  group C: GPU 5.1010294e2 twin 4.7982257e2 (6.31e-2 of the group, 1.17e-4 of the pass)
+  group Ne: GPU 1.1240164e2 twin 1.0572932e2 (6.31e-2 of the group, 2.57e-5 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 2.15e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 3.42e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+
+thread 'burn::cell::gpu_the_runaway_books_as_the_twin' (764065) panicked at crates/sr-engine/tests/gpu/burn.rs:889:17:
+pass 2: group He booked 3.559387109375e4 on the GPU, 3.561542975571247e4 in the twin
+FAILED
+test burn::cell::gpu_the_three_laws_follow_their_closed_forms ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU H_burn: worst |ΔX| 4.95e-5 (limit 1e-4), X = 0.100050, sub-steps 9008, T 100.0000
+GPU He_burn: worst |ΔX| 4.98e-5 (limit 1e-4), X = 0.100050, sub-steps 9009, T 140.0000
+GPU Ne_burn: worst |ΔX| 4.61e-5 (limit 1e-4), X = 0.070046, sub-steps 6304, T 274.0000
+ok
+test burn::cell::h_burn_second_order ... h_burn: k = 0.0500, X_H = 0.100050 (X₀/10 = 0.1), sub-steps 430, retried 0
+ok
+test burn::cell::he_burn_third_order ... he_burn: k = 0.1, X_He = 0.100050 (X₀/10 = 0.1), sub-steps 1003, retried 0
+ok
+test burn::cell::heat_booked_per_substep ... H_burn: booked 782956.910085 for q·Δm = 782956.910085 (rel 1.19e-15), sub-steps 9005
+Ne_burn: booked 4807.544398 for q·Δm = 4807.544398 (rel 3.22e-15), sub-steps 6302
+ok
+test burn::cell::heat_enters_the_energy ... free H_burn: ΔX_H = 0.3000, T 90 → 3615.000, E gained 2610.000000, booked 2610.000000, q·Δm 2610.000000, sub-steps 491
+ok
+test burn::cell::n_fe_steps_in_closed_form ... iron block: Σ 400, a_Y 0, b 0.4, X_n after 20 steps 0.138460588, worst |ΔX_n| against the march 3.83e-15
+a_Y = b: Σ 400, a_Y 0.4, b 0.4, X_n after 20 steps 0.146313872, worst |ΔX_n| against the march 7.77e-16
+gate closes: Σ 390, a_Y 0.4, b 0.41025641025641024, X_n after 20 steps 0.134392504, worst |ΔX_n| against the march 1.05e-15
+iron runs out: Σ 410, a_Y 0.4, b 0.3902439024390244, X_n after 20 steps 0.156405928, worst |ΔX_n| against the march 6.94e-16
+gate limit: Y_eΣ 160.000000000000000 (Σ_N 160), X_Fe 8.615384615384616e-1, X_n 0.138461538461538
+iron limit: Y_eΣ 164.000000000000000 (Σ_N 160), X_Fe 0e0, X_n 0.200000000000000
+ok
+test burn::cell::ne_burn_first_order ... ne_burn: k = 0.05, X_Ne = 0.070046 (X₀/10 = 0.06999999999999999), sub-steps 248, retried 0
+ok
+test burn::cell::shipped_limits_error ... shipped burn_dx: X_H = 0.12761, closed form 0.10000 (error 2.76e-2), sub-steps 13
+ok
+test burn::cell::shipped_limits_hold ... runaway at the shipped limits: max ΔX 0.0363, max ΔT/T 0.0500, sub-steps 185, retried 0, T 18034.2
+ok
+
+failures:
+
+failures:
+    burn::cell::gpu_burn_clock_as_the_twin
+    burn::cell::gpu_the_runaway_books_as_the_twin
+
+test result: FAILED. 18 passed; 2 failed; 0 ignored; 0 measured; 492 filtered out; finished in 2.78s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-11-12T12:35:55-05:00 burn_cell · plant nfe-sub-cycled · a fresh scratch copy of the tree
+planted nfe-sub-cycled: tests/plants/nfe-sub-cycled.patch -> crates/sr-physics/src/reference/react.rs
+== 2026-11-12T12:35:56-05:00 burn_cell · task M0-D167 · box laserax-ai-server :: bash tests/gpu.sh burn::cell physics
+-- burn_cell · exit=101 · 17.41 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-_ee6ejp_/arm3/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-_ee6ejp_/arm3/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 11.31s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 20 tests
+test burn::cell::burn_clock_caps_the_heating ... burn clock, Δt 0.0001: heat 2.885219e-2 against q_max Δt 2.885298e-2 (rel 2.73e-5); clock off 3.948019e-1 (13.68 ×)
+burn clock, the step: on X_H 0.71471 X_Fe 1.84e-16 T 130.17 (1 sub-steps); off X_Fe 1.000000 T 17762.4 (169 sub-steps)
+ok
+test burn::cell::cells_burn_alone ... ok
+test burn::cell::fractions_stay_physical ... mixed cells: 865 sub-steps, max in one cell 185, retried 0
+ok
+test burn::cell::gpu_a_hot_core_in_a_cold_field ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU hot core: P6 3.0332 ms against 0.0291 ms all cold; 2688 sub-steps, at most 42 in one cell, retried 0
+ok
+test burn::cell::gpu_burn_clock_as_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU burn clock, Δt 0.0001: heat GPU 7.056668e-2 twin 7.056669e-2 (rel 1.45e-7); ΔX_H GPU 2.0694e-6 twin 2.1266e-6; X_Fe 2.19e-20; sub-steps GPU 1 twin 1
+GPU burn clock, Δt 0.00907: heat GPU 6.384835e0 twin 6.384835e0 (rel 1.88e-8); ΔX_H GPU 1.9280e-4 twin 1.9278e-4; X_Fe 1.84e-16; sub-steps GPU 1 twin 1
+GPU burn clock under the scale, T 2,520: ΔE GPU 2.286953e3 twin 2.286948e3 (rel 2.11e-6), T → 2588.6; sub-steps GPU 3 twin 3
+ok
+test burn::cell::gpu_cells_burn_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test burn::cell::gpu_fractions_stay_physical_at_the_shipped_limits ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU shipped limits: 686 + 395 sub-steps, most in one cell 177 / 194, retried 0, the runaway at T 17882.2
+ok
+test burn::cell::gpu_heat_booked_per_substep ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU H_burn: booked 782956.937500 for q·Δm = 782956.912816 (rel 3.15e-8), sub-steps 9005, retried 0
+GPU Ne_burn: booked 4807.542480 for q·Δm = 4807.542568 (rel 1.83e-8), sub-steps 6302, retried 0
+ok
+test burn::cell::gpu_heat_enters_the_energy ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU free H_burn: ΔX_H = 0.3000, T 90 → 3615.000, E gained 2610.000244, booked 2610.000244, q·Δm 2610.000104, sub-steps 491
+ok
+test burn::cell::gpu_n_fe_steps_in_closed_form ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU iron block: X_n after 20 steps 0.1384607, worst |ΔX_n| against the march 9.30e-8, against the twin 3.96e-8
+GPU a_Y = b: X_n after 20 steps 0.1463139, worst |ΔX_n| against the march 2.27e-8, against the twin 2.27e-8
+GPU gate closes: X_n after 20 steps 0.1343925, worst |ΔX_n| against the march 3.12e-8, against the twin 2.01e-8
+GPU iron runs out: X_n after 20 steps 0.1564060, worst |ΔX_n| against the march 3.04e-8, against the twin 4.09e-8
+GPU gate limit: Y_eΣ 159.999990463 (Σ_N 160), X_Fe 8.615384101867676e-1, X_n 0.138461575
+GPU iron limit: Y_eΣ 164.000002444 (Σ_N 160), X_Fe 0e0, X_n 0.200000003
+ok
+test burn::cell::gpu_the_runaway_books_as_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+the twin's field runs away in pass 2 at Δt 0.0063056, from T 114.77
+GPU runaway, pass 2: T 114.8 → twin 18830.2, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.599095e5 twin 2.599094e5, f32 resolves 1.8e-3; sub-steps GPU 199 twin 199, retried 25 / 25
+  group H: GPU 1.9508509e5 twin 1.9508509e5 (1.52e-8 of the group, 1.14e-8 of the pass)
+  group He: GPU 3.5615426e4 twin 3.5615430e4 (1.12e-7 of the group, 1.53e-8 of the pass)
+  group C: GPU 4.7982263e2 twin 4.7982257e2 (1.29e-7 of the group, 2.38e-10 of the pass)
+  group Ne: GPU 1.0572933e2 twin 1.0572932e2 (6.87e-8 of the group, 2.80e-11 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 2.15e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 3.42e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, T 2,520: T 2520.0 → twin 27283.3, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.603751e5 twin 2.603751e5, f32 resolves 1.6e-2; sub-steps GPU 155 twin 155, retried 0 / 0
+  group H: GPU 1.9575000e5 twin 1.9575000e5 (2.35e-14 of the group, 1.77e-14 of the pass)
+  group He: GPU 3.6001711e4 twin 3.6001712e4 (3.85e-8 of the group, 5.33e-9 of the pass)
+  group C: GPU 5.0997601e-6 twin 5.0997684e-6 (1.63e-6 of the group, 3.19e-17 of the pass)
+  group Ne: GPU 1.1237365e-6 twin 1.1237384e-6 (1.70e-6 of the group, 7.33e-18 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 2.14e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 3.41e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, trace He in iron, T 47,000: T 47000.0 → twin 47000.0, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 0.000000e0 twin 6.402843e-9, f32 resolves 8.1e-2; sub-steps GPU 1 twin 14, retried 13 / 0
+  group H: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+  group He: GPU -1.6479381e-8 twin 3.5874595e-9 (5.59e0 of the group, 3.12e0 of the pass)
+  group C: GPU -1.3173031e-24 twin -7.1151618e-22 (9.98e-1 of the group, 1.10e-13 of the pass)
+  group Ne: GPU 0.0000000e0 twin -1.5678322e-22 (1.00e0 of the group, 2.43e-14 of the pass)
+  group O: GPU 0.0000000e0 twin 2.0640391e-9 (1.00e0 of the group, 3.21e-1 of the pass)
+  group Si: GPU 0.0000000e0 twin 7.8806865e-10 (1.00e0 of the group, 1.22e-1 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, He_burn's peak, T 3.2e7: T 31777340.0 → twin 111239153.3, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.603520e5 twin 2.603751e5, f32 resolves 1.9e2; sub-steps GPU 171 twin 171, retried 0 / 0
+  group H: GPU 1.9575000e5 twin 1.9575000e5 (1.49e-15 of the group, 1.12e-15 of the pass)
+  group He: GPU 3.6001711e4 twin 3.6001712e4 (3.86e-8 of the group, 5.34e-9 of the pass)
+  group C: GPU 1.0944552e-9 twin 1.0944543e-9 (7.74e-7 of the group, 3.25e-21 of the pass)
+  group Ne: GPU 2.4116417e-10 twin 2.4116398e-10 (8.16e-7 of the group, 7.56e-22 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 2.14e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 3.41e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+ok
+test burn::cell::gpu_the_three_laws_follow_their_closed_forms ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU H_burn: worst |ΔX| 4.95e-5 (limit 1e-4), X = 0.100050, sub-steps 9008, T 100.0000
+GPU He_burn: worst |ΔX| 4.98e-5 (limit 1e-4), X = 0.100050, sub-steps 9009, T 140.0000
+GPU Ne_burn: worst |ΔX| 4.61e-5 (limit 1e-4), X = 0.070046, sub-steps 6304, T 274.0000
+ok
+test burn::cell::h_burn_second_order ... h_burn: k = 0.0500, X_H = 0.100050 (X₀/10 = 0.1), sub-steps 430, retried 0
+ok
+test burn::cell::he_burn_third_order ... he_burn: k = 0.1, X_He = 0.100050 (X₀/10 = 0.1), sub-steps 1003, retried 0
+ok
+test burn::cell::heat_booked_per_substep ... H_burn: booked 782956.910085 for q·Δm = 782956.910085 (rel 1.19e-15), sub-steps 9005
+Ne_burn: booked 4807.544398 for q·Δm = 4807.544398 (rel 3.22e-15), sub-steps 6302
+ok
+test burn::cell::heat_enters_the_energy ... free H_burn: ΔX_H = 0.3000, T 90 → 3615.000, E gained 2610.000000, booked 2610.000000, q·Δm 2610.000000, sub-steps 491
+ok
+test burn::cell::n_fe_steps_in_closed_form ... 
+thread 'burn::cell::n_fe_steps_in_closed_form' (764351) panicked at crates/sr-engine/tests/gpu/burn.rs:564:17:
+assertion `left == right` failed: iron block, step 1: N_Fe sub-cycled (529012 sub-steps)
+  left: 529012
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test burn::cell::ne_burn_first_order ... ne_burn: k = 0.05, X_Ne = 0.070046 (X₀/10 = 0.06999999999999999), sub-steps 248, retried 0
+ok
+test burn::cell::shipped_limits_error ... shipped burn_dx: X_H = 0.12761, closed form 0.10000 (error 2.76e-2), sub-steps 13
+ok
+test burn::cell::shipped_limits_hold ... runaway at the shipped limits: max ΔX 0.0363, max ΔT/T 0.0500, sub-steps 185, retried 0, T 18034.2
+ok
+
+failures:
+
+failures:
+    burn::cell::n_fe_steps_in_closed_form
+
+test result: FAILED. 19 passed; 1 failed; 0 ignored; 0 measured; 492 filtered out; finished in 5.98s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-11-12T12:36:13-05:00 burn_cell · plant nfe-gpu-sub-cycled · a fresh scratch copy of the tree
+planted nfe-gpu-sub-cycled: tests/plants/nfe-gpu-sub-cycled.patch -> crates/sr-engine/src/step/react.rs
+== 2026-11-12T12:36:14-05:00 burn_cell · task M0-D167 · box laserax-ai-server :: bash tests/gpu.sh burn::cell physics
+-- burn_cell · exit=101 · 20.43 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-_ee6ejp_/arm4/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-_ee6ejp_/arm4/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 11.56s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 20 tests
+test burn::cell::burn_clock_caps_the_heating ... burn clock, Δt 0.0001: heat 2.885219e-2 against q_max Δt 2.885298e-2 (rel 2.73e-5); clock off 3.948019e-1 (13.68 ×)
+burn clock, the step: on X_H 0.71471 X_Fe 1.84e-16 T 130.17 (1 sub-steps); off X_Fe 1.000000 T 17762.4 (169 sub-steps)
+ok
+test burn::cell::cells_burn_alone ... ok
+test burn::cell::fractions_stay_physical ... mixed cells: 680 sub-steps, max in one cell 177, retried 0
+ok
+test burn::cell::gpu_a_hot_core_in_a_cold_field ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU hot core: P6 3.0308 ms against 0.0288 ms all cold; 2688 sub-steps, at most 42 in one cell, retried 0
+ok
+test burn::cell::gpu_burn_clock_as_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU burn clock, Δt 0.0001: heat GPU 7.056668e-2 twin 7.056669e-2 (rel 1.45e-7); ΔX_H GPU 2.0694e-6 twin 2.1266e-6; X_Fe 2.19e-20; sub-steps GPU 1 twin 1
+GPU burn clock, Δt 0.00907: heat GPU 6.384835e0 twin 6.384835e0 (rel 1.88e-8); ΔX_H GPU 1.9280e-4 twin 1.9278e-4; X_Fe 1.84e-16; sub-steps GPU 1 twin 1
+GPU burn clock under the scale, T 2,520: ΔE GPU 2.286953e3 twin 2.286948e3 (rel 2.11e-6), T → 2588.6; sub-steps GPU 3 twin 3
+ok
+test burn::cell::gpu_cells_burn_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test burn::cell::gpu_fractions_stay_physical_at_the_shipped_limits ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU shipped limits: 871 + 396 sub-steps, most in one cell 185 / 194, retried 0, the runaway at T 17882.2
+ok
+test burn::cell::gpu_heat_booked_per_substep ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU H_burn: booked 782956.937500 for q·Δm = 782956.912816 (rel 3.15e-8), sub-steps 9005, retried 0
+GPU Ne_burn: booked 4807.542480 for q·Δm = 4807.542568 (rel 1.83e-8), sub-steps 6302, retried 0
+ok
+test burn::cell::gpu_heat_enters_the_energy ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU free H_burn: ΔX_H = 0.3000, T 90 → 3615.000, E gained 2610.000244, booked 2610.000244, q·Δm 2610.000104, sub-steps 491
+ok
+test burn::cell::gpu_n_fe_steps_in_closed_form ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'burn::cell::gpu_n_fe_steps_in_closed_form' (764587) panicked at crates/sr-engine/tests/gpu/burn.rs:994:17:
+assertion `left == right` failed: iron block, step 1: N_Fe sub-cycled on the GPU
+  left: (65536, 1)
+ right: (0, 0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test burn::cell::gpu_the_runaway_books_as_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+the twin's field runs away in pass 2 at Δt 0.0063056, from T 114.77
+GPU runaway, pass 2: T 114.8 → twin 18830.2, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.599095e5 twin 2.599094e5, f32 resolves 1.8e-3; sub-steps GPU 199 twin 199, retried 25 / 25
+  group H: GPU 1.9508509e5 twin 1.9508509e5 (1.52e-8 of the group, 1.14e-8 of the pass)
+  group He: GPU 3.5615426e4 twin 3.5615430e4 (1.12e-7 of the group, 1.53e-8 of the pass)
+  group C: GPU 4.7982263e2 twin 4.7982257e2 (1.29e-7 of the group, 2.38e-10 of the pass)
+  group Ne: GPU 1.0572933e2 twin 1.0572932e2 (6.87e-8 of the group, 2.80e-11 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 2.15e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 3.42e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, T 2,520: T 2520.0 → twin 27283.3, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.603751e5 twin 2.603751e5, f32 resolves 1.6e-2; sub-steps GPU 155 twin 155, retried 0 / 0
+  group H: GPU 1.9575000e5 twin 1.9575000e5 (2.35e-14 of the group, 1.77e-14 of the pass)
+  group He: GPU 3.6001711e4 twin 3.6001712e4 (3.85e-8 of the group, 5.33e-9 of the pass)
+  group C: GPU 5.0997601e-6 twin 5.0997684e-6 (1.63e-6 of the group, 3.19e-17 of the pass)
+  group Ne: GPU 1.1237365e-6 twin 1.1237384e-6 (1.70e-6 of the group, 7.33e-18 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 2.14e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 3.41e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, trace He in iron, T 47,000: T 47000.0 → twin 47000.0, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 0.000000e0 twin 6.402843e-9, f32 resolves 8.1e-2; sub-steps GPU 1 twin 14, retried 13 / 0
+  group H: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+  group He: GPU -1.6479381e-8 twin 3.5874595e-9 (5.59e0 of the group, 3.12e0 of the pass)
+  group C: GPU -1.3173031e-24 twin -7.1151618e-22 (9.98e-1 of the group, 1.10e-13 of the pass)
+  group Ne: GPU 0.0000000e0 twin -1.5678322e-22 (1.00e0 of the group, 2.43e-14 of the pass)
+  group O: GPU 0.0000000e0 twin 2.0640391e-9 (1.00e0 of the group, 3.21e-1 of the pass)
+  group Si: GPU 0.0000000e0 twin 7.8806865e-10 (1.00e0 of the group, 1.22e-1 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, He_burn's peak, T 3.2e7: T 31777340.0 → twin 111239153.3, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.603520e5 twin 2.603751e5, f32 resolves 1.9e2; sub-steps GPU 171 twin 171, retried 0 / 0
+  group H: GPU 1.9575000e5 twin 1.9575000e5 (1.49e-15 of the group, 1.12e-15 of the pass)
+  group He: GPU 3.6001711e4 twin 3.6001712e4 (3.86e-8 of the group, 5.34e-9 of the pass)
+  group C: GPU 1.0944552e-9 twin 1.0944543e-9 (7.74e-7 of the group, 3.25e-21 of the pass)
+  group Ne: GPU 2.4116417e-10 twin 2.4116398e-10 (8.16e-7 of the group, 7.56e-22 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 2.14e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 3.41e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+ok
+test burn::cell::gpu_the_three_laws_follow_their_closed_forms ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU H_burn: worst |ΔX| 4.95e-5 (limit 1e-4), X = 0.100050, sub-steps 9008, T 100.0000
+GPU He_burn: worst |ΔX| 4.98e-5 (limit 1e-4), X = 0.100050, sub-steps 9009, T 140.0000
+GPU Ne_burn: worst |ΔX| 4.61e-5 (limit 1e-4), X = 0.070046, sub-steps 6304, T 274.0000
+ok
+test burn::cell::h_burn_second_order ... h_burn: k = 0.0500, X_H = 0.100050 (X₀/10 = 0.1), sub-steps 430, retried 0
+ok
+test burn::cell::he_burn_third_order ... he_burn: k = 0.1, X_He = 0.100050 (X₀/10 = 0.1), sub-steps 1003, retried 0
+ok
+test burn::cell::heat_booked_per_substep ... H_burn: booked 782956.910085 for q·Δm = 782956.910085 (rel 1.19e-15), sub-steps 9005
+Ne_burn: booked 4807.544398 for q·Δm = 4807.544398 (rel 3.22e-15), sub-steps 6302
+ok
+test burn::cell::heat_enters_the_energy ... free H_burn: ΔX_H = 0.3000, T 90 → 3615.000, E gained 2610.000000, booked 2610.000000, q·Δm 2610.000000, sub-steps 491
+ok
+test burn::cell::n_fe_steps_in_closed_form ... iron block: Σ 400, a_Y 0, b 0.4, X_n after 20 steps 0.138460588, worst |ΔX_n| against the march 3.83e-15
+a_Y = b: Σ 400, a_Y 0.4, b 0.4, X_n after 20 steps 0.146313872, worst |ΔX_n| against the march 7.77e-16
+gate closes: Σ 390, a_Y 0.4, b 0.41025641025641024, X_n after 20 steps 0.134392504, worst |ΔX_n| against the march 1.05e-15
+iron runs out: Σ 410, a_Y 0.4, b 0.3902439024390244, X_n after 20 steps 0.156405928, worst |ΔX_n| against the march 6.94e-16
+gate limit: Y_eΣ 160.000000000000000 (Σ_N 160), X_Fe 8.615384615384616e-1, X_n 0.138461538461538
+iron limit: Y_eΣ 164.000000000000000 (Σ_N 160), X_Fe 0e0, X_n 0.200000000000000
+ok
+test burn::cell::ne_burn_first_order ... ne_burn: k = 0.05, X_Ne = 0.070046 (X₀/10 = 0.06999999999999999), sub-steps 248, retried 0
+ok
+test burn::cell::shipped_limits_error ... shipped burn_dx: X_H = 0.12761, closed form 0.10000 (error 2.76e-2), sub-steps 13
+ok
+test burn::cell::shipped_limits_hold ... runaway at the shipped limits: max ΔX 0.0363, max ΔT/T 0.0500, sub-steps 185, retried 0, T 18034.2
+ok
+
+failures:
+
+failures:
+    burn::cell::gpu_n_fe_steps_in_closed_form
+
+test result: FAILED. 19 passed; 1 failed; 0 ignored; 0 measured; 492 filtered out; finished in 8.75s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-11-12T12:36:34-05:00 burn_cell · plant burn-clock-off · a fresh scratch copy of the tree
+planted burn-clock-off: tests/plants/burn-clock-off.patch -> crates/sr-engine/shaders/react.wgsl, crates/sr-physics/src/reference/react.rs
+== 2026-11-12T12:36:35-05:00 burn_cell · task M0-D167 · box laserax-ai-server :: bash tests/gpu.sh burn::cell physics
+-- burn_cell · exit=101 · 14.35 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-_ee6ejp_/arm5/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-_ee6ejp_/arm5/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 11.33s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 20 tests
+test burn::cell::burn_clock_caps_the_heating ... burn clock, Δt 0.0001: heat 3.948019e-1 against q_max Δt 2.885298e-2 (rel 1.27e1); clock off 3.948019e-1 (1.00 ×)
+
+thread 'burn::cell::burn_clock_caps_the_heating' (764825) panicked at crates/sr-engine/tests/gpu/burn.rs:403:9:
+heat 0.39480191136313414, q_max Δt 0.028852980276154343
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test burn::cell::cells_burn_alone ... ok
+test burn::cell::fractions_stay_physical ... mixed cells: 682 sub-steps, max in one cell 177, retried 0
+ok
+test burn::cell::gpu_a_hot_core_in_a_cold_field ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU hot core: P6 12.6077 ms against 0.0294 ms all cold; 11072 sub-steps, at most 173 in one cell, retried 0
+ok
+test burn::cell::gpu_burn_clock_as_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU burn clock, Δt 0.0001: heat GPU 9.656115e-1 twin 9.656065e-1 (rel 5.18e-6); ΔX_H GPU 2.9070e-5 twin 2.9108e-5; X_Fe 4.12e-18; sub-steps GPU 1 twin 1
+GPU burn clock, Δt 0.00907: heat GPU 2.043037e4 twin 2.043037e4 (rel 1.24e-8); ΔX_H GPU 7.1490e-1 twin 7.1490e-1; X_Fe 1.00e0; sub-steps GPU 169 twin 169
+
+thread 'burn::cell::gpu_burn_clock_as_the_twin' (764834) panicked at crates/sr-engine/tests/gpu/burn.rs:923:13:
+Δt 0.00907: the clocked GPU pass made iron
+FAILED
+test burn::cell::gpu_cells_burn_alone ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ok
+test burn::cell::gpu_fractions_stay_physical_at_the_shipped_limits ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU shipped limits: 688 + 395 sub-steps, most in one cell 177 / 194, retried 0, the runaway at T 17882.2
+ok
+test burn::cell::gpu_heat_booked_per_substep ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU H_burn: booked 782956.937500 for q·Δm = 782956.912816 (rel 3.15e-8), sub-steps 9005, retried 0
+GPU Ne_burn: booked 4807.542480 for q·Δm = 4807.542568 (rel 1.83e-8), sub-steps 6302, retried 0
+ok
+test burn::cell::gpu_heat_enters_the_energy ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU free H_burn: ΔX_H = 0.3000, T 90 → 3615.000, E gained 2610.000244, booked 2610.000244, q·Δm 2610.000104, sub-steps 491
+ok
+test burn::cell::gpu_n_fe_steps_in_closed_form ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU iron block: X_n after 20 steps 0.1384607, worst |ΔX_n| against the march 9.30e-8, against the twin 9.30e-8
+GPU a_Y = b: X_n after 20 steps 0.1463139, worst |ΔX_n| against the march 2.27e-8, against the twin 2.27e-8
+GPU gate closes: X_n after 20 steps 0.1343925, worst |ΔX_n| against the march 3.12e-8, against the twin 3.12e-8
+GPU iron runs out: X_n after 20 steps 0.1564060, worst |ΔX_n| against the march 3.04e-8, against the twin 3.04e-8
+GPU gate limit: Y_eΣ 159.999990463 (Σ_N 160), X_Fe 8.615384101867676e-1, X_n 0.138461575
+GPU iron limit: Y_eΣ 164.000002444 (Σ_N 160), X_Fe 0e0, X_n 0.200000003
+ok
+test burn::cell::gpu_the_runaway_books_as_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+the twin's field runs away in pass 2 at Δt 0.0063056, from T 114.77
+GPU runaway, pass 2: T 114.8 → twin 18830.2, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.599095e5 twin 2.599094e5, f32 resolves 1.8e-3; sub-steps GPU 199 twin 199, retried 25 / 25
+  group H: GPU 1.9508509e5 twin 1.9508509e5 (1.52e-8 of the group, 1.14e-8 of the pass)
+  group He: GPU 3.5615426e4 twin 3.5615430e4 (1.12e-7 of the group, 1.53e-8 of the pass)
+  group C: GPU 4.7982263e2 twin 4.7982257e2 (1.29e-7 of the group, 2.38e-10 of the pass)
+  group Ne: GPU 1.0572933e2 twin 1.0572932e2 (6.87e-8 of the group, 2.80e-11 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 2.15e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 3.42e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, T 2,520: T 2520.0 → twin 27283.3, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.603751e5 twin 2.603751e5, f32 resolves 1.6e-2; sub-steps GPU 155 twin 155, retried 0 / 0
+  group H: GPU 1.9575000e5 twin 1.9575000e5 (2.35e-14 of the group, 1.77e-14 of the pass)
+  group He: GPU 3.6001711e4 twin 3.6001712e4 (3.85e-8 of the group, 5.33e-9 of the pass)
+  group C: GPU 5.0997601e-6 twin 5.0997684e-6 (1.63e-6 of the group, 3.19e-17 of the pass)
+  group Ne: GPU 1.1237365e-6 twin 1.1237384e-6 (1.70e-6 of the group, 7.33e-18 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 2.14e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 3.41e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, trace He in iron, T 47,000: T 47000.0 → twin 47000.0, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 0.000000e0 twin 6.402843e-9, f32 resolves 8.1e-2; sub-steps GPU 1 twin 14, retried 13 / 0
+  group H: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+  group He: GPU -1.6479381e-8 twin 3.5874595e-9 (5.59e0 of the group, 3.12e0 of the pass)
+  group C: GPU -1.3173031e-24 twin -7.1151618e-22 (9.98e-1 of the group, 1.10e-13 of the pass)
+  group Ne: GPU 0.0000000e0 twin -1.5678322e-22 (1.00e0 of the group, 2.43e-14 of the pass)
+  group O: GPU 0.0000000e0 twin 2.0640391e-9 (1.00e0 of the group, 3.21e-1 of the pass)
+  group Si: GPU 0.0000000e0 twin 7.8806865e-10 (1.00e0 of the group, 1.22e-1 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+GPU runaway, He_burn's peak, T 3.2e7: T 31777340.0 → twin 111239153.3, X_Fe twin 1.000000 GPU 1.000000; ΔE GPU 2.603520e5 twin 2.603751e5, f32 resolves 1.9e2; sub-steps GPU 171 twin 171, retried 0 / 0
+  group H: GPU 1.9575000e5 twin 1.9575000e5 (1.49e-15 of the group, 1.12e-15 of the pass)
+  group He: GPU 3.6001711e4 twin 3.6001712e4 (3.86e-8 of the group, 5.34e-9 of the pass)
+  group C: GPU 1.0944552e-9 twin 1.0944543e-9 (7.74e-7 of the group, 3.25e-21 of the pass)
+  group Ne: GPU 2.4116417e-10 twin 2.4116398e-10 (8.16e-7 of the group, 7.56e-22 of the pass)
+  group O: GPU 2.0714285e4 twin 2.0714286e4 (2.69e-8 of the group, 2.14e-9 of the pass)
+  group Si: GPU 7.9090908e3 twin 7.9090909e3 (1.12e-8 of the group, 3.41e-10 of the pass)
+  group N: GPU 0.0000000e0 twin 0.0000000e0 (0.00e0 of the group, 0.00e0 of the pass)
+ok
+test burn::cell::gpu_the_three_laws_follow_their_closed_forms ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+GPU H_burn: worst |ΔX| 4.95e-5 (limit 1e-4), X = 0.100050, sub-steps 9008, T 100.0000
+GPU He_burn: worst |ΔX| 4.98e-5 (limit 1e-4), X = 0.100050, sub-steps 9009, T 140.0000
+GPU Ne_burn: worst |ΔX| 4.61e-5 (limit 1e-4), X = 0.070046, sub-steps 6304, T 274.0000
+ok
+test burn::cell::h_burn_second_order ... h_burn: k = 0.0500, X_H = 0.100050 (X₀/10 = 0.1), sub-steps 430, retried 0
+ok
+test burn::cell::he_burn_third_order ... he_burn: k = 0.1, X_He = 0.100050 (X₀/10 = 0.1), sub-steps 1003, retried 0
+ok
+test burn::cell::heat_booked_per_substep ... H_burn: booked 782956.910085 for q·Δm = 782956.910085 (rel 1.19e-15), sub-steps 9005
+Ne_burn: booked 4807.544398 for q·Δm = 4807.544398 (rel 3.22e-15), sub-steps 6302
+ok
+test burn::cell::heat_enters_the_energy ... free H_burn: ΔX_H = 0.3000, T 90 → 3615.000, E gained 2610.000000, booked 2610.000000, q·Δm 2610.000000, sub-steps 491
+ok
+test burn::cell::n_fe_steps_in_closed_form ... iron block: Σ 400, a_Y 0, b 0.4, X_n after 20 steps 0.138460588, worst |ΔX_n| against the march 3.83e-15
+a_Y = b: Σ 400, a_Y 0.4, b 0.4, X_n after 20 steps 0.146313872, worst |ΔX_n| against the march 7.77e-16
+gate closes: Σ 390, a_Y 0.4, b 0.41025641025641024, X_n after 20 steps 0.134392504, worst |ΔX_n| against the march 1.05e-15
+iron runs out: Σ 410, a_Y 0.4, b 0.3902439024390244, X_n after 20 steps 0.156405928, worst |ΔX_n| against the march 6.94e-16
+gate limit: Y_eΣ 160.000000000000000 (Σ_N 160), X_Fe 8.615384615384616e-1, X_n 0.138461538461538
+iron limit: Y_eΣ 164.000000000000000 (Σ_N 160), X_Fe 0e0, X_n 0.200000000000000
+ok
+test burn::cell::ne_burn_first_order ... ne_burn: k = 0.05, X_Ne = 0.070046 (X₀/10 = 0.06999999999999999), sub-steps 248, retried 0
+ok
+test burn::cell::shipped_limits_error ... shipped burn_dx: X_H = 0.12761, closed form 0.10000 (error 2.76e-2), sub-steps 13
+ok
+test burn::cell::shipped_limits_hold ... runaway at the shipped limits: max ΔX 0.0363, max ΔT/T 0.0500, sub-steps 185, retried 0, T 18034.2
+ok
+
+failures:
+
+failures:
+    burn::cell::burn_clock_caps_the_heating
+    burn::cell::gpu_burn_clock_as_the_twin
+
+test result: FAILED. 18 passed; 2 failed; 0 ignored; 0 measured; 492 filtered out; finished in 2.90s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

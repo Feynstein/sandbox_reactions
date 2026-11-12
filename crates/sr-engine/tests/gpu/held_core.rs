@@ -1,7 +1,7 @@
 //! M0-D71 — the held core on the CPU twin (contract §2.7 [M0-TG2], §2.3.4 [M0-TG2], §1.4.2 [M0-TG2], §2.9's `held`, §5.1's
 //! G-REST; M0-R11's H, reports/unresolved_remnant.md). P8's last act holds a cell with Σ ≥ σ_hold and ε_th ≤ η_hold ε_cold
-//! which holds no iron (X_Fe = 0, §2.7 [M0-D71f]) or is neutron-rich (X_n ≥ 0.5, [M0-R13]) with its disk r ≤ 24 under
-//! m_tov_sb (§0.5 [M0-T130], M0-D153), and releases it past 2η_hold, under ½σ_hold, once X_Fe > 0 with X_n < 0.5 or its disk
+//! which holds no iron past a trace (X_Fe < 10⁻³, §2.7 [M0-D71f], [M0-D170]) or is neutron-rich (X_n ≥ 0.5, [M0-R13]) with its disk r ≤ 24 under
+//! m_tov_sb (§0.5 [M0-T130], M0-D153), and releases it past 2η_hold, under ½σ_hold, once X_Fe ≥ 10⁻³ with X_n < 0.5 or its disk
 //! reaches m_tov_sb; P4
 //! leaves a held cell as it is behind reflecting walls (HLL against the mirror, no mass, energy or species across, no
 //! work); the momentum the hold takes from the grid is booked `held`. One-way inflow (§2.3.4's item 2) is not built: it
@@ -23,8 +23,9 @@
 //!   cell's missed or reversed Σg·Δt is its share of M), the held cells' Σ, E and species bit for bit.
 //! - **The hysteresis**: held at η, kept to 2η, released past it and under ½σ_hold; never held under σ_hold or past η; a
 //!   newly held cell's momentum zeroed and booked, its E as it was.
-//! - **Item 1** (M0-D152, §2.7 [M0-D71f]: no iron is held): cold iron under and past N_Fe's gate never held, nor C/O with
-//!   X_Fe 10⁻³⁰; C/O beside it held, and released once its iron appears (X_Fe 10⁻⁴).
+//! - **Item 1** (M0-D152, §2.7 [M0-D71f]: no iron is held; [M0-D170]: a trace under 10⁻³ is none): cold iron under and
+//!   past N_Fe's gate never held; C/O beside it held, and C/O with X_Fe 9 × 10⁻⁴; the C/O released once its iron appears
+//!   past the trace (X_Fe 1.1 × 10⁻³).
 //! - **The neutron core** (M0-T130, M0-D153, §2.7 [M0-R13], §0.5 [M0-T130]): a cold neutron-rich cell (X_n 0.6, X_Fe 0.4)
 //!   held while its disk r ≤ 24 holds 0.95 m_tov_sb (ballast spread over the disk, probes 64 apart), never at 1.05,
 //!   released once its disk crosses to 1.05; iron at X_n 0.4 never held.
@@ -324,6 +325,74 @@ fn gravity_kick_on_a_held_cell_is_booked() {
     assert!(drift[0] <= STRIP_BAND && drift[1] <= STRIP_BAND, "grid + held momentum gained other than Δt·g·M: {drift:?}");
 }
 
+// ---- the sticky wall (§2.3.4 [M0-D172]) ----
+
+/// The falls' speed: fast enough that the wall's own flux leaves the infall moving in after one step (so the stop shows).
+const FALL: f64 = 1.0;
+
+/// A `size` × `size` world of warm hydrogen (Σ 1, ε_th 1 + ε_cold) round a held block of cold C/O (Σ 20, ε_th ½η_hold
+/// ε_cold: held by the rule) at x, y ∈ [b, b + 4): the three cells left of it, above it and below it fall into it at
+/// [`FALL`], the three right of it move away at [`FALL`], the rest at rest (the edges' impulses cancel). The state and
+/// the block's mask.
+fn fall_world(size: usize, b: usize) -> (State, Vec<bool>) {
+    let eos = Eos::from_physics(&physics()).unwrap();
+    let hy = fractions(&[("H", 1.0)]);
+    let cold_h = eos.eps_cold(1.0, elements().composition(&hy).y_e, 0.0);
+    let inside = |v: usize| (b..b + 4).contains(&v);
+    let near = |v: usize, lo: usize| (lo..lo + 3).contains(&v);
+    let cells: Vec<Cell> = (0..size * size)
+        .map(|i| {
+            let (x, y) = (i % size, i / size);
+            if inside(x) && inside(y) {
+                return cold_cell(&eos, 20.0, co(), 0.5 * hold_key("eta_hold"), [0.0, 0.0]);
+            }
+            let u = if inside(y) && (near(x, b - 3) || near(x, b + 4)) { FALL } else { 0.0 };
+            let v = if inside(x) && near(y, b - 3) {
+                FALL
+            } else if inside(x) && near(y, b + 4) {
+                -FALL
+            } else {
+                0.0
+            };
+            Cell { sigma: 1.0, mom: [u, v], energy: 1.0 + 2.0 * cold_h + 0.5 * (u * u + v * v), x: hy }
+        })
+        .collect();
+    let held = (0..size * size).map(|i| inside(i % size) && inside(i / size)).collect();
+    (state(size, size, &cells), held)
+}
+
+/// The block's free face-neighbours in a `size` world: (cell, axis, whether its fall points into the block) — left, top,
+/// bottom fall in; right moves away.
+fn wall_neighbours(size: usize, b: usize) -> Vec<(usize, usize, bool)> {
+    (b..b + 4)
+        .flat_map(|k| [(k * size + b - 1, 0, true), (k * size + b + 4, 0, false), ((b - 1) * size + k, 1, true), ((b + 4) * size + k, 1, true)])
+        .collect()
+}
+
+/// §2.3.4 [M0-D172] on the twin: a free cell falling into a held block stops at its wall — its momentum into the block
+/// exactly 0 after the step, its kinetic energy left in E (the grid's E unchanged: bounce, no gravity), that momentum
+/// booked `held` (grid + held momentum kept) — and a cell moving away from the block keeps its momentum.
+#[test]
+fn a_free_cell_stops_at_a_held_wall() {
+    const S: usize = 16;
+    const B: usize = 6;
+    let hydro = Hydro::new(&physics(), &elements(), Edge::Bounce).unwrap();
+    let (mut st, held) = fall_world(S, B);
+    let before = st.clone();
+    let dt = hydro.dt(&st, None);
+    let spared = hydro.step_held(&mut st, dt, None, None, None, &held);
+    let scale = sum_abs_momentum(&before) + spared[0].hypot(spared[1]);
+    let drift = momentum_drift(&before, &st, spared, [0.0, 0.0], scale);
+    let de = (total(&st, 3) - total(&before, 3)).abs() / total(&before, 3);
+    let into: Vec<f64> = wall_neighbours(S, B).iter().filter(|n| n.2).map(|&(i, k, _)| st.get(1 + k, i)).collect();
+    let away: Vec<f64> = wall_neighbours(S, B).iter().filter(|n| !n.2).map(|&(i, k, _)| st.get(1 + k, i)).collect();
+    println!("SR-HELD-STICKY into the wall {into:?}; away {away:?}; held {spared:?}; momentum drift {drift:?}; E moved {de:.3e}");
+    assert!(into.iter().all(|&p| p == 0.0), "a free cell's momentum into the held block after the step: {into:?}");
+    assert!(away.iter().all(|&p| p > 0.0), "a free cell moving away from the block lost its momentum: {away:?}");
+    assert!(drift[0] <= STRIP_BAND && drift[1] <= STRIP_BAND, "grid + held momentum drifted {drift:?}");
+    assert!(de <= STRIP_BAND, "the grid's E moved by {de:e}: the stop took the infall's kinetic energy out of E");
+}
+
 /// The pull cases' world: 32 × 32, bounce, gravity and hydro on the twin.
 const PW: usize = 32;
 
@@ -462,22 +531,23 @@ fn the_hold_has_its_hysteresis() {
     }
 }
 
-/// Item 1's cells (§2.7 [M0-D71f]): [cold iron under N_Fe's gate, cold iron past it, C/O as dense, C/O as dense, C/O
-/// with a trace of iron 10⁻³⁰], all at ½η_hold; with `iron_appears` the fourth gains X_Fe 10⁻⁴ (from its O). Σ_N / Y_e of
-/// iron times 0.9 and 1.1 — the gate form held the first and refused the second.
+/// Item 1's cells (§2.7 [M0-D71f], [M0-D170]): [cold iron under N_Fe's gate, cold iron past it, C/O as dense, C/O as
+/// dense, C/O with a trace of iron 9 × 10⁻⁴ — under the trace 10⁻³, held as iron-free], all at ½η_hold; with
+/// `iron_appears` the fourth gains X_Fe 1.1 × 10⁻³ (from its O), past the trace. Σ_N / Y_e of iron times 0.9 and 1.1 —
+/// the gate form held the first and refused the second.
 fn item1_cells(eos: &Eos, physics: &Physics, iron_appears: bool) -> ([Cell; 5], f64, f64) {
     let iron = fractions(&[("Fe", 1.0)]);
     let y_e = elements().composition(&iron).y_e;
     let sigma_n = physics.get("sigma_n").unwrap();
     let (under, past) = (0.9 * sigma_n / y_e, 1.1 * sigma_n / y_e);
     let c = |sigma: f64, x: [f64; N_SPECIES]| cold_cell(eos, sigma, x, 0.5 * hold_key("eta_hold"), [0.0, 0.0]);
-    let fourth = if iron_appears { fractions(&[("C", 0.5), ("O", 0.4999), ("Fe", 1e-4)]) } else { co() };
-    let trace = fractions(&[("C", 0.5), ("O", 0.5), ("Fe", 1e-30)]);
+    let fourth = if iron_appears { fractions(&[("C", 0.5), ("O", 0.4989), ("Fe", 1.1e-3)]) } else { co() };
+    let trace = fractions(&[("C", 0.5), ("O", 0.4991), ("Fe", 9e-4)]);
     ([c(under, iron), c(past, iron), c(past, co()), c(past, fourth), c(past, trace)], under, past)
 }
 
 /// Item 1's masks: after the first P8, and after the second, once the fourth cell's iron appears.
-const ITEM1: [[bool; 5]; 2] = [[false, false, true, true, false], [false, false, true, false, false]];
+const ITEM1: [[bool; 5]; 2] = [[false, false, true, true, true], [false, false, true, false, true]];
 
 #[test]
 fn no_iron_is_held() {
@@ -486,11 +556,11 @@ fn no_iron_is_held() {
     let mut held = vec![false; 5];
     let (cells, under, past) = item1_cells(&eos, &physics, false);
     p8(&floors, &cells, &mut held);
-    assert_eq!(held, ITEM1[0], "iron at Σ {under:.1} and {past:.1}, C/O beside it, C/O with X_Fe 1e-30");
-    // The held C/O cell gains iron: released, though as cold as before.
+    assert_eq!(held, ITEM1[0], "iron at Σ {under:.1} and {past:.1}, C/O beside it, C/O with X_Fe 9e-4");
+    // The held C/O cell gains iron past the trace: released, though as cold as before; the trace cell stays held.
     p8(&floors, &item1_cells(&eos, &physics, true).0, &mut held);
-    assert_eq!(held, ITEM1[1], "the held C/O cell with X_Fe 1e-4");
-    println!("SR-HELD-NO-IRON twin: iron never held at Σ {under:.1} or {past:.1}, a trace of 1e-30 neither; C/O held, released at X_Fe 1e-4");
+    assert_eq!(held, ITEM1[1], "the held C/O cell with X_Fe 1.1e-3");
+    println!("SR-HELD-NO-IRON twin: iron never held at Σ {under:.1} or {past:.1}; C/O and C/O with X_Fe 9e-4 held, released at X_Fe 1.1e-3");
 }
 
 /// The neutron probes' world edge: four disks r ≤ 24, `NP` cells apart, inside it.
@@ -982,6 +1052,40 @@ fn gpu_no_work_crosses_a_held_wall_and_the_kick_is_booked() {
     assert!(worst <= WORK_BAND, "the wall's neighbours' E off the twin's by {worst:e}: work done across the wall");
 }
 
+/// §2.3.4 [M0-D172] on the GPU: [`a_free_cell_stops_at_a_held_wall`]'s fall at 64 × 64, one step against the twin — the
+/// block held as built, every free cell falling into it stopped at exactly 0 (`hydro_commit`), the cells moving away
+/// still moving, the stopped momentum booked `held` as the twin's, grid + held momentum kept, and every cell's E the twin's.
+#[test]
+fn gpu_a_free_cell_stops_at_a_held_wall_as_the_twins() {
+    const B: usize = 30;
+    let physics = physics();
+    let (st, block) = fall_world(GW, B);
+    let before = to_f32(&st);
+    let (after, gpu, twin) = strip_step(&physics, &before, EdgeMode::Bounce, false);
+    let n = GW * GW;
+    assert_eq!(gpu.mask(), block, "the block is not held as built: the case grades no wall");
+    let into: Vec<f32> = wall_neighbours(GW, B).iter().filter(|w| w.2).map(|&(i, k, _)| after[(1 + k) * n + i]).collect();
+    let away: Vec<f32> = wall_neighbours(GW, B).iter().filter(|w| !w.2).map(|&(i, k, _)| after[(1 + k) * n + i]).collect();
+    let (p0, scale) = gpu_momentum(&before, n);
+    let (p1, held) = (gpu_momentum(&after, n).0, gpu.held());
+    let drift = [0, 1].map(|k| (p1[k] + held[k] - p0[k]).abs() / scale);
+    let off = spared_off(&gpu, &twin);
+    let worst = (0..n)
+        .filter(|&i| !block[i])
+        .map(|i| (f64::from(after[3 * n + i]) - twin.state.planes[3 * n + i]).abs() / twin.state.planes[3 * n + i].abs())
+        .fold(0.0, f64::max);
+    println!(
+        "SR-HELD-STICKY-GPU into the wall {into:?}; away {away:?}; held GPU {held:?}, twin {:?} (off {off:.3e}); drift {drift:?}; \
+         free E off the twin's by {worst:.3e}",
+        twin.held
+    );
+    assert!(into.iter().all(|&p| p == 0.0), "a free cell's momentum into the held block after the step: {into:?}");
+    assert!(away.iter().all(|&p| p > 0.0), "a free cell moving away from the block lost its momentum: {away:?}");
+    assert!(off <= SPARED_BAND, "the held block booked {held:?}, the twin's {:?}", twin.held);
+    assert!(drift[0] <= GPU_STRIP_BAND && drift[1] <= GPU_STRIP_BAND, "grid + held momentum drifted {drift:?}");
+    assert!(worst <= WORK_BAND, "a free cell's E off the twin's by {worst:e}");
+}
+
 #[test]
 fn gpu_a_held_edge_cell_lets_nothing_escape() {
     let physics = physics();
@@ -1071,9 +1175,9 @@ fn gpu_no_iron_is_held() {
     gpu.run(1);
     let (second, n_second) = read(&gpu);
     println!("SR-HELD-NO-IRON GPU: masks {first:?} ({n_first} held) then {second:?} ({n_second} held)");
-    assert_eq!(first, ITEM1[0], "iron under and past N_Fe's gate, C/O beside it, C/O with X_Fe 1e-30");
-    assert_eq!(second, ITEM1[1], "the held C/O cell with X_Fe 1e-4");
-    assert_eq!((n_first, n_second), (2, 1), "cells held off item 1's");
+    assert_eq!(first, ITEM1[0], "iron under and past N_Fe's gate, C/O beside it, C/O with X_Fe 9e-4");
+    assert_eq!(second, ITEM1[1], "the held C/O cell with X_Fe 1.1e-3");
+    assert_eq!((n_first, n_second), (3, 2), "cells held off item 1's");
 }
 
 #[test]

@@ -1,0 +1,14 @@
+--- a/crates/sr-engine/shaders/hydro.wgsl
++++ b/crates/sr-engine/shaders/hydro.wgsl
+@@ -1111,8 +1111,9 @@
+         mom.y = 0.0;
+     }
+     if (stopped.x != 0.0 || stopped.y != 0.0) {
+-        held_book[cell] += stopped.x;
+-        held_book[n + cell] += stopped.y;
++        // planted: the sticky wall stops the momentum and books none of it
++        held_book[cell] += 0.0 * stopped.x;
++        held_book[n + cell] += 0.0 * stopped.y;
+     }
+     out_hydro[cell] = get_next(0u, cell);
+     out_hydro[n + cell] = mom.x;

@@ -20,8 +20,9 @@
 //! - The ledger starts at a summary, not before step 0: the box and φ exist only after the first step, so a run's ledger
 //!   starts after its first step and `start.step` says which.
 //! - The momentum `held` (§2.9 [M0-TG2]) is P8's and P4's booking summed: the momentum a newly held cell had when P8 zeroed
-//!   it (`held.mom_*`) and what P4 spared the held cells (`held.spared.mom_*`). What the initial state's hold zeroed before
-//!   step 0 is booked before the ledger starts and dropped with the first interval, as every term booked then is.
+//!   it (`held.mom_*`) and what P4 spared the held cells or stopped at their walls (`held.spared.mom_*`, §2.3.4 [M0-D172]).
+//!   What the initial state's hold zeroed before step 0 is booked before the ledger starts and dropped with the first
+//!   interval, as every term booked then is.
 //! - `edit_potential` (§2.9 [M0-D109]) is the potential energy P0's mass changes brought: ½ ΔΣ (φ_before + φ_after) a cell,
 //!   booked by P2 on the edit's step (step/grav.rs) — what W = ½ Σ m φ, sinks included, moves by under an instantaneous
 //!   edit. W itself is ½ m φ with φ from the step's start, so it lags each step's own motion by half (a hot paint expanding

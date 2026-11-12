@@ -18,16 +18,23 @@
 //!
 //! M0-D71d: the momentum term `held` (§2.9 [M0-TG2]) — the scenes above switch the cold pressure off, so none holds a cell.
 //! Graded where the held cells feel a net force (§0.5 [M0-D71]: the booking graded where it holds by construction): gas
-//! driven against a held C/O block, gravity off, in a leave world. G-REST's M 900 SCF disk: its held cores feel almost no
-//! net force. What the GPU booked there until M0-D151 was not its f32 slots' rounding but P2's f32 field's net force,
+//! driven against a held C/O block, gravity off, in a leave world — the sticky wall's booking graded there too (M0-D174:
+//! plant `held-wall-gpu-unbooked` reads 1.7e-2 against 2.5e-4). G-REST's M 900 SCF disk: its held cores felt almost no net
+//! force before the sticky wall. What the GPU booked there until M0-D151 was not its f32 slots' rounding but P2's f32 field's net force,
 //! carried by the held core's own pull (2.0e-3 of Σm|u| over 1,000 steps on the RTX 4090; the twin's 1e-11; M0-D149's
 //! measurement); since §1.4.2 [M0-D149] a held cell's Σg·Δt reads g_pull, the field of all but the held cells, and the disk
-//! is graded on its `held` at or under the drift without held, the grid's own source-term error (§0.5 [M0-D151], the lead
-//! at M0-D151: «Grade it (Recommended)»; measured 6.6e-6 under 2.0e-5) — the free gas's pull, not P2's rounding; its
-//! invariant's drifts stay printed (§0.5 [M0-D71]).
+//! was graded on its `held` at or under the drift without held (§0.5 [M0-D151]; measured 6.6e-6 under 2.0e-5). Under the
+//! sticky wall (§0.5 [M0-D172]) the rim comes to rest on the core and `held` swings in sign every ~50 steps, so that grade
+//! compared |held| with |held + the residual| — a coin flip; since M0-D174 the invariant with `held` is graded, within
+//! [`HELD_BAND`] of Σm|u| (§0.5 [M0-D174], the lead: «Band 1e-3 (Recommended)»; measured 6.3e-4, P2's whole g on the held
+//! cells 2.6e-3); `held` and the drift without it stay printed (§0.5 [M0-D71]).
 //! A snapshot written before [M0-TG2] is restored with the hold's terms 0.
+//!
+//! M0-D173: summary.json is read as written ([`read_as_written`]), so an exact comparison grades the ledger, not serde_json's
+//! best-effort float parse.
 
-use std::path::PathBuf;
+use std::collections::HashMap;
+use std::path::{Path, PathBuf};
 
 use serde_json::Value;
 use sr_engine::calibrate::{cold_disk_scene, radius_holding, Matter};
@@ -99,9 +106,68 @@ fn run_for(name: &str, scene_json: &str, steps: u64) -> Out {
         args.extend(["--adapter".to_string(), a]);
     }
     assert_eq!(sr_engine::headless::run(&args), 0, "headless");
-    let summary: Value = serde_json::from_slice(&std::fs::read(out.join("summary.json")).unwrap()).unwrap();
+    let summary = read_as_written(&out.join("summary.json"));
     let dump = Dump::read(&out.join("dumps").join(format!("s_{steps}.bin"))).unwrap();
     Out { summary, dump }
+}
+
+/// summary.json as written. serde_json reads a number best-effort (its `float_roundtrip` feature is off, §1.2's table
+/// unchanged, §0.5 [M0-D76]): a 17-digit f64 may come back one ulp off — the M 900 disk's momentum invariant
+/// −0.01937270164489746 read against its four terms re-summed −0.019372701644897433, where the file's own numbers sum to it
+/// exactly (M0-D173). Every number literal of the text is read again by the standard library, which rounds correctly, and
+/// each float of the tree takes the value its literal names — calibration.rs's `read_as_written` (M0-D162), here for the
+/// test's reader alone. Two literals serde_json reads as one double, each naming another, are refused: which float is which
+/// cannot be told.
+fn read_as_written(path: &Path) -> Value {
+    let text = std::fs::read_to_string(path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+    let mut root: Value = serde_json::from_str(&text).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+    let mut exact: HashMap<u64, f64> = HashMap::new();
+    for literal in number_literals(&text) {
+        let lossy = serde_json::from_str::<Value>(literal).ok().and_then(|v| v.as_f64());
+        let (Some(lossy), Ok(written)) = (lossy, literal.parse::<f64>()) else { continue };
+        if let Some(other) = exact.insert(lossy.to_bits(), written) {
+            assert_eq!(other.to_bits(), written.to_bits(), "{}: {other} and {written} read as one double, {lossy}", path.display());
+        }
+    }
+    fn restore(v: &mut Value, exact: &HashMap<u64, f64>) {
+        match v {
+            Value::Number(n) if n.is_f64() => {
+                let written = n.as_f64().and_then(|x| exact.get(&x.to_bits())).and_then(|&x| serde_json::Number::from_f64(x));
+                if let Some(written) = written {
+                    *n = written;
+                }
+            }
+            Value::Array(items) => items.iter_mut().for_each(|x| restore(x, exact)),
+            Value::Object(map) => map.values_mut().for_each(|x| restore(x, exact)),
+            _ => {}
+        }
+    }
+    restore(&mut root, &exact);
+    root
+}
+
+/// The number literals of a JSON text, outside its strings.
+fn number_literals(text: &str) -> Vec<&str> {
+    let bytes = text.as_bytes();
+    let (mut out, mut i, mut in_string) = (Vec::new(), 0, false);
+    while i < bytes.len() {
+        match (in_string, bytes[i]) {
+            (true, b'\\') => i += 2,
+            (_, b'"') => {
+                in_string = !in_string;
+                i += 1;
+            }
+            (false, b'-' | b'0'..=b'9') => {
+                let start = i;
+                while i < bytes.len() && matches!(bytes[i], b'0'..=b'9' | b'-' | b'+' | b'.' | b'e' | b'E') {
+                    i += 1;
+                }
+                out.push(&text[start..i]);
+            }
+            _ => i += 1,
+        }
+    }
+    out
 }
 
 fn num(v: &Value, path: &[&str]) -> f64 {
@@ -409,12 +475,18 @@ fn the_terms_and_the_invariants_on_a_hand_made_summary() {
 const HELD_TERMS: [&str; 4] = ["held.mom_x", "held.mom_y", "held.spared.mom_x", "held.spared.mom_y"];
 /// The held disk's span: G-REST's step 1,000.
 const HELD_STEPS: u64 = 1_000;
+/// The held disk's momentum invariant (grid + sinks + escaped + held) over [`HELD_STEPS`], relative to Σm|u| (§0.5 [M0-D174],
+/// the lead's «Band 1e-3»). Measured on the RTX 4090 under the sticky wall: 6.3e-4 (the elastic wall's 1.7e-5); a held core
+/// reading P2's whole g (`held-core-gpu-whole-g`) 2.6e-3, the sticky wall booking nothing (`held-wall-gpu-unbooked`) 1.6e-3.
+const HELD_BAND: f64 = 1e-3;
 
 /// M0-D71d: G-REST's M 900 SCF disk (`calibrate`'s cold C/O disk, the shipped K's, 64 × 64 bounce, gravity and hydro) through
 /// `headless`, 1,000 steps, so cells are held and the hold books momentum. summary.json's `momentum.held` is the ledger's —
 /// the four `held` terms of the observers' snapshot beside the final dump, cumulative since the start — and its invariant
-/// is grid + sinks + escaped + held. The drift with and without `held` is printed (§0.5 [M0-D71]); `held` is graded at or
-/// under the drift without it (§0.5 [M0-D151]: the free gas's pull, not P2's f32 net force, which read 2.0e-3 against 2.0e-5).
+/// is grid + sinks + escaped + held. The drift with and without `held` is printed (§0.5 [M0-D71]); the drift with it is
+/// graded within [`HELD_BAND`] of Σm|u| (§0.5 [M0-D174]: under the sticky wall `held` is the rim resting on the core and swings
+/// in sign, so [M0-D151]'s «held at or under the drift without held» compared |held| with |held + the residual|).
+/// `held` and the invariant are compared bit for bit, summary.json read as written ([`read_as_written`], M0-D173).
 #[test]
 fn the_held_disk_writes_the_ledgers_held_into_summary_json() {
     let (physics, elements) = (Physics::shipped().unwrap(), Elements::shipped().unwrap());
@@ -428,7 +500,7 @@ fn the_held_disk_writes_the_ledgers_held_into_summary_json() {
     }
     let (code, lines) = run_scene_captured(parse_args(&args).unwrap(), scene, None);
     assert_eq!(code, 0, "headless: {lines:?}");
-    let summary: Value = serde_json::from_slice(&std::fs::read(out.join("summary.json")).unwrap()).unwrap();
+    let summary = read_as_written(&out.join("summary.json"));
     let final_dump = out.join("dumps").join(format!("s_{HELD_STEPS}.bin"));
     let out = Out { summary, dump: Dump::read(&final_dump).unwrap() };
     let snapshot: Value = serde_json::from_slice(&std::fs::read(final_dump.with_extension("observers.json")).unwrap()).unwrap();
@@ -444,7 +516,7 @@ fn the_held_disk_writes_the_ledgers_held_into_summary_json() {
     let without = (inv1[0] - held[0] - inv0[0] + pair(s, "held")[0]).hypot(inv1[1] - held[1] - inv0[1] + pair(s, "held")[1]) / scale;
     println!(
         "SR-LEDGER-HELD disk M 900: steps {}..{}, held ({:.4e}, {:.4e}) = {:.3e} of Σm|u| {scale:.4e}; grid ({:.4e}, {:.4e}); \
-         invariant drift {drift:.3e} of Σm|u| with held, {without:.3e} without (held {} the drift without); snapshot's held ({:.4e}, \
+         invariant drift {drift:.3e} of Σm|u| with held (band {HELD_BAND:.0e}), {without:.3e} without; snapshot's held ({:.4e}, \
          {:.4e}) + spared ({:.4e}, {:.4e})",
         num(s, &["step"]),
         num(e, &["step"]),
@@ -453,7 +525,6 @@ fn the_held_disk_writes_the_ledgers_held_into_summary_json() {
         held[0].hypot(held[1]) / scale,
         grid[0],
         grid[1],
-        if held[0].hypot(held[1]) / scale <= without { "at or under" } else { "over" },
         booked(HELD_TERMS[0]),
         booked(HELD_TERMS[1]),
         booked(HELD_TERMS[2]),
@@ -465,8 +536,10 @@ fn the_held_disk_writes_the_ledgers_held_into_summary_json() {
         let sum = ["grid", "sinks", "escaped", "held"].iter().map(|t| pair(e, t)[k]).sum::<f64>();
         assert_eq!(inv, sum, "the invariant, axis {k}: grid + sinks + escaped + held");
     }
-    let taken = held[0].hypot(held[1]) / scale;
-    assert!(taken <= without, "held {taken:.3e} of Σm|u| over the drift without held {without:.3e}: the held cores book more than the free gas's pull");
+    assert!(
+        drift <= HELD_BAND,
+        "invariant drift {drift:.3e} of Σm|u| with held over {HELD_BAND:.0e} (without held {without:.3e}): held does not account for what the grid lost"
+    );
     assert_grid_matches_the_state(&out);
 }
 

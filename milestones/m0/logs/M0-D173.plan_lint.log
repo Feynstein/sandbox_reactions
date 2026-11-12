@@ -1,0 +1,14 @@
+== 2026-11-12T10:32:31-05:00 plan_lint · task M0-D173 · box laserax-ai-server :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=1 · 0.12 s
+lint: checks=865 failed=1 warnings=8 · blocks=413 · flow_rows=413 · verify_fences=0 · history=0 · flow=per-task · header=612/600 · pipeline=9/60 · ladder=6 rungs · refresh=4/5
+FAIL: Flow row M0-D174 says None, block says 'TODO'
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T103: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T106: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D173 1 · M0-D174 1 · M0-D167 1
+=== NO-GO: 1 violation(s) ===
+

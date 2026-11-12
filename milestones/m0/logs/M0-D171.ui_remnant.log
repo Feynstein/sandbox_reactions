@@ -1,0 +1,16 @@
+== 2026-11-12T08:25:51-05:00 ui_remnant · task M0-D171 · box laserax-ai-server :: bash tests/cpu.sh sr-app --bin ui::remnant::remnant_tests
+-- ui_remnant · exit=0 · 0.11 s
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running unittests src/main.rs (build/target/release/deps/sandbox_reactions-2151d31dcc418aca)
+
+running 6 tests
+test ui::remnant::remnant_tests::a_remnant_the_zoomed_view_does_not_show_has_no_ring ... ok
+test ui::remnant::remnant_tests::no_remnant_no_ring ... ok
+test ui::remnant::remnant_tests::the_ring_keeps_its_size_on_screen_at_every_z ... ok
+test ui::remnant::remnant_tests::the_ring_sits_on_the_remnants_cell_at_z_eight ... ok
+test ui::remnant::remnant_tests::the_ring_sits_on_the_remnants_cell_at_z_one ... ok
+test ui::remnant::remnant_tests::a_ringed_star_reads_star_remnant_under_its_fate_or_ending ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 157 filtered out; finished in 0.00s
+
+

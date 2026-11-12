@@ -52,7 +52,10 @@
 // its Σ, E and species as they were and, in its momentum planes, the momentum it was spared — its momentum flux
 // differences and Δt·Σg, g there P2's g_pull, the pull of all but the held cells (§1.4.2 [M0-D149], `pull_at`) —, which `hydro_commit` books into `held` (`booking.held`) and never writes, so the held cell
 // keeps its momentum, 0 since P8 held it. `hydro_edges` books nothing at a held edge cell. One-way inflow is not built
-// (§0.5 [M0-D71]; M0-D71f). The twin's `Hydro::step_held` is the reference.
+// (§0.5 [M0-D71]; M0-D71f). [M0-D172] The wall is sticky: `hydro_commit` sets a free gas cell's (Σ ≥ Σ_vac) momentum into
+// a held face-neighbour to 0, E as it is — the infall's kinetic energy becomes heat — and books it into `held` with the spared:
+// a standing infall (momentum, no mass flux) held an unresolved rim up, and gravity's face work debited its kick from the
+// rim's heat into P8's floor (M0-D172). The twin's `Hydro::step_held` is the reference.
 //
 // A cell below Σ_vac reads as the floor state (Σ_floor, at rest, T_floor), as P9's rates do (M0-T20) — the box's ghost
 // ring included, where an uploaded vacuum cell may hold Σ = 0; a cell and its four neighbours all below Σ_vac are left
@@ -1087,14 +1090,34 @@ fn hydro_commit(@builtin(global_invocation_id) id: vec3<u32>) {
     let cell = (abox.y0 + id.y) * dims.width + abox.x0 + id.x;
     let n = dims.cells;
     // A held cell is left as it is; the momentum `hydro_update` carried in its next state is what it was spared.
-    if (held_at(i32(abox.x0 + id.x), i32(abox.y0 + id.y))) {
+    let x = i32(abox.x0 + id.x);
+    let y = i32(abox.y0 + id.y);
+    if (held_at(x, y)) {
         held_book[cell] += get_next(1u, cell);
         held_book[n + cell] += get_next(2u, cell);
         return;
     }
-    for (var k = 0u; k < 4u; k++) {
-        out_hydro[k * n + cell] = get_next(k, cell);
+    // [M0-D172] The sticky wall (the header comment): a free gas cell's momentum into a held face-neighbour stops, E as it
+    // is, booked into `held` — its own slots, which no other invocation writes; a cell left under Σ_vac is P8's to reset.
+    var mom = vec2<f32>(get_next(1u, cell), get_next(2u, cell));
+    var stopped = vec2<f32>(0.0, 0.0);
+    let gas = get_next(0u, cell) >= eos.sigma_vac;
+    if (gas && ((held_at(x - 1, y) && mom.x < 0.0) || (held_at(x + 1, y) && mom.x > 0.0))) {
+        stopped.x = mom.x;
+        mom.x = 0.0;
     }
+    if (gas && ((held_at(x, y - 1) && mom.y < 0.0) || (held_at(x, y + 1) && mom.y > 0.0))) {
+        stopped.y = mom.y;
+        mom.y = 0.0;
+    }
+    if (stopped.x != 0.0 || stopped.y != 0.0) {
+        held_book[cell] += stopped.x;
+        held_book[n + cell] += stopped.y;
+    }
+    out_hydro[cell] = get_next(0u, cell);
+    out_hydro[n + cell] = mom.x;
+    out_hydro[2u * n + cell] = mom.y;
+    out_hydro[3u * n + cell] = get_next(3u, cell);
     for (var i = 0u; i < PLANES_A; i++) {
         out_a[i * n + cell] = get_next(4u + i, cell);
     }

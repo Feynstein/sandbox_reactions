@@ -13,10 +13,10 @@
 //! guard (M0-D18).
 //!
 //! The hold (§2.7 [M0-TG2]; M0-R11's H), P8's last act ([`Floors::hold`]): a cell with Σ ≥ σ_hold whose ε_th — as the
-//! floor leaves it — is at most η_hold · ε_cold, which holds no iron (X_Fe = 0, §2.7 [M0-D71f]) or is neutron-rich (X_n ≥
+//! floor leaves it — is at most η_hold · ε_cold, which holds no iron past a trace (X_Fe < 10⁻³, §2.7 [M0-D71f], [M0-D170]) or is neutron-rich (X_n ≥
 //! 0.5, §2.7 [M0-R13]), and whose disk r ≤ r_hold (24) holds less than m_tov_sb (§0.5 [M0-T130]: P3's mass test's disk form and
 //! limit, sinks.rs [`disk`] and [`m_tov_sb`], at r_hold, read on Σ as the floors leave it; M0-D153) is held, and the next step's P4 leaves it
-//! as it is (hydro.rs's held walls). A held cell is released past 2η_hold · ε_cold, under ½σ_hold, once X_Fe > 0 with X_n
+//! as it is (hydro.rs's held walls). A held cell is released past 2η_hold · ε_cold, under ½σ_hold, once X_Fe ≥ 10⁻³ with X_n
 //! < 0.5, or once its disk holds m_tov_sb: a collapsing iron core stays free, a remnant's neutron core is held degenerate,
 //! and a core heading past m_tov_sb is free for P3's sink. A newly held cell's momentum is set to 0 — its kinetic energy
 //! left in E, where it becomes heat — and booked `held`. ε_th and ε_cold are read in f64 of the renormalised fractions.
@@ -31,8 +31,11 @@ use crate::registry::{Elements, Physics, RegistryError, N_SPECIES};
 const NS: usize = N_SPECIES;
 /// The neutron fraction's slot in §1.5's order (the registry's `ID_N`).
 const ID_N: usize = 9;
-/// Iron's slot in §1.5's order: a cell holding any is held only once neutron-rich (§2.7 [M0-D71f], [M0-R13]).
+/// Iron's slot in §1.5's order: a cell holding more than a trace is held only once neutron-rich (§2.7 [M0-D71f], [M0-R13]).
 const ID_FE: usize = 8;
+/// The trace of iron under which a cell is held as one with none (§2.7 [M0-D170]; the stage rows' SPENT): the iron Si
+/// burning mixes through the grid (2.35 × 10⁻⁹ in M0-D168's remnant) kept the hold off every remnant at X_Fe = 0.
+const IRON_TRACE: f64 = 1e-3;
 /// X_n from which a cell holding iron is neutron-rich, past N_Fe's gate (§2.7 [M0-R13]).
 const NEUTRON_RICH: f64 = 0.5;
 /// The state's species planes (§2.2: channels 4–13).
@@ -206,7 +209,7 @@ impl Floors {
         let comp = self.elements.composition(&x);
         let cold = self.eos.eps_cold(sigma, comp.y_e, x[ID_N]);
         let eps_th = energy / sigma - 0.5 * (mom[0] * mom[0] + mom[1] * mom[1]) / (sigma * sigma) - cold;
-        let kind = x[ID_FE] == 0.0 || x[ID_N] >= NEUTRON_RICH;
+        let kind = x[ID_FE] < IRON_TRACE || x[ID_N] >= NEUTRON_RICH;
         let rest = if was_held {
             !(eps_th > 2.0 * self.eta_hold * cold || sigma < 0.5 * self.sigma_hold || !kind)
         } else {

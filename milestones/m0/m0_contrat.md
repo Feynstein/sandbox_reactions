@@ -870,7 +870,7 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     without `held` (the grid's own source-term error), both relative to Σm|u|; the invariant's drifts and the GPU disks'
     grid + held stay printed** · measured by M0-D151 on laserax-ai-server's RTX 4090 (2026-11-03) with g_pull built:
     held 6.6 × 10⁻⁶ against 2.0 × 10⁻⁵ (P2's whole field: 2.0 × 10⁻³) — the lead at M0-D151, 2026-11-03: «Grade it
-    (Recommended)».
+    (Recommended)». Its grade superseded by [M0-D174] (the invariant with `held` within 10⁻³ of Σm|u|).
   - [M0-D71f] §0.5 [M0-TG2]'s items 1–2 («the forms the build starts from, ruled final on the GPU lives' measurement at
     M0-D71f»), §2.7 [M0-TG2]'s hold test («its N_Fe rate is 0: X_Fe = 0 or Y_eΣ ≤ Σ_N … the form measured next») and release
     («or its N_Fe rate is > 0»), §2.3.4 [M0-TG2]'s one-way inflow and §1.4.2 [M0-TG2]'s inflow face · **item 1: a cell holding
@@ -1133,6 +1133,54 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     3,200) also kept the Massive but left the Sun-like a failed star — the lead at M0-D166, 2026-11-10: «Push ÷16 + burn_k 40
     (Recommended)». The Sun-like's planetary nebula, pushed by its light (G-STAGES' plant `no-push`), is not measured here (its whole
     life is over 10 minutes; M0-D167's recalibration lives it).
+  - [M0-D170] §2.7 [M0-D71f]'s hold test («it holds no iron, X_Fe = 0») and release («X_Fe > 0 [M0-D71f] with X_n < 0.5»), as
+    [M0-R13] and [M0-T130] kept them · **iron under a trace is none: a cell is held when X_Fe < 10⁻³ (the stage rows' SPENT trace;
+    the twin's and floors.wgsl's `IRON_TRACE`, a code constant beside `NEUTRON_RICH`), or X_n ≥ 0.5 under m_tov_sb, and released once
+    X_Fe ≥ 10⁻³ with X_n < 0.5** — [M0-D71f]'s reason kept (a cell of real iron is never held below N_Fe's gate), σ_hold, η_hold,
+    r_hold, the neutron gate, the walls and the booking unchanged; physics.json and the assets' physics hash unchanged, the physics
+    itself changed (the one recalibration rides M0-D167's) · measured on laserax-ai-server's RTX 4090 (2026-11-12, tasks/M0-D170.md):
+    the iron Si burning makes mixes through the grid (X_Fe 2.35 × 10⁻⁹ in every cell of m_up_sb's 3,351 sb life), so at X_Fe = 0 the
+    hold engaged on no remnant and P4 took the degenerate centre under T_floor every step, P8 put it back and the hot rim radiated it
+    (floor 1,141 per step = the light, L 1.79 × 10⁵); with the trace the remnant's inner 21 cells are held and the floor falls to 3.2
+    per step (the rest is its thin outflowing rim at the floor, M0-D172), the held core then burning its hydrogen trace (L_nuc/L
+    0.07–0.22); the Massive from M0-D163's s_14000, pumped cold at X_Fe = 0 (floor 1–8 × its light, shown main_sequence to t 420, no
+    ending in 570 s), holds three cells of X_Fe 4.9 × 10⁻⁴ for ~250 steps at t 299, the pump stops (floor 0) and it ends neutron_star
+    at t 372.0 with 5,235 sb; the Giant from s_1200 ends black_hole at t 78.0 bit for bit as before; X_Fe < 0.5 read bit for bit the
+    trace's on all three — the lead at M0-D170, 2026-11-12: «Trace: X_Fe < 1e-3 (Recommended)».
+  - [M0-D172] §2.3.4 [M0-TG2]'s held wall, reflecting alone (HLL against the free face's mirror, no work across it) · **the wall
+    is sticky: after P4's update a free gas cell's (Σ ≥ Σ_vac) momentum into a held face-neighbour is set to 0, E as it is (its
+    kinetic energy becomes heat), and booked `held`** (the twin's `Hydro::step_held`, hydro.wgsl's `hydro_commit` into `booking.held`'s
+    `held.spared` slots) — the wall's flux, the walls' no-work rule, the hold and its booking otherwise unchanged; physics.json and
+    the assets' physics hash unchanged, the physics changed (the one recalibration rides M0-D167's) · measured on
+    laserax-ai-server's RTX 4090 and the CPU twin (2026-11-12, tasks/M0-D172.md): round m_up_sb's held C/O remnant (21 cells) the
+    24 free cells stood falling into the wall at |u| 4.4–6.2 with no mass flux, the wall's HLL flux holding an unresolved rim up;
+    gravity's face work (no work at a face no mass crosses, §1.4.2) debited each step's kick from the rim's heat and, shared by
+    mass, took the five thinnest cells (Σ 0.5) under T_floor — P8's floor 1.26 per step, 13.5 % of the light, over the last 1,000
+    of 2,000 steps; sticky, the floor reads −7 × 10⁻⁸ per step against 7.46 radiated, 29 cells held (the edge comes to rest and
+    cools into the hold), and the Massive from s_14000 runs bit for bit until a cell is held and ends neutron_star at t 369.4
+    (5,306 sb; 372.0 and 5,235 before); P8's floor paid from a cell's motion first also stopped the rim's floor but braked the
+    Massive's collapse into a black hole at t 235.1 — the lead at M0-D172, 2026-11-12: «Sticky held wall (Recommended)».
+  - [M0-D174] §0.5 [M0-D151]'s grade of G-REST's M 900 SCF disk, «its `held` over 1,000 steps graded at or under the momentum
+    invariant's drift without `held`» · **the momentum invariant with `held` (grid + sinks + escaped + held) graded: its drift
+    over 1,000 steps at most 10⁻³ of Σm|u| (read from the final dump); `held` and the drift without it stay printed** · measured
+    on laserax-ai-server's RTX 4090 (2026-11-12, tasks/M0-D174.md): under [M0-D172]'s sticky wall the rim comes to rest on the
+    held core (Σm|u| 63.4 → 31.2) and `held`, mostly the core's spared wall flux and pull from that gas (the sticky wall's own
+    stops ≈ (−0.008, −0.070) of (−0.256, −0.244)), swings in sign every ~50 steps on either wall, so «held at or under the drift
+    without held» compared |held| with |held + the residual| — red at 1,000 steps sticky (1.13 × 10⁻² over 1.08 × 10⁻²), green
+    elastic by the same chance; the invariant with `held` drifts 6.3 × 10⁻⁴ sticky (1.7 × 10⁻⁵ elastic), and a held core
+    reading P2's whole g (plant `held-core-gpu-whole-g`) 2.6 × 10⁻³, the sticky wall booking nothing (plant
+    `held-wall-gpu-unbooked`) 1.6 × 10⁻³ (its own guard the gravity-off wall case, 1.7 × 10⁻² against 2.5 × 10⁻⁴) — the lead at
+    M0-D174, 2026-11-12: «Band 1e-3 (Recommended)».
+  - [M0-D167] §2.5.1's K_burn 40 ([M0-D166]) · **K_burn 15** — the clock's law, its bound and every other value unchanged; the
+    physics hash moves, the one recalibration rides it · measured on laserax-ai-server's RTX 4090 (2026-11-12, tasks/M0-D167.md): at
+    40 the clock slows the Massive's hydrogen shell 10²–10⁶× (a capped cell's heat shared by the raw rates, the steep He/O/Si records
+    taking it), so the envelope's hydrogen falls into the core unburnt (50–130 t.u. to burn it against 0.6–15 t.u. to fall in), sits at
+    c through O and Si burning (X_H,c 0.1–0.2, iron_core never shown), and the unpowered envelope follows it in: N_Fe collapses the
+    whole star inside r ≤ 4, the bounce unbinds 1.7–4.8 % (no supernova), and the cold remnant waits ~150 t.u. on P8's floor for the
+    hold; at 15–20 the Massive (from M0-D163's t 138.7 dump and as a preset-equal disk from t 0) shows o_burn, si_burn, iron_core,
+    core_collapse, supernova and ends neutron_star (4,272–5,209 sb), at 30 it fails as at 40; the Giant ends black_hole from 10 to 40,
+    keeping its mass through the helium event from 15 up (36,795 at t 30 against 30,952 at 10); hydrogen on a faster clock of its own
+    (K_H 1, 3, 0) runs away — the clock is needed on hydrogen too — the lead at M0-D167, 2026-11-12: «burn_k 15 (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1639,7 +1687,9 @@ buffers per shader stage (TW-E15), which binds native builds too (§6.2.2). Not 
   energy and species fluxes set to exactly 0, so the normal-momentum flux is HLL's Π + Σu_n² + S·Σu_n — never §2.8's
   bounce flux, Π alone, under which gravity drove a free cell into the wall without bound (M0-R11). The free cell
   keeps its own slopes (a mirrored stencil zeroed its pressure slope and unbalanced gravity, M0-R11) and its Σg kick;
-  no work is done across the wall (§1.4.2). [M0-D71f] Walls only, final (report item 2): nothing crosses a held wall
+  no work is done across the wall (§1.4.2). [M0-D172] The wall is sticky: after P4's update a free gas cell's (Σ ≥ Σ_vac; under
+  it P8 resets the cell, its momentum booked nowhere, §2.7 [M0-T19]) momentum into a held face-neighbour is set to 0 — its kinetic energy left in E, where it becomes heat — and that momentum booked `held` (§2.9), as
+  a newly held cell's is (§2.7): gas cannot move into a held cell, so its infall there is spent, never a standing momentum. [M0-D71f] Walls only, final (report item 2): nothing crosses a held wall
   either way — no inflow; a held core's ∇·u is 0, and since no iron is held (§2.7 [M0-D71f]) — none under X_n 0.5, and none
   whose object reaches m_tov_sb [M0-R13], its mass within r ≤ 24 [M0-T130] — a collapsing core is free,
   so §2.6's sinks form from free gas (the 20 M₀ life's from a free ring clump at 1.06 m_tov_sb, M0-D71f).
@@ -1689,7 +1739,7 @@ buffers per shader stage (TW-E15), which binds native builds too (§6.2.2). Not 
 | ν of C_burn, Ne_burn, O_burn, Mg_burn, Si_burn, S_burn | 30 | ≥ 4 (K7) | steepness |
 | Σ_N (the N_Fe gate, on Y_eΣ) | 160 | ≥ 2 (K₂ₑ/K₁ₑ)², the relativistic regime | iron neutronizes only once its electrons are relativistic |
 | burn_dx, burn_dt | 0.1, 0.05 | — | a sub-cycle changes no X by more than 0.1 (absolute) and T by no more than 5 % |
-| K_burn (`burn_k`) [M0-D165] | ~~10~~ [M0-D166] 40 | ≥ 0 (0: off) | the burn clock (§2.5.2): a cell's nuclear heating at most ε_th c_s / K_burn per t.u. |
+| K_burn (`burn_k`) [M0-D165] | ~~10~~ ~~[M0-D166] 40~~ [M0-D167] 15 | ≥ 0 (0: off) | the burn clock (§2.5.2): a cell's nuclear heating at most ε_th c_s / K_burn per t.u. |
 
 - **2.5.2 Sub-cycling** (SM M5): per cell, after the flow step, linearised backward-Euler
   sub-steps under burn_dx and burn_dt; fractions clamped ≥ 0 and renormalised; q·ω into ε_th at each
@@ -1762,13 +1812,14 @@ fractions; every energy P8 changes — the vacuum reset's E_floor − E as well 
 
 [M0-TG2] **The hold** — P8's last act, after the floors and the renormalisation, writes the mask the next step's P4
 reads (§2.3.4). A cell is held when Σ ≥ σ_hold and ε_th ≤ η_hold · ε_cold — ε_th as the temperature floor leaves it,
-ε_cold = (u_e + u_n)/Σ of the renormalised fractions (§2.3.2) — and it holds no iron, X_Fe = 0 ([M0-D71f], report item
+ε_cold = (u_e + u_n)/Σ of the renormalised fractions (§2.3.2) — and it holds no iron, ~~X_Fe = 0~~ [M0-D170] X_Fe < 10⁻³, a trace
+read as none ([M0-D71f], report item
 1, final: a held iron cell below N_Fe's gate never compressed to it, so cores froze unneutronized and no sink formed) —
 or, [M0-R13], it is neutron-rich, X_n ≥ 0.5, while its object (§1.9.2) is under m_tov_sb (§2.11) — [M0-T130] the object read
 as the mass within r ≤ 24 cells of the cell, never the observer's (G-WATCH); not built until M0-D153: past N_Fe's gate, so the
 remnant's core is held degenerate and warm instead of P4 pumping it to T_floor, and a core heading past m_tov_sb stays free
 for §2.6's sink (the form M0-T130 builds, ruled final on its lives). A held cell is released when ε_th > 2η_hold · ε_cold,
-Σ < ½σ_hold or X_Fe > 0 [M0-D71f] with X_n < 0.5, or its object reaches m_tov_sb [M0-R13] (its r ≤ 24 mass, [M0-T130]). A newly held cell's
+Σ < ½σ_hold or ~~X_Fe > 0~~ [M0-D170] X_Fe ≥ 10⁻³ [M0-D71f] with X_n < 0.5, or its object reaches m_tov_sb [M0-R13] (its r ≤ 24 mass, [M0-T130]). A newly held cell's
 momentum is set to 0 — the test reads it before — its kinetic energy left in E, where it becomes heat, and that
 momentum is booked `held` (§2.9). Before step 0 the mask is the rule's on the initial state, held where the test
 passes, its zeroed momenta booked; a dump's mask is read back (§2.12.3); Clear world empties it, and P0's other edits

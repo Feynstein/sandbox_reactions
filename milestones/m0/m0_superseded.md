@@ -446,3 +446,22 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   RTX 4090: the Massive reaches X_Fe,c 0.61 with 7,168 sb against 3,252, the Giant keeps 41,836 through its he_core against an
   eruption to 18,098, the Sun-like's collapse and main sequence to t 60 unchanged; the lead at M0-D166, 2026-11-10: «Push ÷16 +
   burn_k 40 (Recommended)»).
+- Contract §2.7's hold test «it holds no iron, X_Fe = 0» and its release «X_Fe > 0 with X_n < 0.5» ([M0-D71f], as [M0-R13] and
+  [M0-T130] kept them) — superseded by contract §0.5 [M0-D170]: held at X_Fe < 10⁻³ (a trace read as none), released once X_Fe ≥ 10⁻³
+  with X_n < 0.5 (measured by M0-D170 on the RTX 4090: a trace of 2.35 × 10⁻⁹ kept the hold off m_up_sb's remnant, the floor pumping
+  1,141 per step into its light; with the trace the floor falls to 3.2, the Massive from s_14000 ends neutron_star at t 372 instead of
+  sitting pumped cold, the Giant unchanged; the lead at M0-D170, 2026-11-12: «Trace: X_Fe < 1e-3 (Recommended)»).
+- Contract §2.3.4 [M0-TG2]'s held wall as a reflecting wall alone — the free cell keeping whatever momentum into the wall its
+  update left it — superseded by contract §0.5 [M0-D172]: the wall is sticky, a free cell's momentum into a held face-neighbour set
+  to 0 after P4's update, E as it is, booked `held` (measured by M0-D172 on the RTX 4090 and the twin: the standing infall round
+  m_up_sb's held remnant fed P8's floor 1.26 per step, 13.5 % of its light; sticky, ~10⁻⁸ of it, the Massive's ending kept; the lead
+  at M0-D172, 2026-11-12: «Sticky held wall (Recommended)»).
+- Contract §0.5 [M0-D151]'s grade of the ledger's M 900 disk, «its `held` over 1,000 steps graded at or under the invariant's drift
+  without `held`» — superseded by contract §0.5 [M0-D174]: the momentum invariant with `held` graded, its drift over 1,000 steps at
+  most 10⁻³ of Σm|u| (measured by M0-D174 on the RTX 4090: under the sticky wall `held` swings in sign every ~50 steps, the old grade
+  a coin flip, red at 1.13 × 10⁻² over 1.08 × 10⁻²; the invariant with `held` 6.3 × 10⁻⁴, a held core on P2's whole g 2.6 × 10⁻³;
+  the lead at M0-D174, 2026-11-12: «Band 1e-3 (Recommended)»).
+- Contract §2.5.1's K_burn 40 ([M0-D166], the Giant's helium event survived as pulses) — superseded by contract §0.5 [M0-D167]: K_burn
+  15 (measured by M0-D167 on the RTX 4090: at 40 and 30 the Massive's hydrogen shell cannot burn its infall, the whole star collapses
+  inside r ≤ 4 and no supernova follows; at 15–20 the Massive ends supernova then neutron_star and the Giant keeps its mass and ends a
+  black hole; the lead at M0-D167, 2026-11-12: «burn_k 15 (Recommended)»).

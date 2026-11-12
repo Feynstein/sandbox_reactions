@@ -1,0 +1,3 @@
+# M0-D170 | launch headless-boot | 2026-11-12T09:10:12-0500
+$ build/target/release/sandbox-reactions headless --scene preset:sun --steps 200 --out /tmp/pb-launch-headless-boot-ev_t61z8
+SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is f585b4e2c1a10829a98617310981a7f464bf790bc5375ba1f0cb9d60f70c3deb (change a constant, calibrate again: sandbox-reactions calibrate)

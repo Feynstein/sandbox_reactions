@@ -23,7 +23,8 @@
 //!
 //! The hold (§2.3.4 [M0-TG2]; M0-D71c): the three dispatches read the mask the last P8 wrote (`State::held`) as a
 //! sampled texture, outside the storage limit; `hydro_commit` books what a held cell was spared into the booking's `held`
-//! buffer (`booking.held`), P4's second.
+//! buffer (`booking.held`), P4's second, and stops a free cell's momentum into a held face-neighbour, booked there too
+//! (the sticky wall, §2.3.4 [M0-D172]).
 
 use sr_physics::registry::Physics;
 
@@ -201,6 +202,8 @@ fn dispatches(
             entry(16, booking.group(held_book)),
         ],
     });
+    // The sticky wall reads Σ_vac (§2.3.4 [M0-D172]): the parameters alone, no cold table.
+    let commit_eos = eos.params_bind_group(device, &commit);
     let tiles = || Size::Indirect(boxfit.args().clone(), ARGS_TILES);
     vec![
         Dispatch { label: "hydro_update", pipeline: update, bind_groups: vec![update_group, eos_group], size: tiles() },
@@ -210,7 +213,7 @@ fn dispatches(
             bind_groups: vec![edges_group, edges_eos],
             size: Size::Fixed([faces.div_ceil(EDGE_GROUP), 1, 1]),
         },
-        Dispatch { label: "hydro_commit", pipeline: commit, bind_groups: vec![commit_group], size: tiles() },
+        Dispatch { label: "hydro_commit", pipeline: commit, bind_groups: vec![commit_group, commit_eos], size: tiles() },
     ]
 }
 

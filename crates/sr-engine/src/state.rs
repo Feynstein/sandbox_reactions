@@ -572,7 +572,8 @@ pub const TERMS: [Term; 42] = [
     // P8's hold (§2.7 [M0-TG2]): the momentum a newly held cell had when it was zeroed (`momentum.held`, §2.9).
     term("held.mom_x", Pass::Floors),
     term("held.mom_y", Pass::Floors),
-    // P4's held cells (§2.3.4 [M0-TG2]): the momentum a held cell is spared — its flux differences and Σg·Δt — booked by
+    // P4's held cells (§2.3.4 [M0-TG2]): the momentum a held cell is spared — its flux differences and Σg·Δt — and, in a
+    // free cell's slot, its momentum into a held face-neighbour the sticky wall stopped ([M0-D172]), booked by
     // `hydro_commit` (`momentum.held`, §2.9).
     term("held.spared.mom_x", Pass::Hydro),
     term("held.spared.mom_y", Pass::Hydro),

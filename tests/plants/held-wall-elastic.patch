@@ -1,0 +1,12 @@
+--- a/crates/sr-physics/src/reference/hydro.rs
++++ b/crates/sr-physics/src/reference/hydro.rs
+@@ -876,7 +876,8 @@
+                 }
+                 // [M0-D172] The sticky wall (module doc): a free gas cell's momentum into a held face-neighbour stops here,
+                 // E as it is, and is booked `held`; a cell left under Σ_vac is P8's to reset, its momentum booked nowhere.
+-                if !held_here && !held.is_empty() && u[0] >= self.sigma_vac {
++                // planted: the held wall elastic again — a free cell's momentum into it kept
++                if false && !held_here && !held.is_empty() && u[0] >= self.sigma_vac {
+                     let into = [
+                         (x > 0 && is_held(i - 1) && u[1] < 0.0) || (x + 1 < w && is_held(i + 1) && u[1] > 0.0),
+                         (y > 0 && is_held(i - w) && u[2] < 0.0) || (y + 1 < h && is_held(i + w) && u[2] > 0.0),

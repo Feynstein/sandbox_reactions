@@ -25,7 +25,7 @@
   "sigma_n": 160,
   "burn_dx": 0.1,
   "burn_dt": 0.05,
-  "burn_k": 40,
+  "burn_k": 15,
   "sigma_floor": 1e-8,
   "sigma_vac": 1e-6,
   "t_floor": 0.05,

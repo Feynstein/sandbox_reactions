@@ -845,7 +845,8 @@ mod tests {
     /// §2.7's initial values as amended by §0.5 [M0-D50]: the ladder × 0.56, a_r 4 × 10⁻⁵ and T_ν 93; a_n_fe 100 by §0.5
     /// [M0-D79]; c_sb 800 and a_r 1 × 10⁻⁵ (a_r c_sb held: 400 and 2 × 10⁻⁵ by §0.5 [M0-D94]) by §0.5 [M0-D163]; the hold's σ_hold 10, η_hold 0.1 and r_hold
     /// 24 by §2.7 [M0-D71g]; T_He 100 by §0.5 [M0-D163]; the burn clock's K_burn 10 by §2.5.2 [M0-D165]; the late ladder T_Ne 118,
-    /// T_O 122, T_Si 135 by §0.5 [M0-D169]; a_r 6.25 × 10⁻⁷, c_sb 12,800 (a_r c_sb held) and K_burn 40 by §0.5 [M0-D166].
+    /// T_O 122, T_Si 135 by §0.5 [M0-D169]; a_r 6.25 × 10⁻⁷, c_sb 12,800 (a_r c_sb held) and K_burn 40 by §0.5 [M0-D166]; K_burn 15 by
+    /// §0.5 [M0-D167].
     #[test]
     fn physics_initial_values_verbatim() {
         let expected: [(&str, f64); 56] = [
@@ -854,7 +855,7 @@ mod tests {
             ("a_ne_burn", 1e-3), ("a_o_burn", 1e-3), ("a_mg_burn", 1e-3), ("a_si_burn", 1e-3), ("a_s_burn", 1e-3),
             ("a_n_fe", 100.0), ("nu_c_burn", 30.0), ("nu_ne_burn", 30.0), ("nu_o_burn", 30.0), ("nu_mg_burn", 30.0),
             ("nu_si_burn", 30.0), ("nu_s_burn", 30.0), ("sigma_n", 160.0), ("burn_dx", 0.1), ("burn_dt", 0.05),
-            ("burn_k", 40.0), ("sigma_floor", 1e-8), ("sigma_vac", 1e-6), ("t_floor", 0.05), ("sigma_obj", 1e-3), ("paint_sigma", 0.02),
+            ("burn_k", 15.0), ("sigma_floor", 1e-8), ("sigma_vac", 1e-6), ("t_floor", 0.05), ("sigma_obj", 1e-3), ("paint_sigma", 0.02),
             ("paint_t", 2.0), ("heat_factor", 1.05), ("cool_factor", 0.95), ("k1e", 21.3), ("k2e", 134.0),
             ("k1n", 2.67), ("k2n", 58.2), ("a_r", 6.25e-7), ("c_sb", 12800.0), ("kappa0", 1.0), ("k_cond", 0.0),
             ("a_nu", 1e-3), ("t_nu", 93.0), ("m_nu", 8.0), ("f_dep", 0.05), ("sigma_bh", 6000.0), ("cfl", 0.4),

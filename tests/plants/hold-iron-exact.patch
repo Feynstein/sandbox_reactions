@@ -1,0 +1,22 @@
+--- a/crates/sr-physics/src/reference/floors.rs
++++ b/crates/sr-physics/src/reference/floors.rs
+@@ -209,7 +209,7 @@
+         let comp = self.elements.composition(&x);
+         let cold = self.eos.eps_cold(sigma, comp.y_e, x[ID_N]);
+         let eps_th = energy / sigma - 0.5 * (mom[0] * mom[0] + mom[1] * mom[1]) / (sigma * sigma) - cold;
+-        let kind = x[ID_FE] < IRON_TRACE || x[ID_N] >= NEUTRON_RICH;
++        let kind = x[ID_FE] == 0.0 || x[ID_N] >= NEUTRON_RICH; // planted: X_Fe = 0 exactly, a trace keeps the hold off
+         let rest = if was_held {
+             !(eps_th > 2.0 * self.eta_hold * cold || sigma < 0.5 * self.sigma_hold || !kind)
+         } else {
+--- a/crates/sr-engine/shaders/floors.wgsl
++++ b/crates/sr-engine/shaders/floors.wgsl
+@@ -200,7 +200,7 @@
+     let mom = vec2<f32>(hydro[n + cell], hydro[2u * n + cell]);
+     let cold = eps_cold(sigma, comp.y_e, x[ID_N]);
+     let eps_th = hydro[3u * n + cell] / sigma - 0.5 * dot(mom / sigma, mom / sigma) - cold;
+-    let kind = x[ID_FE] < IRON_TRACE || x[ID_N] >= NEUTRON_RICH;
++    let kind = x[ID_FE] == 0.0 || x[ID_N] >= NEUTRON_RICH; // planted: X_Fe = 0 exactly
+     let was = textureLoad(held, xy).x != 0u;
+     var now: bool;
+     if (was) {

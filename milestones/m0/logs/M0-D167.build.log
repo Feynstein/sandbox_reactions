@@ -1,0 +1,10 @@
+== 2026-11-12T12:38:31-05:00 build[native] · task M0-D167 · box laserax-ai-server :: bash tests/cargo.sh build {case}
+== 2026-11-12T12:38:31-05:00 build[wasm] · task M0-D167 · box laserax-ai-server :: bash tests/cargo.sh build {case}
+-- build[wasm] · exit=0 · 0.87 s
+build wasm: 1.99.0 in 1 s, target /home/ybelanger/workspace/sandbox_reactions/build/target (1.7G)
+=== GO ===
+
+-- build[native] · exit=0 · 6.83 s
+build native: 1.99.0 in 7 s, target /home/ybelanger/workspace/sandbox_reactions/build/target (1.7G)
+=== GO ===
+

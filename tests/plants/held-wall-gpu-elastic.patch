@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/shaders/hydro.wgsl
++++ b/crates/sr-engine/shaders/hydro.wgsl
+@@ -1101,7 +1101,8 @@
+     // is, booked into `held` — its own slots, which no other invocation writes; a cell left under Σ_vac is P8's to reset.
+     var mom = vec2<f32>(get_next(1u, cell), get_next(2u, cell));
+     var stopped = vec2<f32>(0.0, 0.0);
+-    let gas = get_next(0u, cell) >= eos.sigma_vac;
++    // planted: the held wall elastic again on the GPU — a free cell's momentum into it kept
++    let gas = false && get_next(0u, cell) >= eos.sigma_vac;
+     if (gas && ((held_at(x - 1, y) && mom.x < 0.0) || (held_at(x + 1, y) && mom.x > 0.0))) {
+         stopped.x = mom.x;
+         mom.x = 0.0;

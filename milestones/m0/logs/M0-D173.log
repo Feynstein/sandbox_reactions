@@ -1,0 +1,5 @@
+# M0-D173 — 2026-11-12T10:26:12-05:00 on laserax-ai
+start: plan.py show baseline 2026-11-12T10:23:39-05:00; rung: model=claude-opus-5-5 level=xhigh (heading Opus 5.5, high — MISMATCH)
+sync: appended the server's 1 unreturned loop_times line (M0-D172's claim, 10:03:23) to local before the first rsync up (R18)
+repro [laserax-ai-server, RTX 4090]: verify.py ledger on the tree at start → 7/1 NO-GO, ledger.rs:466 left -0.01937270164489746 right -0.019372701644897433 (logs/M0-D173.ledger.before.log); the same run prints held 1.134e-2 of Σm|u| over the drift without 1.082e-2 — the next assertion (taken <= without) masked
+close: 2026-11-12T10:36:56-05:00 — DONE; claim NO-GO 805/904 (plan_lint's Flow-row pipe, fixed + re-run GO; 38 stale calibration; 1 ledger → M0-D174)

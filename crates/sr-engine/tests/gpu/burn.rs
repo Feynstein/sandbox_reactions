@@ -381,15 +381,15 @@ mod cell {
     }
 
     /// §2.5.2 [M0-D165]'s burn clock on the twin, every record enabled. The law: over Δt 10⁻⁴ (T moves ~2 × 10⁻⁴) the Giant's
-    /// centre books q_max Δt Σ within 10⁻³ at the shipped K_burn 40 ([M0-D166]; 10 by [M0-D165]), where the clock off books
-    /// ~36 × that. Its step: over
+    /// centre books q_max Δt Σ within 10⁻³ at the shipped K_burn 15 ([M0-D167]; 10 by [M0-D165], 40 by [M0-D166]), where the clock
+    /// off books ~13 × that. Its step: over
     /// the measured Δt 0.00907 the clock off climbs H → Fe in the pass (X_Fe > 0.99, M0-D165 § (1)); on, the centre stays
-    /// hydrogen (X_H > 0.7, X_Fe < 10⁻⁶). A cell under q_max — the Sun-like centre, q̇ ~ 3 against q_max ~ 15 at K_burn 40 —
+    /// hydrogen (X_H > 0.7, X_Fe < 10⁻⁶). A cell under q_max — the Sun-like centre, q̇ ~ 3 against q_max ~ 40 at K_burn 15 —
     /// passes bit for bit as with the clock off.
     #[test]
     fn burn_clock_caps_the_heating() {
         let on = physics(&[]);
-        assert_eq!(on.get("burn_k"), Some(40.0));
+        assert_eq!(on.get("burn_k"), Some(15.0));
         let off = physics(&[("burn_k", 0.0)]);
         let clocked = react(&on, &Reactions::shipped(&elements(), &on).unwrap(), false);
         let free = react(&off, &Reactions::shipped(&elements(), &off).unwrap(), false);
@@ -398,7 +398,7 @@ mod cell {
         let dt = 1e-4;
         let (pa, pb) = (clocked.step(&mut a, dt), free.step(&mut b, dt));
         let (got, unclocked) = (pa.nuclear.iter().sum::<f64>() / sigma, pb.nuclear.iter().sum::<f64>() / sigma);
-        let want = q_max(t0, &x, 40.0) * dt;
+        let want = q_max(t0, &x, 15.0) * dt;
         println!("burn clock, Δt {dt}: heat {got:.6e} against q_max Δt {want:.6e} (rel {:.2e}); clock off {unclocked:.6e} ({:.2} ×)", (got - want).abs() / want, unclocked / got);
         assert!((got - want).abs() <= 1e-3 * want, "heat {got}, q_max Δt {want}");
         assert!(unclocked > 5.0 * got, "the clock did not bind: off {unclocked}, on {got}");

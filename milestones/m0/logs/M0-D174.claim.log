@@ -1,0 +1,416 @@
+why plan_lint: never: milestones/m0/m0_implementation_plan.md (+1)
+why build: stale: crates/sr-engine/tests/gpu/ledger.rs
+why burn_cell: stale: crates/sr-engine/tests/gpu/ledger.rs
+why burn_order: stale: crates/sr-engine/tests/gpu/ledger.rs
+why neutrino: stale: crates/sr-engine/tests/gpu/ledger.rs
+why sink: stale: crates/sr-engine/tests/gpu/ledger.rs
+why nu_heat: stale: crates/sr-engine/tests/gpu/ledger.rs
+why summary: stale: crates/sr-engine/tests/gpu/ledger.rs
+why preset_cloud: stale: crates/sr-engine/tests/gpu/ledger.rs
+why observe_run: stale: crates/sr-engine/tests/gpu/ledger.rs
+why stage_order: never: .cargo/config.toml (+154)
+why multi: never: .cargo/config.toml (+151)
+why edits: stale: crates/sr-engine/tests/gpu/ledger.rs
+why edits_file: stale: crates/sr-engine/tests/gpu/ledger.rs
+why sod: stale: crates/sr-engine/tests/gpu/ledger.rs
+why edges: stale: crates/sr-engine/tests/gpu/ledger.rs
+why collapse: stale: crates/sr-engine/tests/gpu/ledger.rs
+why jeans: stale: crates/sr-engine/tests/gpu/ledger.rs
+why sun_burn: never: assets/elements.json (+6)
+why twin: never: .cargo/config.toml (+119)
+why cpu_gpu: stale: crates/sr-engine/tests/gpu/ledger.rs
+why heat_gauss: stale: crates/sr-engine/tests/gpu/ledger.rs
+why heat_implicit: stale: crates/sr-engine/tests/gpu/ledger.rs
+why heat_limiter: stale: crates/sr-engine/tests/gpu/ledger.rs
+why heat_stiff: never: .cargo/config.toml (+134)
+why heat_multigrid: stale: crates/sr-engine/tests/gpu/ledger.rs
+why radiation_force: stale: crates/sr-engine/tests/gpu/ledger.rs
+why grav_force: stale: crates/sr-engine/tests/gpu/ledger.rs
+why grav_selfforce: stale: crates/sr-engine/tests/gpu/ledger.rs
+why fft: stale: crates/sr-engine/tests/gpu/ledger.rs
+why strings: stale: milestones/m0/m0_contrat.md
+why adapter: stale: crates/sr-engine/tests/gpu/ledger.rs
+why state: stale: crates/sr-engine/tests/gpu/ledger.rs
+why booking: stale: crates/sr-engine/tests/gpu/ledger.rs
+why floors: stale: crates/sr-engine/tests/gpu/ledger.rs
+why dt: stale: crates/sr-engine/tests/gpu/ledger.rs
+why box: stale: crates/sr-engine/tests/gpu/ledger.rs
+why latch: stale: crates/sr-engine/tests/gpu/ledger.rs
+why timing: never: .cargo/config.toml (+118)
+why scene: never: .cargo/config.toml (+150)
+why dump: never: .cargo/config.toml (+156)
+why boot: never: .cargo/config.toml (+141)
+why watch_only: stale: milestones/m0/m0_contrat.md
+why calibration: never: .cargo/config.toml (+153)
+why calibrate_cold: stale: crates/sr-engine/tests/gpu/ledger.rs
+why cold_core: stale: crates/sr-engine/tests/gpu/ledger.rs
+why held_core: never: .cargo/config.toml (+131)
+why calibrate_bisect: stale: crates/sr-engine/tests/gpu/ledger.rs
+why calibrate_order: stale: crates/sr-engine/tests/gpu/ledger.rs
+why readouts: stale: crates/sr-engine/tests/gpu/ledger.rs
+why views: stale: crates/sr-engine/tests/gpu/ledger.rs
+why extents: stale: crates/sr-engine/tests/gpu/ledger.rs
+why glow: stale: crates/sr-engine/tests/gpu/ledger.rs
+why frames: never: .cargo/config.toml (+118)
+why ui_banner: never: .cargo/config.toml (+133)
+why ui_tools: stale: crates/sr-engine/tests/gpu/ledger.rs
+why ui_presets: never: .cargo/config.toml (+132)
+why ui_display: stale: crates/sr-engine/tests/gpu/ledger.rs
+why ui_star: never: .cargo/config.toml (+131)
+why ui_legend: stale: crates/sr-engine/tests/gpu/ledger.rs
+why ui_zoom: stale: crates/sr-engine/tests/gpu/ledger.rs
+why ui_remnant: stale: crates/sr-engine/tests/gpu/ledger.rs
+why ui_inspect: never: .cargo/config.toml (+131)
+plan_lint         864/0/0      0.11 s  GO · step 1/63, 62 left
+toolchain         owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+build             2/0/0        1.13 s  GO · step 2/63, 61 left
+burn_cell         20/0/0       9.68 s  GO · step 3/63, 60 left
+burn_order        4/0/0        3.02 s  GO · step 4/63, 59 left
+neutrino          18/0/0       8.78 s  GO · step 5/63, 58 left
+sink              34/0/0      30.06 s  GO · step 6/63, 57 left
+nu_heat           15/0/0      14.83 s  GO · step 7/63, 56 left
+summary           7/0/0        9.18 s  GO · step 8/63, 55 left
+preset_cloud      5/0/0       50.98 s  GO · step 9/63, 54 left
+observe_run       14/0/0      56.44 s  GO · step 10/63, 53 left
+stage_order       0/2/0        0.11 s  NO-GO · step 11/63, 52 left
+multi             3/2/0        2.12 s  NO-GO · step 12/63, 51 left
+edits             17/0/0      18.34 s  GO · step 13/63, 50 left
+edits_file        6/0/0       10.68 s  GO · step 14/63, 49 left
+sod               17/0/0      10.68 s  GO · step 15/63, 48 left
+edges             7/0/0       11.58 s  GO · step 16/63, 47 left
+collapse          6/0/0        2.37 s  GO · step 17/63, 46 left
+jeans             6/0/0        1.57 s  GO · step 18/63, 45 left
+sun_burn          1/3/0        0.16 s  NO-GO · step 19/63, 44 left
+twin              4/2/0        1.67 s  NO-GO · step 20/63, 43 left
+cpu_gpu           3/0/0        7.88 s  GO · step 21/63, 42 left
+heat_gauss        14/0/0       7.47 s  GO · step 22/63, 41 left
+heat_implicit     8/0/0        4.32 s  GO · step 23/63, 40 left
+heat_limiter      8/0/0        7.52 s  GO · step 24/63, 39 left
+heat_stiff        15/1/0      10.18 s  NO-GO · step 25/63, 38 left
+heat_multigrid    4/0/0        4.02 s  GO · step 26/63, 37 left
+radiation_force   11/0/0      11.28 s  GO · step 27/63, 36 left
+grav_force        13/0/0       6.27 s  GO · step 28/63, 35 left
+grav_selfforce    7/0/0        3.32 s  GO · step 29/63, 34 left
+fft               8/0/0        5.87 s  GO · step 30/63, 33 left
+strings           3/0/0        0.11 s  GO · step 31/63, 32 left
+adapter           10/0/0       3.12 s  GO · step 32/63, 31 left
+state             12/0/0       7.48 s  GO · step 33/63, 30 left
+booking           4/0/0        3.52 s  GO · step 34/63, 29 left
+floors            12/0/0       8.88 s  GO · step 35/63, 28 left
+dt                8/0/0        7.77 s  GO · step 36/63, 27 left
+box               8/0/0        9.63 s  GO · step 37/63, 26 left
+latch             5/0/0        3.82 s  GO · step 38/63, 25 left
+timing            4/1/0        8.53 s  NO-GO · step 39/63, 24 left
+scene             7/1/0        1.22 s  NO-GO · step 40/63, 23 left
+dump              12/2/0      33.42 s  NO-GO · step 41/63, 22 left
+boot              0/1/0        0.16 s  NO-GO · step 42/63, 21 left
+desktop           owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+web               owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+capture           owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+measure_ui        owed on laserax-ai or Laser2025-20 (this box: laserax-ai-server) - not run here, never NO-GO
+watch_only        1/0/0        0.11 s  GO · step 43/63, 20 left
+calibration       12/1/0       0.46 s  NO-GO · step 44/63, 19 left
+calibrate_cold    8/0/0        1.47 s  GO · step 45/63, 18 left
+cold_core         8/0/0        8.83 s  GO · step 46/63, 17 left
+held_core         26/1/0     114.03 s  NO-GO · step 47/63, 16 left
+calibrate_bisect  19/0/0      51.10 s  GO · step 48/63, 15 left
+calibrate_order   13/0/0       0.16 s  GO · step 49/63, 14 left
+readouts          9/0/0        0.11 s  GO · step 50/63, 13 left
+views             16/0/0      43.76 s  GO · step 51/63, 12 left
+extents           7/0/0        8.88 s  GO · step 52/63, 11 left
+glow              7/0/0        3.57 s  GO · step 53/63, 10 left
+frames            1/5/0        0.11 s  NO-GO · step 54/63, 9 left
+ui_banner         15/3/0       0.11 s  NO-GO · step 55/63, 8 left
+ui_tools          18/0/0       0.11 s  GO · step 56/63, 7 left
+ui_presets        6/1/0        0.11 s  NO-GO · step 57/63, 6 left
+ui_display        11/0/0       0.16 s  GO · step 58/63, 5 left
+ui_star           6/7/0        0.11 s  NO-GO · step 59/63, 4 left
+ui_legend         21/0/0       0.26 s  GO · step 60/63, 3 left
+ui_zoom           11/0/0       0.11 s  GO · step 61/63, 2 left
+ui_remnant        6/0/0        0.16 s  GO · step 62/63, 1 left
+ui_inspect        4/5/0        0.11 s  NO-GO · step 63/63, 0 left
+tools_selftest    NOT RUN (not impacted: its 15 path(s) checked at the anchor)
+registry          NOT RUN (not impacted: its 38 path(s) checked at the anchor)
+eos               NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+rates             NOT RUN (not impacted: its 37 path(s) checked at the anchor)
+ledger            NOT RUN (not impacted: its 124 path(s) checked at the anchor)
+objects           NOT RUN (not impacted: its 45 path(s) checked at the anchor)
+classify          NOT RUN (not impacted: its 51 path(s) checked at the anchor)
+ending            NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+age_clock         NOT RUN (not impacted: its 35 path(s) checked at the anchor)
+fft_twin          NOT RUN (not impacted: its 21 path(s) checked at the anchor)
+riemann           NOT RUN (not impacted: its 20 path(s) checked at the anchor)
+sheet             NOT RUN (not impacted: its 24 path(s) checked at the anchor)
+time_control      NOT RUN (not impacted: its 12 path(s) checked at the anchor)
+formats           NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+blackbody         NOT RUN (not impacted: its 10 path(s) checked at the anchor)
+licences          NOT RUN (not impacted: its 9 path(s) checked at the anchor)
+calibrate_status  NOT RUN (not impacted: its 6 path(s) checked at the anchor)
+ui_topbar         NOT RUN (not impacted: its 50 path(s) checked at the anchor)
+ui_theme          NOT RUN (not impacted: its 23 path(s) checked at the anchor)
+ui_world          NOT RUN (not impacted: its 47 path(s) checked at the anchor)
+ledger · red-arm proven by M0-D174 2026-11-12T10:58:46-05:00 (fingerprint 429daee03d27) - not re-run
+FLAG oracle: crates/sr-engine/tests/gpu/ledger.rs changed since M0-D174's start - a test, case or check M0-D174's Deliver: does not name
+FLAG oracle: tests/plants/held-wall-gpu-unbooked.patch changed since M0-D174's start - a test, case or check M0-D174's Deliver: does not name
+FLAG oracle: tools/pb/verify.json changed since M0-D174's start - a test, case or check M0-D174's Deliver: does not name
+FLAG oracle: scope `ledger` changed in tools/pb/verify.json - M0-D174's Deliver: names neither it nor the manifest
+logs: milestones/m0/logs/M0-D174.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+e3586310e433
+anchor: 48 path×scope entries moved by this run
+anchor: 183 paths checked · 428 skipped (3 classes) · 226 never checked · 0 stale · 8 unclassified · 42 owed · 451 covered of 887 visible
+NEVER CHECKED  .cargo/config.toml  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  Cargo.lock  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  Cargo.toml  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  assets/calibration.json  (no entry for stage_order, multi, desktop, web, capture, measure_ui, calibration, held_core, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  assets/elements.json  (no entry for stage_order, multi, sun_burn, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_presets)
+NEVER CHECKED  assets/physics.json  (no entry for stage_order, multi, sun_burn, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  assets/reactions.json  (no entry for stage_order, multi, sun_burn, desktop, web, capture, measure_ui, calibration, held_core)
+NEVER CHECKED  crates/sr-app/Cargo.toml  (no entry for boot, desktop, web, capture, measure_ui)
+NEVER CHECKED  crates/sr-app/src/capture.rs  (no entry for boot, desktop, web, capture, measure_ui)
+NEVER CHECKED  crates/sr-app/src/desktop.rs  (no entry for boot, desktop, web, capture, measure_ui, ui_banner)
+NEVER CHECKED  crates/sr-app/src/format.rs  (no entry for boot, desktop, web, capture, measure_ui, ui_banner, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-app/src/main.rs  (no entry for boot, desktop, web, capture, measure_ui, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-app/src/measure.rs  (no entry for boot, desktop, web, capture, measure_ui)
+NEVER CHECKED  crates/sr-app/src/status.rs  (no entry for boot, desktop, web, capture, measure_ui)
+NEVER CHECKED  crates/sr-app/src/strings.rs  (no entry for boot, desktop, web, capture, measure_ui, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-app/src/ui/banner.rs  (no entry for boot, desktop, web, capture, measure_ui, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-app/src/ui/display.rs  (no entry for boot, desktop, web, capture, measure_ui, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-app/src/ui/left.rs  (no entry for boot, desktop, web, capture, measure_ui, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-app/src/ui/legend.rs  (no entry for boot, desktop, web, capture, measure_ui, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-app/src/ui/mod.rs  (no entry for boot, desktop, web, capture, measure_ui, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-app/src/ui/remnant.rs  (no entry for boot, desktop, web, capture, measure_ui, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-app/src/ui/right.rs  (no entry for boot, desktop, web, capture, measure_ui, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-app/src/ui/theme.rs  (no entry for boot, desktop, web, capture, measure_ui, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-app/src/ui/topbar.rs  (no entry for boot, desktop, web, capture, measure_ui, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-app/src/ui/zoom.rs  (no entry for boot, desktop, web, capture, measure_ui, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-app/src/web.rs  (no entry for boot, desktop, web, capture, measure_ui)
+NEVER CHECKED  crates/sr-app/tests/strings.rs  (no entry for boot, desktop, web, capture, measure_ui)
+NEVER CHECKED  crates/sr-engine/Cargo.toml  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/shaders/edit.wgsl  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/shaders/eos.wgsl  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/shaders/fft.wgsl  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/shaders/floors.wgsl  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/shaders/glow.wgsl  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/shaders/grav.wgsl  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/shaders/heat.wgsl  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/shaders/hydro.wgsl  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/shaders/latch.wgsl  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/shaders/nuheat.wgsl  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/shaders/react.wgsl  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/shaders/reduce.wgsl  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/shaders/render.wgsl  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/shaders/sinks.wgsl  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/shaders/summary.wgsl  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/calibrate.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/dump.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/gpu.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/headless.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/ledger.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/lib.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/render.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/scene.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/state.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/step/boxfit.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/step/dt.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/step/edit.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/step/fft.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/step/grav.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/step/heat.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/step/hydro.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/step/latch.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/step/mod.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/step/nuheat.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/step/react.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/step/sinks.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/summary.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/src/watch.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/booking.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/box.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/burn.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_bisect.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_cold.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibrate_order.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/calibration.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cold_core.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/collapse.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/cpu_gpu.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dt.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/dump.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edges.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edit.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/edits_file.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/extents.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/fft.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/floors.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/frames.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/glow.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/grav.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/heat.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/held_core.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/jeans.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/latch.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/ledger.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/main.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/multi.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/neutrino.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/nuheat.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/observe.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/preset.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/radforce.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/readouts.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/scene.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sink.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sod.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/stage_order.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/state.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/summary.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/sunburn.rs  (no entry for stage_order, multi, sun_burn, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/timing.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/twin.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-engine/tests/gpu/views.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/Cargo.toml  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/build.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/calibration.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/calibration_embed.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/eos.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/lib.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/observe/age.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/observe/ending.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/observe/mod.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/observe/stages.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/observe/tracker.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/observe/translate.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/rates.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/reference/fft.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/reference/floors.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/reference/grav.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/reference/heat.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/reference/hydro.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/reference/mod.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/reference/nuheat.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/reference/react.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/reference/riemann.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/reference/sheet.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/reference/sinks.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/registry.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/time.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  crates/sr-physics/src/units.rs  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  rust-toolchain.toml  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  scenes/asym_blob.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/box_blob.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/cold_co_disk.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/cold_disk.json  (no entry for stage_order, multi, twin, scene, dump, calibration)
+NEVER CHECKED  scenes/edge_pulse.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/edits_triggers.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/fill_world.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/heat_ceiling.bin  (no entry for stage_order, multi, heat_stiff, scene, dump, calibration)
+NEVER CHECKED  scenes/heat_hot.json  (no entry for stage_order, multi, heat_stiff, scene, dump, calibration)
+NEVER CHECKED  scenes/heat_overflow.bin  (no entry for stage_order, multi, heat_stiff, scene, dump, calibration)
+NEVER CHECKED  scenes/heat_pulse.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/heat_rim.json  (no entry for stage_order, multi, heat_stiff, scene, dump, calibration)
+NEVER CHECKED  scenes/heat_spot.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/jeans_ripple.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/massive_930.bin  (no entry for stage_order, multi, heat_stiff, scene, dump, calibration)
+NEVER CHECKED  scenes/ref_burn.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/ref_disk.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/ref_sod.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/remnant_window.bin  (no entry for stage_order, multi, scene, dump, calibration, held_core)
+NEVER CHECKED  scenes/sink_cloud.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/sod.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/sun_13593.bin  (no entry for stage_order, multi, heat_stiff, scene, dump, calibration)
+NEVER CHECKED  scenes/sun_13593.observers  (no entry for stage_order, multi, heat_stiff, scene, dump, calibration)
+NEVER CHECKED  scenes/sun_disk.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/thin_cell.bin  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/tune_fit_giant.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/tune_fit_massive.json  (no entry for stage_order, multi, heat_stiff, scene, dump, calibration)
+NEVER CHECKED  scenes/tune_fit_sun.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/tune_k1_massive.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/tune_k1_sun.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  scenes/two_suns.json  (no entry for stage_order, multi, scene, dump, calibration)
+NEVER CHECKED  tests/cargo.sh  (no entry for stage_order, multi, twin, heat_stiff, timing, scene, dump, boot, desktop, web, capture, measure_ui, calibration, held_core, frames, ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  tests/cpu.sh  (no entry for ui_banner, ui_presets, ui_star, ui_inspect)
+NEVER CHECKED  tests/gpu.sh  (no entry for stage_order, multi, sun_burn, twin, heat_stiff, timing, scene, dump, calibration, held_core, frames)
+NEVER CHECKED  tests/plants/banner-bar-before-poll.patch  (no entry for ui_banner)
+NEVER CHECKED  tests/plants/banner-clear-in-flight.patch  (no entry for ui_banner)
+NEVER CHECKED  tests/plants/banner-notice-tied-to-setting.patch  (no entry for ui_banner)
+NEVER CHECKED  tests/plants/banner-wrong-event.patch  (no entry for ui_banner)
+NEVER CHECKED  tests/plants/bound-u-squared.patch  (no entry for heat_stiff)
+NEVER CHECKED  tests/plants/burn-runaway.patch  (no entry for sun_burn)
+NEVER CHECKED  tests/plants/calibration-lossy-parse.patch  (no entry for calibration)
+NEVER CHECKED  tests/plants/carry-commit-early.patch  (no entry for heat_stiff)
+NEVER CHECKED  tests/plants/ceiling-64-passes.patch  (no entry for heat_stiff)
+NEVER CHECKED  tests/plants/ceiling-unlimited.patch  (no entry for heat_stiff)
+NEVER CHECKED  tests/plants/const-drift.patch  (no entry for calibration)
+NEVER CHECKED  tests/plants/dt-empty-box-unbounded.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/dump-channel-order.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/dump-flux-zero.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/dump-held-dropped.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/dump-sim-time-skip.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/dump-sinks-drop.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/failed-star-unsettled.patch  (no entry for stage_order)
+NEVER CHECKED  tests/plants/frames-off-by-one.patch  (no entry for frames)
+NEVER CHECKED  tests/plants/git-dirty-mark-dropped.patch  (no entry for boot)
+NEVER CHECKED  tests/plants/headless-no-sinks.patch  (no entry for dump)
+NEVER CHECKED  tests/plants/held-core-gpu-whole-g.patch  (no entry for held_core)
+NEVER CHECKED  tests/plants/held-core-own-pull.patch  (no entry for held_core)
+NEVER CHECKED  tests/plants/held-wall-elastic.patch  (no entry for held_core)
+NEVER CHECKED  tests/plants/held-wall-gpu-elastic.patch  (no entry for held_core)
+NEVER CHECKED  tests/plants/held-wall-gpu-pressure-only.patch  (no entry for held_core)
+NEVER CHECKED  tests/plants/held-wall-pressure-only.patch  (no entry for held_core)
+NEVER CHECKED  tests/plants/hold-constants-ignored.patch  (no entry for held_core)
+NEVER CHECKED  tests/plants/hold-iron-exact.patch  (no entry for held_core)
+NEVER CHECKED  tests/plants/hold-iron-gate.patch  (no entry for held_core)
+NEVER CHECKED  tests/plants/hold-iron-half.patch  (no entry for held_core)
+NEVER CHECKED  tests/plants/inspect-mix-four.patch  (no entry for ui_inspect)
+NEVER CHECKED  tests/plants/main-sequence-light-window.patch  (no entry for stage_order)
+NEVER CHECKED  tests/plants/neutron-hold-ungated.patch  (no entry for held_core)
+NEVER CHECKED  tests/plants/newton-one-pass.patch  (no entry for heat_stiff)
+NEVER CHECKED  tests/plants/one-object.patch  (no entry for multi)
+NEVER CHECKED  tests/plants/overflow-converged.patch  (no entry for heat_stiff)
+NEVER CHECKED  tests/plants/preset-no-disarm.patch  (no entry for ui_presets)
+NEVER CHECKED  tests/plants/preset-uth-half.patch  (no entry for ui_presets)
+NEVER CHECKED  tests/plants/ratio-unscaled.patch  (no entry for heat_stiff)
+NEVER CHECKED  tests/plants/remnant-unsettled.patch  (no entry for stage_order)
+NEVER CHECKED  tests/plants/render-reserve-required.patch  (no entry for calibration)
+NEVER CHECKED  tests/plants/scene-refuse.patch  (no entry for scene, boot)
+NEVER CHECKED  tests/plants/scene-unknown-key.patch  (no entry for scene, boot)
+NEVER CHECKED  tests/plants/shift-every-heat-free.patch  (no entry for heat_stiff)
+NEVER CHECKED  tests/plants/stage-steps-back.patch  (no entry for stage_order)
+NEVER CHECKED  tests/plants/stall-constants.patch  (no entry for sun_burn)
+NEVER CHECKED  tests/plants/star-rate-while-paused.patch  (no entry for ui_star)
+NEVER CHECKED  tests/plants/timing-skip-pass.patch  (no entry for timing)
+NEVER CHECKED  tests/plants/twin-skip-floors.patch  (no entry for twin)
+NEVER CHECKED  tests/plants/vcycle-carry-restart.patch  (no entry for heat_stiff)
+NEVER CHECKED  tests/plants/warm-rate-not-dumped.patch  (no entry for dump)
+NEVER CHECKED  tests/smoke.sh  (no entry for boot, desktop)
+NEVER CHECKED  tools/pb/launch.json  (no entry for boot, desktop, web)
+UNCLASSIFIED   g_h8he20_lad.out  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   m_ctl_bounce.out  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   m_h8he20_lad.out  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   m_h8he20_lad_bounce.out  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   s_ctl.out  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   s_h8he20_lad.out  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   screen3.done  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   screen3.status  (no scope's `paths` match it and no skip class names it - declare one)
+skipped   420  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  stage_order: 2 failed · log milestones/m0/logs/M0-D174.stage_order.log
+  multi: 2 failed · log milestones/m0/logs/M0-D174.multi.log
+  sun_burn: 3 failed · log milestones/m0/logs/M0-D174.sun_burn.log
+  twin: 2 failed · log milestones/m0/logs/M0-D174.twin.log
+  heat_stiff: 1 failed · log milestones/m0/logs/M0-D174.heat_stiff.log
+  timing: 1 failed · log milestones/m0/logs/M0-D174.timing.log
+  scene: 1 failed · log milestones/m0/logs/M0-D174.scene.log
+  dump: 2 failed · log milestones/m0/logs/M0-D174.dump.log
+  boot: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO · log milestones/m0/logs/M0-D174.boot.log
+  calibration: 1 failed · log milestones/m0/logs/M0-D174.calibration.log
+  held_core: 1 failed · log milestones/m0/logs/M0-D174.held_core.log
+  frames: 5 failed · log milestones/m0/logs/M0-D174.frames.log
+  ui_banner: 3 failed · log milestones/m0/logs/M0-D174.ui_banner.log
+  ui_presets: 1 failed · log milestones/m0/logs/M0-D174.ui_presets.log
+  ui_star: 7 failed · log milestones/m0/logs/M0-D174.ui_star.log
+  ui_inspect: 5 failed · log milestones/m0/logs/M0-D174.ui_inspect.log
+  anchor: 226 never checked, 0 stale, 8 unclassified - every one named above
+verify: 1451 passed, 38 failed, 0 skipped · 47/63 scopes GO · 0 skipped · 5 owed · 0 NOT RUN · 20 not impacted · 156.63 s + loop 0.33 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 1.82->1.84 · base: M0-D174's start 2026-11-12T10:41:06-05:00
+=== NO-GO: stage_order: 2 failed · log milestones/m0/logs/M0-D174.stage_order.log; multi: 2 failed · log milestones/m0/logs/M0-D174.multi.log; sun_burn: 3 failed · log milestones/m0/logs/M0-D174.sun_burn.log; twin: 2 failed · log milestones/m0/logs/M0-D174.twin.log; heat_stiff: 1 failed · log milestones/m0/logs/M0-D174.heat_stiff.log; timing: 1 failed · log milestones/m0/logs/M0-D174.timing.log; sc... ===

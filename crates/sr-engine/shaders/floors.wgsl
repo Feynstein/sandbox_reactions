@@ -17,11 +17,11 @@
 //
 // The hold (§2.7 [M0-TG2]; M0-D71's twin, sr_physics::reference::floors `Floors::hold`), P8's last act, in the
 // renormalisation's invocation once it has written the fractions: a cell with Σ ≥ σ_hold whose ε_th — as the floor left
-// it — is at most η_hold · ε_cold of the renormalised fractions, which holds no iron (X_Fe = 0 exactly in f32, §2.7
-// [M0-D71f]) or is neutron-rich (X_n ≥ 0.5, [M0-R13]), and whose disk r ≤ r_hold holds less than m_tov_sb (§0.5 [M0-T130],
+// it — is at most η_hold · ε_cold of the renormalised fractions, which holds no iron past a trace (X_Fe < 10⁻³ in f32,
+// §2.7 [M0-D71f], [M0-D170]) or is neutron-rich (X_n ≥ 0.5, [M0-R13]), and whose disk r ≤ r_hold holds less than m_tov_sb (§0.5 [M0-T130],
 // M0-D153: sinks.wgsl's mass test's disk form at the twin's r_hold, summed row-major in f32 as `core` sums it, of Σ as
 // `floor_cells` left it — no invocation here writes a Σ — and only where the rest of the test holds or keeps the cell,
-// as the twin calls it) is held; a held cell is released past 2η_hold · ε_cold, under ½σ_hold, once X_Fe > 0 with
+// as the twin calls it) is held; a held cell is released past 2η_hold · ε_cold, under ½σ_hold, once X_Fe ≥ 10⁻³ with
 // X_n < 0.5, or once its disk holds m_tov_sb. The mask (state.rs `state.held`, one word per cell) is the next step's P4's. A newly held cell's
 // momentum — read by the test before — is set to 0, its kinetic energy left in E, and added into `held`'s two slots.
 // Every comparison is f32 of f32 inputs: a cell within f32's rounding of an edge may fall either side of the twin's f64.
@@ -77,8 +77,10 @@ struct Hold {
 
 const PLANES_A: u32 = 5u;
 const PLANES_B: u32 = 5u;
-// Iron's slot in §1.5's order: a cell holding any is held only once neutron-rich (§2.7 [M0-D71f], [M0-R13]).
+// Iron's slot in §1.5's order: a cell holding more than a trace is held only once neutron-rich (§2.7 [M0-D71f], [M0-R13]).
 const ID_FE: u32 = 8u;
+// The trace of iron under which a cell is held as one with none (§2.7 [M0-D170]; the twin's IRON_TRACE).
+const IRON_TRACE: f32 = 1e-3;
 // X_n from which a cell holding iron is neutron-rich (§2.7 [M0-R13]).
 const NEUTRON_RICH: f32 = 0.5;
 
@@ -198,7 +200,7 @@ fn hold(cell: u32, xy: vec2<u32>, x: array<f32, 10>) {
     let mom = vec2<f32>(hydro[n + cell], hydro[2u * n + cell]);
     let cold = eps_cold(sigma, comp.y_e, x[ID_N]);
     let eps_th = hydro[3u * n + cell] / sigma - 0.5 * dot(mom / sigma, mom / sigma) - cold;
-    let kind = x[ID_FE] == 0.0 || x[ID_N] >= NEUTRON_RICH;
+    let kind = x[ID_FE] < IRON_TRACE || x[ID_N] >= NEUTRON_RICH;
     let was = textureLoad(held, xy).x != 0u;
     var now: bool;
     if (was) {

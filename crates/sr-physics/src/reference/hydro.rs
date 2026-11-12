@@ -70,6 +70,12 @@
 //! slopes and its Σg kick. Nothing crosses a held cell's faces either way: §2.3.4's one-way inflow (report item 2) is not
 //! built — on the twin it took the M 900 SCF disk's floor_added over steps 1,000–10,000 to 392.6 against G-REST's 10
 //! (2.26 without), and it moved to M0-D71f's measurement on the GPU lives (§0.5 [M0-D71], the lead at M0-D71).
+//! [M0-D172] The wall is sticky: after its update a free gas cell's (Σ ≥ Σ_vac) momentum into a held face-neighbour is set
+//! to 0, its kinetic energy left in E — where it becomes heat — and that momentum returned with the spared, booked `held` (a
+//! cell left under Σ_vac is P8's to reset, its momentum booked nowhere, §2.7 [M0-T19]). Gas cannot
+//! move into a held cell, so its infall there is spent; left standing, the wall's HLL flux held an unresolved rim up on a
+//! momentum without mass flux, and gravity's face work (no work at a face no mass crosses) debited that infall's kick from
+//! the rim's thinnest cells' heat, which P8's floor put back (M0-D172: 1.26 per step, 13.5 % of the held remnant's light).
 
 use super::grav::Field;
 use crate::eos::Eos;
@@ -627,7 +633,8 @@ impl Hydro {
     }
 
     /// As [`Hydro::step_forced`], the cells `held` flags left as they are behind reflecting walls (module doc; `held` one
-    /// flag per cell, or empty: none held). Returns the momentum the held cells were spared, (x, y) — booked `held`. A held
+    /// flag per cell, or empty: none held). Returns the momentum the held cells were spared and the free cells' infall the
+    /// sticky walls stopped ([M0-D172]), (x, y) — booked `held`. A held
     /// cell's Σg·Δt reads `pull`, the field of everything but the held cells, when given, else `gravity`'s (module doc).
     pub fn step_held(
         &self,
@@ -866,6 +873,20 @@ impl Hydro {
                     let s = self.push_share(&u, d);
                     u[1] += s * d[0];
                     u[2] += s * d[1];
+                }
+                // [M0-D172] The sticky wall (module doc): a free gas cell's momentum into a held face-neighbour stops here,
+                // E as it is, and is booked `held`; a cell left under Σ_vac is P8's to reset, its momentum booked nowhere.
+                if !held_here && !held.is_empty() && u[0] >= self.sigma_vac {
+                    let into = [
+                        (x > 0 && is_held(i - 1) && u[1] < 0.0) || (x + 1 < w && is_held(i + 1) && u[1] > 0.0),
+                        (y > 0 && is_held(i - w) && u[2] < 0.0) || (y + 1 < h && is_held(i + w) && u[2] > 0.0),
+                    ];
+                    for (k, stop) in into.into_iter().enumerate() {
+                        if stop {
+                            spared[k] += u[1 + k];
+                            u[1 + k] = 0.0;
+                        }
+                    }
                 }
                 // Escaped, leaving (§2.8): each boundary face of a cell this step moved, its flux as the cell took it — the
                 // grid loses dt·f through a high face, −dt·f through a low one.

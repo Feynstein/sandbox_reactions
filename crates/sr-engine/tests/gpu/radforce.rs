@@ -342,10 +342,12 @@ fn gpu_p4_reads_the_previous_steps_flux() {
     assert_eq!(by_hand.other, 0.0, "Σ, E and the species as the free step's");
 }
 
-/// The cap's slab: the medium just above the floor (Σ 1, T 0.06: 0.02 of heat above it a cell), the slab at T 1,000 (Σ 0.1).
+/// The cap's slab: the medium just above the floor (Σ 1, T 0.06: 0.02 of heat above it a cell), the slab at T 3,000 (Σ 0.1) —
+/// T 1,000 until [M0-D166] cut the push to a sixteenth (a_r ÷ 16, c_sb × 16: the push κΣF/c_sb), when the slab asked only 6.6 ×
+/// the capped impulse; F ∝ T⁴ lifts it past the guard (measured below).
 const CAP_MEDIUM: (f64, f64) = (1.0, 0.06);
-const CAP_HOT: (f64, f64) = (0.1, 1000.0);
-/// One step's Δt there (CFL 0.4 allows 6.3e-3 in the slab, c² = 2Π/Σ = 4,000).
+const CAP_HOT: (f64, f64) = (0.1, 3000.0);
+/// One step's Δt there (CFL 0.4 allows 3.6e-3 in the slab, c² = 2Π/Σ = 12,000).
 const CAP_DT: f64 = 2e-3;
 /// The cap's tolerances, fixed before the first run: the momentum gained per half of the world against Σ s·Δt·f, and E
 /// per cell against the free step's (P8's rounding where the push spends the heat to the floor) — twin, GPU.
@@ -396,7 +398,7 @@ fn check_cap(label: &str, physics: &Physics, forced: &State, free: &State, f: &[
             uncapped[h]
         );
         assert!(rel <= tol, "{label}: the momentum gained {} against Σ s·Δt·f {} ({rel:e} > {tol:e})", gained[h], expected[h]);
-        // The set-up guard: the uncapped impulse is ≥ 10× the capped one, ≥ 100× its work (measured 425× and 1,720×).
+        // The set-up guard: the uncapped impulse is ≥ 10× the capped one, ≥ 100× its work (measured 282× on the GPU, 1,090× on the twin, at T 3,000 on [M0-D166]'s constants; 425× and 1,720× at T 1,000 on [M0-D163]'s).
         assert!(uncapped[h].abs() > 10.0 * expected[h].abs(), "{label}: the slab must ask far more work than the heat holds");
     }
     println!("SR-RADFORCE {label} cap: {bound} cells capped below half the impulse; E's largest relative gap from the free step {e_gap:.2e}");

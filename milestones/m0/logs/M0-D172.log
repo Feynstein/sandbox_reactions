@@ -1,0 +1,329 @@
+build/m0-d168:
+build.log
+claim.out
+noheat
+nohydro
+p1
+p1.out
+probe.json
+replay.py
+rows.py
+start
+v1
+v1e
+v1e.out
+v1.out
+variant.py
+zfe
+zfe2
+
+build/m0-d170:
+bin
+build.log
+cH
+cH.out
+claim.out
+cT
+cT.out
+frames.py
+gH
+gH.out
+gT
+gT.out
+gZ
+gZ.out
+ld.json
+mH
+mH.out
+mT
+mT.out
+mZ
+mZ.out
+run1.log
+run1.sh
+run2.log
+run2.sh
+s1.done
+s1.status
+s2.done
+s2.status
+sub
+v1
+v1.out
+s_450001.bin
+s_450001.observers.json
+{"version": 1, "world": {"width": 600, "height": 400, "edge": "leave"}, "objects": []}
+-rwxrwxr-x 2 ybelanger ybelanger 23344696 Nov 12 09:07 build/target/release/sandbox-reactions
+name, utilization.gpu [%], memory.used [MiB]
+NVIDIA GeForce RTX 3060, 0 %, 13 MiB
+NVIDIA GeForce RTX 4090, 0 %, 19 MiB
+/dev/nvme2n1p2  937G  377G  513G  43% /
+d163cal: 1 windows (created Mon Nov  9 13:57:24 2026)
+v14: 1 windows (created Fri Nov  6 16:24:56 2026)
+v14b: 1 windows (created Sun Nov  8 09:44:31 2026)
+v14g: 1 windows (created Sun Nov  8 18:11:23 2026)
+v14s2: 1 windows (created Fri Nov  6 16:26:31 2026)
+   step        t raw           shown                M |  dfloor/st    drad/st fl/rad |  held   M_held  Fe_held |   Sig_c  X_Fe,c  X_n,c  X_H,c  c_h
+ 450016  3464.23 cloud         main_sequence   2489.2 |        nan        nan    nan |     5    952.7  2.8e-09 |   243.0 2.35e-09  0.000  0.028  yes
+ 450080  3464.63 white_dwarf   white_dwarf     2489.2 |  1.453e-06      248.8  0.000 |     9   1527.2    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 450144  3465.04 white_dwarf   white_dwarf     2489.2 |  5.588e-07      166.5  0.000 |    13   1839.2    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 450208  3465.44 white_dwarf   white_dwarf     2489.2 |  1.896e-06       50.2  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 450272  3465.84 white_dwarf   white_dwarf     2489.2 |   6.78e-07      40.59  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 450336  3466.25 white_dwarf   white_dwarf     2489.2 |  7.898e-07      34.23  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 450400  3466.65 white_dwarf   white_dwarf     2489.2 |  1.382e-06      33.34  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 450464  3467.05 white_dwarf   white_dwarf     2489.2 |  2.246e-06      25.19  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 450528  3467.45 white_dwarf   white_dwarf     2489.2 |  1.363e-06      22.79  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 450592  3467.85 white_dwarf   white_dwarf     2489.2 |  9.015e-07      23.58  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 450656  3468.24 main_sequence white_dwarf     2489.2 |  1.185e-06       19.2  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 450720  3468.64 main_sequence main_sequence   2489.2 |  1.099e-06      18.75  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 450784  3469.04 main_sequence main_sequence   2489.2 |  1.624e-06      16.83  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 450848  3469.44 main_sequence main_sequence   2489.2 |  8.605e-07      15.35  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 450912  3469.84 main_sequence main_sequence   2489.2 |  7.898e-07      13.74  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 450976  3470.23 main_sequence main_sequence   2489.2 |   0.005512      14.36  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451040  3470.63 main_sequence main_sequence   2489.2 |    0.02676      12.41  0.002 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451104  3471.03 main_sequence main_sequence   2489.2 |     0.3976      8.905  0.045 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451168  3471.43 main_sequence main_sequence   2489.2 |     0.9439      7.103  0.133 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451232  3471.82 main_sequence main_sequence   2489.2 |      0.823      13.08  0.063 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451296  3472.22 main_sequence main_sequence   2489.2 |     0.6656      9.541  0.070 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451360  3472.62 main_sequence main_sequence   2489.2 |     0.4488      13.55  0.033 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451424  3473.01 main_sequence main_sequence   2489.2 |      1.634      7.724  0.211 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451488  3473.41 main_sequence main_sequence   2489.2 |     0.7269      11.95  0.061 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451552  3473.81 main_sequence main_sequence   2489.2 |      1.868      7.504  0.249 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451616  3474.20 main_sequence main_sequence   2489.2 |      1.403      9.161  0.153 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451680  3474.60 main_sequence main_sequence   2489.2 |      2.103      9.735  0.216 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451744  3475.00 main_sequence main_sequence   2489.2 |       1.75      8.572  0.204 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451808  3475.39 main_sequence main_sequence   2489.2 |      2.382      7.873  0.303 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451872  3475.79 main_sequence main_sequence   2489.2 |      2.329      6.119  0.381 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451936  3476.19 main_sequence main_sequence   2489.2 |      1.819      9.598  0.189 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 452000  3476.58 main_sequence main_sequence   2489.2 |      2.018      6.372  0.317 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 452001  3476.59 main_sequence main_sequence   2489.2 |      3.161      2.954  1.070 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+variant none applied
+build native: 1.99.0 in 8 s, target /home/ybelanger/.cache/sandbox-reactions/redarm-target (1.7G)
+=== GO ===
+variant A applied
+build native: 1.99.0 in 7 s, target /home/ybelanger/.cache/sandbox-reactions/redarm-target (1.7G)
+=== GO ===
+variant C applied
+build native: 1.99.0 in 7 s, target /home/ybelanger/.cache/sandbox-reactions/redarm-target (1.7G)
+=== GO ===
+none == shipped binary
+total 68300
+drwxrwxr-x 2 ybelanger ybelanger     4096 Nov 12 09:33 .
+drwxrwxr-x 3 ybelanger ybelanger     4096 Nov 12 09:33 ..
+-rwxrwxr-x 1 ybelanger ybelanger 23344960 Nov 12 09:33 A
+-rwxrwxr-x 1 ybelanger ybelanger 23345240 Nov 12 09:33 C
+-rwxrwxr-x 1 ybelanger ybelanger 23344696 Nov 12 09:33 none
+started
+Thu Nov 12 09:33:58 AM EST 2026
+=== m0-d170/v1
+   step        t raw           shown                M |  dfloor/st    drad/st fl/rad |  held   M_held  Fe_held
+ 450016  3464.23 cloud         main_sequence   2489.2 |        nan        nan    nan |     5    952.7  2.8e-09
+ 450144  3465.04 white_dwarf   white_dwarf     2489.2 |  5.588e-07      166.5  0.000 |    13   1839.2    3e-07
+ 450272  3465.84 white_dwarf   white_dwarf     2489.2 |   6.78e-07      40.59  0.000 |    21   2320.7    3e-07
+ 450400  3466.65 white_dwarf   white_dwarf     2489.2 |  1.382e-06      33.34  0.000 |    21   2320.7    3e-07
+ 450528  3467.45 white_dwarf   white_dwarf     2489.2 |  1.363e-06      22.79  0.000 |    21   2320.7    3e-07
+ 450656  3468.24 main_sequence white_dwarf     2489.2 |  1.185e-06       19.2  0.000 |    21   2320.7    3e-07
+ 450784  3469.04 main_sequence main_sequence   2489.2 |  1.624e-06      16.83  0.000 |    21   2320.7    3e-07
+ 450912  3469.84 main_sequence main_sequence   2489.2 |  7.898e-07      13.74  0.000 |    21   2320.7    3e-07
+ 451040  3470.63 main_sequence main_sequence   2489.2 |    0.02676      12.41  0.002 |    21   2320.7    3e-07
+ 451168  3471.43 main_sequence main_sequence   2489.2 |     0.9439      7.103  0.133 |    21   2320.7    3e-07
+ 451296  3472.22 main_sequence main_sequence   2489.2 |     0.6656      9.541  0.070 |    21   2320.7    3e-07
+ 451424  3473.01 main_sequence main_sequence   2489.2 |      1.634      7.724  0.211 |    21   2320.7    3e-07
+ 451552  3473.81 main_sequence main_sequence   2489.2 |      1.868      7.504  0.249 |    21   2320.7    3e-07
+ 451680  3474.60 main_sequence main_sequence   2489.2 |      2.103      9.735  0.216 |    21   2320.7    3e-07
+ 451808  3475.39 main_sequence main_sequence   2489.2 |      2.382      7.873  0.303 |    21   2320.7    3e-07
+ 451936  3476.19 main_sequence main_sequence   2489.2 |      1.819      9.598  0.189 |    21   2320.7    3e-07
+ 452001  3476.59 main_sequence main_sequence   2489.2 |      3.161      2.954  1.070 |    21   2320.7    3e-07
+=== m0-d172/cA
+   step        t raw           shown                M |  dfloor/st    drad/st fl/rad |  held   M_held  Fe_held
+ 450016  3464.23 cloud         main_sequence   2489.2 |        nan        nan    nan |     5    947.3  2.5e-09
+ 450144  3465.04 white_dwarf   white_dwarf     2489.2 |  2.123e-07      48.25  0.000 |    25   2273.5  2.7e-07
+ 450272  3465.85 white_dwarf   white_dwarf     2489.2 | -9.213e-06      15.18 -0.000 |    29   2356.0  2.7e-07
+ 450400  3466.65 white_dwarf   white_dwarf     2489.2 |  7.078e-08      20.44  0.000 |    29   2356.0  2.7e-07
+ 450528  3467.46 white_dwarf   white_dwarf     2489.2 |  6.333e-08      18.25  0.000 |    29   2356.0  2.7e-07
+ 450656  3468.26 white_dwarf   white_dwarf     2489.2 |  7.451e-08      15.74  0.000 |    29   2356.0  2.7e-07
+ 450784  3469.06 white_dwarf   white_dwarf     2489.2 |  7.451e-08      13.62  0.000 |    29   2356.0  2.7e-07
+ 450912  3469.87 white_dwarf   white_dwarf     2489.2 |  3.353e-08       11.9  0.000 |    29   2356.0  2.7e-07
+ 451040  3470.67 white_dwarf   white_dwarf     2489.2 |  3.353e-08      10.51  0.000 |    29   2356.0  2.7e-07
+ 451168  3471.47 main_sequence main_sequence   2489.2 | -5.253e-07      9.432 -0.000 |    29   2356.0  2.7e-07
+ 451296  3472.27 main_sequence main_sequence   2489.2 |  1.937e-07      8.457  0.000 |    29   2356.0  2.7e-07
+ 451424  3473.07 main_sequence main_sequence   2489.2 |  2.757e-07      7.657  0.000 |    29   2356.0  2.7e-07
+ 451552  3473.86 main_sequence main_sequence   2489.2 |  2.533e-07      6.982  0.000 |    29   2356.0  2.7e-07
+ 451680  3474.66 main_sequence main_sequence   2489.2 |  5.588e-08      6.409  0.000 |    29   2356.0  2.7e-07
+ 451808  3475.46 main_sequence main_sequence   2489.2 |  9.686e-08      5.916  0.000 |    29   2356.0  2.7e-07
+ 451936  3476.26 main_sequence main_sequence   2489.2 | -1.863e-07      5.488 -0.000 |    29   2356.0  2.7e-07
+ 452001  3476.66 main_sequence main_sequence   2489.2 |  -5.96e-08       5.27 -0.000 |    29   2356.0  2.7e-07
+=== m0-d172/cC
+   step        t raw           shown                M |  dfloor/st    drad/st fl/rad |  held   M_held  Fe_held
+ 450016  3464.23 cloud         main_sequence   2489.2 |        nan        nan    nan |     5    952.7  2.8e-09
+ 450144  3465.04 white_dwarf   white_dwarf     2489.2 |  5.588e-07      166.5  0.000 |    13   1839.2    3e-07
+ 450272  3465.84 white_dwarf   white_dwarf     2489.2 |  7.562e-07      40.14  0.000 |    21   2320.4    3e-07
+ 450400  3466.65 white_dwarf   white_dwarf     2489.2 |  1.188e-06      31.22  0.000 |    21   2320.4    3e-07
+ 450528  3467.45 white_dwarf   white_dwarf     2489.2 |  9.947e-07      21.98  0.000 |    21   2320.4    3e-07
+ 450656  3468.24 main_sequence white_dwarf     2489.2 |  1.561e-06      17.55  0.000 |    21   2320.4    3e-07
+ 450784  3469.04 main_sequence main_sequence   2489.2 |  3.949e-07      15.34  0.000 |    21   2320.4    3e-07
+ 450912  3469.84 main_sequence main_sequence   2489.2 |  3.539e-07       13.9  0.000 |    21   2320.4    3e-07
+ 451040  3470.63 main_sequence main_sequence   2489.2 |  1.516e-06      12.13  0.000 |    21   2320.4    3e-07
+ 451168  3471.43 main_sequence main_sequence   2489.2 |  2.883e-06      10.83  0.000 |    21   2320.4    3e-07
+ 451296  3472.22 main_sequence main_sequence   2489.2 |  2.626e-06      9.438  0.000 |    21   2320.4    3e-07
+ 451424  3473.01 main_sequence main_sequence   2489.2 |  2.317e-06       8.84  0.000 |    21   2320.4    3e-07
+ 451552  3473.81 main_sequence main_sequence   2489.2 |  1.714e-06      7.818  0.000 |    21   2320.4    3e-07
+ 451680  3474.60 main_sequence main_sequence   2489.2 |  1.527e-06      7.751  0.000 |    21   2320.4    3e-07
+ 451808  3475.39 main_sequence main_sequence   2489.2 |  1.177e-06      7.707  0.000 |    21   2320.4    3e-07
+ 451936  3476.19 main_sequence main_sequence   2489.2 |  8.382e-07      6.971  0.000 |    21   2320.4    3e-07
+ 452001  3476.59 main_sequence main_sequence   2489.2 |  3.695e-06      4.225  0.000 |    21   2320.4    3e-07
+m0-d170/v1   steps 451008-452001: floor_added/step 1.26  radiated/step 9.345  floor/radiated 0.135
+m0-d172/cA   steps 451008-452001: floor_added/step -6.837e-08  radiated/step 7.458  floor/radiated -9.17e-09
+m0-d172/cC   steps 451008-452001: floor_added/step 1.278e-06  radiated/step 8.491  floor/radiated 1.51e-07
+cA exit 2 SR-HEADLESS DONE steps=452001 sim_time=3476.663258 until=unmet
+cC exit 2 SR-HEADLESS DONE steps=452001 sim_time=3476.588951 until=unmet
+Thu Nov 12 09:36:38 AM EST 2026
+=== m0-d170/mT
+until {'condition': 'ending', 'met': True, 'object': 1} sim_time 372.0204292528797
+ obj {'stage': 'neutron_star', 'ending': 'neutron_star', 'mass': None, 'radius': None}
+ floor_added 36104318.08538818 radiated 31553706.316663325 nuclear -2061818.6530294959
+   {'kind': 'ending', 'step': 47516, 't': None, 'sim_time': 372.0204292528797, 'stage': None, 'from': None, 'to': None, 'ending': None, 'mass': None}
+=== m0-d172/mA
+until {'condition': 'ending', 'met': True, 'object': 1} sim_time 369.35513580800034
+ obj {'stage': 'neutron_star', 'ending': 'neutron_star', 'mass': None, 'radius': None}
+ floor_added 36038598.754089355 radiated 31530473.068983495 nuclear -2064527.990159251
+   {'kind': 'ending', 'step': 46894, 't': None, 'sim_time': 369.35513580800034, 'stage': None, 'from': None, 'to': None, 'ending': None, 'mass': None}
+=== m0-d172/mC
+until {'condition': 'ending', 'met': True, 'object': 1} sim_time 235.1286999634467
+ obj {'stage': 'black_hole', 'ending': 'black_hole', 'mass': None, 'radius': None}
+ floor_added 41991129.548054874 radiated 41160396.305038884 nuclear -8610325.060183082
+   {'kind': 'ending', 'step': 30192, 't': None, 'sim_time': 235.1286999634467, 'stage': None, 'from': None, 'to': None, 'ending': None, 'mass': None}
+=== m0-d170/mT
+   step        t raw           shown                M |  dfloor/st    drad/st fl/rad |  held   M_held  Fe_held |   Sig_c  X_Fe,c  X_n,c  X_H,c  c_h
+  14250   141.04 main_sequence main_sequence   8698.8 |        nan        nan    nan |     0      0.0        0 |    20.6 4.33e-16  0.000  0.273   no
+  15750   154.60 he_core       he_core         8288.0 |          0       1277  0.000 |     0      0.0        0 |    29.1 6.15e-12  0.000  0.259   no
+  17250   166.93 he_core       he_core         7941.0 |          0       1501  0.000 |     0      0.0        0 |    42.0 4.01e-07  0.000  0.240   no
+  18750   178.08 main_sequence main_sequence   7648.7 |          0       1790  0.000 |     0      0.0        0 |    59.6 0.000825  0.000  0.207   no
+  20250   188.18 o_burn        o_burn          7348.4 |          0       2152  0.000 |     0      0.0        0 |    82.2   0.072  0.000  0.189   no
+  21750   197.40 main_sequence main_sequence   7087.2 |          0       2653  0.000 |     0      0.0        0 |   114.8   0.814  0.000  0.166   no
+  23250   205.83 main_sequence main_sequence   6891.0 |          0       3306  0.000 |     0      0.0        0 |   172.8   0.895  0.000  0.103   no
+  24750   212.84 core_collapse core_collapse   6768.3 |       9649       5311  1.817 |     0      0.0        0 |   726.7 4.84e-05  0.270  0.384   no
+  26250   219.05 main_sequence main_sequence   6689.1 |       1731      223.1  7.759 |     0      0.0        0 |   282.2 0.000489  0.446  0.334   no
+  27750   226.99 main_sequence main_sequence   6543.0 |      522.6      130.8  3.997 |     0      0.0        0 |   157.0 0.000489  0.446  0.333   no
+  29250   235.92 main_sequence main_sequence   6408.0 |      316.4      92.82  3.408 |     0      0.0        0 |   135.3 0.000489  0.446  0.333   no
+  30750   245.50 main_sequence main_sequence   6439.7 |      231.6      91.92  2.520 |     0      0.0        0 |   109.5 0.000489  0.446  0.333   no
+  32250   255.51 main_sequence main_sequence   6471.2 |      197.9      55.24  3.582 |     0      0.0        0 |    99.5 0.00049  0.446  0.333   no
+  33750   265.88 main_sequence main_sequence   6495.7 |        171      57.24  2.987 |     0      0.0        0 |    94.2 0.00049  0.446  0.333   no
+  35250   276.50 main_sequence main_sequence   6514.2 |      110.3       61.6  1.790 |     0      0.0        0 |    88.2 0.00049  0.446  0.333   no
+  36750   287.23 main_sequence main_sequence   6526.8 |      15.87      51.86  0.306 |     0      0.0        0 |   101.9 0.00049  0.446  0.333   no
+  38250   297.66 main_sequence main_sequence   6536.0 |      84.82      58.44  1.451 |     0      0.0        0 |   120.5 0.00049  0.446  0.333   no
+  39750   308.62 main_sequence main_sequence   6549.9 |          0      451.6  0.000 |     0      0.0        0 |    42.6 0.000492  0.446  0.284   no
+  41250   321.03 main_sequence main_sequence   6412.3 |          0      586.5  0.000 |     0      0.0        0 |    49.7 0.000495  0.446  0.237   no
+  42750   333.28 main_sequence main_sequence   6002.0 |          0      513.6  0.000 |     0      0.0        0 |    55.1 0.000497  0.446  0.203   no
+  44250   345.46 main_sequence main_sequence   5650.6 |          0      405.1  0.000 |     0      0.0        0 |    60.0 0.000498  0.446  0.175   no
+  45750   357.65 main_sequence main_sequence   5403.8 |          0      309.5  0.000 |     0      0.0        0 |    63.0 0.000498  0.446  0.155   no
+  47250   369.84 neutron_star  neutron_star    5255.1 |          0      227.9  0.000 |     0      0.0        0 |    65.1 0.000497  0.446  0.135   no
+  47516   372.02 neutron_star  neutron_star    5235.1 |          0      193.9  0.000 |     0      0.0        0 |    65.6 0.000497  0.446  0.131   no
+=== m0-d172/mA
+   step        t raw           shown                M |  dfloor/st    drad/st fl/rad |  held   M_held  Fe_held |   Sig_c  X_Fe,c  X_n,c  X_H,c  c_h
+  14250   141.04 main_sequence main_sequence   8698.8 |        nan        nan    nan |     0      0.0        0 |    20.6 4.33e-16  0.000  0.273   no
+  15750   154.60 he_core       he_core         8288.0 |          0       1277  0.000 |     0      0.0        0 |    29.1 6.15e-12  0.000  0.259   no
+  17250   166.93 he_core       he_core         7941.0 |          0       1501  0.000 |     0      0.0        0 |    42.0 4.01e-07  0.000  0.240   no
+  18750   178.08 main_sequence main_sequence   7648.7 |          0       1790  0.000 |     0      0.0        0 |    59.6 0.000825  0.000  0.207   no
+  20250   188.18 o_burn        o_burn          7348.4 |          0       2152  0.000 |     0      0.0        0 |    82.2   0.072  0.000  0.189   no
+  21750   197.40 main_sequence main_sequence   7087.2 |          0       2653  0.000 |     0      0.0        0 |   114.8   0.814  0.000  0.166   no
+  23250   205.83 main_sequence main_sequence   6891.0 |          0       3306  0.000 |     0      0.0        0 |   172.8   0.895  0.000  0.103   no
+  24750   212.84 core_collapse core_collapse   6768.3 |       9649       5311  1.817 |     0      0.0        0 |   726.7 4.84e-05  0.270  0.384   no
+  26250   219.05 main_sequence main_sequence   6689.1 |       1731      223.1  7.759 |     0      0.0        0 |   282.2 0.000489  0.446  0.334   no
+  27750   226.99 main_sequence main_sequence   6543.0 |      522.6      130.8  3.997 |     0      0.0        0 |   157.0 0.000489  0.446  0.333   no
+  29250   235.92 main_sequence main_sequence   6408.0 |      316.4      92.82  3.408 |     0      0.0        0 |   135.3 0.000489  0.446  0.333   no
+  30750   245.50 main_sequence main_sequence   6439.7 |      231.6      91.92  2.520 |     0      0.0        0 |   109.5 0.000489  0.446  0.333   no
+  32250   255.51 main_sequence main_sequence   6471.2 |      197.9      55.24  3.582 |     0      0.0        0 |    99.5 0.00049  0.446  0.333   no
+  33750   265.88 main_sequence main_sequence   6495.7 |        171      57.24  2.987 |     0      0.0        0 |    94.2 0.00049  0.446  0.333   no
+  35250   276.50 main_sequence main_sequence   6514.2 |      110.3       61.6  1.790 |     0      0.0        0 |    88.2 0.00049  0.446  0.333   no
+  36750   287.13 main_sequence main_sequence   6526.9 |      15.85       53.1  0.299 |     0      0.0        0 |   100.5 0.00049  0.446  0.333   no
+  38250   297.90 main_sequence main_sequence   6538.8 |          0      212.7  0.000 |     0      0.0        0 |    44.6 0.00049  0.446  0.302   no
+  39750   310.58 main_sequence main_sequence   6525.1 |          0      570.2  0.000 |     0      0.0        0 |    46.3 0.000493  0.446  0.247   no
+  41250   323.11 main_sequence main_sequence   6215.6 |          0      520.7  0.000 |     0      0.0        0 |    53.3 0.000495  0.446  0.212   no
+  42750   335.44 main_sequence main_sequence   5820.6 |          0      411.8  0.000 |     0      0.0        0 |    54.1 0.000495  0.446  0.187   no
+  44250   347.76 main_sequence main_sequence   5545.3 |          0      371.4  0.000 |     0      0.0        0 |    64.6 0.000498  0.446  0.156   no
+  45750   359.93 neutron_star  neutron_star    5383.8 |          0      250.3  0.000 |     0      0.0        0 |    61.1 0.000496  0.446  0.145   no
+  46894   369.36 neutron_star  neutron_star    5305.8 |          0      160.6  0.000 |     0      0.0        0 |    63.7 0.000496  0.446  0.129   no
+=== m0-d172/mC
+   step        t raw           shown                M |  dfloor/st    drad/st fl/rad |  held   M_held  Fe_held |   Sig_c  X_Fe,c  X_n,c  X_H,c  c_h
+  14250   141.04 main_sequence main_sequence   8698.8 |        nan        nan    nan |     0      0.0        0 |    20.6 4.33e-16  0.000  0.273   no
+  15750   154.60 he_core       he_core         8288.0 |          0       1277  0.000 |     0      0.0        0 |    29.1 6.15e-12  0.000  0.259   no
+  17250   166.93 he_core       he_core         7941.0 |          0       1501  0.000 |     0      0.0        0 |    42.0 4.01e-07  0.000  0.240   no
+  18750   178.08 main_sequence main_sequence   7648.7 |          0       1790  0.000 |     0      0.0        0 |    59.6 0.000825  0.000  0.207   no
+  20250   188.18 o_burn        o_burn          7348.4 |          0       2152  0.000 |     0      0.0        0 |    82.2   0.072  0.000  0.189   no
+  21750   197.40 main_sequence main_sequence   7087.2 |          0       2653  0.000 |     0      0.0        0 |   114.8   0.814  0.000  0.166   no
+  23250   205.83 main_sequence main_sequence   6891.0 |          0       3306  0.000 |     0      0.0        0 |   172.8   0.895  0.000  0.103   no
+  24750   213.11 main_sequence main_sequence   6764.7 |          0       1227  0.000 |     0      0.0        0 |   246.4   0.784  0.000  0.213   no
+  26250   219.49 core_collapse core_collapse   6689.9 |       9985       6903  1.446 |     0      0.0        0 |  1089.6       0  0.504  0.316   no
+  27750   225.57 black_hole    black_hole      6637.5 |       6933       5358  1.294 |     0      0.0        0 |     0.0 1.15e-21  0.000  0.728   no
+  29250   231.43 black_hole    black_hole      6377.5 |          0      4.731  0.000 |     0      0.0        0 |     0.0       0  0.000  0.729   no
+  30192   235.13 black_hole    black_hole      6387.4 |          0      4.866  0.000 |     0      0.0        0 |     0.0       0  0.000  0.729   no
+== 2026-11-12T09:48:31-05:00 build native (linux-pc)
+build native: 1.99.0 in 6 s, target /home/ybelanger/private/sandbox_reactions/build/target (7.4G)
+=== GO ===
+== 2026-11-12T09:49:14-05:00 rsync tree to laserax-ai-server (R18)
+build native: 1.99.0 in 7 s, target /home/ybelanger/workspace/sandbox_reactions/build/target (1.7G)
+=== GO ===
+held_core  25/2/0     121.04 s  NO-GO
+logs: milestones/m0/logs/M0-D172.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+7852b9de6afe
+anchor: 0 path×scope entries moved by this run
+anchor: 180 paths checked · 428 skipped (3 classes) · 226 never checked · 2 stale · 8 unclassified · 42 owed · 450 covered of 886 visible
+FAILED:
+  held_core: 2 failed · log milestones/m0/logs/M0-D172.held_core.log
+verify: 25 passed, 2 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 121.04 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.88->0.84
+=== NO-GO: held_core: 2 failed · log milestones/m0/logs/M0-D172.held_core.log ===
+== 2026-11-12T09:52:54-05:00 rsync + held_core rerun
+=== GO ===
+FAILED:
+  held_core: 1 failed · log milestones/m0/logs/M0-D172.held_core.log
+verify: 26 passed, 1 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 120.64 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.64->1.12
+=== NO-GO: held_core: 1 failed · log milestones/m0/logs/M0-D172.held_core.log ===
+test held_core::a_free_cell_stops_at_a_held_wall ... SR-HELD-STICKY into the wall [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]; away [0.7681215091613671, 0.8399672616934207, 0.8399672616934207, 0.7681215091613671]; held [4.496439448162211, -3.3306690738754696e-16]; momentum drift [6.767532648206817e-17, 5.2871348
+test held_core::a_held_core_books_the_free_gas_pull_as_its_reaction ... SR-HELD-GAS-PULL held [1.0128070238712132, 0.3840593553355807]; minus the core's pull on the gas [1.0128070249707597, 0.3840593557936977] (off 1.100e-9)
+thread 'held_core::a_held_core_books_the_free_gas_pull_as_its_reaction' (720828) panicked at crates/sr-engine/tests/gpu/held_core.rs:472:5:
+test held_core::disk_m1800_rests_held ... SR-HELD-CORE disk M 1800: held 12 at step 0, 12 at 10000 (M0-R11: 12); floor_added -6.1736e-4 over 1000–10000; KE 0.0000e0 → 0.0000e0; held momentum (3.3087e-20, 6.6174e-20); momentum drift 7.399e-20 of Σm|u| 0.0000e0; held cells moving 0
+test held_core::disk_m900_rests_held ... SR-HELD-CORE disk M 900: held 16 at step 0, 16 at 10000 (M0-R11: 16); floor_added 5.7673e0 over 1000–10000; KE 3.7929e1 → 3.7442e1; held momentum (-1.5986e-1, 3.8998e-1); momentum drift 4.214e-1 of Σm|u| 3.0995e1; held cells moving 0
+SR-HELD-STICKY-GPU into the wall [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]; away [0.76812106, 0.83996695, 0.83996695, 0.76812106]; held GPU [4.496440529823303, 0.0], twin [4.4964394485332955, -3.3306690738754696e-16] (off 2.405e-7); drift [0.0, 1.862645149230957e-9]; free E off the twin's by 1.136e-7
+SR-HELD-REF disk M 1800, step 200: relative L1 Σ 0.000e0, E 1.802e-6 (band 1e-3); held 12, 0 cells held on one side only; held momentum GPU [-1.4210854715202004e-14, -7.105427357601002e-15] (Σ|slot| 5.6042e-5), twin [6.617444900424221e-22, 1.3234889800848443e-21]
+SR-HELD-REF disk M 900, step 200: relative L1 Σ 1.753e-6, E 1.088e-6 (band 1e-3); held 16, 0 cells held on one side only; held momentum GPU [-0.0032863616943359375, -0.003604888916015625] (Σ|slot| 4.9519e3), twin [-5.944541547512694e-13, 3.095094862505922e-13]
+thread 'held_core::gpu_the_remnant_window_shines_on_its_own_heat' (721006) panicked at crates/sr-engine/tests/gpu/held_core.rs:1315:5:
+test held_core::a_free_cell_stops_at_a_held_wall ... SR-HELD-STICKY into the wall [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]; away [0.7681215091613671, 0.8399672616934207, 0.8399672616934207, 0.7681215091613671]; held [4.496439448162211, -3.3306690738754696e-16]; momentum drift [6.767532648206817e-17, 5.2871348
+test held_core::a_held_core_books_the_free_gas_pull_as_its_reaction ... SR-HELD-GAS-PULL held [1.0128070249507397, 0.3840593557873474]; minus the core's pull on the gas [1.0128070249707597, 0.3840593557936977] (off 1.939e-11)
+test held_core::disk_m1800_rests_held ... SR-HELD-CORE disk M 1800: held 12 at step 0, 12 at 10000 (M0-R11: 12); floor_added -6.1736e-4 over 1000–10000; KE 0.0000e0 → 0.0000e0; held momentum (2.5846e-22, 5.1709e-22); momentum drift 5.781e-22 of Σm|u| 0.0000e0; held cells moving 0
+test held_core::disk_m900_rests_held ... SR-HELD-CORE disk M 900: held 16 at step 0, 16 at 10000 (M0-R11: 16); floor_added 5.7673e0 over 1000–10000; KE 3.7929e1 → 3.7442e1; held momentum (-1.5986e-1, 3.8998e-1); momentum drift 4.214e-1 of Σm|u| 3.0995e1; held cells moving 0
+SR-HELD-STICKY-GPU into the wall [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]; away [0.76812106, 0.83996695, 0.83996695, 0.76812106]; held GPU [4.496440529823303, 0.0], twin [4.4964394485332955, -3.3306690738754696e-16] (off 2.405e-7); drift [0.0, 1.862645149230957e-9]; free E off the twin's by 1.136e-7
+SR-HELD-REF disk M 1800, step 200: relative L1 Σ 0.000e0, E 1.802e-6 (band 1e-3); held 12, 0 cells held on one side only; held momentum GPU [-1.4210854715202004e-14, -7.105427357601002e-15] (Σ|slot| 3.7750e-7), twin [5.131104737243e-24, 1.0443155233481974e-23]
+SR-HELD-REF disk M 900, step 200: relative L1 Σ 1.753e-6, E 1.088e-6 (band 1e-3); held 16, 0 cells held on one side only; held momentum GPU [-0.0032863616943359375, -0.003604888916015625] (Σ|slot| 4.9519e3), twin [-5.944541547512694e-13, 3.095094862505922e-13]
+thread 'held_core::gpu_the_remnant_window_shines_on_its_own_heat' (721795) panicked at crates/sr-engine/tests/gpu/held_core.rs:1315:5:
+== 2026-11-12T09:55:20-05:00 red by hand: the two plants (server scratch copy)
+=== GO ===
+test held_core::a_free_cell_stops_at_a_held_wall ... SR-HELD-STICKY into the wall [0.7681215091613671, 0.7681215091613671, -0.7681215091613671, 0.8399672616934207, 0.8399672616934207, -0.8399672616934207, 0.8399672616934207, 0.8399672616934207, -0.839967261693
+thread 'held_core::a_free_cell_stops_at_a_held_wall' (722098) panicked at crates/sr-engine/tests/gpu/held_core.rs:390:5:
+SR-HELD-STICKY-GPU into the wall [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]; away [0.76812106, 0.83996695, 0.83996695, 0.76812106]; held GPU [4.496440529823303, 0.0], twin [1.280261907334015, -2.220446049250313e-16] (off 2.512e0); drift [0.0,
+thread 'held_core::gpu_a_free_cell_stops_at_a_held_wall_as_the_twins' (722099) panicked at crates/sr-engine/tests/gpu/held_core.rs:1084:5:
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 510 filtered out; finished in 0.38s
+-- held-wall-elastic done
+=== GO ===
+test held_core::a_free_cell_stops_at_a_held_wall ... SR-HELD-STICKY into the wall [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]; away [0.7681215091613671, 0.8399672616934207, 0.8399672616934207, 0.7681215091613671]; held [4.496439448162211, -3.3
+SR-HELD-STICKY-GPU into the wall [0.76812106, 0.76812106, -0.76812106, 0.83996695, 0.83996695, -0.83996695, 0.83996695, 0.83996695, -0.83996695, 0.76812106, 0.76812106, -0.76812106]; away [0.76812106, 0.83996695, 0.83996695, 0.76812106]; held GPU [1.2802644968
+thread 'held_core::gpu_a_free_cell_stops_at_a_held_wall_as_the_twins' (722323) panicked at crates/sr-engine/tests/gpu/held_core.rs:1082:5:
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 510 filtered out; finished in 0.38s
+-- held-wall-gpu-elastic done
+started Thu Nov 12 09:56:01 AM EST 2026
+m0-d170/v1   steps 451008-452001: floor_added/step 1.26  radiated/step 9.345  floor/radiated 0.135
+m0-d172/cA   steps 451008-452001: floor_added/step -6.837e-08  radiated/step 7.458  floor/radiated -9.17e-09
+m0-d172/v1   steps 451008-452001: floor_added/step -6.837e-08  radiated/step 7.458  floor/radiated -9.17e-09
+v1 == cA bit for bit (last dump)
+mF == mA bit for bit (last dump)
+   step        t raw           shown                M |  dfloor/st    drad/st fl/rad |  held   M_held  Fe_held
+ 450016  3464.23 cloud         main_sequence   2489.2 |        nan        nan    nan |     5    947.3  2.5e-09
+ 450272  3465.85 white_dwarf   white_dwarf     2489.2 | -9.213e-06      15.18 -0.000 |    29   2356.0  2.7e-07
+ 450528  3467.46 white_dwarf   white_dwarf     2489.2 |  6.333e-08      18.25  0.000 |    29   2356.0  2.7e-07
+ 450784  3469.06 white_dwarf   white_dwarf     2489.2 |  7.451e-08      13.62  0.000 |    29   2356.0  2.7e-07
+ 451040  3470.67 white_dwarf   white_dwarf     2489.2 |  3.353e-08      10.51  0.000 |    29   2356.0  2.7e-07
+ 451296  3472.27 main_sequence main_sequence   2489.2 |  1.937e-07      8.457  0.000 |    29   2356.0  2.7e-07
+ 451552  3473.86 main_sequence main_sequence   2489.2 |  2.533e-07      6.982  0.000 |    29   2356.0  2.7e-07
+ 451808  3475.46 main_sequence main_sequence   2489.2 |  9.686e-08      5.916  0.000 |    29   2356.0  2.7e-07
+ 452001  3476.66 main_sequence main_sequence   2489.2 |  -5.96e-08       5.27 -0.000 |    29   2356.0  2.7e-07
+mF {'condition': 'ending', 'met': True, 'object': 1} 369.35513580800034 [('neutron_star', 'neutron_star')]
+== 2026-11-12T10:00:42-05:00 rsync + claim (verify.py --changed) on laserax-ai-server

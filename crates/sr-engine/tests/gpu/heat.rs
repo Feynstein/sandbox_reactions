@@ -1312,14 +1312,15 @@ mod stiff {
     /// (e): backward Euler cools no faster than its refinement — heat_hot's heat left after the one pass within [1.0, 2.2]
     /// × the heat left after 64 passes of Δt/64 (computed 1.69 on a scratch model of the scene). Adversarial: the scene
     /// loses at least half its heat in the refined run (it does not barely move), the band is read before the result.
-    /// The band is the contract's at the scene's ~580 stages, a_r 4 × 10⁻⁷ (M0-TC's), pinned here: the step reads a_r only
-    /// through a_r Δt, so the ratio is the stiffness's — measured on the twin (M0-D55): 1.686 at 580 stages (a_r 4e-7 at Δt
-    /// 0.02, and a_r 4e-5 at 2e-4), 2.138 at 1,833 (4e-5, 0.002), 2.657 at 5,797 (the shipped 4e-5 at 0.02), every solve
-    /// converged; (a)–(d) run on the shipped a_r.
+    /// The band is the contract's at the scene's ~580 stages, a_r 4 × 10⁻⁷ and c_sb 200 (M0-TC's), both pinned here: the step
+    /// reads the light only through a_r c_sb Δt, so the ratio is the stiffness's — measured on the twin (M0-D55): 1.686 at 580
+    /// stages (a_r 4e-7 at Δt 0.02, and a_r 4e-5 at 2e-4), 2.138 at 1,833 (4e-5, 0.002), 2.657 at 5,797 (the then-shipped 4e-5 at
+    /// 0.02), every solve converged; on [M0-D166]'s c_sb 12,800 the pinned a_r alone read 2.55 (c_sb 64 × higher,
+    /// [M0-D171]) — so c_sb is pinned with it; (a)–(d) run on the shipped constants.
     #[test]
     fn the_burnt_field_keeps_no_less_heat_than_its_refinement_and_under_a_factor_of_two_point_two_more() {
         let (scene, ctx, st, _) = load(&HOT);
-        let physics = scene.physics().unwrap().with(&[("a_r", 4e-7)]).unwrap();
+        let physics = scene.physics().unwrap().with(&[("a_r", 4e-7), ("c_sb", 200.0)]).unwrap();
         let heat = Heat::new(&physics, &elements(), flags(&scene)).unwrap();
         let held = |st: &State| -> f64 { ctx.c(st).iter().zip(ctx.temps(st)).map(|(c, t)| c * t).sum() };
         let before = held(&st);

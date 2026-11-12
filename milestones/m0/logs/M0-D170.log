@@ -1,0 +1,255 @@
+build.log
+claim.out
+noheat
+nohydro
+p1
+p1.out
+probe.json
+replay.py
+rows.py
+start
+v1
+v1e
+v1e.out
+v1.out
+variant.py
+zfe
+zfe2
+/dev/nvme2n1p2  937G  355G  535G  40% /
+NVIDIA GeForce RTX 3060, 0 %, 13 MiB
+NVIDIA GeForce RTX 4090, 0 %, 19 MiB
+703552 bash -c cd ~/workspace/sandbox_reactions && ls build/m0-d168/ && df -h ~ | tail -1 && nvidia-smi --query-gpu=name,utilization.gpu,memory.used --format=csv,noheader && pgrep -fa sandbox-reactions | head; ls -la build/target/release/sandbox-reactions
+-rwxrwxr-x 2 ybelanger ybelanger 23344568 Nov 10 15:35 build/target/release/sandbox-reactions
+== 2026-11-12T08:37:49-05:00 variant builds on laserax-ai-server
+dest=/home/ybelanger/scratch/d170 · files=15664 · size=315M · linked=none · excluded=13
+=== GO ===
+1
+201:    let kind = x[ID_FE] < 1e-3 || x[ID_N] >= NEUTRON_RICH;
+   Compiling sr-app v0.0.0 (/home/ybelanger/scratch/d170/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.86s
+build T 6 s
+201:    let kind = x[ID_FE] < 0.5 || x[ID_N] >= NEUTRON_RICH;
+   Compiling sr-app v0.0.0 (/home/ybelanger/scratch/d170/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.79s
+build H 6 s
+total 45536
+drwxrwxr-x 2 ybelanger ybelanger     4096 Nov 12 08:38 .
+drwxrwxr-x 3 ybelanger ybelanger     4096 Nov 12 08:37 ..
+-rwxrwxr-x 1 ybelanger ybelanger 23344592 Nov 12 08:38 H
+-rwxrwxr-x 1 ybelanger ybelanger 23344592 Nov 12 08:37 T
+same-as-tree
+    Finished `release` profile [optimized] target(s) in 5.88s
+Z-equals-shipped
+== 2026-11-12T08:38:50-05:00 screen 1 launched (build/m0-d170/run1.sh)
+== cT
+   step        t raw           shown                M |  dfloor/st    drad/st fl/rad |  held   M_held  Fe_held |   Sig_c  X_Fe,c  X_n,c  X_H,c  c_h
+ 450016  3464.23 cloud         main_sequence   2489.2 |        nan        nan    nan |     5    952.7  2.8e-09 |   243.0 2.35e-09  0.000  0.028  yes
+ 450416  3466.75 white_dwarf   white_dwarf     2489.2 |  1.237e-06      41.34  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 450816  3469.24 main_sequence main_sequence   2489.2 |  2.548e-06       14.3  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451216  3471.72 main_sequence main_sequence   2489.2 |     0.4193      9.595  0.044 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451616  3474.20 main_sequence main_sequence   2489.2 |      1.403      9.161  0.153 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 452001  3476.59 main_sequence main_sequence   2489.2 |      3.161      2.954  1.070 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+== cH
+   step        t raw           shown                M |  dfloor/st    drad/st fl/rad |  held   M_held  Fe_held |   Sig_c  X_Fe,c  X_n,c  X_H,c  c_h
+ 450016  3464.23 cloud         main_sequence   2489.2 |        nan        nan    nan |     5    952.7  2.8e-09 |   243.0 2.35e-09  0.000  0.028  yes
+ 450416  3466.75 white_dwarf   white_dwarf     2489.2 |  1.237e-06      41.34  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 450816  3469.24 main_sequence main_sequence   2489.2 |  2.548e-06       14.3  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451216  3471.72 main_sequence main_sequence   2489.2 |     0.4193      9.595  0.044 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451616  3474.20 main_sequence main_sequence   2489.2 |      1.403      9.161  0.153 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 452001  3476.59 main_sequence main_sequence   2489.2 |      3.161      2.954  1.070 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+cT=cH final dump bit for bit
+cT/dumps/s_452001.bin ../m0-d168/zfe/run/dumps/s_452001.bin differ: byte 227, line 1
+== mZ
+   step        t raw           shown                M |  dfloor/st    drad/st fl/rad |  held   M_held  Fe_held |   Sig_c  X_Fe,c  X_n,c  X_H,c  c_h
+  14250   141.04 main_sequence main_sequence   8698.8 |        nan        nan    nan |     0      0.0        0 |    20.6 4.33e-16  0.000  0.273   no
+  15750   154.60 he_core       he_core         8288.0 |          0       1277  0.000 |     0      0.0        0 |    29.1 6.15e-12  0.000  0.259   no
+  17250   166.93 he_core       he_core         7941.0 |          0       1501  0.000 |     0      0.0        0 |    42.0 4.01e-07  0.000  0.240   no
+  18750   178.08 main_sequence main_sequence   7648.7 |          0       1790  0.000 |     0      0.0        0 |    59.6 0.000825  0.000  0.207   no
+  20250   188.18 o_burn        o_burn          7348.4 |          0       2152  0.000 |     0      0.0        0 |    82.2   0.072  0.000  0.189   no
+  21750   197.40 main_sequence main_sequence   7087.2 |          0       2653  0.000 |     0      0.0        0 |   114.8   0.814  0.000  0.166   no
+  23250   205.83 main_sequence main_sequence   6891.0 |          0       3306  0.000 |     0      0.0        0 |   172.8   0.895  0.000  0.103   no
+  24750   212.84 core_collapse core_collapse   6768.3 |       9649       5311  1.817 |     0      0.0        0 |   726.7 4.84e-05  0.270  0.384   no
+  26250   219.05 main_sequence main_sequence   6689.1 |       1731      223.1  7.759 |     0      0.0        0 |   282.2 0.000489  0.446  0.334   no
+  27750   226.99 main_sequence main_sequence   6543.0 |      522.6      130.8  3.997 |     0      0.0        0 |   157.0 0.000489  0.446  0.333   no
+  29250   235.92 main_sequence main_sequence   6408.0 |      316.4      92.82  3.408 |     0      0.0        0 |   135.3 0.000489  0.446  0.333   no
+  30750   245.50 main_sequence main_sequence   6439.7 |      231.6      91.92  2.520 |     0      0.0        0 |   109.5 0.000489  0.446  0.333   no
+  32250   255.51 main_sequence main_sequence   6471.2 |      197.9      55.24  3.582 |     0      0.0        0 |    99.5 0.00049  0.446  0.333   no
+  33750   265.88 main_sequence main_sequence   6495.7 |        171      57.24  2.987 |     0      0.0        0 |    94.2 0.00049  0.446  0.333   no
+  35250   276.50 main_sequence main_sequence   6514.2 |      110.3       61.6  1.790 |     0      0.0        0 |    88.2 0.00049  0.446  0.333   no
+  36750   287.43 main_sequence main_sequence   6526.9 |      88.66      51.35  1.726 |     0      0.0        0 |    88.2 0.00049  0.446  0.333   no
+  38250   298.56 main_sequence main_sequence   6534.7 |      95.16      40.71  2.338 |     0      0.0        0 |    79.6 0.00049  0.446  0.333   no
+  39750   309.87 main_sequence main_sequence   6543.7 |      132.1      34.03  3.883 |     0      0.0        0 |    82.3 0.00049  0.446  0.333   no
+  41250   321.27 main_sequence main_sequence   6547.9 |      65.06      31.46  2.068 |     0      0.0        0 |    76.6 0.00049  0.446  0.333   no
+  42750   333.01 main_sequence main_sequence   6554.1 |       54.3      38.23  1.420 |     0      0.0        0 |    72.6 0.00049  0.446  0.333   no
+  44250   344.78 main_sequence main_sequence   6525.5 |      84.52      28.84  2.930 |     0      0.0        0 |    74.9 0.00049  0.446  0.333   no
+  45750   356.72 main_sequence main_sequence   6527.7 |       54.9      23.92  2.295 |     0      0.0        0 |    72.6 0.00049  0.446  0.333   no
+  47250   368.71 main_sequence main_sequence   6484.4 |      57.18      23.54  2.429 |     0      0.0        0 |    69.2 0.00049  0.446  0.333   no
+  48750   380.76 main_sequence main_sequence   6484.4 |      22.83      28.47  0.802 |     0      0.0        0 |    69.9 0.00049  0.446  0.333   no
+  50250   393.04 main_sequence main_sequence   6479.1 |       85.8      21.86  3.925 |     0      0.0        0 |    66.4 0.00049  0.445  0.333   no
+  51750   405.36 main_sequence main_sequence   6480.1 |      78.48      20.87  3.761 |     0      0.0        0 |    68.1 0.00049  0.445  0.333   no
+  53250   417.70 main_sequence main_sequence   6469.2 |      15.33      23.35  0.657 |     0      0.0        0 |    67.3 0.000489  0.445  0.333   no
+  53500   419.80 cloud         main_sequence   6458.4 |      20.94      28.27  0.741 |     0      0.0        0 |    63.1 0.000489  0.445  0.333   no
+== mT
+   step        t raw           shown                M |  dfloor/st    drad/st fl/rad |  held   M_held  Fe_held |   Sig_c  X_Fe,c  X_n,c  X_H,c  c_h
+  14250   141.04 main_sequence main_sequence   8698.8 |        nan        nan    nan |     0      0.0        0 |    20.6 4.33e-16  0.000  0.273   no
+  15750   154.60 he_core       he_core         8288.0 |          0       1277  0.000 |     0      0.0        0 |    29.1 6.15e-12  0.000  0.259   no
+  17250   166.93 he_core       he_core         7941.0 |          0       1501  0.000 |     0      0.0        0 |    42.0 4.01e-07  0.000  0.240   no
+  18750   178.08 main_sequence main_sequence   7648.7 |          0       1790  0.000 |     0      0.0        0 |    59.6 0.000825  0.000  0.207   no
+  20250   188.18 o_burn        o_burn          7348.4 |          0       2152  0.000 |     0      0.0        0 |    82.2   0.072  0.000  0.189   no
+  21750   197.40 main_sequence main_sequence   7087.2 |          0       2653  0.000 |     0      0.0        0 |   114.8   0.814  0.000  0.166   no
+  23250   205.83 main_sequence main_sequence   6891.0 |          0       3306  0.000 |     0      0.0        0 |   172.8   0.895  0.000  0.103   no
+  24750   212.84 core_collapse core_collapse   6768.3 |       9649       5311  1.817 |     0      0.0        0 |   726.7 4.84e-05  0.270  0.384   no
+  26250   219.05 main_sequence main_sequence   6689.1 |       1731      223.1  7.759 |     0      0.0        0 |   282.2 0.000489  0.446  0.334   no
+  27750   226.99 main_sequence main_sequence   6543.0 |      522.6      130.8  3.997 |     0      0.0        0 |   157.0 0.000489  0.446  0.333   no
+  29250   235.92 main_sequence main_sequence   6408.0 |      316.4      92.82  3.408 |     0      0.0        0 |   135.3 0.000489  0.446  0.333   no
+  30750   245.50 main_sequence main_sequence   6439.7 |      231.6      91.92  2.520 |     0      0.0        0 |   109.5 0.000489  0.446  0.333   no
+  32250   255.51 main_sequence main_sequence   6471.2 |      197.9      55.24  3.582 |     0      0.0        0 |    99.5 0.00049  0.446  0.333   no
+  33750   265.88 main_sequence main_sequence   6495.7 |        171      57.24  2.987 |     0      0.0        0 |    94.2 0.00049  0.446  0.333   no
+  35250   276.50 main_sequence main_sequence   6514.2 |      110.3       61.6  1.790 |     0      0.0        0 |    88.2 0.00049  0.446  0.333   no
+  36750   287.23 main_sequence main_sequence   6526.8 |      15.87      51.86  0.306 |     0      0.0        0 |   101.9 0.00049  0.446  0.333   no
+  38250   297.66 main_sequence main_sequence   6536.0 |      84.82      58.44  1.451 |     0      0.0        0 |   120.5 0.00049  0.446  0.333   no
+  39750   308.62 main_sequence main_sequence   6549.9 |          0      451.6  0.000 |     0      0.0        0 |    42.6 0.000492  0.446  0.284   no
+  41250   321.03 main_sequence main_sequence   6412.3 |          0      586.5  0.000 |     0      0.0        0 |    49.7 0.000495  0.446  0.237   no
+  42750   333.28 main_sequence main_sequence   6002.0 |          0      513.6  0.000 |     0      0.0        0 |    55.1 0.000497  0.446  0.203   no
+  44250   345.46 main_sequence main_sequence   5650.6 |          0      405.1  0.000 |     0      0.0        0 |    60.0 0.000498  0.446  0.175   no
+  45750   357.65 main_sequence main_sequence   5403.8 |          0      309.5  0.000 |     0      0.0        0 |    63.0 0.000498  0.446  0.155   no
+  47250   369.84 neutron_star  neutron_star    5255.1 |          0      227.9  0.000 |     0      0.0        0 |    65.1 0.000497  0.446  0.135   no
+  47516   372.02 neutron_star  neutron_star    5235.1 |          0      193.9  0.000 |     0      0.0        0 |    65.6 0.000497  0.446  0.131   no
+cmp: mT/dumps/s_33516.bin: No such file or directory
+{"detail":{"held_t":10.040721041150391,"hold_t":10.0,"mass_sb":5235.052286984399,"stage":"neutron_star"},"kind":"ending","object":1,"sim_time":372.0204292528797,"step":47516}
+mT=mH last dump bit for bit
+s_35250.bin
+s_35250.observers.json
+   step        t raw           shown                M |  dfloor/st    drad/st fl/rad |  held   M_held  Fe_held |   Sig_c  X_Fe,c  X_n,c  X_H,c  c_h
+Traceback (most recent call last):
+  File "/home/ybelanger/workspace/sandbox_reactions/build/m0-d170/frames.py", line 30, in <module>
+    b = open('%s/s_%d.bin' % (d, s), 'rb').read(); n = struct.unpack('<I', b[8:12])[0]; h = json.loads(b[12:12 + n])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'sub/s_35250.bin'
+{"detail":{"mass_sb":6798.105587176979},"kind":"core_collapse","object":1,"sim_time":210.91804103692994,"step":24266}
+{"detail":{"held_t":10.040721041150391,"hold_t":10.0,"mass_sb":5235.052286984399,"stage":"neutron_star"},"kind":"ending","object":1,"sim_time":372.0204292528797,"step":47516}
+   step        t raw           shown                M |  dfloor/st    drad/st fl/rad |  held   M_held  Fe_held |   Sig_c  X_Fe,c  X_n,c  X_H,c  c_h
+  35250   276.50 main_sequence main_sequence   6514.2 |        nan        nan    nan |     0      0.0        0 |    88.2 0.00049  0.446  0.333   no
+  35500   278.31 main_sequence main_sequence   6517.3 |      165.8      38.79  4.276 |     0      0.0        0 |    90.5 0.00049  0.446  0.333   no
+  35750   280.13 main_sequence main_sequence   6519.7 |      117.3      46.14  2.542 |     0      0.0        0 |    87.3 0.00049  0.446  0.333   no
+  36000   281.88 main_sequence main_sequence   6520.4 |      43.23      57.49  0.752 |     0      0.0        0 |    91.8 0.00049  0.446  0.333   no
+  36250   283.67 main_sequence main_sequence   6522.4 |       61.3      40.98  1.496 |     0      0.0        0 |    93.5 0.00049  0.446  0.333   no
+  36500   285.47 main_sequence main_sequence   6525.2 |      87.88      51.65  1.702 |     0      0.0        0 |    96.1 0.00049  0.446  0.333   no
+  36750   287.23 main_sequence main_sequence   6526.8 |      15.87      51.86  0.306 |     0      0.0        0 |   101.9 0.00049  0.446  0.333   no
+  37000   288.99 main_sequence main_sequence   6528.6 |      37.59      44.05  0.853 |     0      0.0        0 |    99.6 0.00049  0.446  0.333   no
+  37250   290.75 main_sequence main_sequence   6530.7 |      6.047      63.33  0.095 |     0      0.0        0 |   103.3 0.00049  0.446  0.333   no
+  37500   292.52 main_sequence main_sequence   6531.1 |      19.17      40.25  0.476 |     0      0.0        0 |   106.4 0.00049  0.446  0.333   no
+  37750   294.26 main_sequence main_sequence   6533.3 |      1.268      49.42  0.026 |     0      0.0        0 |   107.8 0.00049  0.446  0.333   no
+  38000   295.96 main_sequence main_sequence   6534.5 |      35.18      44.09  0.798 |     0      0.0        0 |   114.9 0.00049  0.446  0.333   no
+  38250   297.66 main_sequence main_sequence   6536.0 |      84.82      58.44  1.451 |     0      0.0        0 |   120.5 0.00049  0.446  0.333   no
+  38500   299.35 main_sequence main_sequence   6537.6 |      43.37      53.62  0.809 |     3    334.5  0.00049 |   119.8 0.00049  0.446  0.331   no
+  38750   301.02 main_sequence main_sequence   6539.2 |          0      96.51  0.000 |     0      0.0        0 |    89.8 0.00049  0.446  0.324   no
+  39000   302.72 main_sequence main_sequence   6540.2 |          0      112.4  0.000 |     0      0.0        0 |    64.6 0.000491  0.446  0.316   no
+  39250   304.56 main_sequence main_sequence   6541.3 |          0        155  0.000 |     0      0.0        0 |    50.3 0.000491  0.446  0.306   no
+  39500   306.54 main_sequence main_sequence   6543.9 |          0      323.6  0.000 |     0      0.0        0 |    43.7 0.000491  0.446  0.296   no
+  39750   308.62 main_sequence main_sequence   6549.9 |          0      451.6  0.000 |     0      0.0        0 |    42.6 0.000492  0.446  0.284   no
+  40000   310.71 main_sequence main_sequence   6554.7 |          0      534.6  0.000 |     0      0.0        0 |    42.7 0.000492  0.446  0.274   no
+  40250   312.78 main_sequence main_sequence   6553.1 |          0      573.3  0.000 |     0      0.0        0 |    44.2 0.000493  0.446  0.265   no
+Counter({'ignition': 1, 'core_collapse': 1, 'ending': 1})
+{"detail":{"held_t":10.040721041150391,"hold_t":10.0,"mass_sb":5235.052286984399,"stage":"neutron_star"},"kind":"ending","object":1,"sim_time":372.0204292528797,"step":47516}
+== 2026-11-12T08:49:22-05:00 screen 2 launched (build/m0-d170/run2.sh, Giant Z/T/H)
+   step         t raw           shown         |   d_c        L    L_nuc Lnuc/L  vr/vd   2P/W   sett |     L_H  LH/Ln    X_H     R | dfloor/st   drad/st   dnuc/st       dt
+ 450016  3464.228 cloud         main_sequence | 0.997 1.53e+05 3.17e+03 2.1e-02 -0.045  0.772     no |    2.07   0.00 0.0279   2.0 |       nan       nan       nan  0.00636
+ 450176  3465.240 white_dwarf   white_dwarf   | 0.977 1.29e+04     0.29 2.2e-05 -0.009  0.744     no |   0.265   0.91 0.0279   2.0 |     6.125     81.26  0.001826  0.00630
+ 450336  3466.245 white_dwarf   white_dwarf   | 0.967 5.46e+03    0.169 3.1e-05 -0.009  0.737     no |   0.169   1.00 0.0279   2.0 | 7.898e-07     34.23  0.001058  0.00627
+ 450496  3467.246 white_dwarf   white_dwarf   | 0.960 3.87e+03     19.6 5.1e-03 -0.009  0.733     no |    19.6   1.00 0.0279   2.0 | 1.281e-06     24.18    0.1226  0.00625
+ 450656  3468.244 main_sequence white_dwarf   | 0.956 3.08e+03     33.8 1.1e-02 -0.009  0.730     no |    33.8   1.00 0.0279   2.0 | 1.185e-06      19.2    0.2107  0.00623
+ 450816  3469.240 main_sequence main_sequence | 0.953  2.3e+03     48.1 2.1e-02 -0.009  0.727     no |    48.1   1.00 0.0279   2.0 | 2.548e-06      14.3     0.299  0.00622
+ 450976  3470.235 main_sequence main_sequence | 0.950 2.31e+03     61.2 2.6e-02 -0.009  0.726     no |    61.2   1.00 0.0278   2.0 |  0.005512     14.36    0.3804  0.00621
+ 451136  3471.228 main_sequence main_sequence | 0.948 2.68e+03     72.8 2.7e-02 -0.009  0.724     no |    72.8   1.00 0.0278   2.0 |  0.001107     16.64    0.4517  0.00621
+ 451296  3472.221 main_sequence main_sequence | 0.947 1.54e+03     82.5 5.4e-02 -0.009  0.722     no |    82.5   1.00 0.0278   2.0 |    0.6656     9.541    0.5118  0.00620
+ 451456  3473.213 main_sequence main_sequence | 0.946 1.16e+03     90.5 7.8e-02 -0.009  0.721     no |    90.5   1.00 0.0277   2.0 |     1.581     7.212     0.561  0.00620
+ 451616  3474.204 main_sequence main_sequence | 0.945 1.48e+03     96.8 6.5e-02 -0.009  0.720     no |    96.8   1.00 0.0277   2.0 |     1.403     9.161       0.6  0.00620
+ 451776  3475.195 main_sequence main_sequence | 0.944      981      102 1.0e-01 -0.009  0.719     no |     102   1.00 0.0276   2.0 |     2.163     6.079    0.6299  0.00619
+ 451936  3476.186 main_sequence main_sequence | 0.944 1.55e+03      105 6.8e-02 -0.009  0.719     no |     105   1.00 0.0276   2.0 |     1.819     9.598    0.6519  0.00619
+ 452001  3476.589 main_sequence main_sequence | 0.944      477      107 2.2e-01 -0.009  0.718     no |     107   1.00 0.0276   2.0 |     3.161     2.954    0.6595  0.00619
+gZ exit 0 SR-HEADLESS DONE steps=18796 sim_time=78.025136 until=met
+gH exit 0 SR-HEADLESS DONE steps=18796 sim_time=78.025136 until=met
+gT exit 0 SR-HEADLESS DONE steps=18796 sim_time=78.025136 until=met
+== gZ
+{"detail":{"mass_sb":39077.2491485402},"kind":"core_collapse","object":1,"sim_time":26.08763974509202,"step":4396}
+{"detail":{"mass_sb":38707.11813096702},"kind":"supernova","object":1,"sim_time":26.83439638465643,"step":4732}
+{"detail":{"held_t":21.6850425475277,"hold_t":21.65545881983556,"mass_sb":26835.087881721556,"stage":"black_hole"},"kind":"ending","object":1,"sim_time":78.02513612201437,"step":19996}
+== gT
+{"detail":{"mass_sb":39077.2491485402},"kind":"core_collapse","object":1,"sim_time":26.08763974509202,"step":4396}
+{"detail":{"mass_sb":38707.11813096702},"kind":"supernova","object":1,"sim_time":26.83439638465643,"step":4732}
+{"detail":{"held_t":21.6850425475277,"hold_t":21.65545881983556,"mass_sb":26835.087881721556,"stage":"black_hole"},"kind":"ending","object":1,"sim_time":78.02513612201437,"step":19996}
+== gH
+{"detail":{"mass_sb":39077.2491485402},"kind":"core_collapse","object":1,"sim_time":26.08763974509202,"step":4396}
+{"detail":{"mass_sb":38707.11813096702},"kind":"supernova","object":1,"sim_time":26.83439638465643,"step":4732}
+{"detail":{"held_t":21.6850425475277,"hold_t":21.65545881983556,"mass_sb":26835.087881721556,"stage":"black_hole"},"kind":"ending","object":1,"sim_time":78.02513612201437,"step":19996}
+gT=gH at 19996
+gT=gZ at 19996
+   step        t raw           shown                M |  dfloor/st    drad/st fl/rad |  held   M_held  Fe_held |   Sig_c  X_Fe,c  X_n,c  X_H,c  c_h
+   1300     5.90 cloud         cloud          43143.3 |        nan        nan    nan |     0      0.0        0 |     1.1       0  0.000  0.731   no
+   5300    27.88 supernova     supernova      38072.2 |  2.965e+05  2.112e+04 14.040 |     0      0.0        0 |  1820.6       0  0.508  0.486   no
+   9300    38.98 core_collapse core_collapse  29410.4 |       5215       9649  0.540 |     0      0.0        0 |   494.9 4.35e-05  0.478  0.418   no
+  13300    52.12 main_sequence main_sequence  27606.6 |          0       6853  0.000 |     0      0.0        0 |   252.3   0.186  0.502  0.305   no
+  17300    68.03 black_hole    black_hole     27060.3 | -5.358e-07       4002 -0.000 |     0      0.0        0 |    18.2  0.0545  0.484  0.232   no
+  19996    78.03 black_hole    black_hole     26835.1 | -5.712e-07       1709 -0.000 |     0      0.0        0 |    10.2  0.0399  0.475  0.241   no
+== 2026-11-12T09:04:30-05:00 tree rsync'd to laserax-ai-server
+anchor: 0 path×scope entries moved by this run
+anchor: 181 paths checked · 426 skipped (3 classes) · 224 never checked · 1 stale · 8 unclassified · 42 owed · 448 covered of 882 visible
+FAILED:
+  held_core: 1 failed · log milestones/m0/logs/M0-D170.held_core.log
+verify: 24 passed, 1 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 121.89 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.0->0.74
+=== NO-GO: held_core: 1 failed · log milestones/m0/logs/M0-D170.held_core.log ===
+  python3 tools/pb/verify.py <scope> --case <id> --task <ID>
+  python3 tools/pb/verify.py --changed [--base <commit>] --task <ID>
+  python3 tools/pb/verify.py --force <scope>... --task <ID>
+  python3 tools/pb/verify.py --redarm <scope> --task <ID>
+  python3 tools/pb/verify.py --redarm --moved --task <ID>
+  python3 tools/pb/verify.py list
+  python3 tools/pb/verify.py report [--since YYYY-MM-DD] [--budget <s>]
+  python3 tools/pb/verify.py start [--fresh] --task <ID>
+  python3 tools/pb/verify.py touched [--task <ID>] [--path <glob>]
+  python3 tools/pb/verify.py selftest
+verify: wrong call - nothing run
+=== NO-GO: --redarm names its one scope itself: --redarm <scope> - the calls are listed above ===
+build native: 1.99.0 in 6 s, target /home/ybelanger/workspace/sandbox_reactions/build/target (1.7G)
+=== GO ===
+let kind = x[ID_FE] < IRON_TRACE 
+exit 2
+SR-HEADLESS DONE steps=452001 sim_time=3476.588903 until=unmet
+v1 = cT bit for bit
+ 450816  3469.24 main_sequence main_sequence   2489.2 |  2.548e-06       14.3  0.000 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451216  3471.72 main_sequence main_sequence   2489.2 |     0.4193      9.595  0.044 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 451616  3474.20 main_sequence main_sequence   2489.2 |      1.403      9.161  0.153 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+ 452001  3476.59 main_sequence main_sequence   2489.2 |      3.161      2.954  1.070 |    21   2320.7    3e-07 |   243.0 2.35e-09  0.000  0.028  yes
+last 993 steps (451008..452001): floor 1.26/step, radiated 9.345/step, floor/radiated 0.135, floor vs shipped 1141/step: 0.11 %
+exit 1
+UNCLASSIFIED   m_h8he20_lad.out  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   m_h8he20_lad_bounce.out  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   s_ctl.out  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   s_h8he20_lad.out  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   screen3.done  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   screen3.status  (no scope's `paths` match it and no skip class names it - declare one)
+skipped   418  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  stage_order: 2 failed · log milestones/m0/logs/M0-D170.stage_order.log
+  multi: 2 failed · log milestones/m0/logs/M0-D170.multi.log
+  sun_burn: 3 failed · log milestones/m0/logs/M0-D170.sun_burn.log
+  twin: 2 failed · log milestones/m0/logs/M0-D170.twin.log
+  heat_stiff: 1 failed · log milestones/m0/logs/M0-D170.heat_stiff.log
+  timing: 1 failed · log milestones/m0/logs/M0-D170.timing.log
+  scene: 1 failed · log milestones/m0/logs/M0-D170.scene.log
+  dump: 2 failed · log milestones/m0/logs/M0-D170.dump.log
+  boot: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO · log milestones/m0/logs/M0-D170.boot.log
+  calibration: 1 failed · log milestones/m0/logs/M0-D170.calibration.log
+  held_core: 1 failed · log milestones/m0/logs/M0-D170.held_core.log
+  frames: 5 failed · log milestones/m0/logs/M0-D170.frames.log
+  ui_banner: 3 failed · log milestones/m0/logs/M0-D170.ui_banner.log
+  ui_presets: 1 failed · log milestones/m0/logs/M0-D170.ui_presets.log
+  ui_star: 7 failed · log milestones/m0/logs/M0-D170.ui_star.log
+  ui_inspect: 5 failed · log milestones/m0/logs/M0-D170.ui_inspect.log
+  redarm held_core: clean: 1 failed - red with no plant, so a red plant would prove nothing; the plants are not counted
+  anchor: 224 never checked, 0 stale, 8 unclassified - every one named above
+verify: 804 passed, 38 failed, 0 skipped · 59/75 scopes GO · 0 skipped · 5 owed · 0 NOT RUN · 8 not impacted · 159.81 s + loop 251.65 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.33->2.05 · base: M0-D170's start 2026-11-12T08:35:03-05:00
+=== NO-GO: stage_order: 2 failed · log milestones/m0/logs/M0-D170.stage_order.log; multi: 2 failed · log milestones/m0/logs/M0-D170.multi.log; sun_burn: 3 failed · log milestones/m0/logs/M0-D170.sun_burn.log; twin: 2 failed · log milestones/m0/logs/M0-D170.twin.log; heat_stiff: 1 failed · log milestones/m0/logs/M0-D170.heat_stiff.log; timing: 1 failed · log milestones/m0/logs/M0-D170.timing.log; sc... ===

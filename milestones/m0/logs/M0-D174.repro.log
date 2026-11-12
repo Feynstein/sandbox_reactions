@@ -1,0 +1,16 @@
+SR-LEDGER-HELD disk M 900: steps 1..1000, held (-2.5563e-1, -2.4445e-1) = 1.134e-2 of Σm|u| 3.1199e1; grid (2.5158e-1, 2.2508e-1); invariant drift 6.344e-4 of Σm|u| with held, 1.082e-2 without (held over the drift without); snapshot's held (0.0000e0, 0.0000e0) + spared (-2.5563e-1, -2.4445e-1)
+
+thread 'ledger::the_held_disk_writes_the_ledgers_held_into_summary_json' (742377) panicked at crates/sr-engine/tests/gpu/ledger.rs:533:5:
+held 1.134e-2 of Σm|u| over the drift without held 1.082e-2: the held cores book more than the free gas's pull
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    ledger::the_held_disk_writes_the_ledgers_held_into_summary_json
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 511 filtered out; finished in 1.15s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+/tmp/sr-ledger-742376-held
