@@ -1,0 +1,4 @@
+# M0-D175-race | launch game-xvfb | 2026-11-12T16:34:33-0500
+# private X display :100, its X server pid 1910543
+$ build/target/release/sandbox-reactions --status-port 47811 --adapter llvmpipe
+SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402 (change a constant, calibrate again: sandbox-reactions calibrate)

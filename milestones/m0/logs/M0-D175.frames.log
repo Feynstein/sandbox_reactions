@@ -1,0 +1,63 @@
+== 2026-11-12T16:34:32-05:00 frames · task M0-D175 · box laserax-ai :: bash tests/gpu.sh frames physics
+-- frames · exit=101 · 0.11 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 6 tests
+test frames::bad_frame_arguments_are_exit_4 ... SR-ERROR bad arguments: --frames-every must be at least 1
+SR-ERROR bad arguments: --frames-every takes a whole number, got "x"
+SR-ERROR bad arguments: --view takes glow, heat, element or density, got "mass"
+SR-ERROR bad arguments: --view needs --frames-every (the view the frames are drawn in)
+SR-ERROR bad arguments: --adapter is the GPU's: it has no meaning with --cpu-reference
+SR-ERROR bad arguments: --frames-every needs --out (frames go to DIR/frames)
+ok
+test frames::each_frame_is_the_state_of_the_step_in_its_name_glow ... SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'frames::each_frame_is_the_state_of_the_step_in_its_name_glow' (1910273) panicked at crates/sr-engine/tests/gpu/frames.rs:63:5:
+assertion `left == right` failed: headless ["--steps", "40", "--frames-every", "10", "--dump-every", "10"]: ["SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402 (change a constant, calibrate again: sandbox-reactions calibrate)"]
+  left: 6
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test frames::frames_land_at_every_n_steps_at_the_worlds_size ... SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'frames::frames_land_at_every_n_steps_at_the_worlds_size' (1910274) panicked at crates/sr-engine/tests/gpu/frames.rs:63:5:
+assertion `left == right` failed: headless ["--steps", "50", "--frames-every", "10"]: ["SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402 (change a constant, calibrate again: sandbox-reactions calibrate)"]
+  left: 6
+ right: 0
+FAILED
+test frames::frames_leave_the_run_unchanged ... SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'frames::frames_leave_the_run_unchanged' (1910275) panicked at crates/sr-engine/tests/gpu/frames.rs:63:5:
+assertion `left == right` failed: headless ["--steps", "50", "--frames-every", "7"]: ["SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402 (change a constant, calibrate again: sandbox-reactions calibrate)"]
+  left: 6
+ right: 0
+FAILED
+test frames::the_glow_frame_of_a_hot_disk_is_lit_and_brighter_at_its_centre ... SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'frames::the_glow_frame_of_a_hot_disk_is_lit_and_brighter_at_its_centre' (1910276) panicked at crates/sr-engine/tests/gpu/frames.rs:63:5:
+assertion `left == right` failed: headless ["--steps", "10", "--frames-every", "10"]: ["SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402 (change a constant, calibrate again: sandbox-reactions calibrate)"]
+  left: 6
+ right: 0
+FAILED
+test frames::the_view_flag_draws_the_chosen_view ... SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'frames::the_view_flag_draws_the_chosen_view' (1910277) panicked at crates/sr-engine/tests/gpu/frames.rs:63:5:
+assertion `left == right` failed: headless ["--steps", "40", "--frames-every", "10", "--dump-every", "10", "--view", "heat"]: ["SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402 (change a constant, calibrate again: sandbox-reactions calibrate)"]
+  left: 6
+ right: 0
+FAILED
+
+failures:
+
+failures:
+    frames::each_frame_is_the_state_of_the_step_in_its_name_glow
+    frames::frames_land_at_every_n_steps_at_the_worlds_size
+    frames::frames_leave_the_run_unchanged
+    frames::the_glow_frame_of_a_hot_disk_is_lit_and_brighter_at_its_centre
+    frames::the_view_flag_draws_the_chosen_view
+
+test result: FAILED. 1 passed; 5 failed; 0 ignored; 0 measured; 506 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

@@ -1,0 +1,115 @@
+report: 383 DONE blocks · 16 class/rung rows · 2 session folder(s) (-home-ybelanger-private-sandbox-reactions, -home-ybelanger) · 124 block(s) with no session file readable (rung from the handoff, cost null) · 0 block(s) priced from tokens (a session file with no cost line) · 0 priced from list prices · 14 D block(s) naming no cause in the record · $1392.42 read from the sessions' own cost
+BUILD on Haiku 5.5, high: 1 block(s) · first-try 0/1 · $3.20 per DONE block · off the ladder
+BUILD on Opus 5.5, high: 143 block(s) · first-try 63/135 · $13.48 per DONE block · usual
+BUILD on Opus 5.5, xhigh: 6 block(s) · first-try 1/6 · $5.79 per DONE block · above (usual)
+BUILD on Sonnet 5.5, high: 118 block(s) · first-try 76/113 · $2.88 per DONE block · cheaper on Sonnet 5.5, high · vs same class on (usual)
+BUILD on Sonnet 5.5, medium: 1 block(s) · first-try 0/1 · $0.36 per DONE block · n<10
+BUILD on unknown: 26 block(s) · first-try 17/21 · n/a per DONE block · off the ladder
+BUILD·E on Haiku 5.5, high: 10 block(s) · first-try 8/9 · $0.49 per DONE block · off the ladder
+BUILD·E on Opus 5.5, high: 2 block(s) · first-try 1/2 · $2.38 per DONE block · usual
+BUILD·E on Sonnet 5.5, medium: 14 block(s) · first-try 12/12 · $0.80 per DONE block · cheaper on Sonnet 5.5, medium · vs (usual) BUILD blocks, all classes
+CHECK on Opus 5.5, max: 19 block(s) · first-try 11/18 · $24.80 per DONE block · above (usual)
+MOVE on Haiku 5.5, high: 5 block(s) · first-try 4/5 · $0.11 per DONE block · off the ladder
+MOVE on Opus 5.5, high: 1 block(s) · first-try 0/1 · $1.59 per DONE block · usual
+MOVE on Sonnet 5.5, medium: 6 block(s) · first-try 5/5 · $0.24 per DONE block · n<10
+MOVE on unknown: 2 block(s) · first-try 2/2 · n/a per DONE block · off the ladder
+PLAN on Opus 5.5, max: 26 block(s) · first-try 18/26 · $10.22 per DONE block · above (usual)
+PLAN on unknown: 3 block(s) · first-try n/a · n/a per DONE block · off the ladder
+=== GO ===
+lint: checks=868 failed=0 warnings=8 · blocks=415 · flow_rows=415 · verify_fences=0 · history=0 · flow=per-task · header=614/600 · pipeline=9/60 · ladder=6 rungs · refresh=2/5
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T103: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T106: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-TM18 1 · M0-D175 1
+=== GO ===
+status: checks=2 failed=0 warnings=0 · flow=per-task
+=== GO ===
+register: checks=1 failed=0 warnings=0 · set=1 · replaced=1 · appended=0
+=== GO ===
+lint: checks=868 failed=0 warnings=8 · blocks=415 · flow_rows=415 · verify_fences=0 · history=0 · flow=per-task · header=614/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T103: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T106: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-TM18 1 · M0-D175 1
+=== GO ===
+plan_lint  868/0/0      0.12 s  GO
+logs: milestones/m0/logs/M0-TM18.<scope>.log · record: loop_times.jsonl · tree 0487e70f1f97+91542683a667
+anchor: 1 path×scope entries moved by this run
+anchor: 182 paths checked · 431 skipped (3 classes) · 268 never checked · 1 stale · 8 unclassified · 0 owed · 451 covered of 890 visible
+verify: 868 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 2.65->2.65
+=== GO ===
+touched: 0 task(s) · 0 path(s) · 359 claim record(s) naming their files · 71 without (before the field) · 0 foreign
+=== NO-GO: no claim record of M0-TM18 names its files ===
+close: checks=3 failed=0 warnings=1 · handoff_lines=1 · flow=per-task
+WARN: no milestones/m0/tasks/M0-TM18.md - detail belongs there, not in the plan
+=== GO ===
+lint: checks=867 failed=0 warnings=8 · blocks=415 · flow_rows=415 · verify_fences=0 · history=0 · flow=per-task · header=614/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T103: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T106: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D175 1
+=== GO ===
+plan_lint  867/0/0      0.07 s  GO
+logs: milestones/m0/logs/M0-TM18-close.<scope>.log · record: loop_times.jsonl · tree 0487e70f1f97+39bbd9136b04
+anchor: 1 path×scope entries moved by this run
+anchor: 182 paths checked · 432 skipped (3 classes) · 268 never checked · 1 stale · 8 unclassified · 0 owed · 451 covered of 891 visible
+verify: 867 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.07 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 2.42->2.42
+=== GO ===
+
+== 2026-11-12T15:42:54-05:00 the claim on laserax-ai-server (the lead: «you can run it on the server yourself») — R18's route
+-- bring-back owed by M0-D167 (its claim 12:41:12 never came back): the server's 1 new loop_times line appended, its anchor copied back (144 entries newer there; 1 newer here: plan x plan_lint, M0-TM18-close, re-proved by this claim)
+server copies unchanged since the fetch
+appended 1 line (now 2369); anchor = server's (5f08e27a8a4c44e9)
+-- 2026-11-12T15:43:01-05:00 rsync up (R18): rsync -a --exclude .git --exclude build --exclude .venv ./ ybelanger@192.168.1.134:workspace/sandbox_reactions/
+rsync exit 0, 13 files sent
+-- 2026-11-12T15:43:11-05:00 the claim, on laserax-ai-server (RTX 4090): SR_TEST_ADAPTER="RTX 4090" python3 tools/pb/verify.py --changed --task M0-TM18 (output: build/m0-tm18/claim.out there)
+exit 1
+UNCLASSIFIED   screen3.done  (no scope's `paths` match it and no skip class names it - declare one)
+UNCLASSIFIED   screen3.status  (no scope's `paths` match it and no skip class names it - declare one)
+skipped   424  reports, tasks, the contract and docs - until a scope reads one (the `strings` scope reads the contract's strings block, M0-T13, and takes that file out of this class by its paths), a V block reads them
+skipped     7  instruction and config files - no scope grades text; the lead reads them
+skipped     1  the harness's own manifest and anchor - a wrong entry shows as a red or an uncovered scope, never graded by one
+FAILED:
+  stage_order: 2 failed · log milestones/m0/logs/M0-TM18.stage_order.log
+  multi: 2 failed · log milestones/m0/logs/M0-TM18.multi.log
+  sun_burn: 3 failed · log milestones/m0/logs/M0-TM18.sun_burn.log
+  twin: 2 failed · log milestones/m0/logs/M0-TM18.twin.log
+  heat_stiff: 1 failed · log milestones/m0/logs/M0-TM18.heat_stiff.log
+  timing: 1 failed · log milestones/m0/logs/M0-TM18.timing.log
+  scene: 1 failed · log milestones/m0/logs/M0-TM18.scene.log
+  dump: 2 failed · log milestones/m0/logs/M0-TM18.dump.log
+  boot: 1 failed; its own verdict NO-GO: launch.py smoke headless-boot did not end GO · log milestones/m0/logs/M0-TM18.boot.log
+  calibration: 1 failed · log milestones/m0/logs/M0-TM18.calibration.log
+  held_core: 1 failed · log milestones/m0/logs/M0-TM18.held_core.log
+  frames: 5 failed · log milestones/m0/logs/M0-TM18.frames.log
+  ui_banner: 3 failed · log milestones/m0/logs/M0-TM18.ui_banner.log
+  ui_presets: 1 failed · log milestones/m0/logs/M0-TM18.ui_presets.log
+  ui_star: 7 failed · log milestones/m0/logs/M0-TM18.ui_star.log
+  ui_inspect: 5 failed · log milestones/m0/logs/M0-TM18.ui_inspect.log
+  anchor: 226 never checked, 0 stale, 8 unclassified - every one named above
+verify: 983 passed, 38 failed, 0 skipped · 1/17 scopes GO · 0 skipped · 5 owed · 0 NOT RUN · 66 not impacted · 112.11 s + loop 0.25 s · mode changed · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.0->0.84 · base: M0-TM18's start 2026-11-12T15:23:39-05:00
+=== NO-GO: stage_order: 2 failed · log milestones/m0/logs/M0-TM18.stage_order.log; multi: 2 failed · log milestones/m0/logs/M0-TM18.multi.log; sun_burn: 3 failed · log milestones/m0/logs/M0-TM18.sun_burn.log; twin: 2 failed · log milestones/m0/logs/M0-TM18.twin.log; heat_stiff: 1 failed · log milestones/m0/logs/M0-TM18.heat_stiff.log; timing: 1 failed · log milestones/m0/logs/M0-TM18.timing.log; sc... ===
+wall 113 s
+-- 2026-11-12T15:45:23-05:00 bring-back (R18): the task's logs (not M0-TM18.log / .sync.log), claim.out → logs/M0-TM18.claim.log, the server's new loop_times lines appended, the anchor
+new server loop lines: 1
+loop_times now 2370 lines; anchor e7114c84e719aa65
+handoff: checks=1 failed=0 warnings=0
+=== GO ===
+plan_lint  867/0/0      0.11 s  GO
+logs: milestones/m0/logs/M0-TM18-handoff.<scope>.log · record: loop_times.jsonl · tree 0487e70f1f97+1739d0dc64eb
+anchor: 1 path×scope entries moved by this run
+anchor: 183 paths checked · 432 skipped (3 classes) · 268 never checked · 0 stale · 8 unclassified · 0 owed · 451 covered of 891 visible
+verify: 867 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 9.16->9.31
+=== GO ===

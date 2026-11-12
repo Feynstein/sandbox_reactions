@@ -1,0 +1,10 @@
+== 2026-11-12T16:34:31-05:00 measure_ui[run] · task M0-D175 · box laserax-ai :: bash tests/measure/check.sh {case}
+-- measure_ui[run] · exit=1 · 0.16 s
+SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 8e2de6e4ab6eb78757c35d268
+=== NO-GO: the measure run exited 6, expected 0 ===
+
+== 2026-11-12T16:34:31-05:00 measure_ui[refuse] · task M0-D175 · box laserax-ai :: bash tests/measure/check.sh {case}
+-- measure_ui[refuse] · exit=1 · 0.42 s
+SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402 
+=== NO-GO: expected exit 3 for --measure-ui 5 --calibration /tmp/tmp.BaSBxjGCNA/not-a-calibration.json, got 6 ===
+
