@@ -1,0 +1,14 @@
+== plant stage-hold-one
+thread 'stages::the_giant_preset_shows_its_stages_down_to_black_hole' (926675) panicked at crates/sr-engine/tests/gpu/stages.rs:195:5:
+giant: displayed (step, stage) without 3 identical raw results behind it: [(753, "main_sequence"), (1137, "he_core"), (1457, "main_sequence"), (2865, "he_core"), (2913, "main_sequence"), (3585, "he_core"), (3745, "main_sequence"), (4273, "he_core"), (4385, "main_sequence"), (4785, "he_core"), (4961, "main_sequence"), (5313, "he_core"), (5457, "main_sequence"), (5729, "he_core"), (6369, "o_burn"), (6833, "si_burn"), (7025, "main_sequence"), (8162, "black_hole")]; shown [("protostar", 17), ("main_sequence", 753), ("he_core", 1137), ("main_sequence", 1457), ("he_core", 2865), ("main_sequence", 2913), ("he_core", 3585), ("main_sequence", 3745), ("he_core", 4273), ("main_sequence", 4385), ("he_core", 4785), ("main_sequence", 4961), ("he_core", 5313), ("main_sequence", 5457), ("he_core", 5729), ("o_burn", 6369), ("si_burn", 6833), ("main_sequence", 7025), ("core_collapse", 7985), ("supernova",
+--
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 514 filtered out; finished in 51.65s
+
+19:const HOLD: u32 = 3;
+== plant stage-hold-long
+thread 'stages::the_giant_preset_shows_its_stages_down_to_black_hole' (927245) panicked at crates/sr-engine/tests/gpu/stages.rs:198:9:
+giant: protostar is missing, or comes before the stages ahead of it (searched from displayed #0); the run ended at step 8786 (exit 0); displayed stages with the step each first showed at: [("main_sequence", 2081), ("he_core", 6353), ("main_sequence", 7649), ("core_collapse", 7985), ("supernova", 7986), ("black_hole", 8786)]
+--
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 514 filtered out; finished in 59.15s
+
+19:const HOLD: u32 = 3;

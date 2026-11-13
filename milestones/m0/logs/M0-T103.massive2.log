@@ -1,0 +1,41 @@
+2026-11-13T19:29:46Z
+   Compiling sr-engine v0.0.0 (/home/ybelanger/workspace/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 7.29s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test stages::the_massive_preset_shows_its_stages_down_to_neutron_star ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+massive step=33 t=0.30 shown=protostar raw=protostar M=9810.4 (m_up_sb 6515.5)
+massive step=721 t=4.26 shown=main_sequence raw=main_sequence M=9797.5 (m_up_sb 6515.5)
+massive step=10097 t=95.34 shown=he_core raw=he_core M=9071.1 (m_up_sb 6515.5)
+massive step=10273 t=97.13 shown=main_sequence raw=main_sequence M=9051.3 (m_up_sb 6515.5)
+massive step=10449 t=98.92 shown=he_core raw=he_core M=9030.0 (m_up_sb 6515.5)
+massive step=10625 t=100.70 shown=main_sequence raw=main_sequence M=9007.0 (m_up_sb 6515.5)
+massive step=10785 t=102.33 shown=he_core raw=he_core M=8984.4 (m_up_sb 6515.5)
+massive step=10977 t=104.25 shown=main_sequence raw=main_sequence M=8955.2 (m_up_sb 6515.5)
+massive step=11137 t=105.87 shown=he_core raw=he_core M=8928.9 (m_up_sb 6515.5)
+massive step=11329 t=107.79 shown=main_sequence raw=main_sequence M=8894.8 (m_up_sb 6515.5)
+massive step=11457 t=109.07 shown=he_core raw=he_core M=8870.3 (m_up_sb 6515.5)
+massive step=13873 t=131.78 shown=o_burn raw=o_burn M=8058.1 (m_up_sb 6515.5)
+massive step=15345 t=143.86 shown=si_burn raw=si_burn M=7258.6 (m_up_sb 6515.5)
+massive step=15825 t=147.52 shown=main_sequence raw=main_sequence M=6961.0 (m_up_sb 6515.5)
+massive step=16625 t=153.35 shown=iron_core raw=iron_core M=6459.0 (m_up_sb 6515.5)
+massive step=16865 t=155.01 shown=main_sequence raw=main_sequence M=6312.3 (m_up_sb 6515.5)
+massive step=17313 t=158.03 shown=iron_core raw=iron_core M=6047.5 (m_up_sb 6515.5)
+massive step=18225 t=163.80 shown=main_sequence raw=main_sequence M=5558.6 (m_up_sb 6515.5)
+massive step=18353 t=164.56 shown=he_core raw=he_core M=5497.4 (m_up_sb 6515.5)
+massive step=18497 t=165.38 shown=main_sequence raw=main_sequence M=5432.1 (m_up_sb 6515.5)
+massive step=18577 t=165.83 shown=o_burn raw=o_burn M=5396.8 (m_up_sb 6515.5)
+massive step=18641 t=166.19 shown=main_sequence raw=main_sequence M=5368.9 (m_up_sb 6515.5)
+massive step=18705 t=166.54 shown=he_core raw=he_core M=5341.6 (m_up_sb 6515.5)
+massive step=19521 t=171.04 shown=main_sequence raw=main_sequence M=5024.0 (m_up_sb 6515.5)
+massive step=19649 t=171.74 shown=core_collapse raw=core_collapse M=4979.8 (m_up_sb 6515.5)
+massive step=19650 t=171.75 shown=supernova raw=supernova M=4979.5 (m_up_sb 6515.5)
+massive step=21890 t=183.30 shown=neutron_star raw=neutron_star M=4477.9 (m_up_sb 6515.5)
+SR-HEADLESS DONE steps=21890 sim_time=183.299504 until=met
+massive shown (21890 steps, exit 0): [("protostar", 33), ("main_sequence", 721), ("he_core", 10097), ("main_sequence", 10273), ("he_core", 10449), ("main_sequence", 10625), ("he_core", 10785), ("main_sequence", 10977), ("he_core", 11137), ("main_sequence", 11329), ("he_core", 11457), ("o_burn", 13873), ("si_burn", 15345), ("main_sequence", 15825), ("iron_core", 16625), ("main_sequence", 16865), ("iron_core", 17313), ("main_sequence", 18225), ("he_core", 18353), ("main_sequence", 18497), ("o_burn", 18577), ("main_sequence", 18641), ("he_core", 18705), ("main_sequence", 19521), ("core_collapse", 19649), ("supernova", 19650), ("neutron_star", 21890)]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 514 filtered out; finished in 158.13s
+
+2026-11-13T19:32:31Z

@@ -1,0 +1,66 @@
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 3 tests
+test stages::the_giant_preset_shows_its_stages_down_to_black_hole ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+giant step=33 t=0.26 shown=protostar raw=protostar M=18578.6 (m_up_sb 6515.5)
+giant step=785 t=4.05 shown=main_sequence raw=main_sequence M=18561.9 (m_up_sb 6515.5)
+giant step=1169 t=6.08 shown=he_core raw=he_core M=18547.4 (m_up_sb 6515.5)
+giant step=1489 t=7.74 shown=main_sequence raw=main_sequence M=18523.5 (m_up_sb 6515.5)
+giant step=2897 t=20.38 shown=he_core raw=he_core M=17987.2 (m_up_sb 6515.5)
+giant step=2945 t=20.80 shown=main_sequence raw=main_sequence M=17971.6 (m_up_sb 6515.5)
+giant step=3617 t=27.95 shown=he_core raw=he_core M=17518.2 (m_up_sb 6515.5)
+giant step=3777 t=29.31 shown=main_sequence raw=main_sequence M=17425.4 (m_up_sb 6515.5)
+giant step=4305 t=35.02 shown=he_core raw=he_core M=16932.4 (m_up_sb 6515.5)
+giant step=4417 t=36.01 shown=main_sequence raw=main_sequence M=16857.6 (m_up_sb 6515.5)
+giant step=4817 t=40.18 shown=he_core raw=he_core M=16578.0 (m_up_sb 6515.5)
+giant step=4993 t=41.74 shown=main_sequence raw=main_sequence M=16495.3 (m_up_sb 6515.5)
+giant step=5345 t=45.28 shown=he_core raw=he_core M=16348.6 (m_up_sb 6515.5)
+giant step=5489 t=46.59 shown=main_sequence raw=main_sequence M=16292.1 (m_up_sb 6515.5)
+giant step=5761 t=49.16 shown=he_core raw=he_core M=16088.7 (m_up_sb 6515.5)
+giant step=6401 t=54.51 shown=o_burn raw=o_burn M=15656.2 (m_up_sb 6515.5)
+giant step=6865 t=57.72 shown=si_burn raw=si_burn M=15150.3 (m_up_sb 6515.5)
+giant step=7057 t=58.91 shown=main_sequence raw=main_sequence M=14925.5 (m_up_sb 6515.5)
+giant step=7969 t=63.66 shown=core_collapse raw=core_collapse M=13759.1 (m_up_sb 6515.5)
+giant step=7970 t=63.67 shown=supernova raw=supernova M=13757.7 (m_up_sb 6515.5)
+giant step=8146 t=64.31 shown=black_hole raw=black_hole M=13551.1 (m_up_sb 6515.5)
+SR-HEADLESS DONE steps=8146 sim_time=64.311352 until=met
+giant shown (8146 steps, exit 0): [("protostar", 33), ("main_sequence", 785), ("he_core", 1169), ("main_sequence", 1489), ("he_core", 2897), ("main_sequence", 2945), ("he_core", 3617), ("main_sequence", 3777), ("he_core", 4305), ("main_sequence", 4417), ("he_core", 4817), ("main_sequence", 4993), ("he_core", 5345), ("main_sequence", 5489), ("he_core", 5761), ("o_burn", 6401), ("si_burn", 6865), ("main_sequence", 7057), ("core_collapse", 7969), ("supernova", 7970), ("black_hole", 8146)]
+ok
+test stages::the_massive_preset_shows_its_stages_down_to_neutron_star ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+massive step=33 t=0.30 shown=protostar raw=protostar M=9810.4 (m_up_sb 6515.5)
+massive step=721 t=4.26 shown=main_sequence raw=main_sequence M=9797.5 (m_up_sb 6515.5)
+massive step=10097 t=95.34 shown=he_core raw=he_core M=9071.1 (m_up_sb 6515.5)
+massive step=10273 t=97.13 shown=main_sequence raw=main_sequence M=9051.4 (m_up_sb 6515.5)
+massive step=10449 t=98.92 shown=he_core raw=he_core M=9029.9 (m_up_sb 6515.5)
+massive step=10625 t=100.70 shown=main_sequence raw=main_sequence M=9007.0 (m_up_sb 6515.5)
+massive step=10785 t=102.33 shown=he_core raw=he_core M=8984.4 (m_up_sb 6515.5)
+massive step=10977 t=104.26 shown=main_sequence raw=main_sequence M=8955.2 (m_up_sb 6515.5)
+massive step=11137 t=105.87 shown=he_core raw=he_core M=8928.9 (m_up_sb 6515.5)
+massive step=11329 t=107.79 shown=main_sequence raw=main_sequence M=8894.8 (m_up_sb 6515.5)
+massive step=11457 t=109.08 shown=he_core raw=he_core M=8870.3 (m_up_sb 6515.5)
+massive step=13873 t=131.78 shown=o_burn raw=o_burn M=8058.1 (m_up_sb 6515.5)
+massive step=15329 t=143.73 shown=si_burn raw=si_burn M=7268.3 (m_up_sb 6515.5)
+massive step=15809 t=147.41 shown=main_sequence raw=main_sequence M=6971.0 (m_up_sb 6515.5)
+massive step=16577 t=153.01 shown=iron_core raw=iron_core M=6488.6 (m_up_sb 6515.5)
+massive step=16769 t=154.36 shown=main_sequence raw=main_sequence M=6370.5 (m_up_sb 6515.5)
+massive step=17281 t=157.83 shown=iron_core raw=iron_core M=6065.8 (m_up_sb 6515.5)
+massive step=18145 t=163.32 shown=main_sequence raw=main_sequence M=5598.0 (m_up_sb 6515.5)
+massive step=18401 t=164.83 shown=o_burn raw=o_burn M=5475.7 (m_up_sb 6515.5)
+massive step=18513 t=165.47 shown=main_sequence raw=main_sequence M=5424.5 (m_up_sb 6515.5)
+massive step=18849 t=167.37 shown=o_burn raw=o_burn M=5278.2 (m_up_sb 6515.5)
+massive step=18945 t=167.90 shown=main_sequence raw=main_sequence M=5238.7 (m_up_sb 6515.5)
+massive step=19073 t=168.61 shown=o_burn raw=o_burn M=5187.0 (m_up_sb 6515.5)
+massive step=19121 t=168.88 shown=main_sequence raw=main_sequence M=5167.6 (m_up_sb 6515.5)
+massive step=19905 t=173.06 shown=core_collapse raw=core_collapse M=4897.5 (m_up_sb 6515.5)
+massive step=19906 t=173.06 shown=supernova raw=supernova M=4897.2 (m_up_sb 6515.5)
+massive step=21042 t=179.03 shown=neutron_star raw=neutron_star M=4608.2 (m_up_sb 6515.5)
+SR-HEADLESS DONE steps=21042 sim_time=179.034816 until=met
+massive shown (21042 steps, exit 0): [("protostar", 33), ("main_sequence", 721), ("he_core", 10097), ("main_sequence", 10273), ("he_core", 10449), ("main_sequence", 10625), ("he_core", 10785), ("main_sequence", 10977), ("he_core", 11137), ("main_sequence", 11329), ("he_core", 11457), ("o_burn", 13873), ("si_burn", 15329), ("main_sequence", 15809), ("iron_core", 16577), ("main_sequence", 16769), ("iron_core", 17281), ("main_sequence", 18145), ("o_burn", 18401), ("main_sequence", 18513), ("o_burn", 18849), ("main_sequence", 18945), ("o_burn", 19073), ("main_sequence", 19121), ("core_collapse", 19905), ("supernova", 19906), ("neutron_star", 21042)]
+ok
+test stages::the_sun_like_preset_shows_its_stages_down_to_white_dwarf ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+sun step=65 t=1.54 shown=collapsing raw=collapsing M=3136.7 (m_up_sb 6515.5)
+sun step=705 t=9.26 shown=main_sequence raw=main_sequence M=3130.4 (m_up_sb 6515.5)
+sun step=32001 t=361.54 shown=main_sequence raw=main_sequence
+sun step=64001 t=729.39 shown=main_sequence raw=main_sequence
+sun step=96001 t=1094.19 shown=main_sequence raw=main_sequence

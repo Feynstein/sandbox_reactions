@@ -1,0 +1,36 @@
+M0-T103 log, 2026-11-13: rsync to laserax-ai-server, then the Giant case
+2026-11-13T19:25:33Z
+   Compiling sr-engine v0.0.0 (/home/ybelanger/workspace/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 7.27s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test stages::the_giant_preset_shows_its_stages_down_to_black_hole ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+giant step=33 t=0.26 shown=protostar raw=protostar M=18578.6 (m_up_sb 6515.5)
+giant step=785 t=4.05 shown=main_sequence raw=main_sequence M=18561.9 (m_up_sb 6515.5)
+giant step=1169 t=6.08 shown=he_core raw=he_core M=18547.4 (m_up_sb 6515.5)
+giant step=1489 t=7.73 shown=main_sequence raw=main_sequence M=18523.6 (m_up_sb 6515.5)
+giant step=2897 t=20.38 shown=he_core raw=he_core M=17987.2 (m_up_sb 6515.5)
+giant step=2945 t=20.80 shown=main_sequence raw=main_sequence M=17971.6 (m_up_sb 6515.5)
+giant step=3617 t=27.95 shown=he_core raw=he_core M=17518.0 (m_up_sb 6515.5)
+giant step=3777 t=29.31 shown=main_sequence raw=main_sequence M=17425.1 (m_up_sb 6515.5)
+giant step=4305 t=35.02 shown=he_core raw=he_core M=16932.0 (m_up_sb 6515.5)
+giant step=4417 t=36.01 shown=main_sequence raw=main_sequence M=16857.3 (m_up_sb 6515.5)
+giant step=4817 t=40.18 shown=he_core raw=he_core M=16578.0 (m_up_sb 6515.5)
+giant step=4993 t=41.74 shown=main_sequence raw=main_sequence M=16495.3 (m_up_sb 6515.5)
+giant step=5345 t=45.28 shown=he_core raw=he_core M=16348.8 (m_up_sb 6515.5)
+giant step=5489 t=46.59 shown=main_sequence raw=main_sequence M=16292.6 (m_up_sb 6515.5)
+giant step=5761 t=49.16 shown=he_core raw=he_core M=16089.2 (m_up_sb 6515.5)
+giant step=6401 t=54.51 shown=o_burn raw=o_burn M=15656.5 (m_up_sb 6515.5)
+giant step=6865 t=57.72 shown=si_burn raw=si_burn M=15150.5 (m_up_sb 6515.5)
+giant step=7057 t=58.91 shown=main_sequence raw=main_sequence M=14925.7 (m_up_sb 6515.5)
+giant step=7985 t=63.73 shown=core_collapse raw=core_collapse M=13738.1 (m_up_sb 6515.5)
+giant step=7986 t=63.73 shown=supernova raw=supernova M=13736.7 (m_up_sb 6515.5)
+giant step=8194 t=64.48 shown=black_hole raw=black_hole M=13495.9 (m_up_sb 6515.5)
+SR-HEADLESS DONE steps=8194 sim_time=64.484369 until=met
+giant shown (8194 steps, exit 0): [("protostar", 33), ("main_sequence", 785), ("he_core", 1169), ("main_sequence", 1489), ("he_core", 2897), ("main_sequence", 2945), ("he_core", 3617), ("main_sequence", 3777), ("he_core", 4305), ("main_sequence", 4417), ("he_core", 4817), ("main_sequence", 4993), ("he_core", 5345), ("main_sequence", 5489), ("he_core", 5761), ("o_burn", 6401), ("si_burn", 6865), ("main_sequence", 7057), ("core_collapse", 7985), ("supernova", 7986), ("black_hole", 8194)]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 514 filtered out; finished in 51.97s
+
+2026-11-13T19:26:33Z

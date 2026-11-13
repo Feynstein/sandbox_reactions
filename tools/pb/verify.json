@@ -805,6 +805,31 @@
         }
       ]
     },
+    "stages": {
+      "desc": "The visible life (contract §5.2's G-STAGES as §0.5 [M0-T103] reads it; M0-T103): crates/sr-engine/tests/gpu/stages.rs — each preset's whole life on the physics adapter at calibration's masses (`life:<preset>`, the run's progress hook, `--until stage:<the row's last stage>` so frames of 16 steps and not the 256-step chunk of M0-V8's flag), the heaviest object's DISPLAYED stage read every frame (the stages the app's readout shows — never the raw ones). Pass: the displayed ids hold the preset's row as a subsequence in order — sun: (cloud), (collapsing), (protostar), main_sequence, (h_shell), he_core, he_shell, (planetary_nebula), white_dwarf; massive: (cloud), (collapsing), protostar, main_sequence, (h_shell), he_core, {(c_burn), (ne_burn), o_burn} in either order, si_burn, iron_core, core_collapse, supernova, neutron_star; giant: (cloud), (collapsing), protostar, main_sequence, he_core, core_collapse, (supernova), black_hole — every displayed stage but core_collapse and supernova had 3 identical raw results behind it (§1.9.3), the Massive's h_shell and he_core, at their first display, only at mass ≥ m_up_sb (the Supergiant labels; its later he_core flickers, after the star has lost mass, are printed, not graded), and the run met its last stage (`--max-steps` ends an unmet one, exit 2). Each case first grades the matcher on hand-made lists (a missing stage, a wrong order, the parenthesised ones left out, the unordered slot swapped). Measured on the RTX 4090 before this scope (the calibration's own lives, recalibrated file 8096991d…, 16-step frames): Sun-like collapsing, main_sequence 9.3, he_core 1,508.7, o_burn, si_burn, he_shell 1,701.5, iron_core, white_dwarf 1,962.4 (never cloud, protostar, h_shell, planetary_nebula — §0.5 [M0-T103] parenthesised them); Massive protostar … neutron_star 183.3 and Giant protostar … black_hole 64.5, both from the drop (no cloud). ⏱ (R12): a life is long — the Sun-like's about 197,000 steps, over 10 minutes — so the lead's run, one visible terminal, `--changed` only on its own files. Plants stage-hold-one (the display hold 3 → 1: every flicker displays — the 3-results check reds, measured on the Giant, RTX 4090) and stage-hold-long (3 → 40: protostar, o_burn, si_burn and the rest vanish — the matcher reds, protostar missing, Giant, RTX 4090). §5.2's own plant no-push (P4's radiation force zeroed) moved neither the Giant's nor the Massive's displayed stages (RTX 4090, same lives) and the sun's nebula it removes is parenthesised since §0.5 [M0-T103]: retired from the scope, its patch not kept.",
+      "cmd": "bash tests/gpu.sh stages physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 3,
+      "timeout_s": 5400,
+      "arms_at_once": 1,
+      "paths": [
+        "crates/sr-engine/tests/gpu/stages.rs",
+        "tests/gpu.sh",
+        "tests/plants/stage-hold-one.patch",
+        "tests/plants/stage-hold-long.patch"
+      ],
+      "plants": [
+        {
+          "id": "stage-hold-one",
+          "patch": "tests/plants/stage-hold-one.patch"
+        },
+        {
+          "id": "stage-hold-long",
+          "patch": "tests/plants/stage-hold-long.patch"
+        }
+      ]
+    },
     "ending": {
       "desc": "ending (contract §1.9.5; M0-T72): sr_physics::observe::ending on synthetic anchors (no GPU) — the four bands read from the mass in Suns (below 0.08 failed star, below 8 white dwarf, below 25 supernova then neutron star, else black hole; zero and the end segments extended; NaN refused), each of the three thresholds a close call between its two fates, both edges of every band at exactly ±10 % in sandbox mass a close call and a hair outside not (the band closed), the band taken in sandbox mass and not in Suns on a squeezed ladder (1.08 × M_up is 13 % over 8 Suns yet close), the nearer threshold naming the pair where two bands meet, a remnant stage (white_dwarf, neutron_star, black_hole, failed_star) displayed for max(10 t.u., 20 τ_dyn) — stages::ending_hold, §0.5 [M0-D78] — showing the ending instead of the prediction (9.999 t.u. not, 10 t.u. yes; τ_dyn 1 needs 20), no other stage ending it, and the strings keys. Synthetic anchors only — NOT PROVEN against assets/calibration.json's real thresholds; the readout panel wiring is the drawing lots'. Plant ending-band-swap (M_up where M_BH belongs, in the unit).",
       "cmd": "bash tests/cpu.sh sr-physics observe::ending",

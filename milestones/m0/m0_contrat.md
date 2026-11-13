@@ -1205,6 +1205,21 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     and Density's bars take none, the lead named the glow scale only) — the lead at M0-D175's session, 2026-11-13: «Id like for
     the glow scale to be able to be changed in the main window by clicking on the color legend at the bottom, instead of always
     having to use the slider».
+  - [M0-T103] §5.2 G-STAGES' rows (the sun's cloud, protostar, h_shell and planetary_nebula; the massive's and the giant's cloud) ·
+    **the sun's row reads (cloud), (collapsing), (protostar), main_sequence, (h_shell), he_core, he_shell, (planetary_nebula),
+    white_dwarf; the massive's and the giant's cloud is parenthesised, every other stage of their rows as written** — the
+    physics unchanged · measured on laserax-ai-server's RTX 4090 (2026-11-13, the recalibrated file 8096991d…, the calibration's
+    own lives `preset_sun-01`, `preset_massive-02`, `preset_giant-03`, 16-step frames, the displayed stages in summary.json): the
+    Sun-like shows collapsing, main_sequence (t 9.3), he_core, o_burn, si_burn, he_shell, iron_core, white_dwarf (t 1,962.4) — never
+    cloud, protostar, h_shell or planetary_nebula (its first displayed stage is collapsing, from step 65; it contracts whole with
+    no nebula, [M0-D175]); the
+    Massive and the Giant start at protostar from the drop (§1.9.3's cloud row, [M0-D163]) and show every other stage of their rows,
+    down to neutron_star and black_hole — the lead at M0-T103, 2026-11-13: «Amend the rows (Recommended)». The stages the sun does
+    not reach are reported by the scope, never graded. Plant `no-push` (the radiation force zeroed) is replaced by `stage-hold-one`
+    (§1.9.3's display hold 3 → 1) and `stage-hold-long` (3 → 40): measured on the RTX 4090, `no-push` leaves the Giant's and the
+    Massive's displayed stages as they are and the stage it removed, the sun's planetary_nebula, is parenthesised; the two hold
+    plants turn the Giant red. The Massive's «Supergiant» h_shell and he_core are read at their first display (M ≥ m_up_sb there,
+    9,071 against 6,515): its two later he_core flickers (t 164.6 and 166.5) show at 5,497 and 5,342, under it — printed, not graded.
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -2538,11 +2553,12 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   (shell ejection, the explosion — SM). Scope `endings` ⏱. Plant `fate-swap`: the prediction uses
   M_up where M_BH belongs.
 - **G-STAGES · the visible life** (B4–B6). The displayed stage ids contain these as a subsequence,
-  in this order (parenthesised ones may be missing; other stages may appear between): sun — cloud,
-  (collapsing), protostar, main_sequence, h_shell, he_core, he_shell, planetary_nebula, white_dwarf;
-  massive — cloud, (collapsing), protostar, main_sequence, (h_shell), he_core, ~~c_burn, ne_burn and
+  in this order (parenthesised ones may be missing; other stages may appear between): sun — ~~cloud,
+  (collapsing), protostar, main_sequence, h_shell, he_core, he_shell, planetary_nebula, white_dwarf~~ [M0-T103] (cloud),
+  (collapsing), (protostar), main_sequence, (h_shell), he_core, he_shell, (planetary_nebula), white_dwarf;
+  massive — ~~cloud~~ [M0-T103] (cloud), (collapsing), protostar, main_sequence, (h_shell), he_core, ~~c_burn, ne_burn and
   o_burn in either order~~ [M0-D169] (c_burn), (ne_burn) and o_burn in either order, si_burn, iron_core, core_collapse, supernova, neutron_star — its h_shell
-  and he_core labels the "Supergiant" ones (§1.9.3); giant — cloud, (collapsing), protostar,
+  and he_core labels the "Supergiant" ones (§1.9.3); giant — ~~cloud~~ [M0-T103] (cloud), (collapsing), protostar,
   main_sequence, he_core, core_collapse, (supernova), black_hole. *UNVERIFIED*. Scope `stages` ⏱.
   Plant `no-push`: the radiation force zeroed (no planetary nebula while S1 is off).
 - **G-TOUCH · touch any time** (B7: "Add gas to a shining star (it gets heavier and its fate

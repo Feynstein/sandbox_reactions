@@ -1,0 +1,133 @@
+M0-D164 session start 2026-11-13T14:42:25-05:00
+== 2026-11-13T14:43:39-05:00 run1: w1_massive from 0, 3000 steps, dump-every 25, laserax-ai-server RTX 4090, binary 6fa441b8
+rc=0
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3000 sim_time=32.895977 until=none
+wall 21.64 s
+0
+dumps
+events.jsonl
+summary.json
+240
+preset_giant-03
+preset_massive-02
+preset_sun-01
+0
+0
+0
+preset_giant-03 snapshots    0 (largest gap nan t.u.) | last t 0.00 X_H,c 0.0000 X_Fe,c 0.0000 M 0 | Fail-arm pairs 0
+preset_massive-02 snapshots    0 (largest gap nan t.u.) | last t 0.00 X_H,c 0.0000 X_Fe,c 0.0000 M 0 | Fail-arm pairs 0
+preset_sun-01 snapshots    0 (largest gap nan t.u.) | last t 0.00 X_H,c 0.0000 X_Fe,c 0.0000 M 0 | Fail-arm pairs 0
+../../m0-d164/w1 snapshots  120 (largest gap 0.475 t.u.) | last t 32.90 X_H,c 0.6974 X_Fe,c 0.0000 M 5562 | Fail-arm pairs 0
+== 2026-11-13T14:45:42-05:00 run2/3: preset:massive 24000 steps, preset:giant 16700 steps, dump-every 100, RTX 4090
+/dev/nvme2n1p2  937G  460G  430G  52% /
+== 2026-11-13T14:45:55-05:00 run4: P5 isolation, one step from w1 s_300 and s_325, heat on/off
+"heat": false
+300 on rc=0 SR-HEADLESS DONE steps=301 sim_time=4.244662 until=none s_301.bin s_301.observers.json 
+ls: cannot access 'iso_300_off/dumps': No such file or directory
+300 off rc=4 SR-ERROR bad dump: --continue: w1/dumps/s_300.observers.json is scene "w1_massive.json", the run's "w1_noheat.json" 
+325 on rc=0 SR-HEADLESS DONE steps=326 sim_time=4.424166 until=none s_326.bin s_326.observers.json 
+ls: cannot access 'iso_325_off/dumps': No such file or directory
+325 off rc=4 SR-ERROR bad dump: --continue: w1/dumps/s_325.observers.json is scene "w1_massive.json", the run's "w1_noheat.json" 
+300 off rc=4 SR-ERROR bad dump: dump holds F, and this step runs no P5 to keep it (heat off) 
+325 off rc=4 SR-ERROR bad dump: dump holds F, and this step runs no P5 to keep it (heat off) 
+== 2026-11-13T14:46:19-05:00 run5: P5 alone (other switches off), one step from w1 s_300, s_325
+{'gravity': False, 'hydro': False, 'heat': True, 'reactions': False, 'neutrinos': False, 'sinks': False}
+300 p5 rc=0 SR-HEADLESS DONE steps=301 sim_time=4.244662 until=none
+325 p5 rc=0 SR-HEADLESS DONE steps=326 sim_time=4.424166 until=none
+full step 300->301 dt 0.00731 c_sb*dt 93.5 cells | outermost r with T x1.01 97.7, x1.1 0.0, x2 0.0 | max T ratio 1.09 at r 15.8 | heated mass (x1.1) 0 | max |dX_H| 0.00018, max X_Fe 2.7e-15
+p5only step 300->301 dt 0.00731 c_sb*dt 93.5 cells | outermost r with T x1.01 97.7, x1.1 16.6, x2 0.0 | max T ratio 1.14 at r 14.8 | heated mass (x1.1) 199 | max |dX_H| 6e-08, max X_Fe 2.3e-15
+full step 325->326 dt 0.00709 c_sb*dt 90.7 cells | outermost r with T x1.01 100.4, x1.1 53.1, x2 51.9 | max T ratio 11 at r 43.8 | heated mass (x1.1) 263 | max |dX_H| 0.0002, max X_Fe 2.9e-14
+p5only step 325->326 dt 0.00709 c_sb*dt 90.7 cells | outermost r with T x1.01 100.4, x1.1 52.6, x2 51.7 | max T ratio 10.9 at r 43.8 | heated mass (x1.1) 257 | max |dX_H| 6e-08, max X_Fe 2.6e-14
+massive rc=0
+SR-HEADLESS DONE steps=24000 sim_time=193.760908 until=none
+massive wall 170.98 s
+0
+{"detail":{"by":"light","mass_sb":9795.497801633552},"kind":"ignition","object":1,"sim_time":4.732938433531672,"step":800}
+{"detail":{"mass_sb":4962.738918371499},"kind":"core_collapse","object":1,"sim_time":172.02307294588536,"step":19700}
+{"detail":{"mass_sb":4931.76880812645},"kind":"supernova","object":1,"sim_time":172.53940935060382,"step":19800}
+massive    snapshots  240 (largest gap 1.056 t.u.) | last t 193.76 X_H,c 0.1199 X_Fe,c 0.1457 M 4287 | Fail-arm pairs 2 — first: t 164.826 (X_H 0.111) -> t 165.394 (X_Fe 0.969)
+giant rc=0
+SR-HEADLESS DONE steps=16700 sim_time=93.206992 until=none
+giant wall 180.91 s
+0
+{"detail":{"by":"light","mass_sb":18561.1693069702},"kind":"ignition","object":1,"sim_time":4.125938989687711,"step":800}
+{"detail":{"mass_sb":13716.764082930982},"kind":"core_collapse","object":1,"sim_time":63.79503344884142,"step":8000}
+{"detail":{"mass_sb":13604.651885956526},"kind":"supernova","object":1,"sim_time":64.1446970438119,"step":8100}
+{"detail":{"mass_sb":13488.916816711426},"kind":"sink_formed","object":1,"sim_time":64.50618981872685,"step":8200}
+{"detail":{"held_t":27.99239138327539,"hold_t":10.0,"mass_sb":9284.132922671735,"stage":"black_hole"},"kind":"ending","object":1,"sim_time":93.20699234865606,"step":16700}
+giant      snapshots  167 (largest gap 1.284 t.u.) | last t 93.21 X_H,c 0.6857 X_Fe,c 0.0000 M 9284 | Fail-arm pairs 11 — first: t 57.939 (X_H 0.193) -> t 58.560 (X_Fe 0.684)
+massive
+17700 t 160.53 H 0.001 He 0.000 C 0.000 Ne 0.000 O 0.000 Mg 0.000 Si 0.000 S 0.000 Fe 0.999 n 0.000 M 5831  T_c 294.51226806640625
+17800 t 161.17 H 0.000 He 0.000 C 0.000 Ne 0.000 O 0.000 Mg 0.000 Si 0.000 S 0.000 Fe 1.000 n 0.000 M 5777  T_c 298.2657470703125
+17900 t 161.79 H 0.000 He 0.000 C 0.000 Ne 0.000 O 0.000 Mg 0.000 Si 0.000 S 0.000 Fe 1.000 n 0.000 M 5725  T_c 303.9356384277344
+18000 t 162.42 H 0.000 He 0.000 C 0.000 Ne 0.000 O 0.000 Mg 0.000 Si 0.000 S 0.000 Fe 1.000 n 0.000 M 5672  T_c 309.4233703613281
+18100 t 163.03 H 0.000 He 0.000 C 0.000 Ne 0.000 O 0.000 Mg 0.000 Si 0.000 S 0.000 Fe 1.000 n 0.000 M 5621  T_c 313.06719970703125
+18200 t 163.65 H 0.005 He 0.000 C 0.000 Ne 0.005 O 0.000 Mg 0.000 Si 0.000 S 0.000 Fe 0.989 n 0.000 M 5571  T_c 319.7473449707031
+18300 t 164.25 H 0.046 He 0.001 C 0.000 Ne 0.046 O 0.000 Mg 0.000 Si 0.003 S 0.001 Fe 0.902 n 0.000 M 5522  T_c 287.9146728515625
+18400 t 164.83 H 0.111 He 0.002 C 0.001 Ne 0.113 O 0.000 Mg 0.000 Si 0.006 S 0.003 Fe 0.764 n 0.000 M 5476  T_c 253.1029815673828
+18500 t 165.39 H 0.029 He 0.000 C 0.000 Ne 0.002 O 0.000 Mg 0.000 Si 0.000 S 0.000 Fe 0.969 n 0.000 M 5431  T_c 327.4933166503906
+18600 t 165.96 H 0.054 He 0.000 C 0.000 Ne 0.012 O 0.000 Mg 0.000 Si 0.001 S 0.000 Fe 0.932 n 0.000 M 5387  T_c 306.54412841796875
+18700 t 166.52 H 0.122 He 0.002 C 0.001 Ne 0.103 O 0.000 Mg 0.000 Si 0.013 S 0.005 Fe 0.753 n 0.000 M 5344  T_c 239.7181854248047
+18800 t 167.07 H 0.180 He 0.009 C 0.011 Ne 0.186 O 0.001 Mg 0.001 Si 0.028 S 0.012 Fe 0.572 n 0.000 M 5302  T_c 143.97512817382813
+18900 t 167.62 H 0.218 He 0.045 C 0.025 Ne 0.221 O 0.002 Mg 0.001 Si 0.041 S 0.017 Fe 0.429 n 0.000 M 5261  T_c 48.80296325683594
+19000 t 168.17 H 0.241 He 0.066 C 0.032 Ne 0.241 O 0.002 Mg 0.001 Si 0.051 S 0.021 Fe 0.344 n 0.000 M 5221  T_c 0.05000000074505806
+19100 t 168.72 H 0.246 He 0.073 C 0.033 Ne 0.244 O 0.002 Mg 0.001 Si 0.056 S 0.023 Fe 0.321 n 0.000 M 5181  T_c 0.05000894516706467
+19200 t 169.27 H 0.239 He 0.068 C 0.032 Ne 0.239 O 0.002 Mg 0.001 Si 0.058 S 0.024 Fe 0.336 n 0.000 M 5143  T_c 0.05003955215215683
+19300 t 169.82 H 0.232 He 0.061 C 0.031 Ne 0.234 O 0.001 Mg 0.001 Si 0.059 S 0.024 Fe 0.356 n 0.000 M 5105  T_c 0.05010741576552391
+giant
+6500 t 55.24 H 0.211 He 0.001 C 0.000 Ne 0.407 O 0.000 Mg 0.000 Si 0.253 S 0.108 Fe 0.019 n 0.000 M 15568  T_c 198.26171875
+6600 t 55.95 H 0.206 He 0.001 C 0.000 Ne 0.306 O 0.000 Mg 0.000 Si 0.310 S 0.133 Fe 0.045 n 0.000 M 15470  T_c 209.3643341064453
+6700 t 56.64 H 0.201 He 0.001 C 0.000 Ne 0.209 O 0.000 Mg 0.000 Si 0.339 S 0.145 Fe 0.106 n 0.000 M 15352  T_c 221.62059020996094
+6800 t 57.30 H 0.197 He 0.000 C 0.000 Ne 0.131 O 0.000 Mg 0.000 Si 0.310 S 0.133 Fe 0.229 n 0.000 M 15230  T_c 235.69752502441406
+6900 t 57.94 H 0.193 He 0.000 C 0.000 Ne 0.076 O 0.000 Mg 0.000 Si 0.207 S 0.089 Fe 0.435 n 0.000 M 15108  T_c 252.39682006835938
+7000 t 58.56 H 0.189 He 0.000 C 0.000 Ne 0.038 O 0.000 Mg 0.000 Si 0.062 S 0.027 Fe 0.684 n 0.000 M 14990  T_c 271.3721618652344
+7100 t 59.16 H 0.181 He 0.000 C 0.000 Ne 0.015 O 0.000 Mg 0.000 Si 0.003 S 0.001 Fe 0.799 n 0.000 M 14879  T_c 290.36187744140625
+7200 t 59.75 H 0.169 He 0.000 C 0.000 Ne 0.008 O 0.000 Mg 0.000 Si 0.001 S 0.000 Fe 0.822 n 0.000 M 14773  T_c 310.2857360839844
+7300 t 60.31 H 0.157 He 0.000 C 0.000 Ne 0.005 O 0.000 Mg 0.000 Si 0.000 S 0.000 Fe 0.838 n 0.000 M 14665  T_c 332.3553771972656
+7400 t 60.86 H 0.144 He 0.000 C 0.000 Ne 0.003 O 0.000 Mg 0.000 Si 0.000 S 0.000 Fe 0.853 n 0.000 M 14545  T_c 356.9033203125
+7500 t 61.39 H 0.132 He 0.000 C 0.000 Ne 0.002 O 0.000 Mg 0.000 Si 0.000 S 0.000 Fe 0.866 n 0.000 M 14420  T_c 383.7861633300781
+7600 t 61.90 H 0.119 He 0.000 C 0.000 Ne 0.001 O 0.000 Mg 0.000 Si 0.000 S 0.000 Fe 0.880 n 0.000 M 14285  T_c 413.0062561035156
+== massive
+14200 t 134.5788 M 7899 r50 25.1 r90 183.7 r99 293.5 r_Fe 0.0 | T(+x 0,5,10,15,2
+14300 t 135.4211 M 7848 r50 25.1 r90 185.4 r99 294.4 r_Fe 0.0 | T(+x 0,5,10,15,2
+14400 t 136.2570 M 7796 r50 25.1 r90 187.0 r99 294.5 r_Fe 0.0 | T(+x 0,5,10,15,2
+14500 t 137.0866 M 7744 r50 25.1 r90 188.7 r99 295.1 r_Fe 0.0 | T(+x 0,5,10,15,2
+14600 t 137.9099 M 7690 r50 25.0 r90 190.3 r99 296.4 r_Fe 0.0 | T(+x 0,5,10,15,2
+14700 t 138.7270 M 7635 r50 25.0 r90 191.9 r99 297.1 r_Fe 0.0 | T(+x 0,5,10,15,2
+14800 t 139.5381 M 7579 r50 24.7 r90 193.3 r99 297.5 r_Fe 0.0 | T(+x 0,5,10,15,2
+14900 t 140.3432 M 7523 r50 24.5 r90 194.8 r99 298.4 r_Fe 0.0 | T(+x 0,5,10,15,2
+15000 t 141.1424 M 7465 r50 24.2 r90 196.1 r99 299.3 r_Fe 0.0 | T(+x 0,5,10,15,2
+15100 t 141.9360 M 7406 r50 24.0 r90 197.4 r99 299.9 r_Fe 0.0 | T(+x 0,5,10,15,2
+15200 t 142.7238 M 7346 r50 23.5 r90 198.6 r99 300.5 r_Fe 0.0 | T(+x 0,5,10,15,2
+15300 t 143.5061 M 7286 r50 23.1 r90 199.7 r99 301.1 r_Fe 0.0 | T(+x 0,5,10,15,2
+15400 t 144.2828 M 7225 r50 22.6 r90 200.9 r99 301.8 r_Fe 0.0 | T(+x 0,5,10,15,2
+15500 t 145.0542 M 7163 r50 22.0 r90 202.0 r99 302.3 r_Fe 1.4 | T(+x 0,5,10,15,2
+15600 t 145.8202 M 7102 r50 21.4 r90 203.0 r99 302.8 r_Fe 1.4 | T(+x 0,5,10,15,2
+17000 t 155.9357 M 6231 r50 7.8 r90 213.6 r99 308.6 r_Fe 1.4 | T(+x 0,5,10,15,20
+17700 t 160.5345 M 5831 r50 5.0 r90 215.2 r99 310.1 r_Fe 2.2 | T(+x 0,5,10,15,20
+19700 t 172.0231 M 4963 r50 2.2 r90 201.3 r99 310.2 r_Fe 5.0 | T(+x 0,5,10,15,20
+19800 t 172.5394 M 4932 r50 2.2 r90 199.4 r99 310.0 r_Fe 4.2 | T(+x 0,5,10,15,20
+== giant
+6400 t 54.5033 M 15657 r50 43.8 r90 181.5 r99 291.2 r_Fe 0.0 | T(+x 0,5,10,15,20
+6500 t 55.2399 M 15568 r50 44.3 r90 186.2 r99 293.3 r_Fe 0.0 | T(+x 0,5,10,15,20
+6600 t 55.9500 M 15470 r50 44.6 r90 190.3 r99 294.5 r_Fe 0.0 | T(+x 0,5,10,15,20
+6700 t 56.6351 M 15352 r50 44.6 r90 193.4 r99 294.9 r_Fe 0.0 | T(+x 0,5,10,15,20
+6800 t 57.2973 M 15230 r50 44.3 r90 195.9 r99 294.7 r_Fe 0.0 | T(+x 0,5,10,15,20
+6900 t 57.9386 M 15108 r50 44.0 r90 198.0 r99 294.0 r_Fe 0.0 | T(+x 0,5,10,15,20
+7000 t 58.5604 M 14990 r50 43.6 r90 199.7 r99 293.1 r_Fe 1.4 | T(+x 0,5,10,15,20
+7100 t 59.1634 M 14879 r50 43.0 r90 201.2 r99 292.5 r_Fe 2.2 | T(+x 0,5,10,15,20
+7200 t 59.7474 M 14773 r50 42.4 r90 202.4 r99 295.2 r_Fe 2.2 | T(+x 0,5,10,15,20
+7300 t 60.3128 M 14665 r50 41.5 r90 203.9 r99 297.0 r_Fe 2.8 | T(+x 0,5,10,15,20
+7400 t 60.8603 M 14545 r50 40.3 r90 207.1 r99 298.1 r_Fe 2.8 | T(+x 0,5,10,15,20
+7500 t 61.3907 M 14420 r50 39.0 r90 210.0 r99 300.3 r_Fe 3.2 | T(+x 0,5,10,15,20
+7600 t 61.9045 M 14285 r50 37.2 r90 212.2 r99 303.4 r_Fe 3.2 | T(+x 0,5,10,15,20
+8000 t 63.7950 M 13717 r50 23.0 r90 219.1 r99 309.0 r_Fe 3.6 | T(+x 0,5,10,15,20
+== 2026-11-13T14:53:29-05:00 ruling: the lead «Leave it, close DONE (Recommended)»; claim next
+== 2026-11-13T15:04:27-05:00 claim (scoped): plan_lint; --changed stopped past 10 min (GPU scopes of the uncommitted M0-T103 tree on linux-pc)
+plan_lint  868/0/0      0.17 s  GO
+logs: milestones/m0/logs/M0-D164.<scope>.log · record: loop_times.jsonl · tree 1163726a824c+e2a63b9011a7
+anchor: 1 path×scope entries moved by this run
+anchor: 268 paths checked · 437 skipped (3 classes) · 187 never checked · 1 stale · 8 unclassified · 0 owed · 456 covered of 901 visible
+verify: 868 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.17 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 17.11->17.11
+=== GO ===

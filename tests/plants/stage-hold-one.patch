@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/stages.rs
++++ b/crates/sr-physics/src/observe/stages.rs
+@@ -16,7 +16,7 @@
+ use crate::registry::electron_fraction;
+ 
+ /// The display hold: a stage other than core collapse and supernova shows after this many identical results (§1.9.3).
+-const HOLD: u32 = 3;
++const HOLD: u32 = 1;
+ /// A supernova row is open this long (t.u.) after the object last passed core collapse.
+ const SUPERNOVA_WINDOW: f64 = 20.0;
+ /// L_H between these shares of L ignites an object: a star shines what it burns (§1.9.4 as §0.5 [M0-D53] reads it; the lead at

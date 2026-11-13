@@ -1,0 +1,13 @@
+== 2026-11-13T14:55:04-05:00 measure_ui[run] · task M0-D164 · box laserax-ai :: bash tests/measure/check.sh {case}
+-- measure_ui[run] · exit=0 · 3.02 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-UI p95_ms=6.805 frames=20 adapter=llvmpipe (LLVM 20.1.2, 256 bits)
+SR-UI render_reserve_ms=7.305 file=/tmp/tmp.WbaDt3pZS8/cal.json (the next build embeds it)
+measure-ui run: SR-UI p95_ms=6.805, the copy holds render_reserve_ms = p95 + 0.5, every other key and the real file unchanged
+=== GO ===
+
+== 2026-11-13T14:55:07-05:00 measure_ui[refuse] · task M0-D164 · box laserax-ai :: bash tests/measure/check.sh {case}
+-- measure_ui[refuse] · exit=0 · 4.67 s
+measure-ui refuse: a bad frame count, a missing one, --capture beside it, --calibration alone → exit 4; a file that is no calibration → exit 3, untouched; a software adapter without --calibration → exit 3, the real file untouched
+=== GO ===
+

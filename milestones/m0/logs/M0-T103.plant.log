@@ -1,0 +1,20 @@
+checking file crates/sr-engine/shaders/hydro.wgsl
+Hunk #1 succeeded at 1025 (offset 195 lines).
+patching file crates/sr-engine/shaders/hydro.wgsl
+Hunk #1 succeeded at 1025 (offset 195 lines).
+2026-11-13T19:32:43Z
+giant shown (6930 steps, exit 0): [("protostar", 33), ("main_sequence", 769), ("he_core", 1137), ("main_sequence", 1505), ("he_core", 2769), ("main_sequence", 2865), ("he_core", 3441), ("main_sequence", 3617), ("he_core", 4081), ("main_sequence", 4241), ("he_core", 4625), ("o_burn", 5361), ("si_burn", 5729), ("main_sequence", 5889), ("core_collapse", 6513), ("supernova", 6514), ("black_hole", 6930)]
+ok
+--
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 514 filtered out; finished in 45.89s
+
+2026-11-13T19:33:39Z
+massive shown (20434 steps, exit 0): [("protostar", 33), ("main_sequence", 705), ("he_core", 9569), ("main_sequence", 9745), ("he_core", 9953), ("main_sequence", 10129), ("he_core", 10321), ("main_sequence", 10513), ("he_core", 10673), ("main_sequence", 10881), ("he_core", 11009), ("o_burn", 13265), ("si_burn", 14625), ("main_sequence", 15073), ("iron_core", 15921), ("main_sequence", 16401), ("iron_core", 16609), ("main_sequence", 16753), ("iron_core", 16865), ("main_sequence", 17137), ("iron_core", 17185), ("main_sequence", 17777), ("core_collapse", 18609), ("supernova", 18610), ("neutron_star", 20434)]
+ok
+--
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 514 filtered out; finished in 140.20s
+
+patching file crates/sr-engine/shaders/hydro.wgsl
+Hunk #1 succeeded at 1025 (offset 195 lines).
+1028:        let f = radiation_force(cell);
+1078:    let f = boundary(x, y, side, half);

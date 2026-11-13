@@ -475,3 +475,12 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   superseded by contract §0.5 [M0-D175] (the second entry): the flash it targets, X_H,c falling by more than 0.1 and X_Fe,c rising
   past 0.5 within 1 t.u. (measured by M0-D175 on the RTX 4090: the recalibrated Giant trips the letter on a centre holding X_H,c
   ~0.2 while its O/Si burns to Fe over ~8 t.u.; the lead at M0-D175, 2026-11-13: «Amend to the flash (Recommended)»).
+- Contract §5.2 G-STAGES' sun row «cloud, (collapsing), protostar, main_sequence, h_shell, he_core, he_shell, planetary_nebula,
+  white_dwarf» and the massive's and giant's «cloud» — superseded by contract §0.5 [M0-T103]: the sun's cloud, protostar, h_shell and
+  planetary_nebula and the heavy presets' cloud parenthesised (measured by M0-T103 on the RTX 4090: the shipped lives never show them —
+  the Sun-like's first displayed stage is collapsing and it ends with no nebula, the Massive and the Giant are born protostar;
+  the lead at M0-T103, 2026-11-13: «Amend the rows (Recommended)»).
+- Contract §5.2 G-STAGES' plant `no-push` (the radiation force zeroed) — superseded by contract §0.5 [M0-T103]: plants `stage-hold-one` and
+  `stage-hold-long` (measured by M0-T103 on the RTX 4090: `no-push` leaves the Giant's and the Massive's displayed stages unchanged; the sun's
+  nebula it removed is parenthesised; the hold plants turn the Giant red; the lead at M0-T103, 2026-11-13: «Amend the rows (Recommended)» — the
+  plant swap is the same task's reading, declared).
