@@ -1,0 +1,13 @@
+--- a/crates/sr-app/src/ui/legend.rs
++++ b/crates/sr-app/src/ui/legend.rs
+@@ -117,7 +117,9 @@
+ /// bar — clamped to the bar's ends outside 0 … 1; none for a position that is not a number.
+ pub fn glow_pick(position: f64) -> Option<f64> {
+     let [lo, hi] = glow_span();
+-    position.is_finite().then(|| 10f64.powf(lo + (hi - lo) * position.clamp(0.0, 1.0)).clamp(GLOW_S_MIN, GLOW_S_MAX))
++    // Planted: the pick linear in T along the bar, not logarithmic (M0-T132's plant).
++    let _ = (lo, hi);
++    position.is_finite().then(|| (GLOW_S_MIN + (GLOW_S_MAX - GLOW_S_MIN) * position.clamp(0.0, 1.0)).clamp(GLOW_S_MIN, GLOW_S_MAX))
+ }
+ 
+ /// The bar's rectangle in `strip` (the strip's top row holds the title and the marks' labels over it): one place for the drawing and

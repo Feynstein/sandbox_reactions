@@ -1181,6 +1181,30 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     core_collapse, supernova and ends neutron_star (4,272–5,209 sb), at 30 it fails as at 40; the Giant ends black_hole from 10 to 40,
     keeping its mass through the helium event from 15 up (36,795 at t 30 against 30,952 at 10); hydrogen on a faster clock of its own
     (K_H 1, 3, 0) runs away — the clock is needed on hydrogen too — the lead at M0-D167, 2026-11-12: «burn_k 15 (Recommended)».
+  - [M0-D175] §5.2 G-END's Sun-like «white dwarf», read as nature's Sun's (a C/O white dwarf after a planetary nebula) · **the
+    Sun-like's ending white_dwarf, its centre's composition not graded (an iron-rich centre counts); G-STAGES' sun row's he_shell
+    and planetary_nebula are M0-T103's to grade, measured out of reach here** — the physics unchanged ([M0-D167]'s hash) · measured
+    on laserax-ai-server's RTX 4090 (2026-11-12, tasks/M0-D175.md): from M0-V14's s_140000 the Sun-like (0.95 M_ch, never a giant,
+    R₉₀ 14–16 to he_core) contracts whole onto a ~2-cell cold radius, its centre heating with no peak (T_c 86 → 224, d_c ≤ 0.73)
+    through O → Si → Fe, and ends white_dwarf at t 2,026.4 (2,622 sb, X_Fe,c 0.64, no planetary nebula); the pre-[M0-D169] ladder,
+    R15's 125/130/150, a midway 135/145/175 and the pre-[M0-D166] light climb the same (white_dwarf at X_Fe,c 0.35–0.43, or no
+    ending in 570 s), and M0-V14's own old-physics life ended an iron white dwarf too — the lead at M0-D175, 2026-11-13: «Keep
+    shipped, amend (Recommended)».
+  - [M0-D175] M0-D165's Verify 1 Fail arm, carried in M0-D167's Carried flags: «a centre from X_H,c > 0.1 to X_Fe,c > 0.5 within
+    1 t.u.» · **the flash it targets: within 1 t.u. the centre's X_H,c falls by more than 0.1 and its X_Fe,c rises past 0.5** — no
+    physics change · measured on laserax-ai-server's RTX 4090 (2026-11-13, the recalibrated file 8096991d…, tasks/M0-D175.md §
+    Session 3): the Giant preset to core_collapse (observers every 50 steps) trips the letter in 62 pairs (t 57.30, X_H,c 0.197 →
+    t 58.25, X_Fe,c 0.562) on a centre that keeps X_H,c 0.19–0.27 from t 50 (largest fall 0.031 per t.u.) while C/O → Si/S → Fe burns
+    over ~8 t.u. (largest X_Fe,c rise 0.36 per t.u.) — not M0-D165's H → Fe in one pass; the Massive 0 pairs — the lead at M0-D175,
+    2026-11-13: «Amend to the flash (Recommended)».
+  - [M0-T132] §4.2 Centre's legend (M0-T128: a bar read, never touched) · **in the Glow view a click on the legend's bar, or a
+    drag along it with the primary button, sets the Glow setting S to the temperature under the cursor — the bar's own
+    logarithmic scale over 10 K – 10 billion K, clamped to its ends — exactly as the slider does: the slider, its typed value,
+    the mark and the world follow; the pointer over the Glow bar is a pointing hand; Heat, Density and Element take no click** ·
+    additive: nothing in §1.11 or the render moves; two defaults the lead may overturn (a drag works as well as a click; Heat's
+    and Density's bars take none, the lead named the glow scale only) — the lead at M0-D175's session, 2026-11-13: «Id like for
+    the glow scale to be able to be changed in the main window by clicking on the color legend at the bottom, instead of always
+    having to use the slider».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -2267,7 +2291,11 @@ colour and brightness"`, `legend.heat = "Temperature"`, `legend.density = "Densi
   billion K, logarithmic, as the cell image draws a Σ = 1 cell at the current S (the glow not added); Heat and Density: the map
   over the view's range; Element: the ten species' swatches with their `element.*` names — then the marks: the Glow setting (a
   `accent` triangle and line, `legend.white`) and the hovered cell's value (`text.primary`, `legend.cursor` with the inspector's
-  temperature or density; none over vacuum, outside the world or in the Element view). `presets.place_hint` shows under the
+  temperature or density; none over vacuum, outside the world or in the Element view). [M0-T132] In the Glow view the bar
+  (with the mark row above it) takes the pointer: a click on it, or a drag along it with the primary button, sets S to the
+  temperature under the cursor — the bar's own logarithmic scale over 10 K – 10 billion K, clamped to its ends — exactly as the
+  slider does (the slider, its typed value, the mark and the world follow; one S, no second store), and the pointer over it is a
+  pointing hand; Heat, Density and Element take no click, and the world's own clicks are unchanged. `presets.place_hint` shows under the
   legend. With the zoom (M0-T129) the world's scale is z · s, clipped to the world's place at z = 1 (`legend::layout`'s world rect), so the legend and the hint stay in view [M0-D146].
 - **Right panel** (300 px): `star.heading` and the star readout (§4.6); `inspect.heading` and the
   cell inspector (§4.6).
@@ -2503,7 +2531,7 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   Massive > Giant. Orders exact; the gap of 10 is precedent, not proof (TW-E10–E12) — *UNVERIFIED*.
   Scope `squeeze` ⏱. Plant `q-h-tiny`: Q_H ÷ 100.
 - **G-END · each ending as predicted** (RT17; B2, B3). The three presets end as their readouts
-  predicted at the drop (white dwarf; supernova then neutron star; black hole); and preset-shaped
+  predicted at the drop (white dwarf — [M0-D175] its centre's composition not graded; supernova then neutron star; black hole); and preset-shaped
   clouds at each calibrated threshold ÷ 1.25 and × 1.25 in sandbox mass (outside the ±10 % close-call
   band) end on their side as predicted — failed star / white dwarf, white dwarf / neutron star,
   neutron star / black hole. Exact. summary.json records whether S1 or S2 was enabled. *UNVERIFIED*

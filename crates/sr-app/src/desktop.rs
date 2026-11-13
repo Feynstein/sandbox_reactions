@@ -500,6 +500,21 @@ impl eframe::App for SandboxApp {
                 // The legend of the active view under the world (§4.2, M0-T128), then the lines under it: the hint while armed, the
                 // refusal for 3 s in its place (§4.5, M0-D136: the slot holds one line).
                 let view = self.sim.views().active();
+                // In Glow the bar is a control of S (§4.2, M0-T132): a press or a drag on it sends the slider's own command, before the
+                // bar and the mark are read below, so they show this frame's S. Heat, Density and Element take no click.
+                if view == View::Glow {
+                    let pick = ui.interact(legend::pick_rect(placed_at.legend), egui::Id::new("glow_bar"), egui::Sense::click_and_drag());
+                    if !modal && pick.hovered() {
+                        ui.ctx().set_cursor_icon(egui::CursorIcon::PointingHand);
+                    }
+                    if !modal && pick.is_pointer_button_down_on() && ui.input(|i| i.pointer.primary_down()) {
+                        let bar = legend::bar_rect(placed_at.legend);
+                        let along = pick.interact_pointer_pos().map(|p| f64::from((p.x - bar.left()) / bar.width()));
+                        if let Some(kelvin) = along.and_then(legend::glow_pick) {
+                            self.sim.display_command(DisplayCommand::SetGlow(kelvin));
+                        }
+                    }
+                }
                 let bar = self.legend_bars.of(view, self.sim.display());
                 let text_width = |text: &str| {
                     ui.ctx().fonts_mut(|f| f.layout_no_wrap(text.to_string(), egui::FontId::proportional(LEGEND_FONT), TEXT_PRIMARY).size().x)
@@ -852,8 +867,7 @@ const LEGEND_FONT: f32 = 12.0;
 fn draw_legend(painter: &egui::Painter, strip: egui::Rect, legend: &Legend, text_width: &dyn Fn(&str) -> f32) {
     let font = egui::FontId::proportional(LEGEND_FONT);
     painter.text(strip.left_top(), egui::Align2::LEFT_TOP, &legend.title, font.clone(), TEXT_SECONDARY);
-    let bar_top = strip.top() + legend::MARK_TRIANGLE + 6.0;
-    let bar = egui::Rect::from_min_size(egui::pos2(strip.left(), bar_top), egui::vec2(strip.width(), legend::BAR_HEIGHT));
+    let bar = legend::bar_rect(strip);
     let slices = match &legend.bar {
         Bar::Gradient(colours) | Bar::Swatches(colours) => colours,
     };

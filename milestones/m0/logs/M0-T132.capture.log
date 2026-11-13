@@ -1,0 +1,15 @@
+== 2026-11-13T11:02:23-05:00 capture[smoke] · task M0-T132 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[smoke] · exit=1 · 0.16 s
+SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402 (change a constant, calibrate again: sandbox-reactions calibrate)
+=== NO-GO: the capture run exited 6, expected 0 ===
+
+== 2026-11-13T11:02:23-05:00 capture[refuse] · task M0-T132 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 0.21 s
+capture refuse: a malformed hover, select, glow_white, range, fit, display_reset, zoom and preset (a bad or extra key beside it), an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+== 2026-11-13T11:02:23-05:00 capture[actions] · task M0-T132 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[actions] · exit=1 · 0.26 s
+SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402 (change a constant, calibrate again: sandbox-reactions calibrate)
+=== NO-GO: the capture run exited 6, expected 0 ===
+

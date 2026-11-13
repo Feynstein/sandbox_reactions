@@ -44,3 +44,36 @@ test result: FAILED. 1 passed; 3 failed; 0 ignored; 0 measured; 508 filtered out
 
 error: test failed, to rerun pass `-p sr-engine --test gpu`
 
+== 2026-11-13T12:24:42-05:00 sun_burn · task M0-D175 · box laserax-ai-server :: bash tests/gpu.sh sunburn physics
+-- sun_burn · exit=0 · 90.20 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 11.66s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 4 tests
+test sunburn::hydrogen_burns_steadily_at_the_centre ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=3000 sim_time=36.112452 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=58.591068 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-SUNBURN step 3000 t 36.112: centre (300, 200) Σ 8.925 T 33.666 X_H 0.72581; T_max 33.668; bound 3130.22 of 3133.40 (0.9979 of the preset's 3136.72); sinks 0
+SR-SUNBURN step 4000 t 47.406: centre (300, 200) Σ 9.337 T 34.014 X_H 0.72291; T_max 34.016; bound 3129.83 of 3131.19 (0.9978 of the preset's 3136.72); sinks 0
+SR-SUNBURN step 5000 t 58.591: centre (299, 200) Σ 9.587 T 34.323 X_H 0.71983; T_max 34.330; bound 3129.53 of 3130.08 (0.9977 of the preset's 3136.72); sinks 0
+SR-SUNBURN X_H,c: [0.72581, 0.72291, 0.71983]; falls [0.00290, 0.00308] (each ≥ 0.001), 0.00598 over the window (≥ 0.002); least ≥ 0.5
+ok
+test sunburn::it_shines_what_it_burns_and_only_hydrogen_burns ... SR-SUNBURN window: Δt 22.467, L 1778.4, L_nuc 1282.2, L_nuc/L 0.7210 (band (0.5, 2.0)); T_max [33.668, 34.016, 34.330] against 0.5 T_He = 50
+ok
+test sunburn::the_readings_see_what_the_planes_hold ... SR-SUNBURN reading on hand-made planes: Reading { cell: (30, 31), sigma_c: 2.0, x_h_c: 0.6000000238418579, t_c: 6.999998954475347, t_max: 6.999998954475347, mass: 317.0099999997765, bound: 317.0 } (NOT PROVEN on the star)
+ok
+test sunburn::the_star_stays_bound ... SR-SUNBURN bound at step 3000: 3130.22 of the preset's 3136.72 (0.9979), grid 3133.40, sinks 0
+SR-SUNBURN bound at step 4000: 3129.83 of the preset's 3136.72 (0.9978), grid 3131.19, sinks 0
+SR-SUNBURN bound at step 5000: 3129.53 of the preset's 3136.72 (0.9977), grid 3130.08, sinks 0
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 508 filtered out; finished in 78.33s
+
+

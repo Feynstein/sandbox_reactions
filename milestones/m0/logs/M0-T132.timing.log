@@ -1,0 +1,63 @@
+== 2026-11-13T11:02:04-05:00 timing · task M0-T132 · box laserax-ai :: bash tests/gpu.sh timing physics
+-- timing · exit=101 · 10.63 s
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 3.90s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 5 tests
+test timing::a_frame_longer_than_the_query_set_times_its_first_whole_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+a 240-step frame: encoded 48.58ms, submitted 1.02s, done 1.04s (wall)
+a 240-step frame: StepCost { source: GpuTimestamp, steps: 204, ended: 240, step_ms: 1.4468756078431373, pass_ms: [Some(0.009394509803921577), Some(0.002511372549019608), Some(0.024144941176470577), Some(0.10147827450980398), Some(0.039231529411764665), Some(1.1572145882352938), Some(0.04037898039215687), Some(0.01198337254901961), Some(0.008771137254901959), Some(0.011740705882352943)], frame_ms: Some(0.007232000000000001) }
+a 240-step frame: 204 steps recorded for 240 ended
+a 240-step frame: passes sum 1.406849 ms, step 1.446876 ms, off by 2.8 %
+a 10-step frame: encoded 642.83µs, submitted 19.77ms, done 38.23ms (wall)
+the next frame starts a fresh query set: StepCost { source: GpuTimestamp, steps: 10, ended: 10, step_ms: 2.2097983999999995, pass_ms: [Some(0.0090208), Some(0.0024384000000000003), Some(0.023484799999999997), Some(0.09526399999999999), Some(0.03904319999999999), Some(1.8986816000000002), Some(0.0686944), Some(0.0120096), Some(0.0090752), Some(0.011756800000000001)], frame_ms: Some(0.006784) }
+the next frame starts a fresh query set: 10 steps recorded for 10 ended
+the next frame starts a fresh query set: passes sum 2.169469 ms, step 2.209798 ms, off by 1.8 %
+ok
+test timing::bare_steps_time_every_pass_at_its_boundaries ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+recorded passes: ["P0 edits", "P1 dt", "P2 gravity", "P3 sinks", "P4 hydro", "P5 heat", "P6 reactions", "P7 neutrino heating", "P8 floors", "P9 reductions"]
+steps 0–63: StepCost { source: GpuTimestamp, steps: 64, ended: 64, step_ms: 4.348042, pass_ms: [Some(0.009553), Some(0.0025399999999999997), Some(0.0274985), Some(0.09660399999999998), Some(0.032539), Some(4.0704845), Some(0.03379700000000001), Some(0.011821), Some(0.0097115), Some(0.012431500000000002)], frame_ms: None }
+steps 0–63: 64 steps recorded for 64 ended
+steps 0–63: passes sum 4.306980 ms, step 4.348042 ms, off by 0.9 %
+steps 64–78: StepCost { source: GpuTimestamp, steps: 15, ended: 15, step_ms: 5.022461866666665, pass_ms: [Some(0.009201066666666667), Some(0.002568533333333333), Some(0.18689493333333335), Some(0.09408426666666665), Some(0.03353813333333333), Some(4.587889066666667), Some(0.03380693333333334), Some(0.0117632), Some(0.009646933333333333), Some(0.012089599999999997)], frame_ms: None }
+steps 64–78: 15 steps recorded for 15 ended
+steps 64–78: passes sum 4.981483 ms, step 5.022462 ms, off by 0.8 %
+ok
+test timing::frames_report_their_cost_per_step_and_per_pass ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+a 8-step frame: encoded 14.01ms, submitted 129.24ms, done 138.87ms (wall)
+a 40-step frame: encoded 8.68ms, submitted 415.03ms, done 423.97ms (wall)
+frame 0: StepCost { source: GpuTimestamp, steps: 40, ended: 40, step_ms: 3.907272799999999, pass_ms: [Some(0.0094472), Some(0.002624), Some(0.027420799999999995), Some(0.0969592), Some(0.03201040000000001), Some(3.6334176), Some(0.0335808), Some(0.012152), Some(0.009565599999999997), Some(0.011463999999999998)], frame_ms: Some(0.008032000000000001) }
+frame 0: 40 steps recorded for 40 ended
+frame 0: passes sum 3.868642 ms, step 3.907273 ms, off by 1.0 %
+a 40-step frame: encoded 8.03ms, submitted 294.20ms, done 302.49ms (wall)
+frame 1: StepCost { source: GpuTimestamp, steps: 40, ended: 40, step_ms: 2.3159047999999993, pass_ms: [Some(0.0092448), Some(0.0028432), Some(0.027786400000000006), Some(0.09535919999999999), Some(0.032824000000000006), Some(2.0404728), Some(0.0334792), Some(0.011931999999999998), Some(0.009604800000000004), Some(0.0116792)], frame_ms: Some(0.007488) }
+frame 1: 40 steps recorded for 40 ended
+frame 1: passes sum 2.275226 ms, step 2.315905 ms, off by 1.8 %
+a 40-step frame: encoded 4.02ms, submitted 216.28ms, done 225.54ms (wall)
+frame 2: StepCost { source: GpuTimestamp, steps: 40, ended: 40, step_ms: 1.9079664, pass_ms: [Some(0.009318399999999996), Some(0.0025216), Some(0.0295744), Some(0.09933279999999997), Some(0.0321424), Some(1.628084), Some(0.03363599999999999), Some(0.012288000000000004), Some(0.0097064), Some(0.011672)], frame_ms: Some(0.00656) }
+frame 2: 40 steps recorded for 40 ended
+frame 2: passes sum 1.868276 ms, step 1.907966 ms, off by 2.1 %
+ok
+test timing::headless_timing_writes_every_pass_of_the_nominal_disk ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ERROR calibration out of date: its physics_hash is a6c041b1d4018bc977ec7006b68e9d98d95bff12ad4349e934114c0d568b4d74, the assets' is 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402 (change a constant, calibrate again: sandbox-reactions calibrate)
+
+thread 'timing::headless_timing_writes_every_pass_of_the_nominal_disk' (3739710) panicked at crates/sr-engine/tests/gpu/timing.rs:219:66:
+summary.json written: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test timing::the_wall_clock_fallback_is_named_and_times_no_pass ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+bare, wall: StepCost { source: Wall, steps: 20, ended: 20, step_ms: 8.94104765000002, pass_ms: [None, None, None, None, None, None, None, None, None, None], frame_ms: None }
+a 20-step frame: encoded 2.62ms, submitted 137.82ms, done 145.65ms (wall)
+frame, wall: StepCost { source: Wall, steps: 20, ended: 20, step_ms: 7.2855792500000005, pass_ms: [None, None, None, None, None, None, None, None, None, None], frame_ms: None }
+ok
+
+failures:
+
+failures:
+    timing::headless_timing_writes_every_pass_of_the_nominal_disk
+
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 507 filtered out; finished in 6.51s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

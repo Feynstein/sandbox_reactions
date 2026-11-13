@@ -465,3 +465,13 @@ Binding as if it sat in the plan (PLAYBOOK §2.6 P3, §11; R19). Moved byte for 
   15 (measured by M0-D167 on the RTX 4090: at 40 and 30 the Massive's hydrogen shell cannot burn its infall, the whole star collapses
   inside r ≤ 4 and no supernova follows; at 15–20 the Massive ends supernova then neutron_star and the Giant keeps its mass and ends a
   black hole; the lead at M0-D167, 2026-11-12: «burn_k 15 (Recommended)»).
+- Plan M0-D175's Verify 1 «… he_core, he_shell, planetary_nebula, white_dwarf, ending white_dwarf, X_Fe,c < 0.5 · Fail: an iron core
+  at c or no ending» and contract §5.2 G-END's Sun-like «white dwarf» read as nature's Sun's (C/O, after a planetary nebula) — superseded
+  by contract §0.5 [M0-D175]: the Sun-like's ending white_dwarf, its centre's composition not graded; G-STAGES' sun he_shell and
+  planetary_nebula M0-T103's to grade (measured by M0-D175 on the RTX 4090: the Sun-like contracts whole onto ~2 cells and ends
+  white_dwarf at X_Fe,c 0.64 with no nebula, every in-bound ladder and the pre-[M0-D166] light alike; M0-V14's old physics ended iron
+  too; the lead at M0-D175, 2026-11-13: «Keep shipped, amend (Recommended)»).
+- M0-D165's Verify 1 Fail arm «a centre from X_H,c > 0.1 to X_Fe,c > 0.5 within 1 t.u.» (carried in M0-D167's Carried flags) —
+  superseded by contract §0.5 [M0-D175] (the second entry): the flash it targets, X_H,c falling by more than 0.1 and X_Fe,c rising
+  past 0.5 within 1 t.u. (measured by M0-D175 on the RTX 4090: the recalibrated Giant trips the letter on a centre holding X_H,c
+  ~0.2 while its O/Si burns to Fe over ~8 t.u.; the lead at M0-D175, 2026-11-13: «Amend to the flash (Recommended)»).

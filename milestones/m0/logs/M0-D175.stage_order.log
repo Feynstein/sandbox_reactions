@@ -28,3 +28,182 @@ test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 510 filtered out
 
 error: test failed, to rerun pass `-p sr-engine --test gpu`
 
+== 2026-11-13T12:24:42-05:00 stage_order · task M0-D175 · box laserax-ai-server :: bash tests/gpu.sh stage_order physics
+-- stage_order · exit=0 · 51.32 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 11.67s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 2 tests
+test stage_order::the_15_sun_preset_shows_its_stages_in_order ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+massive step=17 lit=false raw=protostar shown=none M=9810.4 R=60.49 Σc=1.001e0 Tc=4.064e1 d_c=0.1712 X_H,c=0.7346 v_r/v_dyn=-0.0026 2P/|W|=1.075 L=2.692e5 L_nuc=3.842e3
+massive step=33 lit=false raw=protostar shown=protostar M=9810.4 R=60.52 Σc=1.005e0 Tc=4.081e1 d_c=0.1710 X_H,c=0.7346 v_r/v_dyn=-0.0053 2P/|W|=1.044 L=1.326e5 L_nuc=3.432e3
+massive step=49 lit=false raw=protostar shown=protostar M=9810.4 R=60.53 Σc=1.009e0 Tc=4.101e1 d_c=0.1709 X_H,c=0.7346 v_r/v_dyn=-0.0082 2P/|W|=1.023 L=9.504e4 L_nuc=3.180e3
+massive step=65 lit=false raw=protostar shown=protostar M=9810.4 R=60.89 Σc=1.015e0 Tc=4.122e1 d_c=0.1709 X_H,c=0.7346 v_r/v_dyn=-0.0110 2P/|W|=1.006 L=7.555e4 L_nuc=3.001e3
+massive step=81 lit=false raw=protostar shown=protostar M=9810.3 R=60.98 Σc=1.022e0 Tc=4.140e1 d_c=0.1712 X_H,c=0.7346 v_r/v_dyn=-0.0139 2P/|W|=0.992 L=6.346e4 L_nuc=2.867e3
+massive step=97 lit=false raw=protostar shown=protostar M=9810.2 R=61.05 Σc=1.029e0 Tc=4.156e1 d_c=0.1716 X_H,c=0.7345 v_r/v_dyn=-0.0169 2P/|W|=0.981 L=5.495e4 L_nuc=2.763e3
+massive step=113 lit=false raw=protostar shown=protostar M=9810.0 R=61.25 Σc=1.037e0 Tc=4.170e1 d_c=0.1722 X_H,c=0.7345 v_r/v_dyn=-0.0198 2P/|W|=0.971 L=4.864e4 L_nuc=2.682e3
+massive step=129 lit=false raw=protostar shown=protostar M=9809.9 R=61.26 Σc=1.046e0 Tc=4.182e1 d_c=0.1729 X_H,c=0.7345 v_r/v_dyn=-0.0228 2P/|W|=0.962 L=4.374e4 L_nuc=2.618e3
+massive step=145 lit=false raw=protostar shown=protostar M=9809.6 R=61.40 Σc=1.056e0 Tc=4.193e1 d_c=0.1738 X_H,c=0.7345 v_r/v_dyn=-0.0258 2P/|W|=0.954 L=3.988e4 L_nuc=2.568e3
+massive step=161 lit=false raw=protostar shown=protostar M=9809.4 R=61.45 Σc=1.066e0 Tc=4.204e1 d_c=0.1747 X_H,c=0.7345 v_r/v_dyn=-0.0288 2P/|W|=0.947 L=3.653e4 L_nuc=2.531e3
+massive step=177 lit=false raw=protostar shown=protostar M=9809.1 R=61.59 Σc=1.078e0 Tc=4.215e1 d_c=0.1757 X_H,c=0.7345 v_r/v_dyn=-0.0318 2P/|W|=0.941 L=3.379e4 L_nuc=2.504e3
+massive step=193 lit=false raw=protostar shown=protostar M=9809.0 R=61.65 Σc=1.089e0 Tc=4.226e1 d_c=0.1768 X_H,c=0.7345 v_r/v_dyn=-0.0348 2P/|W|=0.935 L=3.152e4 L_nuc=2.486e3
+massive step=209 lit=false raw=protostar shown=protostar M=9808.7 R=61.85 Σc=1.102e0 Tc=4.238e1 d_c=0.1780 X_H,c=0.7345 v_r/v_dyn=-0.0379 2P/|W|=0.930 L=2.949e4 L_nuc=2.476e3
+massive step=225 lit=false raw=protostar shown=protostar M=9808.4 R=62.10 Σc=1.115e0 Tc=4.251e1 d_c=0.1792 X_H,c=0.7345 v_r/v_dyn=-0.0411 2P/|W|=0.925 L=2.775e4 L_nuc=2.475e3
+massive step=241 lit=false raw=protostar shown=protostar M=9808.2 R=62.20 Σc=1.130e0 Tc=4.265e1 d_c=0.1805 X_H,c=0.7345 v_r/v_dyn=-0.0442 2P/|W|=0.921 L=2.618e4 L_nuc=2.481e3
+massive step=257 lit=false raw=protostar shown=protostar M=9807.9 R=62.27 Σc=1.145e0 Tc=4.280e1 d_c=0.1818 X_H,c=0.7345 v_r/v_dyn=-0.0473 2P/|W|=0.917 L=2.494e4 L_nuc=2.495e3
+massive step=273 lit=false raw=cloud shown=protostar M=9807.7 R=62.40 Σc=1.161e0 Tc=4.297e1 d_c=0.1831 X_H,c=0.7345 v_r/v_dyn=-0.0505 2P/|W|=0.914 L=2.377e4 L_nuc=2.517e3
+massive step=289 lit=false raw=cloud shown=protostar M=9807.3 R=62.57 Σc=1.178e0 Tc=4.315e1 d_c=0.1845 X_H,c=0.7344 v_r/v_dyn=-0.0538 2P/|W|=0.910 L=2.262e4 L_nuc=2.546e3
+massive step=305 lit=false raw=cloud shown=protostar M=9807.0 R=62.65 Σc=1.196e0 Tc=4.335e1 d_c=0.1860 X_H,c=0.7344 v_r/v_dyn=-0.0570 2P/|W|=0.908 L=2.169e4 L_nuc=2.583e3
+massive step=321 lit=false raw=cloud shown=protostar M=9806.9 R=62.79 Σc=1.216e0 Tc=4.357e1 d_c=0.1875 X_H,c=0.7344 v_r/v_dyn=-0.0602 2P/|W|=0.905 L=2.087e4 L_nuc=2.629e3
+massive step=337 lit=false raw=cloud shown=protostar M=9806.3 R=62.89 Σc=1.237e0 Tc=4.381e1 d_c=0.1891 X_H,c=0.7344 v_r/v_dyn=-0.0636 2P/|W|=0.903 L=2.006e4 L_nuc=2.684e3
+massive step=353 lit=false raw=cloud shown=protostar M=9806.2 R=63.08 Σc=1.259e0 Tc=4.408e1 d_c=0.1907 X_H,c=0.7344 v_r/v_dyn=-0.0669 2P/|W|=0.901 L=1.941e4 L_nuc=2.747e3
+massive step=369 lit=false raw=cloud shown=protostar M=9805.8 R=63.25 Σc=1.283e0 Tc=4.436e1 d_c=0.1924 X_H,c=0.7344 v_r/v_dyn=-0.0703 2P/|W|=0.900 L=1.876e4 L_nuc=2.822e3
+massive step=385 lit=false raw=cloud shown=protostar M=9805.5 R=63.56 Σc=1.308e0 Tc=4.466e1 d_c=0.1941 X_H,c=0.7344 v_r/v_dyn=-0.0738 2P/|W|=0.898 L=1.822e4 L_nuc=2.907e3
+massive step=401 lit=false raw=cloud shown=protostar M=9805.3 R=63.84 Σc=1.335e0 Tc=4.499e1 d_c=0.1959 X_H,c=0.7344 v_r/v_dyn=-0.0772 2P/|W|=0.897 L=1.774e4 L_nuc=3.003e3
+massive step=417 lit=false raw=cloud shown=protostar M=9805.0 R=64.06 Σc=1.363e0 Tc=4.535e1 d_c=0.1978 X_H,c=0.7344 v_r/v_dyn=-0.0807 2P/|W|=0.897 L=1.730e4 L_nuc=3.114e3
+massive step=433 lit=false raw=cloud shown=protostar M=9804.3 R=64.13 Σc=1.394e0 Tc=4.573e1 d_c=0.1997 X_H,c=0.7343 v_r/v_dyn=-0.0841 2P/|W|=0.897 L=1.691e4 L_nuc=3.238e3
+massive step=449 lit=false raw=cloud shown=protostar M=9804.4 R=64.50 Σc=1.426e0 Tc=4.614e1 d_c=0.2017 X_H,c=0.7343 v_r/v_dyn=-0.0875 2P/|W|=0.897 L=1.662e4 L_nuc=3.378e3
+massive step=465 lit=false raw=cloud shown=protostar M=9803.8 R=64.96 Σc=1.461e0 Tc=4.658e1 d_c=0.2038 X_H,c=0.7343 v_r/v_dyn=-0.0911 2P/|W|=0.897 L=1.635e4 L_nuc=3.534e3
+massive step=481 lit=false raw=cloud shown=protostar M=9803.5 R=65.06 Σc=1.498e0 Tc=4.704e1 d_c=0.2059 X_H,c=0.7343 v_r/v_dyn=-0.0944 2P/|W|=0.897 L=1.610e4 L_nuc=3.710e3
+massive step=497 lit=false raw=cloud shown=protostar M=9803.4 R=65.24 Σc=1.537e0 Tc=4.753e1 d_c=0.2081 X_H,c=0.7343 v_r/v_dyn=-0.0977 2P/|W|=0.898 L=1.586e4 L_nuc=3.907e3
+SR-HEADLESS DONE steps=500 sim_time=2.981766 until=unmet
+massive shown: [("protostar", 33)]
+ok
+test stage_order::the_sun_like_preset_shows_its_stages_in_order ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+sun step=17 lit=false raw=cloud shown=none M=3136.7 R=33.97 Σc=1.019e0 Tc=4.666e0 d_c=0.6463 X_H,c=0.7346 v_r/v_dyn=-0.0750 2P/|W|=0.477 L=1.199e2 L_nuc=-0.000e0
+sun step=33 lit=false raw=collapsing shown=none M=3136.7 R=33.74 Σc=1.070e0 Tc=4.901e0 d_c=0.6456 X_H,c=0.7346 v_r/v_dyn=-0.1418 2P/|W|=0.479 L=2.698e1 L_nuc=-0.000e0
+sun step=49 lit=false raw=collapsing shown=none M=3136.7 R=33.18 Σc=1.166e0 Tc=5.340e0 d_c=0.6442 X_H,c=0.7346 v_r/v_dyn=-0.2113 2P/|W|=0.486 L=7.387e0 L_nuc=-0.000e0
+sun step=65 lit=false raw=collapsing shown=collapsing M=3136.7 R=32.10 Σc=1.316e0 Tc=6.028e0 d_c=0.6422 X_H,c=0.7346 v_r/v_dyn=-0.2764 2P/|W|=0.500 L=2.579e0 L_nuc=-0.000e0
+sun step=81 lit=false raw=collapsing shown=collapsing M=3136.7 R=31.13 Σc=1.532e0 Tc=7.022e0 d_c=0.6396 X_H,c=0.7346 v_r/v_dyn=-0.3366 2P/|W|=0.520 L=1.088e0 L_nuc=-0.000e0
+sun step=97 lit=false raw=collapsing shown=collapsing M=3136.6 R=30.66 Σc=1.847e0 Tc=8.463e0 d_c=0.6361 X_H,c=0.7346 v_r/v_dyn=-0.3952 2P/|W|=0.548 L=5.220e-1 L_nuc=-0.000e0
+sun step=113 lit=false raw=collapsing shown=collapsing M=3136.6 R=29.55 Σc=2.313e0 Tc=1.060e1 d_c=0.6314 X_H,c=0.7346 v_r/v_dyn=-0.4449 2P/|W|=0.584 L=2.808e-1 L_nuc=-0.000e0
+sun step=129 lit=false raw=collapsing shown=collapsing M=3136.5 R=28.32 Σc=3.030e0 Tc=1.388e1 d_c=0.6254 X_H,c=0.7346 v_r/v_dyn=-0.4862 2P/|W|=0.632 L=1.721e-1 L_nuc=-0.000e0
+sun step=145 lit=false raw=collapsing shown=collapsing M=3136.3 R=27.07 Σc=4.154e0 Tc=1.898e1 d_c=0.6179 X_H,c=0.7346 v_r/v_dyn=-0.5160 2P/|W|=0.693 L=1.115e-1 L_nuc=-0.000e0
+sun step=161 lit=false raw=collapsing shown=collapsing M=3136.3 R=26.12 Σc=5.820e0 Tc=2.638e1 d_c=0.6100 X_H,c=0.7346 v_r/v_dyn=-0.5312 2P/|W|=0.772 L=7.588e-2 L_nuc=-0.000e0
+sun step=177 lit=false raw=collapsing shown=collapsing M=3136.3 R=25.29 Σc=7.793e0 Tc=3.482e1 d_c=0.6038 X_H,c=0.7346 v_r/v_dyn=-0.5228 2P/|W|=0.864 L=5.433e-2 L_nuc=2.480e2
+sun step=193 lit=false raw=collapsing shown=collapsing M=3136.2 R=23.32 Σc=9.235e0 Tc=4.095e1 d_c=0.5995 X_H,c=0.7345 v_r/v_dyn=-0.4768 2P/|W|=0.962 L=4.045e-2 L_nuc=1.601e3
+sun step=209 lit=false raw=collapsing shown=collapsing M=3136.1 R=22.42 Σc=1.012e1 Tc=4.510e1 d_c=0.5947 X_H,c=0.7344 v_r/v_dyn=-0.4216 2P/|W|=1.057 L=3.084e-2 L_nuc=4.500e3
+sun step=225 lit=false raw=collapsing shown=collapsing M=3136.0 R=21.08 Σc=1.085e1 Tc=4.894e1 d_c=0.5890 X_H,c=0.7341 v_r/v_dyn=-0.3481 2P/|W|=1.145 L=2.408e-2 L_nuc=8.983e3
+sun step=241 lit=false raw=collapsing shown=collapsing M=3135.9 R=19.27 Σc=1.138e1 Tc=5.229e1 d_c=0.5827 X_H,c=0.7338 v_r/v_dyn=-0.2608 2P/|W|=1.225 L=1.929e-2 L_nuc=1.465e4
+sun step=257 lit=false raw=collapsing shown=collapsing M=3135.8 R=17.72 Σc=1.166e1 Tc=5.479e1 d_c=0.5761 X_H,c=0.7334 v_r/v_dyn=-0.1695 2P/|W|=1.296 L=1.548e-2 L_nuc=2.051e4
+sun step=273 lit=false raw=cloud shown=collapsing M=3135.7 R=15.69 Σc=1.169e1 Tc=5.637e1 d_c=0.5697 X_H,c=0.7329 v_r/v_dyn=-0.0784 2P/|W|=1.347 L=1.299e-2 L_nuc=2.452e4
+sun step=289 lit=false raw=protostar shown=collapsing M=3135.6 R=13.94 Σc=1.140e1 Tc=5.631e1 d_c=0.5647 X_H,c=0.7325 v_r/v_dyn=+0.0006 2P/|W|=1.330 L=9.192e4 L_nuc=2.454e4
+sun step=305 lit=false raw=cloud shown=collapsing M=3135.4 R=13.78 Σc=1.061e1 Tc=5.340e1 d_c=0.5630 X_H,c=0.7320 v_r/v_dyn=+0.0664 2P/|W|=1.288 L=8.791e4 L_nuc=2.015e4
+sun step=321 lit=false raw=cloud shown=collapsing M=3135.3 R=14.14 Σc=9.596e0 Tc=4.882e1 d_c=0.5643 X_H,c=0.7317 v_r/v_dyn=+0.1186 2P/|W|=1.234 L=7.041e4 L_nuc=1.363e4
+sun step=337 lit=false raw=cloud shown=collapsing M=3135.2 R=14.40 Σc=8.604e0 Tc=4.394e1 d_c=0.5675 X_H,c=0.7316 v_r/v_dyn=+0.1546 2P/|W|=1.176 L=5.444e4 L_nuc=8.011e3
+sun step=353 lit=false raw=cloud shown=collapsing M=3135.0 R=15.15 Σc=7.732e0 Tc=3.947e1 d_c=0.5715 X_H,c=0.7315 v_r/v_dyn=+0.1791 2P/|W|=1.119 L=4.140e4 L_nuc=4.342e3
+sun step=369 lit=false raw=cloud shown=collapsing M=3134.9 R=16.27 Σc=6.986e0 Tc=3.557e1 d_c=0.5757 X_H,c=0.7314 v_r/v_dyn=+0.1952 2P/|W|=1.064 L=3.100e4 L_nuc=2.178e3
+sun step=385 lit=false raw=cloud shown=collapsing M=3134.7 R=17.28 Σc=6.369e0 Tc=3.230e1 d_c=0.5798 X_H,c=0.7314 v_r/v_dyn=+0.2016 2P/|W|=1.015 L=2.298e4 L_nuc=9.828e2
+sun step=401 lit=false raw=cloud shown=collapsing M=3134.4 R=18.28 Σc=5.867e0 Tc=2.964e1 d_c=0.5834 X_H,c=0.7314 v_r/v_dyn=+0.2005 2P/|W|=0.970 L=1.671e4 L_nuc=3.622e2
+sun step=417 lit=false raw=cloud shown=collapsing M=3134.3 R=18.83 Σc=5.472e0 Tc=2.750e1 d_c=0.5869 X_H,c=0.7314 v_r/v_dyn=+0.1913 2P/|W|=0.932 L=1.200e4 L_nuc=5.885e1
+sun step=433 lit=false raw=cloud shown=collapsing M=3134.3 R=19.58 Σc=5.154e0 Tc=2.575e1 d_c=0.5901 X_H,c=0.7314 v_r/v_dyn=+0.1786 2P/|W|=0.899 L=8.560e3 L_nuc=-0.000e0
+sun step=449 lit=false raw=cloud shown=collapsing M=3134.1 R=20.56 Σc=4.925e0 Tc=2.448e1 d_c=0.5928 X_H,c=0.7314 v_r/v_dyn=+0.1631 2P/|W|=0.871 L=6.113e3 L_nuc=-0.000e0
+sun step=465 lit=false raw=cloud shown=collapsing M=3134.1 R=21.60 Σc=4.761e0 Tc=2.354e1 d_c=0.5950 X_H,c=0.7314 v_r/v_dyn=+0.1448 2P/|W|=0.848 L=4.343e3 L_nuc=-0.000e0
+sun step=481 lit=false raw=cloud shown=collapsing M=3133.9 R=22.34 Σc=4.637e0 Tc=2.282e1 d_c=0.5969 X_H,c=0.7314 v_r/v_dyn=+0.1229 2P/|W|=0.830 L=3.072e3 L_nuc=-0.000e0
+sun step=497 lit=false raw=cloud shown=collapsing M=3133.8 R=22.66 Σc=4.584e0 Tc=2.244e1 d_c=0.5986 X_H,c=0.7314 v_r/v_dyn=+0.0981 2P/|W|=0.816 L=2.183e3 L_nuc=-0.000e0
+sun step=513 lit=false raw=cloud shown=collapsing M=3133.6 R=23.22 Σc=4.560e0 Tc=2.220e1 d_c=0.6000 X_H,c=0.7314 v_r/v_dyn=+0.0729 2P/|W|=0.806 L=1.549e3 L_nuc=-0.000e0
+sun step=529 lit=false raw=failed_star shown=collapsing M=3133.5 R=23.31 Σc=4.576e0 Tc=2.216e1 d_c=0.6012 X_H,c=0.7314 v_r/v_dyn=+0.0464 2P/|W|=0.801 L=1.107e3 L_nuc=-0.000e0
+sun step=545 lit=false raw=cloud shown=collapsing M=3133.1 R=24.22 Σc=4.636e0 Tc=2.233e1 d_c=0.6021 X_H,c=0.7314 v_r/v_dyn=+0.0204 2P/|W|=0.799 L=7.912e2 L_nuc=-0.000e0
+sun step=561 lit=false raw=failed_star shown=collapsing M=3132.7 R=24.61 Σc=4.728e0 Tc=2.265e1 d_c=0.6028 X_H,c=0.7314 v_r/v_dyn=-0.0059 2P/|W|=0.802 L=5.734e2 L_nuc=-0.000e0
+sun step=577 lit=false raw=failed_star shown=collapsing M=3132.4 R=24.76 Σc=4.878e0 Tc=2.323e1 d_c=0.6034 X_H,c=0.7314 v_r/v_dyn=-0.0315 2P/|W|=0.808 L=4.110e2 L_nuc=-0.000e0
+sun step=593 lit=false raw=cloud shown=collapsing M=3132.2 R=24.91 Σc=5.039e0 Tc=2.386e1 d_c=0.6037 X_H,c=0.7314 v_r/v_dyn=-0.0559 2P/|W|=0.819 L=3.007e2 L_nuc=-0.000e0
+sun step=609 lit=false raw=cloud shown=collapsing M=3132.0 R=24.64 Σc=5.268e0 Tc=2.476e1 d_c=0.6041 X_H,c=0.7314 v_r/v_dyn=-0.0779 2P/|W|=0.834 L=2.192e2 L_nuc=-0.000e0
+sun step=625 lit=false raw=cloud shown=collapsing M=3131.8 R=24.23 Σc=5.502e0 Tc=2.571e1 d_c=0.6042 X_H,c=0.7314 v_r/v_dyn=-0.0967 2P/|W|=0.852 L=1.592e2 L_nuc=-0.000e0
+sun step=641 lit=false raw=collapsing shown=collapsing M=3131.6 R=23.41 Σc=5.779e0 Tc=2.680e1 d_c=0.6045 X_H,c=0.7314 v_r/v_dyn=-0.1105 2P/|W|=0.873 L=1.180e2 L_nuc=-0.000e0
+sun step=657 lit=false raw=collapsing shown=collapsing M=3131.1 R=23.21 Σc=6.068e0 Tc=2.798e1 d_c=0.6043 X_H,c=0.7314 v_r/v_dyn=-0.1218 2P/|W|=0.896 L=9.003e1 L_nuc=-0.000e0
+sun step=673 lit=true raw=main_sequence shown=collapsing M=3130.9 R=22.52 Σc=6.375e0 Tc=2.923e1 d_c=0.6041 X_H,c=0.7314 v_r/v_dyn=-0.1272 2P/|W|=0.921 L=6.808e1 L_nuc=7.493e1
+sun step=689 lit=true raw=main_sequence shown=collapsing M=3130.5 R=22.25 Σc=6.677e0 Tc=3.055e1 d_c=0.6031 X_H,c=0.7314 v_r/v_dyn=-0.1296 2P/|W|=0.947 L=5.349e1 L_nuc=2.561e2
+sun step=705 lit=true raw=main_sequence shown=main_sequence M=3130.4 R=21.17 Σc=6.994e0 Tc=3.184e1 d_c=0.6027 X_H,c=0.7314 v_r/v_dyn=-0.1250 2P/|W|=0.973 L=4.316e1 L_nuc=4.878e2
+sun step=721 lit=true raw=main_sequence shown=main_sequence M=3129.9 R=19.86 Σc=7.255e0 Tc=3.301e1 d_c=0.6016 X_H,c=0.7313 v_r/v_dyn=-0.1157 2P/|W|=0.998 L=3.410e1 L_nuc=7.628e2
+sun step=737 lit=true raw=main_sequence shown=main_sequence M=3129.7 R=18.89 Σc=7.551e0 Tc=3.425e1 d_c=0.6010 X_H,c=0.7313 v_r/v_dyn=-0.1036 2P/|W|=1.023 L=2.696e1 L_nuc=1.076e3
+sun step=753 lit=true raw=main_sequence shown=main_sequence M=3129.8 R=18.19 Σc=7.729e0 Tc=3.507e1 d_c=0.6001 X_H,c=0.7313 v_r/v_dyn=-0.0892 2P/|W|=1.045 L=1.756e1 L_nuc=1.414e3
+sun step=769 lit=true raw=main_sequence shown=main_sequence M=3129.9 R=17.58 Σc=7.967e0 Tc=3.613e1 d_c=0.5992 X_H,c=0.7312 v_r/v_dyn=-0.0727 2P/|W|=1.064 L=1.574e1 L_nuc=1.736e3
+sun step=785 lit=true raw=main_sequence shown=main_sequence M=3130.1 R=17.14 Σc=8.063e0 Tc=3.654e1 d_c=0.5989 X_H,c=0.7312 v_r/v_dyn=-0.0546 2P/|W|=1.076 L=4.261e3 L_nuc=2.032e3
+sun step=801 lit=true raw=main_sequence shown=main_sequence M=3130.5 R=16.96 Σc=8.134e0 Tc=3.692e1 d_c=0.5982 X_H,c=0.7311 v_r/v_dyn=-0.0366 2P/|W|=1.082 L=8.577e3 L_nuc=2.226e3
+sun step=817 lit=true raw=main_sequence shown=main_sequence M=3130.8 R=16.87 Σc=8.175e0 Tc=3.712e1 d_c=0.5979 X_H,c=0.7310 v_r/v_dyn=-0.0186 2P/|W|=1.081 L=1.005e4 L_nuc=2.331e3
+sun step=833 lit=true raw=main_sequence shown=main_sequence M=3131.1 R=16.90 Σc=8.139e0 Tc=3.697e1 d_c=0.5980 X_H,c=0.7310 v_r/v_dyn=-0.0018 2P/|W|=1.076 L=1.053e4 L_nuc=2.297e3
+sun step=849 lit=true raw=main_sequence shown=main_sequence M=3131.4 R=16.93 Σc=8.039e0 Tc=3.652e1 d_c=0.5984 X_H,c=0.7309 v_r/v_dyn=+0.0130 2P/|W|=1.067 L=1.037e4 L_nuc=2.158e3
+sun step=865 lit=true raw=main_sequence shown=main_sequence M=3131.7 R=17.01 Σc=7.874e0 Tc=3.578e1 d_c=0.5991 X_H,c=0.7309 v_r/v_dyn=+0.0254 2P/|W|=1.056 L=9.769e3 L_nuc=1.923e3
+sun step=881 lit=true raw=main_sequence shown=main_sequence M=3132.0 R=17.17 Σc=7.674e0 Tc=3.486e1 d_c=0.6000 X_H,c=0.7308 v_r/v_dyn=+0.0348 2P/|W|=1.042 L=8.969e3 L_nuc=1.623e3
+sun step=897 lit=true raw=main_sequence shown=main_sequence M=3132.2 R=17.31 Σc=7.476e0 Tc=3.392e1 d_c=0.6012 X_H,c=0.7308 v_r/v_dyn=+0.0412 2P/|W|=1.027 L=8.065e3 L_nuc=1.334e3
+sun step=913 lit=true raw=main_sequence shown=main_sequence M=3132.5 R=17.55 Σc=7.279e0 Tc=3.297e1 d_c=0.6025 X_H,c=0.7307 v_r/v_dyn=+0.0445 2P/|W|=1.012 L=7.158e3 L_nuc=1.039e3
+sun step=929 lit=true raw=main_sequence shown=main_sequence M=3132.6 R=17.78 Σc=7.089e0 Tc=3.204e1 d_c=0.6039 X_H,c=0.7307 v_r/v_dyn=+0.0447 2P/|W|=0.997 L=6.280e3 L_nuc=7.968e2
+sun step=945 lit=true raw=main_sequence shown=main_sequence M=3132.8 R=18.14 Σc=6.931e0 Tc=3.125e1 d_c=0.6053 X_H,c=0.7307 v_r/v_dyn=+0.0425 2P/|W|=0.983 L=5.471e3 L_nuc=5.993e2
+sun step=961 lit=true raw=main_sequence shown=main_sequence M=3133.0 R=18.27 Σc=6.799e0 Tc=3.058e1 d_c=0.6066 X_H,c=0.7306 v_r/v_dyn=+0.0374 2P/|W|=0.971 L=4.738e3 L_nuc=4.426e2
+sun step=977 lit=true raw=main_sequence shown=main_sequence M=3133.1 R=18.35 Σc=6.710e0 Tc=3.009e1 d_c=0.6077 X_H,c=0.7306 v_r/v_dyn=+0.0305 2P/|W|=0.960 L=4.124e3 L_nuc=3.431e2
+sun step=993 lit=true raw=main_sequence shown=main_sequence M=3133.3 R=18.37 Σc=6.653e0 Tc=2.974e1 d_c=0.6087 X_H,c=0.7306 v_r/v_dyn=+0.0224 2P/|W|=0.952 L=3.583e3 L_nuc=2.555e2
+sun step=1009 lit=true raw=main_sequence shown=main_sequence M=3133.4 R=18.55 Σc=6.627e0 Tc=2.953e1 d_c=0.6096 X_H,c=0.7306 v_r/v_dyn=+0.0136 2P/|W|=0.947 L=3.174e3 L_nuc=2.235e2
+sun step=1025 lit=true raw=main_sequence shown=main_sequence M=3133.5 R=18.86 Σc=6.627e0 Tc=2.943e1 d_c=0.6104 X_H,c=0.7305 v_r/v_dyn=+0.0046 2P/|W|=0.943 L=2.799e3 L_nuc=1.959e2
+sun step=1041 lit=true raw=main_sequence shown=main_sequence M=3133.5 R=18.94 Σc=6.652e0 Tc=2.942e1 d_c=0.6112 X_H,c=0.7305 v_r/v_dyn=-0.0044 2P/|W|=0.942 L=2.495e3 L_nuc=1.802e2
+sun step=1057 lit=true raw=main_sequence shown=main_sequence M=3133.8 R=18.94 Σc=6.699e0 Tc=2.951e1 d_c=0.6119 X_H,c=0.7305 v_r/v_dyn=-0.0129 2P/|W|=0.942 L=2.211e3 L_nuc=1.886e2
+sun step=1073 lit=true raw=main_sequence shown=main_sequence M=3133.7 R=18.85 Σc=6.766e0 Tc=2.969e1 d_c=0.6125 X_H,c=0.7305 v_r/v_dyn=-0.0207 2P/|W|=0.945 L=1.996e3 L_nuc=2.072e2
+sun step=1089 lit=true raw=main_sequence shown=main_sequence M=3133.1 R=18.51 Σc=6.854e0 Tc=2.996e1 d_c=0.6130 X_H,c=0.7305 v_r/v_dyn=-0.0275 2P/|W|=0.949 L=1.827e3 L_nuc=2.487e2
+sun step=1105 lit=true raw=main_sequence shown=main_sequence M=3132.7 R=18.36 Σc=6.956e0 Tc=3.029e1 d_c=0.6134 X_H,c=0.7305 v_r/v_dyn=-0.0333 2P/|W|=0.954 L=1.731e3 L_nuc=2.775e2
+sun step=1121 lit=true raw=main_sequence shown=main_sequence M=3132.0 R=18.35 Σc=7.069e0 Tc=3.068e1 d_c=0.6137 X_H,c=0.7304 v_r/v_dyn=-0.0379 2P/|W|=0.961 L=1.718e3 L_nuc=3.574e2
+sun step=1137 lit=true raw=main_sequence shown=main_sequence M=3131.3 R=18.27 Σc=7.189e0 Tc=3.109e1 d_c=0.6140 X_H,c=0.7304 v_r/v_dyn=-0.0412 2P/|W|=0.968 L=1.772e3 L_nuc=4.297e2
+sun step=1153 lit=true raw=main_sequence shown=main_sequence M=3130.1 R=18.15 Σc=7.309e0 Tc=3.152e1 d_c=0.6141 X_H,c=0.7304 v_r/v_dyn=-0.0432 2P/|W|=0.976 L=1.889e3 L_nuc=5.158e2
+sun step=1169 lit=true raw=main_sequence shown=main_sequence M=3129.3 R=17.84 Σc=7.426e0 Tc=3.193e1 d_c=0.6142 X_H,c=0.7304 v_r/v_dyn=-0.0435 2P/|W|=0.985 L=2.117e3 L_nuc=6.212e2
+sun step=1185 lit=true raw=main_sequence shown=main_sequence M=3128.7 R=17.56 Σc=7.540e0 Tc=3.235e1 d_c=0.6142 X_H,c=0.7303 v_r/v_dyn=-0.0425 2P/|W|=0.993 L=2.426e3 L_nuc=7.245e2
+sun step=1201 lit=true raw=main_sequence shown=main_sequence M=3127.7 R=17.31 Σc=7.649e0 Tc=3.276e1 d_c=0.6142 X_H,c=0.7303 v_r/v_dyn=-0.0404 2P/|W|=1.000 L=2.782e3 L_nuc=8.295e2
+sun step=1217 lit=true raw=main_sequence shown=main_sequence M=3127.1 R=17.19 Σc=7.761e0 Tc=3.318e1 d_c=0.6141 X_H,c=0.7303 v_r/v_dyn=-0.0371 2P/|W|=1.007 L=3.186e3 L_nuc=9.668e2
+sun step=1233 lit=true raw=main_sequence shown=main_sequence M=3126.4 R=16.98 Σc=7.864e0 Tc=3.358e1 d_c=0.6139 X_H,c=0.7302 v_r/v_dyn=-0.0325 2P/|W|=1.013 L=3.592e3 L_nuc=1.074e3
+sun step=1249 lit=true raw=main_sequence shown=main_sequence M=3125.5 R=16.96 Σc=7.956e0 Tc=3.394e1 d_c=0.6138 X_H,c=0.7302 v_r/v_dyn=-0.0272 2P/|W|=1.017 L=3.962e3 L_nuc=1.188e3
+sun step=1265 lit=true raw=main_sequence shown=main_sequence M=3125.0 R=16.75 Σc=8.012e0 Tc=3.414e1 d_c=0.6137 X_H,c=0.7302 v_r/v_dyn=-0.0211 2P/|W|=1.020 L=4.243e3 L_nuc=1.262e3
+sun step=1281 lit=true raw=main_sequence shown=main_sequence M=3124.2 R=16.73 Σc=8.053e0 Tc=3.429e1 d_c=0.6137 X_H,c=0.7301 v_r/v_dyn=-0.0149 2P/|W|=1.022 L=4.378e3 L_nuc=1.329e3
+sun step=1297 lit=true raw=main_sequence shown=main_sequence M=3123.5 R=16.70 Σc=8.070e0 Tc=3.434e1 d_c=0.6138 X_H,c=0.7301 v_r/v_dyn=-0.0087 2P/|W|=1.022 L=4.461e3 L_nuc=1.371e3
+sun step=1313 lit=true raw=main_sequence shown=main_sequence M=3122.7 R=16.58 Σc=8.063e0 Tc=3.429e1 d_c=0.6140 X_H,c=0.7300 v_r/v_dyn=-0.0030 2P/|W|=1.021 L=4.476e3 L_nuc=1.364e3
+sun step=1329 lit=true raw=main_sequence shown=main_sequence M=3122.0 R=16.56 Σc=8.039e0 Tc=3.415e1 d_c=0.6143 X_H,c=0.7300 v_r/v_dyn=+0.0021 2P/|W|=1.018 L=4.409e3 L_nuc=1.327e3
+sun step=1345 lit=true raw=main_sequence shown=main_sequence M=3121.4 R=16.66 Σc=7.995e0 Tc=3.394e1 d_c=0.6147 X_H,c=0.7299 v_r/v_dyn=+0.0064 2P/|W|=1.014 L=4.250e3 L_nuc=1.266e3
+sun step=1361 lit=true raw=main_sequence shown=main_sequence M=3120.8 R=16.74 Σc=7.941e0 Tc=3.368e1 d_c=0.6151 X_H,c=0.7299 v_r/v_dyn=+0.0096 2P/|W|=1.010 L=4.051e3 L_nuc=1.207e3
+sun step=1377 lit=true raw=main_sequence shown=main_sequence M=3119.9 R=16.75 Σc=7.883e0 Tc=3.339e1 d_c=0.6157 X_H,c=0.7299 v_r/v_dyn=+0.0117 2P/|W|=1.005 L=3.818e3 L_nuc=1.117e3
+sun step=1393 lit=true raw=main_sequence shown=main_sequence M=3119.4 R=16.75 Σc=7.822e0 Tc=3.309e1 d_c=0.6163 X_H,c=0.7298 v_r/v_dyn=+0.0128 2P/|W|=1.000 L=3.574e3 L_nuc=1.041e3
+sun step=1409 lit=true raw=main_sequence shown=main_sequence M=3119.0 R=16.87 Σc=7.762e0 Tc=3.280e1 d_c=0.6168 X_H,c=0.7298 v_r/v_dyn=+0.0129 2P/|W|=0.995 L=3.323e3 L_nuc=9.577e2
+sun step=1425 lit=true raw=main_sequence shown=main_sequence M=3118.1 R=16.97 Σc=7.709e0 Tc=3.252e1 d_c=0.6174 X_H,c=0.7297 v_r/v_dyn=+0.0120 2P/|W|=0.990 L=3.091e3 L_nuc=8.553e2
+sun step=1441 lit=true raw=main_sequence shown=main_sequence M=3117.8 R=17.00 Σc=7.665e0 Tc=3.228e1 d_c=0.6180 X_H,c=0.7297 v_r/v_dyn=+0.0103 2P/|W|=0.985 L=2.867e3 L_nuc=8.018e2
+sun step=1457 lit=true raw=main_sequence shown=main_sequence M=3116.9 R=17.00 Σc=7.632e0 Tc=3.208e1 d_c=0.6186 X_H,c=0.7297 v_r/v_dyn=+0.0080 2P/|W|=0.982 L=2.670e3 L_nuc=7.514e2
+sun step=1473 lit=true raw=main_sequence shown=main_sequence M=3116.5 R=17.00 Σc=7.611e0 Tc=3.193e1 d_c=0.6191 X_H,c=0.7296 v_r/v_dyn=+0.0052 2P/|W|=0.979 L=2.511e3 L_nuc=7.155e2
+sun step=1489 lit=true raw=main_sequence shown=main_sequence M=3115.9 R=17.03 Σc=7.603e0 Tc=3.183e1 d_c=0.6197 X_H,c=0.7296 v_r/v_dyn=+0.0021 2P/|W|=0.977 L=2.327e3 L_nuc=6.983e2
+sun step=1505 lit=true raw=main_sequence shown=main_sequence M=3115.5 R=17.05 Σc=7.606e0 Tc=3.179e1 d_c=0.6201 X_H,c=0.7296 v_r/v_dyn=-0.0011 2P/|W|=0.976 L=2.104e3 L_nuc=6.744e2
+sun step=1521 lit=true raw=main_sequence shown=main_sequence M=3114.9 R=17.03 Σc=7.623e0 Tc=3.179e1 d_c=0.6205 X_H,c=0.7296 v_r/v_dyn=-0.0042 2P/|W|=0.975 L=1.929e3 L_nuc=6.494e2
+sun step=1537 lit=true raw=main_sequence shown=main_sequence M=3114.4 R=17.00 Σc=7.650e0 Tc=3.184e1 d_c=0.6208 X_H,c=0.7295 v_r/v_dyn=-0.0072 2P/|W|=0.976 L=1.893e3 L_nuc=6.493e2
+sun step=1553 lit=true raw=main_sequence shown=main_sequence M=3114.1 R=17.00 Σc=7.686e0 Tc=3.193e1 d_c=0.6211 X_H,c=0.7295 v_r/v_dyn=-0.0098 2P/|W|=0.977 L=1.870e3 L_nuc=6.814e2
+sun step=1569 lit=true raw=main_sequence shown=main_sequence M=3113.7 R=16.99 Σc=7.730e0 Tc=3.205e1 d_c=0.6214 X_H,c=0.7295 v_r/v_dyn=-0.0119 2P/|W|=0.979 L=1.860e3 L_nuc=7.220e2
+sun step=1585 lit=true raw=main_sequence shown=main_sequence M=3113.8 R=16.97 Σc=7.780e0 Tc=3.220e1 d_c=0.6216 X_H,c=0.7294 v_r/v_dyn=-0.0137 2P/|W|=0.981 L=1.876e3 L_nuc=7.445e2
+sun step=1601 lit=true raw=main_sequence shown=main_sequence M=3114.0 R=16.86 Σc=7.833e0 Tc=3.236e1 d_c=0.6218 X_H,c=0.7294 v_r/v_dyn=-0.0149 2P/|W|=0.983 L=1.913e3 L_nuc=7.708e2
+sun step=1617 lit=true raw=main_sequence shown=main_sequence M=3114.2 R=16.75 Σc=7.887e0 Tc=3.253e1 d_c=0.6219 X_H,c=0.7294 v_r/v_dyn=-0.0155 2P/|W|=0.986 L=1.984e3 L_nuc=8.138e2
+sun step=1633 lit=true raw=main_sequence shown=main_sequence M=3114.5 R=16.75 Σc=7.941e0 Tc=3.270e1 d_c=0.6221 X_H,c=0.7293 v_r/v_dyn=-0.0157 2P/|W|=0.989 L=2.034e3 L_nuc=8.594e2
+sun step=1649 lit=true raw=main_sequence shown=main_sequence M=3114.8 R=16.65 Σc=7.994e0 Tc=3.287e1 d_c=0.6222 X_H,c=0.7293 v_r/v_dyn=-0.0153 2P/|W|=0.991 L=2.168e3 L_nuc=8.920e2
+sun step=1665 lit=true raw=main_sequence shown=main_sequence M=3115.1 R=16.32 Σc=8.044e0 Tc=3.303e1 d_c=0.6223 X_H,c=0.7293 v_r/v_dyn=-0.0143 2P/|W|=0.994 L=2.236e3 L_nuc=9.284e2
+sun step=1681 lit=true raw=main_sequence shown=main_sequence M=3115.5 R=16.14 Σc=8.090e0 Tc=3.318e1 d_c=0.6224 X_H,c=0.7292 v_r/v_dyn=-0.0131 2P/|W|=0.996 L=2.312e3 L_nuc=9.720e2
+sun step=1697 lit=true raw=main_sequence shown=main_sequence M=3115.8 R=16.13 Σc=8.129e0 Tc=3.330e1 d_c=0.6225 X_H,c=0.7292 v_r/v_dyn=-0.0115 2P/|W|=0.998 L=2.416e3 L_nuc=1.031e3
+sun step=1713 lit=true raw=main_sequence shown=main_sequence M=3116.0 R=16.12 Σc=8.162e0 Tc=3.340e1 d_c=0.6226 X_H,c=0.7292 v_r/v_dyn=-0.0098 2P/|W|=0.999 L=2.491e3 L_nuc=1.076e3
+sun step=1729 lit=true raw=main_sequence shown=main_sequence M=3116.2 R=15.95 Σc=8.188e0 Tc=3.347e1 d_c=0.6227 X_H,c=0.7291 v_r/v_dyn=-0.0078 2P/|W|=1.000 L=2.569e3 L_nuc=1.095e3
+sun step=1745 lit=true raw=main_sequence shown=main_sequence M=3116.5 R=15.83 Σc=8.205e0 Tc=3.352e1 d_c=0.6228 X_H,c=0.7291 v_r/v_dyn=-0.0059 2P/|W|=1.000 L=2.615e3 L_nuc=1.108e3
+sun step=1761 lit=true raw=main_sequence shown=main_sequence M=3116.7 R=15.74 Σc=8.214e0 Tc=3.352e1 d_c=0.6230 X_H,c=0.7290 v_r/v_dyn=-0.0040 2P/|W|=1.000 L=2.691e3 L_nuc=1.114e3
+sun step=1777 lit=true raw=main_sequence shown=main_sequence M=3116.9 R=15.70 Σc=8.215e0 Tc=3.348e1 d_c=0.6233 X_H,c=0.7290 v_r/v_dyn=-0.0024 2P/|W|=0.999 L=2.771e3 L_nuc=1.112e3
+sun step=1793 lit=true raw=main_sequence shown=main_sequence M=3117.1 R=15.70 Σc=8.210e0 Tc=3.343e1 d_c=0.6235 X_H,c=0.7289 v_r/v_dyn=-0.0010 2P/|W|=0.998 L=2.802e3 L_nuc=1.104e3
+sun step=1809 lit=true raw=main_sequence shown=main_sequence M=3117.2 R=15.72 Σc=8.199e0 Tc=3.335e1 d_c=0.6238 X_H,c=0.7289 v_r/v_dyn=+0.0001 2P/|W|=0.997 L=2.788e3 L_nuc=1.089e3
+sun step=1825 lit=true raw=main_sequence shown=main_sequence M=3117.4 R=15.75 Σc=8.185e0 Tc=3.325e1 d_c=0.6242 X_H,c=0.7289 v_r/v_dyn=+0.0008 2P/|W|=0.995 L=2.763e3 L_nuc=1.043e3
+sun step=1841 lit=true raw=main_sequence shown=main_sequence M=3117.6 R=15.80 Σc=8.171e0 Tc=3.315e1 d_c=0.6245 X_H,c=0.7288 v_r/v_dyn=+0.0011 2P/|W|=0.993 L=2.733e3 L_nuc=9.997e2
+sun step=1857 lit=true raw=main_sequence shown=main_sequence M=3117.7 R=15.86 Σc=8.156e0 Tc=3.305e1 d_c=0.6249 X_H,c=0.7288 v_r/v_dyn=+0.0010 2P/|W|=0.992 L=2.686e3 L_nuc=9.717e2
+sun step=1873 lit=true raw=main_sequence shown=main_sequence M=3117.9 R=15.91 Σc=8.144e0 Tc=3.296e1 d_c=0.6252 X_H,c=0.7287 v_r/v_dyn=+0.0005 2P/|W|=0.990 L=2.631e3 L_nuc=9.499e2
+sun step=1889 lit=true raw=main_sequence shown=main_sequence M=3118.0 R=15.96 Σc=8.137e0 Tc=3.288e1 d_c=0.6256 X_H,c=0.7287 v_r/v_dyn=-0.0002 2P/|W|=0.989 L=2.571e3 L_nuc=9.353e2
+sun step=1905 lit=true raw=main_sequence shown=main_sequence M=3118.2 R=15.98 Σc=8.134e0 Tc=3.282e1 d_c=0.6259 X_H,c=0.7287 v_r/v_dyn=-0.0011 2P/|W|=0.987 L=2.510e3 L_nuc=9.242e2
+sun step=1921 lit=true raw=main_sequence shown=main_sequence M=3118.3 R=15.99 Σc=8.137e0 Tc=3.279e1 d_c=0.6263 X_H,c=0.7286 v_r/v_dyn=-0.0022 2P/|W|=0.987 L=2.444e3 L_nuc=9.168e2
+sun step=1937 lit=true raw=main_sequence shown=main_sequence M=3118.5 R=15.97 Σc=8.145e0 Tc=3.277e1 d_c=0.6266 X_H,c=0.7286 v_r/v_dyn=-0.0033 2P/|W|=0.986 L=2.379e3 L_nuc=9.132e2
+sun step=1953 lit=true raw=main_sequence shown=main_sequence M=3118.6 R=15.92 Σc=8.157e0 Tc=3.277e1 d_c=0.6269 X_H,c=0.7286 v_r/v_dyn=-0.0044 2P/|W|=0.986 L=2.317e3 L_nuc=9.133e2
+sun step=1969 lit=true raw=main_sequence shown=main_sequence M=3118.7 R=15.84 Σc=8.174e0 Tc=3.279e1 d_c=0.6271 X_H,c=0.7285 v_r/v_dyn=-0.0055 2P/|W|=0.986 L=2.264e3 L_nuc=9.170e2
+sun step=1985 lit=true raw=main_sequence shown=main_sequence M=3118.8 R=15.74 Σc=8.195e0 Tc=3.283e1 d_c=0.6274 X_H,c=0.7285 v_r/v_dyn=-0.0065 2P/|W|=0.986 L=2.226e3 L_nuc=9.240e2
+sun step=2000 lit=true raw=main_sequence shown=main_sequence M=3118.8 R=15.62 Σc=8.217e0 Tc=3.288e1 d_c=0.6276 X_H,c=0.7285 v_r/v_dyn=-0.0072 2P/|W|=0.987 L=2.186e3 L_nuc=9.334e2
+SR-HEADLESS DONE steps=2000 sim_time=24.629261 until=unmet
+sun shown: [("collapsing", 65), ("main_sequence", 705)]
+ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 510 filtered out; finished in 39.57s
+
+

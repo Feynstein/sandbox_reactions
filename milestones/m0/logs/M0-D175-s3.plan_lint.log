@@ -1,0 +1,15 @@
+== 2026-11-13T10:42:16-05:00 plan_lint · task M0-D175-s3 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.16 s
+lint: checks=870 failed=0 warnings=10 · blocks=416 · flow_rows=416 · verify_fences=0 · history=0 · flow=per-task · header=615/600 · pipeline=9/60 · ladder=6 rungs · refresh=1/5
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T132: `Read:` names crates/sr-app/src/ui/legend.rs whole (618 lines > 500) - name a section or a line range
+WARN: M0-T132: `Read:` names crates/sr-app/src/desktop.rs whole (1675 lines > 500) - name a section or a line range
+WARN: M0-T103: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T106: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D175 1 · M0-T132 6
+=== GO ===
+

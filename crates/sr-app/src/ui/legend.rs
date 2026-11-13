@@ -112,6 +112,26 @@ fn glow_span() -> [f64; 2] {
     [GLOW_S_MIN.log10(), GLOW_S_MAX.log10()]
 }
 
+/// The Glow setting a pick at `position` (0 … 1 along the bar, left to right) stands for, in kelvins (M0-T132): the inverse of where
+/// the bar draws a temperature and of where `legend` stands the S mark — 10 K at 0, 10 billion K at 1, a decade every ninth of the
+/// bar — clamped to the bar's ends outside 0 … 1; none for a position that is not a number.
+pub fn glow_pick(position: f64) -> Option<f64> {
+    let [lo, hi] = glow_span();
+    position.is_finite().then(|| 10f64.powf(lo + (hi - lo) * position.clamp(0.0, 1.0)).clamp(GLOW_S_MIN, GLOW_S_MAX))
+}
+
+/// The bar's rectangle in `strip` (the strip's top row holds the title and the marks' labels over it): one place for the drawing and
+/// for the pointer.
+pub fn bar_rect(strip: egui::Rect) -> egui::Rect {
+    egui::Rect::from_min_size(egui::pos2(strip.left(), strip.top() + MARK_TRIANGLE + 6.0), egui::vec2(strip.width(), BAR_HEIGHT))
+}
+
+/// Where the Glow view's bar listens for a click or a drag: the bar and the row of mark triangles right above it (M0-T132).
+pub fn pick_rect(strip: egui::Rect) -> egui::Rect {
+    let bar = bar_rect(strip);
+    egui::Rect::from_min_max(egui::pos2(bar.left(), bar.top() - MARK_TRIANGLE), bar.max)
+}
+
 /// The log₁₀ range the bar shows: Glow's span, or the view's range; none for Element.
 pub fn range(view: View, display: &Display) -> Option<[f64; 2]> {
     match view {
@@ -492,6 +512,56 @@ mod legend_tests {
             }
             assert!(worst <= 2.0, "S = {s}: the bar is {worst} levels from the formula");
         }
+    }
+
+    #[test]
+    fn a_pick_is_the_bars_own_scale_inverted() {
+        // 1,000 K is two ninths along a 10 K – 10 billion K bar (a decade a ninth), not a third and not 1e-7 of it.
+        let k = glow_pick(2.0 / 9.0).unwrap();
+        assert!((k.log10() - 3.0).abs() < 1e-9, "{k}");
+        // The ends are exact; the middle is a decade and a half above 10⁵ K.
+        assert_eq!((glow_pick(0.0), glow_pick(1.0)), (Some(10.0), Some(1e10)));
+        assert!((glow_pick(0.5).unwrap().log10() - 5.5).abs() < 1e-9);
+        // The ticks' own positions pick the decades they are labelled with.
+        for tick in glow_ticks(1200.0) {
+            let want = tick.label.as_deref().unwrap();
+            let kelvin = glow_pick(tick.position).unwrap();
+            assert_eq!(format::tick_temperature(10f64.powf(kelvin.log10().round())), want, "tick at {}", tick.position);
+            assert!((kelvin.log10() - kelvin.log10().round()).abs() < 1e-9, "{want} is {kelvin}");
+        }
+    }
+
+    #[test]
+    fn a_pick_round_trips_with_the_s_mark_the_legend_stands() {
+        for s in [10.0, 57.3, 1_000.0, 3_000.0, 71_234.5, 1e6, 3.3e8, 1e10] {
+            let mark = at_glow(s, None).white.unwrap().position;
+            let back = glow_pick(mark).unwrap();
+            assert!((back.log10() - s.log10()).abs() < 1e-9, "S = {s}: the mark at {mark} picks {back}");
+        }
+        // And the other way: a pick's own mark stands where it was picked.
+        for p in [0.0, 0.1, 0.37, 2.0 / 9.0, 0.5, 0.93, 1.0] {
+            let s = glow_pick(p).unwrap();
+            let mark = at_glow(s, None).white.unwrap().position;
+            assert!((mark - p).abs() < 1e-9, "{p} picked {s}, its mark stands at {mark}");
+        }
+    }
+
+    #[test]
+    fn a_pick_off_the_bar_clamps_to_its_ends_and_a_non_number_picks_nothing() {
+        assert_eq!((glow_pick(-0.3), glow_pick(f64::NEG_INFINITY)), (Some(10.0), None));
+        assert_eq!((glow_pick(1.7), glow_pick(f64::INFINITY)), (Some(1e10), None));
+        assert_eq!(glow_pick(f64::NAN), None);
+        assert_eq!(glow_pick(-1e300), Some(10.0));
+    }
+
+    #[test]
+    fn the_pick_area_is_the_bar_and_the_mark_row_above_it() {
+        let strip = egui::Rect::from_min_size(egui::pos2(100.0, 500.0), egui::vec2(1200.0, STRIP_HEIGHT));
+        let (bar, pick) = (bar_rect(strip), pick_rect(strip));
+        assert_eq!((bar.left(), bar.width(), bar.height()), (100.0, 1200.0, BAR_HEIGHT));
+        assert_eq!((pick.left(), pick.right(), pick.bottom()), (bar.left(), bar.right(), bar.bottom()));
+        assert_eq!(pick.top(), bar.top() - MARK_TRIANGLE);
+        assert!(bar.bottom() <= strip.bottom(), "the bar sits in the strip");
     }
 
     #[test]

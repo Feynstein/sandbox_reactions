@@ -8,3 +8,37 @@ screen B read: shipped s_k15 continued -> white_dwarf ending at t 2,026.40 (2,62
 == 2026-11-12T16:24:08-05:00 screen C: Giant s_1200 and Massive t 0 on ladm; Massive s_14000 and Giant on lad1
 screen C read: g_ladm black_hole, ending 69.5; m_ladm (t 0) iron_core 137, supernova 151, neutron_star 163, ending 170.9; mm_lad1 iron_core 205.5, supernova 220.1, neutron_star 232.6, ending 237.1; g_lad1 black_hole 43.8, still running at handoff (tmux d175C)
 == handoff: IN PROGRESS (awaiting the lead's ruling on the light end and the recalibration's runner) — tasks/M0-D175.md
+=== 2026-11-13T09:14:58-05:00 M0-D175 session 2 (linux-pc): read g_lad1 on laserax-ai-server ===
+mm_lad1 exit 0 SR-HEADLESS DONE steps=13660 sim_time=237.147302 until=met
+g_ladm exit 0 SR-HEADLESS DONE steps=13196 sim_time=69.544730 until=met
+m_ladm exit 0 SR-HEADLESS DONE steps=21846 sim_time=170.927285 until=met
+g_lad1 exit 124 
+dumps
+d163cal: 1 windows (created Mon Nov  9 13:57:24 2026)
+v14: 1 windows (created Fri Nov  6 16:24:56 2026)
+v14b: 1 windows (created Sun Nov  8 09:44:31 2026)
+v14g: 1 windows (created Sun Nov  8 18:11:23 2026)
+v14s2: 1 windows (created Fri Nov  6 16:26:31 2026)
+  step       t stage          nobj      M   R90   unb    v_r        L    L_nuc       L_N    T_c  Sig_c  d_c |   X_H  X_He  X_CO X_SiS   X_Fe   X_n |    esc     floor
+  1300    5.90 cloud             1  43143 151.5 0.003  -0.47 8.86e+04 4.04e+04         0   59.8    1.1 0.13 | 0.731 0.253 0.017 0.000 0.0000 0.000 |     80         0
+  4300   33.46 he_core           1  35707 217.9 0.000  -0.16 2.67e+06 2.48e+06         0  178.2   10.5 0.27 | 0.340 0.007 0.551 0.102 0.0009 0.000 |   7531         0
+  7300   43.77 black_hole        1  32370 209.3 0.000   0.48 1.05e+06  1.1e+03         0  110.4    2.6 0.15 | 0.553 0.126 0.319 0.001 0.0000 0.000 |  10868 4.018e+07
+ 10300   50.65 black_hole        1  30777 233.4 0.000  -0.73 7.75e+05      276         0   94.4    1.2 0.09 | 0.611 0.103 0.285 0.001 0.0000 0.000 |  12460 4.018e+07
+ 13300   57.07 black_hole        1  29600 235.3 0.000  -1.24 9.08e+05      154         0   89.9    1.5 0.12 | 0.630 0.116 0.254 0.000 0.0000 0.000 |  13638 4.018e+07
+ 16300   63.19 black_hole        1  28896 213.4 0.000  -1.32 6.39e+05       25         0   76.7    0.8 0.08 | 0.639 0.129 0.232 0.000 0.0000 0.000 |  14341 4.018e+07
+2026-11-13T09:17:59-05:00 rsync tree → laserax-ai-server (the lead: «You can rsync the server for me»): OK
+=== 2026-11-13T11:07:16-05:00 M0-D175 session 3 (linux-pc): recal.done read; bring home; Verify 1-3 on laserax-ai-server ===
+8096991d80c1d0978d0f47753e260feb20c757fe8412fc9bc44abab926b27f58  assets/calibration.json
+2026-11-13T11:07:29-05:00 started build/m0-d175/v/v.sh (tmux d175v): massive, giant, sun1
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.17s
+2026-11-13T11:18:32-05:00 started v/fa.sh (tmux d175fa): fa_massive, fa_giant (stage:core_collapse), fa_sun; sun2 (tmux d175v2) from sun1/dumps/s_84000.bin
+2026-11-13T11:18:44-05:00 server: verify.py --redarm heat_stiff --task M0-D175
+2026-11-13T11:22:36-05:00 heat_stiff redarm NO-GO 7 red / 2 green (shift-every-heat-free, ceiling-64-passes: massive_930.bin, sun_13593.bin run 0 unconverged warnings on today's physics, plant or not) -> D filed. server: verify.py --redarm sun_burn
+2026-11-13T12:12:28-05:00 home: heat_stiff/sun_burn redarm logs, 2 loop_times lines. fa: massive 0 pairs, giant 62 pairs (letter) -> the lead: «Amend to the flash (Recommended)» (H fall <= 0.031/t.u.: PASS); fa_sun ignition by light 8.9, main_sequence 9.3. D176 filed. sun3 from sun2/dumps/s_164000.bin (t 1768.9)
+2026-11-13T12:24:36-05:00 Verify 1 PASS (sun1-4 chain on bin/recal: he_core 1508.7, white_dwarf 1962.4, ending white_dwarf 1972.41; = calibrate preset_sun-01). rsync tree -> laserax-ai-server; claim there
+2026-11-13T12:24:36-05:00 rsync OK
+2026-11-13T12:28:03-05:00 claim 1: 1087/0, 24/24 scopes GO, NO-GO on the anchor alone (8 unclassified: M0-D165's root debris, rsync'd up from linux-pc); the server's 8 copies removed; claim 2
+2026-11-13T12:29:19-05:00 claim 2: zero-case (the anchor vouches). Logs home. Closing.
+2026-11-13T12:30:07-05:00 closed DONE; flags -> M0-V15, M0-T103; M0-D176 filed; plan lint GO (1 warning, M0-TD's, not mine)

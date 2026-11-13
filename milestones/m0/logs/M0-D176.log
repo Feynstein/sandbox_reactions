@@ -1,0 +1,11 @@
+M0-D176 start 2026-11-13T12:31:18-05:00 linux-pc; rung model=claude-opus-5-5 level=high
+2026-11-13T12:48:35-05:00 sun_burn redarm launched on server; scan (108 jobs: ceiling-64-passes, shift-every-heat-free over disk/massive/giant/sun segments) launched build/m0-d176/scan
+2026-11-13T12:50:54-05:00 Verify 1 sun_burn --redarm GO 2/2 red 135.37 s laserax-ai-server RTX 4090 (server logs/M0-D176.sun_burn.redarm.log)
+scan (server build/m0-d176/scan, RTX 4090): ceiling-64-passes — massive 23,921 steps, giant 16,625, sun 0→ending in 4,000-step segments from M0-D175's dumps: 0 warnings; disk exit 124 (re-run chained, build/m0-d176/disk)
+shift-every-heat-free — sun from s_12000: 197 warnings, first step 12898 passes 128 rounds 5 (M0-D156's signature); the tree's life clean there
+lead (2026-11-13): «its ok if the test doesnt reach it, well note it as a limitation. since everything else is good we can carve out something for this particular test»
+cut.sh launched: tree s_12000 → 15000 dump every 25; planted 25 steps from each dump ≥ 12850
+2026-11-13T13:32:12-05:00 fixture scenes/sun_13900.bin sha256 a5994bde… (tree 0 warn steps 13900–13903; shift plant 2 warn ×2 runs: 13900 128/5, 13903 128/31; c64 plant 0); heat.rs case re-cut, verify.json + testing.md updated; heat_stiff 16/0/0 GO 15.14 s laserax-ai-server RTX 4090
+disk chains (build/m0-d176/disk): ceiling-64-passes 0 warnings to s_51500, shift-every-heat-free 0 to s_50000; stopped at segment 4 (mine)
+Verify 2 heat_stiff --redarm GO 8 plants 8 red 161.80 s (ceiling-64-passes carved out — the lead's ruling)
+Verify 3 claim GO: 1503 passed 0 failed, 62/62 scopes GO, 5 owed, 21 not impacted, 204.67 s, laserax-ai-server RTX 4090; FLAG oracle ×3 (heat.rs, burn-runaway.patch, verify.json — Deliver names the re-cuts, not the files)

@@ -1565,27 +1565,26 @@ mod stiff {
         });
     }
 
-    /// M0-D156 on the GPU: scenes/sun_13593.bin — the Sun-like life's dump at step 13,593 (preset:sun on the RTX 4090, the tree
-    /// at M0-D91's start, binary 988ccd3a), its observers' snapshot scenes/sun_13593.observers (not `.json`: scenes/'s every
-    /// `.json` is a scene, the `scene` scope) both copied to the run's folder as `--continue` reads them — run on through steps
-    /// 13,594 and 13,595, every pass of the life on and P5 on its default V-cycle; neither step prints `SR-WARN heat unconverged`.
-    /// Before the fix step 13,594 reached the ceiling at 64 passes, 3 rounds: from the third pass each solve met (4)'s two
-    /// measures at its start, and the heat-free START shift — one level over the world's ~150,000 heat-free cells, 95 % of
-    /// zᵀA z carried by cold cells at the world's top edge the update holds on the floor — came back with the same sign every
-    /// pass and walked every other heat-free cell ~1 % in u a pass, past (3)'s per-cell test. The shift set since (heat.wgsl
-    /// `shifted_at`): the heat-free cells off the floor that the step's largest downward shift leaves above it and moves within
-    /// that test. A whole world, not a cut: P5's start alone (a pinned step's state, its rate restored) converges on the old
-    /// shader in 3 passes — the stall needs the life's own P4 → P5 state, which no dump holds.
+    /// M0-D156 on the GPU, re-cut by M0-D176 on today's physics: scenes/sun_13900.bin — the Sun-like life's dump at step 13,900
+    /// (preset:sun on the RTX 4090, calibration 8096991d…: M0-D175's Verify-1 life resumed from its s_12000, binary 6fa441b8) —
+    /// run on by `headless --load-dump` through steps 13,900–13,903, every pass of the life on and P5 on its default V-cycle;
+    /// none prints `SR-WARN heat unconverged`. With every heat-free cell back in the START shift's set (the plant
+    /// shift-every-heat-free) steps 13,900 and 13,903 reach the 128-pass ceiling at 5 and 31 rounds, M0-D156's stall: from the
+    /// third pass each solve meets (4)'s two measures at its start, and the heat-free START shift — one level over the world's
+    /// heat-free cells, its zᵀA z carried by cold cells the update holds on the floor — comes back with the same sign every pass
+    /// and walks every other heat-free cell past (3)'s per-cell test. The shift set since (heat.wgsl `shifted_at`): the
+    /// heat-free cells off the floor that the step's largest downward shift leaves above it and moves within that test. M0-D156's
+    /// own cut (scenes/sun_13593.bin, step 13,594 at 64 passes, 3 rounds) no longer stalls on today's physics (M0-D175). A whole
+    /// world, not a cut: P5's start alone converges on the old shader — the stall needs the life's own P4 → P5 state.
     #[test]
-    fn gpu_the_sun_like_lifes_step_13594_ends_its_newton_passes_below_the_ceiling() {
+    fn gpu_the_sun_like_lifes_steps_13900_to_13903_end_their_newton_passes_below_the_ceiling() {
         let dir = std::env::temp_dir().join(format!("sr-heat-d156-{}", std::process::id()));
         let _ = std::fs::remove_dir_all(&dir);
         std::fs::create_dir_all(&dir).unwrap();
-        let file = dir.join("s_13593.bin");
-        std::fs::copy(scenes_dir().join("sun_13593.bin"), &file).unwrap();
-        std::fs::copy(scenes_dir().join("sun_13593.observers"), sr_engine::headless::observers_path(&file)).unwrap();
+        let file = dir.join("s_13900.bin");
+        std::fs::copy(scenes_dir().join("sun_13900.bin"), &file).unwrap();
         let out = dir.join("out");
-        let mut args: Vec<String> = ["--scene", "preset:sun", "--load-dump", &file.display().to_string(), "--continue", "--steps", "13595", "--out", &out.display().to_string()]
+        let mut args: Vec<String> = ["--scene", "preset:sun", "--load-dump", &file.display().to_string(), "--steps", "4", "--out", &out.display().to_string()]
             .iter()
             .map(|s| s.to_string())
             .collect();
@@ -1595,9 +1594,9 @@ mod stiff {
         let (code, lines) = sr_engine::headless::run_captured(&args);
         let _ = std::fs::remove_dir_all(&dir);
         assert_eq!(code, 0, "headless {args:?}");
-        assert!(lines.iter().any(|l| l.starts_with("SR-HEADLESS DONE steps=13595 ")), "the run reached step 13,595: {lines:?}");
+        assert!(lines.iter().any(|l| l.starts_with("SR-HEADLESS DONE steps=4 ")), "the run ended steps 13,900–13,903: {lines:?}");
         let warned: Vec<&String> = lines.iter().filter(|l| l.starts_with("SR-WARN heat unconverged")).collect();
-        println!("SR-STIFF GPU sun_13593.bin, steps 13,594–13,595: {} heat-unconverged warnings", warned.len());
+        println!("SR-STIFF GPU sun_13900.bin, steps 13,900–13,903: {} heat-unconverged warnings", warned.len());
         assert!(warned.is_empty(), "P5 reached its ceiling: {warned:?}");
     }
 
@@ -1607,7 +1606,10 @@ mod stiff {
     /// `SR-WARN heat unconverged`. At §0.5 [M0-D37]'s 64 passes all four did (passes 64; rounds 820, 669, 589, 488): an iron
     /// shell 18–30 cells from the core (X_Fe 1, its E nearly all kinetic, T⁰ at T_floor) inside hot gas is heated about a cell
     /// a pass — step 930 converges in 94 passes, 952 rounds on the GPU, and the f64 twin from the same P5 start in 97 passes,
-    /// 88,933 rounds — so the ceiling is 128 passes since M0-D159 (§0.5 [M0-D159]).
+    /// 88,933 rounds — so the ceiling is 128 passes since M0-D159 (§0.5 [M0-D159]). A known limitation since M0-D176 (the lead,
+    /// 2026-11-13): on today's physics these steps, and every step found of the three presets' lives and the disk's, close
+    /// within 64 passes, so this case no longer fails at a 64-pass ceiling — it runs as a regression of steps 930–933, and the
+    /// plant ceiling-64-passes is out of heat_stiff's red-arm until a state needs 65–128 passes again.
     #[test]
     fn gpu_the_massive_disks_steps_930_to_933_end_their_newton_passes_below_the_ceiling() {
         let dir = std::env::temp_dir().join(format!("sr-heat-d159-{}", std::process::id()));
