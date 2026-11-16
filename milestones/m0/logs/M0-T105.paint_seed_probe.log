@@ -1,0 +1,14 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 7.77s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test touch::zz_probe_paint_seed ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ZZ step=74815 t=844.48 stage=main_sequence M=5293.0 R=139.8 Tc=55.3 xh=0.506 L=1.209e4 esc=2925.7 unb=147.2
+ZZ step=76200 t=860.12 stage=main_sequence M=5110.1 R=40.4 Tc=56.3 xh=0.490 L=1.266e4 esc=3108.6 unb=24.2
+SR-HEADLESS DONE steps=6000 sim_time=860.123003 until=none
+ZZ exit 0
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 526 filtered out; finished in 33.46s
+

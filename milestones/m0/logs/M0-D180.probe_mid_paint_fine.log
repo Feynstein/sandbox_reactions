@@ -1,0 +1,63 @@
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test d180_probe::zz_d180_probe ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ZZ step=70223 t=800.26 st=main_sequence raw=main_sequence M=8218.9 R=36.4 Sc=12.99 Tc=42.3 dc=0.64 xh=0.480 xfe=0.000 L=2.797e2 Lnuc=1.770e3 vr=-1.078 vir=0.506 unb=0.0 esc=0.0 objs=1 dt=1.12e-2
+ZZ step=70239 t=800.44 st=main_sequence raw=main_sequence M=8218.9 R=35.9 Sc=13.48 Tc=44.1 dc=0.64 xh=0.480 xfe=0.000 L=8.563e1 Lnuc=2.156e3 vr=-1.954 vir=0.513 unb=0.0 esc=0.0 objs=1 dt=1.10e-2
+ZZ step=70255 t=800.61 st=main_sequence raw=main_sequence M=8218.9 R=35.1 Sc=14.11 Tc=46.4 dc=0.63 xh=0.480 xfe=0.000 L=3.366e1 Lnuc=2.921e3 vr=-2.810 vir=0.525 unb=0.0 esc=0.0 objs=1 dt=1.08e-2
+ZZ step=70271 t=800.78 st=main_sequence raw=main_sequence M=8219.0 R=34.7 Sc=14.87 Tc=49.3 dc=0.63 xh=0.481 xfe=0.000 L=1.240e1 Lnuc=4.354e3 vr=-3.646 vir=0.541 unb=0.0 esc=0.0 objs=1 dt=1.06e-2
+ZZ step=70287 t=800.94 st=main_sequence raw=main_sequence M=8219.0 R=34.0 Sc=15.82 Tc=53.2 dc=0.63 xh=0.481 xfe=0.000 L=5.271e0 Lnuc=6.941e3 vr=-4.460 vir=0.564 unb=0.0 esc=0.0 objs=1 dt=1.03e-2
+ZZ step=70303 t=801.10 st=main_sequence raw=main_sequence M=8219.0 R=33.4 Sc=17.02 Tc=58.8 dc=0.62 xh=0.482 xfe=0.000 L=4.651e0 Lnuc=1.190e4 vr=-5.236 vir=0.593 unb=0.0 esc=0.0 objs=1 dt=9.91e-3
+ZZ step=70319 t=801.25 st=main_sequence raw=main_sequence M=8219.0 R=32.1 Sc=18.37 Tc=66.1 dc=0.60 xh=0.484 xfe=0.000 L=4.938e0 Lnuc=2.197e4 vr=-5.958 vir=0.630 unb=0.0 esc=0.0 objs=1 dt=9.47e-3
+ZZ step=70335 t=801.40 st=main_sequence raw=main_sequence M=8219.0 R=31.0 Sc=19.96 Tc=76.3 dc=0.58 xh=0.486 xfe=0.000 L=2.638e0 Lnuc=4.402e4 vr=-6.588 vir=0.677 unb=0.0 esc=0.0 objs=1 dt=9.00e-3
+ZZ step=70351 t=801.53 st=main_sequence raw=he_core M=8219.0 R=30.1 Sc=21.91 Tc=91.3 dc=0.56 xh=0.488 xfe=0.000 L=2.682e0 Lnuc=9.677e4 vr=-7.080 vir=0.734 unb=0.0 esc=0.0 objs=1 dt=8.47e-3
+ZZ step=70367 t=801.66 st=main_sequence raw=he_core M=8219.0 R=29.0 Sc=23.90 Tc=108.7 dc=0.53 xh=0.490 xfe=0.000 L=1.901e0 Lnuc=2.114e5 vr=-7.343 vir=0.807 unb=0.0 esc=0.0 objs=1 dt=7.97e-3
+ZZ step=70383 t=801.78 st=he_core raw=he_core M=8219.1 R=27.6 Sc=26.07 Tc=127.2 dc=0.51 xh=0.491 xfe=0.000 L=1.464e0 Lnuc=3.953e5 vr=-7.310 vir=0.896 unb=0.0 esc=0.0 objs=1 dt=7.45e-3
+ZZ step=70399 t=801.89 st=he_core raw=he_core M=8219.1 R=26.4 Sc=27.94 Tc=146.8 dc=0.49 xh=0.495 xfe=0.000 L=9.299e-1 Lnuc=6.498e5 vr=-6.886 vir=1.005 unb=0.0 esc=0.0 objs=1 dt=7.06e-3
+ZZ step=70415 t=802.00 st=he_core raw=he_core M=8219.1 R=25.4 Sc=29.37 Tc=165.7 dc=0.47 xh=0.498 xfe=0.000 L=7.841e-1 Lnuc=9.840e5 vr=-6.012 vir=1.130 unb=0.0 esc=0.0 objs=1 dt=6.67e-3
+ZZ step=70431 t=802.10 st=he_core raw=he_core M=8219.1 R=23.4 Sc=30.69 Tc=185.5 dc=0.45 xh=0.501 xfe=0.000 L=6.231e-1 Lnuc=1.418e6 vr=-4.629 vir=1.263 unb=0.0 esc=0.0 objs=1 dt=6.31e-3
+ZZ step=70447 t=802.20 st=he_core raw=he_core M=8219.0 R=22.5 Sc=31.31 Tc=201.6 dc=0.44 xh=0.504 xfe=0.000 L=5.232e-1 Lnuc=1.905e6 vr=-2.778 vir=1.394 unb=0.0 esc=0.0 objs=1 dt=5.98e-3
+ZZ step=70463 t=802.29 st=he_core raw=he_core M=8219.0 R=21.2 Sc=31.18 Tc=209.7 dc=0.43 xh=0.509 xfe=0.000 L=7.402e3 Lnuc=2.344e6 vr=-0.587 vir=1.523 unb=0.0 esc=0.0 objs=1 dt=5.85e-3
+ZZ step=70479 t=802.38 st=he_core raw=he_core M=8219.0 R=19.5 Sc=29.00 Tc=203.3 dc=0.43 xh=0.509 xfe=0.000 L=1.292e6 Lnuc=2.621e6 vr=1.764 vir=1.584 unb=0.0 esc=0.0 objs=1 dt=5.90e-3
+ZZ step=70495 t=802.48 st=he_core raw=he_core M=8219.0 R=18.2 Sc=25.76 Tc=189.3 dc=0.42 xh=0.509 xfe=0.000 L=1.986e6 Lnuc=2.681e6 vr=3.948 vir=1.593 unb=0.2 esc=0.0 objs=1 dt=5.97e-3
+ZZ step=70511 t=802.57 st=he_core raw=he_core M=8218.8 R=17.8 Sc=22.69 Tc=176.3 dc=0.42 xh=0.512 xfe=0.000 L=1.996e6 Lnuc=2.576e6 vr=5.646 vir=1.580 unb=0.2 esc=0.0 objs=1 dt=5.40e-3
+ZZ step=70527 t=802.65 st=he_core raw=he_core M=8218.7 R=18.2 Sc=20.11 Tc=165.2 dc=0.41 xh=0.509 xfe=0.000 L=1.793e6 Lnuc=2.377e6 vr=6.951 vir=1.559 unb=0.3 esc=0.0 objs=1 dt=4.92e-3
+ZZ step=70543 t=802.72 st=he_core raw=he_core M=8218.6 R=19.3 Sc=17.94 Tc=155.5 dc=0.40 xh=0.509 xfe=0.000 L=1.528e6 Lnuc=2.135e6 vr=7.988 vir=1.533 unb=0.3 esc=0.0 objs=1 dt=4.66e-3
+ZZ step=70559 t=802.79 st=he_core raw=he_core M=8218.5 R=20.5 Sc=16.04 Tc=146.8 dc=0.39 xh=0.509 xfe=0.000 L=1.261e6 Lnuc=1.879e6 vr=8.838 vir=1.506 unb=0.3 esc=0.0 objs=1 dt=4.54e-3
+ZZ step=70575 t=802.86 st=he_core raw=main_sequence M=8218.4 R=21.9 Sc=14.37 Tc=138.8 dc=0.39 xh=0.509 xfe=0.000 L=1.018e6 Lnuc=1.623e6 vr=9.541 vir=1.477 unb=0.3 esc=0.0 objs=1 dt=4.48e-3
+ZZ step=70591 t=802.94 st=he_core raw=main_sequence M=8218.2 R=22.9 Sc=12.88 Tc=131.4 dc=0.38 xh=0.508 xfe=0.000 L=8.084e5 Lnuc=1.371e6 vr=10.132 vir=1.445 unb=0.3 esc=0.0 objs=1 dt=4.51e-3
+ZZ step=70607 t=803.01 st=main_sequence raw=main_sequence M=8218.0 R=24.4 Sc=11.57 Tc=124.6 dc=0.37 xh=0.507 xfe=0.000 L=6.315e5 Lnuc=1.127e6 vr=10.623 vir=1.411 unb=0.3 esc=0.0 objs=1 dt=4.52e-3
+ZZ step=70623 t=803.08 st=main_sequence raw=main_sequence M=8217.9 R=25.9 Sc=10.42 Tc=118.2 dc=0.36 xh=0.505 xfe=0.000 L=4.879e5 Lnuc=8.973e5 vr=11.029 vir=1.374 unb=0.3 esc=0.0 objs=1 dt=4.54e-3
+ZZ step=70639 t=803.16 st=main_sequence raw=main_sequence M=8217.8 R=27.1 Sc=9.40 Tc=112.2 dc=0.35 xh=0.504 xfe=0.000 L=3.736e5 Lnuc=6.849e5 vr=11.363 vir=1.333 unb=0.3 esc=0.0 objs=1 dt=4.60e-3
+ZZ step=70655 t=803.23 st=main_sequence raw=main_sequence M=8217.8 R=28.8 Sc=8.50 Tc=106.3 dc=0.34 xh=0.502 xfe=0.000 L=2.847e5 Lnuc=4.904e5 vr=11.630 vir=1.288 unb=166.8 esc=0.0 objs=1 dt=4.68e-3
+ZZ step=70671 t=803.31 st=main_sequence raw=main_sequence M=8217.6 R=30.5 Sc=7.69 Tc=99.6 dc=0.34 xh=0.501 xfe=0.000 L=2.161e5 Lnuc=3.122e5 vr=11.834 vir=1.238 unb=432.4 esc=0.0 objs=1 dt=4.77e-3
+ZZ step=70687 t=803.38 st=main_sequence raw=main_sequence M=8217.4 R=31.7 Sc=6.96 Tc=89.4 dc=0.34 xh=0.501 xfe=0.000 L=1.620e5 Lnuc=1.742e5 vr=11.971 vir=1.185 unb=571.0 esc=0.0 objs=1 dt=4.86e-3
+ZZ step=70703 t=803.46 st=main_sequence raw=main_sequence M=8217.2 R=33.9 Sc=6.30 Tc=79.8 dc=0.35 xh=0.500 xfe=0.000 L=1.204e5 Lnuc=1.032e5 vr=12.047 vir=1.132 unb=673.2 esc=0.0 objs=1 dt=4.95e-3
+ZZ step=70719 t=803.54 st=main_sequence raw=main_sequence M=8217.1 R=35.0 Sc=5.72 Tc=71.7 dc=0.36 xh=0.500 xfe=0.000 L=8.847e4 Lnuc=6.380e4 vr=12.071 vir=1.082 unb=777.9 esc=0.0 objs=1 dt=5.06e-3
+ZZ step=70735 t=803.63 st=main_sequence raw=main_sequence M=8217.0 R=37.3 Sc=5.21 Tc=64.7 dc=0.36 xh=0.500 xfe=0.000 L=6.450e4 Lnuc=3.976e4 vr=12.054 vir=1.034 unb=865.5 esc=0.0 objs=1 dt=5.17e-3
+ZZ step=70751 t=803.71 st=main_sequence raw=main_sequence M=8216.8 R=38.8 Sc=4.77 Tc=58.7 dc=0.37 xh=0.500 xfe=0.000 L=4.663e4 Lnuc=2.483e4 vr=12.004 vir=0.988 unb=949.0 esc=0.0 objs=1 dt=5.29e-3
+ZZ step=70767 t=803.80 st=main_sequence raw=main_sequence M=8216.6 R=40.7 Sc=4.39 Tc=53.7 dc=0.37 xh=0.500 xfe=0.000 L=3.338e4 Lnuc=1.554e4 vr=11.929 vir=0.946 unb=1027.0 esc=0.0 objs=1 dt=5.40e-3
+ZZ step=70783 t=803.89 st=main_sequence raw=main_sequence M=8216.3 R=42.6 Sc=4.07 Tc=49.3 dc=0.37 xh=0.500 xfe=0.000 L=2.383e4 Lnuc=9.755e3 vr=11.834 vir=0.907 unb=1086.6 esc=0.0 objs=1 dt=5.52e-3
+ZZ step=70799 t=803.98 st=main_sequence raw=main_sequence M=8216.2 R=44.5 Sc=3.79 Tc=45.6 dc=0.38 xh=0.500 xfe=0.000 L=1.698e4 Lnuc=6.136e3 vr=11.723 vir=0.870 unb=1139.3 esc=0.0 objs=1 dt=5.65e-3
+ZZ step=70815 t=804.07 st=main_sequence raw=main_sequence M=8215.9 R=46.5 Sc=3.54 Tc=42.3 dc=0.38 xh=0.500 xfe=0.000 L=1.202e4 Lnuc=3.860e3 vr=11.600 vir=0.835 unb=1188.8 esc=0.0 objs=1 dt=5.78e-3
+ZZ step=70831 t=804.16 st=main_sequence raw=main_sequence M=8215.7 R=48.6 Sc=3.33 Tc=39.5 dc=0.38 xh=0.500 xfe=0.000 L=8.485e3 Lnuc=2.421e3 vr=11.468 vir=0.803 unb=1236.5 esc=0.0 objs=1 dt=5.91e-3
+ZZ step=70847 t=804.26 st=main_sequence raw=main_sequence M=8215.6 R=50.6 Sc=3.15 Tc=37.1 dc=0.39 xh=0.500 xfe=0.000 L=6.020e3 Lnuc=1.501e3 vr=11.329 vir=0.773 unb=1279.9 esc=0.0 objs=1 dt=6.03e-3
+ZZ step=70863 t=804.36 st=main_sequence raw=main_sequence M=8215.8 R=52.7 Sc=2.99 Tc=34.9 dc=0.39 xh=0.500 xfe=0.000 L=4.272e3 Lnuc=9.109e2 vr=11.186 vir=0.745 unb=1317.9 esc=0.0 objs=1 dt=6.16e-3
+ZZ step=70879 t=804.46 st=main_sequence raw=main_sequence M=8216.3 R=54.7 Sc=2.85 Tc=33.0 dc=0.39 xh=0.500 xfe=0.000 L=3.047e3 Lnuc=5.331e2 vr=11.038 vir=0.719 unb=1351.3 esc=0.0 objs=1 dt=6.28e-3
+ZZ step=70895 t=804.56 st=main_sequence raw=main_sequence M=8216.6 R=57.2 Sc=2.73 Tc=31.4 dc=0.39 xh=0.500 xfe=0.000 L=2.174e3 Lnuc=2.910e2 vr=10.888 vir=0.694 unb=1389.0 esc=0.0 objs=1 dt=6.41e-3
+ZZ step=70911 t=804.67 st=main_sequence raw=main_sequence M=8216.9 R=59.1 Sc=2.62 Tc=29.9 dc=0.40 xh=0.500 xfe=0.000 L=1.550e3 Lnuc=1.373e2 vr=10.736 vir=0.672 unb=1415.4 esc=0.0 objs=1 dt=6.54e-3
+ZZ step=70927 t=804.77 st=main_sequence raw=main_sequence M=8217.2 R=61.5 Sc=2.53 Tc=28.6 dc=0.40 xh=0.500 xfe=0.000 L=1.099e3 Lnuc=4.642e1 vr=10.583 vir=0.650 unb=1443.6 esc=0.0 objs=1 dt=6.67e-3
+ZZ step=70943 t=804.88 st=main_sequence raw=main_sequence M=8217.5 R=63.4 Sc=2.44 Tc=27.4 dc=0.40 xh=0.500 xfe=0.000 L=7.888e2 Lnuc=3.429e0 vr=10.430 vir=0.630 unb=1471.6 esc=0.0 objs=1 dt=6.79e-3
+ZZ step=70959 t=804.99 st=main_sequence raw=cloud M=8217.6 R=66.0 Sc=2.37 Tc=26.4 dc=0.41 xh=0.500 xfe=0.000 L=5.594e2 Lnuc=-0.000e0 vr=10.277 vir=0.612 unb=1493.2 esc=0.0 objs=1 dt=6.92e-3
+ZZ step=70975 t=805.11 st=main_sequence raw=cloud M=8217.8 R=68.1 Sc=2.31 Tc=25.5 dc=0.41 xh=0.500 xfe=0.000 L=3.974e2 Lnuc=-0.000e0 vr=10.124 vir=0.595 unb=1519.2 esc=0.0 objs=1 dt=7.05e-3
+ZZ step=70991 t=805.22 st=main_sequence raw=cloud M=8217.9 R=70.6 Sc=2.25 Tc=24.6 dc=0.41 xh=0.499 xfe=0.000 L=2.856e2 Lnuc=-0.000e0 vr=9.972 vir=0.578 unb=1540.7 esc=0.0 objs=1 dt=7.17e-3
+ZZ step=71000 t=805.29 st=main_sequence raw=cloud M=8218.0 R=71.8 Sc=2.22 Tc=24.2 dc=0.41 xh=0.499 xfe=0.000 L=2.165e2 Lnuc=-0.000e0 vr=9.888 vir=0.570 unb=1551.8 esc=0.0 objs=1 dt=7.20e-3
+SR-HEADLESS DONE steps=800 sim_time=805.285079 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=800 sim_time=805.285079 until=unmet
+ZZ exit 2
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 526 filtered out; finished in 4.94s
+

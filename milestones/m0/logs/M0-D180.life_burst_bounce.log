@@ -1,0 +1,29 @@
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test d180_probe::zz_d180_probe ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ZZ step=72015 t=811.87 st=main_sequence raw=main_sequence M=8207.4 R=193.8 Sc=4.57 Tc=32.9 dc=0.50 xh=0.508 xfe=0.000 L=1.621e4 Lnuc=2.708e2 vr=4.362 vir=0.649 tdyn=29.78 unb=1806.4 esc=0.0 objs=1 dt=5.44e-3
+ZZ step=76015 t=854.34 st=main_sequence raw=main_sequence M=8218.7 R=294.1 Sc=9.98 Tc=57.1 dc=0.53 xh=0.493 xfe=0.000 L=1.557e4 Lnuc=1.387e4 vr=-0.994 vir=0.999 tdyn=55.64 unb=47.3 esc=0.0 objs=1 dt=1.13e-2
+ZZ step=80015 t=898.91 st=main_sequence raw=main_sequence M=8218.7 R=186.4 Sc=10.65 Tc=67.6 dc=0.50 xh=0.433 xfe=0.000 L=3.265e4 Lnuc=2.961e4 vr=-0.691 vir=1.015 tdyn=28.06 unb=2.6 esc=0.0 objs=1 dt=1.10e-2
+ZZ step=84015 t=942.60 st=main_sequence raw=main_sequence M=8218.7 R=120.2 Sc=13.38 Tc=73.7 dc=0.52 xh=0.350 xfe=0.000 L=3.513e4 Lnuc=3.539e4 vr=0.061 vir=1.010 tdyn=14.54 unb=0.0 esc=0.0 objs=1 dt=1.08e-2
+ZZ step=88015 t=985.06 st=main_sequence raw=main_sequence M=8218.7 R=178.3 Sc=18.97 Tc=80.8 dc=0.56 xh=0.254 xfe=0.000 L=3.825e4 Lnuc=3.954e4 vr=0.519 vir=1.021 tdyn=26.26 unb=7.5 esc=0.0 objs=1 dt=1.04e-2
+ZZ step=92015 t=1025.62 st=main_sequence raw=main_sequence M=8218.7 R=242.3 Sc=27.90 Tc=93.4 dc=0.60 xh=0.160 xfe=0.000 L=4.335e4 Lnuc=4.436e4 vr=0.444 vir=1.036 tdyn=41.59 unb=0.0 esc=0.0 objs=1 dt=9.88e-3
+ZZ step=96015 t=1064.36 st=he_core raw=he_core M=8218.7 R=248.3 Sc=39.90 Tc=114.8 dc=0.64 xh=0.070 xfe=0.000 L=5.401e4 Lnuc=5.354e4 vr=0.329 vir=1.069 tdyn=43.15 unb=0.0 esc=0.0 objs=1 dt=9.53e-3
+ZZ step=100015 t=1100.70 st=o_burn raw=o_burn M=8218.7 R=265.2 Sc=65.48 Tc=148.1 dc=0.69 xh=0.013 xfe=0.145 L=9.775e4 Lnuc=9.721e4 vr=0.546 vir=1.105 tdyn=47.65 unb=0.0 esc=0.0 objs=1 dt=8.51e-3
+ZZ step=104015 t=1132.72 st=iron_core raw=iron_core M=8218.7 R=285.6 Sc=134.47 Tc=213.9 dc=0.73 xh=0.000 xfe=1.000 L=1.968e5 Lnuc=1.774e5 vr=0.065 vir=1.035 tdyn=53.23 unb=0.9 esc=0.0 objs=1 dt=7.28e-3
+ZZ step=108015 t=1159.14 st=iron_core raw=iron_core M=8218.7 R=288.9 Sc=204.75 Tc=350.9 dc=0.69 xh=0.000 xfe=1.000 L=7.470e5 Lnuc=5.008e5 vr=-1.006 vir=0.969 tdyn=54.17 unb=3636.8 esc=0.0 objs=1 dt=6.01e-3
+ZZ step=109344 t=1166.41 st=supernova raw=supernova M=8218.7 R=285.9 Sc=295.15 Tc=68.2 dc=0.93 xh=0.155 xfe=0.710 L=9.858e5 Lnuc=5.255e5 vr=-1.490 vir=0.893 tdyn=53.31 unb=3822.0 esc=0.0 objs=1 dt=5.38e-3
+ZZ step=112000 t=1179.20 st=supernova raw=supernova M=8218.7 R=274.0 Sc=664.62 Tc=43.3 dc=0.94 xh=0.093 xfe=0.299 L=5.419e5 Lnuc=2.033e5 vr=-1.603 vir=0.516 tdyn=50.03 unb=3017.1 esc=0.0 objs=1 dt=4.58e-3
+ZZ step=116000 t=1196.48 st=black_hole raw=black_hole M=8218.7 R=250.5 Sc=0.10 Tc=24.4 dc=0.04 xh=0.944 xfe=0.000 L=2.129e4 Lnuc=2.695e-4 vr=-1.407 vir=1.262 tdyn=43.73 unb=0.7 esc=0.0 objs=1 dt=3.83e-3
+ZZ step=120000 t=1211.72 st=black_hole raw=black_hole M=8218.7 R=212.6 Sc=0.15 Tc=29.3 dc=0.05 xh=0.964 xfe=0.000 L=2.794e4 Lnuc=1.231e-2 vr=-1.322 vir=1.183 tdyn=34.20 unb=0.7 esc=0.0 objs=1 dt=3.63e-3
+ZZ step=124000 t=1226.12 st=black_hole raw=black_hole M=8218.7 R=167.4 Sc=0.20 Tc=31.6 dc=0.06 xh=0.978 xfe=0.000 L=2.206e4 Lnuc=1.373e-2 vr=-1.003 vir=1.020 tdyn=23.90 unb=0.9 esc=0.0 objs=1 dt=3.52e-3
+ZZ step=128000 t=1240.10 st=black_hole raw=black_hole M=8218.7 R=89.7 Sc=0.12 Tc=26.3 dc=0.04 xh=0.977 xfe=0.000 L=1.643e4 Lnuc=-0.000e0 vr=-0.699 vir=0.834 tdyn=9.38 unb=0.8 esc=0.0 objs=1 dt=3.44e-3
+SR-HEADLESS DONE steps=59112 sim_time=1244.629515 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=59112 sim_time=1244.629515 until=met
+ZZ exit 0
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 526 filtered out; finished in 412.74s
+

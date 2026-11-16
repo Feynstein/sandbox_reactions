@@ -1,0 +1,12 @@
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test endings::a_cloud_at_m_ign_over_1_25_fails_to_light ... ign_under sun cloud of 2109.039 sb (m_ign 2636.3, m_up 6515.5, m_bh 13681.1) — expected FailedStar then failed_star
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ign_under the drop: step=17 M=2109.037 sb
+SR-HEADLESS DONE steps=2241 sim_time=31.437778 until=met
+ign_under the readout at the drop (M 2109.037): Some(Sure(FailedStar)); 2241 steps, exit 0, summary ending [{"age_years":2247887119.3968534,"ending":"failed_star","id":1,"mass_sb":2101.2983077128883,"mass_suns":0.002961832063838742,"predicted_ending":["failed_star"],"stage":"failed_star","stages":[{"from_step":65,"sim_time":1.6462487205863,"stage":"collapsing"},{"from_step":513,"sim_time":7.4390968689695,"stage":"failed_star"},{"from_step":641,"sim_time":9.34527522791177,"stage":"collapsing"},{"from_step":753,"sim_time":10.874564731493592,"stage":"failed_star"}]}]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 523 filtered out; finished in 12.41s
+

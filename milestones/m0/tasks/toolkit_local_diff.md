@@ -181,3 +181,44 @@ the swapped switch's `RUNGS` holds all seven rungs of the 2026-10-11 ladder.
    `tools-selftest-sigint` (case `verify`: the call dropped from `main()`). The annex's §A.2 says nothing of the launch's signal
    dispositions. Measured on linux-pc: selftest checks=359 · plants 160/160 red, GO, in the foreground and as an async job;
    `--redarm tools_selftest` 5/5 plants RED, GO; laserax-ai-server and win-laptop owed (R15; a no-op on Windows).
+12. **verify.py — `--redarm <scope>` runs the plants only; the clean GO is the scope's own green run on these bytes (local,
+   M0-D178, 2026-11-15; the lead at M0-T104: «the red arm shouldnt run the clean copies if it already runs prior», «Make it
+   so the red arm only runs the red arm», and at M0-D178: «make sure if the clean arm is run, other tests re-use it»).** The
+   clean arm repeated the scope run the routine had just made (R9 (2) then (3)) — for a ⏱ scope a second whole run
+   (`endings` ≈ 45 min). Now every whole run of an armed scope (no `--case`, no case vouched by the anchor, the tree not
+   moved under it) writes the scope's `fingerprint` and `adapter` (`SR_TEST_ADAPTER`) into its record entry, red or green;
+   `green_proof` reads the newest record on this box with that fingerprint and adapter — a whole run GO, or a red-arm whose
+   clean arm ran GO, is the proof; the same bytes run red is none. `redarm(clean=…)`: `"record"` (the CLI's `--redarm
+   <scope>`) refuses with no proof, nothing run, naming `verify.py <scope> --task <ID>`; `"auto"` (the sweep `--redarm
+   --moved`, the loop's plants) reads it, else runs the clean arm as before; `"fresh"` (`--redarm <scope> --with-clean`)
+   always runs it. A clean arm that runs GO is recorded with fingerprint and adapter, so every later reader reuses it. The
+   loop's hook gets the run's record before it is written (`hook(rec)`), so `--changed` / `--all` red-arm a changed scope
+   off the green run they just made. Hunks: `ADAPTER_VAR`, `adapter_now`, `green_proof` in place of `clean_proof`;
+   `redarm`'s `clean`/`fresh` parameters, its refusal, its proof line and log line (`(<what ran>; fingerprint …) - not
+   re-run`), its record's `adapter`; `moved_sweep` unchanged (`clean="auto"` is the default); `loop_checks`' `fresh`;
+   `run_scopes`' `tool`, `fp_before`, the fingerprint written after the run, `rec["scopes"]` built before the hook,
+   `hook(rec)`; `loop_hook`'s two lambdas; `CALLS`, `--with-clean` and `check_call`'s refusal; `cmd_run`. Selftest: `qarm`'s
+   `clean`; scopes `rd`, `mk`; the old clean-proof checks re-cut on `green_proof` (Q4–Q6, the legacy reader as six synthetic
+   records); section « G3 · the red-arm runs the plants only » (refused with no green run; the record written; plants only
+   after it; another adapter refused; a path edited since refused; `--with-clean` then reused; a `--case` run and a moved
+   tree write no fingerprint; the hook sees the record; the CLI sequence); two sweep checks (record read, else clean run);
+   two wrong calls; `ADAPTER_VAR` saved and popped. verify.json's plants `redarm-runs-clean` and `redarm-stale-record`
+   (case `verify`). The annex's §A.2 red-arm paragraph («the clean copy GO, each plant NO-GO») lags by this one — flagged
+   for M0-TZ. Measured on linux-pc: selftest checks=376 · plants 163/163 red, GO; `--redarm tools_selftest` 7/7 RED, GO,
+   its clean read from the scope's run; laserax-ai-server and win-laptop owed (R15).
+13. **verify.py — a long command says its start and a heartbeat with its ETA (local, M0-D179, 2026-11-15; the lead: «can
+   you also make sure that verify.py shows some progress and and ETA. right now the endings run is running and its not
+   printing anything»).** M0-D27's and M0-D65's live lines were said only by a run of several steps, and a command's own
+   line only when it ended, so a one-scope, one-command run (`endings`, ≈ 45 min) said nothing until its verdict. Now, on a
+   terminal only: a one-step run says `>> <scope> · started · ≈ <s> by this box's last run` (or `no past run …`); a
+   red-arm's lone arm says its start; a command still running says every `PB_HEARTBEAT_S` (default 60 s) `.. <label>[ ·
+   <arm>] · running <elapsed> · <k> of <expected> cases done · ≈ <left> left by its pace (…)`, else `… by this box's last
+   run (…)`, else `over this box's last run (…) by <s>`, with `now <case>` while one runs; the cases are libtest's lines in
+   the command's part file — `test <name> ... ` started, `ok|FAILED|ignored` ended, on the same line or alone after the
+   test's own output (`--nocapture`, as tests/gpu.sh runs: checked on M0-T104's bh, giant and mass_up logs, started = ended). Display only: verdicts, counts, logs, records and the anchor unchanged. Hunks: `CASE_DONE_RE`,
+   `heartbeat_s`, `beat_line`, `wait_beating` after `eta_line`; `run_command`'s wait; `ScopeRun.past`/`tag`;
+   `run_scopes`' `live_tag`, `hist` read once, the one-step start line; `redarm`'s lone-arm start and `live_tag`. Selftest:
+   EMIT's `cases` kind; section « L2 · a long command says its start and a heartbeat » (four checks, the plant « a command
+   waited on in silence »); `PB_HEARTBEAT_S` saved and popped. The annex's §A.2 says nothing of live lines.
+   Measured on linux-pc: selftest checks=381 · plants 164/164 red, GO; on a pty (`script`) `--redarm ending` said its lone
+   arm's start and a heartbeat each 0.5 s (`PB_HEARTBEAT_S=0.5`) while cargo rebuilt (logs/M0-D179.pty.log).

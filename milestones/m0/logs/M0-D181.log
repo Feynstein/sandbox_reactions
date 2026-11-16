@@ -1,0 +1,176 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.49s
+[run a] 2026-11-15T17:34:04-05:00 preset:massive leave to 13000, dumps every 1000, RTX 5090
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=13000 sim_time=123.961320 until=none
+[run b] 2026-11-15T17:34:59-05:00 --load-dump a/s_13000 --continue, leave, until ending, dumps every 100, RTX 5090
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=23032 sim_time=189.213718 until=met
+[E1 seg] 2026-11-15T17:39:10-05:00 mutant Σⁿ source, from b/s_19600 --continue --steps 21600, RTX 5090
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=21600 sim_time=181.839927 until=none
+[E1a seg] 2026-11-15T17:40:34-05:00 mutant held-only Σⁿ, from b/s_19600 --continue --steps 21600, RTX 5090
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=21600 sim_time=181.912749 until=none
+[E1 life] 2026-11-15T17:41:38-05:00 mutant Σⁿ source, preset:massive leave, until ending, dumps every 500, RTX 5090
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=23596 sim_time=192.277786 until=met
+[E1 fine] 2026-11-15T17:44:55-05:00 mutant Σⁿ, from e1life/s_17000 --continue --steps 21000, dumps every 100, RTX 5090
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=21000 sim_time=179.191715 until=none
+[E1 step] 2026-11-15T17:46:03-05:00 mutant Σⁿ, from e1fine/s_19400 --continue --steps 19500, dumps every 1, RTX 5090
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=19500 sim_time=171.533095 until=none
+[E2 norad] 2026-11-15T17:46:46-05:00 mutant Σⁿ + no radiation force, from e1fine/s_19400, 20 steps, dumps every 1, RTX 5090
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=19420 sim_time=171.112511 until=none
+   Compiling sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.19s
+
+error: could not compile `sr-physics` (lib test) due to 3 previous errors
+warning: build failed, waiting for other jobs to finish...
+    Finished `release` profile [optimized] target(s) in 0.09s
+[Verify 1] 2026-11-15T17:52:03-05:00 conservation::the_supernova, RTX 5090, after the Σ_src kick
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 15.24s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 3 tests
+test conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=23602 sim_time=192.308600 until=met
+supernova: 23602 steps, 47 checkpoints, t 0.02 → 191.82; edge "leave"; invariants at the end: mass 9.810398e3 (start 9.810396e3), momentum (+8.5153e1, +2.4777e3) (start (-2.5812e-6, -2.0671e-6)), energy -5.094816e5 (start -5.661295e5); |W| 7.1825e6
+supernova: energy invariant drift 7.410e-2 |W| per τ_dyn at worst, bound 1e-3
+supernova: 31 of 47 windows over the bound; the five worst — 20002..20514: 7.41e-2 · 19505..20002: 7.23e-2 · 15505..16001: 5.17e-2 · 16001..16513: 5.09e-2 · 15009..15505: 4.94e-2
+supernova: the worst window — steps 20002..20514, Δinvariant -3.1416e4: floor_added -6.5297e6 · nuclear_released +6.3030e6 · radiated +1.2322e6 · potential -8.0530e5 · thermal -2.1705e5 · cold -2.4229e4 · escaped +1.0984e4 · kinetic -1.8064e3 · neutrino_lost +4.8764e2 · neutrino_deposited -1.4074e0 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
+supernova: the whole life — steps 1..23506, Δinvariant +5.6648e4: radiated +3.7858e7 · floor_added -2.5114e7 · nuclear_released -8.8434e6 · potential -5.8585e6 · cold +1.8287e6 · thermal -4.9163e5 · escaped +4.3646e5 · neutrino_lost +2.2203e5 · kinetic +1.9057e4 · neutrino_deposited -2.0595e0 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
+
+thread 'conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons' (233263) panicked at crates/sr-engine/tests/gpu/conservation.rs:436:5:
+supernova: energy invariant drift 7.410e-2 |W| per τ_dyn, steps 20002..20514, over 1e-3 (UNVERIFIED: a D for a conservative gravity, §0.4)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test conservation::the_supernova_in_a_leave_world_keeps_the_mass_invariant ... supernova: mass invariant drift 2.155e-7 relative at worst (step 14001); bound 1e-6
+ok
+test conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant ... supernova: momentum invariant drift 1.594e-1 of the running peak Σm|u| at worst (step 21506); over the instant Σm|u| 4.941e-1 (step 23010, not graded); at the end Δp (+8.5153e1, +2.4777e3) of Σm|u| 5.1672e3; bound 1e-6
+supernova: the whole life's momentum terms — steps 1..23506, Δinvariant (+8.5153e1, +2.4777e3): grid (+1.1390e2, -6.4903e1) · sinks (+0.0000e0, +0.0000e0) · escaped (-4.5210e1, +4.2732e1) · held (+1.6460e1, +2.4998e3)
+supernova: |Δp| along the life — 513: 2.65e-4 (Σm|u| 2.56e4) · 2001: 1.14e-2 (Σm|u| 1.21e4) · 3505: 9.50e-3 (Σm|u| 2.79e3) · 5009: 1.71e-2 (Σm|u| 1.24e3) · 6513: 3.11e-2 (Σm|u| 2.00e3) · 8001: 4.53e-2 (Σm|u| 3.26e3) · 9505: 5.98e-2 (Σm|u| 5.44e3) · 11009: 7.25e-2 (Σm|u| 1.07e4) · 12513: 8.30e-2 (Σm|u| 1.39e4) · 14001: 9.29e-2 (Σm|u| 1.84e4) · 15505: 1.13e-1 (Σm|u| 2.02e4) · 17009: 9.56e-1 (Σm|u| 1.79e4) · 18513: 3.52e0 (Σm|u| 1.42e4) · 20002: 3.18e3 (Σm|u| 1.62e4) · 21506: 4.08e3 (Σm|u| 1.25e4) · 23010: 2.73e3 (Σm|u| 5.52e3)
+
+thread 'conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant' (240083) panicked at crates/sr-engine/tests/gpu/conservation.rs:422:5:
+supernova: momentum invariant drift 1.594e-1 of Σm|u| at step 21506, over 1e-6
+FAILED
+
+failures:
+
+failures:
+    conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons
+    conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant
+
+test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 530 filtered out; finished in 142.86s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+[E3 life] 2026-11-15T17:54:58-05:00 tree's Σ_src kick + radiation force off, preset:massive leave, until ending, dumps every 500, RTX 5090
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=22464 sim_time=180.383875 until=met
+[Verify 2] 2026-11-15T17:57:48-05:00 verify.py held_core, ledger — RTX 5090
+anchor: 9 path×scope entries moved by this run
+anchor: 265 paths checked · 447 skipped (3 classes) · 199 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 920 visible
+verify: 27 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 142.05 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 8.07->9.17
+=== GO ===
+anchor: 9 path×scope entries moved by this run
+anchor: 265 paths checked · 447 skipped (3 classes) · 199 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 920 visible
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 7.63 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 8.76->8.54
+=== GO ===
+[spot] 2026-11-15T18:00:52-05:00 scopes most exposed to the kick, RTX 5090
+cpu_gpu   3/0/0        3.92 s  GO
+logs: milestones/m0/logs/M0-D181.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+09dfa2a983ed
+anchor: 9 path×scope entries moved by this run
+anchor: 265 paths checked · 447 skipped (3 classes) · 199 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 920 visible
+verify: 3 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 3.93 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 5.47->5.27
+=== GO ===
+twin      6/0/0        1.37 s  GO
+logs: milestones/m0/logs/M0-D181.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+09dfa2a983ed
+anchor: 9 path×scope entries moved by this run
+anchor: 265 paths checked · 447 skipped (3 classes) · 199 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 920 visible
+verify: 6 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.37 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 5.27->5.27
+=== GO ===
+grav_force  13/0/0       1.77 s  GO
+logs: milestones/m0/logs/M0-D181.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+09dfa2a983ed
+anchor: 9 path×scope entries moved by this run
+anchor: 265 paths checked · 447 skipped (3 classes) · 199 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 920 visible
+verify: 13 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.77 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 5.27->5.17
+=== GO ===
+grav_selfforce  7/0/0        0.92 s  GO
+logs: milestones/m0/logs/M0-D181.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+09dfa2a983ed
+anchor: 9 path×scope entries moved by this run
+anchor: 265 paths checked · 447 skipped (3 classes) · 199 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 920 visible
+verify: 7 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.92 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 5.17->5.17
+=== GO ===
+collapse  6/0/0        1.07 s  GO
+logs: milestones/m0/logs/M0-D181.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+09dfa2a983ed
+anchor: 9 path×scope entries moved by this run
+anchor: 265 paths checked · 447 skipped (3 classes) · 199 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 920 visible
+verify: 6 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.07 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 5.17->5.17
+=== GO ===
+sod       17/0/0       5.28 s  GO
+logs: milestones/m0/logs/M0-D181.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+09dfa2a983ed
+anchor: 9 path×scope entries moved by this run
+anchor: 265 paths checked · 447 skipped (3 classes) · 199 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 920 visible
+verify: 17 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 5.28 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 5.17->4.92
+=== GO ===
+jeans     4/2/0        0.42 s  NO-GO
+logs: milestones/m0/logs/M0-D181.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+09dfa2a983ed
+anchor: 121 path×scope entries moved by this run
+anchor: 262 paths checked · 447 skipped (3 classes) · 202 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 920 visible
+FAILED:
+  jeans: 2 failed · log milestones/m0/logs/M0-D181.jeans.log
+verify: 4 passed, 2 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.42 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 4.92->4.92
+=== NO-GO: jeans: 2 failed · log milestones/m0/logs/M0-D181.jeans.log ===
+edges     7/0/0        5.13 s  GO
+logs: milestones/m0/logs/M0-D181.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+09dfa2a983ed
+anchor: 9 path×scope entries moved by this run
+anchor: 262 paths checked · 447 skipped (3 classes) · 202 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 920 visible
+verify: 7 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 5.14 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 4.68->4.55
+=== GO ===
+radiation_force  11/0/0       4.18 s  GO
+logs: milestones/m0/logs/M0-D181.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+09dfa2a983ed
+anchor: 9 path×scope entries moved by this run
+anchor: 262 paths checked · 447 skipped (3 classes) · 202 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 920 visible
+verify: 11 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 4.18 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 4.55->4.42
+=== GO ===
+booking   4/0/0        0.77 s  GO
+logs: milestones/m0/logs/M0-D181.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+09dfa2a983ed
+anchor: 7 path×scope entries moved by this run
+anchor: 262 paths checked · 447 skipped (3 classes) · 202 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 920 visible
+verify: 4 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.77 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 4.42->4.42
+=== GO ===
+box       8/0/0        2.83 s  GO
+logs: milestones/m0/logs/M0-D181.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+09dfa2a983ed
+anchor: 9 path×scope entries moved by this run
+anchor: 262 paths checked · 447 skipped (3 classes) · 202 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 920 visible
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 2.83 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 4.42->4.42
+=== GO ===
+sink      34/0/0       6.09 s  GO
+logs: milestones/m0/logs/M0-D181.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+09dfa2a983ed
+anchor: 9 path×scope entries moved by this run
+anchor: 262 paths checked · 447 skipped (3 classes) · 202 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 920 visible
+verify: 34 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 6.09 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 4.31->4.28
+=== GO ===
+preset_cloud  5/0/0       40.23 s  GO
+logs: milestones/m0/logs/M0-D181.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+09dfa2a983ed
+anchor: 9 path×scope entries moved by this run
+anchor: 262 paths checked · 447 skipped (3 classes) · 202 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 920 visible
+verify: 5 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 40.23 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 4.28->3.67
+=== GO ===
+multi     5/0/0       18.81 s  GO
+logs: milestones/m0/logs/M0-D181.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+09dfa2a983ed
+anchor: 11 path×scope entries moved by this run
+anchor: 262 paths checked · 447 skipped (3 classes) · 202 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 920 visible
+verify: 5 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 18.82 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 3.67->3.64
+=== GO ===
+[jeans pre-change] 2026-11-15T18:02:47-05:00 scratch copy, HEAD's hydro.wgsl
+[E4 jeans] 2026-11-15T18:03:57-05:00 mutant: tree's kick + gravity's energy on (Σ_src, Σ_src·u_mid), scratch
+[restored] 2026-11-15T18:07:01-05:00 jeans on the restored tree, RTX 5090
+verify: 6 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 10.49 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 14.22->13.3
+=== GO ===
+[claim] 2026-11-15T18:09:37-05:00 verify.py --changed --task M0-D181
+[claim] stopped by the agent after > 10 min: it ran the uncommitted tree's owed GPU scopes (stages, endings, touch, conservation …) — the lead's run

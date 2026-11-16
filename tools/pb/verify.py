@@ -58,7 +58,7 @@ PARSERS = ("gonogo", "pytest", "jest", "regex", "exit")
 COMMANDS = ("list", "report", "selftest", "start", "touched")
 BASELINES_KEPT = 20                                 # the newest starts a box keeps (M0-T62)
 CALLS = ("<scope>... --task <ID>", "--all --task <ID>", "<scope> --case <id> --task <ID>",
-         "--changed [--base <commit>] --task <ID>", "--force <scope>... --task <ID>", "--redarm <scope> --task <ID>", "--redarm --moved --task <ID>", "list",
+         "--changed [--base <commit>] --task <ID>", "--force <scope>... --task <ID>", "--redarm <scope> [--with-clean] --task <ID>", "--redarm --moved --task <ID>", "list",
          "report [--since YYYY-MM-DD] [--budget <s>]", "start [--fresh] --task <ID>",
          "touched [--task <ID>] [--path <glob>]", "selftest")
 TOUCH_KINDS = ("added", "modified", "deleted")
@@ -197,6 +197,59 @@ def eta_line(what, done, running, todo, of, elapsed, work_done, work_left, at_on
     pace = elapsed / work_done if work_done > 0 and elapsed > 0 else 1.0 / max(1, at_once)
     return (f".. {what}: {done} done · {f'{running} running · ' if running else ''}{todo} to do (of {of}) · "
             f"{dur(elapsed)} elapsed · ≈ {dur(work_left * pace)} left")
+
+
+CASE_START_RE = re.compile(r"^test (\S+) \.\.\. ", re.M)                   # libtest: a case started
+CASE_DONE_RE = re.compile(r"^(?:test \S+ \.\.\. )?(?:ok|FAILED|ignored)$", re.M)  # ... and ended: on its line, or alone
+                                                                               # after its own output (--nocapture)
+
+
+def heartbeat_s():
+    """Seconds between a running command's heartbeats (M0-D179): $PB_HEARTBEAT_S, else 60."""
+    with contextlib.suppress(TypeError, ValueError):
+        return max(0.05, float(os.environ.get("PB_HEARTBEAT_S", "")))
+    return 60.0
+
+
+def beat_line(sr, label, part, elapsed):
+    """A running command's heartbeat (M0-D179), display only: its elapsed time, the cases its streamed output says
+    ended and the one running (libtest's lines, `--nocapture`'s split ones too), and an ETA - by its own pace once a case ended and the scope's `expected` is known, else
+    by this box's last run of the scope (`sr.past`), else none."""
+    done, now = 0, None
+    with contextlib.suppress(OSError):
+        text = Path(part).read_bytes().decode("utf-8", "replace").replace("\r\n", "\n")
+        done, started = len(CASE_DONE_RE.findall(text)), CASE_START_RE.findall(text)
+        now = started[-1] if len(started) > done else None          # one at a time: the last started, not ended
+    whole = label == sr.name                                  # a cased scope's unit is one case of it: no scope ETA
+    n, past = (sr.expected, sr.past) if whole else (0, None)
+    bits = [f".. {label}{sr.tag} · running {dur(elapsed)}"]
+    if done or now:
+        bits.append(f"{done}{f' of {n}' if n else ''} case{'s' if (n or done) != 1 else ''} done")
+    if now:
+        bits.append(f"now {now}")
+    if done and n and done < n:
+        bits.append(f"≈ {dur(elapsed / done * (n - done))} left by its pace ({done} of {n} in {dur(elapsed)})")
+    elif past and past > elapsed:
+        bits.append(f"≈ {dur(past - elapsed)} left by this box's last run ({dur(past)})")
+    elif past:
+        bits.append(f"over this box's last run ({dur(past)}) by {dur(elapsed - past)}")
+    elif whole:
+        bits.append("no past run on this box to time it by")
+    return " · ".join(bits)
+
+
+def wait_beating(proc, timeout, sr, label, part, t0):
+    """proc.wait(timeout); on a terminal, a heartbeat every `heartbeat_s()` while it runs (M0-D179)."""
+    if not live():
+        return proc.wait(timeout=timeout)
+    end, every = t0 + timeout, heartbeat_s()
+    while True:
+        try:
+            return proc.wait(timeout=max(0.01, min(every, end - time.monotonic())))
+        except subprocess.TimeoutExpired:
+            if time.monotonic() >= end:
+                raise
+            say(beat_line(sr, label, part, time.monotonic() - t0))
 
 
 def guesses(names, hist):
@@ -646,6 +699,7 @@ class ScopeRun:
         self.case_now, self.case_out, self.vouched, self.vouched_n, self.pick = {}, {}, 0, 0, None
         self.green = None                                    # (ts, entry) of the record it was already GO in (M0-T64c)
         self.step = None                                     # (its number, the run's steps) when the run has several
+        self.past, self.tag = None, ""                       # this box's last seconds for it; a red-arm arm's tag (M0-D179)
 
     def ran(self):
         return not (self.skip or self.owed or self.notrun or self.green)
@@ -719,7 +773,7 @@ def run_command(sr, label, cmd, case, root, man, env, task, box):
                     note = f"not started: {exc}"
                 else:
                     try:
-                        rc = proc.wait(timeout=float(spec.get("timeout_s", 900)))
+                        rc = wait_beating(proc, float(spec.get("timeout_s", 900)), sr, label, part, t0)
                     except subprocess.TimeoutExpired:
                         timed_out = True
                         stop_tree(proc)
@@ -1693,15 +1747,43 @@ def redarm_proof(man, name, logs, box, fp):
     return str(last.get("task", "?")), str(last.get("ts", "?"))
 
 
-def clean_proof(name, logs, box, fp):
-    """The clean arm already proven: the newest red-arm record of this scope on this box - any task's - holds a
-    clean GO (or a clean it took as proven) on fingerprint `fp`, today's. -> (task, ts) or None. A record from
-    before the `clean` field: its verdict GO says its clean went GO; a NO-GO one says nothing."""
-    last, sc = newest_redarm(name, logs, box) if fp is not None else (None, None)
-    if sc is None or sc.get("fingerprint") != fp:
+ADAPTER_VAR = "SR_TEST_ADAPTER"      # the GPU a run's cases read (tests/gpu.sh): a green on one vouches for no other
+
+
+def adapter_now():
+    """The adapter this run's cases read (`ADAPTER_VAR`), or None when the caller set none."""
+    return os.environ.get(ADAPTER_VAR) or None
+
+
+def green_proof(name, logs, box, fp, adapter, fresh=None):
+    """The scope's own green run on these bytes (M0-D178): the newest record on this box - any task's, `fresh`
+    (a run's record not written yet) read last - whose entry for the scope carries fingerprint `fp` (today's)
+    and adapter `adapter` decides: a whole run of the scope GO, or a red-arm whose clean arm ran GO, is the proof;
+    the same run red is none. A record says nothing about these bytes - and is read past - when its fingerprint
+    or adapter is another, it has neither (a partial run, a tree moved under the run, a record from before
+    M0-D178), it is a `--case` or partly vouched run, or its clean arm was itself a reading (PROVEN).
+    -> (task, ts, what ran) or None."""
+    if fp is None:
         return None
-    clean = sc.get("clean", "GO" if sc.get("verdict") == "GO" else None)
-    return (str(last.get("task", "?")), str(last.get("ts", "?"))) if clean in ("GO", "PROVEN") else None
+    recs = []
+    with contextlib.suppress(OSError):
+        for ln in (Path(logs) / "loop_times.jsonl").read_text(encoding="utf-8", errors="replace").splitlines():
+            with contextlib.suppress(ValueError):
+                recs.append(json.loads(ln))
+    for r in reversed(recs + ([fresh] if fresh else [])):
+        e = (r.get("scopes") or {}).get(name) if isinstance(r, dict) and isinstance(r.get("scopes"), dict) else None
+        if (not isinstance(e, dict) or r.get("box") != box or e.get("fingerprint") != fp or "adapter" not in e
+                or e.get("adapter") != adapter):
+            continue
+        who = (str(r.get("task", "?")), str(r.get("ts", "?")))
+        if r.get("mode") == "redarm":
+            if e.get("clean") not in ("GO", "NO-GO"):
+                continue
+            return who + ("its clean arm",) if e["clean"] == "GO" else None
+        if r.get("case") is not None or e.get("vouched") or "passed" not in e:
+            continue
+        return who + ("a run of the scope",) if e.get("verdict") == "GO" else None
+    return None
 
 
 def arm_workers(s, jobs, n):
@@ -1735,15 +1817,20 @@ def case_listed(sr, case, copy, man, env, task, box):
     return None if case in found else f"`{case}` is not one of the scope's cases ({', '.join(found[:8]) or 'none'})"
 
 
-def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracked_fn=None, tool=None, prefix=""):
-    """The red-arm campaign of one scope: a fresh scratch copy per arm - the clean copy must go GO (a red
-    with no plant proves nothing), each declared plant, planted in its own copy, must go NO-GO; a timeout
-    or a command that did not start is an error, never a red. The arms run side by side, up to `jobs`
+def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracked_fn=None, tool=None, prefix="",
+           clean="auto", fresh=None):
+    """The red-arm campaign of one scope: a fresh scratch copy per arm - the scope must be shown GO on the same
+    bytes (a red with no plant proves nothing), each declared plant, planted in its own copy, must go NO-GO; a
+    timeout or a command that did not start is an error, never a red. The arms run side by side, up to `jobs`
     (`arm_workers`: a scope that must run alone, one at a time), the jobs shared out between them; their
-    lines, logs and record in declared order. A plant's `case` runs that case alone. The clean arm is not
-    re-run when the newest red-arm record on this box holds a clean GO on today's fingerprint (`clean_proof`).
-    Arms that run, when there are several, are numbered (M0-D27): named live as each starts - after `prefix`,
-    a sweep's campaign - and on its line. The tree itself is never written but for the campaign's log."""
+    lines, logs and record in declared order. A plant's `case` runs that case alone. The clean GO (M0-D178):
+    `clean="record"` (the CLI's `--redarm <scope>`) reads it from the scope's own green run on today's
+    fingerprint and adapter (`green_proof`) and, with none, runs nothing - refused, naming the scope run to make
+    first; `"auto"` (the sweep, the loop's plants) reads it, else runs the clean arm; `"fresh"` (`--with-clean`)
+    always runs the clean arm. A clean arm that runs GO is recorded so the next reader reuses it. `fresh`: a
+    run's record not written yet (the loop's own). Arms that run, when there are several, are numbered (M0-D27):
+    named live as each starts - after `prefix`, a sweep's campaign - and on its line. The tree itself is never
+    written but for the campaign's log."""
     box, root = box or this_box(), Path(root)
     logs = Path(logs) if logs else logs_of(man, root)
     if name not in man["scopes"]:
@@ -1769,7 +1856,14 @@ def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracke
     env = case_env(task)
     t0 = time.monotonic()
     fp = fingerprint(man, name, root, visible_files(root, man, logs), tool)       # the bytes, before
-    proof = clean_proof(name, logs, box, fp)
+    adapter = adapter_now()
+    proof = None if clean == "fresh" else green_proof(name, logs, box, fp, adapter, fresh)
+    if clean == "record" and not proof:
+        raise Refused(f"`{name}` has no green run of the whole scope on these bytes on this box ({box}"
+                      + (f", {ADAPTER_VAR}={adapter}" if adapter else "") + ") - never run, run red, a path or plant "
+                      f"edited since, or another adapter; the red-arm runs the plants only: run "
+                      f"`python3 tools/pb/verify.py {name} --task {task}` first, then this call again "
+                      f"(or `--redarm {name} --with-clean` for a fresh clean arm)")
     todo = [(i, arm) for i, arm in enumerate([None] + plants) if arm is not None or not proof]
     workers = arm_workers(s, jobs, len(todo))
     num = {i: k for k, (i, _arm) in enumerate(todo, 1)} if len(todo) > 1 else {}
@@ -1781,7 +1875,7 @@ def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracke
     def arm_run(i, arm):
         """One arm in its own copy -> (why it is an error, or None; its scope's row, or None)."""
         label = "clean" if arm is None else f"plant {arm['id']}"
-        if i in num:
+        if i in num or len(todo) == 1:                         # a lone arm said too: its run says nothing else (M0-D179)
             say(f">> {prefix}{name} · {label}{at(i)} · started")
         with LOCK, open(part(i), "a", encoding="utf-8") as fh:
             fh.write(f"==== {stamp()} {name} · {label} · a fresh scratch copy of the tree\n")
@@ -1797,7 +1891,8 @@ def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracke
                 if why:
                     return f"its `case` {why}", None
         r = run_scopes(one, [name], copy, task, inner, case=case, mode="redarm", box=box, logs=logs,
-                       log_for=lambda n: part(i), anchor=False, record=False, tracked_fn=lambda _r, _p: [])
+                       log_for=lambda n: part(i), anchor=False, record=False, tracked_fn=lambda _r, _p: [],
+                       live_tag=f" · {label}")
         return None, r["data"]["rows"][0]
 
     done = {}
@@ -1811,7 +1906,8 @@ def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracke
     finally:
         with LOCK, open(log, "a", encoding="utf-8") as fh:
             if proof:
-                fh.write(f"==== {stamp()} {name} · clean: proven by {proof[0]} {proof[1]} (fingerprint {fp[:12]})\n")
+                fh.write(f"==== {stamp()} {name} · clean: proven by {proof[0]} {proof[1]} ({proof[2]}; "
+                         f"fingerprint {fp[:12]}) - not re-run\n")
             for i, _arm in todo:                              # declared order, whatever order they ended in
                 with contextlib.suppress(OSError):
                     fh.write(part(i).read_text(encoding="utf-8", errors="replace"))
@@ -1820,7 +1916,7 @@ def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracke
     lines, fails, red, green, errors, arms = [], [], 0, 0, 0, {}
     if proof:
         clean = "PROVEN"
-        lines.append(f"{name} · clean: proven by {proof[0]} {proof[1]} (fingerprint {fp[:12]})")
+        lines.append(f"{name} · clean: proven by {proof[0]} {proof[1]} ({proof[2]}; fingerprint {fp[:12]}) - not re-run")
     else:
         row = done[0][1]
         clean = row["verdict"]
@@ -1860,7 +1956,7 @@ def redarm(man, name, root, task, jobs, box=None, logs=None, record=True, tracke
         rec = {"ts": stamp(), "task": task, "mode": "redarm", "seconds": secs, "tree": tree_id(root, man, logs),
                "verdict": "NO-GO" if fails or not red else "GO", "box": box, "python": PYTHON, "arms_at_once": workers,
                "scopes": {name: {"plants": arms, "verdict": "NO-GO" if fails or not red else "GO",
-                                 "clean": clean, "fingerprint": fp}}}
+                                 "clean": clean, "fingerprint": fp, "adapter": adapter}}}
         load, load_source = sample_load()                  # after `secs`: sampling never bills the campaign
         rec.update(load=load, load_source=load_source, cpus=os.cpu_count())
         normalise(rec, man)
@@ -2181,11 +2277,12 @@ def loop_flags(block, changed, mchanges, man, manifest_rel, task, rev):
 
 
 def loop_checks(man, root, task, jobs, box, manifest, base_sha=None, git=git_out, block=False, changed=False,
-                mchanges=False, label=None, tool=None, proven=None):
+                mchanges=False, label=None, tool=None, proven=None, fresh=None):
     """What the loop adds to its scopes (PLAYBOOK §8, §A.2): the plants of every scope added or changed
     since the base run, and must each go NO-GO - unless a red-arm record on this box, any task's, already
     proves them on the same bytes (`redarm_proof`; `proven` collects {scope: "<task> <ts> <fp 12>"} for the
-    claim's record); the flags. The base is the task's own start (`loop_base`, which hands `changed`,
+    claim's record); their clean GO read from the loop's own run (`fresh`, its record not yet written) or an
+    earlier green run on the same bytes, else run (M0-D178); the flags. The base is the task's own start (`loop_base`, which hands `changed`,
     `mchanges` and `label` in); a `--base` commit reads git; passing neither reads HEAD. -> (lines, failures)."""
     rev, lines, fails = base_sha or "HEAD", [], []
     label = label or rev[:12]
@@ -2212,7 +2309,7 @@ def loop_checks(man, root, task, jobs, box, manifest, base_sha=None, git=git_out
             if proven is not None:
                 proven[n] = f"{proof[0]} {proof[1]} {fp[:12]}"
             continue
-        r = redarm(man, n, root, task, jobs, box=box, record=False)
+        r = redarm(man, n, root, task, jobs, box=box, record=False, fresh=fresh)
         lines += r["lines"] + [r["counts"]]
         fails += [f"redarm {n}: {x}" for x in (r["failures"] or ([r["nogo"]] if r["nogo"] else []))]
     return lines + loop_flags(block, changed, mchanges, man, manifest_rel, task, label), fails
@@ -2227,9 +2324,14 @@ def loop_bill(elapsed, before_s, hook_s):
 # ----------------------------------------------------------------------------------------------------- a run
 def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, logs=None, log_for=None,
                anchor=True, gate=False, visible=None, not_run=(), why=None, hook=None, record=True,
-               tracked_fn=None, extra=None, pick=None, reuse=False):
+               tracked_fn=None, extra=None, pick=None, reuse=False, tool=None, live_tag=""):
     """Run these scopes: the plain ones in parallel (jobs), the exclusive ones alone after them, the smoke last
     on --all; one record appended; the anchor advanced by the green scopes; with `gate`, the anchor graded.
+    An armed scope run whole (no `--case`, no case vouched by the anchor) on a tree that did not move under it
+    carries its fingerprint and adapter in the record - its green is the clean GO `--redarm` reads (M0-D178);
+    the hook gets the record before it is written (the loop's plants read the run they follow). On a terminal a
+    one-step run says its start, and a command still running a heartbeat with its ETA (M0-D179; `live_tag`: a
+    red-arm arm's name on those lines, its start said by the campaign).
     `pick` ({"cases", "by_scope"}, --changed's): a scope whose cases are files runs the cases that moved.
     `reuse` (a scoped or `--case` run's, never the loop's): a scope the task's newest record on this box has GO on
     today's tree id is not re-run, unless it declares `rerun` (M0-T64c). Several scopes that run: each a step,
@@ -2262,6 +2364,11 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
             raise Refused("the tree's files cannot be listed (a folder or .gitignore is unreadable) - the anchor cannot name its subject")
     snap = (anchor_snapshot(man, root, [n for n, _s, no in specs if not no and n not in green], visible)
             if use_anchor and visible is not None else {})
+    armed = [n for n, s, no in specs if case is None and record and mode != "redarm" and not no and n not in green
+             and n in man["scopes"] and "placeholder" not in s and not owed_on(s, box) and s.get("plants")]
+    fvis = (visible if visible is not None else visible_files(root, man, logs)) if armed else None
+    fp_before = {n: fingerprint(man, n, root, fvis, tool) for n in armed}           # the bytes, before any case runs
+    adapter = adapter_now()
     env = case_env(task)
     t0, runs, todo = time.monotonic(), [], []
     for name, s, no in specs:
@@ -2299,7 +2406,10 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
     units_left = {}                                    # each step's units not ended yet: 0 is a step done
     for u in todo:
         units_left[u[0].name] = units_left.get(u[0].name, 0) + 1
-    exp, unknown = guesses([sr.name for sr in steps], past_seconds(logs, box)) if live() and len(steps) > 1 else ({}, 0)
+    hist = past_seconds(logs, box) if live() and steps else {}
+    for sr in steps:
+        sr.past, sr.tag = hist.get(sr.name), live_tag
+    exp, unknown = guesses([sr.name for sr in steps], hist) if live() and len(steps) > 1 else ({}, 0)
     if exp:                                            # the plain ones share the jobs, the exclusive ones run alone
         first_guess = (sum(exp[sr.name] for sr in steps if not sr.spec.get("exclusive")) / max(1, jobs)
                        + sum(exp[sr.name] for sr in steps if sr.spec.get("exclusive")))
@@ -2323,6 +2433,9 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
             first, sr.started = sr.started is None, sr.started or time.time()
         if first and sr.step:
             say(f">> {sr.name} · {step_tag('step', *sr.step)} · started")
+        elif first and len(steps) == 1 and not live_tag:              # one step: its start, timed (M0-D179)
+            say(f">> {sr.name} · started · " + (f"≈ {dur(sr.past)} by this box's last run" if sr.past
+                                                 else "no past run on this box to time it by"))
         run_unit(sr, label, cmd, value, root, man, env, task, box)
         with LOCK:
             sr.ended = time.time()
@@ -2358,6 +2471,12 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
     w = max([len(sr.name) for sr in runs] + [len(n) for n, _g in not_run] + [8]) + 2
     lines += [sr.line(w, box) + (f" · {step_tag('step', *sr.step)}" if sr.step else "") for sr in runs]
     lines += [f"{n:<{w}}NOT RUN ({g})" for n, g in not_run]
+    rec["scopes"] = {sr.name: sr.record() for sr in runs if not sr.green}
+    fvis = visible_files(root, man, logs) if fp_before else None                    # the bytes, after
+    for sr in ran:
+        fp = fp_before.get(sr.name)
+        if fp is not None and not sr.vouched and fingerprint(man, sr.name, root, fvis, tool) == fp:
+            rec["scopes"][sr.name].update(fingerprint=fp, adapter=adapter)
     failures = [f"{sr.name}: {'; '.join(sr.red())} · log {rel(sr.log, root)}" for sr in reds]
     if mode in ("all", "changed"):              # a scoped run is judged on the scopes it ran; the loop is not complete
         failures += [f"{sr.name}: NOT RUN ({sr.notrun}) - " + ("the complete loop is not complete" if mode == "all"
@@ -2365,7 +2484,7 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
                      for sr in unrun]
     if hook:
         th = time.monotonic()
-        hook_lines, hook_fails = hook()
+        hook_lines, hook_fails = hook(rec)
         lines += hook_lines
         failures += hook_fails
         rec.update(loop_bill(elapsed, rec.get("loop_seconds") or 0.0, time.monotonic() - th))
@@ -2386,7 +2505,6 @@ def run_scopes(man, names, root, task, jobs, case=None, mode="scope", box=None, 
         failures.append("zero passed in total" + (" - every scope named is NOT RUN, each named above"
                                                   if unrun and not ran else ""))
     rec["verdict"] = "NO-GO" if failures else "GO"
-    rec["scopes"] = {sr.name: sr.record() for sr in runs if not sr.green}
     rec["scopes"].update({n: {"verdict": "NOT RUN", "reason": g} for n, g in not_run})
     normalise(rec, man)                                    # after the loop's bill: its seconds normalised too
     if record:
@@ -2455,12 +2573,13 @@ def loop_hook(man, root, task, jobs, manifest, sha=None):
     (each scope the red-arm proof spared, filled by the hook before the record is written)."""
     t0, proven = time.monotonic(), {}
     if sha:
-        hook = lambda: loop_checks(man, root, task, jobs, this_box(), manifest, sha, proven=proven)  # noqa: E731
+        hook = lambda rec=None: loop_checks(man, root, task, jobs, this_box(), manifest, sha, proven=proven,  # noqa: E731
+                                            fresh=rec)
         line, touched = f"base: commit {sha[:12]}", touched_git(root, sha)
     else:
         lb = loop_base(man, root, task, manifest)
-        hook = lambda: loop_checks(man, root, task, jobs, this_box(), manifest, changed=lb["changed"],  # noqa: E731
-                                   mchanges=lb["mchanges"], label=lb["label"], proven=proven)
+        hook = lambda rec=None: loop_checks(man, root, task, jobs, this_box(), manifest, changed=lb["changed"],  # noqa: E731
+                                            mchanges=lb["mchanges"], label=lb["label"], proven=proven, fresh=rec)
         line, touched = lb["line"], lb["touched"]
     fields = {"base": line[len("base: "):], "touched": touched, "loop_seconds": round(time.monotonic() - t0, 3),
               "proven": proven}
@@ -2472,7 +2591,8 @@ def cmd_run(man, a, root, manifest):
     cap = 1 if "jobs_cap" in top_errors(man) else int(man.get("jobs_cap", 8))    # a bad cap: one command at a time
     jobs = 1 if a.serial else (a.jobs or min(os.cpu_count() or 1, cap))
     if a.redarm:
-        return moved_sweep(man, root, task, jobs) if a.moved else redarm(man, a.redarm, root, task, jobs)
+        return (moved_sweep(man, root, task, jobs) if a.moved
+                else redarm(man, a.redarm, root, task, jobs, clean="fresh" if a.with_clean else "record"))
     if a.changed:
         sha = resolve_base(root, a.base) if a.base else None
         hook, tail, fields = loop_hook(man, root, task, jobs, manifest, sha)
@@ -2862,6 +2982,11 @@ if kind == "seelog":
     kind = "go" if lines and lines[-1].startswith("== ") and "seelog" in lines[-1] else "nogo"
 if kind == "marker":
     open("ran.marker", "w").close()
+if kind == "cases":                   # one libtest case line now, then a pause; red on a BUG in the file named (M0-D179)
+    print("test one ... ok\ntest two ... its own output", flush=True)   # --nocapture: `ok` on a line of its own, later
+    time.sleep(float(args[-1]))
+    print("ok")
+    kind, args = ("nogo", args) if len(args) > 1 and "BUG" in open(args[0], encoding="utf-8").read() else ("count", ["3"])
 if kind == "check":
     if len(args) > 1:
         time.sleep(float(args[1]))
@@ -2908,7 +3033,7 @@ def selftest():
     global PROGRESS
     checks, failed, plants = [], [], [0, 0]           # plants: [planted, red]
     saved = {k: os.environ.get(k) for k in ("PB_TASK", "PB_TRACE", "PB_BOX", "GIT_CEILING_DIRECTORIES",
-                                            "PYTHONFAULTHANDLER", "PB_PYTHON")}
+                                            "PYTHONFAULTHANDLER", "PB_PYTHON", ADAPTER_VAR, "PB_HEARTBEAT_S")}
     saved_progress, PROGRESS = PROGRESS, False
 
     def check(name, ok, detail=""):
@@ -2946,6 +3071,8 @@ def selftest():
             os.environ.pop("PB_TASK", None)
             os.environ.pop("PYTHONFAULTHANDLER", None)               # the harness, not the caller, must set it
             os.environ.pop("PB_PYTHON", None)                        # the same
+            os.environ.pop(ADAPTER_VAR, None)                        # a green run reads the adapter it ran on (M0-D178)
+            os.environ.pop("PB_HEARTBEAT_S", None)                   # the heartbeat's default, unless a check lowers it
             os.environ["PB_BOX"] = "SELFBOX"
             os.environ["GIT_CEILING_DIRECTORIES"] = str(tmp.parent)   # the fixture root is no git checkout
             trace = tmp / "trace.txt"
@@ -3426,7 +3553,7 @@ def selftest():
             check("--changed with no repository: the edited file chooses its scope",
                   {r["scope"] for r in n2["data"]["rows"]} == {"chk"} and not n2["failures"], n2["failures"] or n2["lines"])
             n3 = run_scopes(nman, ["chk"], nrep, "T9", 1, mode="all",
-                            hook=lambda: loop_checks(nman, nrep, "T9", 1, "SELFBOX", nrep / "verify.json"))
+                            hook=lambda _rec=None: loop_checks(nman, nrep, "T9", 1, "SELFBOX", nrep / "verify.json"))
             check("--all with no repository: GO", not n3["failures"] and not n3["nogo"], n3["failures"] or n3["nogo"])
             n4 = redarm(nman, "chk", nrep, "T9", 1, box="SELFBOX")
             check("--redarm with no repository: the plant goes red, GO", not n4["failures"] and not n4["nogo"]
@@ -4323,7 +4450,7 @@ def selftest():
             (qroot / "emit.py").write_text(EMIT, encoding="utf-8")
             qtool = qroot / "tool.py"
             qtool.write_text("v1\n", encoding="utf-8")
-            for f in ("data", "a", "b", "x", "y"):
+            for f in ("data", "a", "b", "x", "y", "r"):
                 (qroot / f"{f}.txt").write_text("ok\n", encoding="utf-8")
                 (qroot / f"plants/{f}.patch").write_text(f"--- a/{f}.txt\n+++ b/{f}.txt\n@@ -1 +1 @@\n-ok\n+BUG\n", encoding="utf-8")
             three = [{"id": f"p{k}", "patch": "plants/data.patch"} for k in (1, 2, 3)]
@@ -4337,14 +4464,16 @@ def selftest():
                        "plants": [{"id": "yb", "patch": "plants/y.patch", "case": "y"}]},
                 "m1": {"cmd": f"{py} check a.txt", "paths": ["a.txt"], "plants": [{"id": "a", "patch": "plants/a.patch"}]},
                 "m2": {"cmd": f"{py} check b.txt", "paths": ["b.txt"], "plants": [{"id": "b", "patch": "plants/b.patch"}]},
+                "rd": {"cmd": f"{py} check data.txt 0.15", "paths": ["r.txt"], "plants": three[:2]},
+                "mk": {"cmd": f"{py} marker", "paths": ["ran.marker"], "plants": [{"id": "a", "patch": "plants/a.patch"}]},
                 "bare": {"cmd": f"{py} go"}}}
             qrecs = qroot / "logs" / "loop_times.jsonl"
             qcopy = lambda m=None: json.loads(json.dumps(m or qman))                     # noqa: E731
             overlap = lambda sp: any(a[1] < b[2] and b[1] < a[2] for i, a in enumerate(sp) for b in sp[i + 1:])  # noqa: E731
 
-            def qarm(scope, task, m=None, jobs=4, record=True):
+            def qarm(scope, task, m=None, jobs=4, record=True, clean="auto"):
                 trace.write_text("", encoding="utf-8")
-                r = redarm(m or qman, scope, qroot, task, jobs, box="SELFBOX", record=record, tool=qtool)
+                r = redarm(m or qman, scope, qroot, task, jobs, box="SELFBOX", record=record, tool=qtool, clean=clean)
                 return r, spans()
 
             def swap(fn_name, mutant, call):                 # one mutant of this runner, put back whatever happens
@@ -4396,14 +4525,16 @@ def selftest():
                   last["scopes"]["par"]["clean"] == "PROVEN" and last["scopes"]["par"]["verdict"] == "GO"
                   and bool(last["scopes"]["par"]["fingerprint"]), last)
             (qroot / "data.txt").write_text("ok\nmore\n", encoding="utf-8")       # a file the plants patch, outside `paths`
+            rm, _sp = swap("green_proof", lambda *_a, **_k: ("MUTANT", "0", "x"), lambda: qarm("par", "Q4m", record=False))
             r, sp = qarm("par", "Q4")
             plant_("the clean arm re-runs when a file the plants patch, outside `paths`, changed",
                    r["lines"][0].startswith("par · clean · GO") and len(sp) == 4 and not r["failures"], r["lines"])
-            (qroot / "data.txt").write_text("ok\n", encoding="utf-8")
-            rm, _sp = swap("clean_proof", lambda *_a, **_k: ("MUTANT", "0"), lambda: qarm("par", "Q5m", record=False))
-            r, sp = qarm("par", "Q5")
             plant_("a clean arm skipped whatever the bytes: red - the moved-bytes case runs it",
                    "proven by MUTANT" in rm["lines"][0] and r["lines"][0].startswith("par · clean · GO"), (rm["lines"][0], r["lines"][0]))
+            r, sp = qarm("par", "Q5")
+            check("a clean arm that ran GO is reused: the next red-arm on the same bytes reads it, the plants only (M0-D178)",
+                  r["lines"][0].startswith("par · clean: proven by Q4 ") and "its clean arm" in r["lines"][0] and len(sp) == 3
+                  and not r["failures"], (r["lines"], sp))
             last = json.loads(qrecs.read_text(encoding="utf-8").splitlines()[-1])
             last["task"], last["scopes"]["par"]["clean"] = "Q6x", "NO-GO"
             with open(qrecs, "a", encoding="utf-8") as fh:
@@ -4411,13 +4542,91 @@ def selftest():
             r, _sp = qarm("par", "Q6", record=False)
             plant_("the clean arm re-runs when the newest record's clean was NO-GO", r["lines"][0].startswith("par · clean · GO"),
                    r["lines"])
+            (qroot / "data.txt").write_text("ok\n", encoding="utf-8")
             leg = tmp / "legacy"
             leg.mkdir()
-            (leg / "loop_times.jsonl").write_text(json.dumps({"ts": "t", "task": "OLD", "mode": "redarm", "box": "SELFBOX", "scopes": {
-                "par": {"plants": {"p1": "RED"}, "verdict": "GO", "fingerprint": "f"}}}) + "\n", encoding="utf-8")
-            plant_("the clean proof: a record from before the field proves on its GO, its own box and fingerprint only",
-                   clean_proof("par", leg, "SELFBOX", "f") == ("OLD", "t") and clean_proof("par", leg, "OTHERBOX", "f") is None
-                   and clean_proof("par", leg, "SELFBOX", "g") is None and clean_proof("par", leg, "SELFBOX", None) is None)
+            lrec = lambda ts, task, mode, e, **kw: json.dumps(dict({"ts": ts, "task": task, "mode": mode, "box": "SELFBOX",  # noqa: E731
+                                                                     "scopes": {"par": e}}, **kw)) + "\n"
+            ok_ = {"passed": 1, "failed": 0, "verdict": "GO", "fingerprint": "f", "adapter": None}
+            (leg / "loop_times.jsonl").write_text(
+                lrec("t1", "OLD", "redarm", {"plants": {"p1": "RED"}, "verdict": "GO", "fingerprint": "f", "clean": "GO"})
+                + lrec("t2", "RUN", "scope", ok_) + lrec("t3", "CASE", "case", ok_, case="x")
+                + lrec("t4", "PART", "changed", dict(ok_, vouched=1)) + lrec("t5", "GPU", "scope", dict(ok_, adapter="RTX 4090")),
+                encoding="utf-8")
+            gp = lambda fp="f", ad=None, box="SELFBOX", fresh=None: green_proof("par", leg, box, fp, ad, fresh)  # noqa: E731
+            plant_("the clean proof: a whole green run on its own box, fingerprint and adapter; never a record from before "
+                   "the adapter, a `--case` or partly vouched run (M0-D178)",
+                   gp() == ("RUN", "t2", "a run of the scope") and gp(ad="RTX 4090")[0] == "GPU" and gp(ad="RTX 5090") is None
+                   and gp(box="OTHERBOX") is None and gp(fp="g") is None and gp(fp=None) is None, (gp(), gp(ad="RTX 4090")))
+            with open(leg / "loop_times.jsonl", "a", encoding="utf-8") as fh:
+                fh.write(lrec("t6", "RED", "scope", dict(ok_, passed=0, failed=1, verdict="NO-GO")))
+            plant_("the clean proof: the scope run red on the same bytes voids an older green; a run's own record, not yet "
+                   "written, is read last",
+                   gp() is None and gp(ad="RTX 4090")[0] == "GPU"
+                   and gp(fresh=json.loads(lrec("t7", "NOW", "changed", ok_)))[:2] == ("NOW", "t7"), gp())
+
+            # -- G3 · the red-arm runs the plants only: its clean GO is the scope's own green run (M0-D178) -----
+            def qref(scope, task, how="record"):
+                trace.write_text("", encoding="utf-8")
+                try:
+                    r = redarm(qman, scope, qroot, task, 4, box="SELFBOX", tool=qtool, clean=how)
+                except Refused as exc:
+                    return str(exc), None, spans()
+                return None, r, spans()
+
+            qrun = lambda scope, task, case=None, hook=None: run_scopes(qman, [scope], qroot, task, 2, case=case,  # noqa: E731
+                                                                         box="SELFBOX", anchor=False, tool=qtool, hook=hook)
+            qlast = lambda scope: json.loads(qrecs.read_text(encoding="utf-8").splitlines()[-1])["scopes"][scope]  # noqa: E731
+            qfp = lambda scope: fingerprint(qman, scope, qroot, visible_files(qroot, qman, qroot / "logs"), qtool)  # noqa: E731
+            why, r, sp = qref("rd", "R1")
+            check("--redarm with no green run of the scope on these bytes: refused, nothing run, the scope's run named",
+                  why is not None and "verify.py rd --task R1" in why and sp == [], (why, sp))
+            r = qrun("rd", "R2")
+            check("a whole green run of an armed scope records its fingerprint and the adapter",
+                  not r["failures"] and qlast("rd").get("fingerprint") == qfp("rd") and qlast("rd").get("adapter", "-") is None,
+                  qlast("rd"))
+            why, r, sp = qref("rd", "R3")
+            check("--redarm after the scope's green run: the plants only, two arms, the clean read from that run",
+                  why is None and not r["failures"] and r["data"]["red"] == 2 and len(sp) == 2
+                  and r["lines"][0].startswith("rd · clean: proven by R2 ") and "a run of the scope" in r["lines"][0], (why, r, sp))
+            os.environ[ADAPTER_VAR] = "SELF-GPU"
+            why, r, sp = qref("rd", "R4")
+            os.environ.pop(ADAPTER_VAR, None)
+            check("--redarm under another adapter than the green run's: refused, the adapter named, nothing run",
+                  why is not None and f"{ADAPTER_VAR}=SELF-GPU" in (why or "") and sp == [], (why, sp))
+            (qroot / "r.txt").write_text("ok\nedited\n", encoding="utf-8")
+            why, r, sp = qref("rd", "R5")
+            check("--redarm after a path of the scope was edited since its green run: refused, nothing run (a stale record)",
+                  why is not None and "verify.py rd --task R5" in (why or "") and sp == [], (why, (r or {}).get("lines"), sp))
+            why, r, sp = qref("rd", "R6", how="fresh")
+            check("--with-clean: the clean arm, then the plants, whatever record stands",
+                  why is None and not r["failures"] and r["lines"][0].startswith("rd · clean · GO") and len(sp) == 3, (why, r, sp))
+            why, r, sp = qref("rd", "R7")
+            check("... and the clean arm it ran is reused: the next --redarm reads it, the plants only",
+                  why is None and r["lines"][0].startswith("rd · clean: proven by R6 ") and len(sp) == 2, (why, r, sp))
+            (qroot / "r.txt").write_text("ok\n", encoding="utf-8")
+            r = qrun("cs", "R8", case="x")
+            why, _r, sp = qref("cs", "R9")
+            check("a `--case` run writes no fingerprint and never stands for the whole scope: --redarm refused",
+                  not r["failures"] and "fingerprint" not in qlast("cs") and why is not None and sp == [], (qlast("cs"), why))
+            (qroot / "ran.marker").write_text("before\n", encoding="utf-8")
+            r = qrun("mk", "R10")
+            check("a run whose tree moved under it (its own path written) writes no fingerprint",
+                  not r["failures"] and "fingerprint" not in qlast("mk") and qlast("mk")["verdict"] == "GO", qlast("mk"))
+            seen_ = []
+            r = qrun("rd", "R11", hook=lambda rec: (seen_.append(json.loads(json.dumps(rec))), ([], []))[1])
+            check("the loop's hook gets the run's record, the scope's fingerprint in it, before it is written",
+                  bool(seen_) and seen_[0]["scopes"]["rd"].get("fingerprint") == qfp("rd") and not r["failures"], seen_[:1])
+            cman = {"rc": {"cmd": f"{py} check rc.txt", "paths": ["rc.txt"], "plants": [{"id": "b", "patch": "rcbug.patch"}]}}
+            (tmp / "rc.txt").write_text("ok\n", encoding="utf-8")
+            (tmp / "rcbug.patch").write_text("--- a/rc.txt\n+++ b/rc.txt\n@@ -1 +1 @@\n-ok\n+BUG\n", encoding="utf-8")
+            cli = [run_(cman, *a_, task="R12", anchor="rc.anchor.json") for a_ in (("--redarm", "rc"), ("rc",), ("--redarm", "rc"),
+                                                          ("--redarm", "rc", "--with-clean"))]
+            check("through the CLI: --redarm before the scope's run refused, naming it; after it, the plant alone, the clean "
+                  "read; --with-clean the clean arm too (M0-D178)",
+                  [c[0] for c in cli] == [1, 0, 0, 0] and "verify.py rc --task R12" in cli[0][1] and "rc · clean · GO" not in cli[0][1]
+                  and "rc · clean: proven by R12 " in cli[2][1] and "rc · clean · GO" not in cli[2][1] and "rc · clean · GO" in cli[3][1],
+                  [c[1][-300:] for c in cli])
             r, sp = qarm("cs", "Q7")
             check("a plant's `case`: its arm runs that case alone and goes red - the clean arm runs the whole scope",
                   not r["failures"] and r["data"]["red"] == 1 and len(sp) == 3 and "(case y)" in r["lines"][1], (r["lines"], sp))
@@ -4477,10 +4686,23 @@ def selftest():
             r = sw("Q15", mg)
             plant_("--redarm --moved: one campaign NO-GO makes the sweep NO-GO",
                    bool(r["failures"]) and "GREEN 1" in r["counts"] and any("stayed GO" in f for f in r["failures"]), r["counts"])
+            (qroot / "a.txt").write_text("ok\nswept\n", encoding="utf-8")
+            qrun("m1", "Q17s")
+            r = sw("Q17")
+            check("--redarm --moved: a moved scope run green on these bytes - the campaign reads that run, plants only (M0-D178)",
+                  any(x.startswith("m1 · clean: proven by Q17s ") for x in r["lines"])
+                  and not any(x.startswith("m1 · clean · GO") for x in r["lines"]) and not r["failures"], r["lines"])
+            (qroot / "a.txt").write_text("ok\nswept again\n", encoding="utf-8")
+            r = sw("Q18")
+            check("--redarm --moved: a moved scope with no green run on these bytes - the campaign runs the clean arm, as before",
+                  any(x.startswith("m1 · clean · GO") for x in r["lines"]) and not r["failures"], r["lines"])
+            (qroot / "a.txt").write_text("ok\n", encoding="utf-8")
             r = moved_sweep({"logs_dir": "logs", "scopes": {"bare": {"cmd": "x"}}}, qroot, "Q16", 1, box="SELFBOX")
             plant_("--redarm --moved with no armed scope: NO-GO, named", "nothing to sweep" in (r["nogo"] or ""), r["nogo"])
             for name, args in (("--moved without --redarm", ("--moved",)), ("--redarm with no scope, no --moved", ("--redarm",)),
-                               ("--redarm <scope> --moved", ("--redarm", "a", "--moved"))):
+                               ("--redarm <scope> --moved", ("--redarm", "a", "--moved")),
+                               ("--with-clean without --redarm", ("a", "--with-clean")),
+                               ("--redarm --moved --with-clean", ("--redarm", "--moved", "--with-clean"))):
                 rc, out = run_(clean, *args)
                 plant_(f"a wrong call ({name}) prints the right one", rc == 1 and "the calls:" in out and "--redarm --moved" in out,
                        out[-300:])
@@ -4782,6 +5004,56 @@ def selftest():
                                        r"|\.\. scope: \d done · (\d running · )?\d to do \(of 3\) · \S+ elapsed · ≈ \S+ left",
                                        ln) for ln in live)
                   and len(eta) == 4 and eta[-1].startswith(".. scope: 3 done · 0 to do (of 3) · "), live)
+
+            # -- L2 · a long command says its start and a heartbeat with its ETA (M0-D179) ----------------------------
+            (qroot / "sl.txt").write_text("ok\n", encoding="utf-8")
+            (qroot / "plants/sl.patch").write_text("--- a/sl.txt\n+++ b/sl.txt\n@@ -1 +1 @@\n-ok\n+BUG\n", encoding="utf-8")
+            hman = {"logs_dir": "logs", "vars": {"emit": ["emit.py"]}, "scopes": {
+                "slow": {"cmd": f"{py} cases sl.txt 0.7", "count": r"checked: (?P<n>\d+) repositories", "expected": 3,
+                         "paths": ["sl.txt"],
+                         "plants": [{"id": "b", "patch": "plants/sl.patch"}]},
+                "slow2": {"cmd": f"{py} trace slow2 0.7"}}}
+
+            def heard(call):                   # the live lines a call says on a terminal, the heartbeat at 0.1 s
+                global PROGRESS
+                tty_, PROGRESS = Tty(), True
+                os.environ["PB_HEARTBEAT_S"] = "0.1"
+                try:
+                    with contextlib.redirect_stderr(tty_):
+                        out_ = call()
+                finally:
+                    PROGRESS = False
+                    os.environ.pop("PB_HEARTBEAT_S", None)
+                return out_, tty_.getvalue().splitlines()
+
+            hrun = lambda scope, task: run_scopes(hman, [scope], qroot, task, 1, box="SELFBOX", anchor=False, tool=qtool)  # noqa: E731
+            r, hl = heard(lambda: hrun("slow", "H1"))
+            beats = [x for x in hl if x.startswith(".. slow · running ")]
+            check("a one-step run on a terminal says its start - no past run to time it by - and, while its command "
+                  "runs, a heartbeat: elapsed, the cases its output says ended, an ETA by its pace (M0-D179)",
+                  hl[:1] == [">> slow · started · no past run on this box to time it by"] and bool(beats)
+                  and all(re.fullmatch(r"\.\. slow · running \S+( · 1 of 3 cases done · now two · ≈ \S+ left by its pace \(1 of 3 in \S+\)"
+                                       r"| · no past run on this box to time it by)", x) for x in beats)
+                  and any("1 of 3 cases done · now two" in x for x in beats), hl)
+            hrun("slow2", "H2")                                       # off the terminal: a past run, nothing said
+            r2, hl2 = heard(lambda: hrun("slow2", "H3"))
+            check("... with a past run on this box: its start timed by it, the heartbeat's ETA by it; the verdict as off "
+                  "the terminal", re.fullmatch(r">> slow2 · started · ≈ \S+ by this box's last run", hl2[0] if hl2 else "")
+                  is not None and any(re.fullmatch(r"\.\. slow2 · running \S+ · (≈ \S+ left by this box's last run \(\S+\)"
+                                                   r"|over this box's last run \(\S+\) by \S+)", x) for x in hl2)
+                  and r2["failures"] == [] and r2["counts"].split(" · ")[0] == "verify: 1 passed, 0 failed, 0 skipped", hl2)
+            _r, hlm = swap_("wait_beating", lambda proc, timeout, *_a: proc.wait(timeout=timeout),
+                            lambda: heard(lambda: hrun("slow2", "H4")))
+            plant_("a command waited on in silence: red - the long run says no heartbeat",
+                   not any(" · running " in x for x in hlm) and any(" · running " in x for x in hl2), hlm)
+            quiet = io.StringIO()
+            with contextlib.redirect_stderr(quiet):
+                hrun("slow2", "H5")
+            check("... off a terminal, nothing said at all", quiet.getvalue() == "", quiet.getvalue()[:200])
+            r3, hl3 = heard(lambda: redarm(hman, "slow", qroot, "H6", 2, box="SELFBOX", tool=qtool, clean="record"))
+            check("a red-arm's lone arm says its start and its heartbeat, the arm named on each line",
+                  not r3["failures"] and r3["data"]["red"] == 1 and hl3[:1] == [">> slow · plant b · started"]
+                  and any(x.startswith(".. slow · plant b · running ") for x in hl3), hl3)
     except Exception as exc:                   # a crash is a failed check, never a traceback in place of the verdict
         failed.append(f"crashed after {len(checks)} checks: {type(exc).__name__}: {exc} "
                       f"({traceback.format_exc().strip().splitlines()[-3].strip()})")
@@ -4836,7 +5108,10 @@ def build_parser():
     ap.add_argument("--fresh", action="store_true", help="start: write the task's baseline again (default: keep the first)")
     ap.add_argument("--path", help="touched: the paths matching this glob, each with every task that touched it")
     ap.add_argument("--redarm", metavar="SCOPE", nargs="?", const=True,
-                    help="the scope's plants, one scratch copy each, side by side: clean GO, each plant NO-GO")
+                    help="the scope's plants, one scratch copy each, side by side, each NO-GO; the clean GO read from "
+                         "the scope's own green run on these bytes (M0-D178)")
+    ap.add_argument("--with-clean", action="store_true",
+                    help="with --redarm <scope>: run the clean copy fresh too, whatever record stands (a one-off proof)")
     ap.add_argument("--moved", action="store_true",
                     help="with --redarm alone: every armed scope whose red-arm proof no longer holds, one campaign each")
     ap.add_argument("--task", help="names the logs; required for a run (else $PB_TASK)")
@@ -4880,6 +5155,8 @@ def check_call(a):
         raise CallError("--changed takes no scope, no --case, no --redarm")
     if a.redarm and (a.scopes or a.case is not None):
         raise CallError("--redarm names its one scope itself: --redarm <scope>")
+    if a.with_clean and (a.redarm is None or a.redarm is True):
+        raise CallError("--with-clean goes with --redarm <scope>: --redarm <scope> --with-clean")
     if a.moved and a.redarm is not True:
         raise CallError("--moved goes with --redarm alone: --redarm --moved")
     if a.redarm is True and not a.moved:

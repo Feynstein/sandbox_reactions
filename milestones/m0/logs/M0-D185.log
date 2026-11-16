@@ -1,0 +1,42 @@
+cpu_gpu   3/0/0       13.51 s  GO
+logs: milestones/m0/logs/M0-D185.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+8a0c0062de3f
+anchor: 126 path×scope entries moved by this run
+anchor: 265 paths checked · 449 skipped (3 classes) · 199 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 922 visible
+verify: 3 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 13.52 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 0.46->0.93
+=== GO ===
+cpu_gpu · clean: proven by M0-D185 2026-11-15T19:15:57-05:00 (a run of the scope; fingerprint 18f8271d4bc8) - not re-run
+cpu_gpu · plant cfl-gpu · RED (proven: 3 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope cpu_gpu · 14.12 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D185.cpu_gpu.redarm.log
+=== GO ===
+cpu_gpu   3/0/0       10.15 s  GO
+logs: milestones/m0/logs/M0-D185.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+9d6431b007ef
+anchor: 1 path×scope entries moved by this run
+anchor: 265 paths checked · 449 skipped (3 classes) · 199 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 922 visible
+verify: 3 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 10.15 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 0.7->0.75
+=== GO ===
+cpu_gpu · clean: proven by M0-D185 2026-11-15T19:17:14-05:00 (a run of the scope; fingerprint 9c7e5dabcb39) - not re-run
+cpu_gpu · plant cfl-gpu · RED (proven: 3 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope cpu_gpu · 16.76 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D185.cpu_gpu.redarm.log
+=== GO ===
+cpu_gpu   3/0/0        3.98 s  GO
+logs: milestones/m0/logs/M0-D185.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+d7d46c2ac838
+anchor: 0 path×scope entries moved by this run
+anchor: 265 paths checked · 449 skipped (3 classes) · 199 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 922 visible
+verify: 3 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 3.98 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 0.77->0.79
+=== GO ===
+cpu_gpu · clean: proven by M0-D185 2026-11-15T19:18:34-05:00 (a run of the scope; fingerprint 9c7e5dabcb39) - not re-run
+cpu_gpu · plant cfl-gpu · RED (proven: 3 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope cpu_gpu · 16.66 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D185.cpu_gpu.redarm.log
+=== GO ===
+build     2/0/0        6.25 s  GO
+logs: milestones/m0/logs/M0-D185.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+d7d46c2ac838
+anchor: 16 path×scope entries moved by this run
+anchor: 265 paths checked · 449 skipped (3 classes) · 199 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 922 visible
+verify: 2 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 5.59 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 1.28->2.22
+=== GO ===
+twin      6/0/0        1.57 s  GO
+logs: milestones/m0/logs/M0-D185.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+d7d46c2ac838
+anchor: 2 path×scope entries moved by this run
+anchor: 265 paths checked · 449 skipped (3 classes) · 199 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 922 visible
+verify: 6 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.57 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 2.22->2.12
+=== GO ===

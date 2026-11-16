@@ -66,6 +66,16 @@
           "id": "tools-selftest-sigint",
           "patch": "tests/plants/tools-selftest-sigint.patch",
           "case": "verify"
+        },
+        {
+          "id": "redarm-runs-clean",
+          "patch": "tests/plants/tools-selftest-redarm-runs-clean.patch",
+          "case": "verify"
+        },
+        {
+          "id": "redarm-stale-record",
+          "patch": "tests/plants/tools-selftest-redarm-stale-record.patch",
+          "case": "verify"
         }
       ]
     },
@@ -830,6 +840,68 @@
         }
       ]
     },
+    "endings": {
+      "desc": "Each ending as predicted (contract §5.2's G-END; M0-T104; ⏱, R12): crates/sr-engine/tests/gpu/endings.rs — `bash tests/gpu.sh endings physics`, nine cases, one whole life each to its ending (`--until ending`, the remnant held `ending_hold`, never a stage passing through), through `run_scene_captured`'s progress hook: the three presets at calibration's `preset_mass_sb` (sun → white_dwarf, massive → neutron_star after a supernova, giant → black_hole) and a Sun-like-shaped cloud at each calibrated threshold ÷ 1.25 and × 1.25 in sandbox mass (m_ign_sb: failed_star | white_dwarf; m_up_sb: white_dwarf | neutron_star; m_bh_sb: neutron_star | black_hole). Pass: the engine's `Predictor` read on the heaviest object's mass at the first frame is the sure fate the case's side of its threshold names (never a close call), the life met its ending, summary.json's `objects[until.object].ending` is the ending that fate leads to (a supernova leads to a neutron star) and non-null (the remnant held), and summary.json's `standins` reads {s1: false, s2: false} (§5.2: whether S1 or S2 was enabled). Each case first grades its grader on hand-made values (another ending, a close call, an ending not held, no ending met, a stand-in on, another object's ending). A life is long — the Sun-like's about 197,000 steps, over 10 minutes — so the lead's run, `timeout_s` 21,600. Plant fate-swap (§5.2: the prediction's supernova band bounded by M_up where M_BH belongs). Paths: its own test, `tests/gpu.sh` and the plant — not crates/** (R12).",
+      "cmd": "bash tests/gpu.sh endings physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 9,
+      "timeout_s": 21600,
+      "arms_at_once": 1,
+      "paths": [
+        "crates/sr-engine/tests/gpu/endings.rs",
+        "tests/gpu.sh",
+        "tests/plants/fate-swap.patch"
+      ],
+      "plants": [
+        {
+          "id": "fate-swap",
+          "patch": "tests/plants/fate-swap.patch"
+        }
+      ]
+    },
+    "touch": {
+      "desc": "Touch any time (contract §5.2's G-TOUCH; M0-T105; ⏱, R12): crates/sr-engine/tests/gpu/touch.rs — `bash tests/gpu.sh touch physics`, two cases, one whole life each to its ending (`--until ending`) under an edits file (`--edits`, §2.12.5) whose every entry fires when the heaviest object's central hydrogen first falls under 0.5: scenes/touch_paint.json paints hydrogen onto the Sun-like preset's centre (radius 40, 51 frames, to about 1.25 × m_up_sb) and scenes/touch_erase.json erases the Massive preset from outside in (three rings of sixteen radius-40 disks at 100, 80 and 62 cells, the outer first, to about m_up_sb ÷ 1.25). Pass: the engine's `Predictor` at the drop reads the sure old fate (white dwarf | supernova), an edit lands (the object's mass jumps over 1 % on its frame before), the mass read 64 steps after it is within 6 % of the case's target, the `Predictor` on that mass — read after the edit, never at the drop — is a sure fate the case allows (supernova or black hole | white dwarf) and not the old one, and summary.json's `objects[until.object].ending` is the ending that new fate leads to (white_dwarf for the erase case). [M0-D180] The paint case runs with `--edge bounce` (summary.json's `world.edge` graded; under `leave` the painted star outgrows the world) and its supernova fate is graded on a `supernova` event of the ending's object, then neutron_star or black_hole (§0.5 [M0-D180]). Each case grades its grader on hand-made values first. The Sun-like's life to X_H,c 0.5 is long — the lead's run, `timeout_s` 21,600. Plant edit-ignored (M0-T76's patch, §5.2: P0 drops edits on non-vacuum cells). Paths: its own test, the two edits files, `tests/gpu.sh` and the plant — not crates/** (R12).",
+      "cmd": "bash tests/gpu.sh touch physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 2,
+      "timeout_s": 21600,
+      "arms_at_once": 1,
+      "paths": [
+        "crates/sr-engine/tests/gpu/touch.rs",
+        "scenes/touch_paint.json",
+        "scenes/touch_erase.json",
+        "tests/gpu.sh",
+        "tests/plants/edit-ignored.patch"
+      ],
+      "plants": [
+        {
+          "id": "edit-ignored",
+          "patch": "tests/plants/edit-ignored.patch"
+        }
+      ]
+    },
+    "conservation": {
+      "desc": "Conservation over whole lives (contract §5.1's G-CONS; M0-T106; ⏱, R12): crates/sr-engine/tests/gpu/conservation.rs — `bash tests/gpu.sh conservation physics`, seven cases over two whole lives each run once (a checkpoint every 1,000 / 100 steps, read through `Progress::checkpoint_every`: each carries the ledger's latest record and the dump's Σm|u|): the Sun-like preset at calibration's `preset_mass_sb` in a `bounce` world to its white dwarf, and the Massive preset from M0-V14's iron-core dump (~/.cache/sandbox-reactions/dumps/m0-v14_massive_iron_core_s800.bin, sha256 6707f6ecc17c6296…, refused otherwise) in a `leave` world to its neutron star after a supernova; for each life a case per invariant. Pass: mass invariant (§2.9) constant to 1e-6 relative to its start at every checkpoint; momentum (grid + sinks + escaped + held) to 1e-6 of Σm|u| — the running peak of the life's Σm|u| (grid + sinks), the instant one printed beside it; energy invariant drifting ≤ 1e-3 |W| per τ_dyn in every window between two records, |W| the smaller of the two and τ_dyn the largest the readout showed in the window (the strictest); each life is a life (its ending, its stages, its checkpoints, both stand-ins off); the table of every energy term's change over the worst window and the life is printed beside the drift. The seventh case's grader is graded on hand-made records (a drift just under each bound passes and just over is refused; half a τ_dyn is held to its share; NaN is the worst; the §2.9 terms and signs). Fail: NO-GO — energy is UNVERIFIED (§5.5): more drift is a D for a conservative gravity formulation, never a looser bound (§0.4). A life is long — the Sun-like's about 179,000 steps, over 10 minutes — so the lead's run, `timeout_s` 21,600. Plant no-grav-work (§5.1: the energy source of gravity's face work dropped from P4's update). Paths: its own test, `tests/gpu.sh` and the plant — not crates/** (R12).",
+      "cmd": "bash tests/gpu.sh conservation physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 7,
+      "timeout_s": 21600,
+      "arms_at_once": 1,
+      "paths": [
+        "crates/sr-engine/tests/gpu/conservation.rs",
+        "tests/gpu.sh",
+        "tests/plants/no-grav-work.patch"
+      ],
+      "plants": [
+        {
+          "id": "no-grav-work",
+          "patch": "tests/plants/no-grav-work.patch"
+        }
+      ]
+    },
     "ending": {
       "desc": "ending (contract §1.9.5; M0-T72): sr_physics::observe::ending on synthetic anchors (no GPU) — the four bands read from the mass in Suns (below 0.08 failed star, below 8 white dwarf, below 25 supernova then neutron star, else black hole; zero and the end segments extended; NaN refused), each of the three thresholds a close call between its two fates, both edges of every band at exactly ±10 % in sandbox mass a close call and a hair outside not (the band closed), the band taken in sandbox mass and not in Suns on a squeezed ladder (1.08 × M_up is 13 % over 8 Suns yet close), the nearer threshold naming the pair where two bands meet, a remnant stage (white_dwarf, neutron_star, black_hole, failed_star) displayed for max(10 t.u., 20 τ_dyn) — stages::ending_hold, §0.5 [M0-D78] — showing the ending instead of the prediction (9.999 t.u. not, 10 t.u. yes; τ_dyn 1 needs 20), no other stage ending it, and the strings keys. Synthetic anchors only — NOT PROVEN against assets/calibration.json's real thresholds; the readout panel wiring is the drawing lots'. Plant ending-band-swap (M_up where M_BH belongs, in the unit).",
       "cmd": "bash tests/cpu.sh sr-physics observe::ending",
@@ -1263,7 +1335,7 @@
       ]
     },
     "cpu_gpu": {
-      "desc": "G-REF, the GPU against the CPU twin (contract §5.1, §2.2, §6.7, ES-E20, R8, R13; M0-T38): the GPU's f32 step (P2 + P4 + P8, the box fit, the scene's switches and edge) and sr_physics::reference::Twin's f64 step run the same scene for exactly 200 steps and their states are read side by side — relative L1 difference of Σ and of E at most 1e-3, the largest absolute difference of each X at most 1e-4 (read where both Σ ≥ Σ_floor / 1e-4 = 1e-4: below it P8's floor matter alone can move an X by the band) — on scenes/ref_disk.json (64 × 64, leave: a cold Maclaurin disk a = 24, Σc = 1, H 0.75 / He 0.25, gravity and hydro on, the four cold-pressure K's off by `overrides` and nothing else) and scenes/ref_sod.json (64 × 64, bounce: Sod's strip ρ 1 | 0.125, P 1 | 0.1, hydrogen | helium, the K's off, hydro only; the shock reflected inside the 200 steps), each case printing its sim times, both L1 differences and its largest |ΔX| (SR-REF), on the physics adapter (R12). The burning field (scenes/ref_burn.json, M0-T48: a hot H | He field under P5 heat and P6 reactions, H's mass in the twin falling at least 1 %) is the third, on the same bands. The twin's own CFL is read from physics.json and the GPU's from the same key in step/dt.rs: cfl-gpu plants 0.4 → 0.39 in the GPU's alone, 2.5 % short in sim time at step 200",
+      "desc": "G-REF, the GPU against the CPU twin (contract §5.1, §2.2, §6.7, ES-E20, R8, R13; M0-T38): the GPU's f32 step (P2 + P4 + P8, the box fit, the scene's switches and edge) and sr_physics::reference::Twin's f64 step run the same scene, the GPU for exactly 200 steps and the twin to the GPU's sim time (its last step capped, §0.5 [M0-D185]), and their states are read side by side there — the two runs' sim times after 200 steps within 5e-4 relative (the clock line), relative L1 difference of Σ and of E at most 1e-3, the largest absolute difference of each X at most 1e-4 (read where both Σ ≥ Σ_floor / 1e-4 = 1e-4: below it P8's floor matter alone can move an X by the band) — on scenes/ref_disk.json (64 × 64, leave: a cold Maclaurin disk a = 24, Σc = 1, H 0.75 / He 0.25, gravity and hydro on, the four cold-pressure K's off by `overrides` and nothing else) and scenes/ref_sod.json (64 × 64, bounce: Sod's strip ρ 1 | 0.125, P 1 | 0.1, hydrogen | helium, the K's off, hydro only; the shock reflected inside the 200 steps), each case printing its sim times, both L1 differences and its largest |ΔX| (SR-REF), on the physics adapter (R12). The burning field (scenes/ref_burn.json, M0-T48: a hot H | He field under P5 heat and P6 reactions, H's mass in the twin falling at least 1 %) is the third, on the same bands. The twin's own CFL is read from physics.json and the GPU's from the same key in step/dt.rs: cfl-gpu plants 0.4 → 0.39 in the GPU's alone, 2.5 % short in sim time at step 200 on Sod (the clock line; burn 1.8 %, the disk 0.05 % — its Δt mostly gravity's, red by its L1 at equal time)",
       "cmd": "bash tests/gpu.sh cpu_gpu physics",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",

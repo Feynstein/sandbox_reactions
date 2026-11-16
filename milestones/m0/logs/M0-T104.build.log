@@ -1,0 +1,4 @@
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 10.40s
+  Executable tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)

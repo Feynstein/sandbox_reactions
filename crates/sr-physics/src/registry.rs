@@ -344,6 +344,11 @@ impl Physics {
         self.values.get(key).copied()
     }
 
+    /// Which stand-in laws (§1.6.4) this physics was built with; summary.json records them (§5.2 G-END, M0-T104).
+    pub fn standins(&self) -> Standins {
+        self.standins
+    }
+
     /// Every key, in file order.
     pub fn keys() -> impl Iterator<Item = &'static str> {
         SCHEMA.iter().map(|(k, _)| *k)

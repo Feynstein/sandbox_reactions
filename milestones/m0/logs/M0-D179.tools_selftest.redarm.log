@@ -1,0 +1,261 @@
+==== 2026-11-15T12:03:00-05:00 tools_selftest · clean: proven by M0-D179 2026-11-15T12:02:23-05:00 (a run of the scope; fingerprint 7ce97db7e588) - not re-run
+==== 2026-11-15T12:02:23-05:00 tools_selftest · plant tools-selftest-scratch · a fresh scratch copy of the tree
+planted tools-selftest-scratch: tests/plants/tools-selftest-scratch.patch -> tools/pb/scratch_copy.sh
+== 2026-11-15T12:02:28-05:00 tools_selftest[plan] · task M0-D179 · box laserax-ai :: {python} tools/pb/plan.py selftest
+-- tools_selftest[plan] · exit=0 · 1.32 s
+selftest: checks=260 failed=0 warnings=0 · plants=80
+=== GO ===
+
+== 2026-11-15T12:02:29-05:00 tools_selftest[verify] · task M0-D179 · box laserax-ai :: {python} tools/pb/verify.py selftest
+-- tools_selftest[verify] · exit=0 · 16.75 s
+selftest: checks=381 · failed=0 · plants=164/164 red
+=== GO ===
+
+== 2026-11-15T12:02:46-05:00 tools_selftest[launch] · task M0-D179 · box laserax-ai :: {python} tools/pb/launch.py selftest
+-- tools_selftest[launch] · exit=0 · 3.77 s
+checks: 62, failures: 0
+=== GO ===
+
+== 2026-11-15T12:02:50-05:00 tools_selftest[review_page] · task M0-D179 · box laserax-ai :: {python} tools/pb/review_page.py selftest
+-- tools_selftest[review_page] · exit=0 · 1.12 s
+  read back verbatim from the report on disk after a served POST: 2/2 (JSON + text/plain beacon shape)
+  unknown capture id POST: HTTP 422, remarks.json + report unchanged; the unflagged capture's POST: HTTP 422
+  red arms: accept_unknown → red · memory_only → red · drop_outside → red · show_unflagged → red · raw_paths → red
+checks 45 · passed 45 · failed 0 · skipped 0
+=== GO ===
+
+== 2026-11-15T12:02:51-05:00 tools_selftest[status_page] · task M0-D179 · box laserax-ai :: {python} tools/pb/status_page.py selftest
+-- tools_selftest[status_page] · exit=0 · 1.72 s
+  block lists: the page's == the fixture's 6 · plan.py lint GO, blocks 6, Flow rows 6
+  round trip: 1 answered question(s) read back by poll after a served POST
+  red arms: own_parser → red · critical_ignored → red · rewrite_state → red · accept_unknown → red · no_lock → red
+checks 43 · passed 43 · failed 0
+=== GO ===
+
+== 2026-11-15T12:02:52-05:00 tools_selftest[content_gate] · task M0-D179 · box laserax-ai :: {python} tools/pb/content_gate.py selftest
+-- tools_selftest[content_gate] · exit=0 · 0.77 s
+checks: 87 · passed: 87 · failed: 0
+=== GO ===
+
+== 2026-11-15T12:02:53-05:00 tools_selftest[rung_record] · task M0-D179 · box laserax-ai :: {python} tools/pb/rung_record.py selftest
+-- tools_selftest[rung_record] · exit=0 · 0.11 s
+selftest: checks=73 passed=73 failed=0 · plants red 31/31
+=== GO ===
+
+== 2026-11-15T12:02:53-05:00 tools_selftest[capture_web] · task M0-D179 · box laserax-ai :: node tools/pb/capture_web.mjs selftest
+-- tools_selftest[capture_web] · exit=0 · 0.97 s
+NOTE no tools/pb/routes.json beside the tool: nothing of the project's to validate
+NOTE live tier NOT RUN (--live: a real browser, through the project's Playwright)
+selftest: checks=85 · failed=0 · plants=38 · live=0 · seconds=0.91
+=== GO ===
+
+== 2026-11-15T12:02:54-05:00 tools_selftest[switch] · task M0-D179 · box laserax-ai :: node tools/pb/switch.mjs selftest
+-- tools_selftest[switch] · exit=0 · 0.03 s
+selftest: checks=45 passed=45 failed=0 · plants red 13/13
+=== GO ===
+
+== 2026-11-15T12:02:54-05:00 tools_selftest[scratch_copy] · task M0-D179 · box laserax-ai :: bash tools/pb/scratch_copy.sh --selftest
+-- tools_selftest[scratch_copy] · exit=1 · 0.26 s
+checks=12 · passed=9 · failed=3
+FAIL no file of §A.7's 13 excluded folders is copied, top level or nested
+FAIL .venv and node_modules are symlinks to the source's
+FAIL PLANT `models` removed from the list → its two files appear → the leak check turns red
+=== NO-GO: 3 check(s) failed ===
+
+==== 2026-11-15T12:02:23-05:00 tools_selftest · plant tools-selftest-box-list · a fresh scratch copy of the tree
+planted tools-selftest-box-list: tests/plants/tools-selftest-box-list.patch -> tools/pb/verify.py
+== 2026-11-15T12:02:28-05:00 tools_selftest[verify] · task M0-D179 · box laserax-ai :: {python} tools/pb/verify.py selftest
+-- tools_selftest[verify] · exit=1 · 16.95 s
+FAILED:
+  a `box` list runs on each box it names and owes on every other (M0-D111): (['src/b.py'], True)
+selftest: checks=381 · failed=1 · plants=164/164 red
+=== NO-GO: 1 check(s) failed ===
+
+==== 2026-11-15T12:02:23-05:00 tools_selftest · plant tools-selftest-arms-at-once · a fresh scratch copy of the tree
+planted tools-selftest-arms-at-once: tests/plants/tools-selftest-arms-at-once.patch -> tools/pb/verify.py
+== 2026-11-15T12:02:28-05:00 tools_selftest[verify] · task M0-D179 · box laserax-ai :: {python} tools/pb/verify.py selftest
+-- tools_selftest[verify] · exit=1 · 16.45 s
+FAILED:
+  arm_workers: never more than the scope's `arms_at_once` (M0-D108)
+  --redarm: an `arms_at_once: 1` scope's arms one at a time, its record says so (M0-D108): [('go', 1794762156.774524, 1794762156.92483), ('nogo', 1794762156.775227, 1794762156.925356), ('nogo', 1794762156.775615, 1794762156.92596)]
+  PLANT `arms_at_once` ignored: red - the arms side by side, the serial case sees them overlap: [('nogo', 1794762156.949514, 1794762157.099702), ('nogo', 1794762156.950183, 1794762157.100356)]
+selftest: checks=381 · failed=3 · plants=163/164 red
+=== NO-GO: 3 check(s) failed ===
+
+==== 2026-11-15T12:02:23-05:00 tools_selftest · plant tools-selftest-launch-records · a fresh scratch copy of the tree
+planted tools-selftest-launch-records: tests/plants/tools-selftest-launch-records.patch -> tools/pb/launch.py
+== 2026-11-15T12:02:28-05:00 tools_selftest[launch] · task M0-D179 · box laserax-ai :: {python} tools/pb/launch.py selftest
+-- tools_selftest[launch] · exit=1 · 3.67 s
+checks: 62, failures: 2
+FAIL 8 starts at once on one pid file: each GO, every record kept
+FAIL 8 stops at once on one pid file: each GO, no record left
+=== NO-GO: 2 failure(s) ===
+
+==== 2026-11-15T12:02:23-05:00 tools_selftest · plant tools-selftest-sigint · a fresh scratch copy of the tree
+planted tools-selftest-sigint: tests/plants/tools-selftest-sigint.patch -> tools/pb/verify.py
+== 2026-11-15T12:02:28-05:00 tools_selftest[verify] · task M0-D179 · box laserax-ai :: {python} tools/pb/verify.py selftest
+-- tools_selftest[verify] · exit=1 · 31.73 s
+FAILED:
+  a run handed SIGINT ignored still stops a hung command at its SIGINT, not 15 s on (M0-D125): T9.<scope>.log · record: loop_times.jsonl · tree 23ff7f746f85
+FAILED:
+  a: timed out after 0.2 s · log logs/T9.a.log
+verify: 1 passed, 0 failed, 0 skipped · 1/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 15.20 s + loop 0.00 s · mode all · jobs 8 · box SELFBOX · python 3.12.3 · load 2.58->2.68 · base: none — every plant
+=== NO-GO: a: timed out after 0.2 s · log logs/T9.a.log ===
+
+selftest: checks=381 · failed=1 · plants=164/164 red
+=== NO-GO: 1 check(s) failed ===
+
+==== 2026-11-15T12:02:23-05:00 tools_selftest · plant redarm-runs-clean · a fresh scratch copy of the tree
+planted redarm-runs-clean: tests/plants/tools-selftest-redarm-runs-clean.patch -> tools/pb/verify.py
+== 2026-11-15T12:02:28-05:00 tools_selftest[verify] · task M0-D179 · box laserax-ai :: {python} tools/pb/verify.py selftest
+-- tools_selftest[verify] · exit=1 · 17.70 s
+FAILED:
+  through the CLI: --redarm before the scope's run refused, naming it; after it, the plant alone, the clean read; --with-clean the clean arm too (M0-D178): ['rc · clean · GO · arm 1/2, 1 left\nrc · plant b · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 2/2, 0 left\nredarm: 1 plants · 1 red · 0 green · 0 errors · scope rc · 0.33 s · 2 arm(s) at a time · box SELFBOX · log logs/R12.rc.redarm.log\n=== GO ===\n', ' 0 skipped (0 classes) · 0 never checked · 0 stale · 171 unclassified · 0 owed · 1 covered of 172 visible\nverify: 1 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.02 s · mode scope · jobs 8 · box SELFBOX · python 3.12.3 · load 2.57->2.57\n=== GO ===\n', 'rc · clean · GO · arm 1/2, 1 left\nrc · plant b · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 2/2, 0 left\nredarm: 1 plants · 1 red · 0 green · 0 errors · scope rc · 0.40 s · 2 arm(s) at a time · box SELFBOX · log logs/R12.rc.redarm.log\n=== GO ===\n', 'rc · clean · GO · arm 1/2, 1 left\nrc · plant b · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 2/2, 0 left\nredarm: 1 plants · 1 red · 0 green · 0 errors · scope rc · 0.25 s · 2 arm(s) at a time · box SELFBOX · log logs/R12.rc.redarm.log\n=== GO ===\n']
+selftest: checks=381 · failed=1 · plants=164/164 red
+=== NO-GO: 1 check(s) failed ===
+
+==== 2026-11-15T12:02:23-05:00 tools_selftest · plant redarm-stale-record · a fresh scratch copy of the tree
+planted redarm-stale-record: tests/plants/tools-selftest-redarm-stale-record.patch -> tools/pb/verify.py
+== 2026-11-15T12:02:28-05:00 tools_selftest[verify] · task M0-D179 · box laserax-ai :: {python} tools/pb/verify.py selftest
+-- tools_selftest[verify] · exit=1 · 16.95 s
+FAILED:
+  PLANT --redarm: a clean copy that is already red is NO-GO, its plants not run: ['plant diff: the patch plants/bug.patch does not apply: data.txt @@ -1 +1 @@: its old lines appear 0 times in the file, not once - an error, not a red']
+  PLANT the clean arm re-runs when a file the plants patch, outside `paths`, changed: ['par · clean: proven by Q1 2026-11-15T12:02:35-05:00 (its clean arm; fingerprint 6c2f7b5e6b45) - not re-run', 'par · plant p1 · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 1/3, 2 left', 'par · plant p2 · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 2/3, 1 left', 'par · plant p3 · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 3/3, 0 left']
+  PLANT a clean arm skipped whatever the bytes: red - the moved-bytes case runs it: ('par · clean: proven by MUTANT 0 (x; fingerprint 6c2f7b5e6b45) - not re-run', 'par · clean: proven by Q1 2026-11-15T12:02:35-05:00 (its clean arm; fingerprint 6c2f7b5e6b45) - not re-run')
+  a clean arm that ran GO is reused: the next red-arm on the same bytes reads it, the plants only (M0-D178): (['par · clean: proven by Q1 2026-11-15T12:02:35-05:00 (its clean arm; fingerprint 6c2f7b5e6b45) - not re-run', 'par · plant p1 · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 1/3, 2 left', 'par · plant p2 · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 2/3, 1 left', 'par · plant p3 · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 3/3, 0 left'], [('nogo', 1794762158.066896, 1794762158.217067), ('nogo', 1794762158.067197, 1794762158.217366), ('nogo', 1794762158.068636, 1794762158.218761)])
+  PLANT the clean proof: a whole green run on its own box, fingerprint and adapter; never a record from before the adapter, a `--case` or partly vouched run (M0-D178): (('RUN', 't2', 'a run of the scope'), ('GPU', 't5', 'a run of the scope'))
+  --redarm after a path of the scope was edited since its green run: refused, nothing run (a stale record): (None, ['rd · clean: proven by R2 2026-11-15T12:02:38-05:00 (a run of the scope; fingerprint 48b534b78b96) - not re-run', 'rd · plant p1 · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 1/2, 1 left', 'rd · plant p2 · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 2/2, 0 left'], [('nogo', 1794762158.775673, 1794762158.925874), ('nogo', 1794762158.776079, 1794762158.926197)])
+  --redarm --moved: a moved scope with no green run on these bytes - the campaign runs the clean arm, as before: ['m1 · clean: proven by Q17s 2026-11-15T12:02:40-05:00 (a run of the scope; fingerprint 032ff4a142ec) - not re-run', 'm1 · plant a · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed)', 'redarm: 1 plants · 1 red · 0 green · 0 errors · scope m1 · 0.02 s · 1 arm(s) at a time · box SELFBOX · log logs/Q18.m1.redarm.log', 'm2 · proven by Q17 2026-11-15T12:02:40-05:00 (fingerprint ec011906b5af) - not moved', 'far · owed on OTHERBOX (this box: SELFBOX) - swept there, never NO-GO here']
+selftest: checks=381 · failed=7 · plants=160/164 red
+=== NO-GO: 7 check(s) failed ===
+
+==== 2026-11-15T12:06:42-05:00 tools_selftest · clean: proven by M0-D179 2026-11-15T12:05:36-05:00 (a run of the scope; fingerprint 163f734a8982) - not re-run
+==== 2026-11-15T12:05:37-05:00 tools_selftest · plant tools-selftest-scratch · a fresh scratch copy of the tree
+planted tools-selftest-scratch: tests/plants/tools-selftest-scratch.patch -> tools/pb/scratch_copy.sh
+== 2026-11-15T12:05:42-05:00 tools_selftest[plan] · task M0-D179 · box laserax-ai :: {python} tools/pb/plan.py selftest
+-- tools_selftest[plan] · exit=0 · 12.39 s
+selftest: checks=260 failed=0 warnings=0 · plants=80
+=== GO ===
+
+== 2026-11-15T12:05:54-05:00 tools_selftest[verify] · task M0-D179 · box laserax-ai :: {python} tools/pb/verify.py selftest
+-- tools_selftest[verify] · exit=0 · 30.22 s
+selftest: checks=381 · failed=0 · plants=164/164 red
+=== GO ===
+
+== 2026-11-15T12:06:24-05:00 tools_selftest[launch] · task M0-D179 · box laserax-ai :: {python} tools/pb/launch.py selftest
+-- tools_selftest[launch] · exit=0 · 9.48 s
+checks: 62, failures: 0
+=== GO ===
+
+== 2026-11-15T12:06:34-05:00 tools_selftest[review_page] · task M0-D179 · box laserax-ai :: {python} tools/pb/review_page.py selftest
+-- tools_selftest[review_page] · exit=0 · 3.17 s
+  read back verbatim from the report on disk after a served POST: 2/2 (JSON + text/plain beacon shape)
+  unknown capture id POST: HTTP 422, remarks.json + report unchanged; the unflagged capture's POST: HTTP 422
+  red arms: accept_unknown → red · memory_only → red · drop_outside → red · show_unflagged → red · raw_paths → red
+checks 45 · passed 45 · failed 0 · skipped 0
+=== GO ===
+
+== 2026-11-15T12:06:37-05:00 tools_selftest[status_page] · task M0-D179 · box laserax-ai :: {python} tools/pb/status_page.py selftest
+-- tools_selftest[status_page] · exit=0 · 2.47 s
+  block lists: the page's == the fixture's 6 · plan.py lint GO, blocks 6, Flow rows 6
+  round trip: 1 answered question(s) read back by poll after a served POST
+  red arms: own_parser → red · critical_ignored → red · rewrite_state → red · accept_unknown → red · no_lock → red
+checks 43 · passed 43 · failed 0
+=== GO ===
+
+== 2026-11-15T12:06:39-05:00 tools_selftest[content_gate] · task M0-D179 · box laserax-ai :: {python} tools/pb/content_gate.py selftest
+-- tools_selftest[content_gate] · exit=0 · 1.27 s
+checks: 87 · passed: 87 · failed: 0
+=== GO ===
+
+== 2026-11-15T12:06:41-05:00 tools_selftest[rung_record] · task M0-D179 · box laserax-ai :: {python} tools/pb/rung_record.py selftest
+-- tools_selftest[rung_record] · exit=0 · 0.16 s
+selftest: checks=73 passed=73 failed=0 · plants red 31/31
+=== GO ===
+
+== 2026-11-15T12:06:41-05:00 tools_selftest[capture_web] · task M0-D179 · box laserax-ai :: node tools/pb/capture_web.mjs selftest
+-- tools_selftest[capture_web] · exit=0 · 1.07 s
+NOTE no tools/pb/routes.json beside the tool: nothing of the project's to validate
+NOTE live tier NOT RUN (--live: a real browser, through the project's Playwright)
+selftest: checks=85 · failed=0 · plants=38 · live=0 · seconds=1.00
+=== GO ===
+
+== 2026-11-15T12:06:42-05:00 tools_selftest[switch] · task M0-D179 · box laserax-ai :: node tools/pb/switch.mjs selftest
+-- tools_selftest[switch] · exit=0 · 0.03 s
+selftest: checks=45 passed=45 failed=0 · plants red 13/13
+=== GO ===
+
+== 2026-11-15T12:06:42-05:00 tools_selftest[scratch_copy] · task M0-D179 · box laserax-ai :: bash tools/pb/scratch_copy.sh --selftest
+-- tools_selftest[scratch_copy] · exit=1 · 0.26 s
+checks=12 · passed=9 · failed=3
+FAIL no file of §A.7's 13 excluded folders is copied, top level or nested
+FAIL .venv and node_modules are symlinks to the source's
+FAIL PLANT `models` removed from the list → its two files appear → the leak check turns red
+=== NO-GO: 3 check(s) failed ===
+
+==== 2026-11-15T12:05:37-05:00 tools_selftest · plant tools-selftest-box-list · a fresh scratch copy of the tree
+planted tools-selftest-box-list: tests/plants/tools-selftest-box-list.patch -> tools/pb/verify.py
+== 2026-11-15T12:05:41-05:00 tools_selftest[verify] · task M0-D179 · box laserax-ai :: {python} tools/pb/verify.py selftest
+-- tools_selftest[verify] · exit=1 · 34.70 s
+FAILED:
+  a `box` list runs on each box it names and owes on every other (M0-D111): (['src/b.py'], True)
+selftest: checks=381 · failed=1 · plants=164/164 red
+=== NO-GO: 1 check(s) failed ===
+
+==== 2026-11-15T12:05:37-05:00 tools_selftest · plant tools-selftest-arms-at-once · a fresh scratch copy of the tree
+planted tools-selftest-arms-at-once: tests/plants/tools-selftest-arms-at-once.patch -> tools/pb/verify.py
+== 2026-11-15T12:05:41-05:00 tools_selftest[verify] · task M0-D179 · box laserax-ai :: {python} tools/pb/verify.py selftest
+-- tools_selftest[verify] · exit=1 · 34.04 s
+FAILED:
+  arm_workers: never more than the scope's `arms_at_once` (M0-D108)
+  --redarm: an `arms_at_once: 1` scope's arms one at a time, its record says so (M0-D108): [('go', 1794762365.285982, 1794762365.436199), ('nogo', 1794762365.306711, 1794762365.456877), ('nogo', 1794762365.306588, 1794762365.456893)]
+  PLANT `arms_at_once` ignored: red - the arms side by side, the serial case sees them overlap: [('nogo', 1794762365.594187, 1794762365.744351), ('nogo', 1794762365.594208, 1794762365.744388)]
+selftest: checks=381 · failed=3 · plants=163/164 red
+=== NO-GO: 3 check(s) failed ===
+
+==== 2026-11-15T12:05:37-05:00 tools_selftest · plant tools-selftest-launch-records · a fresh scratch copy of the tree
+planted tools-selftest-launch-records: tests/plants/tools-selftest-launch-records.patch -> tools/pb/launch.py
+== 2026-11-15T12:05:42-05:00 tools_selftest[launch] · task M0-D179 · box laserax-ai :: {python} tools/pb/launch.py selftest
+-- tools_selftest[launch] · exit=1 · 13.04 s
+checks: 62, failures: 1
+FAIL 8 starts at once on one pid file: each GO, every record kept
+=== NO-GO: 1 failure(s) ===
+
+==== 2026-11-15T12:05:37-05:00 tools_selftest · plant tools-selftest-sigint · a fresh scratch copy of the tree
+planted tools-selftest-sigint: tests/plants/tools-selftest-sigint.patch -> tools/pb/verify.py
+== 2026-11-15T12:05:41-05:00 tools_selftest[verify] · task M0-D179 · box laserax-ai :: {python} tools/pb/verify.py selftest
+-- tools_selftest[verify] · exit=1 · 47.17 s
+FAILED:
+  a run handed SIGINT ignored still stops a hung command at its SIGINT, not 15 s on (M0-D125): /T9.<scope>.log · record: loop_times.jsonl · tree 14fd6d7e87bd
+FAILED:
+  a: timed out after 0.2 s · log logs/T9.a.log
+verify: 1 passed, 0 failed, 0 skipped · 1/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 15.20 s + loop 0.00 s · mode all · jobs 8 · box SELFBOX · python 3.12.3 · load 3.5->4.07 · base: none — every plant
+=== NO-GO: a: timed out after 0.2 s · log logs/T9.a.log ===
+
+selftest: checks=381 · failed=1 · plants=164/164 red
+=== NO-GO: 1 check(s) failed ===
+
+==== 2026-11-15T12:05:37-05:00 tools_selftest · plant redarm-runs-clean · a fresh scratch copy of the tree
+planted redarm-runs-clean: tests/plants/tools-selftest-redarm-runs-clean.patch -> tools/pb/verify.py
+== 2026-11-15T12:05:42-05:00 tools_selftest[verify] · task M0-D179 · box laserax-ai :: {python} tools/pb/verify.py selftest
+-- tools_selftest[verify] · exit=1 · 35.14 s
+FAILED:
+  through the CLI: --redarm before the scope's run refused, naming it; after it, the plant alone, the clean read; --with-clean the clean arm too (M0-D178): ['rc · clean · GO · arm 1/2, 1 left\nrc · plant b · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 2/2, 0 left\nredarm: 1 plants · 1 red · 0 green · 0 errors · scope rc · 0.32 s · 2 arm(s) at a time · box SELFBOX · log logs/R12.rc.redarm.log\n=== GO ===\n', ' 0 skipped (0 classes) · 0 never checked · 0 stale · 171 unclassified · 0 owed · 1 covered of 172 visible\nverify: 1 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.02 s · mode scope · jobs 8 · box SELFBOX · python 3.12.3 · load 4.85->4.85\n=== GO ===\n', 'rc · clean · GO · arm 1/2, 1 left\nrc · plant b · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 2/2, 0 left\nredarm: 1 plants · 1 red · 0 green · 0 errors · scope rc · 0.32 s · 2 arm(s) at a time · box SELFBOX · log logs/R12.rc.redarm.log\n=== GO ===\n', 'rc · clean · GO · arm 1/2, 1 left\nrc · plant b · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 2/2, 0 left\nredarm: 1 plants · 1 red · 0 green · 0 errors · scope rc · 0.23 s · 2 arm(s) at a time · box SELFBOX · log logs/R12.rc.redarm.log\n=== GO ===\n']
+selftest: checks=381 · failed=1 · plants=164/164 red
+=== NO-GO: 1 check(s) failed ===
+
+==== 2026-11-15T12:05:37-05:00 tools_selftest · plant redarm-stale-record · a fresh scratch copy of the tree
+planted redarm-stale-record: tests/plants/tools-selftest-redarm-stale-record.patch -> tools/pb/verify.py
+== 2026-11-15T12:05:42-05:00 tools_selftest[verify] · task M0-D179 · box laserax-ai :: {python} tools/pb/verify.py selftest
+-- tools_selftest[verify] · exit=1 · 34.88 s
+FAILED:
+  PLANT --redarm: a clean copy that is already red is NO-GO, its plants not run: ['plant diff: the patch plants/bug.patch does not apply: data.txt @@ -1 +1 @@: its old lines appear 0 times in the file, not once - an error, not a red']
+  PLANT the clean arm re-runs when a file the plants patch, outside `paths`, changed: ['par · clean: proven by Q1 2026-11-15T12:06:04-05:00 (its clean arm; fingerprint 6c2f7b5e6b45) - not re-run', 'par · plant p1 · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 1/3, 2 left', 'par · plant p2 · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 2/3, 1 left', 'par · plant p3 · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 3/3, 0 left']
+  PLANT a clean arm skipped whatever the bytes: red - the moved-bytes case runs it: ('par · clean: proven by MUTANT 0 (x; fingerprint 6c2f7b5e6b45) - not re-run', 'par · clean: proven by Q1 2026-11-15T12:06:04-05:00 (its clean arm; fingerprint 6c2f7b5e6b45) - not re-run')
+  a clean arm that ran GO is reused: the next red-arm on the same bytes reads it, the plants only (M0-D178): (['par · clean: proven by Q1 2026-11-15T12:06:04-05:00 (its clean arm; fingerprint 6c2f7b5e6b45) - not re-run', 'par · plant p1 · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 1/3, 2 left', 'par · plant p2 · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 2/3, 1 left', 'par · plant p3 · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 3/3, 0 left'], [('nogo', 1794762367.263166, 1794762367.413403), ('nogo', 1794762367.263895, 1794762367.414079), ('nogo', 1794762367.263922, 1794762367.414097)])
+  PLANT the clean proof: a whole green run on its own box, fingerprint and adapter; never a record from before the adapter, a `--case` or partly vouched run (M0-D178): (('RUN', 't2', 'a run of the scope'), ('GPU', 't5', 'a run of the scope'))
+  --redarm after a path of the scope was edited since its green run: refused, nothing run (a stale record): (None, ['rd · clean: proven by R2 2026-11-15T12:06:07-05:00 (a run of the scope; fingerprint 48b534b78b96) - not re-run', 'rd · plant p1 · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 1/2, 1 left', 'rd · plant p2 · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed) · arm 2/2, 0 left'], [('nogo', 1794762368.152203, 1794762368.328642), ('nogo', 1794762368.152357, 1794762368.328733)])
+  --redarm --moved: a moved scope with no green run on these bytes - the campaign runs the clean arm, as before: ['m1 · clean: proven by Q17s 2026-11-15T12:06:10-05:00 (a run of the scope; fingerprint 032ff4a142ec) - not re-run', 'm1 · plant a · RED (proven: 1 failed; its own verdict NO-GO: 1 check(s) failed)', 'redarm: 1 plants · 1 red · 0 green · 0 errors · scope m1 · 0.05 s · 1 arm(s) at a time · box SELFBOX · log logs/Q18.m1.redarm.log', 'm2 · proven by Q17 2026-11-15T12:06:10-05:00 (fingerprint ec011906b5af) - not moved', 'far · owed on OTHERBOX (this box: SELFBOX) - swept there, never NO-GO here']
+selftest: checks=381 · failed=7 · plants=160/164 red
+=== NO-GO: 7 check(s) failed ===
+

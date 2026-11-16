@@ -29,9 +29,12 @@
 //!
 //! Gravity's source (§1.4.2; M0-T36), when a step is given P2's field ([`Hydro::step_with`]): the Hancock predictor kicks
 //! each face state by half a step of g — its velocity by ½Δt·g, its energy by the work Σ(u + ¼Δt·g)·g·½Δt, so the kick
-//! leaves its thermal energy as it was — beside the flux differences; the update adds Δt·Σg to the momentum, Σ the cell
-//! centre's half-step value from that same predictor (its flux differences and its half kick). The energy source is the
-//! work the step's mass fluxes do across φ (§0.5 [M0-D64], [M0-D68]): a face whose mass flux q (along +x or +y) joins
+//! leaves its thermal energy as it was — beside the flux differences; the update adds Δt·Σ_src,mid·g_mid to the momentum
+//! (§1.4.2 [M0-D183]): Σ_src,mid is the cell centre's half-step Σ from that same predictor (0 below Σ_vac, a held cell's
+//! own Σ, as [`grav::source`](super::grav::source) masks), and g_mid, φ_mid the field P2's solve gives on it, the sinks'
+//! part of the field the step is given (that field less P2's solve on Σⁿ) added — so the masses that pull are the masses
+//! pulled and the pairs' pulls cancel (M0-D181: Σ_mid·g with g from Σⁿ moved the supernova life's momentum 1.04 of
+//! Σm|u|). The energy source is the work the step's mass fluxes do across φ_mid (§0.5 [M0-D64], [M0-D68], [M0-D183]): a face whose mass flux q (along +x or +y) joins
 //! cell i to its neighbour j does Δt·q·(φ_i − φ_j), cell i keeping ½Δt·p_i·(φ_i − φ_j) of it — p the two cells'
 //! half-step momenta on that axis — so each cell keeps the Δt·(Σu)·g its own momentum kick pays for (g by central
 //! differences of φ). The rest, D = Δt·(q − ½(p_i + p_j))·(φ_i − φ_j), the work of the mass the face moved beyond the two
@@ -41,7 +44,7 @@
 //! gain, is shared by w_i = Σ_i/(Σ_i + Σ_j), their half-step masses' share: a thin cell beside a dense one is not heated by
 //! the dense one's flux, and a cold collapse's lifted mass is paid by its infall, not by its heat (charged to heat it
 //! lost 8× its entropy, M0-D68). Summed, the energy gained is exactly −Σ_faces Δt·q·Δφ, what the mass moved does to W at
-//! the step's φ, and the impulses cancel; what remains is first order in Δt, φ lagging the half step (measured, M0-D64).
+//! the half step's φ, and the impulses cancel (M0-D64 measured φⁿ lagging the half step as a first-order remainder).
 //! A ghost cell's g and φ are its edge cell's, so no work is done across the world's edge.
 //!
 //! The radiation force (§2.4.4; M0-T43), when a step is given the previous step's flux F ([`Hydro::step_forced`]: P5's
@@ -61,7 +64,8 @@
 //! Held cells (§2.3.4 [M0-TG2]; P8's hold, floors.rs), when a step is given the hold's mask ([`Hydro::step_held`]): a held
 //! cell takes no flux difference in its momentum, no gravity source and no radiation force, and what its momentum's flux
 //! differences, Δt·Σg and its faces' impulses would have given it is returned — the momentum booked `held`, its g that of
-//! all but the held cells when the step is given that field (§1.4.2 [M0-D149]: the core's own pull cancels over it in
+//! all but the held cells when the step is given that field — at the half step, the same solve on Σ_src,mid with the held
+//! cells emptied, the given field's sinks' part added (§1.4.2 [M0-D149], [M0-D183]): the core's own pull cancels over it in
 //! exact arithmetic, and in f32 its rounding was the GPU's whole `held`, M0-D149). A face
 //! between two held cells, or between a held cell and the world's edge, carries nothing. A face between a held and a free
 //! cell is a reflecting wall: HLL between the free side's predicted face and its mirror (the normal velocity negated),
@@ -77,7 +81,7 @@
 //! momentum without mass flux, and gravity's face work (no work at a face no mass crosses) debited that infall's kick from
 //! the rim's thinnest cells' heat, which P8's floor put back (M0-D172: 1.26 per step, 13.5 % of the held remnant's light).
 
-use super::grav::Field;
+use super::grav::{self, Field};
 use crate::eos::Eos;
 use crate::registry::{Elements, Physics, RegistryError, N_SPECIES};
 
@@ -713,6 +717,46 @@ impl Hydro {
             }
         }
 
+        // A cell with no gas around it stays empty.
+        let vacuum = |x: usize, y: usize| st.get(0, y * w + x) < self.sigma_vac;
+        let empty = |x: usize, y: usize| {
+            vacuum(x, y)
+                && (x == 0 || vacuum(x - 1, y))
+                && (x + 1 == w || vacuum(x + 1, y))
+                && (y == 0 || vacuum(x, y - 1))
+                && (y + 1 == h || vacuum(x, y + 1))
+        };
+
+        // The half step's field (§1.4.2 [M0-D183]): Σ_src at the predictor's half step, its φ_mid and g_mid, and with held
+        // cells the same with them emptied — each with the sinks' part of the field the step was given.
+        let mid_field = gravity.map(|given| {
+            let src: Vec<f64> = (0..n)
+                .map(|i| {
+                    let s = if is_held(i) {
+                        st.get(0, i)
+                    } else if empty(i % w, i / w) {
+                        0.0
+                    } else {
+                        mids[i][0]
+                    };
+                    if s >= self.sigma_vac { s } else { 0.0 }
+                })
+                .collect();
+            let mut solver = grav::Gravity::new(grav::G);
+            let mut solve = |source: &[f64], given: &Field, base: &[f64]| {
+                let own = solver.field(source, self.sigma_vac, w, h).expect("the step's world pads within the FFT");
+                let at_n = solver.field(base, self.sigma_vac, w, h).expect("the step's world pads within the FFT");
+                let plus = |a: &[f64], g: &[f64], b: &[f64]| (0..n).map(|i| a[i] + (g[i] - b[i])).collect::<Vec<f64>>();
+                Field { phi: plus(&own.phi, &given.phi, &at_n.phi), gx: plus(&own.gx, &given.gx, &at_n.gx), gy: plus(&own.gy, &given.gy, &at_n.gy) }
+            };
+            let field = solve(&src, given, st.plane(0));
+            let pull = pull.filter(|_| !held.is_empty()).map(|p| {
+                let free = |v: &[f64]| (0..n).map(|i| if is_held(i) { 0.0 } else { v[i] }).collect::<Vec<f64>>();
+                solve(&free(&src), p, &free(st.plane(0)))
+            });
+            (src, field, pull)
+        });
+
         // The fluxes: face i of a row lies between cells i − 1 and i; row j of the y fluxes between rows j − 1 and j. A
         // boundary face takes its edge cell's own face and, leaving, the ghost's beyond it (`at` ± a step).
         let boundary = |side: usize, own: &Face, cell: usize| {
@@ -789,16 +833,10 @@ impl Hydro {
         let mut spared = [0.0f64; 2];
 
         // The update, in place; a cell with no gas around it stays empty.
-        let vacuum = |x: usize, y: usize| st.get(0, y * w + x) < self.sigma_vac;
         let mut next = st.clone();
         for y in 0..h {
             for x in 0..w {
-                let empty = vacuum(x, y)
-                    && (x == 0 || vacuum(x - 1, y))
-                    && (x + 1 == w || vacuum(x + 1, y))
-                    && (y == 0 || vacuum(x, y - 1))
-                    && (y + 1 == h || vacuum(x, y + 1));
-                if empty {
+                if empty(x, y) {
                     continue;
                 }
                 let i = y * w + x;
@@ -826,12 +864,13 @@ impl Hydro {
                         u[k] -= d;
                     }
                 }
-                // Gravity's source, time-centred on the predictor's half step (§1.4.2), its energy the faces' work and the
-                // pairs' impulses (module doc): each face as its low cell and its high cell both read it. A face on the world's edge does none (its φ difference is 0).
-                // A held cell's kick and impulses are booked, not taken; no work crosses a still face (§1.4.2 [M0-TG2]).
-                if let (Some([gx, gy]), Some(f)) = (accel(at(x, y)), gravity) {
+                // Gravity's source at the predictor's half step, Σ_src,mid·g_mid (§1.4.2 [M0-D183]), its energy the faces'
+                // work across φ_mid and the pairs' impulses (module doc): each face as its low cell and its high cell both
+                // read it. A face on the world's edge does none (its φ difference is 0). A held cell's kick and impulses are
+                // booked, not taken; no work crosses a still face (§1.4.2 [M0-TG2]).
+                if let Some((src, f, pull)) = &mid_field {
                     let m = mids[i];
-                    let mut kick = [dt * m[0] * gx, dt * m[0] * gy];
+                    let mut kick = [dt * src[i] * f.gx[i], dt * src[i] * f.gy[i]];
                     let p = f.phi[i];
                     let next = |nx: usize, ny: usize| (f.phi[ny * w + nx], mids[ny * w + nx]);
                     let (pr, mr) = if x + 1 < w { next(x + 1, y) } else { (p, m) };
@@ -856,7 +895,7 @@ impl Hydro {
                         // The core's own pull cancels over it: Σg·Δt from the field of all but the held cells (§1.4.2
                         // [M0-D149]); a held cell's faces are all still, so its kick is that alone.
                         if let Some(p) = pull {
-                            kick = [dt * m[0] * p.gx[i], dt * m[0] * p.gy[i]];
+                            kick = [dt * src[i] * p.gx[i], dt * src[i] * p.gy[i]];
                         }
                         spared[0] += kick[0];
                         spared[1] += kick[1];

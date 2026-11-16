@@ -1,0 +1,15 @@
+M0-D177 2026-11-15T08:47:45-05:00 linux-pc: md5 compare of tracked files, linux-pc HEAD vs laserax-ai-server checkout
+2026-11-15T08:48:37-05:00 scp of 9 files to laserax-ai-server, server's stale copies kept in build/m0-d177/stale/
+9/9 md5 OK
+differ: 79, outside logs/: 0
+2026-11-15T08:49:15-05:00 moved 10 untracked non-HEAD paths on server into build/m0-d177/debris/ (paths kept)
+10
+?? crates/sr-engine/tests/gpu/stages.rs
+?? milestones/m0/tasks/M0-D164.md
+?? milestones/m0/tasks/M0-T103.md
+?? tests/plants/stage-hold-long.patch
+?? tests/plants/stage-hold-one.patch
+touched: 0 task(s) · 0 path(s) · 366 claim record(s) naming their files · 71 without (before the field) · 0 foreign
+=== NO-GO: no claim record of M0-D177 names its files ===
+2026-11-15T08:50:02-05:00 plan + tasks/M0-D177.md synced, md5 2/2 OK
+2026-11-15T10:39:11-05:00 closing plan + task file synced, md5 2/2 OK

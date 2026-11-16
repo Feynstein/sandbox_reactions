@@ -1,6 +1,7 @@
 // P4 hydro (m0_contrat.md §1.3.2, §2.3.3–§2.3.5, §2.8): M0-T33b's twin (sr_physics::reference::hydro) in f32, three
 // dispatches — `hydro_update` over the active box's 8 × 8 tiles, `hydro_edges` over the world's boundary faces, then
-// `hydro_commit` over the box's tiles. Compiled with eos.wgsl prepended (group 1).
+// `hydro_commit` over the box's tiles — after, when the step runs P2, `hydro_mid` and P2's half-step chains (gravity's
+// source, below). Compiled with eos.wgsl prepended (group 1).
 //
 // `hydro_update`, one cell per invocation: finite volume, unsplit, second order — MUSCL-Hancock with the monotonised-
 // central limiter on the primitives (Σ, u, v, Π, X_i), the species slopes sharing one limiter factor so ΣX_i = 1 holds;
@@ -24,15 +25,18 @@
 //
 // Gravity's source (§1.4.2; M0-T36), when the step runs P2 (`edges.gravity`): `face_state`'s Hancock predictor kicks each
 // face state by half a step of the cell's g — velocity by ½Δt·g, energy by the work Σ(u + ¼Δt·g)·g·½Δt, leaving its
-// thermal energy as it was — beside the flux differences; `hydro_update` adds Δt·Σg to the momentum, Σ the cell centre's
-// half-step value from that same predictor. The energy source is the work the step's mass fluxes do across φ (§0.5
+// thermal energy as it was — beside the flux differences; `hydro_update` adds Δt·Σ_src,mid·g_mid to the momentum
+// (§1.4.2 [M0-D183]): `hydro_mid`, P4's first dispatch, writes Σ_src at the cell centre's half step (the predictor's Σ, 0
+// below Σ_vac, a held cell's own Σ) into P2's field (`mid_out`, its plane 10), P2's chains solve φ_mid and g_mid on it
+// (step/grav.rs `Gravity::mid`), and the update multiplies g_mid by that same plane — so the masses that pull are the
+// masses pulled, and the pairs' pulls cancel (M0-D181: Σ_mid·g with g from Σⁿ did not). The energy source is the work the step's mass fluxes do across φ (§0.5
 // [M0-D64], [M0-D68]): a face whose mass flux q joins the cell i to its neighbour j does Δt·q·(φ_i − φ_j), i keeping
 // ½Δt·p_i·(φ_i − φ_j) of it — p the two cells' half-step momenta on that axis — so each cell keeps the Δt·(Σu)·g its own
 // momentum pays for; the rest, the work of the mass HLL's diffusion moves, D = Δt·(q − ½(p_i + p_j))·(φ_i − φ_j), when it
 // is a cost (D < 0) is paid first from the pair's relative motion on the axis — at most half its kinetic energy, by an
 // equal and opposite impulse — and what is left of it, or a gain, is shared by w_i = Σ_i/(Σ_i + Σ_j), their half-step
 // masses' share (`face_work`); the neighbours' half-step centres cross through `mids`. Summed, the energy gained is what
-// the moved mass does to W at the step's φ, and the impulses cancel in the momentum. A ghost's g and φ are its edge cell's, so
+// the moved mass does to W at the half step's φ_mid (§1.4.2 [M0-D183]), and the impulses cancel in the momentum. A ghost's g and φ are its edge cell's, so
 // no work is done across the world's edge. `hydro_edges` recomputes the same predictor, so it binds g too. The twin's
 // `Hydro::step_with` is the reference.
 //
@@ -50,7 +54,8 @@
 // work is done across a face with a held side, so neither cell takes `face_work` there; the free cell keeps its slopes
 // and its Σg kick. A held cell takes no flux difference, no gravity source and no radiation force: `hydro_update` writes
 // its Σ, E and species as they were and, in its momentum planes, the momentum it was spared — its momentum flux
-// differences and Δt·Σg, g there P2's g_pull, the pull of all but the held cells (§1.4.2 [M0-D149], `pull_at`) —, which `hydro_commit` books into `held` (`booking.held`) and never writes, so the held cell
+// differences and Δt·Σg, Σ its plane-10 source and g there the half step's g_pull_mid, the pull of all but the held cells
+// (§1.4.2 [M0-D149], [M0-D183], `pull_at`) —, which `hydro_commit` books into `held` (`booking.held`) and never writes, so the held cell
 // keeps its momentum, 0 since P8 held it. `hydro_edges` books nothing at a held edge cell. One-way inflow is not built
 // (§0.5 [M0-D71]; M0-D71f). [M0-D172] The wall is sticky: `hydro_commit` sets a free gas cell's (Σ ≥ Σ_vac) momentum into
 // a held face-neighbour to 0, E as it is — the infall's kinetic energy becomes heat — and books it into `held` with the spared:
@@ -128,6 +133,16 @@ struct Edges {
 // The booking's `held` buffer (state.rs `booking.held`): held.spared.mom_x's plane, then held.spared.mom_y's, one slot per
 // cell — `hydro_commit`'s.
 @group(0) @binding(16) var<storage, read_write> held_book: array<f32>;
+// P2's field as `hydro_mid` writes it (the same buffer as `grav`, never bound both ways in one dispatch): Σ_src at the
+// half step into plane MID_SRC (§1.4.2 [M0-D183]).
+@group(0) @binding(17) var<storage, read_write> mid_out: array<f32>;
+
+// The field's half-step planes (step/grav.rs `FIELD_PLANES`): g_mid's x (y the next), φ_mid, g_pull_mid's x (y the next),
+// Σ_src at the half step.
+const MID_G: u32 = 5u;
+const MID_PHI: u32 = 7u;
+const MID_PULL: u32 = 8u;
+const MID_SRC: u32 = 10u;
 
 const PLANES_A: u32 = 5u;
 const PLANES_B: u32 = 5u;
@@ -307,17 +322,26 @@ fn accel_at(x: i32, y: i32) -> vec2<f32> {
     return vec2<f32>(grav[cell], grav[dims.cells + cell]);
 }
 
-// φ at (x, y), a ghost's its edge cell's (so no work is done across the world's edge); read only when the step runs P2.
+// φ_mid at (x, y), the half step's (§1.4.2 [M0-D183]), a ghost's its edge cell's (so no work is done across the world's
+// edge); read only when the step runs P2.
 fn phi_at(x: i32, y: i32) -> f32 {
     let cell = u32(clamp(y, 0, i32(dims.height) - 1)) * dims.width + u32(clamp(x, 0, i32(dims.width) - 1));
-    return grav[2u * dims.cells + cell];
+    return grav[MID_PHI * dims.cells + cell];
 }
 
-// g_pull at the cell (x, y) inside the world — the pull of all but the held cells, what a held cell's spared Σg·Δt reads
-// (§1.4.2 [M0-D149]); read only when the step runs P2.
+// g_pull_mid at the cell (x, y) inside the world — the half step's pull of all but the held cells, what a held cell's
+// spared Σg·Δt reads (§1.4.2 [M0-D149], [M0-D183]); read only when the step runs P2.
 fn pull_at(x: i32, y: i32) -> vec2<f32> {
     let cell = u32(y) * dims.width + u32(x);
-    return vec2<f32>(grav[3u * dims.cells + cell], grav[4u * dims.cells + cell]);
+    return vec2<f32>(grav[MID_PULL * dims.cells + cell], grav[(MID_PULL + 1u) * dims.cells + cell]);
+}
+
+// g_mid at the cell (x, y) inside the world, and Σ_src at the half step there — the pull and the mass it multiplies
+// (§1.4.2 [M0-D183]); read only when the step runs P2.
+fn mid_kick_at(x: i32, y: i32) -> vec3<f32> {
+    let cell = u32(y) * dims.width + u32(x);
+    let n = dims.cells;
+    return vec3<f32>(grav[MID_G * n + cell], grav[(MID_G + 1u) * n + cell], grav[MID_SRC * n + cell]);
 }
 
 // Gravity's source at one face over the step (the header comment), for the face's low cell (−x or −y) and its high cell
@@ -993,7 +1017,7 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
     if (here) {
         var spared = -dt * vec2<f32>((fxr[1] - fxl[1]) + (fyr[1] - fyl[1]), (fxr[2] - fxl[2]) + (fyr[2] - fyl[2]));
         if (edges.gravity != 0u) {
-            spared += dt * pred.mid.x * pull_at(x, y);
+            spared += dt * mid_kick_at(x, y).z * pull_at(x, y);
         }
         keep(cell);
         put_next(1u, cell, spared.x);
@@ -1003,11 +1027,12 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
     for (var k = 0u; k < COMPONENTS; k++) {
         u[k] -= dt * ((fxr[k] - fxl[k]) + (fyr[k] - fyl[k]));
     }
-    // Gravity's source, time-centred on the predictor's half step (§1.4.2); no work across a face to a held cell.
+    // Gravity's source at the predictor's half step (§1.4.2 [M0-D183]): Σ_src,mid·g_mid; no work across a face to a held
+    // cell.
     if (edges.gravity != 0u) {
-        let g = accel_at(x, y);
-        u[1] += dt * pred.mid.x * g.x;
-        u[2] += dt * pred.mid.x * g.y;
+        let k = mid_kick_at(x, y);
+        u[1] += dt * k.z * k.x;
+        u[2] += dt * k.z * k.y;
         let p = phi_at(x, y);
         let m = pred.mid;
         let ml = mids[select(64u + lid.y, lid.y * TILE + lid.x - 1u, lid.x > 0u)];
@@ -1032,6 +1057,43 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
         u[2] += s * d.y;
     }
     write_next(cell, u);
+}
+
+// Σ at the half step of the cell (x, y) as the Hancock predictor makes it — Σ plus half a step of its faces' mass flux
+// differences (`hancock`'s mid.x in exact arithmetic) — read from the state, g never read.
+fn half_sigma(x: i32, y: i32, half: f32) -> f32 {
+    let c = read_at(x, y);
+    let xl = read_at(x - 1, y);
+    let xr = read_at(x + 1, y);
+    let yl = read_at(x, y - 1);
+    let yr = read_at(x, y + 1);
+    let sx = slope(xl, c, xr);
+    let sy = slope(yl, c, yr);
+    let wxl = bracketed(offset(c, sx, -0.5), c, xl);
+    let wxr = bracketed(offset(c, sx, 0.5), c, xr);
+    let wyl = bracketed(offset(c, sy, -0.5), c, yl);
+    let wyr = bracketed(offset(c, sy, 0.5), c, yr);
+    return c.sigma + half * ((wxl.sigma * wxl.u - wxr.sigma * wxr.u) + (wyl.sigma * wyl.v - wyr.sigma * wyr.v));
+}
+
+// P4's first dispatch when the step runs P2 (§1.4.2 [M0-D183]): Σ_src at the half step over the box into `mid_out`'s plane
+// MID_SRC — the predictor's Σ where it is at least Σ_vac, a held cell's own Σ (it takes no flux), 0 elsewhere and in a cell
+// the update leaves empty — the source P2's half-step chains solve and the mass `hydro_update`'s kick multiplies.
+@compute @workgroup_size(8, 8)
+fn hydro_mid(@builtin(global_invocation_id) id: vec3<u32>) {
+    if (id.x >= abox.w || id.y >= abox.h) {
+        return;
+    }
+    let x = i32(abox.x0 + id.x);
+    let y = i32(abox.y0 + id.y);
+    let cell = u32(y) * dims.width + u32(x);
+    var s = 0.0;
+    if (held_at(x, y)) {
+        s = hydro[cell];
+    } else if (!left_empty(x, y)) {
+        s = half_sigma(x, y, 0.5 * dt_rec.x);
+    }
+    mid_out[MID_SRC * dims.cells + cell] = select(0.0, s, s >= eos.sigma_vac);
 }
 
 // One invocation per boundary-face slot, leaving only: the face's `boundary` flux, as `hydro_update` applied it to its

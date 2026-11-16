@@ -506,6 +506,13 @@ impl Costs {
     }
 }
 
+/// summary.json's `standins` (§5.2 G-END, M0-T104): whether each stand-in law (§1.6.4) was enabled in the run's physics —
+/// `{"s1": bool, "s2": bool}`, both false in every shipped run.
+fn standins_json(physics: &Physics) -> serde_json::Value {
+    let s = physics.standins();
+    json!({"s1": s.s1, "s2": s.s2})
+}
+
 /// The lines `say` has printed since [`run_captured`] began, while it runs.
 static CAPTURE: std::sync::Mutex<Option<Vec<String>>> = std::sync::Mutex::new(None);
 
@@ -717,6 +724,7 @@ fn run_twin(
             "ledger": {"start": {}, "end": {}},
             "events": [],
             "objects": [],
+            "standins": standins_json(physics),
             "until": {"condition": format!("steps:{wanted}"), "met": met},
         });
         let text = serde_json::to_string_pretty(&summary).expect("a json! value serialises");
@@ -1327,6 +1335,7 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
             "ledger": ledger.json(),
             "events": watch.events().iter().map(|e| e.json()).collect::<Vec<_>>(),
             "objects": watch.objects_json(),
+            "standins": standins_json(&physics),
             "max_gas_speed": watch.max_gas_speed(),
             "until": {"condition": condition, "met": met},
         });

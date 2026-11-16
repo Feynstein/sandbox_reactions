@@ -1220,6 +1220,45 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     Massive's displayed stages as they are and the stage it removed, the sun's planetary_nebula, is parenthesised; the two hold
     plants turn the Giant red. The Massive's «Supergiant» h_shell and he_core are read at their first display (M ≥ m_up_sb there,
     9,071 against 6,515): its two later he_core flickers (t 164.6 and 166.5) show at 5,497 and 5,342, under it — printed, not graded.
+  - [M0-T104] §2.12.2's summary.json keys (`events`, `objects`, `until`, `timing`) with §5.2 G-END's «summary.json records whether S1 or S2 was
+    enabled», which no key carried · **summary.json gains `standins`: `{"s1": bool, "s2": bool}`, the stand-in laws (§1.6.4) the run's
+    physics was built with — both false in every shipped run (`Physics::shipped`, `Standins::SHIPPED`); the CPU twin's summary writes it
+    too** — the physics unchanged · G-END's cases read it beside `objects[].predicted_ending` and `ending` (§5.2) · measured on
+    laserax-ai-server's RTX 4090 (2026-11-15, tasks/M0-T104.md): every life of the `endings` scope writes {s1: false, s2: false} — the
+    lead's «do task T104», 2026-11-15, the block's own Deliver (`crates/sr-engine/src/headless.rs`: summary.json recording whether S1 or S2 was enabled).
+  - [M0-D180] §5.2 G-TOUCH's paint row, «it then ends as a neutron star or black hole, as its new prediction says», run in the
+    default world (edge `leave`) · **the paint case runs with edges that bounce (`--edge bounce`; summary.json's `world.edge`
+    graded), its edits file unchanged, and is graded on a `supernova` event of the ending's object, then a neutron_star or
+    black_hole ending; the erase row unchanged** — the physics unchanged · measured on linux-pc's RTX 5090 (2026-11-15,
+    tasks/M0-D180.md): the painted Sun-like (8,219 sb — 3,093 sb half-burnt under 5,125 sb of pure hydrogen) outgrows the 600 ×
+    400 world: under `leave` its envelope reaches R 200–212 and 5,100–5,500 sb flow out, ending a white dwarf (three seeds, and a
+    paint paced one frame per 64 steps: white dwarf 3,020 sb) where G-END's 8,144 sb cloud keeps R ≈ 56; the paint landing in ≤ 7
+    steps (τ_dyn 1.03) also drops the virial share 0.98 → 0.51, the core overshoots to T_c ≈ 210 and the burn unbinds ≈ 1,840 sb
+    (reactions off: none). Under `bounce` every gram stays and both paces go supernova (step ≈ 109,200) then black hole — the
+    ejecta fall back in the closed box — the lead at M0-D180, 2026-11-15: «Bounce + SN, NS or BH (Recommended)».
+  - [M0-D183] §1.4.2's «P4 adds the momentum source Σg and the energy source Σu·g, time-centred on the predictor's half-step
+    velocity» (with §0.5 [M0-D64]/[M0-D68]'s face work across P2's φ and [M0-D149]'s held Σg_pull) · **the momentum source is
+    Σ_src,mid·g_mid, the face work runs across φ_mid and a held cell's spared Σg·Δt is Σ_src,mid·g_pull,mid: Σ_src,mid is Σ_src at
+    the predictor's half step (its Σ where ≥ Σ_vac, else 0; a held cell's own Σ), φ_mid = K ∗ Σ_src,mid plus the sinks' §1.4.3 as
+    P2 added them, g_pull,mid the same with the held cells emptied — solved in P4 after the predictor; P2's g still drives the
+    predictor's half kick and P9's Δt** — amended in place, each passage tagged [M0-D183]; GPU (`hydro_mid`, `Gravity::mid`'s
+    chains, the field's planes 5–10) and twin (`Hydro::step_held`) alike; physics.json unchanged, the physics changed · measured
+    on linux-pc's RTX 5090 (2026-11-15, tasks/M0-D183.md): the extra chain costs ≈ P2's 0.134 ms a step (4 % of a 3.3 ms step,
+    1.4 % of 9.5 ms); the Massive life in a leave world with §2.4.4's radiation force off drifts 6.0 × 10⁻⁶ of the running peak
+    Σm|u| (M0-D181's E3 floor 8.5 × 10⁻⁶; the shipped kick 1.04 with the force on) and ends supernova → neutron_star at t 182.2;
+    G-JEANS J ×1.0000 (the Σⁿ kick ×89.3, M0-D181); G-REF's disk E 1.19 × 10⁻³ over its 10⁻³ band — a thin wind cell at step 146
+    lands 4.3 × 10⁻¹² above Σ_vac in the twin's f64 and under it in the GPU's f32, sets Δt, and the clocks part (→ M0-D185) — the
+    lead at M0-D183, 2026-11-15: «Half-step φ (Recommended)», «φ_mid too (Recommended)», «File a D, close DONE (Recommended)».
+  - [M0-D185] §5.1 G-REF's «200 steps: relative L1 difference ≤ 10⁻³ in Σ and E, ≤ 10⁻⁴ absolute in each X», read at equal step
+    count · **the GPU runs 200 steps to t_GPU and the twin steps on its own Δt to t_GPU, its last step capped to land there
+    (`Twin::cap_dt_next`); the states are read there on the same bands (X on [M0-V5]'s cell set); and the clocks on their own
+    line: each run's sim time after 200 uncapped steps, |t_GPU / t_twin − 1| ≤ 5 × 10⁻⁴** — amended in place, tagged [M0-D185];
+    scenes, steps, bands and plant unchanged · at equal steps a thin cell that lands above Σ_vac in f64 and under it in f32
+    sets a different Δt and the comparison reads the clocks' offset as state: measured on linux-pc's RTX 5090, 2026-11-15, the
+    disk's wind at step 146 (M0-D183) parts the clocks by 6.6 × 10⁻⁵ and reads E 1.19 × 10⁻³; at equal time the disk reads
+    Σ 8.1 × 10⁻⁵, E 1.4 × 10⁻⁴, Sod 2.0 × 10⁻⁷, burn 1.1 × 10⁻⁵ · the plant `cfl-gpu` red in all three: the clock on Sod
+    (−2.45 %) and burn (−1.84 %), the disk by Σ 3.2 × 10⁻³ at equal time (its clock −0.047 %, inside the band: the disk's Δt
+    is mostly gravity's) — the lead at M0-D185, 2026-11-15: «Equal sim time (Recommended)», «5e-4 relative (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1285,7 +1324,7 @@ clock, the rung, the frame or a label.
 | P1 Δt | Δt_n is the reduction P9 made at the end of step n−1 (step 0 reduces the initial state first) |
 | P2 gravity | φ = K ∗ Σ_src over the box (§1.4.2), re-solved on the cadence of §1.4.4; sinks' potentials added (§1.4.3); g = −∇φ; [M0-D149] while the mask holds a cell, φ_pull and g_pull of all but the held cells beside them (§1.4.2) |
 | P3 sinks | formation (at most one per step) and accretion, then the sinks' kick-drift (§2.6) |
-| P4 hydro | MUSCL-Hancock + HLL (§2.3) with the gravity source, the radiation force from the previous step's flux (§2.4.4), the edge ghosts (§2.8); escaped counters; [M0-TG2] a held cell (the mask the last P8 wrote, §2.7) left as it is behind reflecting walls, the momentum it is spared booked `held` (§2.3.4) |
+| P4 hydro | [M0-D183] the half step's Σ_src, then P2's chains on it (φ_mid, g_mid, g_pull,mid; §1.4.2), then MUSCL-Hancock + HLL (§2.3) with the gravity source, the radiation force from the previous step's flux (§2.4.4), the edge ghosts (§2.8); escaped counters; [M0-TG2] a held cell (the mask the last P8 wrote, §2.7) left as it is behind reflecting walls, the momentum it is spared booked `held` (§2.3.4) |
 | P5 heat | flux-limited diffusion stepped by RKL2 with s stages (§2.4); radiated energy counted; the flux field F kept for step n+1's P4 |
 | P6 reactions | every enabled registry record and neutrino cooling, sub-cycled per cell (§2.5); the neutrino source field S_ν kept; the latch flag (§1.8.5) |
 | P7 neutrino heating | the S_ν share deposited through a convolution kernel (§2.5.4); zero dispatches when ΣS_ν = 0 |
@@ -1321,9 +1360,14 @@ exact potential at a unit square's centre from its own uniform mass, ∫∫_{[�
 4 ln(1 + √2) (my arithmetic), not Plummer softening (SM-C1: softening ε = 0.5 doubled the force
 error). Computed by a zero-padded FFT convolution over the box (Hockney–Eastwood, SM-E8), radix-2
 sizes (§1.3.3). g = −∇φ by central differences. P4 adds the momentum source Σg and the energy source
-Σu·g, time-centred on the predictor's half-step velocity. [M0-TG2] A held cell (§2.3.4, §2.7) takes neither source,
+Σu·g, time-centred on the predictor's half-step velocity. [M0-D183] The momentum source is Σ_src,mid·g_mid and the energy source
+§0.5 [M0-D64]/[M0-D68]'s face work across φ_mid: Σ_src,mid is Σ_src at the predictor's half step (its Σ where ≥ Σ_vac, else 0; a
+held cell's own Σ), φ_mid = K ∗ Σ_src,mid plus the sinks' §1.4.3 as P2 added them, g_mid = −∇φ_mid — solved in P4 after the
+predictor, so the masses that pull are the masses pulled and the pairs' pulls cancel; P2's g still drives the predictor's half
+kick and P9's Δt. [M0-TG2] A held cell (§2.3.4, §2.7) takes neither source,
 its Σg·Δt booked `held` — [M0-D149] g there being g_pull = −∇φ_pull, φ_pull = K ∗ Σ_src with the held cells emptied plus
-the sinks' §1.4.3, which P2 solves beside φ while the mask holds a cell, so the core's own pull, which cancels over it,
+the sinks' §1.4.3, which P2 solves beside φ while the mask holds a cell ([M0-D183] at the half step: Σ_src,mid·g_pull,mid, the
+same solve on Σ_src,mid in P4), so the core's own pull, which cancels over it,
 is never booked —, and no gravitational work is done across a face between a held and a free cell: neither cell
 takes §0.5 [M0-D64]'s ½Δt·p·Δφ share nor [M0-D68]'s D there, and the free cell keeps its Σg kick. [M0-D71f] No face
 passes mass into a held cell (§2.3.4's walls, final), so no held face does work.
@@ -1975,7 +2019,7 @@ the twin's P8 and the GPU's alike (the lead at M0-TG2: «Code now, move later (R
   "ledger": {"start": {…}, "end": {…}}, "events": [{"step", "sim_time", "kind":
   "ignition|core_collapse|supernova|sink_formed|ending", "object", "detail"}], "objects": [{"id",
   "stage", "mass_sb", "mass_suns", "predicted_ending", "ending", "age_years", "stages": [{"stage",
-  "from_step", "sim_time"}]}], "until": {"condition", "met"[, "object" — M0-D95: the life's ending's object, §0.5 [M0-D95]]}, "timing": {"per_pass_ms": {…},
+  "from_step", "sim_time"}]}], "standins": {"s1", "s2"} [M0-T104], "until": {"condition", "met"[, "object" — M0-D95: the life's ending's object, §0.5 [M0-D95]]}, "timing": {"per_pass_ms": {…},
   "step_ms_mean"}}` (timing only with `--timing`).
 - **2.12.3 State dump** (`dumps/s_<step>.bin`): the eight bytes `SRDUMP01`, a little-endian u32
   header length, a UTF-8 JSON header `{"version": 1, "width", "height", "step", "sim_time",
@@ -2536,7 +2580,9 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   `wall-copy`: bounce ghosts copy instead of mirror.
 - **G-REF · the CPU twin.** GPU f32 against the CPU f64 twin on three 64 × 64 scenes (a collapsing
   disk, a Sod strip, a burning field), 200 steps: relative L1 difference ≤ 10⁻³ in Σ and E, ≤ 10⁻⁴
-  absolute in each X (SM §Oracles; ES-E20: floats differ between GPUs). *UNVERIFIED*. Scope
+  absolute in each X (SM §Oracles; ES-E20: floats differ between GPUs) — [M0-D185] read at the GPU's sim
+  time after 200 steps (the twin's last step capped to land there), and the two sim times after 200 steps
+  within 5 × 10⁻⁴ relative. *UNVERIFIED*. Scope
   `cpu-gpu`. Plant `cfl-gpu`: the GPU's CFL 0.4 → 0.39.
 
 ### 5.2 The squeeze, the endings, the stages, touch
@@ -2563,8 +2609,9 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   Plant `no-push`: the radiation force zeroed (no planetary nebula while S1 is off).
 - **G-TOUCH · touch any time** (B7: "Add gas to a shining star (it gets heavier and its fate
   changes), erase a chunk, heat or cool it"). Edits files: hydrogen painted onto the Sun-like preset
-  at X_H,c = 0.5 until it weighs 1.25 × m_up_sb — it then ends as a neutron star or black hole, as
-  its new prediction says; the Massive preset at X_H,c = 0.5 erased from outside in down to
+  at X_H,c = 0.5 until it weighs 1.25 × m_up_sb — ~~it then ends as a neutron star or black hole, as
+  its new prediction says~~ [M0-D180] in a world whose edges bounce, it then goes supernova, as its new prediction says, and
+  ends a neutron star or a black hole; the Massive preset at X_H,c = 0.5 erased from outside in down to
   m_up_sb ÷ 1.25 — it then ends as a white dwarf. Exact. *UNVERIFIED*. Scope `touch` ⏱. Plant
   `edit-ignored`: P0 drops edits on non-vacuum cells.
 - **G-FIT · every life fits the world.** Through each preset's life no bound gas

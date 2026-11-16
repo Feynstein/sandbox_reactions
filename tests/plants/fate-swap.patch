@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/ending.rs
++++ b/crates/sr-physics/src/observe/ending.rs
+@@ -116,7 +116,7 @@
+             Fate::FailedStar
+         } else if suns < MASS_SUNS[2] {
+             Fate::WhiteDwarf
+-        } else if suns < MASS_SUNS[3] {
++        } else if suns < MASS_SUNS[2] {
+             Fate::Supernova
+         } else {
+             Fate::BlackHole

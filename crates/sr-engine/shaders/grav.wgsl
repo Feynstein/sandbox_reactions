@@ -23,6 +23,13 @@
 // `grav_rows` clears the flag for the next step. With no held cell the pull chain costs its rows alone, and planes 3 and
 // 4 keep their last values, which no pass reads then.
 //
+// The half step (§1.4.2 [M0-D183]; step/grav.rs `Gravity::mid`, run inside P4 after `hydro_mid`): the same chains again on
+// Σ_src at the predictor's half step — the plane `hydro_mid` writes into g's plane 10, read as `src` through the chain's
+// own `fp` — g_pull_mid into g's planes 8 and 9 (`grav_gradient_pull_mid`, the held cells emptied, gated as the pull),
+// then g_mid and φ_mid into planes 5, 6 and 7 (`grav_gradient_mid`); with P3, `grav_sinks_mid` adds the sinks' pull and
+// potential as P2 added them (`g_total` less `g` in planes 0 … 4). P4's kick, its face work and a held cell's spared
+// Σg·Δt read them, so the masses the pull comes from are the masses it multiplies and the pairs cancel.
+//
 // The edit chain (§2.9 [M0-D109]; step/grav.rs `Gravity::edit_potential`, joined by step/edit.rs): on a step whose P0 moved
 // mass — `gate` is P0's flag — φ_δ = K ∗ ΔΣ of P0's ΔΣ plane (bound as `src`), solved before φ's rows on the same work
 // buffer into a scratch plane (`dst`, then `phi_edit`); `grav_edit_before` books ½ ΔΣ (φ − φ_δ) after `grav_gradient`, φ the
@@ -72,7 +79,8 @@ const MAX_SINKS: u32 = 16u;
 // φ as conv_rows_inverse wrote it into `dst` (the same buffer, never bound both ways in one dispatch)
 @group(0) @binding(10) var<storage, read> phi: array<f32>;
 // g = −∇φ: the x plane, the y plane, then φ's (P4's energy source reads it, §0.5 [M0-D64]), then g_pull's x and y planes
-// — the gas's alone when the step runs P3 (`gas_field`), else the field itself
+// — the gas's alone when the step runs P3 (`gas_field`), else the field itself; then the half step's (§1.4.2 [M0-D183]):
+// g_mid's x and y planes, φ_mid's, g_pull_mid's x and y planes, and Σ_src at the half step (`hydro_mid`'s, in the field)
 @group(0) @binding(11) var<storage, read_write> g: array<f32>;
 // the sinks (P3's buffer) and g and φ with their pull added (the field P4 and Δt read), used by `grav_sinks` alone
 @group(0) @binding(12) var<storage, read> sink_state: SinkState;
@@ -281,6 +289,46 @@ fn grav_gradient_pull(@builtin(global_invocation_id) id: vec3<u32>) {
     let cell = (abox.y0 + id.y) * fp.stride + abox.x0 + id.x;
     g[3u * gp.cells + cell] = a.x;
     g[4u * gp.cells + cell] = a.y;
+}
+
+// The half step's g_mid = −∇φ_mid over the box's 8 × 8 tiles, into g's planes 5 and 6, and φ_mid beside it in plane 7
+// (§1.4.2 [M0-D183]).
+@compute @workgroup_size(8, 8)
+fn grav_gradient_mid(@builtin(global_invocation_id) id: vec3<u32>) {
+    if (id.x >= abox.w || id.y >= abox.h) {
+        return;
+    }
+    let a = gradient_at(id.xy);
+    let cell = (abox.y0 + id.y) * fp.stride + abox.x0 + id.x;
+    g[5u * gp.cells + cell] = a.x;
+    g[6u * gp.cells + cell] = a.y;
+    g[7u * gp.cells + cell] = phi[cell];
+}
+
+// The half step's g_pull_mid = −∇φ_pull,mid into g's planes 8 and 9, while a cell is held (`gate`).
+@compute @workgroup_size(8, 8)
+fn grav_gradient_pull_mid(@builtin(global_invocation_id) id: vec3<u32>) {
+    if (id.x >= abox.w || id.y >= abox.h || gate.x == 0u) {
+        return;
+    }
+    let a = gradient_at(id.xy);
+    let cell = (abox.y0 + id.y) * fp.stride + abox.x0 + id.x;
+    g[8u * gp.cells + cell] = a.x;
+    g[9u * gp.cells + cell] = a.y;
+}
+
+// With P3, the half step's planes 5 … 9 of `g_total` (the field P4 reads): the gas's half-step field plus the sinks' pull
+// and potential as `grav_sinks` added them to planes 0 … 4 this step — the same sinks, read back as `g_total` less `g`.
+@compute @workgroup_size(8, 8)
+fn grav_sinks_mid(@builtin(global_invocation_id) id: vec3<u32>) {
+    if (id.x >= abox.w || id.y >= abox.h) {
+        return;
+    }
+    let cell = (abox.y0 + id.y) * fp.stride + abox.x0 + id.x;
+    for (var k = 0u; k < 5u; k++) {
+        let at = k * gp.cells + cell;
+        g_total[5u * gp.cells + at] = g[5u * gp.cells + at] + (g_total[at] - g[at]);
+    }
 }
 
 // An optional 5th, only in a step that runs P3 (§1.4.3): every sink's softened potential −G M / √(r² + r_acc²) added to φ, and its

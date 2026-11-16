@@ -119,8 +119,8 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
   with the scope's planted bugs (`tests/plants/<plant>.patch`, or a command for a file that moves); (2) iterate on
   **your scope alone** until green (`verify.py <scope> --task <ID>`); (3) red-arm it **only when the task added it or
   changed its check** — its manifest entry, its plants, or a test file its `Deliver:` names (`verify.py --redarm
-  <scope> --task <ID>`: the clean copy GO, each plant NO-GO); a scope the task only runs is not re-armed, the sweep
-  covers it [M0-TE-V12.3]; (4) make every plan edit through `plan.py`; (5) run `verify.py --changed --task <ID>`
+  <scope> --task <ID>`: the plants only; the clean copy is the scope's own green run on this tree (`--with-clean` for a fresh one) — each plant NO-GO; with no green run of the scope on these bytes it refuses, naming
+  `verify.py <scope> --task <ID>` [M0-D178]); a scope the task only runs is not re-armed, the sweep covers it [M0-TE-V12.3]; (4) make every plan edit through `plan.py`; (5) run `verify.py --changed --task <ID>`
   **once, last** — the claim about the tree you hand over, read against the task's own start that `plan.py show`
   records, never a commit, so no commit is needed between tasks; a block whose `show` recorded no start names `--base
   <a commit's SHA>`, never `HEAD` (R10) [M0-TE-V12.3]; (6) write the handoff from that run; (7) a fix after step 5 is
@@ -250,7 +250,10 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
   keep their spelling. The checks, their cases, `expected` counts and plants are unchanged — a rename, never a bypass.
 - A block that greps testing.md for its rows (a docs block's Verify) greps the `_` spelling.
 
-## R18 · GPU runs on laserax-ai-server — a block executed on laserax-ai (the lead, 2026-10-22, at M0-D85)
+## R18 · GPU runs on laserax-ai-server — a block executed on laserax-ai (the lead, 2026-10-22, at M0-D85) — N/A, superseded by R21
+- **N/A — superseded by R21** (the lead, 2026-11-15, at M0-D181: «You can write in the plans standing rules that we can move back
+  the tests to this PCs 5090 from now on. The tests and calibration, etc etc»). The text below is kept as written (the plan's
+  Superseded section).
 - The lead, 2026-10-22, at M0-D85: «write as a standing rule in this plan to run everything thats on the gpu, even the tests on
   laserax-ai-server, when executing tasks on laserax-ai». Before it, per task: M0-D80 «use the RTX 4090 to run your tests there»,
   «Push from here», «Iterate there, claim here»; M0-R8 «run everything that requires a gpu on laserax-ai-server, just like D84 did,
@@ -312,6 +315,19 @@ every time (§13 OPT-C). Grants buy execution, never acceptance.
 - **The reading** (mine, M0-TJ5 — the lead corrects it if wrong): a deploy is any copy of the web build to an address players
   reach — `games-box`, a CDN, a game portal; serving a build on this machine for a test (the web smoke, `review_page.py
   serve`) is not one, and Steam's desktop release is outside R20 (the negative scope keeps Steam).
+
+## R21 · GPU runs on linux-pc's RTX 5090 (the lead, 2026-11-15, at M0-D181)
+- The lead, 2026-11-15, at M0-D181, after its one-task exception («Use linux-pc's RTX 5090 this time»): «You can write in the plans
+  standing rules that we can move back the tests to this PCs 5090 from now on. The tests and calibration, etc etc». It supersedes R18.
+- **What runs here.** A block executed on linux-pc (laserax-ai) runs every GPU run on its own NVIDIA GeForce RTX 5090: the GPU scopes
+  while iterating, `--redarm`, the claim run (`verify.py --changed`), `calibrate`, `headless`, `bench` and every probe — `tests/gpu.sh`'s
+  default adapter (`SR_TEST_ADAPTER` unset, or `"RTX 5090"`), `--adapter "RTX 5090"` on the binary. Every number names the RTX 5090 and
+  linux-pc (R13). No tree is rsync'd to laserax-ai-server for a run, and no log comes back from it.
+- **Unchanged.** The Quadro RTX 4000's own checks (G-FPS, G-TOP, per-pass costs, a window, Xvfb, a display capture) stay on the Quadro
+  as their blocks name it; win-laptop's runs stay R15's; a run over ten minutes stays the lead's, in one visible terminal (R9, R12).
+- **My reading (M0-D181 — the lead corrects it if wrong):** a run the register still owes on laserax-ai-server's RTX 4090 (Awaiting
+  lead) runs here on the RTX 5090 instead, its bound unchanged and its number named by the adapter; a measurement whose `Deliver:` is
+  the RTX 4090's own stays the 4090's and is asked. Evidence kept on laserax-ai-server (Awaiting lead's keep lists) stays there.
 
 ## The Rules paragraph (moved byte for byte from the plan by M0-TC13, 2026-11-02)
 PLAYBOOK.md v12.3 + the instruction file bind every agent (cited once, never per block). Full text

@@ -21,6 +21,10 @@
 //! from the F P5 left in `side.flux` at the end of the last step, with physics.json's κ₀, c_sb, κ_dust and T_dust in the
 //! same uniform.
 //!
+//! The half step (§1.4.2 [M0-D183]): with P2, a fourth dispatch comes first — `hydro_mid` writes Σ_src at the predictor's
+//! half step into P2's field (its plane 10, [`super::grav::FIELD_PLANES`]), which P2's half-step chains solve
+//! ([`super::grav::Gravity::take_mid`], joined after it by step/mod.rs) and the update's kick multiplies.
+//!
 //! The hold (§2.3.4 [M0-TG2]; M0-D71c): the three dispatches read the mask the last P8 wrote (`State::held`) as a
 //! sampled texture, outside the storage limit; `hydro_commit` books what a held cell was spared into the booking's `held`
 //! buffer (`booking.held`), P4's second, and stops a free cell's momentum into a held face-neighbour, booked there too
@@ -96,7 +100,7 @@ impl Hydro {
                 &no_flux
             }
         };
-        let dispatches = dispatches(device, state, booking, eos, boxfit, dt_record, g, flux, &mode);
+        let dispatches = dispatches(device, state, booking, eos, boxfit, dt_record, g, flux, &mode, gravity.is_some());
         Hydro { dispatches, edge: mode, sources }
     }
 
@@ -127,6 +131,7 @@ fn dispatches(
     gravity: &wgpu::Buffer,
     flux: &wgpu::Buffer,
     edge: &wgpu::Buffer,
+    half_step: bool,
 ) -> Vec<Dispatch> {
     let module = device.create_shader_module(wgpu::ShaderModuleDescriptor {
         label: Some("hydro.wgsl"),
@@ -205,7 +210,28 @@ fn dispatches(
     // The sticky wall reads Σ_vac (§2.3.4 [M0-D172]): the parameters alone, no cold table.
     let commit_eos = eos.params_bind_group(device, &commit);
     let tiles = || Size::Indirect(boxfit.args().clone(), ARGS_TILES);
-    vec![
+    // Σ_src at the half step into P2's field (§1.4.2 [M0-D183]), with P2 only.
+    let mid = half_step.then(|| {
+        let pipeline = compute_pipeline(device, &module, "hydro_mid");
+        let group = device.create_bind_group(&wgpu::BindGroupDescriptor {
+            label: Some("P4 hydro_mid"),
+            layout: &pipeline.get_bind_group_layout(0),
+            entries: &[
+                entry(0, state.dims()),
+                entry(1, state.group(0)),
+                entry(2, state.group(1)),
+                entry(3, state.group(2)),
+                entry(7, boxfit.active()),
+                entry(8, dt_record),
+                entry(13, edge),
+                held(15, state),
+                entry(17, gravity),
+            ],
+        });
+        let eos_group = eos.bind_group(device, &pipeline);
+        Dispatch { label: "hydro_mid", pipeline, bind_groups: vec![group, eos_group], size: tiles() }
+    });
+    mid.into_iter().chain([
         Dispatch { label: "hydro_update", pipeline: update, bind_groups: vec![update_group, eos_group], size: tiles() },
         Dispatch {
             label: "hydro_edges",
@@ -214,7 +240,8 @@ fn dispatches(
             size: Size::Fixed([faces.div_ceil(EDGE_GROUP), 1, 1]),
         },
         Dispatch { label: "hydro_commit", pipeline: commit, bind_groups: vec![commit_group, commit_eos], size: tiles() },
-    ]
+    ])
+    .collect()
 }
 
 /// A bind group entry binding the whole of `buffer`.

@@ -15,6 +15,9 @@
 
 use super::fft::{Convolver, FftError};
 
+/// G = 1 in the sandbox's units (§2.1): the constant P4's half-step solve uses (§1.4.2 [M0-D183]).
+pub const G: f64 = 1.0;
+
 /// The convolution's ring past the box that g's central difference reads (M0-D69).
 pub const RING: usize = 1;
 

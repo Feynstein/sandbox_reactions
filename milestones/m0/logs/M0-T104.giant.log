@@ -1,0 +1,13 @@
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test endings::the_giant_preset_ends_a_black_hole_as_predicted ... giant giant cloud of 18578.605 sb (m_ign 2636.3, m_up 6515.5, m_bh 13681.1) — expected BlackHole then black_hole
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+giant the drop: step=17 M=18578.530 sb
+SR-HEADLESS DONE steps=16610 sim_time=92.908635 until=met
+giant the readout at the drop (M 18578.530): Some(Sure(BlackHole)); 16610 steps, exit 0, summary ending [{"age_years":2849695867.587099,"at_x_h":{"luminosity":178709.57632771257,"radius":151.69022493084967,"sim_time":44.691536475904286,"x_h_c":0.35},"ending":"black_hole","id":1,"mass_sb":9290.694412276149,"mass_suns":13.796957103415089,"predicted_ending":["supernova"],"stage":"black_hole","stages":[{"from_step":33,"sim_time":0.26316929748281837,"stage":"protostar"},{"from_step":785,"sim_time":4.047906836960465,"stage":"main_sequence"},{"from_step":1169,"sim_time":6.083625429309905,"stage":"he_core"},{"from_step":1489,"sim_time":7.734356291592121,"stage":"main_sequence"},{"from_step":2897,"sim_time":20.38189691118896,"stage":"he_core"},{"from_step":2945,"sim_time":20.798378717154264,"stage":"main_sequence"},{"from_step":3617,"sim_time":27.951804974116385,"stage":"he_core"},{"from_step":3777,"sim_time":29.308045369572937,"stage":"main_sequence"},{"from_step":4305,"sim_time":35.0237064473331,"stage":"he_core"},{"from_step":4417,"sim_time":36.01144357211888,"stage":"main_sequence"},{"from_step":4817,"sim_time":40.180017000064254,"stage":"he_core"},{"from_step":4993,"sim_time":41.744491445831954,"stage":"main_sequence"},{"from_step":5345,"sim_time":45.283964176662266,"stage":"he_core"},{"from_step":5489,"sim_time":46.59406081680208,"stage":"main_sequence"},{"from_step":5761,"sim_time":49.16300064697862,"stage":"he_core"},{"from_step":6401,"sim_time":54.51081472123042,"stage":"o_burn"},{"from_step":6865,"sim_time":57.71639038203284,"stage":"si_burn"},{"from_step":7057,"sim_time":58.90647578565404,"stage":"main_sequence"},{"from_step":7985,"sim_time":63.72838625591248,"stage":"core_collapse"},{"from_step":7986,"sim_time":63.7327777617611,"stage":"supernova"},{"from_step":8194,"sim_time":64.48436878737994,"stage":"black_hole"}]}]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 523 filtered out; finished in 197.34s
+

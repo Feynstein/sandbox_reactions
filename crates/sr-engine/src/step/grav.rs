@@ -31,6 +31,14 @@
 //!   (a g carrying a sink's own pull would pull the sink on itself through the bilinear read) while [`Gravity::field`],
 //!   what P4 and Δt read, carries every pull. φ is the gas's plus the sinks'.
 //!
+//! The half step (§1.4.2 [M0-D183]): P4's kick multiplies g by the predictor's half-step Σ, so the g it reads must be the
+//! pull of those same masses, or the pairs' pulls do not cancel (M0-D181: Σ_mid·g with φ from Σⁿ drifted the supernova
+//! life's momentum by 1.04 of Σm|u|). [`Gravity::mid`] is that solve: P4's `hydro_mid` writes Σ_src at the half step into
+//! the field's plane 10, then the pull's chain and φ's run again on it — the same entry points, reading that plane through
+//! their own FFT parameters — `grav_gradient_pull_mid` into planes 8 and 9 and `grav_gradient_mid` into planes 5, 6 and
+//! 7 (g_mid, φ_mid), and with P3 `grav_sinks_mid` adds the sinks' part P2 added. Its dispatches join P4's list between
+//! `hydro_mid` and `hydro_update` (step/mod.rs).
+//!
 //! The edit chain (§2.9 [M0-D109]), added by [`Step::with_edits`](super::Step::with_edits) through
 //! [`Gravity::edit_potential`]: on a step whose P0 moved mass (P0's flag, bound as `gate`), φ_δ = K ∗ ΔΣ of P0's ΔΣ plane
 //! — `grav_rows_edit` (no vacuum mask: ΔΣ is signed), `grav_columns`, `grav_rows_inverse` into a scratch plane, before φ's
@@ -58,6 +66,9 @@ use crate::state::{SideFields, State};
 pub const G: f64 = 1.0;
 /// Dispatches per step: the pull's four, then φ's (one more, `grav_sinks`, in a step that runs P3).
 pub const DISPATCHES: usize = 8;
+/// The field's planes: g's x and y, φ, g_pull's x and y, then the half step's (§1.4.2 [M0-D183]) g_mid's x and y, φ_mid,
+/// g_pull_mid's x and y, and Σ_src at the half step.
+pub const FIELD_PLANES: u64 = 11;
 
 /// The kernel's transform for a `width` × `height` world: every padded size's real quarter, in f32, and where each size
 /// starts — at index (log2 nx − 5) · `ny_sizes` + log2 ny − 5 — with `ny_sizes`. Refused when an axis pads past
@@ -124,6 +135,8 @@ pub struct Gravity {
     /// With P3: the gas's own g, which `field` holds plus the sinks' pull.
     gas: Option<wgpu::Buffer>,
     pub(super) dispatches: Vec<Dispatch>,
+    /// The half step's chain (§1.4.2 [M0-D183]), taken into P4's list after `hydro_mid` ([`Gravity::mid`]).
+    pub(super) mid: Vec<Dispatch>,
     /// What [`Gravity::edit_potential`] builds its chain from.
     kit: Kit,
 }
@@ -170,6 +183,9 @@ impl Gravity {
         let sigma_vac = physics.get("sigma_vac").expect("physics.json key sigma_vac") as f32;
         let cells = world.cells() as u32;
         let fft_params = init_buffer(device, "grav.fft_params", wgpu::BufferUsages::UNIFORM, &[world.width, 0, 0, 0]);
+        // The half step's chain reads Σ_src from the field's plane 10 (`hydro_mid`'s) and writes φ_mid at its scratch's 0.
+        let fft_params_mid =
+            init_buffer(device, "grav.fft_params_mid", wgpu::BufferUsages::UNIFORM, &[world.width, 10 * cells, 0, 0]);
         let c_sb = physics.get("c_sb").expect("physics.json key c_sb") as f32;
         let grav_params = init_buffer(
             device,
@@ -187,11 +203,11 @@ impl Gravity {
             usage: storage,
             mapped_at_creation: false,
         });
-        // g's two planes, φ's, then g_pull's two (the pull, above).
+        // g's two planes, φ's, then g_pull's two (the pull, above), then the half step's five and its Σ_src.
         let plane = |label| {
             device.create_buffer(&wgpu::BufferDescriptor {
                 label: Some(label),
-                size: 5 * u64::from(cells) * 4,
+                size: FIELD_PLANES * u64::from(cells) * 4,
                 usage: storage | wgpu::BufferUsages::COPY_SRC,
                 mapped_at_creation: false,
             })
@@ -207,19 +223,28 @@ impl Gravity {
             usage: storage,
             mapped_at_creation: false,
         });
+        let phi_mid = device.create_buffer(&wgpu::BufferDescriptor {
+            label: Some("grav.phi_mid"),
+            size: u64::from(cells) * 4,
+            usage: storage,
+            mapped_at_creation: false,
+        });
         let pull_flag = init_buffer(device, "grav.pull_flag", storage | wgpu::BufferUsages::UNIFORM, &[0u32; 4]);
         let always = init_buffer(device, "grav.gate", wgpu::BufferUsages::UNIFORM, &[1u32, 0, 0, 0]);
 
         // Every entry point binds the subset of group 0 it uses (auto layouts); `entry` maps a binding to its buffer, the
-        // pull's chain (`pull`) its own φ and gate.
-        let entry = |binding: u32, pull: bool| -> wgpu::BindingResource<'_> {
+        // pull's chain (`pull`) its own φ and gate, the half step's (`mid`) its FFT parameters, source and φ.
+        let entry = |binding: u32, pull: bool, mid: bool| -> wgpu::BindingResource<'_> {
             match binding {
                 0 => boxfit.active().as_entire_binding(),
+                1 if mid => fft_params_mid.as_entire_binding(),
                 1 => fft_params.as_entire_binding(),
                 2 => twiddles.as_entire_binding(),
                 3 => work.as_entire_binding(),
+                4 if mid => field.as_entire_binding(),
                 4 => state.group(0).as_entire_binding(),
                 5 | 10 if pull => pull_phi.as_entire_binding(),
+                5 | 10 if mid => phi_mid.as_entire_binding(),
                 5 | 10 => side.phi().as_entire_binding(),
                 7 => grav_params.as_entire_binding(),
                 8 => kquarter.as_entire_binding(),
@@ -233,10 +258,10 @@ impl Gravity {
                 _ => field.as_entire_binding(),
             }
         };
-        let dispatch = |label: &'static str, bindings: &[u32], size: Size, pull: bool| {
+        let dispatch_in = |label: &'static str, bindings: &[u32], size: Size, pull: bool, mid: bool| {
             let pipeline = compute_pipeline(device, &module, label);
             let entries: Vec<wgpu::BindGroupEntry> =
-                bindings.iter().map(|&b| wgpu::BindGroupEntry { binding: b, resource: entry(b, pull) }).collect();
+                bindings.iter().map(|&b| wgpu::BindGroupEntry { binding: b, resource: entry(b, pull, mid) }).collect();
             let bind_groups = vec![device.create_bind_group(&wgpu::BindGroupDescriptor {
                 label: Some(label),
                 layout: &pipeline.get_bind_group_layout(0),
@@ -244,6 +269,7 @@ impl Gravity {
             })];
             Dispatch { label, pipeline, bind_groups, size }
         };
+        let dispatch = |label: &'static str, bindings: &[u32], size: Size, pull: bool| dispatch_in(label, bindings, size, pull, false);
         let rows = || Size::Fixed([world.height, 1, 1]);
         let columns = || Size::Fixed([max_nx, 1, 1]);
         let inverse = || Size::Fixed([world.height + 2, 1, 1]);
@@ -261,6 +287,20 @@ impl Gravity {
         if sinks.is_some() {
             dispatches.push(dispatch("grav_sinks", &[0, 1, 5, 7, 11, 12, 13], tiles(), false));
         }
+        // The half step's chain (§1.4.2 [M0-D183]): the pull's, then φ's, as P2's, on `hydro_mid`'s plane.
+        let mut mid = vec![
+            dispatch_in("grav_rows_pull", &[0, 1, 2, 3, 4, 7, 14, 15], rows(), true, true),
+            dispatch_in("grav_columns", &[0, 2, 3, 7, 8, 9, 16], columns(), true, true),
+            dispatch_in("grav_rows_inverse", &[0, 1, 2, 3, 5, 16], inverse(), true, true),
+            dispatch_in("grav_gradient_pull_mid", &[0, 1, 3, 7, 10, 11, 16], tiles(), true, true),
+            dispatch_in("grav_rows", &[0, 1, 2, 3, 4, 7, 14, 15], rows(), false, true),
+            dispatch_in("grav_columns", &[0, 2, 3, 7, 8, 9, 16], columns(), false, true),
+            dispatch_in("grav_rows_inverse", &[0, 1, 2, 3, 5, 16], inverse(), false, true),
+            dispatch_in("grav_gradient_mid", &[0, 1, 3, 7, 10, 11], tiles(), false, true),
+        ];
+        if sinks.is_some() {
+            mid.push(dispatch_in("grav_sinks_mid", &[0, 1, 7, 11, 13], tiles(), false, true));
+        }
         let kit = Kit {
             module,
             world: [world.width, world.height],
@@ -269,7 +309,7 @@ impl Gravity {
             phi: side.phi().clone(),
             args: boxfit.args().clone(),
         };
-        Ok(Gravity { field, gas, dispatches, kit })
+        Ok(Gravity { field, gas, dispatches, mid, kit })
     }
 
     /// The edit chain on P0's ΔΣ plane `delta` and its flag `moved` (word 0 set on a step whose edits move mass), booking
@@ -318,9 +358,15 @@ impl Gravity {
 
     /// g = −∇φ, f32: the x plane, the y plane, then φ's (P4's energy source, §0.5 [M0-D64]), then g_pull's x and y planes
     /// (the pull, above: what P4's held cells read, last solved while a cell was held), row-major over the world (y down,
-    /// §2.12.4); with sinks, their pull (§1.4.3) included in g and g_pull — the field P4 and Δt read.
+    /// §2.12.4); with sinks, their pull (§1.4.3) included in g and g_pull — the field P4 and Δt read; then the half step's
+    /// planes 5 … 10 ([`FIELD_PLANES`], §1.4.2 [M0-D183]), what P4's kick, face work and held cells read.
     pub fn field(&self) -> &wgpu::Buffer {
         &self.field
+    }
+
+    /// The half step's chain (§1.4.2 [M0-D183]), for P4's list between `hydro_mid` and `hydro_update`: taken once.
+    pub(super) fn take_mid(&mut self) -> Vec<Dispatch> {
+        std::mem::take(&mut self.mid)
     }
 
     /// The gas's own g = −∇φ: [`Gravity::field`] without the sinks' pull — P3's kick-drift-kick reads this one.

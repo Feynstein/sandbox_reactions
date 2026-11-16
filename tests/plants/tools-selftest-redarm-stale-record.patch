@@ -1,0 +1,11 @@
+--- a/tools/pb/verify.py
++++ b/tools/pb/verify.py
+@@ -1718,7 +1718,7 @@
+                 recs.append(json.loads(ln))
+     for r in reversed(recs + ([fresh] if fresh else [])):
+         e = (r.get("scopes") or {}).get(name) if isinstance(r, dict) and isinstance(r.get("scopes"), dict) else None
+-        if (not isinstance(e, dict) or r.get("box") != box or e.get("fingerprint") != fp or "adapter" not in e
++        if (not isinstance(e, dict) or r.get("box") != box or "adapter" not in e
+                 or e.get("adapter") != adapter):
+             continue
+         who = (str(r.get("task", "?")), str(r.get("ts", "?")))

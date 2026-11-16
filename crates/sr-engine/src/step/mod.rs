@@ -495,6 +495,11 @@ impl Step {
         let flux = heat.map(|h| h.side.flux());
         let mut flow = edge.map(|edge| hydro::Hydro::new(device, state, booking, eos, physics, &boxfit, dt.record(), g, flux, edge));
         passes[Pass::Hydro as usize] = flow.as_mut().map(|h| std::mem::take(&mut h.dispatches)).unwrap_or_default();
+        // With P2, P2's half-step chains run inside P4, after `hydro_mid` wrote their source (§1.4.2 [M0-D183]).
+        if let (Some(gr), true) = (gravity.as_mut(), flow.is_some()) {
+            let chain = gr.take_mid();
+            passes[Pass::Hydro as usize].splice(1..1, chain);
+        }
         let mut warm = heat.map(|h| heat::Heat::new(device, state, booking, eos, physics, &boxfit, dt.record(), h));
         passes[Pass::Heat as usize] = warm.as_mut().map(|h| std::mem::take(&mut h.dispatches)).unwrap_or_default();
         let mut burn = react.map(|r| react::React::new(device, state, booking, eos, physics, &boxfit, dt.record(), r));

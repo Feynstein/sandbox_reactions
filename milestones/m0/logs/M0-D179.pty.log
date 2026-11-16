@@ -1,0 +1,28 @@
+>> ending · started · ≈ 0s by this box's last run
+.. ending 0.11s
+ending    11/0/0       0.11 s  GO
+logs: milestones/m0/logs/M0-D179.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+10cce89397dd
+anchor: 0 path×scope entries moved by this run
+anchor: 267 paths checked · 440 skipped (3 classes) · 191 never checked · 2 stale · 8 unclassified · 0 owed · 460 covered of 908 visible
+verify: 11 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.15 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 3.6->3.6
+=== GO ===
+>> ending · plant ending-band-swap · started
+.. ending · plant ending-band-swap · running 1s · over this box's last run (0s) by 0s
+.. ending · plant ending-band-swap · running 1s · over this box's last run (0s) by 1s
+.. ending · plant ending-band-swap · running 2s · over this box's last run (0s) by 1s
+.. ending · plant ending-band-swap · running 2s · over this box's last run (0s) by 2s
+.. ending 2.37s
+ending · clean: proven by M0-D179 2026-11-15T12:03:06-05:00 (a run of the scope; fingerprint 5dc2855038f7) - not re-run
+ending · plant ending-band-swap · RED (proven: 3 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope ending · 2.96 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D179.ending.redarm.log
+=== GO ===
+>> ending · plant ending-band-swap · started
+.. ending · plant ending-band-swap · running 1s · over this box's last run (0s) by 0s
+.. ending · plant ending-band-swap · running 1s · over this box's last run (0s) by 1s
+.. ending · plant ending-band-swap · running 2s · over this box's last run (0s) by 1s
+.. ending · plant ending-band-swap · running 2s · over this box's last run (0s) by 2s
+.. ending 2.47s
+ending · clean: proven by M0-D179 2026-11-15T12:06:47-05:00 (a run of the scope; fingerprint d8dfe14ba853) - not re-run
+ending · plant ending-band-swap · RED (proven: 3 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope ending · 3.07 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D179.ending.redarm.log
+=== GO ===

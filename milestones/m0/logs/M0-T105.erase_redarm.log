@@ -1,0 +1,25 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.59s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says ... erase massive preset of 9810.394 sb under touch_erase.json — the edit aims at 5212.4 sb (m_up 6515.5), the fate leaving Supernova for one of [WhiteDwarf]
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+erase the drop: step=16 M=9810.390 sb
+SR-HEADLESS DONE steps=23039 sim_time=189.249447 until=met
+erase the readout at the drop (M 9810.390): Some(Sure(Supernova)); after the edit None: None; 23039 steps, exit 0, summary ending [{"age_years":1047398474.8879126,"at_x_h":{"luminosity":111346.84955300682,"radius":74.14119197071578,"sim_time":81.84186479682103,"x_h_c":0.35},"ending":"neutron_star","id":1,"mass_sb":4347.214320477098,"mass_suns":2.9935846837473776,"predicted_ending":["white_dwarf"],"stage":"neutron_star","stages":[{"from_step":3,"sim_time":0.03979703038930893,"stage":"protostar"},{"from_step":652,"sim_time":3.8569275559857488,"stage":"main_sequence"},{"from_step":10110,"sim_time":95.46826965594664,"stage":"he_core"},{"from_step":10270,"sim_time":97.0986962770112,"stage":"main_sequence"},{"from_step":10446,"sim_time":98.88927250774576,"stage":"he_core"},{"from_step":10622,"sim_time":100.67112970119342,"stage":"main_sequence"},{"from_step":10798,"sim_time":102.4564677090384,"stage":"he_core"},{"from_step":10974,"sim_time":104.225369699765,"stage":"main_sequence"},{"from_step":11134,"sim_time":105.84253407968208,"stage":"he_core"},{"from_step":11342,"sim_time":107.92371566267684,"stage":"main_sequence"},{"from_step":11454,"sim_time":109.04689315753058,"stage":"he_core"},{"from_step":13870,"sim_time":131.75517834583297,"stage":"o_burn"},{"from_step":15342,"sim_time":143.835842278786,"stage":"si_burn"},{"from_step":15822,"sim_time":147.50496703991666,"stage":"main_sequence"},{"from_step":16574,"sim_time":152.99084663810208,"stage":"iron_core"},{"from_step":16782,"sim_time":154.44552873633802,"stage":"main_sequence"},{"from_step":17278,"sim_time":157.80515274684876,"stage":"iron_core"},{"from_step":18142,"sim_time":163.30226314021274,"stage":"main_sequence"},{"from_step":18398,"sim_time":164.81239562109113,"stage":"o_burn"},{"from_step":18510,"sim_time":165.45730046508834,"stage":"main_sequence"},{"from_step":18846,"sim_time":167.35470305057245,"stage":"o_burn"},{"from_step":18942,"sim_time":167.88567336043343,"stage":"main_sequence"},{"from_step":19070,"sim_time":168.5958418273367,"stage":"o_burn"},{"from_step":19134,"sim_time":168.95584993436933,"stage":"main_sequence"},{"from_step":19902,"sim_time":173.0393861690536,"stage":"core_collapse"},{"from_step":19903,"sim_time":173.044701424893,"stage":"supernova"},{"from_step":21071,"sim_time":179.19055029796436,"stage":"neutron_star"}]}]
+
+thread 'touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says' (1034203) panicked at crates/sr-engine/tests/gpu/touch.rs:219:9:
+erase: no edit ever landed: the mass never jumped (X_H,c never under 0.5, or P0 dropped the edits)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 525 filtered out; finished in 287.51s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+exit 101

@@ -1,0 +1,16 @@
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says ... erase massive preset of 9810.394 sb under touch_erase.json — the edit aims at 5212.4 sb (m_up 6515.5), the fate leaving Supernova for one of [WhiteDwarf]
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+erase the drop: step=16 M=9810.390 sb
+erase an edit landed: step=6398 M 9270.620 -> 5230.930 sb, x_h_c 0.499
+erase after the edit: step=6462 M=5230.923 sb, stage main_sequence
+SR-HEADLESS DONE steps=36510 sim_time=322.335337 until=met
+erase the readout at the drop (M 9810.390): Some(Sure(Supernova)); after the edit Some((6398, 5230.923047129996)): Some(Sure(WhiteDwarf)); 36510 steps, exit 0, summary ending [{"age_years":2540943246.370141,"at_x_h":{"luminosity":33135.963995478014,"radius":25.802309302448997,"sim_time":121.37269064132124,"x_h_c":0.35},"ending":"white_dwarf","id":1,"mass_sb":3137.3714582496323,"mass_suns":1.00303239878427,"predicted_ending":["white_dwarf"],"stage":"white_dwarf","stages":[{"from_step":3,"sim_time":0.03979703038930893,"stage":"protostar"},{"from_step":652,"sim_time":3.8569275559857488,"stage":"main_sequence"},{"from_step":7246,"sim_time":62.65371809061617,"stage":"he_core"},{"from_step":7294,"sim_time":63.07348564546555,"stage":"main_sequence"},{"from_step":19070,"sim_time":184.3524232218042,"stage":"he_core"},{"from_step":23278,"sim_time":224.8121817102656,"stage":"o_burn"},{"from_step":25470,"sim_time":244.86503949109465,"stage":"si_burn"},{"from_step":26030,"sim_time":249.82867436110973,"stage":"main_sequence"},{"from_step":26158,"sim_time":250.9470743574202,"stage":"he_shell"},{"from_step":27102,"sim_time":259.01029716804624,"stage":"iron_core"},{"from_step":31854,"sim_time":294.26273226877674,"stage":"o_burn"},{"from_step":31934,"sim_time":294.7730484874919,"stage":"main_sequence"},{"from_step":32078,"sim_time":295.6771365827881,"stage":"o_burn"},{"from_step":32190,"sim_time":296.374506956432,"stage":"main_sequence"},{"from_step":32382,"sim_time":297.5538028511219,"stage":"he_core"},{"from_step":32542,"sim_time":298.51027733273804,"stage":"main_sequence"},{"from_step":32670,"sim_time":299.27328754914925,"stage":"iron_core"},{"from_step":32718,"sim_time":299.5596294491552,"stage":"main_sequence"},{"from_step":35038,"sim_time":312.3210395784117,"stage":"white_dwarf"}]}]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 525 filtered out; finished in 243.40s
+
+exit 0

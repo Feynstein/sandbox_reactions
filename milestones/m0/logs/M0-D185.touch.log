@@ -1,0 +1,46 @@
+== 2026-11-15T19:20:49-05:00 touch · task M0-D185 · box laserax-ai :: bash tests/gpu.sh touch physics
+-- touch · exit=101 · 12432.38 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 2 tests
+test touch::hydrogen_painted_onto_the_sun_like_star_ends_it_a_neutron_star_or_a_black_hole_as_its_new_prediction_says ... paint sun preset of 3136.718 sb under touch_paint.json — the edit aims at 8144.4 sb (m_up 6515.5), the fate leaving WhiteDwarf for one of [Supernova, BlackHole]
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+paint the drop: step=16 M=3136.696 sb
+paint an edit landed: step=50800 M 3129.588 -> 6346.125 sb, x_h_c 0.529
+paint after the edit: step=50866 M=8255.745 sb, stage main_sequence
+paint step=64002 t=714.35 stage=main_sequence M=8255.5
+SR-HEADLESS DONE steps=96595 sim_time=986.217875 until=met
+paint the readout at the drop (M 3136.696): Some(Sure(WhiteDwarf)); after the edit Some((50800, 8255.74453312112)): Some(Sure(Supernova)); 96595 steps, exit 0, summary ending [{"age_years":4579442820.247538,"at_x_h":{"luminosity":35923.63496783498,"radius":111.88689983470758,"sim_time":733.6371555146761,"x_h_c":0.35},"ending":"neutron_star","id":1,"mass_sb":8255.473276495934,"mass_suns":11.507418892078569,"predicted_ending":["supernova"],"stage":"neutron_star","stages":[{"from_step":3,"sim_time":0.08816618658602238,"stage":"cloud"},{"from_step":25,"sim_time":0.6086400020867586,"stage":"collapsing"},{"from_step":280,"sim_time":4.3135015573352575,"stage":"protostar"},{"from_step":571,"sim_time":7.482325599528849,"stage":"failed_star"},{"from_step":630,"sim_time":8.279750014655292,"stage":"collapsing"},{"from_step":665,"sim_time":8.74103813804686,"stage":"main_sequence"},{"from_step":50994,"sim_time":579.2249294323847,"stage":"he_core"},{"from_step":51186,"sim_time":580.2595345191658,"stage":"main_sequence"},{"from_step":75826,"sim_time":836.8236760725267,"stage":"he_core"},{"from_step":76642,"sim_time":844.7610911759548,"stage":"main_sequence"},{"from_step":76706,"sim_time":845.3825376960449,"stage":"he_core"},{"from_step":78658,"sim_time":864.2368178996257,"stage":"o_burn"},{"from_step":80866,"sim_time":884.8395403674804,"stage":"si_burn"},{"from_step":81842,"sim_time":893.6077960855328,"stage":"he_shell"},{"from_step":82962,"sim_time":903.3072969713248,"stage":"iron_core"},{"from_step":86962,"sim_time":934.0538027747534,"stage":"main_sequence"},{"from_step":87010,"sim_time":934.3890987089836,"stage":"iron_core"},{"from_step":87250,"sim_time":936.0485156010836,"stage":"main_sequence"},{"from_step":87346,"sim_time":936.708397175651,"stage":"iron_core"},{"from_step":87666,"sim_time":938.9097495963796,"stage":"main_sequence"},{"from_step":87826,"sim_time":939.9950378309004,"stage":"iron_core"},{"from_step":88066,"sim_time":941.6012020306662,"stage":"main_sequence"},{"from_step":88258,"sim_time":942.8724969592876,"stage":"iron_core"},{"from_step":88578,"sim_time":944.9635843541472,"stage":"main_sequence"},{"from_step":88754,"sim_time":946.0965953222476,"stage":"iron_core"},{"from_step":88994,"sim_time":947.6049950928428,"stage":"main_sequence"},{"from_step":89058,"sim_time":947.99605049612,"stage":"iron_core"},{"from_step":89474,"sim_time":950.544816837646,"stage":"main_sequence"},{"from_step":89586,"sim_time":951.222762549296,"stage":"iron_core"},{"from_step":89794,"sim_time":952.4651512610726,"stage":"main_sequence"},{"from_step":90802,"sim_time":958.0107584469952,"stage":"core_collapse"},{"from_step":90803,"sim_time":958.0161229413934,"stage":"supernova"},{"from_step":91587,"sim_time":962.0633671353572,"stage":"neutron_star"},{"from_step":91619,"sim_time":962.2153606223874,"stage":"supernova"},{"from_step":92291,"sim_time":965.5166381415912,"stage":"neutron_star"},{"from_step":92323,"sim_time":965.6774884858168,"stage":"supernova"},{"from_step":93667,"sim_time":972.1984687782824,"stage":"neutron_star"},{"from_step":93699,"sim_time":972.3520310330204,"stage":"supernova"},{"from_step":93747,"sim_time":972.5845454665832,"stage":"neutron_star"},{"from_step":93827,"sim_time":972.9634886495768,"stage":"supernova"},{"from_step":93891,"sim_time":973.282078019809,"stage":"neutron_star"},{"from_step":94275,"sim_time":975.1424616267904,"stage":"supernova"},{"from_step":94499,"sim_time":976.1970559745096,"stage":"neutron_star"}]}]
+ok
+test touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says ... erase massive preset of 9810.394 sb under touch_erase.json — the edit aims at 5212.4 sb (m_up 6515.5), the fate leaving Supernova for one of [WhiteDwarf]
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+erase the drop: step=16 M=9810.390 sb
+erase an edit landed: step=6397 M 9269.982 -> 5230.770 sb, x_h_c 0.499
+erase after the edit: step=6461 M=5230.762 sb, stage main_sequence
+erase step=64013 t=465.53 stage=he_shell M=3197.8
+erase step=128013 t=820.12 stage=he_shell M=3167.2
+erase step=192013 t=1220.17 stage=he_shell M=3164.6
+erase step=256013 t=1624.91 stage=he_shell M=3164.6
+erase step=320013 t=2031.66 stage=he_shell M=3164.6
+erase step=384013 t=2439.43 stage=he_shell M=3164.6
+erase step=448013 t=2847.36 stage=he_shell M=3164.5
+erase step=512013 t=3255.33 stage=he_shell M=3164.5
+erase step=576013 t=3663.31 stage=he_shell M=3164.5
+SR-HEADLESS DONE steps=600000 sim_time=3816.221680 until=unmet
+erase the readout at the drop (M 9810.390): Some(Sure(Supernova)); after the edit Some((6397, 5230.7624287207145)): Some(Sure(WhiteDwarf)); 600000 steps, exit 2, summary ending [{"age_years":2835005587.3316255,"at_x_h":{"luminosity":33093.804756115656,"radius":25.798503324733563,"sim_time":121.34051252575593,"x_h_c":0.35},"ending":null,"id":1,"mass_sb":3164.466974814888,"mass_suns":1.1365475678720651,"predicted_ending":["white_dwarf"],"stage":"he_shell","stages":[{"from_step":3,"sim_time":0.03979703597724438,"stage":"protostar"},{"from_step":652,"sim_time":3.856867874506861,"stage":"main_sequence"},{"from_step":7245,"sim_time":62.64547929679975,"stage":"he_core"},{"from_step":7293,"sim_time":63.06548421503976,"stage":"main_sequence"},{"from_step":19325,"sim_time":186.79724433785304,"stage":"he_core"},{"from_step":23005,"sim_time":222.5371773377992,"stage":"o_burn"},{"from_step":25117,"sim_time":242.1111771375872,"stage":"si_burn"},{"from_step":25741,"sim_time":247.6639390788041,"stage":"main_sequence"},{"from_step":25885,"sim_time":248.92803798941895,"stage":"he_shell"},{"from_step":26797,"sim_time":256.7966206786223,"stage":"iron_core"},{"from_step":32253,"sim_time":297.0072322054766,"stage":"main_sequence"},{"from_step":32637,"sim_time":299.39589931303635,"stage":"o_burn"},{"from_step":32813,"sim_time":300.45601192489266,"stage":"main_sequence"},{"from_step":32909,"sim_time":301.01858050655574,"stage":"o_burn"},{"from_step":32989,"sim_time":301.47907314961776,"stage":"main_sequence"},{"from_step":35021,"sim_time":312.88573597278446,"stage":"o_burn"},{"from_step":35165,"sim_time":313.6738850502297,"stage":"main_sequence"},{"from_step":35581,"sim_time":315.85721745248884,"stage":"o_burn"},{"from_step":35645,"sim_time":316.1991992597468,"stage":"main_sequence"},{"from_step":38541,"sim_time":331.748374145478,"stage":"iron_core"},{"from_step":38589,"sim_time":332.0119950864464,"stage":"main_sequence"},{"from_step":42669,"sim_time":353.37254564044997,"stage":"iron_core"},{"from_step":43101,"sim_time":355.61274610552937,"stage":"he_shell"},{"from_step":45069,"sim_time":366.1771379308775,"stage":"iron_core"},{"from_step":48829,"sim_time":386.09249270986766,"stage":"he_shell"},{"from_step":59821,"sim_time":443.311378931161,"stage":"iron_core"},{"from_step":59917,"sim_time":443.810778462328,"stage":"he_shell"},{"from_step":99773,"sim_time":654.2372065023519,"stage":"white_dwarf"},{"from_step":100365,"sim_time":657.4405005648732,"stage":"iron_core"},{"from_step":102365,"sim_time":668.1620134543628,"stage":"he_shell"},{"from_step":103597,"sim_time":674.6997410012409,"stage":"white_dwarf"},{"from_step":103773,"sim_time":675.5975185511634,"stage":"iron_core"},{"from_step":103837,"sim_time":675.9241550182924,"stage":"he_shell"},{"from_step":103981,"sim_time":676.6345225274563,"stage":"iron_core"},{"from_step":104141,"sim_time":677.3729006042704,"stage":"he_shell"},{"from_step":104285,"sim_time":678.0769851361401,"stage":"iron_core"},{"from_step":104413,"sim_time":678.6824244284071,"stage":"white_dwarf"},{"from_step":105853,"sim_time":686.4056405080482,"stage":"he_shell"}]}]
+
+thread 'touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says' (1172179) panicked at crates/sr-engine/tests/gpu/touch.rs:408:9:
+erase: no ending within the step cap (exit 2, until {"condition":"ending","met":false})
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 531 filtered out; finished in 12432.17s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

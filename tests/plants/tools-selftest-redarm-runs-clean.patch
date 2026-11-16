@@ -1,0 +1,11 @@
+--- a/tools/pb/verify.py
++++ b/tools/pb/verify.py
+@@ -2529,7 +2529,7 @@
+     jobs = 1 if a.serial else (a.jobs or min(os.cpu_count() or 1, cap))
+     if a.redarm:
+         return (moved_sweep(man, root, task, jobs) if a.moved
+-                else redarm(man, a.redarm, root, task, jobs, clean="fresh" if a.with_clean else "record"))
++                else redarm(man, a.redarm, root, task, jobs, clean="fresh"))
+     if a.changed:
+         sha = resolve_base(root, a.base) if a.base else None
+         hook, tail, fields = loop_hook(man, root, task, jobs, manifest, sha)

@@ -220,6 +220,13 @@ impl Twin {
         self.dt_next
     }
 
+    /// Caps Δt_{n+1} at `cap`: the next step runs on min(Δt_{n+1}, cap) — G-REF's read at the GPU's sim time (§5.1
+    /// [M0-D185]); a step shorter than P9's stays inside its CFL and gravity bounds. `cap` must be positive and finite.
+    pub fn cap_dt_next(&mut self, cap: f64) {
+        assert!(cap > 0.0 && cap.is_finite(), "a Δt cap must be positive and finite, not {cap}");
+        self.dt_next = self.dt_next.min(cap);
+    }
+
     /// The hold's mask as the last P8 wrote it (before step 0, the initial state's): `true` where a cell is held.
     pub fn held_mask(&self) -> &[bool] {
         &self.mask

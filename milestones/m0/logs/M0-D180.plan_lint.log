@@ -1,0 +1,37 @@
+== 2026-11-15T16:36:46-05:00 plan_lint · task M0-D180 · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.07 s
+lint: checks=874 failed=0 warnings=26 · blocks=421 · flow_rows=421 · verify_fences=0 · history=0 · flow=per-task · header=620/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+WARN: M0-TC14: DONE outside the current phase and 21 lines long - stub it (§2.6)
+WARN: M0-TM16: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-D162: DONE outside the current phase and 33 lines long - stub it (§2.6)
+WARN: M0-D163: DONE outside the current phase and 39 lines long - stub it (§2.6)
+WARN: M0-D165: DONE outside the current phase and 14 lines long - stub it (§2.6)
+WARN: M0-TM17: DONE outside the current phase and 18 lines long - stub it (§2.6)
+WARN: M0-R15: DONE outside the current phase and 11 lines long - stub it (§2.6)
+WARN: M0-D168: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D169: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D166: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D171: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D170: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D172: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D173: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D174: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D167: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-TM18: DONE outside the current phase and 9 lines long - stub it (§2.6)
+WARN: M0-T132: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D175: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D176: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T106: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+=== GO ===
+
+plan_lint  874/0/0      0.07 s  GO
+logs: milestones/m0/logs/M0-D180.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+133b1927af86
+anchor: 1 path×scope entries moved by this run
+anchor: 267 paths checked · 446 skipped (3 classes) · 195 never checked · 1 stale · 8 unclassified · 0 owed · 463 covered of 917 visible
+verify: 874 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.07 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 3.75->3.75
+=== GO ===

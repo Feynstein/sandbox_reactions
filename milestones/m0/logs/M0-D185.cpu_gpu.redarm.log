@@ -1,0 +1,126 @@
+==== 2026-11-15T19:16:19-05:00 cpu_gpu · clean: proven by M0-D185 2026-11-15T19:15:57-05:00 (a run of the scope; fingerprint 18f8271d4bc8) - not re-run
+==== 2026-11-15T19:16:05-05:00 cpu_gpu · plant cfl-gpu · a fresh scratch copy of the tree
+planted cfl-gpu: tests/plants/cfl-gpu.patch -> crates/sr-engine/src/step/dt.rs
+== 2026-11-15T19:16:06-05:00 cpu_gpu · task M0-D185 · box laserax-ai :: bash tests/gpu.sh cpu_gpu physics
+-- cpu_gpu · exit=101 · 13.51 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-6ocz8rn1/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-6ocz8rn1/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.62s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 3 tests
+test cpu_gpu::the_burning_field_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 0.94874 / twin ≥ 0.94930 (-0.0595 %, band ±0.05 %); at the GPU's t, the twin in 195 steps: relative L1 Σ 0.000e0 (band 1e-3), E 4.134e-4 (band 1e-3); largest |ΔX| 5.491e-3 in x_Fe (band 1e-4)
+
+thread 'cpu_gpu::the_burning_field_gpu_against_the_twin' (780778) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:168:5:
+ref_burn.json: sim time at 200 steps GPU 0.9487377009354532 / twin ≥ 0.949302506312561: the clocks part by 5.949688043084267e-4 > 5e-4
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test cpu_gpu::the_collapsing_disk_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-REF ref_disk.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 2.70717 / twin ≥ 2.70773 (-0.0208 %, band ±0.05 %); at the GPU's t, the twin in 199 steps: relative L1 Σ 3.173e-3 (band 1e-3), E 4.991e-3 (band 1e-3); largest |ΔX| 7.701e-6 in x_He (band 1e-4)
+
+thread 'cpu_gpu::the_collapsing_disk_gpu_against_the_twin' (780820) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:173:5:
+ref_disk.json: relative L1 in Σ 3.1731085263736318e-3 > 1e-3
+FAILED
+test cpu_gpu::the_sod_strip_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-REF ref_sod.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 19.05001 / twin ≥ 19.05207 (-0.0108 %, band ±0.05 %); at the GPU's t, the twin in 195 steps: relative L1 Σ 4.842e-5 (band 1e-3), E 8.280e-5 (band 1e-3); largest |ΔX| 1.927e-4 in x_He (band 1e-4)
+
+thread 'cpu_gpu::the_sod_strip_gpu_against_the_twin' (780825) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:175:5:
+ref_sod.json: |ΔX| 1.927095171893045e-4 in x_He > 1e-4
+FAILED
+
+failures:
+
+failures:
+    cpu_gpu::the_burning_field_gpu_against_the_twin
+    cpu_gpu::the_collapsing_disk_gpu_against_the_twin
+    cpu_gpu::the_sod_strip_gpu_against_the_twin
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 530 filtered out; finished in 3.78s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-11-15T19:17:36-05:00 cpu_gpu · clean: proven by M0-D185 2026-11-15T19:17:14-05:00 (a run of the scope; fingerprint 9c7e5dabcb39) - not re-run
+==== 2026-11-15T19:17:20-05:00 cpu_gpu · plant cfl-gpu · a fresh scratch copy of the tree
+planted cfl-gpu: tests/plants/cfl-gpu.patch -> crates/sr-engine/src/step/dt.rs
+== 2026-11-15T19:17:20-05:00 cpu_gpu · task M0-D185 · box laserax-ai :: bash tests/gpu.sh cpu_gpu physics
+-- cpu_gpu · exit=101 · 16.18 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-iwdm0y2i/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-iwdm0y2i/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.60s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 3 tests
+test cpu_gpu::the_burning_field_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 0.94874 / twin 0.96647 (-1.8351 %, band ±0.05 %); at the GPU's t, the twin in 195 steps: relative L1 Σ 0.000e0 (band 1e-3), E 4.134e-4 (band 1e-3); largest |ΔX| 5.491e-3 in x_Fe (band 1e-4)
+
+thread 'cpu_gpu::the_burning_field_gpu_against_the_twin' (782236) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:169:5:
+ref_burn.json: sim time at 200 steps GPU 0.9487377009354532 / twin 0.9664731148444414: the clocks part by 1.8350654184356552e-2 > 5e-4
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test cpu_gpu::the_collapsing_disk_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-REF ref_disk.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 2.70717 / twin 2.70844 (-0.0470 %, band ±0.05 %); at the GPU's t, the twin in 199 steps: relative L1 Σ 3.173e-3 (band 1e-3), E 4.991e-3 (band 1e-3); largest |ΔX| 7.701e-6 in x_He (band 1e-4)
+
+thread 'cpu_gpu::the_collapsing_disk_gpu_against_the_twin' (782263) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:173:5:
+ref_disk.json: relative L1 in Σ 3.1731085263736318e-3 > 1e-3
+FAILED
+test cpu_gpu::the_sod_strip_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-REF ref_sod.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 19.05001 / twin 19.52918 (-2.4536 %, band ±0.05 %); at the GPU's t, the twin in 195 steps: relative L1 Σ 4.842e-5 (band 1e-3), E 8.280e-5 (band 1e-3); largest |ΔX| 1.927e-4 in x_He (band 1e-4)
+
+thread 'cpu_gpu::the_sod_strip_gpu_against_the_twin' (782288) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:169:5:
+ref_sod.json: sim time at 200 steps GPU 19.05001202225685 / twin 19.529181192375518: the clocks part by 2.4536060441988305e-2 > 5e-4
+FAILED
+
+failures:
+
+failures:
+    cpu_gpu::the_burning_field_gpu_against_the_twin
+    cpu_gpu::the_collapsing_disk_gpu_against_the_twin
+    cpu_gpu::the_sod_strip_gpu_against_the_twin
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 530 filtered out; finished in 6.47s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-11-15T19:18:50-05:00 cpu_gpu · clean: proven by M0-D185 2026-11-15T19:18:34-05:00 (a run of the scope; fingerprint 9c7e5dabcb39) - not re-run
+==== 2026-11-15T19:18:34-05:00 cpu_gpu · plant cfl-gpu · a fresh scratch copy of the tree
+planted cfl-gpu: tests/plants/cfl-gpu.patch -> crates/sr-engine/src/step/dt.rs
+== 2026-11-15T19:18:34-05:00 cpu_gpu · task M0-D185 · box laserax-ai :: bash tests/gpu.sh cpu_gpu physics
+-- cpu_gpu · exit=101 · 16.08 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-tkez4wfb/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-tkez4wfb/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.49s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 3 tests
+test cpu_gpu::the_burning_field_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-REF ref_burn.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 0.94874 / twin 0.96647 (-1.8351 %, band ±0.05 %); at the GPU's t, the twin in 195 steps: relative L1 Σ 0.000e0 (band 1e-3), E 4.134e-4 (band 1e-3); largest |ΔX| 5.491e-3 in x_Fe (band 1e-4)
+
+thread 'cpu_gpu::the_burning_field_gpu_against_the_twin' (782931) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:169:5:
+ref_burn.json: sim time at 200 steps GPU 0.9487377009354532 / twin 0.9664731148444414: the clocks part by 1.8350654184356552e-2 > 5e-4
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test cpu_gpu::the_collapsing_disk_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-REF ref_disk.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 2.70717 / twin 2.70844 (-0.0470 %, band ±0.05 %); at the GPU's t, the twin in 199 steps: relative L1 Σ 3.173e-3 (band 1e-3), E 4.991e-3 (band 1e-3); largest |ΔX| 7.701e-6 in x_He (band 1e-4)
+
+thread 'cpu_gpu::the_collapsing_disk_gpu_against_the_twin' (782960) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:173:5:
+ref_disk.json: relative L1 in Σ 3.1731085263736318e-3 > 1e-3
+FAILED
+test cpu_gpu::the_sod_strip_gpu_against_the_twin ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-REF ref_sod.json: 200 steps on SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA: sim time GPU 19.05001 / twin 19.52918 (-2.4536 %, band ±0.05 %); at the GPU's t, the twin in 195 steps: relative L1 Σ 4.842e-5 (band 1e-3), E 8.280e-5 (band 1e-3); largest |ΔX| 1.927e-4 in x_He (band 1e-4)
+
+thread 'cpu_gpu::the_sod_strip_gpu_against_the_twin' (782965) panicked at crates/sr-engine/tests/gpu/cpu_gpu.rs:169:5:
+ref_sod.json: sim time at 200 steps GPU 19.05001202225685 / twin 19.529181192375518: the clocks part by 2.4536060441988305e-2 > 5e-4
+FAILED
+
+failures:
+
+failures:
+    cpu_gpu::the_burning_field_gpu_against_the_twin
+    cpu_gpu::the_collapsing_disk_gpu_against_the_twin
+    cpu_gpu::the_sod_strip_gpu_against_the_twin
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 530 filtered out; finished in 6.47s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

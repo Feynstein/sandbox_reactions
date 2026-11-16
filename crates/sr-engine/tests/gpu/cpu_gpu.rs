@@ -1,6 +1,6 @@
 //! M0-T38 — G-REF, the GPU against the CPU twin (contract §5.1, §2.2, §6.7, R13): the GPU's f32 step and the twin's f64 step
-//! (`sr_physics::reference::Twin`, M0-T37) run the same scene for the same number of steps and their states are read side
-//! by side — the relative L1 difference of Σ and of E at most 10⁻³, the largest absolute difference of each mass fraction X
+//! (`sr_physics::reference::Twin`, M0-T37) run the same scene to the same sim time and their states are read side by side
+//! — the relative L1 difference of Σ and of E at most 10⁻³, the largest absolute difference of each mass fraction X
 //! at most 10⁻⁴ (ES-E20: floats differ between GPUs, so the band is the contract's, never tuned to an adapter).
 //!
 //! §5.1's three 64 × 64 scenes, 200 steps each: scenes/ref_disk.json, a cold Maclaurin disk (a = 24, Σc = 1, the
@@ -13,9 +13,14 @@
 //! The twin runs the whole world and the GPU its fitted box (M0-T37's note): outside the box the GPU leaves vacuum at Σ = 0
 //! where the twin's P8 sets Σ_floor — 10⁻⁸ per cell, invisible in the L1 sums, so X is read only where both states hold
 //! matter — Σ at or above Σ_floor / 10⁻⁴ = 10⁻⁴, 100 × Σ_vac, where P8's floor matter (pure hydrogen) cannot move an X by
-//! the band: unmasked, five of the disk's 1,608 rim cells at Σ ≈ 3 × 10⁻⁶ (3 × Σ_vac) read |ΔX| up to 1.06 × 10⁻³ in x_H. Both runs take exactly 200 steps, so their sim times differ by the Δt they chose: a GPU
-//! whose CFL is 0.39 where the twin's is 0.4 is 2.5 % short in time at step 200, which is what the plant (tests/plants/
-//! cfl-gpu.patch) shows these comparisons.
+//! the band: unmasked, five of the disk's 1,608 rim cells at Σ ≈ 3 × 10⁻⁶ (3 × Σ_vac) read |ΔX| up to 1.06 × 10⁻³ in x_H.
+//!
+//! The states are read at equal sim time (§5.1 [M0-D185]): the GPU runs 200 steps to t_GPU and the twin steps on its own Δt
+//! to t_GPU, its last step capped to land there. At equal step count a thin cell that lands above Σ_vac in f64 and under it
+//! in f32 sets a different Δt and parts the clocks — the disk's wind at step 146 (M0-D183): 6.6 × 10⁻⁵ in time, read as
+//! 1.2 × 10⁻³ in E. The clocks are graded on their own line: each run's sim time after 200 steps within 5 × 10⁻⁴
+//! relative, so a GPU whose CFL is 0.39 where the twin's is 0.4 (tests/plants/cfl-gpu.patch) still reads red — 2.5 % short
+//! on Sod, 0.11–0.16 % on the disk, whose Δt gravity mostly sets.
 
 use std::path::{Path, PathBuf};
 
@@ -33,6 +38,8 @@ const STEPS: u64 = 200;
 /// §5.1's bands: relative L1 in Σ and E, absolute in each X.
 const L1_BAND: f64 = 1e-3;
 const X_BAND: f64 = 1e-4;
+/// §5.1 [M0-D185]'s clock band: |t_GPU / t_twin − 1| after STEPS steps each.
+const CLOCK_BAND: f64 = 5e-4;
 
 fn elements() -> Elements {
     Elements::shipped().unwrap()
@@ -67,7 +74,7 @@ fn grade(file: &str) {
     let (switches, test) = (scene.switches, scene.test);
     // P6's records as the registry has them, with the scene's overrides (the physics the scene's run uses).
     let records = Reactions::shipped(&elements(), &physics).unwrap();
-    let burning = Burning {
+    let burning = || Burning {
         heat: heat::TestFlags {
             pin_temperature: test.pin_temperature,
             constant_diffusivity: test.constant_diffusivity,
@@ -84,15 +91,12 @@ fn grade(file: &str) {
         EdgeMode::Bounce => Edge::Bounce,
     };
     let twin_switches = Switches { gravity, hydro, heat: switches.heat, reactions: switches.reactions };
-    let mut twin =
-        Twin::new(&physics, &elements(), edge, twin_switches, Some(burning), w, h, planes.iter().map(|&v| f64::from(v)).collect()).unwrap();
+    let make_twin =
+        || Twin::new(&physics, &elements(), edge, twin_switches, Some(burning()), w, h, planes.iter().map(|&v| f64::from(v)).collect()).unwrap();
+    let mut twin = make_twin();
     let h_before = hydrogen_mass(&twin.state.planes, cells);
-    for _ in 0..STEPS {
-        twin.step();
-    }
-    let h_after = hydrogen_mass(&twin.state.planes, cells);
 
-    // The GPU, the same switches and edge, the same number of steps.
+    // The GPU, the same switches and edge, STEPS steps; the twin follows it to its sim time, below.
     let gpu = super::device();
     let state = GpuState::new(&gpu.device, world).unwrap();
     state.upload(&gpu.queue, &planes).unwrap();
@@ -110,6 +114,35 @@ fn grade(file: &str) {
     assert_eq!(report.steps, STEPS, "the GPU ran {} steps: {report:?}", report.steps);
     assert!(report.non_finite.is_none(), "non-finite state: {:?}", report.non_finite);
     let out = state.readback(&gpu.device, &gpu.queue);
+    let t_gpu = report.sim_time;
+
+    // The twin to the GPU's sim time: P9's Δt each step, the last capped to land on t_gpu. Its clock is its own sim time
+    // after STEPS uncapped steps: recorded on the way when it lands at STEPS or later (the uncapped trajectory up to the
+    // landing is the same steps), else read from a fresh twin run STEPS steps (a GPU short in time lands it early).
+    let mut clock = None;
+    let landed = loop {
+        let (t, dt) = (twin.sim_time(), twin.dt_next());
+        if twin.step_index() + 1 == STEPS {
+            clock = Some(t + dt);
+        }
+        let last = t + dt >= t_gpu;
+        if last {
+            twin.cap_dt_next(t_gpu - t);
+        }
+        twin.step();
+        if last {
+            break twin.step_index();
+        }
+    };
+    let h_after = hydrogen_mass(&twin.state.planes, cells);
+    let t_twin = clock.unwrap_or_else(|| {
+        let mut full = make_twin();
+        for _ in 0..STEPS {
+            full.step();
+        }
+        full.sim_time()
+    });
+    let clock_off = (t_gpu / t_twin - 1.0).abs();
 
     let (sigma, energy) = (l1(&out, &twin.state.planes, 0, cells), l1(&out, &twin.state.planes, 3, cells));
     // X is read where the floor cannot move it by the band: a cell below Σ_floor / 10⁻⁴ may hold more than 10⁻⁴ of its mass
@@ -123,15 +156,19 @@ fn grade(file: &str) {
             worst = (d, c);
         }
     }
-    let t_gpu = f64::from(report.sim_time);
     println!(
-        "SR-REF {file}: {STEPS} steps on {}: sim time GPU {t_gpu:.5} / twin {:.5} ({:+.3} %); relative L1 Σ {sigma:.3e} (band {L1_BAND:e}), \
-         E {energy:.3e} (band {L1_BAND:e}); largest |ΔX| {:.3e} in {} (band {X_BAND:e})",
+        "SR-REF {file}: {STEPS} steps on {}: sim time GPU {t_gpu:.5} / twin {t_twin:.5} ({:+.4} %, band ±{:.2} %); at the GPU's t, the \
+         twin in {landed} steps: relative L1 Σ {sigma:.3e} (band {L1_BAND:e}), E {energy:.3e} (band {L1_BAND:e}); largest |ΔX| {:.3e} in {} \
+         (band {X_BAND:e})",
         gpu.info.sr_adapter_line(),
-        twin.sim_time(),
-        100.0 * (t_gpu / twin.sim_time() - 1.0),
+        100.0 * (t_gpu / t_twin - 1.0),
+        100.0 * CLOCK_BAND,
         worst.0,
         CHANNELS[worst.1],
+    );
+    assert!(
+        clock_off <= CLOCK_BAND,
+        "{file}: sim time at {STEPS} steps GPU {t_gpu} / twin {t_twin}: the clocks part by {clock_off:e} > {CLOCK_BAND:e}"
     );
     assert!(sigma <= L1_BAND, "{file}: relative L1 in Σ {sigma:e} > {L1_BAND:e}");
     assert!(energy <= L1_BAND, "{file}: relative L1 in E {energy:e} > {L1_BAND:e}");

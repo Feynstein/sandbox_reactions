@@ -330,3 +330,12 @@ mod held_core;
 
 /// M0-T103 — the visible life: each preset's displayed stages against §5.2's G-STAGES rows (contract §1.9.3, §5.2, §0.5 [M0-T103]).
 mod stages;
+
+/// M0-T104 — each ending as predicted (contract §5.2's G-END; §1.9.5, §2.12.2).
+mod endings;
+
+/// M0-T105 — touch any time (contract §5.2's G-TOUCH).
+mod touch;
+
+/// M0-T106 — conservation over whole lives (contract §5.1's G-CONS).
+mod conservation;

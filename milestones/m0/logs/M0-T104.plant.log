@@ -1,0 +1,16 @@
+patching file crates/sr-physics/src/observe/ending.rs
+
+thread 'endings::a_cloud_at_m_up_times_1_25_ends_a_neutron_star' (1125007) panicked at crates/sr-engine/tests/gpu/endings.rs:160:9:
+up_over: the prediction at the drop is Some(Sure(BlackHole)), not the sure Supernova
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    endings::a_cloud_at_m_up_times_1_25_ends_a_neutron_star
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 523 filtered out; finished in 205.41s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+5cfab10b11d0fe9c4e681936aa6811a9  crates/sr-physics/src/observe/ending.rs

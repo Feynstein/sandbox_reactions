@@ -1,0 +1,65 @@
+# M0-D183 2026-11-15T18:24:02-05:00 linux-pc
+    Finished `release` profile [optimized] target(s) in 0.11s
+== build/m0-d181/a/dumps/s_13000.bin
+== build/m0-d181/a/dumps/s_13000.bin, 200 steps
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=125.796586 until=none
+== build/m0-d181/e1fine/dumps/s_19400.bin, 200 steps
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=172.055179 until=none
+## jeans 2026-11-15T18:35:43-05:00
+jeans     6/0/0       12.80 s  GO
+logs: milestones/m0/logs/M0-D183.<scope>.log · record: loop_times.jsonl · tree 5bbb43936ef4+5722c33f043e
+anchor: 7 path×scope entries moved by this run
+anchor: 265 paths checked · 448 skipped (3 classes) · 199 never checked · 1 stale · 8 unclassified · 0 owed · 465 covered of 921 visible
+verify: 6 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 12.80 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 5.86->6.37
+=== GO ===
+## verify2 scopes 2026-11-15T18:36:00-05:00
+cpu_gpu   2/1/0        4.13 s  NO-GO
+FAILED:
+verify: 2 passed, 1 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 4.13 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 6.02->6.02
+grav_force  13/0/0       1.77 s  GO
+verify: 13 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.77 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 6.02->6.58
+=== GO ===
+sod       17/0/0       5.63 s  GO
+verify: 17 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 5.63 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 6.58->6.53
+=== GO ===
+held_core  27/0/0     196.55 s  GO
+verify: 27 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 196.55 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 6.53->16.88
+=== GO ===
+ledger    8/0/0        7.63 s  GO
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 7.63 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 16.88->14.74
+=== GO ===
+[Verify 1] 2026-11-15T18:44:35-05:00 E3 on the change: preset:massive leave until ending, radiation force off (scratch /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/ffc9a097-35c1-4ba0-a306-b7edabfec3b8/scratchpad/norad), dumps every 500, RTX 5090
+[spot] 2026-11-15T18:44:40-05:00 scopes exposed to the kick, RTX 5090
+twin      6/0/0        4.09 s  GO
+grav_selfforce  7/0/0        1.73 s  GO
+collapse  6/0/0        4.19 s  GO
+edges     7/0/0       17.01 s  GO
+radiation_force  11/0/0       7.45 s  GO
+booking   4/0/0        1.07 s  GO
+box       8/0/0        4.92 s  GO
+sink      34/0/0       9.73 s  GO
+preset_cloud  5/0/0       43.20 s  GO
+multi     5/0/0       31.93 s  GO
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=22788 sim_time=182.195848 until=met
+   500 |dp| 2.269e-04 sum|p| 2.569e+04
+  2000 |dp| 4.916e-03 sum|p| 1.207e+04
+  3500 |dp| 1.969e-02 sum|p| 2.996e+03
+  5000 |dp| 3.558e-02 sum|p| 1.258e+03
+  6500 |dp| 5.088e-02 sum|p| 2.047e+03
+  8000 |dp| 6.590e-02 sum|p| 3.459e+03
+  9500 |dp| 7.977e-02 sum|p| 7.161e+03
+ 11000 |dp| 9.258e-02 sum|p| 1.126e+04
+ 12500 |dp| 1.046e-01 sum|p| 1.535e+04
+ 14000 |dp| 1.147e-01 sum|p| 1.921e+04
+ 15500 |dp| 1.247e-01 sum|p| 1.972e+04
+ 17000 |dp| 1.343e-01 sum|p| 1.702e+04
+ 18500 |dp| 1.472e-01 sum|p| 1.417e+04
+ 20000 |dp| 1.455e-01 sum|p| 1.133e+04
+ 21500 |dp| 1.311e-01 sum|p| 6.671e+03
+ 22788 |dp| 1.537e-01 sum|p| 1.155e+04
+ 22788 |dp| 1.537e-01 sum|p| 1.155e+04
+worst drift 5.980e-06 of the running peak at step 22788; end |dp| 1.537e-01, peak 2.569e+04, end ratio 5.980e-06
+[claim] 2026-11-15T18:49:31-05:00 verify.py --changed --task M0-D183, RTX 5090, capped at 570 s
