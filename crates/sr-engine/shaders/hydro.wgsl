@@ -45,7 +45,12 @@
 // last step — the previous step's flux, since P5 runs after P4 —, after the flux differences and gravity's source; E is
 // left as it is (the work comes out of the thermal energy), capped at the heat the cell holds above its floor (§0.5
 // [M0-D58], `push_share`). The predictor is not kicked and the boundary fluxes do not see it, so `hydro_edges` binds no F.
-// The twin's `Hydro::step_forced` is the reference.
+// [M0-D184] The force never moves the grid's momentum: the cell-centred κΣF/c_sb does not telescope where κΣ jumps, and
+// the cap trims one side of pushes that should cancel (M0-D184 measured +3.6 a step at the Massive's collapse against a
+// net of 0.04 uncapped). So `hydro_update` writes the push it applied, s·d, over its own cell's F (consumed; P5 rewrites
+// F over the whole box after P4), 0 in every other box cell; `hydro_push_sum`, one workgroup, sums it over the box — the
+// net N and the gross S = Σ|s·d| in compensated f32, a fixed order —; `hydro_commit` takes |s·d|·N/S back from each
+// pushed cell, E as it is, before the sticky wall. The twin's `Hydro::step_forced` is the reference.
 //
 // Held cells (§2.3.4 [M0-TG2], §1.4.2 [M0-TG2]; M0-D71c), the mask the last P8 wrote (state.rs `State::held`, read here
 // as a sampled texture: the update's 8 storage slots are full): a face between two held cells, or between a held cell and
@@ -98,8 +103,9 @@ struct ActiveBox {
 @group(0) @binding(4) var<storage, read_write> next_lo: array<f32>;
 @group(0) @binding(5) var<storage, read_write> next_hi: array<f32>;
 // P5's flux F (state.rs `side.flux`): the x plane, then the y plane, cell-centred, row-major — read only when
-// `edges.radiation` is 1 (else a placeholder is bound). The update's eighth storage buffer.
-@group(0) @binding(6) var<storage, read> rad_flux: array<f32>;
+// `edges.radiation` is 1 (else a placeholder is bound). The update's eighth storage buffer. [M0-D184] The update
+// overwrites each box cell's with the push it applied (the header comment), which `hydro_push_sum` and `hydro_commit` read.
+@group(0) @binding(6) var<storage, read_write> rad_flux: array<f32>;
 @group(0) @binding(7) var<uniform> abox: ActiveBox;
 // The Δt record (reduce.wgsl `DtState`), its first four words as a uniform — so the update keeps a storage slot for F
 // (M0-T43): word 0 is Δt_n.
@@ -136,6 +142,8 @@ struct Edges {
 // P2's field as `hydro_mid` writes it (the same buffer as `grav`, never bound both ways in one dispatch): Σ_src at the
 // half step into plane MID_SRC (§1.4.2 [M0-D183]).
 @group(0) @binding(17) var<storage, read_write> mid_out: array<f32>;
+// [M0-D184] The radiation force's sums over the box (`hydro_push_sum`): the net push N (x, y), the gross S = Σ|s·d|.
+@group(0) @binding(18) var<storage, read_write> push_net: array<f32>;
 
 // The field's half-step planes (step/grav.rs `FIELD_PLANES`): g_mid's x (y the next), φ_mid, g_pull_mid's x (y the next),
 // Σ_src at the half step.
@@ -744,6 +752,15 @@ fn write_next(cell: u32, u: array<f32, 14>) {
     }
 }
 
+// [M0-D184] The push cell `cell` took from the radiation force this step, written over its F (the header comment); only
+// when the step runs P5 — else `rad_flux` is a placeholder.
+fn put_push(cell: u32, p: vec2<f32>) {
+    if (edges.radiation != 0u) {
+        rad_flux[cell] = p.x;
+        rad_flux[dims.cells + cell] = p.y;
+    }
+}
+
 // Copies cell `cell` into the next state unchanged — a held cell with no momentum spared, its momentum planes 0.
 fn keep(cell: u32) {
     let n = dims.cells;
@@ -856,6 +873,7 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
     if (workgroupUniformLoad(&moving) == 0u) {
         if (inside) {
             keep(cell);
+            put_push(cell, vec2<f32>(0.0, 0.0));
         }
         return;
     }
@@ -967,6 +985,7 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
     if (!moves) {
         if (inside) {
             keep(cell);
+            put_push(cell, vec2<f32>(0.0, 0.0));
         }
         return;
     }
@@ -1022,6 +1041,7 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
         keep(cell);
         put_next(1u, cell, spared.x);
         put_next(2u, cell, spared.y);
+        put_push(cell, vec2<f32>(0.0, 0.0));
         return;
     }
     for (var k = 0u; k < COMPONENTS; k++) {
@@ -1048,14 +1068,18 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
         u[2] += dn.x - up.x;
         u[3] += r.y + l.z + dn.y + up.z;
     }
-    // The radiation force from the previous step's flux (§2.4.4): momentum only, E as it is.
+    // The radiation force from the previous step's flux (§2.4.4): momentum only, E as it is; the push taken written over
+    // the cell's F for `hydro_push_sum` (§2.4.4 [M0-D184]).
+    var push = vec2<f32>(0.0, 0.0);
     if (edges.radiation != 0u && !empty_here) {
         let f = radiation_force(cell);
         let d = dt * f;
         let s = push_share(u, d);
-        u[1] += s * d.x;
-        u[2] += s * d.y;
+        push = s * d;
+        u[1] += push.x;
+        u[2] += push.y;
     }
+    put_push(cell, push);
     write_next(cell, u);
 }
 
@@ -1144,6 +1168,55 @@ fn hydro_edges(@builtin(global_invocation_id) id: vec3<u32>) {
     }
 }
 
+// [M0-D184] A compensated sum: `hi` the running f32 sums of (push x, push y, |push|), `lo` what their roundings lost.
+struct PushSum {
+    hi: vec3<f32>,
+    lo: vec3<f32>,
+}
+
+// `a` + `b` with the rounding error of the f32 sum (Knuth's TwoSum, branch-free), `lo` carried.
+fn push_add(a: PushSum, b: vec3<f32>, lo: vec3<f32>) -> PushSum {
+    let s = a.hi + b;
+    let bb = s - a.hi;
+    let e = (a.hi - (s - bb)) + (b - bb);
+    return PushSum(s, a.lo + lo + e);
+}
+
+const PUSH_GROUP: u32 = 256u;
+var<workgroup> push_part: array<PushSum, 256>;
+
+// [M0-D184] The radiation force's net push N and its gross S = Σ|s·d| over the box (the header comment), one workgroup:
+// each invocation sums the box cells k ≡ its index (mod 256) in order, then a fixed tree joins the 256 — the same push,
+// the same sums, bit for bit. Writes (N_x, N_y, S, 0) to `push_net`, zeros when the step runs no P5.
+@compute @workgroup_size(256)
+fn hydro_push_sum(@builtin(local_invocation_index) li: u32) {
+    var acc = PushSum(vec3<f32>(0.0), vec3<f32>(0.0));
+    if (edges.radiation != 0u) {
+        let cells = abox.w * abox.h;
+        for (var k = li; k < cells; k += PUSH_GROUP) {
+            let cell = (abox.y0 + k / abox.w) * dims.width + abox.x0 + k % abox.w;
+            let p = vec2<f32>(rad_flux[cell], rad_flux[dims.cells + cell]);
+            acc = push_add(acc, vec3<f32>(p, length(p)), vec3<f32>(0.0));
+        }
+    }
+    push_part[li] = acc;
+    workgroupBarrier();
+    for (var half = PUSH_GROUP / 2u; half > 0u; half = half / 2u) {
+        if (li < half) {
+            let other = push_part[li + half];
+            push_part[li] = push_add(push_part[li], other.hi, other.lo);
+        }
+        workgroupBarrier();
+    }
+    if (li == 0u) {
+        let total = push_part[0].hi + push_part[0].lo;
+        push_net[0] = total.x;
+        push_net[1] = total.y;
+        push_net[2] = total.z;
+        push_net[3] = 0.0;
+    }
+}
+
 @compute @workgroup_size(8, 8)
 fn hydro_commit(@builtin(global_invocation_id) id: vec3<u32>) {
     if (id.x >= abox.w || id.y >= abox.h) {
@@ -1162,6 +1235,11 @@ fn hydro_commit(@builtin(global_invocation_id) id: vec3<u32>) {
     // [M0-D172] The sticky wall (the header comment): a free gas cell's momentum into a held face-neighbour stops, E as it
     // is, booked into `held` — its own slots, which no other invocation writes; a cell left under Σ_vac is P8's to reset.
     var mom = vec2<f32>(get_next(1u, cell), get_next(2u, cell));
+    // [M0-D184] The net push taken back from each pushed cell in proportion to its push, E as it is (the header comment).
+    if (edges.radiation != 0u && push_net[2] > 0.0) {
+        let p = vec2<f32>(rad_flux[cell], rad_flux[n + cell]);
+        mom -= length(p) * vec2<f32>(push_net[0], push_net[1]) / push_net[2];
+    }
     var stopped = vec2<f32>(0.0, 0.0);
     let gas = get_next(0u, cell) >= eos.sigma_vac;
     if (gas && ((held_at(x - 1, y) && mom.x < 0.0) || (held_at(x + 1, y) && mom.x > 0.0))) {

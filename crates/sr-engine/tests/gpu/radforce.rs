@@ -29,6 +29,9 @@
 //! heat on, 64 × 64 bounce, gravity and hydro, the shipped constants — 50 steps on the twin and through `headless` on the
 //! GPU: every value finite and the mass invariant within 10⁻⁶ (uncapped, E runs to NaN by step 12 and the world empties).
 //!
+//! M0-D184 — the net push taken back (§2.4.4 [M0-D184]): on F with its left half halved (a net push along +x), each cell
+//! gains d − |d|·N/S (N the net of the pushes d = Δt·f, S their gross), the grid's momentum unmoved — twin and GPU.
+//!
 //! M0-D83 — each GPU case on both of P5's preconditioners, Jacobi and the V-cycle (§0.5 [M0-D82]): `crate::heat`'s
 //! `on_both_preconditioners`, the D58 block's in-process `headless` run included.
 
@@ -52,6 +55,7 @@ use crate::heat::on_both_preconditioners;
 on_both_preconditioners!(
     gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged,
     gpu_p4_reads_the_previous_steps_flux,
+    gpu_the_net_push_is_taken_back,
     gpu_the_push_spends_no_more_than_the_heat_above_the_floor,
     gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass,
 );
@@ -340,6 +344,83 @@ fn gpu_p4_reads_the_previous_steps_flux() {
         }
     }
     assert_eq!(by_hand.other, 0.0, "Σ, E and the species as the free step's");
+}
+
+/// [M0-D184] The net push taken back (§2.4.4 [M0-D184]): F with its left half (x < W/2) halved, so the push d = Δt·f has a
+/// net N = Σ d along +x of about a third of the gross S = Σ|d|. The oracle, from the ruling's words: each cell gains
+/// d − |d|·N/S. Graded, x: the gain summed over the cells pushed −x and over those pushed +x each equals that sum of the
+/// oracle within TOL relative (taking nothing back is ~1/3 off on each); the grid's whole gain, x and y, within TOL of S;
+/// Σ, E and the species the free step's bit for bit.
+fn check_net(label: &str, forced: &State, free: &State, f: &[Vec<f64>; 2], dt: f64) {
+    let n = forced.cells();
+    let d: Vec<[f64; 2]> = (0..n).map(|i| [dt * f[0][i], dt * f[1][i]]).collect();
+    let m: Vec<f64> = d.iter().map(|d| d[0].hypot(d[1])).collect();
+    let (net, gross) = (d.iter().fold([0.0, 0.0], |a, d| [a[0] + d[0], a[1] + d[1]]), m.iter().sum::<f64>());
+    assert!(net[0] > 0.1 * gross, "{label}: the halved F must leave a net push along +x (N {net:?}, S {gross:e})");
+    let mut groups = [[0.0f64; 2]; 2]; // [pushed −x, pushed +x][gained, oracle]
+    let mut whole = [0.0f64; 2];
+    let mut other = 0.0f64;
+    for i in 0..n {
+        let gained = [forced.planes[n + i] - free.planes[n + i], forced.planes[2 * n + i] - free.planes[2 * n + i]];
+        whole[0] += gained[0];
+        whole[1] += gained[1];
+        if d[i][0] != 0.0 {
+            let g = usize::from(d[i][0] > 0.0);
+            groups[g][0] += gained[0];
+            groups[g][1] += d[i][0] - m[i] * net[0] / gross;
+        }
+        for ch in (0..14).filter(|&ch| ch != 1 && ch != 2) {
+            other = other.max((forced.planes[ch * n + i] - free.planes[ch * n + i]).abs());
+        }
+    }
+    for (g, name) in ["pushed −x", "pushed +x"].into_iter().enumerate() {
+        let [gained, oracle] = groups[g];
+        let rel = (gained - oracle).abs() / oracle.abs();
+        println!("SR-RADFORCE {label} net, {name}: gained {gained:.9e}, oracle {oracle:.9e}, relative {rel:.2e}");
+        assert!(rel <= TOL, "{label} {name}: gained {gained:e} against the oracle's {oracle:e} ({rel:e} > {TOL:e})");
+    }
+    println!("SR-RADFORCE {label} net: N ({:.6e}, {:.6e}), S {gross:.6e}; the grid's gain ({:.2e}, {:.2e})", net[0], net[1], whole[0], whole[1]);
+    for c in 0..2 {
+        assert!(whole[c].abs() <= TOL * gross, "{label}: the grid's momentum moved {:e} along {c} (S {gross:e})", whole[c]);
+    }
+    assert_eq!(other, 0.0, "{label}: the take-back changes the momentum only — Σ, E and the species bit for bit");
+}
+
+/// F with its left half (x < W/2) halved.
+fn halved_left(fx: &[f64], fy: &[f64]) -> (Vec<f64>, Vec<f64>) {
+    let half = |c: &[f64]| c.iter().enumerate().map(|(i, &v)| if i % W < W / 2 { 0.5 * v } else { v }).collect();
+    (half(fx), half(fy))
+}
+
+/// The twin's P4 takes the net push back (§2.4.4 [M0-D184]).
+#[test]
+fn twin_the_net_push_is_taken_back() {
+    let physics = physics();
+    let hydro = Hydro::new(&physics, &elements(), Edge::Bounce).unwrap();
+    let heat = Heat::new(&physics, &elements(), pinned()).unwrap();
+    let st = slab();
+    let flux = heat.step(&mut st.clone(), DT).flux.cells();
+    let (hx, hy) = halved_left(&flux.0, &flux.1);
+    let mut free = st.clone();
+    hydro.step(&mut free, DT);
+    let mut forced = st.clone();
+    hydro.step_forced(&mut forced, DT, None, Some((&hx, &hy)));
+    check_net("twin", &forced, &free, &force(&physics, &st, &hx, &hy), DT);
+}
+
+/// The GPU's P4 takes the net push back (§2.4.4 [M0-D184]): one step on the halved F, after two steps of the slab.
+fn gpu_the_net_push_is_taken_back() {
+    let physics = physics();
+    let pair = Pair::new(&physics, &slab());
+    let dt = f64::from(DT as f32);
+    for _ in 0..2 {
+        pair.step(dt);
+    }
+    let (fx, fy) = pair.flux();
+    let (hx, hy) = halved_left(&fx, &fy);
+    pair.write_flux(&hx, &hy);
+    let (start, forced, free) = pair.step(dt);
+    check_net("gpu", &forced, &free, &force(&physics, &start, &hx, &hy), dt);
 }
 
 /// The cap's slab: the medium just above the floor (Σ 1, T 0.06: 0.02 of heat above it a cell), the slab at T 3,000 (Σ 0.1) —

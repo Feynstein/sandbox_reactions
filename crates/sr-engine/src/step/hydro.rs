@@ -2,12 +2,13 @@
 //! (sr_physics::reference::hydro) in f32 — unsplit MUSCL-Hancock, the monotonised-central limiter, HLL with Davis
 //! speeds, species by the mass flux, eos.wgsl's pressure, two ghosts a side — bounce or leave (§2.8; M0-T35).
 //!
-//! Three dispatches: `hydro_update` over the box's 8 × 8 tiles ([`Size::Indirect`] at [`ARGS_TILES`]) writes the next
+//! Three dispatches, `hydro_push_sum` between the last two (below): `hydro_update` over the box's 8 × 8 tiles ([`Size::Indirect`] at [`ARGS_TILES`]) writes the next
 //! state into P4's own planes — two buffers of [`NEXT_PLANES`] planes in §2.2's order — from the state as the step found it, each
 //! tile's predicted faces exchanged through 9,216 B of workgroup memory instead of stored (a stored face set is 60 words a
 //! cell, past WebGPU's 128 MiB binding at §2.8's largest worlds; M0-D30); `hydro_edges`, one invocation per boundary face (a fixed size),
 //! books what a leave edge lets out into the booking's `escaped` buffer from the same face flux the update applied;
-//! `hydro_commit` copies the next state back over the box. The update binds the state's three buffers, the next
+//! `hydro_commit` copies the next state back over the box — after, when the step runs P5, `hydro_push_sum` (one workgroup)
+//! has summed the radiation force's pushes the update wrote over F, and the commit takes the net back (§2.4.4 [M0-D184]). The update binds the state's three buffers, the next
 //! state's two, P2's g, P5's F and eos.wgsl's table: WebGPU's 8 storage buffers per stage (§2.2, §6.2.2), all of
 //! them — hence the booking's own dispatch, the next state in two buffers of seven planes, not three as the state (M0-T36:
 //! a slot for g; 7 planes at 2048 × 2048 still fit the 128 MiB binding), and the Δt record bound as a uniform (M0-T43: a
@@ -190,6 +191,15 @@ fn dispatches(
     let world = state.world();
     let faces = 2 * (world.width + world.height);
 
+    // [M0-D184] The radiation force's net push and gross over the box, (N_x, N_y, S, 0): `hydro_push_sum`'s, the commit's.
+    let push_net = init_buffer(device, "hydro.push_net", wgpu::BufferUsages::STORAGE, &[0; 4]);
+    let push_sum = compute_pipeline(device, &module, "hydro_push_sum");
+    let push_sum_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
+        label: Some("P4 hydro_push_sum"),
+        layout: &push_sum.get_bind_group_layout(0),
+        entries: &[entry(0, state.dims()), entry(6, flux), entry(7, boxfit.active()), entry(13, edge), entry(18, &push_net)],
+    });
+
     let held_book = BOOK_GROUPS.iter().position(|g| g.name == "booking.held").expect("the booking buffer of P4's held cells");
     let commit = compute_pipeline(device, &module, "hydro_commit");
     let commit_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
@@ -199,12 +209,15 @@ fn dispatches(
             entry(0, state.dims()),
             entry(4, &next[0]),
             entry(5, &next[1]),
+            entry(6, flux),
             entry(7, boxfit.active()),
             entry(9, state.group(0)),
             entry(10, state.group(1)),
             entry(11, state.group(2)),
+            entry(13, edge),
             held(15, state),
             entry(16, booking.group(held_book)),
+            entry(18, &push_net),
         ],
     });
     // The sticky wall reads Σ_vac (§2.3.4 [M0-D172]): the parameters alone, no cold table.
@@ -239,6 +252,7 @@ fn dispatches(
             bind_groups: vec![edges_group, edges_eos],
             size: Size::Fixed([faces.div_ceil(EDGE_GROUP), 1, 1]),
         },
+        Dispatch { label: "hydro_push_sum", pipeline: push_sum, bind_groups: vec![push_sum_group], size: Size::Fixed([1, 1, 1]) },
         Dispatch { label: "hydro_commit", pipeline: commit, bind_groups: vec![commit_group, commit_eos], size: tiles() },
     ])
     .collect()

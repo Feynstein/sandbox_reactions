@@ -1,0 +1,22 @@
+--- a/crates/sr-physics/src/reference/hydro.rs
++++ b/crates/sr-physics/src/reference/hydro.rs
+@@ -951,7 +951,7 @@
+         // |s·d|·N/S with S = Σ|s·d| (module doc), E as it is.
+         let norm = |p: &[f64; 2]| (p[0] * p[0] + p[1] * p[1]).sqrt();
+         let net = push.iter().fold([0.0, 0.0, 0.0], |a, p| [a[0] + p[0], a[1] + p[1], a[2] + norm(p)]);
+-        if net[2] > 0.0 {
++        if net[2] < 0.0 {
+             for (i, p) in push.iter().enumerate() {
+                 let m = norm(p);
+                 next.planes[n + i] -= m * net[0] / net[2];
+--- a/crates/sr-engine/shaders/hydro.wgsl
++++ b/crates/sr-engine/shaders/hydro.wgsl
+@@ -1236,7 +1236,7 @@
+     // is, booked into `held` — its own slots, which no other invocation writes; a cell left under Σ_vac is P8's to reset.
+     var mom = vec2<f32>(get_next(1u, cell), get_next(2u, cell));
+     // [M0-D184] The net push taken back from each pushed cell in proportion to its push, E as it is (the header comment).
+-    if (edges.radiation != 0u && push_net[2] > 0.0) {
++    if (edges.radiation != 0u && push_net[2] < 0.0) {
+         let p = vec2<f32>(rad_flux[cell], rad_flux[n + cell]);
+         mom -= length(p) * vec2<f32>(push_net[0], push_net[1]) / push_net[2];
+     }

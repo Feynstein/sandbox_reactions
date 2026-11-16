@@ -1,0 +1,9 @@
+M0-D184 log — opened 2026-11-16T09:39:38-05:00 on linux-pc
+== run t19000 2026-11-16T09:39:48-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=19000 sim_time=168.999511 until=none
+
+real	1m12.535s
+user	1m9.811s
+sys	0m0.815s
+== 2026-11-16T10:06:55-05:00 Verify 1 FAIL 5.025e-6 (floor, M0-D186); radiation_force GO 14/0, redarm 3/3 red; jeans held_core cpu_gpu twin booking GO; life neutron_star t 193.2; details tasks/M0-D184.md

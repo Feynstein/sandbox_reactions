@@ -1,0 +1,89 @@
+== 2026-11-16T12:10:57-05:00 M0-D184 short part of the claim: the 79 non-⏱ scopes the anchor ties to the change (named; --changed owed to M0-V15)
+verify: refused - nothing run
+=== NO-GO: unknown scope(s): heat_rkl2 - `list` shows them (plan_lint, tools_selftest, toolchain, build, registry, eos, rates, burn_cell, burn_order, neutrino, sink, nu_heat, summary, ledger, preset_cloud, observe_run, objects, classify, stage_order, stages, endings, touch, conservation, ending, age_clock, multi, edits, edits_file, fft_twin, riemann, sheet, sod, edges, collapse, jeans, sun_burn, tw... ===
+exit 1
+== 2026-11-16T12:11:10-05:00 re-run without heat_rkl2 (an anchor entry, no scope in verify.json): 78 scopes
+adapter           10/0/0       8.79 s  GO · step 1/77, 76 left
+age_clock         17/0/0       2.97 s  GO · step 2/77, 75 left
+booking           4/0/0        8.33 s  GO · step 3/77, 74 left
+boot              1/0/0       24.31 s  GO · step 4/77, 73 left
+box               8/0/0       12.44 s  GO · step 5/77, 72 left
+build             2/0/0        5.24 s  GO · step 6/77, 71 left
+burn_cell         20/0/0      11.53 s  GO · step 7/77, 70 left
+burn_order        4/0/0        5.37 s  GO · step 8/77, 69 left
+calibrate_bisect  19/0/0      85.57 s  GO · step 9/77, 68 left
+calibrate_cold    8/0/0        1.22 s  GO · step 10/77, 67 left
+calibrate_order   13/0/0       0.21 s  GO · step 11/77, 66 left
+calibration       13/0/0       0.41 s  GO · step 12/77, 65 left
+capture           3/0/0       55.75 s  GO · step 13/77, 64 left
+classify          57/0/0       0.11 s  GO · step 14/77, 63 left
+cold_core         8/0/0       13.04 s  GO · step 15/77, 62 left
+collapse          6/0/0        5.48 s  GO · step 16/77, 61 left
+cpu_gpu           3/0/0       10.19 s  GO · step 17/77, 60 left
+desktop           5/0/0      111.66 s  GO · step 18/77, 59 left
+dt                8/0/0        2.57 s  GO · step 19/77, 58 left
+dump              14/0/0      42.08 s  GO · step 20/77, 57 left
+edges             7/0/0       10.50 s  GO · step 21/77, 56 left
+edits             17/0/0       8.65 s  GO · step 22/77, 55 left
+edits_file        6/0/0        6.04 s  GO · step 23/77, 54 left
+ending            11/0/0       0.11 s  GO · step 24/77, 53 left
+eos               13/0/0       0.12 s  GO · step 25/77, 52 left
+extents           7/0/0        9.50 s  GO · step 26/77, 51 left
+fft               8/0/0        5.79 s  GO · step 27/77, 50 left
+fft_twin          10/0/0       0.17 s  GO · step 28/77, 49 left
+floors            12/0/0      10.19 s  GO · step 29/77, 48 left
+frames            6/0/0       15.85 s  GO · step 30/77, 47 left
+glow              7/0/0        4.92 s  GO · step 31/77, 46 left
+grav_force        13/0/0       5.92 s  GO · step 32/77, 45 left
+grav_selfforce    7/0/0        3.32 s  GO · step 33/77, 44 left
+heat_gauss        14/0/0       6.78 s  GO · step 34/77, 43 left
+heat_implicit     8/0/0        4.07 s  GO · step 35/77, 42 left
+heat_limiter      8/0/0        6.23 s  GO · step 36/77, 41 left
+heat_multigrid    4/0/0        3.52 s  GO · step 37/77, 40 left
+heat_stiff        16/0/0       8.23 s  GO · step 38/77, 39 left
+held_core         27/0/0     184.90 s  GO · step 39/77, 38 left
+jeans             6/0/0        1.47 s  GO · step 40/77, 37 left
+latch             5/0/0        2.67 s  GO · step 41/77, 36 left
+ledger            8/0/0       17.90 s  GO · step 42/77, 35 left
+measure_ui        2/0/0        7.90 s  GO · step 43/77, 34 left
+multi             5/0/0       49.47 s  GO · step 44/77, 33 left
+neutrino          18/0/0       3.52 s  GO · step 45/77, 32 left
+nu_heat           15/0/0       5.42 s  GO · step 46/77, 31 left
+objects           29/0/0       0.11 s  GO · step 47/77, 30 left
+observe_run       14/0/0      65.85 s  GO · step 48/77, 29 left
+plan_lint         GO (already GO on this tree at 2026-11-16T10:07:19-05:00 — not re-run)
+preset_cloud      5/0/0       45.20 s  GO · step 49/77, 28 left
+radiation_force   14/0/0      12.49 s  GO · step 50/77, 27 left
+rates             8/0/0        0.11 s  GO · step 51/77, 26 left
+readouts          9/0/0        0.11 s  GO · step 52/77, 25 left
+registry          29/0/0       0.11 s  GO · step 53/77, 24 left
+riemann           8/0/0        0.11 s  GO · step 54/77, 23 left
+sheet             7/0/0        0.21 s  GO · step 55/77, 22 left
+sink              34/0/0      12.30 s  GO · step 56/77, 21 left
+sod               17/0/0       9.03 s  GO · step 57/77, 20 left
+stage_order       2/0/0       35.45 s  GO · step 58/77, 19 left
+state             12/0/0       4.59 s  GO · step 59/77, 18 left
+strings           3/0/0        1.44 s  GO · step 60/77, 17 left
+summary           7/0/0        5.02 s  GO · step 61/77, 16 left
+timing            5/0/0       21.86 s  GO · step 62/77, 15 left
+twin              6/0/0        3.17 s  GO · step 63/77, 14 left
+ui_banner         18/0/0       2.37 s  GO · step 64/77, 13 left
+ui_display        11/0/0       1.27 s  GO · step 65/77, 12 left
+ui_inspect        9/0/0        0.16 s  GO · step 66/77, 11 left
+ui_legend         25/0/0       0.62 s  GO · step 67/77, 10 left
+ui_presets        7/0/0        0.67 s  GO · step 68/77, 9 left
+ui_remnant        6/0/0        0.21 s  GO · step 69/77, 8 left
+ui_star           13/0/0       0.22 s  GO · step 70/77, 7 left
+ui_tools          18/0/0       0.16 s  GO · step 71/77, 6 left
+ui_topbar         15/0/0       0.26 s  GO · step 72/77, 5 left
+ui_world          7/0/0        0.21 s  GO · step 73/77, 4 left
+ui_zoom           11/0/0       0.21 s  GO · step 74/77, 3 left
+views             16/0/0      40.05 s  GO · step 75/77, 2 left
+watch_only        1/0/0        0.11 s  GO · step 76/77, 1 left
+web               5/0/0     1165.55 s  GO · step 77/77, 0 left
+logs: milestones/m0/logs/M0-D184.<scope>.log · record: loop_times.jsonl · tree d0fb254daea5+45303fe240e6
+anchor: 243 path×scope entries moved by this run
+anchor: 305 paths checked · 451 skipped (3 classes) · 161 never checked · 0 stale · 0 unclassified · 0 owed · 466 covered of 917 visible
+verify: 1742 passed, 0 failed, 0 skipped · 78/78 scopes GO · 0 skipped · 0 owed · 1 not re-run · 0 NOT RUN · 0 not impacted · 644.20 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 16.52->11.55
+=== GO ===
+exit 0

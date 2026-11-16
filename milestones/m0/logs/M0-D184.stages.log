@@ -1,0 +1,101 @@
+== 2026-11-16T11:54:55-05:00 stages · task M0-D184 · box laserax-ai :: bash tests/gpu.sh stages physics
+-- stages · exit=0 · 836.65 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 3 tests
+test stages::the_giant_preset_shows_its_stages_down_to_black_hole ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+giant step=33 t=0.26 shown=protostar raw=protostar M=18578.6 (m_up_sb 6515.5)
+giant step=785 t=4.05 shown=main_sequence raw=main_sequence M=18561.9 (m_up_sb 6515.5)
+giant step=1169 t=6.08 shown=he_core raw=he_core M=18547.4 (m_up_sb 6515.5)
+giant step=1489 t=7.73 shown=main_sequence raw=main_sequence M=18523.5 (m_up_sb 6515.5)
+giant step=2897 t=20.39 shown=he_core raw=he_core M=17986.5 (m_up_sb 6515.5)
+giant step=2961 t=20.94 shown=main_sequence raw=main_sequence M=17965.9 (m_up_sb 6515.5)
+giant step=3617 t=27.95 shown=he_core raw=he_core M=17519.3 (m_up_sb 6515.5)
+giant step=3777 t=29.31 shown=main_sequence raw=main_sequence M=17426.7 (m_up_sb 6515.5)
+giant step=4305 t=35.02 shown=he_core raw=he_core M=16934.9 (m_up_sb 6515.5)
+giant step=4417 t=36.01 shown=main_sequence raw=main_sequence M=16860.2 (m_up_sb 6515.5)
+giant step=4817 t=40.18 shown=he_core raw=he_core M=16581.0 (m_up_sb 6515.5)
+giant step=4993 t=41.74 shown=main_sequence raw=main_sequence M=16498.3 (m_up_sb 6515.5)
+giant step=5329 t=45.14 shown=he_core raw=he_core M=16356.5 (m_up_sb 6515.5)
+giant step=5489 t=46.59 shown=main_sequence raw=main_sequence M=16295.8 (m_up_sb 6515.5)
+giant step=5761 t=49.16 shown=he_core raw=he_core M=16092.6 (m_up_sb 6515.5)
+giant step=6401 t=54.52 shown=o_burn raw=o_burn M=15660.4 (m_up_sb 6515.5)
+giant step=6865 t=57.73 shown=si_burn raw=si_burn M=15153.3 (m_up_sb 6515.5)
+giant step=7057 t=58.93 shown=main_sequence raw=main_sequence M=14928.3 (m_up_sb 6515.5)
+giant step=7985 t=63.77 shown=core_collapse raw=core_collapse M=13736.6 (m_up_sb 6515.5)
+giant step=7986 t=63.78 shown=supernova raw=supernova M=13735.2 (m_up_sb 6515.5)
+giant step=8130 t=64.31 shown=black_hole raw=black_hole M=13565.8 (m_up_sb 6515.5)
+SR-HEADLESS DONE steps=8130 sim_time=64.305738 until=met
+giant shown (8130 steps, exit 0): [("protostar", 33), ("main_sequence", 785), ("he_core", 1169), ("main_sequence", 1489), ("he_core", 2897), ("main_sequence", 2961), ("he_core", 3617), ("main_sequence", 3777), ("he_core", 4305), ("main_sequence", 4417), ("he_core", 4817), ("main_sequence", 4993), ("he_core", 5329), ("main_sequence", 5489), ("he_core", 5761), ("o_burn", 6401), ("si_burn", 6865), ("main_sequence", 7057), ("core_collapse", 7985), ("supernova", 7986), ("black_hole", 8130)]
+ok
+test stages::the_massive_preset_shows_its_stages_down_to_neutron_star ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+massive step=33 t=0.30 shown=protostar raw=protostar M=9810.4 (m_up_sb 6515.5)
+massive step=721 t=4.26 shown=main_sequence raw=main_sequence M=9797.5 (m_up_sb 6515.5)
+massive step=10097 t=95.34 shown=he_core raw=he_core M=9070.7 (m_up_sb 6515.5)
+massive step=10273 t=97.13 shown=main_sequence raw=main_sequence M=9051.0 (m_up_sb 6515.5)
+massive step=10449 t=98.92 shown=he_core raw=he_core M=9029.5 (m_up_sb 6515.5)
+massive step=10625 t=100.70 shown=main_sequence raw=main_sequence M=9006.6 (m_up_sb 6515.5)
+massive step=10785 t=102.33 shown=he_core raw=he_core M=8984.0 (m_up_sb 6515.5)
+massive step=10977 t=104.26 shown=main_sequence raw=main_sequence M=8954.9 (m_up_sb 6515.5)
+massive step=11137 t=105.87 shown=he_core raw=he_core M=8928.6 (m_up_sb 6515.5)
+massive step=11329 t=107.79 shown=main_sequence raw=main_sequence M=8894.6 (m_up_sb 6515.5)
+massive step=11457 t=109.08 shown=he_core raw=he_core M=8870.2 (m_up_sb 6515.5)
+massive step=13889 t=131.93 shown=o_burn raw=o_burn M=8051.6 (m_up_sb 6515.5)
+massive step=15345 t=143.89 shown=si_burn raw=si_burn M=7262.6 (m_up_sb 6515.5)
+massive step=15825 t=147.57 shown=main_sequence raw=main_sequence M=6965.9 (m_up_sb 6515.5)
+massive step=16785 t=154.56 shown=iron_core raw=iron_core M=6364.6 (m_up_sb 6515.5)
+massive step=17217 t=157.57 shown=main_sequence raw=main_sequence M=6102.0 (m_up_sb 6515.5)
+massive step=17345 t=158.45 shown=iron_core raw=iron_core M=6025.5 (m_up_sb 6515.5)
+massive step=17969 t=162.65 shown=main_sequence raw=main_sequence M=5669.1 (m_up_sb 6515.5)
+massive step=18033 t=163.06 shown=iron_core raw=iron_core M=5634.9 (m_up_sb 6515.5)
+massive step=18609 t=166.69 shown=main_sequence raw=main_sequence M=5347.7 (m_up_sb 6515.5)
+massive step=18897 t=168.43 shown=o_burn raw=o_burn M=5220.1 (m_up_sb 6515.5)
+massive step=18961 t=168.80 shown=main_sequence raw=main_sequence M=5193.6 (m_up_sb 6515.5)
+massive step=19249 t=170.43 shown=o_burn raw=o_burn M=5081.9 (m_up_sb 6515.5)
+massive step=19313 t=170.79 shown=main_sequence raw=main_sequence M=5058.0 (m_up_sb 6515.5)
+massive step=19921 t=174.09 shown=core_collapse raw=core_collapse M=4859.2 (m_up_sb 6515.5)
+massive step=19922 t=174.09 shown=supernova raw=supernova M=4858.9 (m_up_sb 6515.5)
+massive step=21730 t=183.17 shown=neutron_star raw=neutron_star M=4483.2 (m_up_sb 6515.5)
+SR-HEADLESS DONE steps=21730 sim_time=183.173775 until=met
+massive shown (21730 steps, exit 0): [("protostar", 33), ("main_sequence", 721), ("he_core", 10097), ("main_sequence", 10273), ("he_core", 10449), ("main_sequence", 10625), ("he_core", 10785), ("main_sequence", 10977), ("he_core", 11137), ("main_sequence", 11329), ("he_core", 11457), ("o_burn", 13889), ("si_burn", 15345), ("main_sequence", 15825), ("iron_core", 16785), ("main_sequence", 17217), ("iron_core", 17345), ("main_sequence", 17969), ("iron_core", 18033), ("main_sequence", 18609), ("o_burn", 18897), ("main_sequence", 18961), ("o_burn", 19249), ("main_sequence", 19313), ("core_collapse", 19921), ("supernova", 19922), ("neutron_star", 21730)]
+ok
+test stages::the_sun_like_preset_shows_its_stages_down_to_white_dwarf ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+sun step=65 t=1.54 shown=collapsing raw=collapsing M=3136.7 (m_up_sb 6515.5)
+sun step=705 t=9.24 shown=main_sequence raw=main_sequence M=3130.3 (m_up_sb 6515.5)
+sun step=32001 t=361.49 shown=main_sequence raw=main_sequence
+sun step=64001 t=729.63 shown=main_sequence raw=main_sequence
+sun step=96001 t=1095.03 shown=main_sequence raw=main_sequence
+sun step=128001 t=1445.19 shown=main_sequence raw=main_sequence
+sun step=135297 t=1518.82 shown=he_core raw=he_core M=3055.2 (m_up_sb 6515.5)
+sun step=147553 t=1636.29 shown=o_burn raw=o_burn M=2918.5 (m_up_sb 6515.5)
+sun step=150609 t=1663.91 shown=si_burn raw=si_burn M=2841.0 (m_up_sb 6515.5)
+sun step=151425 t=1671.12 shown=main_sequence raw=main_sequence M=2818.8 (m_up_sb 6515.5)
+sun step=152033 t=1676.43 shown=he_shell raw=he_shell M=2801.7 (m_up_sb 6515.5)
+sun step=152081 t=1676.85 shown=si_burn raw=si_burn M=2800.2 (m_up_sb 6515.5)
+sun step=152225 t=1678.10 shown=main_sequence raw=main_sequence M=2796.7 (m_up_sb 6515.5)
+sun step=154929 t=1701.72 shown=he_shell raw=he_shell M=2724.0 (m_up_sb 6515.5)
+sun step=155185 t=1703.89 shown=main_sequence raw=main_sequence M=2727.5 (m_up_sb 6515.5)
+sun step=155297 t=1704.83 shown=he_shell raw=he_shell M=2723.5 (m_up_sb 6515.5)
+sun step=156273 t=1712.89 shown=iron_core raw=iron_core M=2642.8 (m_up_sb 6515.5)
+sun step=156417 t=1714.05 shown=he_shell raw=he_shell M=2621.4 (m_up_sb 6515.5)
+sun step=156657 t=1715.98 shown=iron_core raw=iron_core M=2598.9 (m_up_sb 6515.5)
+sun step=159889 t=1740.57 shown=main_sequence raw=main_sequence M=2473.7 (m_up_sb 6515.5)
+sun step=160001 t=1741.37 shown=main_sequence raw=main_sequence
+sun step=160257 t=1743.13 shown=he_core raw=he_core M=2475.7 (m_up_sb 6515.5)
+sun step=160657 t=1745.81 shown=main_sequence raw=main_sequence M=2477.5 (m_up_sb 6515.5)
+sun step=163297 t=1762.64 shown=iron_core raw=iron_core M=2485.2 (m_up_sb 6515.5)
+sun step=170209 t=1804.79 shown=main_sequence raw=main_sequence M=2493.9 (m_up_sb 6515.5)
+sun step=170289 t=1805.27 shown=iron_core raw=iron_core M=2494.0 (m_up_sb 6515.5)
+sun step=170673 t=1807.59 shown=main_sequence raw=main_sequence M=2494.2 (m_up_sb 6515.5)
+sun step=170817 t=1808.46 shown=iron_core raw=iron_core M=2494.4 (m_up_sb 6515.5)
+sun step=171153 t=1810.50 shown=main_sequence raw=main_sequence M=2494.6 (m_up_sb 6515.5)
+sun step=171345 t=1811.65 shown=iron_core raw=iron_core M=2494.7 (m_up_sb 6515.5)
+sun step=171425 t=1812.14 shown=white_dwarf raw=white_dwarf M=2494.8 (m_up_sb 6515.5)
+SR-HEADLESS DONE steps=171425 sim_time=1812.137120 until=met
+sun shown (171425 steps, exit 0): [("collapsing", 65), ("main_sequence", 705), ("he_core", 135297), ("o_burn", 147553), ("si_burn", 150609), ("main_sequence", 151425), ("he_shell", 152033), ("si_burn", 152081), ("main_sequence", 152225), ("he_shell", 154929), ("main_sequence", 155185), ("he_shell", 155297), ("iron_core", 156273), ("he_shell", 156417), ("iron_core", 156657), ("main_sequence", 159889), ("he_core", 160257), ("main_sequence", 160657), ("iron_core", 163297), ("main_sequence", 170209), ("iron_core", 170289), ("main_sequence", 170673), ("iron_core", 170817), ("main_sequence", 171153), ("iron_core", 171345), ("white_dwarf", 171425)]
+ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 533 filtered out; finished in 836.48s
+
+

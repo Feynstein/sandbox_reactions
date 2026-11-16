@@ -1259,6 +1259,28 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     Σ 8.1 × 10⁻⁵, E 1.4 × 10⁻⁴, Sod 2.0 × 10⁻⁷, burn 1.1 × 10⁻⁵ · the plant `cfl-gpu` red in all three: the clock on Sod
     (−2.45 %) and burn (−1.84 %), the disk by Σ 3.2 × 10⁻³ at equal time (its clock −0.047 %, inside the band: the disk's Δt
     is mostly gravity's) — the lead at M0-D185, 2026-11-15: «Equal sim time (Recommended)», «5e-4 relative (Recommended)».
+  - [M0-D184] §2.4.4's push «the cell gains s·Δt·f» as each cell's alone · **each cell gains d_i − |d_i|·N/S, d_i = s_i Δt f_i,
+    N = Σ d_i and S = Σ |d_i| over the grid, E unchanged, before the sticky wall: the force moves no momentum of the grid, the
+    light's recoil not kept** — amended in place, tagged [M0-D184]; f, the cap and physics.json unchanged; GPU (`hydro_update`
+    writes s·d over its cell's consumed F, `hydro_push_sum` sums N and S in compensated f32 in one workgroup, `hydro_commit`
+    takes |d|·N/S back) and twin (`Hydro::step_held`, the sticky wall moved after it) alike · the cell-centred κΣF/c_sb does
+    not telescope where κΣ jumps, and [M0-D58]'s cap, cell by cell, trims one side of pushes that should cancel: measured on
+    linux-pc's RTX 5090, 2026-11-16 (tasks/M0-D184.md), the Massive at steps 19,000–20,000 with M0-D183's kick — gross ±48 a
+    step each way, the uncapped net 0.04 a step (Δt·Σ κΣF/c_sb from the dumps' F, the cap-off probe the same to 3 digits;
+    the light's own recoil a quarter of it), capped +3.6 a step, 10 × E_rad/c_sb over 10 steps; with the change the invariant
+    moves ≤ 4.3 × 10⁻³ per 50 steps, as with the force off (≤ 4.2 × 10⁻³), and conservation's supernova momentum case reads
+    5.0 × 10⁻⁶ of the running peak (1.04 shipped; M0-D183's force-off floor 6.0 × 10⁻⁶; G-CONS's 10⁻⁶ is the floor's, filed
+    apart); P4 0.38 → 0.57 ms a step at step 19,000 (a 9.35 ms step) — the lead at M0-D184, 2026-11-16: «Net push removed
+    (Recommended)», «Split into a D (Recommended)».
+  - [M0-D186] §5.1 G-CONS's «momentum (grid + sinks + escaped + held [M0-TG2]) to 10⁻⁶ of Σm|u|» · **to 10⁻⁵ of the running
+    peak Σm|u|** (the largest the life has had so far, as `conservation` reads it; mass stays 10⁻⁶ relative) · f32's floor with
+    every route booked is ~5 × 10⁻⁶: measured on linux-pc's RTX 5090, 2026-11-16 (tasks/M0-D186.md), the Massive's supernova
+    life (leave, 23,772 steps) drifts 4.4 × 10⁻⁶ of the peak 2.54 × 10⁴ (the test's in-process life 5.0 × 10⁻⁶) — gravity's
+    kick Σ Δt·Σ_src,mid·g_mid 4.9 × 10⁻⁶ by step 14,500, linear and one-signed: P2's f32 FFT (its f32 twiddles) is not exactly
+    circulant, so the self-force keeps a net ~10⁻⁸ of its gross a step (10⁻¹⁷ in f64); a take-back of that net is under one
+    ulp of a cell's g and drifted 3.3 × 10⁻³; beside it a remainder up to 4.8 × 10⁻⁶ in the outflow (steps 15,000–20,000),
+    not localised at f32; the vacuum reset 3.7 × 10⁻⁸, the face work, the push's residual, P4's flux against `escaped` each
+    ≤ 2.5 × 10⁻⁷ before step 18,000 — the lead at M0-D186, 2026-11-16: «Bound 1e-5 (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1805,7 +1827,9 @@ buffers per shader stage (TW-E15), which binds native builds too (§6.2.2). Not 
   in the next step; E is unchanged by it (the work comes out of thermal energy). [M0-D58] The work is capped at the heat
   the cell holds above its floor: the cell gains s·Δt·f, s = min(1, s*), s* the positive root of
   |p₀ + s Δt f|² − |p₀|² = 2ΣA, with p₀ and A = Σ(ε_th − T_floor/μ) the cell's momentum and heat above its floor after
-  P4's other terms (s = 0 when A ≤ 0).
+  P4's other terms (s = 0 when A ≤ 0). [M0-D184] The force never moves the grid's momentum: with d_i = s_i Δt f_i the
+  push each cell took, N = Σ_i d_i over the grid and S = Σ_i |d_i|, each cell gives back |d_i|·N/S (nothing when S = 0),
+  E unchanged, before the sticky wall (§2.3.4 [M0-D172]) — the light's own recoil is not kept.
 - **2.4.5** No photon particles: luminosity is the heat flux leaving the gas (SM M4), and the glow is
   drawn from T (§1.11).
 
@@ -2554,7 +2578,7 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   to KE 5 × 10⁶ on it, M0-R11).
 - **G-CONS · conservation.** A whole Sun-like life (bounce) and a supernova (leave; the Massive
   preset from its iron core): the mass invariant of §2.9 constant to 10⁻⁶ relative; momentum (grid
-  + sinks + escaped + held [M0-TG2]) to 10⁻⁶ of Σm|u|; the energy invariant drifting ≤ 10⁻³ |W| per τ_dyn (SM-O10).
+  + sinks + escaped + held [M0-TG2]) to ~~10⁻⁶ of Σm|u|~~ [M0-D186] 10⁻⁵ of the running peak Σm|u| (§0.5 [M0-D186]); the energy invariant drifting ≤ 10⁻³ |W| per τ_dyn (SM-O10).
   Mass and momentum *by construction*; energy *UNVERIFIED* — source-term gravity conserves it only
   approximately (SM, from memory): more drift calls for a conservative gravity formulation, never a
   looser bound (§0.4). Scope `conservation` ⏱. Plant `no-grav-work`: the energy source Σu·g dropped.

@@ -56,7 +56,11 @@
 //! [M0-D58]): with the updated cell's momentum p₀, its thermal energy Σ(ε_th − T_floor/μ) = A and the impulse d = Δt·f,
 //! the cell gains s·d, s = min(1, s*) with s* the root of |p₀ + s d|² − |p₀|² = 2ΣA (0 when A ≤ 0) — `push_share`. Where
 //! a_r T⁴ is far above the gas's heat (the radiation energy is not in E), the uncapped push took ε_th below the floor and
-//! P8's refill fed it back, step after step, to NaN (M0-D58).
+//! P8's refill fed it back, step after step, to NaN (M0-D58). [M0-D184] The force never moves the grid's momentum: κΣF/c_sb
+//! at the cell does not telescope where κΣ jumps, and the cap trims one side of pushes that should cancel (+3.6 a step
+//! at the Massive's collapse against a net of 0.04 uncapped, M0-D184), so after the update the net push N = Σ s·d is taken
+//! back from each pushed cell in proportion to its own push, |s·d|·N/S with S = Σ|s·d|, E as it is — before the sticky
+//! wall, which stops what is left.
 //!
 //! A cell below Σ_vac is read as the floor state (Σ_floor, at rest, T_floor), as P9's rates do (M0-T20); a cell and its
 //! four neighbours all below Σ_vac are left as they are, so empty space is not filled by the floor.
@@ -831,6 +835,8 @@ impl Hydro {
             }
         }
         let mut spared = [0.0f64; 2];
+        // The radiation force's push each cell took (§2.4.4 [M0-D184]), its net taken back after the update.
+        let mut push = vec![[0.0f64; 2]; n];
 
         // The update, in place; a cell with no gas around it stays empty.
         let mut next = st.clone();
@@ -910,22 +916,9 @@ impl Hydro {
                     let [ax, ay] = self.radiation_force(st, i, fx[i], fy[i]);
                     let d = [dt * ax, dt * ay];
                     let s = self.push_share(&u, d);
-                    u[1] += s * d[0];
-                    u[2] += s * d[1];
-                }
-                // [M0-D172] The sticky wall (module doc): a free gas cell's momentum into a held face-neighbour stops here,
-                // E as it is, and is booked `held`; a cell left under Σ_vac is P8's to reset, its momentum booked nowhere.
-                if !held_here && !held.is_empty() && u[0] >= self.sigma_vac {
-                    let into = [
-                        (x > 0 && is_held(i - 1) && u[1] < 0.0) || (x + 1 < w && is_held(i + 1) && u[1] > 0.0),
-                        (y > 0 && is_held(i - w) && u[2] < 0.0) || (y + 1 < h && is_held(i + w) && u[2] > 0.0),
-                    ];
-                    for (k, stop) in into.into_iter().enumerate() {
-                        if stop {
-                            spared[k] += u[1 + k];
-                            u[1 + k] = 0.0;
-                        }
-                    }
+                    push[i] = [s * d[0], s * d[1]];
+                    u[1] += push[i][0];
+                    u[2] += push[i][1];
                 }
                 // Escaped, leaving (§2.8): each boundary face of a cell this step moved, its flux as the cell took it — the
                 // grid loses dt·f through a high face, −dt·f through a low one.
@@ -951,6 +944,38 @@ impl Hydro {
                 next.planes[3 * n + i] = u[3];
                 for s in 0..NS {
                     next.planes[(4 + s) * n + i] = u[4 + s] / u[0];
+                }
+            }
+        }
+        // [M0-D184] The force's net push N over the grid taken back from each pushed cell in proportion to its push,
+        // |s·d|·N/S with S = Σ|s·d| (module doc), E as it is.
+        let norm = |p: &[f64; 2]| (p[0] * p[0] + p[1] * p[1]).sqrt();
+        let net = push.iter().fold([0.0, 0.0, 0.0], |a, p| [a[0] + p[0], a[1] + p[1], a[2] + norm(p)]);
+        if net[2] > 0.0 {
+            for (i, p) in push.iter().enumerate() {
+                let m = norm(p);
+                next.planes[n + i] -= m * net[0] / net[2];
+                next.planes[2 * n + i] -= m * net[1] / net[2];
+            }
+        }
+        // [M0-D172] The sticky wall (module doc): a free gas cell's momentum into a held face-neighbour stops, E as it is,
+        // and is booked `held`; a cell left under Σ_vac is P8's to reset, its momentum booked nowhere.
+        if !held.is_empty() {
+            for i in 0..n {
+                if is_held(i) || next.planes[i] < self.sigma_vac {
+                    continue;
+                }
+                let (x, y) = (i % w, i / w);
+                let (ux, uy) = (next.planes[n + i], next.planes[2 * n + i]);
+                let into = [
+                    (x > 0 && is_held(i - 1) && ux < 0.0) || (x + 1 < w && is_held(i + 1) && ux > 0.0),
+                    (y > 0 && is_held(i - w) && uy < 0.0) || (y + 1 < h && is_held(i + w) && uy > 0.0),
+                ];
+                for (k, stop) in into.into_iter().enumerate() {
+                    if stop {
+                        spared[k] += next.planes[(1 + k) * n + i];
+                        next.planes[(1 + k) * n + i] = 0.0;
+                    }
                 }
             }
         }

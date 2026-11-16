@@ -1,0 +1,30 @@
+M0-D186 log — linux-pc, RTX 5090 (R21); opened 2026-11-16T12:26:33-05:00
+[2026-11-16T12:27:05-05:00] vac probe life: /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/9611656a-0339-44e2-a780-fc6426598120/scratchpad/bin/vac headless --scene preset:massive --edge leave --until ending --dump-every 500 --out build/m0-d186/vac
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=23772 sim_time=193.273634 until=met
+[2026-11-16T12:30:31-05:00] twin: build/target/release/sandbox-reactions headless --cpu-reference --scene preset:massive --edge leave --steps 100 --dump-every 50 --out build/m0-d186/twin100
+[2026-11-16T12:32:27-05:00] probes K W F P side by side: /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/9611656a-0339-44e2-a780-fc6426598120/scratchpad/bin/<m> headless --scene preset:massive --edge leave --until ending --max-steps 200000 --dump-every 500 --out build/m0-d186/<m> --adapter 'RTX 5090'
+K
+W
+F
+P SR-HEADLESS DONE steps=23772 sim_time=193.273634 until=met
+[2026-11-16T12:36:56-05:00] probes K W F (limit 16) + base side by side, same command
+K SR-HEADLESS DONE steps=23772 sim_time=193.273634 until=met
+W SR-HEADLESS DONE steps=23772 sim_time=193.273634 until=met
+F SR-HEADLESS DONE steps=23772 sim_time=193.273634 until=met
+base SR-HEADLESS DONE steps=23772 sim_time=193.273634 until=met
+[2026-11-16T12:49:32-05:00] prototype fix1 (net self-pull taken back after the mid chain): same life command, out build/m0-d186/fix1
+SR-HEADLESS DONE steps=23884 sim_time=194.005341 until=met
+[2026-11-16T12:59:25-05:00] probe KA (the kick as applied), same life command
+[2026-11-16T13:03:13-05:00] KA4 and base4 (FRAME 16 -> 4 in headless.rs), same life command
+[2026-11-16T13:09:37-05:00] probe E (P4's floor-state replacement of cells under Σ_vac), same life command
+[2026-11-16T13:13:12-05:00] probe T (P4 update's whole applied change), same life command
+[2026-11-16T13:19:17-05:00] Verify 2: verify.py ledger / booking --task M0-D186
+anchor: 303 paths checked · 452 skipped (3 classes) · 161 never checked · 2 stale · 0 unclassified · 0 owed · 466 covered of 918 visible
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 8.48 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 13.77->14.03
+=== GO ===
+anchor: 303 paths checked · 452 skipped (3 classes) · 161 never checked · 2 stale · 0 unclassified · 0 owed · 466 covered of 918 visible
+verify: 4 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.17 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 14.03->15.23
+=== GO ===
+[2026-11-16T13:20:39-05:00] claim: verify.py --changed --task M0-D186 (capped 570 s)
+[2026-11-16T13:31:32-05:00] closed DONE; claim FAIL (scene, pre-existing → M0-D188), ⏱ scopes stopped at cap

@@ -1,6 +1,6 @@
 --- a/crates/sr-physics/src/reference/hydro.rs
 +++ b/crates/sr-physics/src/reference/hydro.rs
-@@ -700,7 +700,7 @@
+@@ -913,7 +913,7 @@
                  }
                  // The radiation force from the previous step's flux (§2.4.4): momentum only, E as it is.
                  if let Some((fx, fy)) = radiation {
@@ -8,15 +8,15 @@
 +                    let [ax, ay] = self.radiation_force(st, i, 0.0 * fx[i], 0.0 * fy[i]);
                      let d = [dt * ax, dt * ay];
                      let s = self.push_share(&u, d);
-                     u[1] += s * d[0];
+                     push[i] = [s * d[0], s * d[1]];
 --- a/crates/sr-engine/shaders/hydro.wgsl
 +++ b/crates/sr-engine/shaders/hydro.wgsl
-@@ -830,7 +830,7 @@
-     }
-     // The radiation force from the previous step's flux (§2.4.4): momentum only, E as it is.
+@@ -1072,7 +1072,7 @@
+     // the cell's F for `hydro_push_sum` (§2.4.4 [M0-D184]).
+     var push = vec2<f32>(0.0, 0.0);
      if (edges.radiation != 0u && !empty_here) {
 -        let f = radiation_force(cell);
 +        let f = 0.0 * radiation_force(cell);
          let d = dt * f;
          let s = push_share(u, d);
-         u[1] += s * d.x;
+         push = s * d;
