@@ -1,0 +1,3 @@
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=23080 sim_time=190.119731 until=met
+exit 0

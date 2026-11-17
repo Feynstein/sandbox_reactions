@@ -5,9 +5,11 @@
 //! - `touch_paint`: the Sun-like preset, hydrogen painted onto its centre (radius 40, 51 frames of the brush) until it weighs
 //!   about 1.25 × m_up_sb — the prediction moves from a white dwarf to a supernova, and the life ends a neutron star (or a black hole,
 //!   whichever the new prediction names);
-//! - `touch_erase`: the Massive preset, erased from outside in (three rings of sixteen radius-40 disks, 100, 80 and 62 cells from the
-//!   centre, the outer ring first) down to about m_up_sb ÷ 1.25 — the prediction moves from a supernova to a white dwarf, and the
-//!   life ends a white dwarf.
+//! - `touch_erase`: the Massive preset, erased from outside in (four rings of sixteen radius-40 disks, 100, 80, 62 and 54 cells from
+//!   the centre, the outer ring first) down to about m_up_sb ÷ 2 — the prediction moves from a supernova to a white dwarf, and the
+//!   life ends a white dwarf. [M0-D191] Erased only to m_up_sb ÷ 1.25 (three rings), the star kept a ~3,200 sb iron remnant, just over
+//!   m_ch_sb, that went neutron-rich and ended a neutron star (§0.5 [M0-D190]); erased deeper, no core can outgrow m_ch_sb (§0.5
+//!   [M0-D191], the lead's «Erase deeper»).
 //!
 //! What a case reads, and from where (R12's one adapter):
 //! - the prediction at the drop, the engine's own `Predictor` on the heaviest object's mass at the run's first frame, and the
@@ -15,7 +17,7 @@
 //!   the frame before) — read after the edit has landed, never at the drop (a prediction re-read at the drop passes by luck: the
 //!   star's fate would be the old one's);
 //! - the post-edit prediction is sure (never a close call), names one of the fates the case allows, and is not the fate at the drop;
-//! - the post-edit mass sits within `BAND` of the case's target (1.25 × or ÷ 1.25 m_up_sb): the edits files carry cells and frames,
+//! - the post-edit mass sits within `BAND` of the case's target (1.25 × or ÷ 2 m_up_sb): the edits files carry cells and frames,
 //!   not masses, so a calibration or a physics change that moves the star at X_H,c = 0.5 turns this red — regenerate the file then;
 //! - the ending: summary.json's `objects[until.object].ending` (non-null once the remnant held `ending_hold`, `--until ending`) is
 //!   the ending that post-edit fate leads to;
@@ -33,12 +35,17 @@ use sr_engine::scene::Scene;
 use sr_physics::calibration::{self, Calibration};
 use sr_physics::observe::ending::{Fate, Prediction, Predictor};
 
-/// §1.9.5's far side of the ±10 % close-call band: the targets are m_up_sb × and ÷ this.
+/// §1.9.5's far side of the ±10 % close-call band: the paint case's target is m_up_sb × this.
 const SIDE: f64 = 1.25;
+/// [M0-D191] The erase case's target is m_up_sb ÷ this (§0.5 [M0-D191]): ≈ 3,258 sb, under m_ch_sb and over m_ign_sb × 1.1 with
+/// `BAND` either side — a sure white dwarf whose core cannot outgrow m_ch_sb (at ÷ `SIDE` the remnant went neutron-rich).
+const ERASE_DEPTH: f64 = 2.0;
 /// How far the post-edit mass may sit from its target, relative: the edits are cells and frames, so the mass is the file's, not
-/// a trigger's (a mass trigger cannot wait for central hydrogen, §2.12.5). The sure window around a target is ± 10 % of m_up_sb ÷ it.
+/// a trigger's (a mass trigger cannot wait for central hydrogen, §2.12.5). The sure window around the paint target is ± 10 % of
+/// m_up_sb ÷ it; around the erase target, the band's floor (3,062 sb) stays over m_ign_sb × 1.1 (2,900 sb).
 const BAND: f64 = 0.06;
-/// Steps after the first frame whose mass jumped at which the post-edit mass is read: the edits land in at most six steps.
+/// Steps after the first frame whose mass jumped at which the post-edit mass is read: the edits land in at most eight steps (64
+/// entries, eight a step).
 const SETTLE: u64 = 64;
 /// A frame's mass moving this much (relative) on the one before is the edit landing.
 const JUMP: f64 = 0.01;
@@ -432,7 +439,7 @@ fn the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_predict
         preset: "massive",
         mass: |c| c.preset_mass_sb.massive,
         edits: "touch_erase.json",
-        target: |c| c.m_up_sb / SIDE,
+        target: |c| c.m_up_sb / ERASE_DEPTH,
         fates: &[Fate::WhiteDwarf],
         drop_fate: Fate::Supernova,
         max_steps: 600_000,

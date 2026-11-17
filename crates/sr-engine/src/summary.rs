@@ -2,7 +2,8 @@
 //!
 //! [`Step::encode_frame`](crate::step::Step::encode_frame) records it after the frame's steps: over the active box, one
 //! [`Block`] per 4 × 4 cells, the box's blocks row-major from its origin — mass, Σx·m and Σy·m, momentum, kinetic,
-//! thermal and cold energy, ∫Π dA, the ten species masses, Σm·φ, the max-Σ cell (its index, Σ, T, X, Π_cold / Π), the
+//! thermal and cold energy, ∫Π dA, the ten species masses, Σm·φ (φ at the step's end, 2φ_mid − φⁿ, when the step runs P2 and
+//! P4's half step, M0-D193; else P2's φⁿ), the max-Σ cell (its index, Σ, T, X, Π_cold / Π), the
 //! frame accumulators summed (state.rs's `TERMS` marked `accumulator`, M0-T18), the unbound mass and the sinks inside.
 //! Every value is an f32 sum of the block's 16 cells in row-major order, so the same state gives the same bits (§1.3.4);
 //! the summary feeds observers only.
@@ -53,7 +54,7 @@ pub struct Block {
     pub pressure: f32,
     /// Σ·X_i, §1.5's order.
     pub species: [f32; 10],
-    /// Σm·φ (0 in a step with no φ).
+    /// Σm·φ (0 in a step with no φ), φ at the step's end when the step has P2's half step (M0-D193), else P2's φⁿ.
     pub phi_m: f32,
     /// The max-Σ cell (the lowest y, then the lowest x, among equals): its index y·width + x, Σ, T, X and Π_cold / Π.
     pub max_cell: u32,
@@ -143,7 +144,8 @@ pub(crate) struct Summary {
 
 impl Summary {
     /// The summary for `state`'s world over `boxfit`'s box: φ from `phi` (none: read as 0), the sinks from P3's state
-    /// buffer when the step has one.
+    /// buffer when the step has one; with `mid` (P2's field, whose plane 7 holds φ_mid — a step with P2 and P4) Σm·φ reads
+    /// φ at the step's end, 2φ_mid − φⁿ (M0-D193).
     pub(crate) fn new(
         device: &wgpu::Device,
         state: &State,
@@ -151,6 +153,7 @@ impl Summary {
         eos: &EosGpu,
         boxfit: &BoxFit,
         phi: Option<&wgpu::Buffer>,
+        mid: Option<&wgpu::Buffer>,
         sinks: Option<&wgpu::Buffer>,
     ) -> Summary {
         let world = state.world();
@@ -166,7 +169,7 @@ impl Summary {
             mapped_at_creation: false,
         });
         let uniform = wgpu::BufferUsages::UNIFORM;
-        let params = init_buffer(device, "summary.params", uniform, &[u32::from(phi.is_some()), 0, 0, 0]);
+        let params = init_buffer(device, "summary.params", uniform, &[if phi.is_none() { 0 } else if mid.is_some() { 2 } else { 1 }, 0, 0, 0]);
         let placeholder = init_buffer(device, "summary.placeholder", wgpu::BufferUsages::STORAGE, &[0; 4]);
         let group = |pass: Pass| BOOK_GROUPS.iter().position(|g| TERMS[g.terms.start].writer == pass).expect("a booking buffer per accumulator pass");
         let book = |pass: Pass| booking.group(group(pass));
@@ -184,6 +187,7 @@ impl Summary {
                 8 => book(Pass::Heat).as_entire_binding(),
                 9 => book(Pass::Reactions).as_entire_binding(),
                 10 => book(Pass::NeutrinoHeating).as_entire_binding(),
+                12 => mid.unwrap_or(&placeholder).as_entire_binding(),
                 _ => sinks.unwrap_or(&placeholder).as_entire_binding(),
             }
         };
@@ -201,7 +205,7 @@ impl Summary {
             Dispatch { label, pipeline, bind_groups, size: Size::Indirect(boxfit.args().clone(), ARGS_TILES) }
         };
         Summary {
-            dispatches: vec![dispatch("summary_cells", &[0, 1, 2, 3, 4, 5, 6, 7], true), dispatch("summary_book", &[0, 5, 6, 8, 9, 10, 11], false)],
+            dispatches: vec![dispatch("summary_cells", &[0, 1, 2, 3, 4, 5, 6, 7, 12], true), dispatch("summary_book", &[0, 5, 6, 8, 9, 10, 11], false)],
             blocks,
             active: boxfit.active().clone(),
             sinks: sinks.cloned(),

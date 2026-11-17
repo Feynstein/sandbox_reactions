@@ -1281,6 +1281,78 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     ulp of a cell's g and drifted 3.3 × 10⁻³; beside it a remainder up to 4.8 × 10⁻⁶ in the outflow (steps 15,000–20,000),
     not localised at f32; the vacuum reset 3.7 × 10⁻⁸, the face work, the push's residual, P4's flux against `escaped` each
     ≤ 2.5 × 10⁻⁷ before step 18,000 — the lead at M0-D186, 2026-11-16: «Bound 1e-5 (Recommended)».
+  - [M0-D189] §1.9.3's white_dwarf row «X_n,c < 0.5» (the densest cell's X_n) · **X̄_n < 0.5: the free neutrons' mass fraction
+    over the object's member blocks' gas, Σ_b (Σ·X_n)_b / Σ_b m_b (the tracker's `x_n_mean`)** — amended in place, tagged
+    [M0-D189]; the neutron_star row (Y_e,c, d_c, a passed core collapse) and every other row's X_c unchanged · one held cell at c
+    (§2.3.4 [M0-TG2]) can collapse alone, neutronise and freeze, and its X_n alone kept a cold, settled, sub-m_ch remnant from
+    every ending row: measured on linux-pc's RTX 5090, 2026-11-17 (tasks/M0-D189.md), the Sun-like bounce life on HEAD from step
+    167,500 — c one held cell at σ 644.18, X_n 0.535, its neighbours σ ≤ 29 at X_n 0.11, the remnant 2,940.8 sb, d_c 1.000,
+    |v_r| 0.011 √(GM/R), L_nuc 5 × 10⁻⁴ L, X̄_n 0.190 — main_sequence to the 400,000 cap (M0-D186's run); the centre 4 × 4 block's
+    mean 0.469 → 0.477 (170,000 → 175,000) and r ≤ 8 cells' 0.283 → 0.373 climbing toward the cell's 0.535; with the change the
+    same state ends white_dwarf at step 169,708 (M 2,936.8). M0-D184's take-back is not the cause: from one state either binary
+    ends a white dwarf, from HEAD's step-155,000 state only HEAD's does not · the erased Massive's remnant (touch) is neutron-rich
+    throughout (X̄_n 0.476 at step 44,000, 0.3 % under m_ch) and is filed apart (M0-D190) — the lead at M0-D189, 2026-11-17: «Core's
+    mean X_n (Recommended)», then on the measured block mean «Whole object (Recommended)», «File a D for it (Recommended)».
+  - [M0-D190] §1.9.3's core_collapse row («N_Fe is converting matter (L_N < 0)», with [M0-D92]'s M > m_ch_sb) · **it also matches,
+    once — while the object has passed no core collapse — an object whose X̄_n (§0.5 [M0-D189]) is ≥ 0.5, whatever its mass against
+    m_ch_sb: neutron matter is a collapsed core, and the neutron_star row (Y_e,c ≤ 0.35, d_c ≥ 0.5, no sink, a passed collapse) then
+    names it** — amended in place, tagged [M0-D190]; the mass arm, the order, the events' rule, the supernova window and every
+    other row unchanged · the erased Massive (touch, `--edge leave`) builds an iron core of 3,239 sb (step 32,000, X_Fe,c 1.000) —
+    over its own matter's ceiling, m_ch_sb × ((Ȳ_e/0.5)^{3/2} + √(m_tov_sb/m_ch_sb) X̄_n^{3/2})² (the cold pressure's
+    ultra-relativistic limit, K₂ₑ (Y_eΣ)^{3/2} + K₂ₙ (X_nΣ)^{3/2}; 2,571 sb for iron; my arithmetic, matching m_tov_sb/m_ch_sb
+    = 1.509 = (K₂ₙ/(K₂ₑ 0.5^{3/2}))²) — which falls to two cells (R 2.0 from step 36,000) and neutronises: from step 44,000 a
+    3,174–3,204 sb remnant at Ȳ_e 0.233 and X̄_n 0.48–0.50 (its own ceiling ≈ 1,817 sb), held by the grid at 2(P + K_t)/|W|
+    0.42–0.50, 0.3–1.6 % under m_ch_sb so the mass arm never fires; white_dwarf held only on [M0-D168]'s d_c ≥ 0.9, which the
+    held centre cell lost within ~3,000 steps each time (1.0 → 0.83), then X̄_n 0.5018 from step 64,000; he_shell to the
+    600,000 cap (M0-D185's and M0-D186's touch runs) — measured on linux-pc's RTX 5090, 2026-11-17 (tasks/M0-D190.md). The
+    own-matter ceiling as the bound (the block's first reading) was not ruled: on M0-D189's HEAD trajectory the Sun-like's own
+    ceiling falls to 2,126 sb under its 2,944 sb while its centre neutronises — the lead at M0-D190, 2026-11-17: «Neutron-rich =
+    collapsed (Recommended)», «File a D for the case (Recommended)».
+  - [M0-D191] §5.2 G-TOUCH's erase row, «the Massive preset at X_H,c = 0.5 erased from outside in down to m_up_sb ÷ 1.25 — it then
+    ends as a white dwarf» · **erased down to m_up_sb ÷ 2 (≈ 3,258 sb: four rings of sixteen radius-40 disks, 100, 80, 62 and 54
+    cells from the centre, the outer first), the trigger, the band (6 %), the sure white-dwarf prediction and the white_dwarf
+    ending graded unchanged** — amended in place, tagged [M0-D191]; the paint row unchanged · measured on linux-pc's RTX 5090
+    (2026-11-17, tasks/M0-D191.md): erased to m_up_sb ÷ 1.25 the star keeps a ~3,200 sb iron remnant, just over m_ch_sb, that
+    goes neutron-rich and ends a neutron star (§0.5 [M0-D190]); erased earlier (X_H,c < 0.70) to the same target it ends
+    white_dwarf only through a disruption that leaves one held neutron-rich cell in a 968 sb halo at X̄_n 0.476; erased to
+    m_up_sb ÷ 2 the edit lands at step 6,384 (9,270.0 → 3,186.0 sb, −2.2 %) and the life ends white_dwarf at step 99,976
+    (2,585.8 sb, X̄_n 0.035, no collapse) — the lead at M0-D191, 2026-11-17: «Erase deeper (Recommended)».
+  - [M0-D182] §2.8's leave edge «whatever crosses — mass, momentum, energy, each species — is booked `escaped`» and §2.9's
+    energy `escaped` (the gas energy E the boundary flux carries) · **the energy booked `escaped` is the gas energy that crosses
+    plus the potential energy its mass takes with it, Δt·f_Σ·φ_mid at the edge cell (the same φ_mid §0.5 [M0-D64]'s face work
+    reads, a ghost's its edge cell's), signed as the flux; nothing more when the step runs no P2; it can read negative** — GPU
+    (`hydro_edges`) and twin alike; no key added, summary.json's `energy.escaped` carries it · W = ½Σmφ rises by δm·|φ_e| when
+    δm leaves the edge cell, and nothing booked it: measured on linux-pc's RTX 5090, 2026-11-17 (tasks/M0-D182.md), the
+    Massive's supernova life (leave, 23,832 steps, a dump each 100) — Δinvariant / Δm_escaped 30–42 over steps 1,000–19,000
+    against the flux-weighted φ at the edge from the dumps (−37.5 at step 3,000, −37.4 at 10,000, −31.1 at 15,000, −22.7 at
+    18,000), falling with the grid's mass (|φ_e| ≈ M/200–M/300 in the 600 × 400 world, G = 1); booked, the life is bit-identical,
+    the windows over G-CONS's 10⁻³ |W| per τ_dyn 30 → 13 of 47, each before step 15,500 under it (the worst 6.3 × 10⁻⁴, the dumps' windows graded as the test grades), the
+    whole life's Δinvariant +1.33 × 10⁵ → −2.44 × 10⁴; what is left — a steady −200 per 500 steps over 15,500–18,500 and the
+    collapse's and explosion's ±10³–1.5 × 10⁴ — is filed apart (M0-D192) — the lead at M0-D182, 2026-11-17: «Into escaped
+    (Recommended)», «File as new D (Recommended)».
+  - [M0-D192] §1.4.2 [M0-D183]'s «Σ_src,mid is Σ_src at the predictor's half step» · **Σ_src,mid is ½(Σⁿ + Σⁿ⁺¹), the midpoint
+    of the step's own mass update by its HLL fluxes (a cell below Σ_vac from the floor state's Σ, as the update starts it), 0
+    below Σ_vac, a held cell's own Σ** — GPU (P4's first dispatch is `hydro_update` itself under a mid-pass uniform writing the
+    midpoint into the next state's Σ plane, then `hydro_mid` into the field's plane 10: one more flux pass a step) and twin alike;
+    the predictor's half-step centres still split each face's work · with K symmetric, φ_mid is then ½(φⁿ + φⁿ⁺¹) and the faces'
+    work moves E by exactly ΔW; the predictor's own centre (its face extrapolations, not HLL's fluxes) is not that midpoint — 3.8
+    sb short over the Massive's star at step 15,500 — and its φ_mid reproduced the energy each step lost to 0.15 (numpy, from
+    every-step dumps: gravity and hydro alone −0.39 to −0.69 a step, steps 15,501–15,504; every module on, −14 to −61 a step at
+    20,002–20,020, −6,199 at step 21,764 and −9,963 at 21,836, single steps at the bounce): measured on linux-pc's RTX 5090,
+    2026-11-17 (tasks/M0-D192.md); with the midpoint the same steps read ±0.12, and the life (leave, 23,080 steps) graded with W at
+    each step's end has no window over G-CONS's 10⁻³ |W| per τ_dyn (worst 1.1 × 10⁻⁵, the whole life +16) — the windows the test
+    still fails (5 of 46, worst 5.7 × 10⁻³) are the ledger's W read on the step's start φ, filed apart (M0-D193) — the lead at
+    M0-D192, 2026-11-17: «Midpoint, recomputed (Recommended)», «End of step, 2φ_mid − φⁿ (Recommended)», «Work here, W as new D
+    (Recommended)».
+  - [M0-D193] §2.9's «potential W = ½Σmφ» read on P2's φ from the step's start · **W = ½Σmφ with φ at the step's end,
+    φⁿ⁺¹ = 2φ_mid − φⁿ, when the step runs P2 and P4's half step** (the block summary's Σm·φ, GPU; no key, no format changed; a
+    step with P2 alone or a test's synthetic φ reads φⁿ as before; `unbound` keeps P2's φ) · with φ_mid = K ∗ ½(Σⁿ + Σⁿ⁺¹)
+    since [M0-D192] and K symmetric, 2φ_mid − φⁿ is K ∗ Σⁿ⁺¹ exactly, less P8's vacuum reset after P4 and the Σ_vac mask; the
+    ledger's W on φⁿ lagged each step's own ΔW by half, up to 5,300 at a record at the bounce, 5 of 46 windows over G-CONS's
+    10⁻³ |W| per τ_dyn on the supernova life (worst 5.72 × 10⁻³) with the work exact: measured on linux-pc's RTX 5090,
+    2026-11-17 (tasks/M0-D193.md); with W at the step's end 0 of 46 (worst 1.2 × 10⁻⁵), and the ledger's W matches the f64
+    ½Σmφ of the dumps (63 at every 370 steps) to 1.7 × 10⁻⁷ of |W| — the lead at M0-D192, 2026-11-17: «End of step, 2φ_mid −
+    φⁿ (Recommended)», «Work here, W as new D (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1383,7 +1455,8 @@ exact potential at a unit square's centre from its own uniform mass, ∫∫_{[�
 error). Computed by a zero-padded FFT convolution over the box (Hockney–Eastwood, SM-E8), radix-2
 sizes (§1.3.3). g = −∇φ by central differences. P4 adds the momentum source Σg and the energy source
 Σu·g, time-centred on the predictor's half-step velocity. [M0-D183] The momentum source is Σ_src,mid·g_mid and the energy source
-§0.5 [M0-D64]/[M0-D68]'s face work across φ_mid: Σ_src,mid is Σ_src at the predictor's half step (its Σ where ≥ Σ_vac, else 0; a
+§0.5 [M0-D64]/[M0-D68]'s face work across φ_mid: Σ_src,mid is ~~Σ_src at the predictor's half step~~ [M0-D192] ½(Σⁿ + Σⁿ⁺¹), the
+midpoint of the step's own mass update by its HLL fluxes (§0.5 [M0-D192]) (its Σ where ≥ Σ_vac, else 0; a
 held cell's own Σ), φ_mid = K ∗ Σ_src,mid plus the sinks' §1.4.3 as P2 added them, g_mid = −∇φ_mid — solved in P4 after the
 predictor, so the masses that pull are the masses pulled and the pairs' pulls cancel; P2's g still drives the predictor's half
 kick and P9's Δt. [M0-TG2] A held cell (§2.3.4, §2.7) takes neither source,
@@ -1591,8 +1664,8 @@ follow the stage; "Supergiant" replaces "Red giant" for objects with M ≥ M_up 
 | black_hole | a sink lies inside the object | remnant |
 | neutron_star | X_n,c ≥ 0.5, \|v_r\| ≤ 0.05 √(GM/R), no sink | remnant |
 | supernova | the object passed core_collapse within the last 20 t.u. and M_unb ≥ 0.1 M | — |
-| core_collapse | N_Fe is converting matter (L_N < 0) | — |
-| white_dwarf | ignited, d_c ≥ 0.5, L_nuc < 0.01 L, M_unb < 0.05 M, X_n,c < 0.5 | remnant |
+| core_collapse | N_Fe is converting matter (L_N < 0) [M0-D190] — or, once (no collapse passed), the object's X̄_n ≥ 0.5 whatever its mass (the [M0-D92] bound reads the first arm only) | — |
+| white_dwarf | ignited, d_c ≥ 0.5, L_nuc < 0.01 L, M_unb < 0.05 M, ~~X_n,c < 0.5~~ [M0-D189] X̄_n < 0.5 (the free neutrons' mass fraction over the object's member blocks' gas, §1.9.2) | remnant |
 | failed_star | never ignited, d_c ≥ 0.5, L_H < 0.01 L | remnant |
 | planetary_nebula | ignited, d_c ≥ 0.5, L_nuc < 0.1 L, M_unb ≥ 0.05 M | — |
 | iron_core | X_Fe,c ≥ 0.5 and ~~L_nuc < 0.1 L~~ [M0-D169] no fuel still burns at c (no group with q̇_c,g > 0 and one of its fuels at c ≥ 10⁻³) | — |
@@ -2636,7 +2709,7 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   at X_H,c = 0.5 until it weighs 1.25 × m_up_sb — ~~it then ends as a neutron star or black hole, as
   its new prediction says~~ [M0-D180] in a world whose edges bounce, it then goes supernova, as its new prediction says, and
   ends a neutron star or a black hole; the Massive preset at X_H,c = 0.5 erased from outside in down to
-  m_up_sb ÷ 1.25 — it then ends as a white dwarf. Exact. *UNVERIFIED*. Scope `touch` ⏱. Plant
+  ~~m_up_sb ÷ 1.25~~ [M0-D191] m_up_sb ÷ 2 — it then ends as a white dwarf. Exact. *UNVERIFIED*. Scope `touch` ⏱. Plant
   `edit-ignored`: P0 drops edits on non-vacuum cells.
 - **G-FIT · every life fits the world.** Through each preset's life no bound gas
   (½|u|² + ε_th + φ < 0) denser than Σ = 10⁻² comes within 16 cells of an edge of the default world

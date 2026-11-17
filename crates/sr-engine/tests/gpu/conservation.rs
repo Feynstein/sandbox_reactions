@@ -2,7 +2,7 @@
 //! whole lives — the Sun-like preset in a world whose edges bounce, to its white dwarf, and a supernova in a world whose edges
 //! leave, the Massive preset from its iron-core dump to its neutron star:
 //! - mass: grid + sinks + escaped + erased + vacuum_reset − painted − preset_dropped constant to 10⁻⁶ relative to its start;
-//! - momentum: grid + sinks + escaped + held constant to 10⁻⁶ of Σm|u|;
+//! - momentum: grid + sinks + escaped + held constant to 10⁻⁵ of the running peak Σm|u| (§0.5 [M0-D186]: f32's floor with every route booked);
 //! - energy: the invariant of §2.9 drifting at most 10⁻³ |W| per τ_dyn (`UNVERIFIED`: source-term gravity conserves it only
 //!   approximately; a red here is a D for a conservative gravity formulation, never a looser bound, §0.4).
 //!
@@ -37,8 +37,10 @@ use sr_engine::scene::Scene;
 use sr_physics::calibration;
 use sr_physics::observe::tracker::read_exact;
 
-/// §5.1's mass and momentum bound, relative.
-const BAND: f64 = 1e-6;
+/// §5.1's mass bound, relative to the start's.
+const MASS_BAND: f64 = 1e-6;
+/// §5.1's momentum bound, of the running peak Σm|u| (§0.5 [M0-D186], the lead's ruling: 10⁻⁶ → 10⁻⁵).
+const MOMENTUM_BAND: f64 = 1e-5;
 /// §5.1's energy bound: |W| per τ_dyn.
 const CONS_PER_TAU: f64 = 1e-3;
 
@@ -401,8 +403,8 @@ fn supernova_life() -> &'static Life {
 
 fn mass_case(l: &Life) {
     let (d, at) = grade_mass(l);
-    println!("{}: mass invariant drift {d:.3e} relative at worst (step {at}); bound {BAND:.0e}", l.id);
-    assert!(d <= BAND, "{}: mass invariant drift {d:.3e} relative at step {at}, over {BAND:.0e}", l.id);
+    println!("{}: mass invariant drift {d:.3e} relative at worst (step {at}); bound {MASS_BAND:.0e}", l.id);
+    assert!(d <= MASS_BAND, "{}: mass invariant drift {d:.3e} relative at step {at}, over {MASS_BAND:.0e}", l.id);
 }
 
 fn momentum_case(l: &Life) {
@@ -410,7 +412,7 @@ fn momentum_case(l: &Life) {
     let last = l.points.last().expect("a checkpoint");
     println!(
         "{}: momentum invariant drift {d:.3e} of the running peak Σm|u| at worst (step {at}); over the instant Σm|u| {instant:.3e} (step {instant_at}, not graded); \
-         at the end Δp ({:+.4e}, {:+.4e}) of Σm|u| {:.4e}; bound {BAND:.0e}",
+         at the end Δp ({:+.4e}, {:+.4e}) of Σm|u| {:.4e}; bound {MOMENTUM_BAND:.0e}",
         l.id,
         last.rec.momentum[0] - l.start.momentum[0],
         last.rec.momentum[1] - l.start.momentum[1],
@@ -419,7 +421,7 @@ fn momentum_case(l: &Life) {
     println!("{}: the whole life's momentum terms — {}", l.id, momentum_table(&l.start, &last.rec));
     let trail: Vec<String> = l.points.iter().step_by((l.points.len() / 12).max(1)).map(|p| format!("{}: {:.2e} (Σm|u| {:.2e})", p.rec.step, momentum_drift(&l.start, &p.rec, 1.0), p.scale)).collect();
     println!("{}: |Δp| along the life — {}", l.id, trail.join(" · "));
-    assert!(d <= BAND, "{}: momentum invariant drift {d:.3e} of Σm|u| at step {at}, over {BAND:.0e}", l.id);
+    assert!(d <= MOMENTUM_BAND, "{}: momentum invariant drift {d:.3e} of Σm|u| at step {at}, over {MOMENTUM_BAND:.0e}", l.id);
 }
 
 fn energy_case(l: &Life) {
@@ -515,12 +517,14 @@ fn snapshot_record(step: u64, t: f64) -> Value {
 fn grader_is_graded() {
     // Mass: 1e-6 relative to the start's.
     let start = rec(1, 0.0, 1000.0, [0.0, 0.0], 0.0, -5.0);
-    assert!(mass_drift(&start, &rec(2, 1.0, 1000.0 * (1.0 + 0.9e-6), [0.0; 2], 0.0, -5.0)) <= BAND, "a mass drift of 0.9e-6 refused");
-    assert!(mass_drift(&start, &rec(2, 1.0, 1000.0 * (1.0 - 1.1e-6), [0.0; 2], 0.0, -5.0)) > BAND, "a mass drift of 1.1e-6 accepted");
-    // Momentum: the vector's length over the scale.
-    assert!(momentum_drift(&start, &rec(2, 1.0, 1000.0, [0.6e-6, 0.6e-6], 0.0, -5.0), 1.0) <= BAND, "0.85e-6 of Σm|u| refused");
-    assert!(momentum_drift(&start, &rec(2, 1.0, 1000.0, [0.8e-6, 0.8e-6], 0.0, -5.0), 1.0) > BAND, "1.13e-6 of Σm|u| accepted");
-    assert!(momentum_drift(&start, &rec(2, 1.0, 1000.0, [0.9e-6, 0.0], 0.0, -5.0), 0.5) > BAND, "a halved scale not held to its share");
+    assert!(mass_drift(&start, &rec(2, 1.0, 1000.0 * (1.0 + 0.9e-6), [0.0; 2], 0.0, -5.0)) <= MASS_BAND, "a mass drift of 0.9e-6 refused");
+    assert!(mass_drift(&start, &rec(2, 1.0, 1000.0 * (1.0 - 1.1e-6), [0.0; 2], 0.0, -5.0)) > MASS_BAND, "a mass drift of 1.1e-6 accepted");
+    // Momentum: the vector's length over the scale, 1e-5 (a mass-sized 1.13e-6 is inside it, 5e-6 — the supernova's — too).
+    assert!(momentum_drift(&start, &rec(2, 1.0, 1000.0, [0.6e-5, 0.6e-5], 0.0, -5.0), 1.0) <= MOMENTUM_BAND, "0.85e-5 of Σm|u| refused");
+    assert!(momentum_drift(&start, &rec(2, 1.0, 1000.0, [0.8e-5, 0.8e-5], 0.0, -5.0), 1.0) > MOMENTUM_BAND, "1.13e-5 of Σm|u| accepted");
+    assert!(momentum_drift(&start, &rec(2, 1.0, 1000.0, [0.9e-5, 0.0], 0.0, -5.0), 0.5) > MOMENTUM_BAND, "a halved scale not held to its share");
+    assert!(momentum_drift(&start, &rec(2, 1.0, 1000.0, [0.8e-6, 0.8e-6], 0.0, -5.0), 1.0) <= MOMENTUM_BAND, "1.13e-6 of Σm|u| refused: the old bound still read");
+    assert!(momentum_drift(&start, &rec(2, 1.0, 1000.0, [3.5e-6, 3.5e-6], 0.0, -5.0), 1.0) <= MOMENTUM_BAND, "4.95e-6 of Σm|u| refused");
     // Energy: |Δ| / |W| per τ_dyn. One τ_dyn long, 0.9e-3 |W| passes, 1.1e-3 does not; half a τ_dyn long, 0.9e-3 does not.
     let (a, tau) = (rec(1, 0.0, 1.0, [0.0; 2], 0.0, -100.0), 2.0);
     assert!(energy_per_tau(&a, &rec(2, tau, 1.0, [0.0; 2], 0.09, -100.0), tau) <= CONS_PER_TAU, "0.9e-3 |W| per τ_dyn refused");
@@ -536,7 +540,7 @@ fn grader_is_graded() {
         point(rec(2, 2.0, 1000.0, [0.0; 2], 0.0, -5.0), 1.0, 2.0),
         point(rec(3, 4.0, 1000.0, [0.0; 2], 0.004, -5.0), 1.0, 2.0),
     ]);
-    assert!(grade_energy(&clean).0 <= CONS_PER_TAU && grade_mass(&clean).0 <= BAND && (grade_momentum(&clean).0).0 <= BAND);
+    assert!(grade_energy(&clean).0 <= CONS_PER_TAU && grade_mass(&clean).0 <= MASS_BAND && (grade_momentum(&clean).0).0 <= MOMENTUM_BAND);
     let leak = life_of(start.clone(), vec![
         point(rec(2, 2.0, 1000.0, [0.0; 2], 0.0, -5.0), 1.0, 2.0),
         point(rec(3, 4.0, 1000.0, [0.0; 2], 0.0, -5.0), 1.0, 2.0),
@@ -551,9 +555,9 @@ fn grader_is_graded() {
         point(rec(3, 2.0, 1000.0, [5e-5, 0.0], 0.0, -5.0), 1e-3, 1.0),
     ]);
     let ((over_peak, _), (instant, _)) = grade_momentum(&quiet);
-    assert!(over_peak <= BAND && instant > BAND, "the running peak not the scale: {over_peak}, instant {instant}");
+    assert!(over_peak <= MOMENTUM_BAND && instant > MOMENTUM_BAND, "the running peak not the scale: {over_peak}, instant {instant}");
     let never_grew = life_of(start.clone(), vec![point(rec(2, 1.0, 1000.0, [5e-5, 0.0], 0.0, -5.0), 1.0, 1.0)]);
-    assert!(grade_momentum(&never_grew).0 .0 > BAND);
+    assert!(grade_momentum(&never_grew).0 .0 > MOMENTUM_BAND);
     // A NaN anywhere is the worst: a non-finite invariant is never a pass.
     let nan = life_of(start.clone(), vec![point(rec(2, 1.0, f64::NAN, [f64::NAN; 2], f64::NAN, -5.0), 1.0, 1.0)]);
     assert!(grade_mass(&nan).0.is_nan() && grade_momentum(&nan).0 .0.is_nan() && grade_energy(&nan).0.is_nan());

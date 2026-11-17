@@ -1,211 +1,32 @@
-# M0-T106 supernova cases on linux-pc, RTX 5090, 2026-11-15T17:07:38-05:00
-    Finished `release` profile [optimized] target(s) in 0.04s
+2026-11-17T16:18:10-05:00
+== M0-T106 supernova cases, RTX 5090
+    Finished `release` profile [optimized] target(s) in 0.20s
      Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
 
-running 3 tests
-test conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons ... 
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons' (3490453) panicked at crates/sr-engine/tests/gpu/conservation.rs:306:5:
-assertion `left == right` failed: hand-made: ended neutron_star, not white_dwarf
-  left: "neutron_star"
- right: "white_dwarf"
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+running 0 tests
 
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons' (3490453) panicked at crates/sr-engine/tests/gpu/conservation.rs:308:9:
-hand-made: the heaviest object never showed supernova (saw {})
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 536 filtered out; finished in 0.00s
 
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons' (3490453) panicked at crates/sr-engine/tests/gpu/conservation.rs:310:5:
-hand-made: 1 checkpoints, fewer than the 2 a life of this length gives
-SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
-SR-WARN preset massive: the nominal Sun-like disk until calibration gives preset_mass_sb (§2.11)
-SR-HEADLESS DONE steps=2151 sim_time=17.431894 until=met
-supernova: 2951 steps, 21 checkpoints, t 7.18 → 17.20; edge "leave"; invariants at the end: mass 5.902032e3 (start 5.902033e3), momentum (-7.7321e4, -6.6421e4) (start (-1.6974e0, +2.3658e-1)), energy -3.047909e6 (start -2.928038e6); |W| 1.0952e7
-
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons' (3490453) panicked at crates/sr-engine/tests/gpu/conservation.rs:308:9:
-supernova: the heaviest object never showed supernova (saw {"core_collapse", "neutron_star"})
-FAILED
-test conservation::the_supernova_in_a_leave_world_keeps_the_mass_invariant ... 
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_mass_invariant' (3614811) panicked at crates/sr-engine/tests/gpu/conservation.rs:306:5:
-assertion `left == right` failed: hand-made: ended neutron_star, not white_dwarf
-  left: "neutron_star"
- right: "white_dwarf"
-
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_mass_invariant' (3614811) panicked at crates/sr-engine/tests/gpu/conservation.rs:308:9:
-hand-made: the heaviest object never showed supernova (saw {})
-
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_mass_invariant' (3614811) panicked at crates/sr-engine/tests/gpu/conservation.rs:310:5:
-hand-made: 1 checkpoints, fewer than the 2 a life of this length gives
-
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_mass_invariant' (3614811) panicked at crates/sr-engine/tests/gpu/conservation.rs:308:9:
-supernova: the heaviest object never showed supernova (saw {"core_collapse", "neutron_star"})
-FAILED
-test conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant ... 
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant' (3614812) panicked at crates/sr-engine/tests/gpu/conservation.rs:306:5:
-assertion `left == right` failed: hand-made: ended neutron_star, not white_dwarf
-  left: "neutron_star"
- right: "white_dwarf"
-
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant' (3614812) panicked at crates/sr-engine/tests/gpu/conservation.rs:308:9:
-hand-made: the heaviest object never showed supernova (saw {})
-
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant' (3614812) panicked at crates/sr-engine/tests/gpu/conservation.rs:310:5:
-hand-made: 1 checkpoints, fewer than the 2 a life of this length gives
-
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant' (3614812) panicked at crates/sr-engine/tests/gpu/conservation.rs:308:9:
-supernova: the heaviest object never showed supernova (saw {"core_collapse", "neutron_star"})
-FAILED
-
-failures:
-
-failures:
-    conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons
-    conservation::the_supernova_in_a_leave_world_keeps_the_mass_invariant
-    conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant
-
-test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 530 filtered out; finished in 63.14s
-
-error: test failed, to rerun pass `-p sr-engine --test gpu`
-exit 101
-# rerun 2026-11-15T17:08:59-05:00
-   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
-    Finished `release` profile [optimized] target(s) in 25.52s
-     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
-
-running 4 tests
-test conservation::the_grader_is_graded_on_hand_made_records ... ok
-test conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
-SR-WARN preset massive: the nominal Sun-like disk until calibration gives preset_mass_sb (§2.11)
-SR-HEADLESS DONE steps=2151 sim_time=17.431894 until=met
-supernova: 2951 steps, 21 checkpoints, t 7.18 → 17.20; edge "leave"; invariants at the end: mass 5.902032e3 (start 5.902033e3), momentum (-7.7321e4, -6.6421e4) (start (-1.6974e0, +2.3658e-1)), energy -3.047909e6 (start -2.928038e6); |W| 1.0952e7
-
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons' (3701281) panicked at crates/sr-engine/tests/gpu/conservation.rs:334:9:
-supernova: no supernova event of the ending's object 1 (events [{"detail":{"mass_sb":5896.158193114214},"kind":"core_collapse","object":1,"sim_time":7.255769894225523,"step":817},{"detail":{"held_t":10.002662945073098,"hold_t":10.0,"mass_sb":5677.528783867136,"stage":"neutron_star"},"kind":"ending","object":1,"sim_time":17.431893634144217,"step":2951}])
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-FAILED
-test conservation::the_supernova_in_a_leave_world_keeps_the_mass_invariant ... 
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_mass_invariant' (3763904) panicked at crates/sr-engine/tests/gpu/conservation.rs:334:9:
-supernova: no supernova event of the ending's object 1 (events [{"detail":{"mass_sb":5896.158193114214},"kind":"core_collapse","object":1,"sim_time":7.255769894225523,"step":817},{"detail":{"held_t":10.002662945073098,"hold_t":10.0,"mass_sb":5677.528783867136,"stage":"neutron_star"},"kind":"ending","object":1,"sim_time":17.431893634144217,"step":2951}])
-FAILED
-test conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant ... 
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant' (3763905) panicked at crates/sr-engine/tests/gpu/conservation.rs:334:9:
-supernova: no supernova event of the ending's object 1 (events [{"detail":{"mass_sb":5896.158193114214},"kind":"core_collapse","object":1,"sim_time":7.255769894225523,"step":817},{"detail":{"held_t":10.002662945073098,"hold_t":10.0,"mass_sb":5677.528783867136,"stage":"neutron_star"},"kind":"ending","object":1,"sim_time":17.431893634144217,"step":2951}])
-FAILED
-
-failures:
-
-failures:
-    conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons
-    conservation::the_supernova_in_a_leave_world_keeps_the_mass_invariant
-    conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant
-
-test result: FAILED. 1 passed; 3 failed; 0 ignored; 0 measured; 529 filtered out; finished in 67.77s
-
-error: test failed, to rerun pass `-p sr-engine --test gpu`
-exit 101
-# massive whole life in leave 2026-11-15T17:11:00-05:00 (timeout 600 s)
-   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
-warning: unused import: `std::path::PathBuf`
-  --> crates/sr-engine/tests/gpu/conservation.rs:31:5
-   |
-31 | use std::path::PathBuf;
-   |     ^^^^^^^^^^^^^^^^^^
-   |
-   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
-
-warning: `sr-engine` (test "gpu") generated 1 warning (run `cargo fix --test "gpu" -p sr-engine` to apply 1 suggestion)
-    Finished `release` profile [optimized] target(s) in 7.14s
+exit 0
+    Finished `release` profile [optimized] target(s) in 0.08s
      Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
 
 running 3 tests
 test conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
-SR-HEADLESS DONE steps=23010 sim_time=189.101580 until=met
-supernova: 23010 steps, 45 checkpoints, t 0.02 → 186.60; edge "leave"; invariants at the end: mass 9.810394e3 (start 9.810396e3), momentum (+2.2813e4, -1.3970e4) (start (-2.5817e-6, -2.0663e-6)), energy -4.598415e5 (start -5.661295e5); |W| 7.1198e6
-supernova: energy invariant drift 6.300e-2 |W| per τ_dyn at worst, bound 1e-3
-supernova: the worst window — steps 19505..20002, Δinvariant -1.6143e4: floor_added -6.1185e6 · nuclear_released +5.5671e6 · radiated +1.9574e6 · potential -1.8917e6 · cold +5.9734e5 · thermal -1.6840e5 · neutrino_lost +2.5545e4 · escaped +1.4741e4 · kinetic +4.0290e2 · neutrino_deposited +0.0000e0 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
-supernova: the whole life — steps 1..22514, Δinvariant +1.0629e5: radiated +3.5245e7 · floor_added -1.9851e7 · nuclear_released -1.1792e7 · potential -5.7958e6 · cold +1.9907e6 · escaped +4.3012e5 · thermal -3.6697e5 · neutrino_lost +2.0754e5 · kinetic +3.8488e4 · neutrino_deposited -3.9855e-1 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
-
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons' (3769639) panicked at crates/sr-engine/tests/gpu/conservation.rs:412:5:
-supernova: energy invariant drift 6.300e-2 |W| per τ_dyn, steps 19505..20002, over 1e-3 (UNVERIFIED: a D for a conservative gravity, §0.4)
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-FAILED
-test conservation::the_supernova_in_a_leave_world_keeps_the_mass_invariant ... supernova: mass invariant drift 2.642e-7 relative at worst (step 21506); bound 1e-6
+SR-HEADLESS DONE steps=23090 sim_time=190.169346 until=met
+supernova: 23090 steps, 46 checkpoints, t 0.02 → 189.77; edge "leave"; invariants at the end: mass 9.810393e3 (start 9.810396e3), momentum (-1.0651e-1, -1.1342e-1) (start (-4.5642e-6, +8.5875e-6)), energy -5.661109e5 (start -5.661371e5); |W| 7.3459e6
+supernova: energy invariant drift 1.174e-5 |W| per τ_dyn at worst, bound 1e-3
+supernova: 0 of 46 windows over the bound; the five worst — 1..513: 1.17e-5 · 513..1009: 1.08e-5 · 21010..21506: 5.33e-6 · 16513..17009: 4.12e-6 · 1009..1505: 3.95e-6
+supernova: the worst window — steps 1..513, Δinvariant +8.8444e0: radiated +1.4790e5 · thermal -1.3891e5 · potential -6.0564e4 · kinetic +5.1314e4 · cold +9.1948e3 · nuclear_released -9.0182e3 · floor_added +8.7947e1 · neutrino_lost +0.0000e0 · neutrino_deposited +0.0000e0 · escaped +0.0000e0 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
+supernova: the whole life — steps 1..23010, Δinvariant +2.6140e1: radiated +4.0400e7 · floor_added -2.4054e7 · nuclear_released -1.2519e7 · potential -6.0219e6 · cold +1.8510e6 · neutrino_lost +4.6442e5 · thermal -4.4993e5 · escaped +2.8124e5 · kinetic +4.7655e4 · neutrino_deposited -1.4394e1 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
 ok
-test conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant ... supernova: momentum invariant drift 1.043e0 of the running peak Σm|u| at worst (step 22514); over the instant Σm|u| 2.231e0 (step 22514, not graded); at the end Δp (+2.2813e4, -1.3970e4) of Σm|u| 1.1989e4; bound 1e-6
-
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant' (3803264) panicked at crates/sr-engine/tests/gpu/conservation.rs:403:5:
-supernova: momentum invariant drift 1.043e0 of Σm|u| at step 22514, over 1e-6
-FAILED
-
-failures:
-
-failures:
-    conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons
-    conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant
-
-test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 530 filtered out; finished in 147.38s
-
-error: test failed, to rerun pass `-p sr-engine --test gpu`
-exit 101
-# massive whole life, momentum terms 2026-11-15T17:13:54-05:00
-    Finished `release` profile [optimized] target(s) in 0.04s
-     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
-
-running 3 tests
-test conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
-SR-HEADLESS DONE steps=23010 sim_time=189.101580 until=met
-supernova: 23010 steps, 45 checkpoints, t 0.02 → 186.60; edge "leave"; invariants at the end: mass 9.810394e3 (start 9.810396e3), momentum (+2.2813e4, -1.3970e4) (start (-2.5817e-6, -2.0663e-6)), energy -4.598415e5 (start -5.661295e5); |W| 7.1198e6
-supernova: energy invariant drift 6.300e-2 |W| per τ_dyn at worst, bound 1e-3
-supernova: the worst window — steps 19505..20002, Δinvariant -1.6143e4: floor_added -6.1185e6 · nuclear_released +5.5671e6 · radiated +1.9574e6 · potential -1.8917e6 · cold +5.9734e5 · thermal -1.6840e5 · neutrino_lost +2.5545e4 · escaped +1.4741e4 · kinetic +4.0290e2 · neutrino_deposited +0.0000e0 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
-supernova: the whole life — steps 1..22514, Δinvariant +1.0629e5: radiated +3.5245e7 · floor_added -1.9851e7 · nuclear_released -1.1792e7 · potential -5.7958e6 · cold +1.9907e6 · escaped +4.3012e5 · thermal -3.6697e5 · neutrino_lost +2.0754e5 · kinetic +3.8488e4 · neutrino_deposited -3.9855e-1 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
-
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons' (3806984) panicked at crates/sr-engine/tests/gpu/conservation.rs:431:5:
-supernova: energy invariant drift 6.300e-2 |W| per τ_dyn, steps 19505..20002, over 1e-3 (UNVERIFIED: a D for a conservative gravity, §0.4)
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-FAILED
-test conservation::the_supernova_in_a_leave_world_keeps_the_mass_invariant ... supernova: mass invariant drift 2.642e-7 relative at worst (step 21506); bound 1e-6
+test conservation::the_supernova_in_a_leave_world_keeps_the_mass_invariant ... supernova: mass invariant drift 3.958e-7 relative at worst (step 21506); bound 1e-6
 ok
-test conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant ... supernova: momentum invariant drift 1.043e0 of the running peak Σm|u| at worst (step 22514); over the instant Σm|u| 2.231e0 (step 22514, not graded); at the end Δp (+2.2813e4, -1.3970e4) of Σm|u| 1.1989e4; bound 1e-6
-supernova: the whole life's momentum terms — steps 1..22514, Δinvariant (+2.2813e4, -1.3970e4): grid (+1.7843e3, -2.6935e3) · sinks (+0.0000e0, +0.0000e0) · escaped (-4.3489e1, -5.9377e1) · held (+2.1072e4, -1.1217e4)
-supernova: |Δp| along the life — 513: 4.04e-4 (Σm|u| 2.56e4) · 2001: 4.76e-3 (Σm|u| 1.21e4) · 3505: 9.16e-3 (Σm|u| 2.76e3) · 5009: 2.54e-2 (Σm|u| 1.24e3) · 6513: 4.30e-2 (Σm|u| 2.00e3) · 8001: 6.10e-2 (Σm|u| 3.26e3) · 9505: 7.05e-2 (Σm|u| 5.44e3) · 11009: 8.47e-2 (Σm|u| 1.07e4) · 12513: 1.20e-1 (Σm|u| 1.39e4) · 14001: 6.55e-1 (Σm|u| 1.83e4) · 15505: 3.11e0 (Σm|u| 2.01e4) · 17009: 2.27e2 (Σm|u| 1.89e4) · 18513: 4.83e2 (Σm|u| 1.52e4) · 20002: 9.22e2 (Σm|u| 1.32e4) · 21506: 1.22e4 (Σm|u| 1.33e4)
+test conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant ... supernova: momentum invariant drift 7.226e-6 of the running peak Σm|u| at worst (step 19505); over the instant Σm|u| 2.304e-5 (step 5505, not graded); at the end Δp (-1.0651e-1, -1.1343e-1) of Σm|u| 1.1022e4; bound 1e-5
+supernova: the whole life's momentum terms — steps 1..23010, Δinvariant (-1.0651e-1, -1.1343e-1): grid (+5.4598e2, -2.7429e3) · sinks (+0.0000e0, +0.0000e0) · escaped (-2.4423e1, +2.4007e1) · held (-5.2166e2, +2.7188e3)
+supernova: |Δp| along the life — 513: 6.58e-4 (Σm|u| 2.57e4) · 2001: 5.90e-3 (Σm|u| 1.21e4) · 3505: 1.02e-2 (Σm|u| 2.76e3) · 5009: 2.72e-2 (Σm|u| 1.24e3) · 6513: 4.30e-2 (Σm|u| 2.00e3) · 8001: 5.71e-2 (Σm|u| 3.26e3) · 9505: 7.07e-2 (Σm|u| 5.44e3) · 11009: 8.45e-2 (Σm|u| 1.07e4) · 12513: 9.46e-2 (Σm|u| 1.40e4) · 14001: 1.05e-1 (Σm|u| 1.84e4) · 15505: 1.13e-1 (Σm|u| 2.02e4) · 17009: 1.24e-1 (Σm|u| 1.77e4) · 18513: 1.62e-1 (Σm|u| 1.44e4) · 20001: 1.81e-1 (Σm|u| 1.14e4) · 21506: 1.67e-1 (Σm|u| 1.26e4) · 23010: 1.56e-1 (Σm|u| 1.10e4)
+ok
 
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant' (3831399) panicked at crates/sr-engine/tests/gpu/conservation.rs:422:5:
-supernova: momentum invariant drift 1.043e0 of Σm|u| at step 22514, over 1e-6
-FAILED
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 533 filtered out; finished in 308.61s
 
-failures:
-
-failures:
-    conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons
-    conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant
-
-test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 530 filtered out; finished in 143.37s
-
-error: test failed, to rerun pass `-p sr-engine --test gpu`
-exit 101
-# massive whole life, window list 2026-11-15T17:16:55-05:00
-   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
-    Finished `release` profile [optimized] target(s) in 7.24s
-     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
-
-running 1 test
-test conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
-SR-HEADLESS DONE steps=23010 sim_time=189.101580 until=met
-supernova: 23010 steps, 45 checkpoints, t 0.02 → 186.60; edge "leave"; invariants at the end: mass 9.810394e3 (start 9.810396e3), momentum (+2.2813e4, -1.3970e4) (start (-2.5817e-6, -2.0663e-6)), energy -4.598415e5 (start -5.661295e5); |W| 7.1198e6
-supernova: energy invariant drift 6.300e-2 |W| per τ_dyn at worst, bound 1e-3
-supernova: 31 of 45 windows over the bound; the five worst — 19505..20002: 6.30e-2 · 15505..16001: 5.16e-2 · 16001..16513: 5.11e-2 · 15009..15505: 4.94e-2 · 16513..17009: 4.65e-2
-supernova: the worst window — steps 19505..20002, Δinvariant -1.6143e4: floor_added -6.1185e6 · nuclear_released +5.5671e6 · radiated +1.9574e6 · potential -1.8917e6 · cold +5.9734e5 · thermal -1.6840e5 · neutrino_lost +2.5545e4 · escaped +1.4741e4 · kinetic +4.0290e2 · neutrino_deposited +0.0000e0 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
-supernova: the whole life — steps 1..22514, Δinvariant +1.0629e5: radiated +3.5245e7 · floor_added -1.9851e7 · nuclear_released -1.1792e7 · potential -5.7958e6 · cold +1.9907e6 · escaped +4.3012e5 · thermal -3.6697e5 · neutrino_lost +2.0754e5 · kinetic +3.8488e4 · neutrino_deposited -3.9855e-1 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
-
-thread 'conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons' (3835620) panicked at crates/sr-engine/tests/gpu/conservation.rs:436:5:
-supernova: energy invariant drift 6.300e-2 |W| per τ_dyn, steps 19505..20002, over 1e-3 (UNVERIFIED: a D for a conservative gravity, §0.4)
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-FAILED
-
-failures:
-
-failures:
-    conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons
-
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 532 filtered out; finished in 130.86s
-
-error: test failed, to rerun pass `-p sr-engine --test gpu`
-exit 101
+exit 0

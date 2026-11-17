@@ -1,0 +1,783 @@
+==== 2026-11-17T09:52:21-05:00 objects · clean: proven by M0-D189 2026-11-17T09:50:26-05:00 (a run of the scope; fingerprint e800a2d48dd0) - not re-run
+==== 2026-11-17T09:51:47-05:00 objects · plant one-object · a fresh scratch copy of the tree
+planted one-object: tests/plants/one-object.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-11-17T09:51:47-05:00 objects · task M0-D189 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 2.57 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-cxv5r8m5/arm1/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.52s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 31 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... FAILED
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... FAILED
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... FAILED
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... FAILED
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_degenerate_centre_has_its_own_dynamical_time ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_mean_neutron_fraction_is_the_member_blocks_mass_weighted ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::the_rotation_is_the_tangential_kinetic_energy_about_the_centre ... ok
+test observe::tracker::tests::the_snapshot_carries_tau_deg_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::the_snapshot_carries_the_mean_neutron_fraction_and_reads_one_without_it_as_the_centre_s ... ok
+test observe::tracker::tests::the_snapshot_carries_the_rotation_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+test observe::tracker::tests::the_core_s_burning_is_c_s_own ... ok
+
+failures:
+
+---- observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass stdout ----
+
+thread 'observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass' (215949) panicked at crates/sr-physics/src/observe/tracker.rs:1337:9:
+assertion `left == right` failed: a sink's block joins even with no dense cell: the lone sink is an object
+  left: 1
+ right: 2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::tracker::tests::a_split_keeps_the_id_with_the_centre stdout ----
+
+thread 'observe::tracker::tests::a_split_keeps_the_id_with_the_centre' (215951) panicked at crates/sr-physics/src/observe/tracker.rs:1009:9:
+assertion `left == right` failed
+  left: [1]
+ right: [1, 2]
+
+---- observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part stdout ----
+
+thread 'observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part' (215952) panicked at crates/sr-physics/src/observe/tracker.rs:981:9:
+assertion `left == right` failed
+  left: [1]
+ right: [1, 2]
+
+---- observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block stdout ----
+
+thread 'observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block' (215954) panicked at crates/sr-physics/src/observe/tracker.rs:916:9:
+assertion `left == right` failed: one empty block between separates
+  left: 1
+ right: 2
+
+
+failures:
+    observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass
+    observe::tracker::tests::a_split_keeps_the_id_with_the_centre
+    observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part
+    observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block
+
+test result: FAILED. 27 passed; 4 failed; 0 ignored; 0 measured; 185 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-17T09:51:50-05:00 objects · plant light-to-heaviest · a fresh scratch copy of the tree
+planted light-to-heaviest: tests/plants/light-to-heaviest.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-11-17T09:51:50-05:00 objects · task M0-D189 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 2.42 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-cxv5r8m5/arm2/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.36s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 31 tests
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_degenerate_centre_has_its_own_dynamical_time ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_mean_neutron_fraction_is_the_member_blocks_mass_weighted ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::the_rotation_is_the_tangential_kinetic_energy_about_the_centre ... ok
+test observe::tracker::tests::the_snapshot_carries_tau_deg_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::the_snapshot_carries_the_mean_neutron_fraction_and_reads_one_without_it_as_the_centre_s ... ok
+test observe::tracker::tests::the_snapshot_carries_the_rotation_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... FAILED
+test observe::tracker::tests::the_core_s_burning_is_c_s_own ... ok
+
+failures:
+
+---- observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light stdout ----
+
+thread 'observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light' (216397) panicked at crates/sr-physics/src/observe/tracker.rs:1196:9:
+assertion `left == right` failed: each its own halo's, none lost
+  left: (96.0, 0.0)
+ right: (16.0, 80.0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light
+
+test result: FAILED. 30 passed; 1 failed; 0 ignored; 0 measured; 185 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-17T09:51:53-05:00 objects · plant lone-sink-left-out · a fresh scratch copy of the tree
+planted lone-sink-left-out: tests/plants/lone-sink-left-out.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-11-17T09:51:53-05:00 objects · task M0-D189 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 2.52 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-cxv5r8m5/arm3/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.43s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 31 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... FAILED
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... FAILED
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... FAILED
+test observe::tracker::tests::the_degenerate_centre_has_its_own_dynamical_time ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_mean_neutron_fraction_is_the_member_blocks_mass_weighted ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::the_rotation_is_the_tangential_kinetic_energy_about_the_centre ... ok
+test observe::tracker::tests::the_snapshot_carries_tau_deg_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::the_snapshot_carries_the_mean_neutron_fraction_and_reads_one_without_it_as_the_centre_s ... ok
+test observe::tracker::tests::the_snapshot_carries_the_rotation_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_core_s_burning_is_c_s_own ... ok
+
+failures:
+
+---- observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it stdout ----
+
+thread 'observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it' (216869) panicked at crates/sr-physics/src/observe/tracker.rs:1482:13:
+assertion `left == right` failed: frame 0
+  left: []
+ right: [1]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own stdout ----
+
+thread 'observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own' (216873) panicked at crates/sr-physics/src/observe/tracker.rs:1439:9:
+assertion `left == right` failed: the sink alone is an object
+  left: 0
+ right: 1
+
+---- observe::tracker::tests::sinks_are_matched_by_place_not_by_slot stdout ----
+
+thread 'observe::tracker::tests::sinks_are_matched_by_place_not_by_slot' (216882) panicked at crates/sr-physics/src/observe/tracker.rs:1506:9:
+assertion `left == right` failed
+  left: []
+ right: [1, 2, 3]
+
+
+failures:
+    observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it
+    observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own
+    observe::tracker::tests::sinks_are_matched_by_place_not_by_slot
+
+test result: FAILED. 28 passed; 3 failed; 0 ignored; 0 measured; 185 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-17T09:51:56-05:00 objects · plant identity-by-block · a fresh scratch copy of the tree
+planted identity-by-block: tests/plants/identity-by-block.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-11-17T09:51:56-05:00 objects · task M0-D189 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 2.42 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-cxv5r8m5/arm4/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.36s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 31 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... FAILED
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... FAILED
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_degenerate_centre_has_its_own_dynamical_time ... ok
+test observe::tracker::tests::the_mean_neutron_fraction_is_the_member_blocks_mass_weighted ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::the_rotation_is_the_tangential_kinetic_energy_about_the_centre ... ok
+test observe::tracker::tests::the_snapshot_carries_tau_deg_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::the_snapshot_carries_the_mean_neutron_fraction_and_reads_one_without_it_as_the_centre_s ... ok
+test observe::tracker::tests::the_snapshot_carries_the_rotation_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+test observe::tracker::tests::the_core_s_burning_is_c_s_own ... ok
+
+failures:
+
+---- observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it stdout ----
+
+thread 'observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it' (217065) panicked at crates/sr-physics/src/observe/tracker.rs:1482:13:
+assertion `left == right` failed: frame 1
+  left: [2]
+ right: [1]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::tracker::tests::sinks_are_matched_by_place_not_by_slot stdout ----
+
+thread 'observe::tracker::tests::sinks_are_matched_by_place_not_by_slot' (217078) panicked at crates/sr-physics/src/observe/tracker.rs:1512:9:
+assertion `left == right` failed
+  left: [(4, 1400.0), (5, 300.0)]
+ right: [(1, 1400.0), (3, 300.0)]
+
+
+failures:
+    observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it
+    observe::tracker::tests::sinks_are_matched_by_place_not_by_slot
+
+test result: FAILED. 29 passed; 2 failed; 0 ignored; 0 measured; 185 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-17T09:51:58-05:00 objects · plant sink-not-carried · a fresh scratch copy of the tree
+planted sink-not-carried: tests/plants/sink-not-carried.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-11-17T09:51:59-05:00 objects · task M0-D189 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 2.42 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-cxv5r8m5/arm5/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.33s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 31 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... FAILED
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_degenerate_centre_has_its_own_dynamical_time ... ok
+test observe::tracker::tests::the_mean_neutron_fraction_is_the_member_blocks_mass_weighted ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::the_rotation_is_the_tangential_kinetic_energy_about_the_centre ... ok
+test observe::tracker::tests::the_snapshot_carries_tau_deg_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::the_snapshot_carries_the_mean_neutron_fraction_and_reads_one_without_it_as_the_centre_s ... ok
+test observe::tracker::tests::the_snapshot_carries_the_rotation_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+test observe::tracker::tests::the_core_s_burning_is_c_s_own ... ok
+
+failures:
+
+---- observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it stdout ----
+
+thread 'observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it' (217298) panicked at crates/sr-physics/src/observe/tracker.rs:1482:13:
+assertion `left == right` failed: frame 1
+  left: [2]
+ right: [1]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it
+
+test result: FAILED. 30 passed; 1 failed; 0 ignored; 0 measured; 185 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-17T09:52:01-05:00 objects · plant split-by-share · a fresh scratch copy of the tree
+planted split-by-share: tests/plants/split-by-share.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-11-17T09:52:02-05:00 objects · task M0-D189 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 2.42 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-cxv5r8m5/arm6/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.37s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 31 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... FAILED
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... FAILED
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_degenerate_centre_has_its_own_dynamical_time ... ok
+test observe::tracker::tests::the_mean_neutron_fraction_is_the_member_blocks_mass_weighted ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::the_rotation_is_the_tangential_kinetic_energy_about_the_centre ... ok
+test observe::tracker::tests::the_snapshot_carries_tau_deg_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::the_snapshot_carries_the_mean_neutron_fraction_and_reads_one_without_it_as_the_centre_s ... ok
+test observe::tracker::tests::the_snapshot_carries_the_rotation_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+test observe::tracker::tests::the_core_s_burning_is_c_s_own ... ok
+
+failures:
+
+---- observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history stdout ----
+
+thread 'observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history' (217689) panicked at crates/sr-physics/src/observe/tracker.rs:1059:9:
+assertion `left == right` failed: the core keeps the id at 2 % of the star's weight
+  left: [(1, 2400.0), (2, 300.0)]
+ right: [(1, 300.0), (2, 2400.0)]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::tracker::tests::a_split_keeps_the_id_with_the_centre stdout ----
+
+thread 'observe::tracker::tests::a_split_keeps_the_id_with_the_centre' (217699) panicked at crates/sr-physics/src/observe/tracker.rs:1011:9:
+assertion `left == right` failed
+  left: [(1, 1400.0), (2, 400.0)]
+ right: [(1, 400.0), (2, 1400.0)]
+
+
+failures:
+    observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history
+    observe::tracker::tests::a_split_keeps_the_id_with_the_centre
+
+test result: FAILED. 29 passed; 2 failed; 0 ignored; 0 measured; 185 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-17T09:52:04-05:00 objects · plant kinetic-t-radial · a fresh scratch copy of the tree
+planted kinetic-t-radial: tests/plants/kinetic-t-radial.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-11-17T09:52:05-05:00 objects · task M0-D189 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 2.47 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-cxv5r8m5/arm7/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.39s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 31 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_degenerate_centre_has_its_own_dynamical_time ... ok
+test observe::tracker::tests::the_mean_neutron_fraction_is_the_member_blocks_mass_weighted ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... FAILED
+test observe::tracker::tests::the_rotation_is_the_tangential_kinetic_energy_about_the_centre ... FAILED
+test observe::tracker::tests::the_snapshot_carries_tau_deg_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::the_snapshot_carries_the_mean_neutron_fraction_and_reads_one_without_it_as_the_centre_s ... ok
+test observe::tracker::tests::the_snapshot_carries_the_rotation_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_core_s_burning_is_c_s_own ... ok
+
+failures:
+
+---- observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre stdout ----
+
+thread 'observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre' (217911) panicked at crates/sr-physics/src/observe/tracker.rs:1241:9:
+assertion `left == right` failed: radial momenta: no rotation
+  left: 3.25
+ right: 0.0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- observe::tracker::tests::the_rotation_is_the_tangential_kinetic_energy_about_the_centre stdout ----
+
+thread 'observe::tracker::tests::the_rotation_is_the_tangential_kinetic_energy_about_the_centre' (217912) panicked at crates/sr-physics/src/observe/tracker.rs:1257:9:
+1.375 against 5
+
+
+failures:
+    observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre
+    observe::tracker::tests::the_rotation_is_the_tangential_kinetic_energy_about_the_centre
+
+test result: FAILED. 29 passed; 2 failed; 0 ignored; 0 measured; 185 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-17T09:52:07-05:00 objects · plant kinetic-t-required · a fresh scratch copy of the tree
+planted kinetic-t-required: tests/plants/kinetic-t-required.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-11-17T09:52:07-05:00 objects · task M0-D189 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 2.42 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-cxv5r8m5/arm8/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.37s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 31 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_degenerate_centre_has_its_own_dynamical_time ... ok
+test observe::tracker::tests::the_mean_neutron_fraction_is_the_member_blocks_mass_weighted ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::the_rotation_is_the_tangential_kinetic_energy_about_the_centre ... ok
+test observe::tracker::tests::the_snapshot_carries_tau_deg_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::the_snapshot_carries_the_mean_neutron_fraction_and_reads_one_without_it_as_the_centre_s ... ok
+test observe::tracker::tests::the_snapshot_carries_the_rotation_and_reads_one_without_it_as_none ... FAILED
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+test observe::tracker::tests::the_core_s_burning_is_c_s_own ... ok
+
+failures:
+
+---- observe::tracker::tests::the_snapshot_carries_the_rotation_and_reads_one_without_it_as_none stdout ----
+
+thread 'observe::tracker::tests::the_snapshot_carries_the_rotation_and_reads_one_without_it_as_none' (218208) panicked at crates/sr-physics/src/observe/tracker.rs:1269:9:
+assertion `left == right` failed: no K_t: none until the next frame measures it
+  left: Err("kinetic_t: not an f64 written as a string: null")
+ right: Ok(Object { id: 1, mass: 309.054, gas_mass: 0.0, sink_mass: 0.0, sinks: 0, centre: [0.0, 0.0], radius: 0.0, tau_dyn: 0.0, luminosity: 0.0, luminosity_own: 0.0, l_group: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], l_nuc: 0.0, q_c: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], l_nu: 0.0, l_nu_deposited: 0.0, sigma_c: 0.0, t_c: 0.0, x_c: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], d_c: 0.0, x_n_mean: 0.0, v_r: 0.0, thermal: 0.0, kinetic: 655.23, kinetic_t: 0.0, pressure: 383.77, potential: -2155.67, unbound: 0.0, core_group: None, r_core: None, envelope_mass: None, tau_deg: None })
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::tracker::tests::the_snapshot_carries_the_rotation_and_reads_one_without_it_as_none
+
+test result: FAILED. 30 passed; 1 failed; 0 ignored; 0 measured; 185 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-17T09:52:10-05:00 objects · plant tau-deg-every-block · a fresh scratch copy of the tree
+planted tau-deg-every-block: tests/plants/tau-deg-every-block.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-11-17T09:52:10-05:00 objects · task M0-D189 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 2.47 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-cxv5r8m5/arm9/crates/sr-physics)
+warning: constant `DEGENERATE` is never used
+  --> crates/sr-physics/src/observe/tracker.rs:73:7
+   |
+73 | const DEGENERATE: f64 = 0.5;
+   |       ^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-physics` (lib test) generated 1 warning
+    Finished `release` profile [optimized] target(s) in 2.38s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 31 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_degenerate_centre_has_its_own_dynamical_time ... FAILED
+test observe::tracker::tests::the_mean_neutron_fraction_is_the_member_blocks_mass_weighted ... ok
+test observe::tracker::tests::the_rotation_is_the_tangential_kinetic_energy_about_the_centre ... ok
+test observe::tracker::tests::the_snapshot_carries_tau_deg_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::the_snapshot_carries_the_mean_neutron_fraction_and_reads_one_without_it_as_the_centre_s ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::the_snapshot_carries_the_rotation_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_core_s_burning_is_c_s_own ... ok
+
+failures:
+
+---- observe::tracker::tests::the_degenerate_centre_has_its_own_dynamical_time stdout ----
+
+thread 'observe::tracker::tests::the_degenerate_centre_has_its_own_dynamical_time' (218387) panicked at crates/sr-physics/src/observe/tracker.rs:1300:9:
+Some(1.2597425461642482) against 0.2999187417560973
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::tracker::tests::the_degenerate_centre_has_its_own_dynamical_time
+
+test result: FAILED. 30 passed; 1 failed; 0 ignored; 0 measured; 185 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-17T09:52:13-05:00 objects · plant centre-burning-from-block · a fresh scratch copy of the tree
+planted centre-burning-from-block: tests/plants/centre-burning-from-block.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-11-17T09:52:13-05:00 objects · task M0-D189 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 2.42 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-cxv5r8m5/arm10/crates/sr-physics)
+warning: function `burning_at` is never used
+   --> crates/sr-physics/src/observe/tracker.rs:641:4
+    |
+641 | fn burning_at(config: &TrackerConfig, sigma: f64, x: &[f64; 10], t: f64) -> [f64; 7] {
+    |    ^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-physics` (lib test) generated 1 warning
+    Finished `release` profile [optimized] target(s) in 2.37s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 31 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_degenerate_centre_has_its_own_dynamical_time ... ok
+test observe::tracker::tests::the_mean_neutron_fraction_is_the_member_blocks_mass_weighted ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::the_rotation_is_the_tangential_kinetic_energy_about_the_centre ... ok
+test observe::tracker::tests::the_snapshot_carries_tau_deg_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::the_snapshot_carries_the_mean_neutron_fraction_and_reads_one_without_it_as_the_centre_s ... ok
+test observe::tracker::tests::the_snapshot_carries_the_rotation_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+test observe::tracker::tests::the_core_s_burning_is_c_s_own ... FAILED
+
+failures:
+
+---- observe::tracker::tests::the_core_s_burning_is_c_s_own stdout ----
+
+thread 'observe::tracker::tests::the_core_s_burning_is_c_s_own' (218561) panicked at crates/sr-physics/src/observe/tracker.rs:1396:9:
+[30000.0, 10000.0, 0.0, 0.0, 5000.0, 1000.0, 0.0] against 11.926721199346973
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::tracker::tests::the_core_s_burning_is_c_s_own
+
+test result: FAILED. 30 passed; 1 failed; 0 ignored; 0 measured; 185 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-17T09:52:16-05:00 objects · plant centre-burning-unlit · a fresh scratch copy of the tree
+planted centre-burning-unlit: tests/plants/centre-burning-unlit.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-11-17T09:52:16-05:00 objects · task M0-D189 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 2.42 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-cxv5r8m5/arm11/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.35s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 31 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_degenerate_centre_has_its_own_dynamical_time ... ok
+test observe::tracker::tests::the_mean_neutron_fraction_is_the_member_blocks_mass_weighted ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::the_rotation_is_the_tangential_kinetic_energy_about_the_centre ... ok
+test observe::tracker::tests::the_snapshot_carries_tau_deg_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::the_snapshot_carries_the_mean_neutron_fraction_and_reads_one_without_it_as_the_centre_s ... ok
+test observe::tracker::tests::the_snapshot_carries_the_rotation_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+test observe::tracker::tests::the_core_s_burning_is_c_s_own ... FAILED
+
+failures:
+
+---- observe::tracker::tests::the_core_s_burning_is_c_s_own stdout ----
+
+thread 'observe::tracker::tests::the_core_s_burning_is_c_s_own' (218719) panicked at crates/sr-physics/src/observe/tracker.rs:1397:9:
+assertion `left == right` failed: silicon at c, T_c under T_Si: not lit
+  left: 3.258441226996851
+ right: 0.0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::tracker::tests::the_core_s_burning_is_c_s_own
+
+test result: FAILED. 30 passed; 1 failed; 0 ignored; 0 measured; 185 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+
+==== 2026-11-17T09:52:18-05:00 objects · plant x-n-mean-centre-cell · a fresh scratch copy of the tree
+planted x-n-mean-centre-cell: tests/plants/x-n-mean-centre-cell.patch -> crates/sr-physics/src/observe/tracker.rs
+== 2026-11-17T09:52:19-05:00 objects · task M0-D189 · box laserax-ai :: bash tests/cpu.sh sr-physics observe::tracker
+-- objects · exit=101 · 2.52 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-cxv5r8m5/arm12/crates/sr-physics)
+    Finished `release` profile [optimized] target(s) in 2.44s
+     Running unittests src/lib.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/sr_physics-966c57c717c01f2d)
+
+running 31 tests
+test observe::tracker::tests::a_block_below_sigma_obj_does_not_join ... ok
+test observe::tracker::tests::a_box_that_moves_does_not_change_an_id ... ok
+test observe::tracker::tests::a_lone_sink_is_followed_where_its_velocity_carries_it ... ok
+test observe::tracker::tests::a_blast_s_core_keeps_the_star_s_history ... ok
+test observe::tracker::tests::a_halo_s_light_is_the_nearest_object_s ... ok
+test observe::tracker::tests::a_merge_keeps_the_heavier_id ... ok
+test observe::tracker::tests::a_blob_shifted_by_two_blocks_keeps_its_id ... ok
+test observe::tracker::tests::a_sink_is_the_centre_and_adds_its_mass ... ok
+test observe::tracker::tests::a_sink_crossing_a_block_keeps_its_object_s_id ... ok
+test observe::tracker::tests::a_sink_no_block_holds_is_an_object_of_its_own ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_centre ... ok
+test observe::tracker::tests::a_split_keeps_the_id_with_the_larger_part ... ok
+test observe::tracker::tests::a_wisp_is_left_out ... ok
+test observe::tracker::tests::eight_connected_joins_a_corner_but_not_an_empty_block ... ok
+test observe::tracker::tests::energies_and_the_centre_values ... ok
+test observe::tracker::tests::one_blob ... ok
+test observe::tracker::tests::powers_are_the_frame_sums_over_its_sim_time ... ok
+test observe::tracker::tests::radius_ninety_percent_and_tau_dyn ... ok
+test observe::tracker::tests::sinks_are_matched_by_place_not_by_slot ... ok
+test observe::tracker::tests::the_envelope_lies_outside_twice_the_core ... ok
+test observe::tracker::tests::the_degenerate_centre_has_its_own_dynamical_time ... ok
+test observe::tracker::tests::the_radial_velocity_is_mass_weighted_about_the_centre ... ok
+test observe::tracker::tests::the_mean_neutron_fraction_is_the_member_blocks_mass_weighted ... FAILED
+test observe::tracker::tests::the_rotation_is_the_tangential_kinetic_energy_about_the_centre ... ok
+test observe::tracker::tests::the_snapshot_carries_tau_deg_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::the_snapshot_carries_the_mean_neutron_fraction_and_reads_one_without_it_as_the_centre_s ... ok
+test observe::tracker::tests::the_snapshot_carries_the_rotation_and_reads_one_without_it_as_none ... ok
+test observe::tracker::tests::two_blobs_keep_their_ids ... ok
+test observe::tracker::tests::two_stars_each_keep_their_own_halo_s_light ... ok
+test observe::tracker::tests::the_snapshot_carries_the_sinks_and_refuses_one_without_them ... ok
+test observe::tracker::tests::the_core_s_burning_is_c_s_own ... ok
+
+failures:
+
+---- observe::tracker::tests::the_mean_neutron_fraction_is_the_member_blocks_mass_weighted stdout ----
+
+thread 'observe::tracker::tests::the_mean_neutron_fraction_is_the_member_blocks_mass_weighted' (219187) panicked at crates/sr-physics/src/observe/tracker.rs:888:9:
+X̄_n 0.535 against 0.15722222222222224
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    observe::tracker::tests::the_mean_neutron_fraction_is_the_member_blocks_mass_weighted
+
+test result: FAILED. 30 passed; 1 failed; 0 ignored; 0 measured; 185 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-physics --lib`
+

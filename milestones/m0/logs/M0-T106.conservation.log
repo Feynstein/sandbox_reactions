@@ -1,0 +1,55 @@
+== 2026-11-17T16:24:56-05:00 conservation · task M0-T106 · box laserax-ai :: bash tests/gpu.sh conservation physics
+-- conservation · exit=101 · 986.43 s
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 7 tests
+test conservation::the_grader_is_graded_on_hand_made_records ... ok
+test conservation::the_sun_like_life_in_a_bounce_world_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+sun step=64001 t=729.42 stage=main_sequence
+sun step=128001 t=1440.05 stage=main_sequence
+SR-HEADLESS DONE steps=171809 sim_time=1809.967874 until=met
+sun: 171809 steps, 171 checkpoints, t 0.03 → 1802.66; edge "bounce"; invariants at the end: mass 3.136716e3 (start 3.136720e3), momentum (-5.9943e0, -1.4155e1) (start (+3.3136e-6, +1.1250e-6)), energy -1.791159e5 (start -1.805930e5); |W| 8.8045e5
+sun: energy invariant drift 7.936e-6 |W| per τ_dyn at worst, bound 1e-3
+sun: 0 of 171 windows over the bound; the five worst — 1..1009: 7.94e-6 · 161009..162001: 7.50e-6 · 163009..164001: 5.88e-6 · 160001..161009: 5.69e-6 · 159009..160001: 5.32e-6
+sun: the worst window — steps 1..1009, Δinvariant +6.8916e0: potential -2.5084e5 · cold +1.0098e5 · radiated +9.4317e4 · thermal +8.2798e4 · nuclear_released -2.8190e4 · kinetic +9.0641e2 · floor_added +2.9828e1 · neutrino_lost +0.0000e0 · neutrino_deposited +0.0000e0 · escaped +0.0000e0 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
+sun: the whole life — steps 1..171009, Δinvariant +1.4771e3: radiated +3.3717e7 · nuclear_released -1.6847e7 · floor_added -1.6632e7 · potential -6.4125e5 · kinetic +2.4811e5 · cold +1.3250e5 · neutrino_lost +2.0475e4 · thermal +2.3944e3 · neutrino_deposited +0.0000e0 · escaped +0.0000e0 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
+ok
+test conservation::the_sun_like_life_in_a_bounce_world_keeps_the_mass_invariant ... sun: mass invariant drift 1.305e-6 relative at worst (step 170001); bound 1e-6
+
+thread 'conservation::the_sun_like_life_in_a_bounce_world_keeps_the_mass_invariant' (426102) panicked at crates/sr-engine/tests/gpu/conservation.rs:407:5:
+sun: mass invariant drift 1.305e-6 relative at step 170001, over 1e-6
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test conservation::the_sun_like_life_in_a_bounce_world_keeps_the_momentum_invariant ... sun: momentum invariant drift 9.024e-3 of the running peak Σm|u| at worst (step 154001); over the instant Σm|u| 9.430e-3 (step 106001, not graded); at the end Δp (-5.9943e0, -1.4155e1) of Σm|u| 3.6083e4; bound 1e-5
+sun: the whole life's momentum terms — steps 1..171009, Δinvariant (-5.9943e0, -1.4155e1): grid (-5.9943e0, -1.4155e1) · sinks (+0.0000e0, +0.0000e0) · escaped (+0.0000e0, +0.0000e0) · held (+0.0000e0, +0.0000e0)
+sun: |Δp| along the life — 1009: 2.12e-3 (Σm|u| 9.64e2) · 15009: 3.50e-2 (Σm|u| 1.21e2) · 29009: 1.78e-1 (Σm|u| 1.03e2) · 43009: 6.06e-1 (Σm|u| 1.09e2) · 57009: 9.71e-1 (Σm|u| 1.16e2) · 71009: 9.75e-1 (Σm|u| 1.46e2) · 85009: 1.07e0 (Σm|u| 2.10e2) · 99009: 1.78e0 (Σm|u| 2.70e2) · 113009: 2.94e0 (Σm|u| 3.69e2) · 127009: 3.43e0 (Σm|u| 5.40e2) · 141009: 5.59e0 (Σm|u| 8.66e2) · 155009: 1.06e1 (Σm|u| 2.94e3) · 169009: 1.52e1 (Σm|u| 4.36e4)
+
+thread 'conservation::the_sun_like_life_in_a_bounce_world_keeps_the_momentum_invariant' (426104) panicked at crates/sr-engine/tests/gpu/conservation.rs:424:5:
+sun: momentum invariant drift 9.024e-3 of Σm|u| at step 154001, over 1e-5
+FAILED
+test conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=23090 sim_time=190.169346 until=met
+supernova: 23090 steps, 46 checkpoints, t 0.02 → 189.77; edge "leave"; invariants at the end: mass 9.810393e3 (start 9.810396e3), momentum (-1.0651e-1, -1.1342e-1) (start (-4.5642e-6, +8.5875e-6)), energy -5.661109e5 (start -5.661371e5); |W| 7.3459e6
+supernova: energy invariant drift 1.174e-5 |W| per τ_dyn at worst, bound 1e-3
+supernova: 0 of 46 windows over the bound; the five worst — 1..513: 1.17e-5 · 513..1009: 1.08e-5 · 21010..21506: 5.33e-6 · 16513..17009: 4.12e-6 · 1009..1505: 3.95e-6
+supernova: the worst window — steps 1..513, Δinvariant +8.8444e0: radiated +1.4790e5 · thermal -1.3891e5 · potential -6.0564e4 · kinetic +5.1314e4 · cold +9.1948e3 · nuclear_released -9.0182e3 · floor_added +8.7947e1 · neutrino_lost +0.0000e0 · neutrino_deposited +0.0000e0 · escaped +0.0000e0 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
+supernova: the whole life — steps 1..23010, Δinvariant +2.6140e1: radiated +4.0400e7 · floor_added -2.4054e7 · nuclear_released -1.2519e7 · potential -6.0219e6 · cold +1.8510e6 · neutrino_lost +4.6442e5 · thermal -4.4993e5 · escaped +2.8124e5 · kinetic +4.7655e4 · neutrino_deposited -1.4394e1 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
+ok
+test conservation::the_supernova_in_a_leave_world_keeps_the_mass_invariant ... supernova: mass invariant drift 3.958e-7 relative at worst (step 21506); bound 1e-6
+ok
+test conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant ... supernova: momentum invariant drift 7.226e-6 of the running peak Σm|u| at worst (step 19505); over the instant Σm|u| 2.304e-5 (step 5505, not graded); at the end Δp (-1.0651e-1, -1.1343e-1) of Σm|u| 1.1022e4; bound 1e-5
+supernova: the whole life's momentum terms — steps 1..23010, Δinvariant (-1.0651e-1, -1.1343e-1): grid (+5.4598e2, -2.7429e3) · sinks (+0.0000e0, +0.0000e0) · escaped (-2.4423e1, +2.4007e1) · held (-5.2166e2, +2.7188e3)
+supernova: |Δp| along the life — 513: 6.58e-4 (Σm|u| 2.57e4) · 2001: 5.90e-3 (Σm|u| 1.21e4) · 3505: 1.02e-2 (Σm|u| 2.76e3) · 5009: 2.72e-2 (Σm|u| 1.24e3) · 6513: 4.30e-2 (Σm|u| 2.00e3) · 8001: 5.71e-2 (Σm|u| 3.26e3) · 9505: 7.07e-2 (Σm|u| 5.44e3) · 11009: 8.45e-2 (Σm|u| 1.07e4) · 12513: 9.46e-2 (Σm|u| 1.40e4) · 14001: 1.05e-1 (Σm|u| 1.84e4) · 15505: 1.13e-1 (Σm|u| 2.02e4) · 17009: 1.24e-1 (Σm|u| 1.77e4) · 18513: 1.62e-1 (Σm|u| 1.44e4) · 20001: 1.81e-1 (Σm|u| 1.14e4) · 21506: 1.67e-1 (Σm|u| 1.26e4) · 23010: 1.56e-1 (Σm|u| 1.10e4)
+ok
+
+failures:
+
+failures:
+    conservation::the_sun_like_life_in_a_bounce_world_keeps_the_mass_invariant
+    conservation::the_sun_like_life_in_a_bounce_world_keeps_the_momentum_invariant
+
+test result: FAILED. 5 passed; 2 failed; 0 ignored; 0 measured; 529 filtered out; finished in 986.26s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

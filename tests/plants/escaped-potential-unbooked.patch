@@ -1,0 +1,12 @@
+--- a/crates/sr-engine/shaders/hydro.wgsl
++++ b/crates/sr-engine/shaders/hydro.wgsl
+@@ -1160,9 +1160,6 @@
+     // [M0-D182] The mass that crosses takes its potential energy with it: W = ½Σmφ rises by δm·|φ| when δm leaves the edge
+     // cell, so the energy booked `escaped` is the gas's plus δm·φ_mid there — the same φ_mid the face work reads, a ghost's
+     // its edge cell's (§2.8, §2.9 [M0-D182]). With P2 off there is no φ and nothing more to book.
+-    if (edges.gravity != 0u) {
+-        escaped[3u * slots + slot] += s * f[0] * phi_at(x, y);
+-    }
+ }
+ 
+ // [M0-D184] A compensated sum: `hi` the running f32 sums of (push x, push y, |push|), `lo` what their roundings lost.

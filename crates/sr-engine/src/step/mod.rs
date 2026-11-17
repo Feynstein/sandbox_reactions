@@ -489,16 +489,20 @@ impl Step {
         let g = gravity.as_ref().map(Gravity::field);
         // The block summary's φ: P2's plane, else the one P3 reads (a test's synthetic world), else none.
         let phi = side.or(sinks.map(|s| s.side)).map(SideFields::phi);
-        let summary = Summary::new(device, state, booking, eos, &boxfit, phi, sink_state.as_ref());
+        // With P2 and P4 the half step's φ_mid is in the field's plane 7: W reads φ at the step's end, 2φ_mid − φⁿ (M0-D193).
+        let mid = gravity.as_ref().filter(|_| edge.is_some()).map(Gravity::field);
+        let summary = Summary::new(device, state, booking, eos, &boxfit, phi, mid, sink_state.as_ref());
         let mut sink = sinks.zip(sink_state).map(|(s, buf)| sinks::Sinks::new(device, state, booking, eos, physics, &boxfit, dt.record(), buf, s));
         passes[Pass::Sinks as usize] = sink.as_mut().map(|s| std::mem::take(&mut s.dispatches)).unwrap_or_default();
         let flux = heat.map(|h| h.side.flux());
         let mut flow = edge.map(|edge| hydro::Hydro::new(device, state, booking, eos, physics, &boxfit, dt.record(), g, flux, edge));
         passes[Pass::Hydro as usize] = flow.as_mut().map(|h| std::mem::take(&mut h.dispatches)).unwrap_or_default();
-        // With P2, P2's half-step chains run inside P4, after `hydro_mid` wrote their source (§1.4.2 [M0-D183]).
+        // With P2, P2's half-step chains run inside P4, after `hydro_mid` wrote their source (§1.4.2 [M0-D183]) — after the
+        // mid pass and `hydro_mid` since [M0-D192].
         if let (Some(gr), true) = (gravity.as_mut(), flow.is_some()) {
             let chain = gr.take_mid();
-            passes[Pass::Hydro as usize].splice(1..1, chain);
+            let at = passes[Pass::Hydro as usize].iter().position(|d| d.label == "hydro_mid").expect("P4's hydro_mid, with P2") + 1;
+            passes[Pass::Hydro as usize].splice(at..at, chain);
         }
         let mut warm = heat.map(|h| heat::Heat::new(device, state, booking, eos, physics, &boxfit, dt.record(), h));
         passes[Pass::Heat as usize] = warm.as_mut().map(|h| std::mem::take(&mut h.dispatches)).unwrap_or_default();

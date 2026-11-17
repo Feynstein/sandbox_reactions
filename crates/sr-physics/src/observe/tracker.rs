@@ -92,6 +92,9 @@ pub struct TrackerConfig {
     pub ladder: [f64; 6],
 }
 
+/// The free neutrons' index in §1.5's order (a block's `species`, an object's `x_c`).
+const X_N: usize = 9;
+
 /// The physics.json temperature of each group's rung, H … Si (§1.6.3's ladder).
 const LADDER_KEYS: [&str; 6] = ["t_h", "t_he", "t_c", "t_ne", "t_o", "t_si"];
 
@@ -157,6 +160,11 @@ pub struct Object {
     pub t_c: f64,
     pub x_c: [f64; 10],
     pub d_c: f64,
+    /// X̄_n: the free neutrons' mass fraction over the member blocks' gas, Σ_b (Σ·X_n)_b / Σ_b m_b — what §1.9.3's white_dwarf
+    /// row reads as its X_n,c (§0.5 [M0-D189], the lead: «Whole object (Recommended)»): one held cell at c can neutronise and
+    /// freeze (σ 644, X_n 0.54 in a 2,941 sb remnant at X̄_n 0.19, M0-D189) and keep a cold, settled remnant from every ending
+    /// row; 0 for a lone sink.
+    pub x_n_mean: f64,
     /// v_r: the mass-weighted radial velocity about c.
     pub v_r: f64,
     /// U (thermal), K (kinetic, gas), P = ∫Π dA, W = ½Σmφ, M_unb.
@@ -431,6 +439,7 @@ impl Object {
             m.insert(k.into(), exact(*x));
         }
         m.insert("kinetic_t".into(), exact(o.kinetic_t));
+        m.insert("x_n_mean".into(), exact(o.x_n_mean));
         m.insert("q_c".into(), o.q_c.iter().map(|x| exact(*x)).collect());
         for (k, xs) in o.lists() {
             m.insert(k.into(), xs.iter().map(|x| exact(*x)).collect());
@@ -475,6 +484,9 @@ impl Object {
                 *x = read_exact(s, "q_c")?;
             }
         }
+        // One written before §0.5 [M0-D189] has no X̄_n: the centre's X_n — the row's old reading — until the next frame
+        // measures it.
+        o.x_n_mean = optional("x_n_mean")?.unwrap_or(o.x_c[X_N]);
         Ok(o)
     }
 }
@@ -744,6 +756,9 @@ fn measure(config: &TrackerConfig, report: &Report, members: Vec<usize>) -> Foun
     // The light credited from outside the object is added by `credit_light` once every object is known.
     let luminosity_own = per_time(sum(&|b| b.radiated));
 
+    // X̄_n over the member blocks' gas (§0.5 [M0-D189]).
+    let x_n_mean = if gas_mass > 0.0 { sum(&|b| b.species[X_N]) / gas_mass } else { 0.0 };
+
     // The dominant burning group's core and the envelope outside twice its radius.
     let dominant = (0..GROUPS.len())
         .filter(|&g| g != GROUP_N && l_group[g] > 0.0)
@@ -782,6 +797,7 @@ fn measure(config: &TrackerConfig, report: &Report, members: Vec<usize>) -> Foun
         t_c: cb.max_t,
         x_c: cb.max_x,
         d_c: cb.cold_ratio,
+        x_n_mean,
         v_r,
         thermal: sum(&|b| b.thermal),
         kinetic: sum(&|b| b.kinetic),
@@ -852,6 +868,26 @@ mod tests {
         assert_eq!((o.id, o.mass, o.gas_mass, o.sink_mass, o.sinks), (1, 900.0, 900.0, 0.0, 0));
         // The max-Σ cell is block (3, 3)'s (13, 13); its centre is (13.5, 13.5).
         assert_eq!((o.centre, o.sigma_c), ([13.5, 13.5], 2.0));
+    }
+
+    #[test]
+    fn the_mean_neutron_fraction_is_the_member_blocks_mass_weighted() {
+        // §0.5 [M0-D189]: c's densest cell neutron-rich, the remnant around it not — X̄_n weighs every member block's gas.
+        let mut r = report(8, 8);
+        rect(&mut r, 2..5, 2..5, 100.0);
+        for b in r.blocks.iter_mut().filter(|b| b.mass > 0.0) {
+            b.species[X_N] = 0.11 * b.mass;
+        }
+        let c = 3 * 8 + 3;
+        r.blocks[c].max_sigma = 644.0;
+        r.blocks[c].max_x[X_N] = 0.535;
+        r.blocks[c].species[X_N] = 0.535 * 100.0;
+        let o = Tracker::new(cfg()).update(&r)[0].clone();
+        assert_eq!(o.x_c[X_N], 0.535, "X_n,c is still the densest cell's");
+        let expected = (8.0 * 0.11 * 100.0 + 0.535 * 100.0) / 900.0;
+        assert!((o.x_n_mean - expected).abs() < 1e-12, "X̄_n {} against {expected}", o.x_n_mean);
+        let mut t = Tracker::new(cfg());
+        assert!(t.update(&report(8, 8)).is_empty(), "no gas, no object");
     }
 
     #[test]
@@ -1231,6 +1267,18 @@ mod tests {
         let mut old = snap;
         old.as_object_mut().unwrap().remove("kinetic_t");
         assert_eq!(Object::restore(&old), Ok(Object { kinetic_t: 0.0, ..o }), "no K_t: none until the next frame measures it");
+    }
+
+    #[test]
+    fn the_snapshot_carries_the_mean_neutron_fraction_and_reads_one_without_it_as_the_centre_s() {
+        // §0.5 [M0-D189]: X̄_n round-trips; a snapshot written before it reads X_n,c, the row's old reading.
+        let mut o = Object { id: 1, mass: 2_940.8, gas_mass: 2_940.8, x_n_mean: 0.19, ..Object::default() };
+        o.x_c[X_N] = 0.535;
+        let snap = o.snapshot();
+        assert_eq!(Object::restore(&snap), Ok(o.clone()), "round trip");
+        let mut old = snap;
+        old.as_object_mut().unwrap().remove("x_n_mean");
+        assert_eq!(Object::restore(&old), Ok(Object { x_n_mean: 0.535, ..o }), "no X̄_n: the centre's until the next frame");
     }
 
     #[test]

@@ -1,0 +1,23 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 7.35s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test conservation::the_grader_is_graded_on_hand_made_records ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 535 filtered out; finished in 0.00s
+
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=23762 sim_time=193.223719 until=met
+supernova: 23762 steps, 47 checkpoints, t 0.02 → 191.97; edge "leave"; invariants at the end: mass 9.810394e3 (start 9.810396e3), momentum (-8.6306e-2, +3.7214e-2) (start (-2.5812e-6, -2.0671e-6)), energy -4.328739e5 (start -5.661295e5); |W| 7.5003e6
+supernova: momentum invariant drift 5.025e-6 of the running peak Σm|u| at worst (step 20514); over the instant Σm|u| 2.255e-5 (step 5505, not graded); at the end Δp (-8.6304e-2, +3.7216e-2) of Σm|u| 1.0035e4; bound 1e-5
+supernova: the whole life's momentum terms — steps 1..23506, Δinvariant (-8.6304e-2, +3.7216e-2): grid (-7.7415e2, -1.3068e3) · sinks (+0.0000e0, +0.0000e0) · escaped (-2.6541e1, -5.0773e1) · held (+8.0061e2, +1.3577e3)
+supernova: |Δp| along the life — 513: 4.33e-4 (Σm|u| 2.57e4) · 2001: 5.12e-3 (Σm|u| 1.21e4) · 3505: 1.12e-2 (Σm|u| 2.77e3) · 5009: 2.65e-2 (Σm|u| 1.24e3) · 6513: 4.18e-2 (Σm|u| 2.00e3) · 8001: 5.66e-2 (Σm|u| 3.25e3) · 9505: 7.11e-2 (Σm|u| 5.43e3) · 11009: 8.41e-2 (Σm|u| 1.07e4) · 12513: 9.39e-2 (Σm|u| 1.39e4) · 14001: 1.04e-1 (Σm|u| 1.83e4) · 15505: 1.00e-1 (Σm|u| 2.01e4) · 17009: 8.18e-2 (Σm|u| 1.83e4) · 18513: 7.45e-2 (Σm|u| 1.40e4) · 20002: 1.10e-1 (Σm|u| 1.28e4) · 21506: 1.09e-1 (Σm|u| 1.28e4) · 23010: 9.38e-2 (Σm|u| 1.11e4)
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 535 filtered out; finished in 160.78s
+

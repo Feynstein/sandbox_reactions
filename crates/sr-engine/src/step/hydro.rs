@@ -22,9 +22,12 @@
 //! from the F P5 left in `side.flux` at the end of the last step, with physics.json's κ₀, c_sb, κ_dust and T_dust in the
 //! same uniform.
 //!
-//! The half step (§1.4.2 [M0-D183]): with P2, a fourth dispatch comes first — `hydro_mid` writes Σ_src at the predictor's
-//! half step into P2's field (its plane 10, [`super::grav::FIELD_PLANES`]), which P2's half-step chains solve
-//! ([`super::grav::Gravity::take_mid`], joined after it by step/mod.rs) and the update's kick multiplies.
+//! The half step (§1.4.2 [M0-D183], [M0-D192]): with P2, two dispatches come first — `hydro_update` under the mid pass's
+//! own uniform (`edge_mid`: the edge words with `mid` 1 and `radiation` 0), which writes the midpoint of the step's own
+//! mass update, ½(Σⁿ + Σⁿ⁺¹), into the next state's Σ plane and takes nothing else, then `hydro_mid`, which writes it, 0
+//! below Σ_vac, into P2's field (its plane 10, [`super::grav::FIELD_PLANES`]) — the source P2's half-step chains solve
+//! ([`super::grav::Gravity::take_mid`], joined after `hydro_mid` by step/mod.rs) and the update's kick multiplies. One more
+//! flux pass a step: the midpoint of the mass HLL moves is what makes the faces' work move W exactly (hydro.wgsl's header).
 //!
 //! The hold (§2.3.4 [M0-TG2]; M0-D71c): the three dispatches read the mask the last P8 wrote (`State::held`) as a
 //! sampled texture, outside the storage limit; `hydro_commit` books what a held cell was spared into the booking's `held`
@@ -53,6 +56,8 @@ const _: () = {
 pub struct Hydro {
     pub(super) dispatches: Vec<Dispatch>,
     edge: wgpu::Buffer,
+    /// The mid pass's edge uniform (§1.4.2 [M0-D192]): the same edge mode, `mid` 1, `radiation` 0.
+    edge_mid: wgpu::Buffer,
     sources: [u32; 7],
 }
 
@@ -86,6 +91,7 @@ impl Hydro {
         ];
         let usage = wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST;
         let mode = init_buffer(device, "hydro.edge", usage, &words(edge, &sources));
+        let mode_mid = init_buffer(device, "hydro.edge_mid", usage, &mid_words(edge, &sources));
         let (no_gravity, no_flux);
         let g = match gravity {
             Some(g) => g,
@@ -101,14 +107,15 @@ impl Hydro {
                 &no_flux
             }
         };
-        let dispatches = dispatches(device, state, booking, eos, boxfit, dt_record, g, flux, &mode, gravity.is_some());
-        Hydro { dispatches, edge: mode, sources }
+        let dispatches = dispatches(device, state, booking, eos, boxfit, dt_record, g, flux, [&mode, &mode_mid], gravity.is_some());
+        Hydro { dispatches, edge: mode, edge_mid: mode_mid, sources }
     }
 
     /// Sets the edge mode for every step submitted after this call (`queue.write_buffer`: ahead of the next submission).
     pub fn set_edge_mode(&self, queue: &wgpu::Queue, edge: EdgeMode) {
-        let bytes: Vec<u8> = words(edge, &self.sources).iter().flat_map(|w| w.to_le_bytes()).collect();
-        queue.write_buffer(&self.edge, 0, &bytes);
+        let bytes = |w: [u32; 8]| w.iter().flat_map(|w| w.to_le_bytes()).collect::<Vec<u8>>();
+        queue.write_buffer(&self.edge, 0, &bytes(words(edge, &self.sources)));
+        queue.write_buffer(&self.edge_mid, 0, &bytes(mid_words(edge, &self.sources)));
     }
 }
 
@@ -118,6 +125,14 @@ fn words(edge: EdgeMode, sources: &[u32; 7]) -> [u32; 8] {
     let mut w = [0; 8];
     w[0] = u32::from(edge == EdgeMode::Leave);
     w[1..].copy_from_slice(sources);
+    w
+}
+
+/// The mid pass's words (§1.4.2 [M0-D192]): [`words`] with `radiation` 0 (no force, F untouched) and `mid` 1.
+fn mid_words(edge: EdgeMode, sources: &[u32; 7]) -> [u32; 8] {
+    let mut w = words(edge, sources);
+    w[2] = 0;
+    w[3] = 1;
     w
 }
 
@@ -131,7 +146,7 @@ fn dispatches(
     dt_record: &wgpu::Buffer,
     gravity: &wgpu::Buffer,
     flux: &wgpu::Buffer,
-    edge: &wgpu::Buffer,
+    [edge, edge_mid]: [&wgpu::Buffer; 2],
     half_step: bool,
 ) -> Vec<Dispatch> {
     let module = device.create_shader_module(wgpu::ShaderModuleDescriptor {
@@ -149,24 +164,27 @@ fn dispatches(
     });
 
     let update = compute_pipeline(device, &module, "hydro_update");
-    let update_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
-        label: Some("P4 hydro_update"),
-        layout: &update.get_bind_group_layout(0),
-        entries: &[
-            entry(0, state.dims()),
-            entry(1, state.group(0)),
-            entry(2, state.group(1)),
-            entry(3, state.group(2)),
-            entry(4, &next[0]),
-            entry(5, &next[1]),
-            entry(6, flux),
-            entry(7, boxfit.active()),
-            entry(8, dt_record),
-            entry(13, edge),
-            entry(14, gravity),
-            held(15, state),
-        ],
-    });
+    let update_group_with = |label: &str, edge: &wgpu::Buffer| {
+        device.create_bind_group(&wgpu::BindGroupDescriptor {
+            label: Some(label),
+            layout: &update.get_bind_group_layout(0),
+            entries: &[
+                entry(0, state.dims()),
+                entry(1, state.group(0)),
+                entry(2, state.group(1)),
+                entry(3, state.group(2)),
+                entry(4, &next[0]),
+                entry(5, &next[1]),
+                entry(6, flux),
+                entry(7, boxfit.active()),
+                entry(8, dt_record),
+                entry(13, edge),
+                entry(14, gravity),
+                held(15, state),
+            ],
+        })
+    };
+    let update_group = update_group_with("P4 hydro_update", edge);
     let eos_group = eos.bind_group(device, &update);
 
     let book = BOOK_GROUPS.iter().position(|g| TERMS[g.terms.start].writer == Pass::Hydro).expect("a booking buffer written by P4");
@@ -223,28 +241,25 @@ fn dispatches(
     // The sticky wall reads Σ_vac (§2.3.4 [M0-D172]): the parameters alone, no cold table.
     let commit_eos = eos.params_bind_group(device, &commit);
     let tiles = || Size::Indirect(boxfit.args().clone(), ARGS_TILES);
-    // Σ_src at the half step into P2's field (§1.4.2 [M0-D183]), with P2 only.
+    // Σ_src at the half step into P2's field (§1.4.2 [M0-D183], [M0-D192]), with P2 only: the mid pass — the update's own
+    // fluxes, ½(Σⁿ + Σⁿ⁺¹) into the next state's Σ plane —, then `hydro_mid` from that plane.
     let mid = half_step.then(|| {
+        let pass = Dispatch {
+            label: "hydro_update_mid",
+            pipeline: update.clone(),
+            bind_groups: vec![update_group_with("P4 hydro_update (mid pass)", edge_mid), eos_group.clone()],
+            size: tiles(),
+        };
         let pipeline = compute_pipeline(device, &module, "hydro_mid");
         let group = device.create_bind_group(&wgpu::BindGroupDescriptor {
             label: Some("P4 hydro_mid"),
             layout: &pipeline.get_bind_group_layout(0),
-            entries: &[
-                entry(0, state.dims()),
-                entry(1, state.group(0)),
-                entry(2, state.group(1)),
-                entry(3, state.group(2)),
-                entry(7, boxfit.active()),
-                entry(8, dt_record),
-                entry(13, edge),
-                held(15, state),
-                entry(17, gravity),
-            ],
+            entries: &[entry(0, state.dims()), entry(4, &next[0]), entry(7, boxfit.active()), entry(17, gravity)],
         });
-        let eos_group = eos.bind_group(device, &pipeline);
-        Dispatch { label: "hydro_mid", pipeline, bind_groups: vec![group, eos_group], size: tiles() }
+        let eos_group = eos.params_bind_group(device, &pipeline);
+        [pass, Dispatch { label: "hydro_mid", pipeline, bind_groups: vec![group, eos_group], size: tiles() }]
     });
-    mid.into_iter().chain([
+    mid.into_iter().flatten().chain([
         Dispatch { label: "hydro_update", pipeline: update, bind_groups: vec![update_group, eos_group], size: tiles() },
         Dispatch {
             label: "hydro_edges",

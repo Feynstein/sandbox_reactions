@@ -46,5 +46,21 @@
   {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 300, "y": 138, "radius": 40}},
   {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 324, "y": 143, "radius": 40}},
   {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 344, "y": 156, "radius": 40}},
-  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 357, "y": 176, "radius": 40}}
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 357, "y": 176, "radius": 40}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 354, "y": 200, "radius": 40}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 350, "y": 221, "radius": 40}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 338, "y": 238, "radius": 40}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 321, "y": 250, "radius": 40}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 300, "y": 254, "radius": 40}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 279, "y": 250, "radius": 40}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 262, "y": 238, "radius": 40}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 250, "y": 221, "radius": 40}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 246, "y": 200, "radius": 40}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 250, "y": 179, "radius": 40}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 262, "y": 162, "radius": 40}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 279, "y": 150, "radius": 40}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 300, "y": 146, "radius": 40}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 321, "y": 150, "radius": 40}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 338, "y": 162, "radius": 40}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "erase", "x": 350, "y": 179, "radius": 40}}
 ]

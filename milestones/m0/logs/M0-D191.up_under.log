@@ -1,0 +1,15 @@
+== 2026-11-17T13:11:27-05:00 endings::a_cloud_at_m_up_over_1_25_ends_a_white_dwarf, RTX 5090, cap 590 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test endings::a_cloud_at_m_up_over_1_25_ends_a_white_dwarf ... up_under sun cloud of 5212.417 sb (m_ign 2636.3, m_up 6515.5, m_bh 13681.1) — expected WhiteDwarf then white_dwarf
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+up_under the drop: step=17 M=5212.390 sb
+SR-HEADLESS DONE steps=50897 sim_time=477.415694 until=met
+up_under the readout at the drop (M 5212.390): Some(Sure(WhiteDwarf)); 50897 steps, exit 0, summary ending [{"age_years":3385534125.0783596,"at_x_h":{"luminosity":29993.97565701802,"radius":28.67889423064052,"sim_time":219.58696786127985,"x_h_c":0.35},"ending":"white_dwarf","id":1,"mass_sb":3015.084936842788,"mass_suns":0.5628528238286132,"predicted_ending":["white_dwarf"],"stage":"white_dwarf","stages":[{"from_step":33,"sim_time":0.4507313510403037,"stage":"cloud"},{"from_step":113,"sim_time":1.3190035223960876,"stage":"collapsing"},{"from_step":305,"sim_time":3.140956641174853,"stage":"main_sequence"},{"from_step":27985,"sim_time":296.4134077029303,"stage":"he_core"},{"from_step":33009,"sim_time":344.8216299423948,"stage":"o_burn"},{"from_step":35425,"sim_time":367.3163860337809,"stage":"si_burn"},{"from_step":36273,"sim_time":374.95690550189465,"stage":"he_shell"},{"from_step":37409,"sim_time":384.8556622928008,"stage":"iron_core"},{"from_step":43089,"sim_time":427.5175475846045,"stage":"main_sequence"},{"from_step":43137,"sim_time":427.825853635557,"stage":"o_burn"},{"from_step":43185,"sim_time":428.13482579309493,"stage":"main_sequence"},{"from_step":43489,"sim_time":430.0302228596993,"stage":"he_core"},{"from_step":43633,"sim_time":430.9096783204004,"stage":"main_sequence"},{"from_step":46689,"sim_time":448.6073613981716,"stage":"o_burn"},{"from_step":46753,"sim_time":448.96167665626854,"stage":"main_sequence"},{"from_step":47009,"sim_time":450.3656309000216,"stage":"o_burn"},{"from_step":47105,"sim_time":450.8982428605668,"stage":"main_sequence"},{"from_step":47841,"sim_time":454.9471071679145,"stage":"o_burn"},{"from_step":47889,"sim_time":455.2054866873659,"stage":"main_sequence"},{"from_step":48945,"sim_time":461.8931566667743,"stage":"iron_core"},{"from_step":48993,"sim_time":462.22533924365416,"stage":"white_dwarf"},{"from_step":49649,"sim_time":466.98777544731274,"stage":"iron_core"},{"from_step":49697,"sim_time":467.34799943258986,"stage":"white_dwarf"}]}]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 535 filtered out; finished in 273.65s
+
+exit 0

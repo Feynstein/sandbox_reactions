@@ -1,0 +1,26 @@
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=23090 sim_time=190.169346 until=met
+supernova: 23090 steps, 46 checkpoints, t 0.02 → 189.77; edge "leave"; invariants at the end: mass 9.810393e3 (start 9.810396e3), momentum (-1.0651e-1, -1.1342e-1) (start (-4.5642e-6, +8.5875e-6)), energy -5.647005e5 (start -5.661425e5); |W| 7.3445e6
+supernova: energy invariant drift 5.719e-3 |W| per τ_dyn at worst, bound 1e-3
+supernova: 5 of 46 windows over the bound; the five worst — 20513..21010: 5.72e-3 · 21010..21506: 4.17e-3 · 18513..19009: 3.55e-3 · 19009..19505: 3.18e-3 · 22002..22514: 2.02e-3
+supernova: the worst window — steps 20513..21010, Δinvariant +2.0063e3: floor_added -1.2034e7 · nuclear_released +1.1464e7 · radiated +2.7388e6 · potential -2.1729e6 · thermal -2.8765e5 · cold +2.1036e5 · kinetic +4.6435e4 · neutrino_lost +2.8437e4 · escaped +8.3505e3 · neutrino_deposited -1.3812e1 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
+supernova: the whole life — steps 1..23010, Δinvariant +1.4421e3: radiated +4.0400e7 · floor_added -2.4054e7 · nuclear_released -1.2519e7 · potential -6.0205e6 · cold +1.8510e6 · neutrino_lost +4.6442e5 · thermal -4.4993e5 · escaped +2.8124e5 · kinetic +4.7655e4 · neutrino_deposited -1.4394e1 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
+
+thread 'conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons' (1843859) panicked at crates/sr-engine/tests/gpu/conservation.rs:438:5:
+supernova: energy invariant drift 5.719e-3 |W| per τ_dyn, steps 20513..21010, over 1e-3 (UNVERIFIED: a D for a conservative gravity, §0.4)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 535 filtered out; finished in 143.67s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+exit 101

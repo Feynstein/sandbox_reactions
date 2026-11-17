@@ -1,0 +1,37 @@
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=4 sim_time=145.125854 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=8 sim_time=174.525042 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=8 sim_time=183.361845 until=none
+step     dΣE          dW       dBooked   dInv_true    gap(Hancock-φ̄)   resid
+ 20001    -7114.34    10194.71 -2046767.94 -2043687.57         -63.61 -2043623.96
+ 20002    -7192.39    10205.83    -3013.41       0.04         -65.86     65.90
+ 20003    -7132.76    10093.75    -2961.08      -0.08         -66.08     65.99
+ 20004    -6949.35     9862.92    -2913.52       0.05         -64.60     64.65
+ 20005    -6667.93     9537.93    -2869.97       0.03         -62.01     62.04
+ 20006    -6325.04     9146.13    -2821.10       0.00         -58.79     58.79
+ 20007    -5943.27     8708.31    -2765.09      -0.06         -55.25     55.20
+ 20008    -5547.79     8246.66    -2698.89      -0.02         -51.68     51.66
+total dInv -2043687.6  gap -487.9  resid -2043199.7
+step     dΣE          dW       dBooked   dInv_true    gap(Hancock-φ̄)   resid
+ 21761      726.81     -198.18    55456.08   55984.72           2.68  55982.04
+ 21762     1068.67     -450.19     -618.43       0.05           2.04     -1.99
+ 21763     1324.52     -689.44     -635.12      -0.04           3.43     -3.46
+ 21764   -90526.98    89888.57      638.45       0.04       -6203.89   6203.93
+ 21765    -9033.14     7786.68     1246.57       0.12         -98.01     98.13
+ 21766    -8767.19     7278.91     1488.35       0.08         -42.03     42.11
+ 21767    -6690.80     5737.63      953.19       0.02         -21.68     21.70
+ 21768    -3775.04     4204.37     -429.45      -0.12         -11.56     11.44
+total dInv 55984.9  gap -6369.0  resid 62353.9
+  File "/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/b0c5cd4a-4ac3-4a8f-9f4f-4d73584003e3/scratchpad/gap.py", line 36, in <module>
+    prev = full(paths[0]); pb, _ = booked(paths[0])
+                                   ^^^^^^^^^^^^^^^^
+  File "/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/b0c5cd4a-4ac3-4a8f-9f4f-4d73584003e3/scratchpad/gap.py", line 34, in booked
+    e = json.load(open(path.replace(".bin", ".observers.json")))["ledger"]["last"]["energy"]
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'build/m0-d192/dumps/noF/s_15500.observers.json'
+ 15502      205.91     -205.90        0.00       0.01          -0.48      0.49
+ 15503      220.38     -220.39        0.00      -0.01          -0.61      0.60
+ 15504      221.40     -221.40        0.00      -0.00          -0.75      0.75
+total dInv -127941.1  gap -2.2  resid -127938.9

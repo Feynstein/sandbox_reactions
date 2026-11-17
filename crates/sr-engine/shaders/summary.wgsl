@@ -31,7 +31,8 @@ struct ActiveBox {
     fits: u32,
 }
 
-// summary.rs: whether `phi` is the step's φ (0: a placeholder, φ read as 0).
+// summary.rs: whether `phi` is the step's φ (0: a placeholder, φ read as 0; 1: φⁿ; 2: φⁿ and `field`'s plane 7, φ_mid, so
+// W reads φⁿ⁺¹ = 2φ_mid − φⁿ).
 struct SummaryParams {
     has_phi: u32,
     _pad0: u32,
@@ -55,6 +56,8 @@ struct SummaryParams {
 @group(0) @binding(10) var<storage, read> book_nuheat: array<f32>;
 // step/sinks.rs's state buffer, as words: the count first, the sinks from word 8, 8 words each (x, y first).
 @group(0) @binding(11) var<storage, read> sinks: array<u32>;
+// P2's field (step/grav.rs `FIELD_PLANES`): plane 7 is φ_mid, the half step's potential; read when `has_phi` is 2.
+@group(0) @binding(12) var<storage, read> field: array<f32>;
 
 const BLOCK: u32 = 4u;
 const FIELDS: u32 = 48u;
@@ -70,6 +73,7 @@ const F_COLD: u32 = 7u;
 const F_PRESSURE: u32 = 8u;
 const F_SPECIES: u32 = 9u;
 const F_PHI_M: u32 = 19u;
+const PLANE_PHI_MID: u32 = 7u;
 const F_MAX_CELL: u32 = 20u;
 const F_MAX_SIGMA: u32 = 21u;
 const F_MAX_T: u32 = 22u;
@@ -161,14 +165,19 @@ fn summary_cells(@builtin(global_invocation_id) gid: vec3<u32>) {
             let ec = eps_cold(s, comp.y_e, x[ID_N]);
             let eth = hydro[3u * n + cell] / s - ke - ec;
             var phi_v = 0.0;
+            var phi_w = 0.0;
             if (params.has_phi != 0u) {
                 phi_v = phi[cell];
+                phi_w = phi_v;
+            }
+            if (params.has_phi == 2u) {
+                phi_w = 2.0 * field[PLANE_PHI_MID * n + cell] - phi_v;
             }
             kinetic += 0.5 * dot(mom, mom) / s;
             thermal += s * eth;
             cold += s * ec;
             pi_dA += pressure(s, eth, comp.y_e, x[ID_N]);
-            phi_m += s * phi_v;
+            phi_m += s * phi_w;
             if (ke + eth + phi_v > 0.0) {
                 unbound += s;
             }

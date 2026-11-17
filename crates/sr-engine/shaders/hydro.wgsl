@@ -26,10 +26,17 @@
 // Gravity's source (§1.4.2; M0-T36), when the step runs P2 (`edges.gravity`): `face_state`'s Hancock predictor kicks each
 // face state by half a step of the cell's g — velocity by ½Δt·g, energy by the work Σ(u + ¼Δt·g)·g·½Δt, leaving its
 // thermal energy as it was — beside the flux differences; `hydro_update` adds Δt·Σ_src,mid·g_mid to the momentum
-// (§1.4.2 [M0-D183]): `hydro_mid`, P4's first dispatch, writes Σ_src at the cell centre's half step (the predictor's Σ, 0
-// below Σ_vac, a held cell's own Σ) into P2's field (`mid_out`, its plane 10), P2's chains solve φ_mid and g_mid on it
+// (§1.4.2 [M0-D183]): Σ_src,mid is [M0-D192] the midpoint of the step's own mass update, ½(Σⁿ + Σⁿ⁺¹) — P4's first
+// dispatch is `hydro_update` itself under the mid pass's uniform (`edges.mid` 1, `edges.radiation` 0): the same faces and
+// fluxes, bit for bit, the update's Σ only, ½(Σⁿ + Σⁿ⁺¹) written into the next state's Σ plane, nothing else taken
+// (the gravity source, the radiation force and its push skipped) —, then `hydro_mid` writes it, 0 below Σ_vac, into P2's
+// field (`mid_out`, its plane 10) — a held cell's own Σ, a cell left empty 0 —, P2's chains solve φ_mid and g_mid on it
 // (step/grav.rs `Gravity::mid`), and the update multiplies g_mid by that same plane — so the masses that pull are the
-// masses pulled, and the pairs' pulls cancel (M0-D181: Σ_mid·g with g from Σⁿ did not). The energy source is the work the step's mass fluxes do across φ (§0.5
+// masses pulled, and the pairs' pulls cancel (M0-D181: Σ_mid·g with g from Σⁿ did not). φ_mid is then ½(φⁿ + φⁿ⁺¹), and
+// the faces' work below moves E by exactly what the moved mass moves W = ½Σmφ (K symmetric); the predictor's half-step
+// Σ, which it was until M0-D192, is not the midpoint of the mass HLL moves (its own face extrapolations, not HLL's
+// fluxes: 3.8 sb short of it over the Massive's star at step 15,500), and the supernova life lost energy by it — up to
+// 9,963 in one step at the bounce (tasks/M0-D192.md). The energy source is the work the step's mass fluxes do across φ (§0.5
 // [M0-D64], [M0-D68]): a face whose mass flux q joins the cell i to its neighbour j does Δt·q·(φ_i − φ_j), i keeping
 // ½Δt·p_i·(φ_i − φ_j) of it — p the two cells' half-step momenta on that axis — so each cell keeps the Δt·(Σu)·g its own
 // momentum pays for; the rest, the work of the mass HLL's diffusion moves, D = Δt·(q − ½(p_i + p_j))·(φ_i − φ_j), when it
@@ -119,12 +126,13 @@ struct ActiveBox {
 @group(0) @binding(12) var<storage, read_write> escaped: array<f32>;
 
 // The edge mode: `leave` 1, bounce 0; `gravity` 1 when the step runs P2 (`grav` is then its g); `radiation` 1 when it
-// runs P5 (`rad_flux` is then its F); then the radiation force's constants (physics.json, §2.4.2).
+// runs P5 (`rad_flux` is then its F); `mid` 1 in the mid pass's own uniform only ([M0-D192], the header comment); then
+// the radiation force's constants (physics.json, §2.4.2).
 struct Edges {
     leave: u32,
     gravity: u32,
     radiation: u32,
-    _c: u32,
+    mid: u32,
     kappa0: f32,
     c_sb: f32,
     kappa_dust: f32,
@@ -140,7 +148,7 @@ struct Edges {
 // cell — `hydro_commit`'s.
 @group(0) @binding(16) var<storage, read_write> held_book: array<f32>;
 // P2's field as `hydro_mid` writes it (the same buffer as `grav`, never bound both ways in one dispatch): Σ_src at the
-// half step into plane MID_SRC (§1.4.2 [M0-D183]).
+// half step into plane MID_SRC (§1.4.2 [M0-D183], [M0-D192]).
 @group(0) @binding(17) var<storage, read_write> mid_out: array<f32>;
 // [M0-D184] The radiation force's sums over the box (`hydro_push_sum`): the net push N (x, y), the gross S = Σ|s·d|.
 @group(0) @binding(18) var<storage, read_write> push_net: array<f32>;
@@ -1047,7 +1055,13 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
     for (var k = 0u; k < COMPONENTS; k++) {
         u[k] -= dt * ((fxr[k] - fxl[k]) + (fyr[k] - fyl[k]));
     }
-    // Gravity's source at the predictor's half step (§1.4.2 [M0-D183]): Σ_src,mid·g_mid; no work across a face to a held
+    // [M0-D192] The mid pass: the midpoint of the cell's mass update, ½(Σⁿ + Σⁿ⁺¹), into the next state's Σ plane for
+    // `hydro_mid`; nothing else is taken (the update proper runs after P2's half-step chains).
+    if (edges.mid != 0u) {
+        put_next(0u, cell, 0.5 * (hydro[cell] + u[0]));
+        return;
+    }
+    // Gravity's source at the half step (§1.4.2 [M0-D183]): Σ_src,mid·g_mid; no work across a face to a held
     // cell.
     if (edges.gravity != 0u) {
         let k = mid_kick_at(x, y);
@@ -1083,40 +1097,17 @@ fn hydro_update(@builtin(local_invocation_id) lid: vec3<u32>, @builtin(local_inv
     write_next(cell, u);
 }
 
-// Σ at the half step of the cell (x, y) as the Hancock predictor makes it — Σ plus half a step of its faces' mass flux
-// differences (`hancock`'s mid.x in exact arithmetic) — read from the state, g never read.
-fn half_sigma(x: i32, y: i32, half: f32) -> f32 {
-    let c = read_at(x, y);
-    let xl = read_at(x - 1, y);
-    let xr = read_at(x + 1, y);
-    let yl = read_at(x, y - 1);
-    let yr = read_at(x, y + 1);
-    let sx = slope(xl, c, xr);
-    let sy = slope(yl, c, yr);
-    let wxl = bracketed(offset(c, sx, -0.5), c, xl);
-    let wxr = bracketed(offset(c, sx, 0.5), c, xr);
-    let wyl = bracketed(offset(c, sy, -0.5), c, yl);
-    let wyr = bracketed(offset(c, sy, 0.5), c, yr);
-    return c.sigma + half * ((wxl.sigma * wxl.u - wxr.sigma * wxr.u) + (wyl.sigma * wyl.v - wyr.sigma * wyr.v));
-}
-
-// P4's first dispatch when the step runs P2 (§1.4.2 [M0-D183]): Σ_src at the half step over the box into `mid_out`'s plane
-// MID_SRC — the predictor's Σ where it is at least Σ_vac, a held cell's own Σ (it takes no flux), 0 elsewhere and in a cell
-// the update leaves empty — the source P2's half-step chains solve and the mass `hydro_update`'s kick multiplies.
+// P4's second dispatch when the step runs P2, after the mid pass (§1.4.2 [M0-D183], [M0-D192]): Σ_src at the half step
+// over the box into `mid_out`'s plane MID_SRC — the mid pass's ½(Σⁿ + Σⁿ⁺¹) where it is at least Σ_vac, else 0 (a held
+// cell's is its own Σ, the mid pass keeping it; a cell left empty is below Σ_vac) — the source P2's half-step chains solve
+// and the mass `hydro_update`'s kick multiplies.
 @compute @workgroup_size(8, 8)
 fn hydro_mid(@builtin(global_invocation_id) id: vec3<u32>) {
     if (id.x >= abox.w || id.y >= abox.h) {
         return;
     }
-    let x = i32(abox.x0 + id.x);
-    let y = i32(abox.y0 + id.y);
-    let cell = u32(y) * dims.width + u32(x);
-    var s = 0.0;
-    if (held_at(x, y)) {
-        s = hydro[cell];
-    } else if (!left_empty(x, y)) {
-        s = half_sigma(x, y, 0.5 * dt_rec.x);
-    }
+    let cell = (abox.y0 + id.y) * dims.width + abox.x0 + id.x;
+    let s = next_lo[cell];
     mid_out[MID_SRC * dims.cells + cell] = select(0.0, s, s >= eos.sigma_vac);
 }
 
@@ -1165,6 +1156,12 @@ fn hydro_edges(@builtin(global_invocation_id) id: vec3<u32>) {
     let s = select(-dt, dt, (side & 1u) == 1u);
     for (var k = 0u; k < COMPONENTS; k++) {
         escaped[k * slots + slot] += s * f[k];
+    }
+    // [M0-D182] The mass that crosses takes its potential energy with it: W = ½Σmφ rises by δm·|φ| when δm leaves the edge
+    // cell, so the energy booked `escaped` is the gas's plus δm·φ_mid there — the same φ_mid the face work reads, a ghost's
+    // its edge cell's (§2.8, §2.9 [M0-D182]). With P2 off there is no φ and nothing more to book.
+    if (edges.gravity != 0u) {
+        escaped[3u * slots + slot] += s * f[0] * phi_at(x, y);
     }
 }
 

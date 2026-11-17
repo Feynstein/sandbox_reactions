@@ -25,8 +25,11 @@
 //!   interval, as every term booked then is.
 //! - `edit_potential` (§2.9 [M0-D109]) is the potential energy P0's mass changes brought: ½ ΔΣ (φ_before + φ_after) a cell,
 //!   booked by P2 on the edit's step (step/grav.rs) — what W = ½ Σ m φ, sinks included, moves by under an instantaneous
-//!   edit. W itself is ½ m φ with φ from the step's start, so it lags each step's own motion by half (a hot paint expanding
-//!   in its first step: 1 % of its ΔW, M0-D101); that lag is the step's, and no term books it.
+//!   edit. W itself is ½ m φ with φ at the step's end (§2.9 [M0-D193]) when the step runs P2 and P4's half step: the summary
+//!   reads φⁿ⁺¹ = 2φ_mid − φⁿ, φ_mid = K ∗ ½(Σⁿ + Σⁿ⁺¹) being the midpoint's since M0-D192. Before M0-D193 it read P2's φⁿ and
+//!   lagged each step's own motion by half (a hot paint expanding in its first step: 1 % of its ΔW, M0-D101; at the bounce
+//!   up to 5,300 at a record). A step without the half step (P2 alone, a test's synthetic φ) still reads φⁿ, and that lag
+//!   is the step's: no term books it.
 
 use serde_json::{json, Value};
 use sr_physics::observe::tracker::{exact, read_exact, read_list, read_whole};

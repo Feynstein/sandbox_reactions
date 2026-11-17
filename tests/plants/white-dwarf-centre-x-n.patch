@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/stages.rs
++++ b/crates/sr-physics/src/observe/stages.rs
+@@ -230,7 +230,7 @@
+             && c.o.d_c >= 0.5
+             && c.o.l_nuc < 0.01 * c.o.luminosity
+             && c.o.unbound < 0.05 * c.o.mass
+-            && c.o.x_n_mean < 0.5
++            && c.o.x_c[X_N] < 0.5
+             && c.o.mass <= c.m_ch
+             && (settled(c) || degenerate_at_rest(c))
+     }),

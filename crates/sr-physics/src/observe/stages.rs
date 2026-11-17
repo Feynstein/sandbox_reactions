@@ -39,11 +39,18 @@ const BURN_SHARE: f64 = 0.1;
 /// ≥ 0.5, so no white dwarf reaches it; N_Fe's gate holds a collapsed iron centre at 0.25–0.30 (§1.9.3 as §0.5 [M0-D79]
 /// reads it; the lead at M0-R5, «Rate + NS row (Recommended)»; reports/neutronization.md).
 const NEUTRON_Y_E: f64 = 0.35;
+/// An object whose gas is at least this share free neutrons (X̄_n, the tracker's `x_n_mean`) is neutron matter: no white dwarf
+/// (§0.5 [M0-D189]) and, once, a collapsed core whatever its mass against m_ch_sb (§0.5 [M0-D190]; the lead, «Neutron-rich =
+/// collapsed (Recommended)») — the erased Massive's remnant (touch), 3,190 sb at X̄_n 0.50 and Ȳ_e 0.233, two cells wide, is
+/// 1.76 × its own matter's ceiling yet 0.3–1.6 % under the C/O m_ch_sb, so the mass arm never fires.
+const NEUTRON_RICH: f64 = 0.5;
 
 /// Species indices (§1.5) and group indices ([`super::GROUPS`]) the rows read.
 const X_H: usize = 0;
 const X_HE: usize = 1;
 const X_FE: usize = 8;
+/// The tests' handle on X_n; the white_dwarf row reads the object's X̄_n (§0.5 [M0-D189]).
+#[cfg(test)]
 const X_N: usize = 9;
 const G_H: usize = 0;
 const G_HE: usize = 1;
@@ -209,7 +216,8 @@ type Row = (Stage, fn(&Ctx) -> bool);
 /// White dwarf and planetary nebula read an object of at most m_ch_sb: a heavier star's quiet, degenerate centre is its iron
 /// core on the way to collapse, never a remnant whose hold races the collapse — §0.5 [M0-D81]. Core collapse reads one of more
 /// (none refused where the run has no ceiling): a lighter remnant whose cold iron centre overshoots into N_Fe's gate bounces
-/// back to a white dwarf — §0.5 [M0-D92]. White dwarf and planetary nebula are also settled: the Sun-like, re-expanding at
+/// back to a white dwarf — §0.5 [M0-D92]. Core collapse also reads, once, an object half free neutrons (X̄_n ≥ 0.5) whatever
+/// its mass: neutron matter is a collapsed core, which the neutron star row then names — §0.5 [M0-D190]. White dwarf and planetary nebula are also settled: the Sun-like, re-expanding at
 /// +0.2 √(GM/R) after its flash with its hydrogen unburnt, is no remnant — §0.5 [M0-D140]; a white dwarf may instead be at rest
 /// on a wholly degenerate centre — §0.5 [M0-D168].
 /// Iron core and the c/ne/o/si_burn rows read the burning at c itself, not the whole star's — §0.5 [M0-D169].
@@ -224,13 +232,16 @@ const ROWS: [Row; 19] = [
     (Stage::NeutronStar, |c| {
         electron_fraction(&c.o.x_c) <= NEUTRON_Y_E && c.o.d_c >= 0.5 && c.o.sinks == 0 && c.h.last_collapse.is_some()
     }),
-    (Stage::CoreCollapse, |c| c.o.l_group[G_N] < 0.0 && (c.o.mass > c.m_ch || c.m_ch.is_infinite())),
+    (Stage::CoreCollapse, |c| {
+        (c.o.l_group[G_N] < 0.0 && (c.o.mass > c.m_ch || c.m_ch.is_infinite()))
+            || (c.o.x_n_mean >= NEUTRON_RICH && c.h.last_collapse.is_none())
+    }),
     (Stage::WhiteDwarf, |c| {
         c.h.ignited
             && c.o.d_c >= 0.5
             && c.o.l_nuc < 0.01 * c.o.luminosity
             && c.o.unbound < 0.05 * c.o.mass
-            && c.o.x_c[X_N] < 0.5
+            && c.o.x_n_mean < 0.5
             && c.o.mass <= c.m_ch
             && (settled(c) || degenerate_at_rest(c))
     }),
@@ -526,6 +537,7 @@ mod tests {
                 x
             },
             d_c: 0.0,
+            x_n_mean: 0.0,
             v_r: 0.0,
             thermal: 1.0,
             kinetic: 0.0,
@@ -765,6 +777,76 @@ mod tests {
         o.unbound = 0.0;
         o.d_c = 0.49;
         assert_ne!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "not degenerate");
+    }
+
+    #[test]
+    fn the_white_dwarf_row_reads_the_whole_object_s_neutron_fraction() {
+        // §0.5 [M0-D189] (the lead: «Whole object (Recommended)»): HEAD's Sun-like bounce life at step 170,000 (RTX 5090) —
+        // one held cell at c, σ 644.18 and X_n 0.535, in a 2,940.8 sb remnant at X̄_n 0.190, cold, d_c 1.000, at rest.
+        let mut o = degenerate();
+        o.d_c = 1.0;
+        o.x_c[X_N] = 0.535;
+        o.x_n_mean = 0.190;
+        assert_eq!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "one neutron-rich cell at c does not refuse the remnant");
+        o.x_n_mean = 0.4999;
+        assert_eq!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "X̄_n under 0.5 is within");
+        o.x_n_mean = 0.5;
+        assert_ne!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "X̄_n 0.5: neutron matter, no white dwarf");
+        o.x_c[X_N] = 0.0;
+        assert_ne!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "the row reads X̄_n, not the centre's X_n");
+    }
+
+    /// The erased Massive's remnant (touch) at step 64,000 (RTX 5090, M0-D190's w2): 3,197.2 sb, two cells wide, its centre
+    /// Fe 0.488 and n 0.511 (Y_e,c 0.227), d_c 0.970, at rest, N_Fe not converting this frame, X̄_n 0.5018.
+    fn erased_remnant() -> Object {
+        let mut o = degenerate();
+        o.mass = 3_197.2;
+        o.d_c = 0.970;
+        (o.x_c[X_H], o.x_c[X_FE], o.x_c[X_N]) = (0.0, 0.488, 0.511);
+        o.x_n_mean = 0.5018;
+        o
+    }
+
+    #[test]
+    fn an_object_half_neutrons_is_a_collapsed_core_whatever_its_mass() {
+        // §0.5 [M0-D190] (the lead: «Neutron-rich = collapsed (Recommended)»).
+        let mut o = erased_remnant();
+        assert!(o.mass < M_CH && o.l_group[G_N] == 0.0);
+        assert_eq!(stage_of(&o, &ignited()), Stage::CoreCollapse, "X̄_n 0.5018 under m_ch_sb, N_Fe idle: a collapsed core");
+        o.x_n_mean = 0.5;
+        assert_eq!(stage_of(&o, &ignited()), Stage::CoreCollapse, "X̄_n 0.5 is within");
+        o.x_n_mean = 0.4999;
+        assert_eq!(stage_of(&o, &ignited()), Stage::WhiteDwarf, "X̄_n 0.4999: the white dwarf's");
+        // Once: a passed collapse is not re-armed by the arm (the supernova window would reopen) — the neutron star row reads
+        // the centre, and a centre off it falls to the rows below.
+        o.x_n_mean = 0.5018;
+        assert_eq!(stage_of(&o, &collapsed()), Stage::NeutronStar);
+        (o.x_c[X_FE], o.x_c[X_N]) = (1.0, 0.0);
+        assert_ne!(stage_of(&o, &collapsed()), Stage::CoreCollapse, "after a collapse the X̄_n arm reads nothing");
+        assert_ne!(stage_of(&o, &collapsed()), Stage::WhiteDwarf, "X̄_n 0.5018 is still no white dwarf");
+        // The mass arm is unchanged: N_Fe converting under m_ch_sb at X̄_n 0.4999 is no collapse (§0.5 [M0-D92]).
+        let mut o = erased_remnant();
+        o.x_n_mean = 0.4999;
+        o.l_group[G_N] = -7.16e4;
+        assert_ne!(stage_of(&o, &ignited()), Stage::CoreCollapse);
+    }
+
+    #[test]
+    fn the_erased_remnant_collapses_once_then_ends_a_neutron_star() {
+        let mut t = StageTracker::new(M_CH);
+        let mut o = erased_remnant();
+        o.x_n_mean = 0.4988;
+        let mut lit = o.clone();
+        (lit.l_group[G_H], lit.l_nuc) = (10.0, 10.0);
+        assert_eq!(kinds(&t.update(&[lit], 6.0)), vec![EventKind::Ignition], "the star once shone");
+        assert_eq!(shown_after(&mut t, &o, 459.33, 3), Some(Stage::WhiteDwarf), "step 63,500: X̄_n 0.4988");
+        o.x_n_mean = 0.5018;
+        assert_eq!(kinds(&t.update(&[o.clone()], 464.56)), vec![EventKind::CoreCollapse]);
+        assert_eq!(t.stage(1).unwrap().shown, Some(Stage::CoreCollapse));
+        assert_eq!(shown_after(&mut t, &o, 464.6, 3), Some(Stage::NeutronStar), "no ejecta: no supernova, the remnant");
+        o.x_n_mean = 0.4990;
+        assert!(t.update(&[o.clone()], 485.0).is_empty(), "X̄_n back under 0.5 as gas falls in: no event");
+        assert_eq!(shown_after(&mut t, &o, 485.0, 3), Some(Stage::NeutronStar), "the neutron star row reads the centre");
     }
 
     #[test]

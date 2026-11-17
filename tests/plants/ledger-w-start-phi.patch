@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/summary.rs
++++ b/crates/sr-engine/src/summary.rs
+@@ -169,7 +169,7 @@
+             mapped_at_creation: false,
+         });
+         let uniform = wgpu::BufferUsages::UNIFORM;
+-        let params = init_buffer(device, "summary.params", uniform, &[if phi.is_none() { 0 } else if mid.is_some() { 2 } else { 1 }, 0, 0, 0]);
++        let params = init_buffer(device, "summary.params", uniform, &[u32::from(phi.is_some()), 0, 0, 0]);
+         let placeholder = init_buffer(device, "summary.placeholder", wgpu::BufferUsages::STORAGE, &[0; 4]);
+         let group = |pass: Pass| BOOK_GROUPS.iter().position(|g| TERMS[g.terms.start].writer == pass).expect("a booking buffer per accumulator pass");
+         let book = |pass: Pass| booking.group(group(pass));

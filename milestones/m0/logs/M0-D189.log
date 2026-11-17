@@ -1,0 +1,245 @@
+M0-D189 log — linux-pc, RTX 5090, started 2026-11-17T08:58:43-05:00
+dest=/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/5e3266e7-fadc-40c7-8493-1f1159a9c50d/scratchpad/pre184 · files=16434 · size=287M · linked=none · excluded=13
+=== GO ===
+    Finished `release` profile [optimized] target(s) in 0.11s
+   Compiling sr-app v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/5e3266e7-fadc-40c7-8493-1f1159a9c50d/scratchpad/pre184/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 24.95s
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=4000 sim_time=47.416938 until=none
+wall 27.16 s
+2026-11-17T09:00:24-05:00 split A: head vs pre184, preset:sun bounce, 50000 steps, dumps every 5000
+== build/m0-d189/a_head
+   step        t          stage      cx      cy    comx    comy   X_H,c  X_He,c     T_c   sig_c         L     L_nuc        px        py     Sm|u|
+== build/m0-d189/a_head
+   step        t          stage      cx      cy    comx    comy   X_H,c  X_He,c     T_c   sig_c         L     L_nuc        px        py     Sm|u|
+   5000    58.60  main_sequence  300.50  199.50  299.50  199.50  0.7199  0.2632   34.31    9.59    1664.3    1335.5 -1.72e-02 -1.54e-02  1.50e+02
+  10000   113.99  main_sequence  299.50  199.50  299.50  199.50  0.7024  0.2807   35.75    9.87    1504.2    1538.7 -3.12e-02 -1.69e-02  1.43e+02
+  15000   169.57  main_sequence  299.50  199.50  299.50  199.50  0.6824  0.3007   37.13    9.69    1580.4    1705.0 -5.08e-02 -1.97e-02  1.21e+02
+  20000   225.59  main_sequence  300.50  199.50  299.50  199.50  0.6605  0.3226   38.27    9.58    1765.9    1830.6 -6.83e-02 -2.03e-02  1.11e+02
+  25000   282.03  main_sequence  299.50  199.50  299.50  199.50  0.6379  0.3452   39.32    9.55    1888.0    1924.1 -1.68e-02  3.76e-02  1.05e+02
+  30000   338.80  main_sequence  300.50  200.50  299.50  199.50  0.6134  0.3697   40.53    9.59    2007.5    2033.5  7.23e-02  1.57e-01  1.03e+02
+  35000   395.83  main_sequence  299.50  200.50  299.50  199.50  0.5877  0.3954   41.55    9.71    2143.0    2163.4  1.61e-01  2.67e-01  1.05e+02
+  40000   453.08  main_sequence  299.50  200.50  299.50  199.51  0.5616  0.4215   42.82    9.87    2266.0    2281.3  2.56e-01  3.77e-01  1.07e+02
+  45000   510.50  main_sequence  300.50  200.50  299.51  199.52  0.5346  0.4485   43.89   10.11    2412.3    2422.0  3.49e-01  4.69e-01  1.10e+02
+  50000   568.08  main_sequence  300.50  200.50  299.51  199.53  0.5068  0.4763   45.06   10.41    2576.3    2580.0  4.35e-01  5.55e-01  1.11e+02
+== build/m0-d189/a_pre
+   step        t          stage      cx      cy    comx    comy   X_H,c  X_He,c     T_c   sig_c         L     L_nuc        px        py     Sm|u|
+   5000    58.60  main_sequence  300.50  200.50  299.50  199.50  0.7199  0.2632   34.32    9.59    1663.0    1336.3 -4.56e-03 -3.20e-03  1.50e+02
+  10000   113.99  main_sequence  299.50  199.50  299.50  199.50  0.7024  0.2807   35.74    9.87    1506.0    1537.4 -1.71e-02 -4.20e-03  1.43e+02
+  15000   169.57  main_sequence  299.50  199.50  299.50  199.50  0.6824  0.3007   37.13    9.68    1579.7    1704.5 -3.36e-02 -6.20e-03  1.21e+02
+  20000   225.58  main_sequence  299.50  199.50  299.50  199.50  0.6606  0.3225   38.30    9.58    1763.6    1825.3 -4.91e-02 -1.06e-02  1.11e+02
+  25000   282.02  main_sequence  300.50  199.50  299.50  199.50  0.6376  0.3455   39.40    9.54    1885.9    1925.3  5.45e-03  4.65e-02  1.05e+02
+  30000   338.79  main_sequence  300.50  200.50  299.50  199.50  0.6131  0.3700   40.44    9.61    2010.2    2026.0  9.27e-02  1.65e-01  1.03e+02
+  35000   395.81  main_sequence  300.50  200.50  299.50  199.51  0.5878  0.3953   41.65    9.69    2141.3    2165.2  1.80e-01  2.87e-01  1.04e+02
+  40000   453.08  main_sequence  300.50  200.50  299.51  199.51  0.5606  0.4225   42.95    9.86    2270.1    2281.0  2.61e-01  3.98e-01  1.07e+02
+  45000   510.52  main_sequence  300.50  200.50  299.51  199.52  0.5326  0.4505   44.07   10.11    2412.0    2426.5  3.34e-01  5.01e-01  1.10e+02
+  50000   568.15  main_sequence  300.50  200.50  299.52  199.54  0.5042  0.4789   45.29   10.37    2577.4    2579.3  3.87e-01  5.97e-01  1.10e+02
+2026-11-17T09:05:08-05:00 split B: continue 50000 -> 110000, dumps every 5000
+== build/m0-d189/b_head
+   step        t          stage      cx      cy    comx    comy   X_H,c  X_He,c     T_c   sig_c         L     L_nuc        px        py     Sm|u|
+  55000   625.76  main_sequence  300.50  200.50  299.53  199.55  0.4787  0.5044   46.32   10.75    2743.8    2731.8  5.03e-01  6.37e-01  1.12e+02
+  60000   683.50  main_sequence  299.50  200.50  299.54  199.57  0.4501  0.5330   47.79   11.08    2938.5    2927.1  5.69e-01  6.42e-01  1.26e+02
+  65000   741.19  main_sequence  300.50  199.50  299.56  199.58  0.4177  0.5654   49.00   11.60    3141.8    3125.4  6.08e-01  6.05e-01  1.35e+02
+  70000   798.72  main_sequence  299.50  200.50  299.58  199.60  0.3994  0.5837   49.17   12.21    3391.5    3354.3  4.70e-01  5.41e-01  1.51e+02
+  75000   856.03  main_sequence  299.50  200.50  299.60  199.63  0.3935  0.5896   48.88   12.79    3658.9    3624.0  2.25e-01  4.78e-01  1.64e+02
+  80000   913.11  main_sequence  300.50  200.50  299.63  199.66  0.3644  0.6187   51.73   13.34    3956.7    3929.4  1.45e-02  2.94e-01  1.72e+02
+  85000   969.96  main_sequence  300.50  200.50  299.65  199.69  0.3394  0.6437   52.80   14.18    4306.3    4267.7 -1.64e-01 -6.06e-04  1.85e+02
+  90000  1026.57  main_sequence  300.50  200.50  299.68  199.73  0.3190  0.6641   54.39   14.94    4712.8    4662.1 -3.46e-01 -3.80e-01  2.00e+02
+  95000  1082.90  main_sequence  300.50  200.50  299.70  199.75  0.2938  0.6893   56.54   15.85    5190.5    5127.8 -5.70e-01 -6.98e-01  2.10e+02
+ 100000  1138.97  main_sequence  300.50  200.50  299.72  199.80  0.2648  0.7183   59.01   16.98    5751.4    5664.3 -7.86e-01 -9.45e-01  2.39e+02
+ 105000  1194.66  main_sequence  300.50  200.50  299.75  199.87  0.2320  0.7511   62.14   18.38    6421.3    6314.7 -1.05e+00 -1.32e+00  2.73e+02
+ 110000  1249.81  main_sequence  300.50  200.50  299.82  199.93  0.2046  0.7785   64.69   20.28    7247.9    7100.1 -1.18e+00 -1.59e+00  3.38e+02
+== build/m0-d189/b_pre
+   step        t          stage      cx      cy    comx    comy   X_H,c  X_He,c     T_c   sig_c         L     L_nuc        px        py     Sm|u|
+  55000   625.89  main_sequence  300.50  200.50  299.53  199.55  0.4754  0.5077   46.83   10.68    2742.6    2748.6  4.51e-01  7.00e-01  1.15e+02
+  60000   683.69  main_sequence  300.50  200.50  299.54  199.57  0.4485  0.5346   48.07   11.08    2943.8    2927.3  5.25e-01  7.31e-01  1.20e+02
+  65000   741.49  main_sequence  299.50  200.50  299.56  199.58  0.4126  0.5705   49.95   11.54    3145.8    3129.1  5.91e-01  7.27e-01  1.30e+02
+  70000   799.17  main_sequence  299.50  200.50  299.58  199.60  0.3842  0.5989   51.20   12.11    3393.2    3359.7  4.86e-01  7.54e-01  1.41e+02
+  75000   856.53  main_sequence  299.50  200.50  299.59  199.61  0.3684  0.6147   51.25   12.82    3675.6    3618.6  3.55e-01  7.56e-01  1.76e+02
+  80000   913.53  main_sequence  299.50  200.50  299.59  199.63  0.3626  0.6205   50.56   13.52    3979.5    3936.7  2.31e-01  8.34e-01  1.74e+02
+  85000   970.16  main_sequence  299.50  200.50  299.61  199.64  0.3615  0.6216   51.04   13.94    4309.9    4284.4  1.00e-01  9.43e-01  1.89e+02
+  90000  1026.63  main_sequence  300.50  200.50  299.64  199.69  0.3347  0.6484   53.03   14.84    4738.2    4656.7 -4.88e-02  1.17e+00  2.19e+02
+  95000  1082.88  main_sequence  300.50  200.50  299.70  199.77  0.2973  0.6858   55.96   15.86    5196.0    5139.7 -3.48e-02  1.26e+00  2.30e+02
+ 100000  1138.95  main_sequence  300.50  200.50  299.78  199.86  0.2611  0.7220   58.83   17.13    5751.8    5664.1 -2.03e-01  1.17e+00  2.94e+02
+ 105000  1194.72  main_sequence  300.50  200.50  299.88  199.95  0.2309  0.7522   62.07   18.48    6375.4    6351.6 -4.36e-01  8.86e-01  2.99e+02
+ 110000  1250.09  main_sequence  300.50  200.50  299.96  200.01  0.1963  0.7868   65.65   20.33    7228.8    7085.7 -6.30e-01  7.14e-01  2.67e+02
+2026-11-17T09:08:32-05:00 split C: continue 110000 -> 175000 (until ending), dumps every 2500
+== build/m0-d189/c_head
+   step        t          stage      cx      cy    comx    comy   X_H,c  X_He,c     T_c   sig_c         L     L_nuc        px        py     Sm|u|
+ 112500  1277.12  main_sequence  300.50  200.50  299.89  199.95  0.1857  0.7974   67.14   21.35    7736.7    7580.0 -1.23e+00 -1.66e+00  3.79e+02
+ 115000  1304.27  main_sequence  300.50  200.50  299.93  199.97  0.1696  0.8135   69.42   22.45    8266.8    8089.6 -1.42e+00 -1.78e+00  3.53e+02
+ 117500  1331.23  main_sequence  300.50  200.50  299.96  199.98  0.1522  0.8309   71.91   23.82    8880.5    8664.5 -1.72e+00 -1.93e+00  3.34e+02
+ 120000  1357.93  main_sequence  300.50  200.50  299.97  199.98  0.1362  0.8468   74.46   25.38    9574.2    9326.2 -1.90e+00 -2.10e+00  3.31e+02
+ 122500  1384.33  main_sequence  300.50  200.50  299.98  199.98  0.1201  0.8629   77.33   27.12   10349.8   10074.3 -2.07e+00 -2.24e+00  3.39e+02
+ 125000  1410.42  main_sequence  300.50  200.50  299.98  199.98  0.1054  0.8769   80.32   29.04   11238.7   10924.8 -2.17e+00 -2.32e+00  3.54e+02
+ 127500  1436.16  main_sequence  300.50  200.50  299.98  199.98  0.0905  0.8879   83.24   31.25   12268.0   11916.0 -2.21e+00 -2.51e+00  3.86e+02
+ 130000  1461.54  main_sequence  300.50  200.50  299.98  199.98  0.0770  0.8759   87.28   33.66   13506.1   13155.4 -2.16e+00 -2.73e+00  4.26e+02
+ 132500  1486.56  main_sequence  300.50  200.50  299.98  199.98  0.0646  0.6700   93.14   35.80   15074.4   14934.3 -2.15e+00 -2.67e+00  4.74e+02
+ 135000  1511.44        he_core  300.50  200.50  299.98  199.98  0.0490  0.1570  102.08   38.59   17189.4   17040.4 -2.05e+00 -2.53e+00  5.59e+02
+ 137500  1536.15        he_core  300.50  200.50  299.97  199.98  0.0357  0.0608  106.12   41.46   19823.2   19921.8 -2.22e+00 -2.46e+00  7.12e+02
+ 140000  1560.69        he_core  300.50  200.50  299.98  199.97  0.0246  0.0114  110.88   45.32   22672.0   22372.2 -1.51e+00 -1.62e+00  8.35e+02
+ 142500  1584.72        he_core  300.50  200.50  300.00  199.97  0.0146  0.0016  116.49   49.56   26238.2   26067.9 -8.76e-01 -2.58e+00  9.77e+02
+ 145000  1608.15  main_sequence  300.50  200.50  299.99  199.97  0.0088  0.0009  121.37   53.82   31100.1   31047.8 -3.18e+00 -2.08e+00  1.19e+03
+ 147500  1631.21         o_burn  300.50  200.50  299.96  199.93  0.0061  0.0016  123.97   59.72   37732.6   37084.7 -3.74e+00 -1.93e+00  1.53e+03
+ 150000  1653.66         o_burn  300.50  200.50  299.94  200.00  0.0031  0.0010  133.82   72.10   48642.1   46659.4 -4.30e-01  7.57e+00  1.90e+03
+ 152500  1675.28      iron_core  300.50  200.50  299.97  200.04  0.0001  0.0000  165.88   89.10   57874.6   53879.1  2.20e+00 -1.13e+01  1.96e+03
+ 155000  1695.86      iron_core  300.50  200.50  300.00  199.99  0.0001  0.0000  173.22   98.39   96674.1   91210.2 -1.93e-02 -1.84e+01  2.06e+03
+ 157500  1715.55      iron_core  300.50  200.50  299.94  199.88  0.0001  0.0000  209.02  123.32  158716.7  171913.4 -1.06e+01 -2.21e+01  2.52e+03
+ 160000  1733.28        he_core  300.50  200.50  299.85  199.87  0.0663  0.0017  165.21  179.53  233136.0  156480.0 -1.37e+01 -1.75e+01  4.62e+03
+ 162500  1748.52  main_sequence  300.50  200.50  299.81  199.88  0.0490  0.0043  133.12  244.60  301248.5  108416.1 -1.23e+01 -3.92e+00  6.38e+03
+ 165000  1763.27  main_sequence  300.50  200.50  299.80  199.89  0.0519  0.0080  117.28  322.12  409067.7   95922.5 -6.19e+00  6.20e+00  8.09e+03
+ 167500  1777.39  main_sequence  300.50  200.50  299.66  199.93  0.0467  0.0067    0.25  644.18   59173.7    7212.6  2.87e+02 -2.92e+03  4.00e+04
+ 170000  1792.48  main_sequence  300.50  200.50  301.13  200.68  0.0467  0.0067    0.25  644.18   10561.3       5.5  1.67e+03  1.41e+03  2.97e+04
+ 172500  1807.58  main_sequence  300.50  200.50  290.46  202.74  0.0467  0.0067    0.61  644.18   32934.2      11.3  1.05e+03 -4.27e+03  2.51e+04
+ 175000  1822.69  main_sequence  300.50  200.50  299.57  190.57  0.0467  0.0067    0.62  644.18   11274.5       0.2  3.32e+03 -2.25e+03  2.08e+04
+== build/m0-d189/c_pre
+   step        t          stage      cx      cy    comx    comy   X_H,c  X_He,c     T_c   sig_c         L     L_nuc        px        py     Sm|u|
+ 112500  1277.52  main_sequence  300.50  200.50  299.98  200.02  0.1788  0.8043   67.80   21.49    7736.3    7565.9 -6.85e-01  7.56e-01  2.72e+02
+ 115000  1304.73  main_sequence  300.50  200.50  299.99  200.02  0.1627  0.8204   69.91   22.75    8266.8    8090.0 -7.65e-01  6.97e-01  2.85e+02
+ 117500  1331.70  main_sequence  300.50  200.50  299.99  200.02  0.1471  0.8360   72.20   24.16    8887.3    8674.4 -9.49e-01  6.13e-01  2.99e+02
+ 120000  1358.39  main_sequence  300.50  200.50  299.99  200.01  0.1326  0.8505   74.60   25.71    9580.0    9339.8 -1.14e+00  5.36e-01  3.19e+02
+ 122500  1384.78  main_sequence  300.50  200.50  299.99  200.01  0.1182  0.8647   77.33   27.42   10352.7   10095.1 -1.32e+00  5.17e-01  3.54e+02
+ 125000  1410.83  main_sequence  300.50  200.50  299.99  200.00  0.1048  0.8775   80.25   29.29   11283.2   10965.0 -1.52e+00  5.33e-01  3.79e+02
+ 127500  1436.55  main_sequence  300.50  200.50  299.98  199.99  0.0908  0.8882   82.97   31.43   12318.8   11974.0 -1.73e+00  6.15e-01  4.06e+02
+ 130000  1461.91  main_sequence  300.50  200.50  299.98  199.99  0.0780  0.8775   87.15   33.67   13533.5   13213.5 -1.99e+00  1.06e+00  4.50e+02
+ 132500  1486.91  main_sequence  300.50  200.50  299.98  199.99  0.0670  0.7224   91.88   35.91   15173.8   14949.5 -2.20e+00  7.24e-01  5.00e+02
+ 135000  1511.76        he_core  300.50  200.50  299.97  199.99  0.0542  0.2668   99.48   38.47   17269.0   17224.0 -2.44e+00  5.73e-01  5.91e+02
+ 137500  1536.47        he_core  300.50  200.50  299.96  199.98  0.0431  0.1068  103.63   41.63   19837.3   19679.6 -2.28e+00  5.75e-01  7.83e+02
+ 140000  1560.82        he_core  300.50  200.50  299.95  199.98  0.0306  0.0254  108.55   45.74   22661.9   22178.4 -2.62e+00 -1.84e-01  8.99e+02
+ 142500  1584.64        he_core  300.50  200.50  299.93  199.99  0.0196  0.0037  114.22   49.92   26334.0   25957.3 -4.26e+00 -4.26e-02  1.03e+03
+ 145000  1608.15        he_core  300.50  200.50  299.93  200.00  0.0116  0.0016  119.41   53.16   31542.4   31291.0 -3.85e+00 -2.11e+00  1.22e+03
+ 147500  1631.23         o_burn  300.50  200.50  299.96  200.00  0.0064  0.0019  123.97   59.55   38105.8   37464.0 -4.92e+00 -7.16e+00  1.50e+03
+ 150000  1653.54         o_burn  300.50  200.50  299.97  199.93  0.0036  0.0014  128.55   72.46   48519.1   46440.3 -5.18e+00 -1.00e+01  1.80e+03
+ 152500  1674.95      iron_core  300.50  200.50  300.02  199.88  0.0002  0.0000  162.95   88.10   68194.3   65476.2 -1.18e+01 -2.96e-01  1.96e+03
+ 155000  1695.35      iron_core  300.50  200.50  300.02  199.83  0.0001  0.0000  178.46  101.98   99948.7   95018.4 -1.57e+01 -6.24e+00  1.87e+03
+ 157500  1714.73      iron_core  300.50  200.50  300.04  199.78  0.0000  0.0000  203.67  125.15  160066.4  126522.0 -9.73e+00  5.72e+00  2.63e+03
+ 160000  1732.18  main_sequence  300.50  200.50  300.01  199.85  0.1184  0.0495   55.71  203.69  260191.6  102039.6 -1.45e+01  1.61e+01  4.62e+03
+ 162500  1747.28  main_sequence  300.50  200.50  300.14  199.88  0.0996  0.0373   39.85  242.56  240934.4   99999.3  4.91e+02 -3.34e+01  6.30e+03
+ 165000  1761.70  main_sequence  300.50  200.50  300.10  200.06  0.0628  0.0004  207.84  346.23  267365.9  150508.7  5.58e+02  6.01e+02  1.28e+04
+ 166664  1773.28    white_dwarf  302.50  202.50  301.92  202.03  0.0612  0.0077    0.05   89.27    4645.0      -0.0  5.71e+02  6.21e+02  3.93e+04
+== build/m0-d189/c_head
+   step            raw          shown        M      R    d_c   lnuc/L   unb/M   X_N |vr|/vdyn virial   sig_c nobj
+ 155000      iron_core      iron_core   3090.6  168.3  0.723 9.43e-01   0.117  0.00     0.072  0.933    98.4    1
+ 157500      iron_core      iron_core   3069.3  118.7  0.718 1.08e+00   0.099  0.00     0.109  0.919   123.3    1
+ 160000        he_core        he_core   3085.8  115.6  0.798 6.71e-01   0.115  0.00     0.221  0.863   179.5    1
+ 162500  main_sequence  main_sequence   3067.9   25.9  0.860 3.60e-01   0.094  0.00     0.157  0.803   244.6    1
+ 165000  main_sequence  main_sequence   3020.4    2.0  0.877 2.34e-01   0.067  0.07     0.060  0.746   322.1    1
+ 167500  main_sequence  main_sequence   2944.4    5.8  1.000 1.22e-01   0.028  0.54     0.011  0.715   644.2    2
+ 170000  main_sequence  main_sequence   2940.8   17.3  1.000 5.19e-04   0.001  0.54     0.011  0.905   644.2    1
+ 172500  main_sequence  main_sequence   2979.3   39.4  0.999 3.42e-04   0.002  0.54     0.085  0.810   644.2    1
+ 175000  main_sequence  main_sequence   3003.4   58.4  0.999 1.75e-05   0.001  0.54     0.054  0.871   644.2    1
+== build/m0-d189/c_pre
+   step            raw          shown        M      R    d_c   lnuc/L   unb/M   X_N |vr|/vdyn virial   sig_c nobj
+ 155000      iron_core      iron_core   3090.9  161.2  0.722 9.51e-01   0.111  0.00     0.063  0.930   102.0    1
+ 157500      iron_core      iron_core   3088.7  155.7  0.726 7.90e-01   0.119  0.00     0.126  0.909   125.1    1
+ 160000  main_sequence  main_sequence   3090.6  120.1  0.924 3.92e-01   0.116  0.00     0.242  0.844   203.7    1
+ 162500  main_sequence  main_sequence   3089.4   65.1  0.951 4.15e-01   0.098  0.00     0.230  0.816   242.6    1
+ 165000         o_burn  main_sequence   3045.9    2.0  0.757 5.63e-01   0.072  0.22     0.046  0.736   346.2    1
+ 166664    white_dwarf    white_dwarf   2979.4   12.7  1.000 -0.00e+00   0.000  0.11     0.015  0.826    89.3    1
+2026-11-17T09:18:40-05:00 split D: crossed — head binary from pre's 155000 dump, pre binary from head's 155000 dump; until ending, max 175000, dumps every 2500
+== build/m0-d189/d_head_on_pre
+   step            raw          shown        M      R    d_c   lnuc/L   unb/M   X_N |vr|/vdyn virial   sig_c nobj
+ 157500      iron_core      iron_core   3088.7  155.7  0.726 7.90e-01   0.119  0.00     0.125  0.910   125.1    1
+ 160000  main_sequence  main_sequence   3090.6  120.1  0.913 3.89e-01   0.116  0.00     0.244  0.844   203.0    1
+ 162500  main_sequence  main_sequence   3089.4   64.0  1.000 3.36e-01   0.100  0.00     0.237  0.814   240.2    1
+ 165000      iron_core      iron_core   3044.4    2.0  0.977 2.26e-01   0.073  0.00     0.050  0.769   296.8    1
+ 167500        he_core        he_core   2984.8    2.2  0.688 9.70e-01   0.002  0.35     0.010  0.758   201.2    1
+ 169772    white_dwarf    white_dwarf   2920.6   19.1  1.000 -0.00e+00   0.000  0.16     0.014  0.835    72.8    1
+== build/m0-d189/d_pre_on_head
+   step            raw          shown        M      R    d_c   lnuc/L   unb/M   X_N |vr|/vdyn virial   sig_c nobj
+ 157500      iron_core      iron_core   3069.3  118.8  0.718 1.08e+00   0.099  0.00     0.109  0.919   123.3    1
+ 160000        he_core        he_core   3085.7  115.7  0.795 6.68e-01   0.115  0.00     0.221  0.864   179.5    1
+ 162500  main_sequence  main_sequence   3067.9   25.9  0.905 3.46e-01   0.094  0.00     0.160  0.805   243.8    1
+ 165000  main_sequence  main_sequence   3020.1    2.0  0.858 2.30e-01   0.067  0.10     0.058  0.737   335.5    1
+ 167500    white_dwarf    white_dwarf   3012.6   13.9  1.000 3.63e-04   0.000  0.20     0.026  0.776   125.3    1
+ 169260    white_dwarf    white_dwarf   2923.4   17.9  1.000 2.39e-04   0.000  0.20     0.003  0.870    68.5    1
+2026-11-17T09:22:36-05:00 split E: sensitivity — head from own 155000 (repeat), head from own 152500, pre from own 152500; until ending, max 175000
+e_head155: SR-HEADLESS DONE steps=175000 sim_time=1822.687548 until=unmet
+e_head152: SR-HEADLESS DONE steps=175000 sim_time=1822.687548 until=unmet
+e_pre152: SR-HEADLESS DONE steps=166664 sim_time=1773.279075 until=met
+== build/m0-d189/e_head155
+   step            raw          shown        M      R    d_c   lnuc/L   unb/M   X_N |vr|/vdyn virial   sig_c nobj
+ 157500      iron_core      iron_core   3069.3  118.7  0.718 1.08e+00   0.099  0.00     0.109  0.919   123.3    1
+ 160000        he_core        he_core   3085.8  115.6  0.798 6.71e-01   0.115  0.00     0.221  0.863   179.5    1
+ 162500  main_sequence  main_sequence   3067.9   25.9  0.860 3.60e-01   0.094  0.00     0.157  0.803   244.6    1
+ 165000  main_sequence  main_sequence   3020.4    2.0  0.877 2.34e-01   0.067  0.07     0.060  0.746   322.1    1
+ 167500  main_sequence  main_sequence   2944.4    5.8  1.000 1.22e-01   0.028  0.54     0.011  0.715   644.2    2
+ 170000  main_sequence  main_sequence   2940.8   17.3  1.000 5.19e-04   0.001  0.54     0.011  0.905   644.2    1
+ 172500  main_sequence  main_sequence   2979.3   39.4  0.999 3.42e-04   0.002  0.54     0.085  0.810   644.2    1
+ 175000  main_sequence  main_sequence   3003.4   58.4  0.999 1.75e-05   0.001  0.54     0.054  0.871   644.2    1
+== build/m0-d189/e_head152
+   step            raw          shown        M      R    d_c   lnuc/L   unb/M   X_N |vr|/vdyn virial   sig_c nobj
+ 155000      iron_core      iron_core   3090.6  168.3  0.723 9.43e-01   0.117  0.00     0.072  0.933    98.4    1
+ 157500      iron_core      iron_core   3069.3  118.7  0.718 1.08e+00   0.099  0.00     0.109  0.919   123.3    1
+ 160000        he_core        he_core   3085.8  115.6  0.798 6.71e-01   0.115  0.00     0.221  0.863   179.5    1
+ 162500  main_sequence  main_sequence   3067.9   25.9  0.860 3.60e-01   0.094  0.00     0.157  0.803   244.6    1
+ 165000  main_sequence  main_sequence   3020.4    2.0  0.877 2.34e-01   0.067  0.07     0.060  0.746   322.1    1
+ 167500  main_sequence  main_sequence   2944.4    5.8  1.000 1.22e-01   0.028  0.54     0.011  0.715   644.2    2
+ 170000  main_sequence  main_sequence   2940.8   17.3  1.000 5.19e-04   0.001  0.54     0.011  0.905   644.2    1
+ 172500  main_sequence  main_sequence   2979.3   39.4  0.999 3.42e-04   0.002  0.54     0.085  0.810   644.2    1
+ 175000  main_sequence  main_sequence   3003.4   58.4  0.999 1.75e-05   0.001  0.54     0.054  0.871   644.2    1
+== build/m0-d189/e_pre152
+   step            raw          shown        M      R    d_c   lnuc/L   unb/M   X_N |vr|/vdyn virial   sig_c nobj
+ 155000      iron_core      iron_core   3090.9  161.2  0.722 9.51e-01   0.111  0.00     0.063  0.930   102.0    1
+ 157500      iron_core      iron_core   3088.7  155.7  0.726 7.90e-01   0.119  0.00     0.126  0.909   125.1    1
+ 160000  main_sequence  main_sequence   3090.6  120.1  0.924 3.92e-01   0.116  0.00     0.242  0.844   203.7    1
+ 162500  main_sequence  main_sequence   3089.4   65.1  0.951 4.15e-01   0.098  0.00     0.230  0.816   242.6    1
+ 165000         o_burn  main_sequence   3045.9    2.0  0.757 5.63e-01   0.072  0.22     0.046  0.736   346.2    1
+ 166664    white_dwarf    white_dwarf   2979.4   12.7  1.000 -0.00e+00   0.000  0.11     0.015  0.826    89.3    1
+2026-11-17T09:31:16-05:00 split F: erase case on HEAD, preset:massive leave + touch_erase.json, until ending, max 92000, dumps every 4000, timeout 590
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+Command exited with non-zero status 124
+wall 590.11
+== build/m0-d189/f_erase
+   step            raw          shown        M      R    d_c   lnuc/L   unb/M   X_N |vr|/vdyn virial   sig_c nobj
+  40000  main_sequence  main_sequence   3164.3    2.0  1.000 7.76e-02   0.000  0.48     0.029  0.441   629.1    1
+  44000       he_shell       he_shell   3174.1    2.0  0.827 2.84e-02   0.000  0.51     0.050  0.469   705.9    1
+probe: the 4x4 block (aligned) holding the densest cell — mass-weighted X_n vs the densest cell's
+  c_head/167500: densest (300,200) σ 644.2 X_n 0.535 · block mass 1242.1 mean X_n 0.331
+  c_head/170000: densest (300,200) σ 644.2 X_n 0.535 · block mass 763.4 mean X_n 0.469
+  c_head/175000: densest (300,200) σ 644.2 X_n 0.535 · block mass 747.9 mean X_n 0.477
+  f_erase/40000: densest (301,202) σ 629.1 X_n 0.477 · block mass 3011.4 mean X_n 0.436
+  f_erase/44000: densest (300,203) σ 705.9 X_n 0.512 · block mass 2304.9 mean X_n 0.488
+  c_pre/165000: densest (300,200) σ 346.2 X_n 0.215 · block mass 1417.8 mean X_n 0.137
+  c_pre/166664: densest (302,202) σ 89.3 X_n 0.114 · block mass 1003.9 mean X_n 0.113
+probe: mass-weighted X_n — 3x3 blocks about the densest cell's block, r<=8 cells of it, the whole gas (σ>=1e-6)
+  c_head/170000: 3x3 blocks 0.304 (M 1417) · r<=8 0.283 (M 1591) · whole 0.190 (M 3091)
+  c_head/175000: 3x3 blocks 0.383 (M 1006) · r<=8 0.373 (M 1043) · whole 0.190 (M 3091)
+  f_erase/44000: 3x3 blocks 0.482 (M 3174) · r<=8 0.482 (M 3174) · whole 0.476 (M 3214)
+  c_pre/166664: 3x3 blocks 0.113 (M 2120) · r<=8 0.113 (M 2205) · whole 0.103 (M 3091)
+error[E0716]: temporary value dropped while borrowed
+error: could not compile `sr-physics` (lib test) due to 1 previous error
+test result: ok. 117 passed; 0 failed; 0 ignored; 0 measured; 99 filtered out; finished in 0.01s
+
+2026-11-17T09:46:48-05:00 verify 1 (window): fixed binary from c_head/s_165000, until ending, max 200000
+SR-HEADLESS DONE steps=169708 sim_time=1790.714872 until=met
+wall 69.56
+[{'detail': {'held_t': 10.05582344532013, 'hold_t': 10.0, 'mass_sb': 2936.7993617411703, 'stage': 'white_dwarf'}, 'kind': 'ending', 'object': 1, 'sim_time': 1790.7148716812953, 'step': 169708}]
+verify: 58 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 8.94 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 81.95->86.31
+=== GO ===
+verify: 31 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.22 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 86.31->86.31
+=== GO ===
+classify · plant burn-rows-whole-object · RED (proven: 2 failed) · arm 17/18, 1 left
+classify · plant white-dwarf-centre-x-n · RED (proven: 1 failed) · arm 18/18, 0 left
+redarm: 18 plants · 18 red · 0 green · 0 errors · scope classify · 80.16 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D189.classify.redarm.log
+=== GO ===
+objects · plant centre-burning-unlit · RED (proven: 1 failed) · arm 11/12, 1 left
+objects · plant x-n-mean-centre-cell · RED (proven: 1 failed) · arm 12/12, 0 left
+redarm: 12 plants · 12 red · 0 green · 0 errors · scope objects · 35.84 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D189.objects.redarm.log
+=== GO ===
+ui_banner        18/0/0       2.42 s  GO · step 17/17, 0 left
+logs: milestones/m0/logs/M0-D189.<scope>.log · record: loop_times.jsonl · tree 0fd0f2e2492f+bb80246e9e72
+anchor: 66 path×scope entries moved by this run
+anchor: 454 paths checked · 454 skipped (3 classes) · 9 never checked · 5 stale · 0 unclassified · 0 owed · 468 covered of 922 visible
+verify: 178 passed, 0 failed, 0 skipped · 17/17 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 74.60 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 9.61->19.91
+=== GO ===
+FAILED:
+  build: build[native]: 1 failed; build[native]: its own verdict NO-GO: cargo clippy -D warnings failed · log milestones/m0/logs/M0-D189.build.log
+verify: 1 passed, 1 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 7.28 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 25.97->27.17
+=== NO-GO: build: build[native]: 1 failed; build[native]: its own verdict NO-GO: cargo clippy -D warnings failed · log milestones/m0/logs/M0-D189.build.log ===
+verify: 60 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 28.52 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 30.17->35.78
+=== GO ===
+redarm: 18 plants · 18 red · 0 green · 0 errors · scope classify · 114.84 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D189.classify.redarm.log
+=== GO ===
+verify: 896 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.17 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 50.29->50.29
+=== GO ===

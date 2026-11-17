@@ -2,7 +2,7 @@
 +++ b/crates/sr-physics/src/observe/stages.rs
 @@ -211,7 +211,7 @@
              && c.o.unbound < 0.05 * c.o.mass
-             && c.o.x_c[X_N] < 0.5
+             && c.o.x_n_mean < 0.5
              && c.o.mass <= c.m_ch
 -            && (settled(c) || degenerate_at_rest(c))
 +            && settled(c)

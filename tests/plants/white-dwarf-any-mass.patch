@@ -3,7 +3,7 @@
 @@ -210,7 +210,7 @@
              && c.o.l_nuc < 0.01 * c.o.luminosity
              && c.o.unbound < 0.05 * c.o.mass
-             && c.o.x_c[X_N] < 0.5
+             && c.o.x_n_mean < 0.5
 -            && c.o.mass <= c.m_ch
 +            && c.m_ch > 0.0
              && (settled(c) || degenerate_at_rest(c))

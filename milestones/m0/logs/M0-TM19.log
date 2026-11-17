@@ -1,0 +1,85 @@
+# M0-TM19 — rating pass · linux-pc (laserax-ai) · 2026-11-17 14:50 EST
+## rung_record.py now (launch): model=claude-opus-5-5 level=max plugin=installed
+## probe: CLAUDECODE=1 CLAUDE_EFFORT=high AI_AGENT=claude-code_2-1-326_agent
+## skill bundle: /tmp/claude-1000/bundled-skills/2.1.326/392a7276f36832f3af4554f1322e0e21/claude-api (table cached 2026-11-03)
+## shared/models.md sha256: 74245a8d11939d988321c47ab4b4775ac1fa287f97ed94f7b65eb6145bcbe7b9
+## rung_record.py report
+report: 406 DONE blocks · 16 class/rung rows · 2 session folder(s) (-home-ybelanger-private-sandbox-reactions, -home-ybelanger) · 337 block(s) with no session file readable (rung from the handoff, cost null) · 0 block(s) priced from tokens (a session file with no cost line) · 0 priced from list prices · 18 D block(s) naming no cause in the record · $499.82 read from the sessions' own cost
+BUILD on Opus 5.5, high: 156 block(s) · first-try 70/148 · $14.41 per DONE block · usual
+BUILD on Opus 5.5, xhigh: 5 block(s) · first-try 1/5 · $8.60 per DONE block · above (usual)
+BUILD on Sonnet 5.5, high: 108 block(s) · first-try 71/103 · $4.16 per DONE block · cheaper on Sonnet 5.5, high · vs same class on (usual)
+BUILD on Sonnet 5.5, medium: 1 block(s) · first-try 0/1 · $0.36 per DONE block · n<10
+BUILD on unknown: 47 block(s) · first-try 31/41 · n/a per DONE block · off the ladder
+BUILD·E on Haiku 5.5, high: 8 block(s) · first-try 8/8 · n/a per DONE block · off the ladder
+BUILD·E on Opus 5.5, high: 3 block(s) · first-try 1/3 · n/a per DONE block · usual
+BUILD·E on Sonnet 5.5, medium: 6 block(s) · first-try 5/5 · n/a per DONE block · n<10
+BUILD·E on unknown: 9 block(s) · first-try 7/7 · n/a per DONE block · off the ladder
+CHECK on Opus 5.5, max: 18 block(s) · first-try 11/17 · $47.06 per DONE block · above (usual)
+CHECK on unknown: 1 block(s) · first-try 0/1 · n/a per DONE block · off the ladder
+MOVE on Haiku 5.5, high: 4 block(s) · first-try 3/4 · n/a per DONE block · off the ladder
+MOVE on Sonnet 5.5, medium: 6 block(s) · first-try 5/5 · $0.32 per DONE block · n<10
+MOVE on unknown: 4 block(s) · first-try 3/4 · n/a per DONE block · off the ladder
+PLAN on Opus 5.5, max: 27 block(s) · first-try 18/27 · $6.10 per DONE block · above (usual)
+PLAN on unknown: 3 block(s) · first-try n/a · n/a per DONE block · off the ladder
+=== GO ===
+## plan.py lint (start)
+lint: checks=902 failed=0 warnings=27 · blocks=434 · flow_rows=434 · verify_fences=0 · history=0 · flow=per-task · header=634/600 · pipeline=9/60 · ladder=6 rungs · refresh=5/5
+M0-TJ1   | **PLAN + LEAD answers** | Opus 5.5, max | trail-words=0  
+M0-TM19  | **PLAN** | Opus 5.5, max | trail-words=0  
+M0-D192  | **BUILD** | Opus 5.5, high | trail-words=0  - Rating: Opus 5.5, high (usual) — the cause is not measur
+M0-T106  | **BUILD** | Sonnet 5.5, high | trail-words=0  
+M0-T107  | **BUILD** | Sonnet 5.5, high | trail-words=0  
+M0-T98b  | **BUILD** | Sonnet 5.5, high | trail-words=0  
+M0-T99b  | **BUILD** | Sonnet 5.5, high | trail-words=0  
+M0-T100  | **BUILD** | Sonnet 5.5, high | trail-words=0  
+M0-T101  | **BUILD** | Sonnet 5.5, high | trail-words=0  
+M0-T108  | **BUILD** | Sonnet 5.5, high | trail-words=0  
+M0-V15   | **CHECK** | Opus 5.5, max | trail-words=0  
+M0-T109  | **BUILD** | Sonnet 5.5, high | trail-words=0  
+M0-T124  | **BUILD** | Opus 5.5, high | trail-words=0  - Rating: (usual) — rule (3): a design the spec leaves ope
+M0-T110  | **BUILD** | Sonnet 5.5, high | trail-words=0  
+M0-T111  | **BUILD** | Sonnet 5.5, medium | trail-words=0 - Sizing: E 
+M0-T112  | **BUILD** | Sonnet 5.5, high | trail-words=0  
+M0-T113  | **BUILD** | Sonnet 5.5, high | trail-words=0  
+M0-T115  | **BUILD** | Sonnet 5.5, high | trail-words=0  
+M0-V16   | **CHECK** | Opus 5.5, max | trail-words=0  
+M0-V17   | **CHECK** | Opus 5.5, max | trail-words=0  
+M0-TD    | **BUILD** | Sonnet 5.5, high | trail-words=0  
+M0-TW    | **LEAD walk + CHECK scribe** | Opus 5.5, max | trail-words=0  
+M0-T116  | **BUILD** | Sonnet 5.5, high | trail-words=0  
+M0-TZ    | **PLAN** | Opus 5.5, max | trail-words=0  
+register: checks=1 failed=0 warnings=0 · set=1 · replaced=1 · appended=0
+=== GO ===
+lint: checks=902 failed=0 warnings=27 · blocks=434 · flow_rows=434 · verify_fences=0 · history=0 · flow=per-task · header=634/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+plan_lint  902/0/0      0.06 s  GO
+logs: milestones/m0/logs/M0-TM19.<scope>.log · record: loop_times.jsonl · tree 0fd0f2e2492f+2899c58bf057
+anchor: 1 path×scope entries moved by this run
+anchor: 455 paths checked · 457 skipped (3 classes) · 9 never checked · 6 stale · 0 unclassified · 0 owed · 470 covered of 927 visible
+verify: 902 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.07 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 1.35->1.35
+=== GO ===
+touched: 0 task(s) · 0 path(s) · 366 claim record(s) naming their files · 71 without (before the field) · 0 foreign
+=== NO-GO: no claim record of M0-TM19 names its files ===
+## claim: verify.py --changed --task M0-TM19 (14:51:53)
+exit=124
+close: checks=3 failed=0 warnings=0 · handoff_lines=1 · flow=per-task
+=== GO ===
+plan_lint  901/0/0      0.06 s  GO
+logs: milestones/m0/logs/M0-TM19-close.<scope>.log · record: loop_times.jsonl · tree 0fd0f2e2492f+b4a24538e172
+anchor: 1 path×scope entries moved by this run
+anchor: 455 paths checked · 458 skipped (3 classes) · 9 never checked · 6 stale · 0 unclassified · 0 owed · 470 covered of 928 visible
+verify: 901 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.07 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 2.75->2.75
+=== GO ===
+lint: checks=901 failed=0 warnings=27 · blocks=434 · flow_rows=434 · verify_fences=0 · history=0 · flow=per-task · header=634/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+flag: checks=1 failed=0 warnings=0 · refresh=0/5
+=== GO ===
+register: checks=1 failed=0 warnings=0 · set=1 · replaced=1 · appended=0
+=== GO ===
+handoff: checks=1 failed=0 warnings=0
+=== GO ===
+plan_lint  901/0/0      0.11 s  GO
+logs: milestones/m0/logs/M0-TM19-owed.<scope>.log · record: loop_times.jsonl · tree 0fd0f2e2492f+0eb1bfcd2b6e
+anchor: 1 path×scope entries moved by this run
+anchor: 455 paths checked · 458 skipped (3 classes) · 9 never checked · 6 stale · 0 unclassified · 0 owed · 470 covered of 928 visible
+verify: 901 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 20.94->20.94
+=== GO ===
+lint: checks=901 failed=0 warnings=27 · blocks=434 · flow_rows=434 · verify_fences=0 · history=0 · flow=per-task · header=634/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5

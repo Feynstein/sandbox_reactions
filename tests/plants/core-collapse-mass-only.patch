@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/stages.rs
++++ b/crates/sr-physics/src/observe/stages.rs
+@@ -234,7 +234,7 @@
+     }),
+     (Stage::CoreCollapse, |c| {
+         (c.o.l_group[G_N] < 0.0 && (c.o.mass > c.m_ch || c.m_ch.is_infinite()))
+-            || (c.o.x_n_mean >= NEUTRON_RICH && c.h.last_collapse.is_none())
++            || (c.o.x_n_mean >= NEUTRON_RICH && false)
+     }),
+     (Stage::WhiteDwarf, |c| {
+         c.h.ignited

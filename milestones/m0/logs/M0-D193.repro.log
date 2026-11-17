@@ -1,0 +1,15 @@
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=23090 sim_time=190.169346 until=met
+supernova: 23090 steps, 46 checkpoints, t 0.02 → 189.77; edge "leave"; invariants at the end: mass 9.810393e3 (start 9.810396e3), momentum (-1.0651e-1, -1.1342e-1) (start (-4.5642e-6, +8.5875e-6)), energy -5.661109e5 (start -5.661371e5); |W| 7.3459e6
+supernova: energy invariant drift 1.174e-5 |W| per τ_dyn at worst, bound 1e-3
+supernova: 0 of 46 windows over the bound; the five worst — 1..513: 1.17e-5 · 513..1009: 1.08e-5 · 21010..21506: 5.33e-6 · 16513..17009: 4.12e-6 · 1009..1505: 3.95e-6
+supernova: the worst window — steps 1..513, Δinvariant +8.8444e0: radiated +1.4790e5 · thermal -1.3891e5 · potential -6.0564e4 · kinetic +5.1314e4 · cold +9.1948e3 · nuclear_released -9.0182e3 · floor_added +8.7947e1 · neutrino_lost +0.0000e0 · neutrino_deposited +0.0000e0 · escaped +0.0000e0 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
+supernova: the whole life — steps 1..23010, Δinvariant +2.6140e1: radiated +4.0400e7 · floor_added -2.4054e7 · nuclear_released -1.2519e7 · potential -6.0219e6 · cold +1.8510e6 · neutrino_lost +4.6442e5 · thermal -4.4993e5 · escaped +2.8124e5 · kinetic +4.7655e4 · neutrino_deposited -1.4394e1 · swallowed +0.0000e0 · tools +0.0000e0 · edit_potential +0.0000e0
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 535 filtered out; finished in 165.34s
+

@@ -1,0 +1,9 @@
+== 2026-11-17T13:38:35-05:00 touch erase case, capped 90 s (the grader and the first lines only), RTX 5090
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says ... erase massive preset of 9810.394 sb under touch_erase.json — the edit aims at 3257.8 sb (m_up 6515.5), the fate leaving Supernova for one of [WhiteDwarf]
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+erase the drop: step=16 M=9810.390 sb
+exit 124

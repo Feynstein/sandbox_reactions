@@ -30,8 +30,11 @@
 //! Gravity's source (§1.4.2; M0-T36), when a step is given P2's field ([`Hydro::step_with`]): the Hancock predictor kicks
 //! each face state by half a step of g — its velocity by ½Δt·g, its energy by the work Σ(u + ¼Δt·g)·g·½Δt, so the kick
 //! leaves its thermal energy as it was — beside the flux differences; the update adds Δt·Σ_src,mid·g_mid to the momentum
-//! (§1.4.2 [M0-D183]): Σ_src,mid is the cell centre's half-step Σ from that same predictor (0 below Σ_vac, a held cell's
-//! own Σ, as [`grav::source`](super::grav::source) masks), and g_mid, φ_mid the field P2's solve gives on it, the sinks'
+//! (§1.4.2 [M0-D183]): Σ_src,mid is [M0-D192] the midpoint of the step's own mass update, ½(Σⁿ + Σⁿ⁺¹) from the fluxes
+//! (0 below Σ_vac, a held cell's own Σ, as [`grav::source`](super::grav::source) masks) — not the predictor's half-step
+//! centre, which is not the midpoint of the mass HLL moves, so φ_mid there missed ΔW (the supernova life up to 9,963 a
+//! step at the bounce, tasks/M0-D192.md); with it the faces' work below moves E by exactly what the moved mass moves
+//! W = ½Σmφ —, and g_mid, φ_mid the field P2's solve gives on it, the sinks'
 //! part of the field the step is given (that field less P2's solve on Σⁿ) added — so the masses that pull are the masses
 //! pulled and the pairs' pulls cancel (M0-D181: Σ_mid·g with g from Σⁿ moved the supernova life's momentum 1.04 of
 //! Σm|u|). The energy source is the work the step's mass fluxes do across φ_mid (§0.5 [M0-D64], [M0-D68], [M0-D183]): a face whose mass flux q (along +x or +y) joins
@@ -731,36 +734,6 @@ impl Hydro {
                 && (y + 1 == h || vacuum(x, y + 1))
         };
 
-        // The half step's field (§1.4.2 [M0-D183]): Σ_src at the predictor's half step, its φ_mid and g_mid, and with held
-        // cells the same with them emptied — each with the sinks' part of the field the step was given.
-        let mid_field = gravity.map(|given| {
-            let src: Vec<f64> = (0..n)
-                .map(|i| {
-                    let s = if is_held(i) {
-                        st.get(0, i)
-                    } else if empty(i % w, i / w) {
-                        0.0
-                    } else {
-                        mids[i][0]
-                    };
-                    if s >= self.sigma_vac { s } else { 0.0 }
-                })
-                .collect();
-            let mut solver = grav::Gravity::new(grav::G);
-            let mut solve = |source: &[f64], given: &Field, base: &[f64]| {
-                let own = solver.field(source, self.sigma_vac, w, h).expect("the step's world pads within the FFT");
-                let at_n = solver.field(base, self.sigma_vac, w, h).expect("the step's world pads within the FFT");
-                let plus = |a: &[f64], g: &[f64], b: &[f64]| (0..n).map(|i| a[i] + (g[i] - b[i])).collect::<Vec<f64>>();
-                Field { phi: plus(&own.phi, &given.phi, &at_n.phi), gx: plus(&own.gx, &given.gx, &at_n.gx), gy: plus(&own.gy, &given.gy, &at_n.gy) }
-            };
-            let field = solve(&src, given, st.plane(0));
-            let pull = pull.filter(|_| !held.is_empty()).map(|p| {
-                let free = |v: &[f64]| (0..n).map(|i| if is_held(i) { 0.0 } else { v[i] }).collect::<Vec<f64>>();
-                solve(&free(&src), p, &free(st.plane(0)))
-            });
-            (src, field, pull)
-        });
-
         // The fluxes: face i of a row lies between cells i − 1 and i; row j of the y fluxes between rows j − 1 and j. A
         // boundary face takes its edge cell's own face and, leaving, the ghost's beyond it (`at` ± a step).
         let boundary = |side: usize, own: &Face, cell: usize| {
@@ -834,6 +807,40 @@ impl Hydro {
                 }
             }
         }
+        // The half step's field (§1.4.2 [M0-D183], [M0-D192]): Σ_src at the half step — the midpoint of the step's own mass
+        // update, ½(Σⁿ + Σⁿ⁺¹) from the fluxes above (a cell below Σ_vac starting from the floor state's Σ, as the update
+        // does), a held cell's own Σ, 0 in a cell left empty and below Σ_vac —, its φ_mid and g_mid, and with held cells the
+        // same with them emptied — each with the sinks' part of the field the step was given.
+        let mid_field = gravity.map(|given| {
+            let src: Vec<f64> = (0..n)
+                .map(|i| {
+                    let (x, y) = (i % w, i / w);
+                    let s = if is_held(i) {
+                        st.get(0, i)
+                    } else if empty(x, y) {
+                        0.0
+                    } else {
+                        let start = if vacuum(x, y) { self.cons(&grid[at(x, y)])[0] } else { st.get(0, i) };
+                        let div = (fx[y * (w + 1) + x + 1][0] - fx[y * (w + 1) + x][0]) + (fy[(y + 1) * w + x][0] - fy[y * w + x][0]);
+                        0.5 * (st.get(0, i) + (start - dt * div))
+                    };
+                    if s >= self.sigma_vac { s } else { 0.0 }
+                })
+                .collect();
+            let mut solver = grav::Gravity::new(grav::G);
+            let mut solve = |source: &[f64], given: &Field, base: &[f64]| {
+                let own = solver.field(source, self.sigma_vac, w, h).expect("the step's world pads within the FFT");
+                let at_n = solver.field(base, self.sigma_vac, w, h).expect("the step's world pads within the FFT");
+                let plus = |a: &[f64], g: &[f64], b: &[f64]| (0..n).map(|i| a[i] + (g[i] - b[i])).collect::<Vec<f64>>();
+                Field { phi: plus(&own.phi, &given.phi, &at_n.phi), gx: plus(&own.gx, &given.gx, &at_n.gx), gy: plus(&own.gy, &given.gy, &at_n.gy) }
+            };
+            let field = solve(&src, given, st.plane(0));
+            let pull = pull.filter(|_| !held.is_empty()).map(|p| {
+                let free = |v: &[f64]| (0..n).map(|i| if is_held(i) { 0.0 } else { v[i] }).collect::<Vec<f64>>();
+                solve(&free(&src), p, &free(st.plane(0)))
+            });
+            (src, field, pull)
+        });
         let mut spared = [0.0f64; 2];
         // The radiation force's push each cell took (§2.4.4 [M0-D184]), its net taken back after the update.
         let mut push = vec![[0.0f64; 2]; n];
@@ -870,7 +877,7 @@ impl Hydro {
                         u[k] -= d;
                     }
                 }
-                // Gravity's source at the predictor's half step, Σ_src,mid·g_mid (§1.4.2 [M0-D183]), its energy the faces'
+                // Gravity's source at the half step, Σ_src,mid·g_mid (§1.4.2 [M0-D183], [M0-D192]), its energy the faces'
                 // work across φ_mid and the pairs' impulses (module doc): each face as its low cell and its high cell both
                 // read it. A face on the world's edge does none (its φ difference is 0). A held cell's kick and impulses are
                 // booked, not taken; no work crosses a still face (§1.4.2 [M0-TG2]).
@@ -930,11 +937,15 @@ impl Hydro {
                         (y + 1 == h, 1.0, &fy[h * w + x], st.face(3, x)),
                     ];
                     let faces = st.faces();
+                    // [M0-D182] The crossing mass's potential energy leaves with it (W rises by δm·|φ|): booked into
+                    // `escaped` energy at the edge cell's φ_mid, the face work's; none without gravity.
+                    let phi_edge = mid_field.as_ref().map_or(0.0, |(_, f, _)| f.phi[i]);
                     for (edge, sign, f, slot) in crossing {
                         if edge {
                             for (k, fk) in f.iter().enumerate() {
                                 next.escaped[k * faces + slot] += sign * dt * fk;
                             }
+                            next.escaped[3 * faces + slot] += sign * dt * f[0] * phi_edge;
                         }
                     }
                 }

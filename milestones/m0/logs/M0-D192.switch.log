@@ -1,0 +1,16 @@
+== all
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=148.882547 until=none
+exit 0
+== heat
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ERROR bad dump: dump holds F, and this step runs no P5 to keep it (heat off)
+exit 4
+== react
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=148.532722 until=none
+exit 0
+== nu
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=148.882921 until=none
+exit 0

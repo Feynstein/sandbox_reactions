@@ -4,6 +4,7 @@
 //! scenes/ parsing, and `headless` running a scene file as given.
 
 use super::device;
+use sr_engine::headless::EditPlan;
 use sr_engine::scene::{sun_disk_planes, Scene, SUN_MIX};
 use sr_engine::state::{State, WorldConfig, N_CHANNELS};
 use sr_physics::eos::Eos;
@@ -249,11 +250,26 @@ fn every_scene_file_parses() {
     files.sort();
     assert!(files.len() >= 2, "scenes/ holds sun_disk.json and fill_world.json at least: {files:?}");
     let physics = Physics::shipped().unwrap();
+    let mut edits_files = Vec::new();
     for path in &files {
+        // An edits file (§2.12.5) is a top-level array, not a scene: it is read as edits against the default world and
+        // the registry, and refused the same way a bad one is by `headless --edits`. Anything else is a scene.
+        let text = std::fs::read_to_string(path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+        let value: serde_json::Value = serde_json::from_str(&text).unwrap_or_else(|e| panic!("{}: not JSON: {e}", path.display()));
+        if value.is_array() {
+            EditPlan::parse(&text, WorldConfig::default(), &elements()).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+            println!("{}: {} edits (§2.12.5), parsed as an edits file", path.display(), value.as_array().unwrap().len());
+            edits_files.push(path.file_name().unwrap().to_string_lossy().into_owned());
+            continue;
+        }
         let scene = Scene::load(path).unwrap_or_else(|e| panic!("{e}"));
         let (_, warnings) = scene.planes(scene.world, &scene.physics().unwrap(), &elements()).unwrap();
         println!("{}: {} objects, {}x{}, no warning: {}", path.display(), scene.objects.len(), scene.world.width, scene.world.height, warnings.is_empty());
         assert!(warnings.is_empty(), "{}: {warnings:?}", path.display());
+    }
+    // M0-T105's two edits files are in scenes/ and are read as edits, not skipped.
+    for name in ["touch_erase.json", "touch_paint.json"] {
+        assert!(edits_files.iter().any(|f| f == name), "{name} read as an edits file: {edits_files:?}");
     }
     // sun_disk.json is the preset's own disk, bit for bit; fill_world.json leaves no vacuum cell in any world shape.
     let sun = Scene::load(&scenes_dir().join("sun_disk.json")).unwrap();
