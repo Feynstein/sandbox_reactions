@@ -1,0 +1,251 @@
+M0-D195 — 2026-11-19T12:39:48-05:00 linux-pc; build
+    Finished `release` profile [optimized] target(s) in 0.36s
+== resume check s_44000 -> 45000 2026-11-19T12:39:56-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=510.588232 until=none
+IDENTICAL
+== chunk A 45000->100000 2026-11-19T12:40:10-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=55000 sim_time=1138.671326 until=none
+exit 0 122 s
+== chunk B 100000->160000 2026-11-19T12:42:26-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=60000 sim_time=1729.150251 until=none
+exit 0 242 s
+== chunk C 160000->ending 2026-11-19T12:47:03-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=10704 sim_time=1796.177124 until=met
+exit 0 180 s
+== trail 0-45000 (build/m0-d199/tree, straight)
+   5000 grid 3135.611726 vac 1.108454 esc 0.000e+00 sinks 0.000e+00 inv 3136.7201793 d_inv -3.541e-05 rel -6.434e-09
+  10000 grid 3135.611951 vac 1.108454 esc 0.000e+00 sinks 0.000e+00 inv 3136.7204049 d_inv +1.245e-04 rel +6.548e-08
+  15000 grid 3135.612488 vac 1.108454 esc 0.000e+00 sinks 0.000e+00 inv 3136.7209414 d_inv +1.061e-04 rel +2.365e-07
+  20000 grid 3135.609767 vac 1.110875 esc 0.000e+00 sinks 0.000e+00 inv 3136.7206418 d_inv +3.766e-05 rel +1.410e-07
+  25000 grid 3135.014039 vac 1.706283 esc 0.000e+00 sinks 0.000e+00 inv 3136.7203216 d_inv -5.619e-05 rel +3.895e-08
+  30000 grid 3134.462929 vac 2.257221 esc 0.000e+00 sinks 0.000e+00 inv 3136.7201500 d_inv +1.979e-06 rel -1.578e-08
+  35000 grid 3133.723935 vac 2.995809 esc 0.000e+00 sinks 0.000e+00 inv 3136.7197438 d_inv -2.378e-04 rel -1.453e-07
+  40000 grid 3132.786056 vac 3.933788 esc 0.000e+00 sinks 0.000e+00 inv 3136.7198443 d_inv -4.707e-06 rel -1.132e-07
+  45000 grid 3131.722343 vac 4.997211 esc 0.000e+00 sinks 0.000e+00 inv 3136.7195538 d_inv -1.139e-04 rel -2.059e-07
+worst 2.365e-07 at 15000
+== trail chunk a (resumed; relative to its own start 3131.722141279339)
+  50000 grid 3130.503921 vac 1.218340 esc 0.000e+00 sinks 0.000e+00 inv 3131.7222615 d_inv -1.590e-05 rel +3.838e-08
+  55000 grid 3129.211792 vac 2.510455 esc 0.000e+00 sinks 0.000e+00 inv 3131.7222474 d_inv -1.265e-04 rel +3.388e-08
+  60000 grid 3127.853400 vac 3.869039 esc 0.000e+00 sinks 0.000e+00 inv 3131.7224388 d_inv -3.887e-05 rel +9.500e-08
+  65000 grid 3126.430073 vac 5.292485 esc 0.000e+00 sinks 0.000e+00 inv 3131.7225579 d_inv -3.952e-06 rel +1.330e-07
+  70000 grid 3124.946997 vac 6.775566 esc 0.000e+00 sinks 0.000e+00 inv 3131.7225624 d_inv -4.757e-05 rel +1.345e-07
+  75000 grid 3123.377994 vac 8.344901 esc 0.000e+00 sinks 0.000e+00 inv 3131.7228956 d_inv +6.691e-05 rel +2.409e-07
+  80000 grid 3121.711024 vac 10.011615 esc 0.000e+00 sinks 0.000e+00 inv 3131.7226391 d_inv -1.723e-04 rel +1.590e-07
+  85000 grid 3119.932321 vac 11.790075 esc 0.000e+00 sinks 0.000e+00 inv 3131.7223955 d_inv -8.832e-05 rel +8.118e-08
+  90000 grid 3118.022594 vac 13.699300 esc 0.000e+00 sinks 0.000e+00 inv 3131.7218932 d_inv -4.801e-05 rel -7.923e-08
+  95000 grid 3115.963032 vac 15.758874 esc 0.000e+00 sinks 0.000e+00 inv 3131.7219063 d_inv -9.845e-05 rel -7.503e-08
+ 100000 grid 3113.685988 vac 18.036085 esc 0.000e+00 sinks 0.000e+00 inv 3131.7220735 d_inv +2.971e-05 rel -2.166e-08
+worst 2.409e-07 at 75000
+== trail chunk b (resumed; relative to its own start 3113.685528297167)
+ 105000 grid 3111.126082 vac 2.559594 esc 0.000e+00 sinks 0.000e+00 inv 3113.6856762 d_inv -1.081e-05 rel +4.750e-08
+ 110000 grid 3108.219343 vac 5.466417 esc 0.000e+00 sinks 0.000e+00 inv 3113.6857594 d_inv -2.422e-05 rel +7.421e-08
+ 115000 grid 3104.890004 vac 8.796291 esc 0.000e+00 sinks 0.000e+00 inv 3113.6862942 d_inv +1.494e-04 rel +2.460e-07
+ 120000 grid 3101.003311 vac 12.683304 esc 0.000e+00 sinks 0.000e+00 inv 3113.6866147 d_inv -1.589e-04 rel +3.489e-07
+ 125000 grid 3096.318066 vac 17.368582 esc 0.000e+00 sinks 0.000e+00 inv 3113.6866479 d_inv -1.093e-04 rel +3.596e-07
+ 130000 grid 3092.741418 vac 20.945703 esc 0.000e+00 sinks 0.000e+00 inv 3113.6871214 d_inv +4.738e-04 rel +5.116e-07
+ 135000 grid 3091.036068 vac 22.650935 esc 0.000e+00 sinks 0.000e+00 inv 3113.6870034 d_inv -2.699e-04 rel +4.738e-07
+ 140000 grid 3091.035965 vac 22.650935 esc 0.000e+00 sinks 0.000e+00 inv 3113.6869006 d_inv +2.839e-05 rel +4.407e-07
+ 145000 grid 3091.035704 vac 22.650935 esc 0.000e+00 sinks 0.000e+00 inv 3113.6866394 d_inv -2.670e-06 rel +3.568e-07
+ 150000 grid 3091.035429 vac 22.650935 esc 0.000e+00 sinks 0.000e+00 inv 3113.6863644 d_inv -9.559e-05 rel +2.685e-07
+ 155000 grid 3091.034530 vac 22.650935 esc 0.000e+00 sinks 0.000e+00 inv 3113.6854654 d_inv -3.040e-04 rel -2.021e-08
+ 160000 grid 3091.033841 vac 22.650935 esc 0.000e+00 sinks 0.000e+00 inv 3113.6847757 d_inv -4.641e-04 rel -2.417e-07
+worst 5.604e-07 at 134000
+== trail chunk c (resumed; relative to its own start 3091.0339531600475)
+ 165000 grid 3091.032820 vac 0.000000 esc 0.000e+00 sinks 0.000e+00 inv 3091.0328201 d_inv -2.528e-04 rel -3.666e-07
+ 170000 grid 3091.031666 vac 0.000000 esc 0.000e+00 sinks 0.000e+00 inv 3091.0316657 d_inv -1.422e-04 rel -7.400e-07
+worst 8.111e-07 at 170704
+== dumps' f64 Σ sums
+ 136000 sum 3091.036133 max 39.2 cells>100 0 mass>100 0.0 cells>1 497 mass-weighted ulp 1.03e-06 box [0, 0, 600, 400]
+ 150000 sum 3091.035449 max 72.3 cells>100 0 mass>100 0.0 cells>1 290 mass-weighted ulp 1.70e-06 box [0, 0, 600, 400]
+ 160000 sum 3091.033901 max 205.1 cells>100 9 mass>100 1373.5 cells>1 49 mass-weighted ulp 8.99e-06 box [0, 0, 600, 400]
+ 170000 sum 3091.031675 max 107.4 cells>100 1 mass>100 107.4 cells>1 431 mass-weighted ulp 2.98e-06 box [0, 0, 600, 400]
+== unbiased-rounding random walk estimate
+ 136000 per-step rounding sd (all cells moving) 5.02e-06; over 35,000 steps 9.39e-04; Σ quantiles 50/90/99/max [0.0001, 0.0007, 0.0418] 39.2
+ 160000 per-step rounding sd (all cells moving) 1.53e-05; over 35,000 steps 2.86e-03; Σ quantiles 50/90/99/max [0.0018, 0.0024, 0.0028] 205.1
+ 170000 per-step rounding sd (all cells moving) 8.14e-06; over 35,000 steps 1.52e-03; Σ quantiles 50/90/99/max [0.0009, 0.0013, 0.0018] 107.4
+== stitched: 0-45k -6.46e-4, 45k-100k -6.8e-5, 100k-160k -7.5e-4, 160k-170704 -2.51e-3 => -3.97e-3 sb = 1.27e-6 of 3136.720 at the ending (white_dwarf, step 170,704); junction read noise <=4.6e-4 each
+== build (fix) 2026-11-19T13:01:18-05:00
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.16s
+== fix: late window 160000->ending 2026-11-19T13:01:32-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=12336 sim_time=1808.191817 until=met
+exit 0 153 s
+ 161000 grid 3091.033575 vac 0.000000 esc 0.000e+00 sinks 0.000e+00 inv 3091.0335751 d_inv +0.000e+00 rel -1.223e-07
+ 162000 grid 3091.033634 vac 0.000000 esc 0.000e+00 sinks 0.000e+00 inv 3091.0336338 d_inv +5.863e-05 rel -1.033e-07
+ 163000 grid 3091.033288 vac 0.000000 esc 0.000e+00 sinks 0.000e+00 inv 3091.0332880 d_inv -3.458e-04 rel -2.152e-07
+ 164000 grid 3091.033168 vac 0.000000 esc 0.000e+00 sinks 0.000e+00 inv 3091.0331684 d_inv -1.196e-04 rel -2.539e-07
+ 165000 grid 3091.033228 vac 0.000000 esc 0.000e+00 sinks 0.000e+00 inv 3091.0332283 d_inv +5.996e-05 rel -2.345e-07
+ 166000 grid 3091.033204 vac 0.000000 esc 0.000e+00 sinks 0.000e+00 inv 3091.0332036 d_inv -2.476e-05 rel -2.425e-07
+ 167000 grid 3091.033128 vac 0.000000 esc 0.000e+00 sinks 0.000e+00 inv 3091.0331281 d_inv -7.541e-05 rel -2.669e-07
+ 168000 grid 3091.033336 vac 0.000000 esc 0.000e+00 sinks 0.000e+00 inv 3091.0333358 d_inv +2.077e-04 rel -1.997e-07
+ 169000 grid 3091.033387 vac 0.000000 esc 0.000e+00 sinks 0.000e+00 inv 3091.0333867 d_inv +5.088e-05 rel -1.833e-07
+ 170000 grid 3091.033073 vac 0.000000 esc 0.000e+00 sinks 0.000e+00 inv 3091.0330734 d_inv -3.133e-04 rel -2.846e-07
+ 171000 grid 3091.033148 vac 0.000000 esc 0.000e+00 sinks 0.000e+00 inv 3091.0331476 d_inv +7.418e-05 rel -2.606e-07
+ 172000 grid 3091.032973 vac 0.000000 esc 0.000e+00 sinks 0.000e+00 inv 3091.0329732 d_inv -1.744e-04 rel -3.170e-07
+ 172336 grid 3091.032978 vac 0.000000 esc 0.000e+00 sinks 0.000e+00 inv 3091.0329776 d_inv +4.428e-06 rel -3.156e-07
+worst 3.170e-07 at 172000
+ 161000 3091.0332468 carry +0.00e+00  3091.0335380 carry +0.00e+00
+ 162000 3091.0327114 carry +0.00e+00  3091.0333686 carry +0.00e+00
+ 163000 3091.0332893 carry +0.00e+00  3091.0333656 carry +0.00e+00
+ 164000 3091.0330730 carry +0.00e+00  3091.0332233 carry +0.00e+00
+ 165000 3091.0327241 carry +0.00e+00  3091.0333626 carry +0.00e+00
+ 166000 3091.0329496 carry +0.00e+00  3091.0330145 carry +0.00e+00
+ 167000 3091.0322301 carry +0.00e+00  3091.0330520 carry +0.00e+00
+ 168000 3091.0317518 carry +0.00e+00  3091.0331503 carry +0.00e+00
+ 169000 3091.0318642 carry +0.00e+00  3091.0332032 carry +0.00e+00
+ 170000 3091.0316751 carry +0.00e+00  3091.0330308 carry +0.00e+00
+ 170704 3091.0313494 carry +0.00e+00                                
+ 171000                                 3091.0330946 carry +0.00e+00
+ 172000                                 3091.0329548 carry +0.00e+00
+ 172336                                 3091.0329436 carry +0.00e+00
+== fix 2 (carry in words): late window 160000->ending 2026-11-19T13:04:53-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=10224 sim_time=1792.370070 until=met
+exit 0 123 s
+ 161000 3091.0332468 carry +0.00e+00  3091.0339051 carry -3.69e-06
+ 162000 3091.0327114 carry +0.00e+00  3091.0338946 carry +6.80e-06
+ 163000 3091.0332893 carry +0.00e+00  3091.0339030 carry -1.56e-06
+ 164000 3091.0330730 carry +0.00e+00  3091.0338960 carry +5.44e-06
+ 165000 3091.0327241 carry +0.00e+00  3091.0338993 carry +2.11e-06
+ 166000 3091.0329496 carry +0.00e+00  3091.0338910 carry +1.04e-05
+ 167000 3091.0322301 carry +0.00e+00  3091.0338925 carry +8.89e-06
+ 168000 3091.0317518 carry +0.00e+00  3091.0338920 carry +9.37e-06
+ 169000 3091.0318642 carry +0.00e+00  3091.0339062 carry -4.78e-06
+ 170000 3091.0316751 carry +0.00e+00  3091.0339008 carry +6.37e-07
+ 170224                                 3091.0338989 carry +2.51e-06
+ 170704 3091.0313494 carry +0.00e+00                                
+== fix life chunk 1: 0->60000 2026-11-19T13:07:05-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=60000 sim_time=683.546840 until=none
+exit 0 213 s
+== fix life chunk 2: 60000->125000 2026-11-19T13:10:42-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=65000 sim_time=1406.635935 until=none
+exit 0 154 s
+== fix life chunk 3: 125000->ending 2026-11-19T13:13:20-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=45784 sim_time=1796.616224 until=met
+exit 0 377 s
+   1000 ledger +1.157e-08  dumps +2.488e-09
+   6000 ledger -1.307e-08  dumps +2.485e-09
+  11000 ledger -3.313e-09  dumps +2.485e-09
+  16000 ledger -1.676e-08  dumps +2.485e-09
+  21000 ledger +8.166e-09  dumps +2.485e-09
+  26000 ledger +4.229e-09  dumps +2.485e-09
+  31000 ledger -6.028e-09  dumps +2.483e-09
+  36000 ledger +1.021e-08  dumps +2.479e-09
+  41000 ledger +2.130e-10  dumps +2.476e-09
+  46000 ledger +1.440e-08  dumps +2.473e-09
+  51000 ledger +1.594e-08  dumps +2.469e-09
+  56000 ledger -2.201e-08  dumps +2.468e-09
+  61000 ledger -3.638e-08  dumps -8.844e-08
+  66000 ledger -2.797e-09  dumps -8.844e-08
+  71000 ledger -9.106e-09  dumps -8.845e-08
+  76000 ledger -2.498e-08  dumps -8.845e-08
+  81000 ledger -2.428e-09  dumps -8.845e-08
+  86000 ledger -3.877e-09  dumps -8.846e-08
+  91000 ledger -1.057e-08  dumps -8.847e-08
+  96000 ledger +1.304e-08  dumps -8.847e-08
+ 101000 ledger +3.330e-09  dumps -8.848e-08
+ 106000 ledger -1.606e-08  dumps -8.849e-08
+ 111000 ledger -2.815e-08  dumps -8.849e-08
+ 116000 ledger +5.668e-10  dumps -8.850e-08
+ 121000 ledger -9.089e-09  dumps -8.852e-08
+ 126000 ledger -3.842e-08  dumps -4.038e-07
+ 131000 ledger -2.483e-08  dumps -4.038e-07
+ 136000 ledger -1.727e-08  dumps -4.038e-07
+ 141000 ledger -3.818e-08  dumps -4.038e-07
+ 146000 ledger -3.080e-08  dumps -4.038e-07
+ 151000 ledger -1.468e-08  dumps -4.038e-07
+ 156000 ledger -1.903e-08  dumps -4.038e-07
+ 161000 ledger -5.732e-08  dumps -4.038e-07
+ 166000 ledger -3.889e-08  dumps -4.038e-07
+ 170784 ledger -2.266e-08  dumps -4.038e-07
+ 170784 ledger -2.266e-08  dumps -4.038e-07
+ledger worst 5.732e-08 at 161000 · dumps worst 4.038e-07 at 158000 · bound 1e-6 · start 3136.720201
+== resume check with carry: life2 s_124000 -> 125000 2026-11-19T13:20:07-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=1406.635935 until=none
+IDENTICAL (carry "mass_carry":-8.108931979222689e-7)
+== adversarial: 100-step spacing, life3 s_160000 -> 162000 2026-11-19T13:20:29-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=1741.825755 until=none
+100-step spacing, steps 160,100-162,000: 20 checkpoints, Σ+carry vs s_160000 worst +0.000e+00 sb (0.00e+00 rel) at 160100; vacuum reset in window: none expected
+== verify ledger 2026-11-19T13:21:13-05:00
+== proportional give-back: late window 160000->ending 2026-11-19T13:25:40-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=10032 sim_time=1791.845799 until=met
+exit 0 113 s
+ 161000 3091.0332468 carry +0.00e+00  3091.0339661 carry -6.47e-05
+ 162000 3091.0327114 carry +0.00e+00  3091.0338141 carry +8.73e-05
+ 163000 3091.0332893 carry +0.00e+00  3091.0339014 carry +3.36e-08
+ 164000 3091.0330730 carry +0.00e+00  3091.0338416 carry +5.98e-05
+ 165000 3091.0327241 carry +0.00e+00  3091.0338413 carry +6.01e-05
+ 166000 3091.0329496 carry +0.00e+00  3091.0339489 carry -4.75e-05
+ 167000 3091.0322301 carry +0.00e+00  3091.0339691 carry -6.77e-05
+ 168000 3091.0317518 carry +0.00e+00  3091.0339748 carry -7.34e-05
+ 169000 3091.0318642 carry +0.00e+00  3091.0338859 carry +1.55e-05
+ 170000 3091.0316751 carry +0.00e+00  3091.0339077 carry -6.26e-06
+ 170032                                 3091.0339658 carry -6.44e-05
+ 170704 3091.0313494 carry +0.00e+00                                
+== shipped (proportional) life chunk 1: 0->60000 2026-11-19T13:28:56-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=60000 sim_time=683.568614 until=none
+exit 0 235 s
+== shipped life chunk 2: 60000->125000 2026-11-19T13:32:56-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=65000 sim_time=1406.794492 until=none
+exit 0 168 s
+== shipped life chunk 3: 125000->ending 2026-11-19T13:35:49-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=44976 sim_time=1791.629698 until=met
+exit 0 342 s
+   1000 ledger +2.762e-08  dumps +3.096e-09
+   6000 ledger +2.217e-08  dumps +3.093e-09
+  11000 ledger +1.642e-08  dumps +3.093e-09
+  16000 ledger -9.532e-09  dumps +3.093e-09
+  21000 ledger -5.213e-09  dumps +3.093e-09
+  26000 ledger -1.531e-08  dumps +3.093e-09
+  31000 ledger -7.692e-09  dumps +3.090e-09
+  36000 ledger -1.575e-08  dumps +3.087e-09
+  41000 ledger +2.033e-08  dumps +3.083e-09
+  46000 ledger +6.500e-09  dumps +3.079e-09
+  51000 ledger +4.065e-09  dumps +3.076e-09
+  56000 ledger -8.160e-09  dumps +3.074e-09
+  61000 ledger +1.427e-08  dumps -8.686e-08
+  66000 ledger +8.829e-09  dumps -8.687e-08
+  71000 ledger -3.367e-09  dumps -8.687e-08
+  76000 ledger -3.067e-09  dumps -8.687e-08
+  81000 ledger +4.341e-08  dumps -8.688e-08
+  86000 ledger +2.144e-08  dumps -8.689e-08
+  91000 ledger +2.129e-08  dumps -8.689e-08
+  96000 ledger +5.079e-08  dumps -8.690e-08
+ 101000 ledger -1.910e-08  dumps -8.691e-08
+ 106000 ledger +4.034e-08  dumps -8.692e-08
+ 111000 ledger +2.500e-08  dumps -8.693e-08
+ 116000 ledger -2.468e-08  dumps -8.693e-08
+ 121000 ledger -2.795e-09  dumps -8.694e-08
+ 126000 ledger +2.458e-09  dumps -4.096e-07
+ 131000 ledger -2.142e-08  dumps -4.096e-07
+ 136000 ledger -7.021e-09  dumps -4.096e-07
+ 141000 ledger +5.501e-09  dumps -4.096e-07
+ 146000 ledger +3.874e-08  dumps -4.096e-07
+ 151000 ledger +3.192e-08  dumps -4.096e-07
+ 156000 ledger +9.154e-09  dumps -4.096e-07
+ 161000 ledger -2.470e-09  dumps -4.096e-07
+ 166000 ledger +6.702e-08  dumps -4.096e-07
+ 169976 ledger -6.477e-09  dumps -4.096e-07
+ledger worst 6.702e-08 at 166000 · dumps worst 4.096e-07 at 136000 · bound 1e-6 · start 3136.720199
+== shipped: resume check life3 s_164000 -> 165000, adversarial 100-step spacing 160000 -> 162000 2026-11-19T13:41:43-05:00
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=1759.219321 until=none
+resume IDENTICAL (carry at 164000: "mass_carry":-0.000032376774470321834)
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2000 sim_time=1740.942977 until=none
+100-step spacing, 160,100-162,000: 20 checkpoints; grid alone worst 6.95e-05 sb (2.2e-08), grid + carry worst 0.00e+00 sb

@@ -9,7 +9,8 @@
 //! bit for bit (§1.3.4) — Δt_n and Δt_{n+1} (`dt`, `dt_next`), the latch's sim time since its last set (`latch_since`,
 //! its arming, §1.8.5), the active box's record (`box`: x0, y0, w, h, fft_w, fft_h, from_step, fits) and its indirect
 //! sizes (`box_args`, §1.3.3), whether F follows the channels (`flux`, §0.5 [M0-D33]) and whether P5's rate follows F
-//! (`rate`, §0.5 [M0-D85]; a header without the key reads false). f32 values are written as JSON numbers, which carry them
+//! (`rate`, §0.5 [M0-D85]; a header without the key reads false), and [M0-D195] P4's mass carry (`mass_carry`, written
+//! only when not 0; a header without the key reads 0). f32 values are written as JSON numbers, which carry them
 //! exactly.
 //!
 //! When the run runs P5, F's two f32 planes (`side.flux`: F_x, then F_y, row-major) follow the fourteen channels and
@@ -59,6 +60,9 @@ pub struct Resume {
     pub latch_since: f32,
     pub box_record: [u32; 8],
     pub box_args: [u32; 6],
+    /// [M0-D195] The mass P4's give-back left to carry into the next step (hydro.wgsl MASS_CARRY): written as
+    /// `resume.mass_carry` when it is not 0, and a header without the key reads 0.
+    pub mass_carry: f32,
 }
 
 /// A state dump in memory: the header's values and the planes in canonical order.
@@ -105,6 +109,9 @@ impl Dump {
         });
         if self.held.is_some() {
             header["resume"]["held"] = true.into();
+        }
+        if r.mass_carry != 0.0 {
+            header["resume"]["mass_carry"] = f64::from(r.mass_carry).into();
         }
         header
     }
@@ -311,7 +318,7 @@ fn parse_header(v: &Value) -> Result<(Dump, bool, bool, bool), String> {
         })
         .collect::<Result<Vec<Sink>, String>>()?;
     let at_r = "header.resume";
-    let r = object_with(&m["resume"], at_r, &["dt", "dt_next", "latch_since", "box", "box_args", "flux"], &["rate", "held"])?;
+    let r = object_with(&m["resume"], at_r, &["dt", "dt_next", "latch_since", "box", "box_args", "flux"], &["rate", "held", "mass_carry"])?;
     let flux = r["flux"].as_bool().ok_or_else(|| format!("{at_r}.flux: not true or false: {}", r["flux"]))?;
     // A header without the key — every dump written before it — reads false.
     let optional = |k: &str| match r.get(k) {
@@ -329,6 +336,7 @@ fn parse_header(v: &Value) -> Result<(Dump, bool, bool, bool), String> {
         latch_since: f32_of("latch_since")?,
         box_record: words(r, at_r, "box")?,
         box_args: words(r, at_r, "box_args")?,
+        mass_carry: if r.contains_key("mass_carry") { f32_of("mass_carry")? } else { 0.0 },
     };
     let dump = Dump {
         world,

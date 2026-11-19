@@ -1,0 +1,120 @@
+== 2026-11-19T11:36:35-05:00 booking · task M0-D199 · box laserax-ai :: bash tests/gpu.sh booking physics
+-- booking · exit=101 · 0.82 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 4 tests
+test booking::every_terms_f64_total_equals_the_expected_total_over_16_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+44 terms, 7228000 values, 16 steps: worst relative error 0e0 (tolerance 1e-9)
+ok
+test booking::the_clear_empties_every_term ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test booking::the_layout_names_every_term_and_accumulator_with_its_writer ... 
+thread 'booking::the_layout_names_every_term_and_accumulator_with_its_writer' (809116) panicked at crates/sr-engine/tests/gpu/booking.rs:256:5:
+assertion `left == right` failed
+  left: [("mass.painted", Edits, false), ("mass.erased", Edits, false), ("mass.preset_dropped", Edits, false), ("mass.cleared", Edits, false), ("energy.tools.painted", Edits, false), ("energy.tools.erased", Edits, false), ("energy.tools.heated", Edits, false), ("energy.tools.cooled", Edits, false), ("energy.tools.preset", Edits, false), ("energy.tools.cleared", Edits, false), ("energy.swallowed", Sinks, false), ("escaped.mass", Hydro, false), ("escaped.mom_x", Hydro, false), ("escaped.mom_y", Hydro, false), ("escaped.energy", Hydro, false), ("escaped.mass.x_H", Hydro, false), ("escaped.mass.x_He", Hydro, false), ("escaped.mass.x_C", Hydro, false), ("escaped.mass.x_O", Hydro, false), ("escaped.mass.x_Ne", Hydro, false), ("escaped.mass.x_Mg", Hydro, false), ("escaped.mass.x_Si", Hydro, false), ("escaped.mass.x_S", Hydro, false), ("escaped.mass.x_Fe", Hydro, false), ("escaped.mass.x_n", Hydro, false), ("radiated", Heat, true), ("nuclear.H", Reactions, true), ("nuclear.He", Reactions, true), ("nuclear.C", Reactions, true), ("nuclear.Ne", Reactions, true), ("nuclear.O", Reactions, true), ("nuclear.Si", Reactions, true), ("nuclear.N", Reactions, true), ("neutrino_lost", Reactions, true), ("neutrino_deposited", NeutrinoHeating, true), ("mass.vacuum_reset", Floors, false), ("energy.floor_added", Floors, false), ("held.mom_x", Floors, false), ("held.mom_y", Floors, false), ("held.spared.mom_x", Hydro, false), ("held.spared.mom_y", Hydro, false), ("energy.edit_potential", Gravity, false), ("vacuum_reset.mom_x", Floors, false), ("vacuum_reset.mom_y", Floors, false)]
+ right: [("mass.painted", Edits, false), ("mass.erased", Edits, false), ("mass.preset_dropped", Edits, false), ("mass.cleared", Edits, false), ("energy.tools.painted", Edits, false), ("energy.tools.erased", Edits, false), ("energy.tools.heated", Edits, false), ("energy.tools.cooled", Edits, false), ("energy.tools.preset", Edits, false), ("energy.tools.cleared", Edits, false), ("energy.swallowed", Sinks, false), ("escaped.mass", Hydro, false), ("escaped.mom_x", Hydro, false), ("escaped.mom_y", Hydro, false), ("escaped.energy", Hydro, false), ("escaped.mass.x_H", Hydro, false), ("escaped.mass.x_He", Hydro, false), ("escaped.mass.x_C", Hydro, false), ("escaped.mass.x_O", Hydro, false), ("escaped.mass.x_Ne", Hydro, false), ("escaped.mass.x_Mg", Hydro, false), ("escaped.mass.x_Si", Hydro, false), ("escaped.mass.x_S", Hydro, false), ("escaped.mass.x_Fe", Hydro, false), ("escaped.mass.x_n", Hydro, false), ("radiated", Heat, true), ("nuclear.H", Reactions, true), ("nuclear.He", Reactions, true), ("nuclear.C", Reactions, true), ("nuclear.Ne", Reactions, true), ("nuclear.O", Reactions, true), ("nuclear.Si", Reactions, true), ("nuclear.N", Reactions, true), ("neutrino_lost", Reactions, true), ("neutrino_deposited", NeutrinoHeating, true), ("mass.vacuum_reset", Floors, false), ("energy.floor_added", Floors, false), ("held.mom_x", Floors, false), ("held.mom_y", Floors, false), ("held.spared.mom_x", Hydro, false), ("held.spared.mom_y", Hydro, false), ("energy.edit_potential", Gravity, false)]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test booking::two_runs_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+
+failures:
+
+failures:
+    booking::the_layout_names_every_term_and_accumulator_with_its_writer
+
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 532 filtered out; finished in 0.70s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+== 2026-11-19T11:43:02-05:00 booking · task M0-D199 · box laserax-ai :: bash tests/gpu.sh booking physics
+-- booking · exit=101 · 0.77 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 4 tests
+test booking::every_terms_f64_total_equals_the_expected_total_over_16_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+44 terms, 7228000 values, 16 steps: worst relative error 0e0 (tolerance 1e-9)
+ok
+test booking::the_clear_empties_every_term ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test booking::the_layout_names_every_term_and_accumulator_with_its_writer ... 
+thread 'booking::the_layout_names_every_term_and_accumulator_with_its_writer' (827200) panicked at crates/sr-engine/tests/gpu/booking.rs:256:5:
+assertion `left == right` failed
+  left: [("mass.painted", Edits, false), ("mass.erased", Edits, false), ("mass.preset_dropped", Edits, false), ("mass.cleared", Edits, false), ("energy.tools.painted", Edits, false), ("energy.tools.erased", Edits, false), ("energy.tools.heated", Edits, false), ("energy.tools.cooled", Edits, false), ("energy.tools.preset", Edits, false), ("energy.tools.cleared", Edits, false), ("energy.swallowed", Sinks, false), ("escaped.mass", Hydro, false), ("escaped.mom_x", Hydro, false), ("escaped.mom_y", Hydro, false), ("escaped.energy", Hydro, false), ("escaped.mass.x_H", Hydro, false), ("escaped.mass.x_He", Hydro, false), ("escaped.mass.x_C", Hydro, false), ("escaped.mass.x_O", Hydro, false), ("escaped.mass.x_Ne", Hydro, false), ("escaped.mass.x_Mg", Hydro, false), ("escaped.mass.x_Si", Hydro, false), ("escaped.mass.x_S", Hydro, false), ("escaped.mass.x_Fe", Hydro, false), ("escaped.mass.x_n", Hydro, false), ("radiated", Heat, true), ("nuclear.H", Reactions, true), ("nuclear.He", Reactions, true), ("nuclear.C", Reactions, true), ("nuclear.Ne", Reactions, true), ("nuclear.O", Reactions, true), ("nuclear.Si", Reactions, true), ("nuclear.N", Reactions, true), ("neutrino_lost", Reactions, true), ("neutrino_deposited", NeutrinoHeating, true), ("mass.vacuum_reset", Floors, false), ("energy.floor_added", Floors, false), ("held.mom_x", Floors, false), ("held.mom_y", Floors, false), ("held.spared.mom_x", Hydro, false), ("held.spared.mom_y", Hydro, false), ("energy.edit_potential", Gravity, false), ("vacuum_reset.mom_x", Floors, false), ("vacuum_reset.mom_y", Floors, false)]
+ right: [("mass.painted", Edits, false), ("mass.erased", Edits, false), ("mass.preset_dropped", Edits, false), ("mass.cleared", Edits, false), ("energy.tools.painted", Edits, false), ("energy.tools.erased", Edits, false), ("energy.tools.heated", Edits, false), ("energy.tools.cooled", Edits, false), ("energy.tools.preset", Edits, false), ("energy.tools.cleared", Edits, false), ("energy.swallowed", Sinks, false), ("escaped.mass", Hydro, false), ("escaped.mom_x", Hydro, false), ("escaped.mom_y", Hydro, false), ("escaped.energy", Hydro, false), ("escaped.mass.x_H", Hydro, false), ("escaped.mass.x_He", Hydro, false), ("escaped.mass.x_C", Hydro, false), ("escaped.mass.x_O", Hydro, false), ("escaped.mass.x_Ne", Hydro, false), ("escaped.mass.x_Mg", Hydro, false), ("escaped.mass.x_Si", Hydro, false), ("escaped.mass.x_S", Hydro, false), ("escaped.mass.x_Fe", Hydro, false), ("escaped.mass.x_n", Hydro, false), ("radiated", Heat, true), ("nuclear.H", Reactions, true), ("nuclear.He", Reactions, true), ("nuclear.C", Reactions, true), ("nuclear.Ne", Reactions, true), ("nuclear.O", Reactions, true), ("nuclear.Si", Reactions, true), ("nuclear.N", Reactions, true), ("neutrino_lost", Reactions, true), ("neutrino_deposited", NeutrinoHeating, true), ("mass.vacuum_reset", Floors, false), ("energy.floor_added", Floors, false), ("held.mom_x", Floors, false), ("held.mom_y", Floors, false), ("held.spared.mom_x", Hydro, false), ("held.spared.mom_y", Hydro, false), ("energy.edit_potential", Gravity, false)]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test booking::two_runs_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+
+failures:
+
+failures:
+    booking::the_layout_names_every_term_and_accumulator_with_its_writer
+
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 532 filtered out; finished in 0.64s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+== 2026-11-19T11:47:33-05:00 booking · task M0-D199 · box laserax-ai :: bash tests/gpu.sh booking physics
+-- booking · exit=101 · 0.97 s
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 4 tests
+test booking::every_terms_f64_total_equals_the_expected_total_over_16_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+44 terms, 7228000 values, 16 steps: worst relative error 0e0 (tolerance 1e-9)
+ok
+test booking::the_clear_empties_every_term ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test booking::the_layout_names_every_term_and_accumulator_with_its_writer ... 
+thread 'booking::the_layout_names_every_term_and_accumulator_with_its_writer' (840584) panicked at crates/sr-engine/tests/gpu/booking.rs:256:5:
+assertion `left == right` failed
+  left: [("mass.painted", Edits, false), ("mass.erased", Edits, false), ("mass.preset_dropped", Edits, false), ("mass.cleared", Edits, false), ("energy.tools.painted", Edits, false), ("energy.tools.erased", Edits, false), ("energy.tools.heated", Edits, false), ("energy.tools.cooled", Edits, false), ("energy.tools.preset", Edits, false), ("energy.tools.cleared", Edits, false), ("energy.swallowed", Sinks, false), ("escaped.mass", Hydro, false), ("escaped.mom_x", Hydro, false), ("escaped.mom_y", Hydro, false), ("escaped.energy", Hydro, false), ("escaped.mass.x_H", Hydro, false), ("escaped.mass.x_He", Hydro, false), ("escaped.mass.x_C", Hydro, false), ("escaped.mass.x_O", Hydro, false), ("escaped.mass.x_Ne", Hydro, false), ("escaped.mass.x_Mg", Hydro, false), ("escaped.mass.x_Si", Hydro, false), ("escaped.mass.x_S", Hydro, false), ("escaped.mass.x_Fe", Hydro, false), ("escaped.mass.x_n", Hydro, false), ("radiated", Heat, true), ("nuclear.H", Reactions, true), ("nuclear.He", Reactions, true), ("nuclear.C", Reactions, true), ("nuclear.Ne", Reactions, true), ("nuclear.O", Reactions, true), ("nuclear.Si", Reactions, true), ("nuclear.N", Reactions, true), ("neutrino_lost", Reactions, true), ("neutrino_deposited", NeutrinoHeating, true), ("mass.vacuum_reset", Floors, false), ("energy.floor_added", Floors, false), ("held.mom_x", Floors, false), ("held.mom_y", Floors, false), ("held.spared.mom_x", Hydro, false), ("held.spared.mom_y", Hydro, false), ("energy.edit_potential", Gravity, false), ("vacuum_reset.mom_x", Floors, false), ("vacuum_reset.mom_y", Floors, false)]
+ right: [("mass.painted", Edits, false), ("mass.erased", Edits, false), ("mass.preset_dropped", Edits, false), ("mass.cleared", Edits, false), ("energy.tools.painted", Edits, false), ("energy.tools.erased", Edits, false), ("energy.tools.heated", Edits, false), ("energy.tools.cooled", Edits, false), ("energy.tools.preset", Edits, false), ("energy.tools.cleared", Edits, false), ("energy.swallowed", Sinks, false), ("escaped.mass", Hydro, false), ("escaped.mom_x", Hydro, false), ("escaped.mom_y", Hydro, false), ("escaped.energy", Hydro, false), ("escaped.mass.x_H", Hydro, false), ("escaped.mass.x_He", Hydro, false), ("escaped.mass.x_C", Hydro, false), ("escaped.mass.x_O", Hydro, false), ("escaped.mass.x_Ne", Hydro, false), ("escaped.mass.x_Mg", Hydro, false), ("escaped.mass.x_Si", Hydro, false), ("escaped.mass.x_S", Hydro, false), ("escaped.mass.x_Fe", Hydro, false), ("escaped.mass.x_n", Hydro, false), ("radiated", Heat, true), ("nuclear.H", Reactions, true), ("nuclear.He", Reactions, true), ("nuclear.C", Reactions, true), ("nuclear.Ne", Reactions, true), ("nuclear.O", Reactions, true), ("nuclear.Si", Reactions, true), ("nuclear.N", Reactions, true), ("neutrino_lost", Reactions, true), ("neutrino_deposited", NeutrinoHeating, true), ("mass.vacuum_reset", Floors, false), ("energy.floor_added", Floors, false), ("held.mom_x", Floors, false), ("held.mom_y", Floors, false), ("held.spared.mom_x", Hydro, false), ("held.spared.mom_y", Hydro, false), ("energy.edit_potential", Gravity, false)]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test booking::two_runs_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+
+failures:
+
+failures:
+    booking::the_layout_names_every_term_and_accumulator_with_its_writer
+
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 532 filtered out; finished in 0.82s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+== 2026-11-19T11:54:58-05:00 booking · task M0-D199 · box laserax-ai :: bash tests/gpu.sh booking physics
+-- booking · exit=101 · 2.02 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 4 tests
+test booking::every_terms_f64_total_equals_the_expected_total_over_16_steps ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+44 terms, 7228000 values, 16 steps: worst relative error 0e0 (tolerance 1e-9)
+ok
+test booking::the_clear_empties_every_term ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+test booking::the_layout_names_every_term_and_accumulator_with_its_writer ... 
+thread 'booking::the_layout_names_every_term_and_accumulator_with_its_writer' (920337) panicked at crates/sr-engine/tests/gpu/booking.rs:256:5:
+assertion `left == right` failed
+  left: [("mass.painted", Edits, false), ("mass.erased", Edits, false), ("mass.preset_dropped", Edits, false), ("mass.cleared", Edits, false), ("energy.tools.painted", Edits, false), ("energy.tools.erased", Edits, false), ("energy.tools.heated", Edits, false), ("energy.tools.cooled", Edits, false), ("energy.tools.preset", Edits, false), ("energy.tools.cleared", Edits, false), ("energy.swallowed", Sinks, false), ("escaped.mass", Hydro, false), ("escaped.mom_x", Hydro, false), ("escaped.mom_y", Hydro, false), ("escaped.energy", Hydro, false), ("escaped.mass.x_H", Hydro, false), ("escaped.mass.x_He", Hydro, false), ("escaped.mass.x_C", Hydro, false), ("escaped.mass.x_O", Hydro, false), ("escaped.mass.x_Ne", Hydro, false), ("escaped.mass.x_Mg", Hydro, false), ("escaped.mass.x_Si", Hydro, false), ("escaped.mass.x_S", Hydro, false), ("escaped.mass.x_Fe", Hydro, false), ("escaped.mass.x_n", Hydro, false), ("radiated", Heat, true), ("nuclear.H", Reactions, true), ("nuclear.He", Reactions, true), ("nuclear.C", Reactions, true), ("nuclear.Ne", Reactions, true), ("nuclear.O", Reactions, true), ("nuclear.Si", Reactions, true), ("nuclear.N", Reactions, true), ("neutrino_lost", Reactions, true), ("neutrino_deposited", NeutrinoHeating, true), ("mass.vacuum_reset", Floors, false), ("energy.floor_added", Floors, false), ("held.mom_x", Floors, false), ("held.mom_y", Floors, false), ("held.spared.mom_x", Hydro, false), ("held.spared.mom_y", Hydro, false), ("energy.edit_potential", Gravity, false), ("vacuum_reset.mom_x", Floors, false), ("vacuum_reset.mom_y", Floors, false)]
+ right: [("mass.painted", Edits, false), ("mass.erased", Edits, false), ("mass.preset_dropped", Edits, false), ("mass.cleared", Edits, false), ("energy.tools.painted", Edits, false), ("energy.tools.erased", Edits, false), ("energy.tools.heated", Edits, false), ("energy.tools.cooled", Edits, false), ("energy.tools.preset", Edits, false), ("energy.tools.cleared", Edits, false), ("energy.swallowed", Sinks, false), ("escaped.mass", Hydro, false), ("escaped.mom_x", Hydro, false), ("escaped.mom_y", Hydro, false), ("escaped.energy", Hydro, false), ("escaped.mass.x_H", Hydro, false), ("escaped.mass.x_He", Hydro, false), ("escaped.mass.x_C", Hydro, false), ("escaped.mass.x_O", Hydro, false), ("escaped.mass.x_Ne", Hydro, false), ("escaped.mass.x_Mg", Hydro, false), ("escaped.mass.x_Si", Hydro, false), ("escaped.mass.x_S", Hydro, false), ("escaped.mass.x_Fe", Hydro, false), ("escaped.mass.x_n", Hydro, false), ("radiated", Heat, true), ("nuclear.H", Reactions, true), ("nuclear.He", Reactions, true), ("nuclear.C", Reactions, true), ("nuclear.Ne", Reactions, true), ("nuclear.O", Reactions, true), ("nuclear.Si", Reactions, true), ("nuclear.N", Reactions, true), ("neutrino_lost", Reactions, true), ("neutrino_deposited", NeutrinoHeating, true), ("mass.vacuum_reset", Floors, false), ("energy.floor_added", Floors, false), ("held.mom_x", Floors, false), ("held.mom_y", Floors, false), ("held.spared.mom_x", Hydro, false), ("held.spared.mom_y", Hydro, false), ("energy.edit_potential", Gravity, false)]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test booking::two_runs_are_bit_identical ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ok
+
+failures:
+
+failures:
+    booking::the_layout_names_every_term_and_accumulator_with_its_writer
+
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 532 filtered out; finished in 1.89s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

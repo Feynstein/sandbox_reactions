@@ -1,0 +1,8 @@
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test age::the_graders_refuse_a_falling_age_a_jump_and_a_clock_off_the_suns_life ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 538 filtered out; finished in 0.00s
+

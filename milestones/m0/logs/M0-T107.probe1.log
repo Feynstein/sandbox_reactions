@@ -1,0 +1,32 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 19.23s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test age::the_age_of_the_massive_star_never_falls_and_never_jumps_under_a_paint_and_an_erase ... graders graded on hand-made values
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+touch step=3200 t=24.71 stage=main_sequence id=1 M=9499.5 X_H,c=0.660 Σ_c=5.665 R=52.7 age=1.1926e6 yr
+touch step=6400 t=57.74 stage=main_sequence id=1 M=9874.2 X_H,c=0.526 Σ_c=8.841 R=54.7 age=4.1710e6 yr
+touch step=9600 t=90.95 stage=main_sequence id=1 M=9518.9 X_H,c=0.328 Σ_c=13.010 R=86.1 age=7.8502e6 yr
+touch step=12811 t=120.80 stage=he_core id=1 M=7905.8 X_H,c=0.123 Σ_c=27.940 R=149.4 age=1.2819e7 yr
+touch step=16011 t=149.97 stage=o_burn id=1 M=6496.4 X_H,c=0.021 Σ_c=65.672 R=190.5 age=1.3205e7 yr
+touch step=19211 t=174.90 stage=iron_core id=1 M=4912.8 X_H,c=0.000 Σ_c=146.526 R=202.0 age=1.4346e7 yr
+touch step=22411 t=194.71 stage=main_sequence id=1 M=4091.5 X_H,c=0.110 Σ_c=297.132 R=117.2 age=2.5788e7 yr
+touch step=24546 t=205.85 stage=neutron_star id=1 M=3907.4 X_H,c=0.077 Σ_c=655.265 R=2.0 age=5.6562e8 yr
+SR-HEADLESS DONE steps=25746 sim_time=212.170003 until=met
+touch: 25746 steps, exit 0, 1675 ticks with an age, summary objects [{"age_years":1197184151.904356,"at_x_h":{"luminosity":110925.99106337344,"radius":86.00749219455614,"sim_time":88.01962706586346,"x_h_c":0.35},"ending":"neutron_star","id":1,"mass_sb":3652.0809302721177,"mass_suns":1.960533776247453,"predicted_ending":["white_dwarf"],"stage":"neutron_star","stages":[{"from_step":3,"sim_time":0.03981781657785177,"stage":"protostar"},{"from_step":664,"sim_time":3.929624699056149,"stage":"main_sequence"},{"from_step":6473,"sim_time":58.4456414389424,"stage":"he_core"},{"from_step":6634,"sim_time":59.87847047345713,"stage":"main_sequence"},{"from_step":10299,"sim_time":96.42705685831606,"stage":"he_core"},{"from_step":10603,"sim_time":98.71156980888918,"stage":"main_sequence"},{"from_step":10699,"sim_time":99.63789574569093,"stage":"he_core"},{"from_step":10795,"sim_time":100.61522967880592,"stage":"main_sequence"},{"from_step":11067,"sim_time":103.38205028278752,"stage":"he_core"},{"from_step":11179,"sim_time":104.51638275710866,"stage":"main_sequence"},{"from_step":11387,"sim_time":106.61959642590956,"stage":"he_core"},{"from_step":11531,"sim_time":108.06849412387236,"stage":"main_sequence"},{"from_step":11707,"sim_time":109.8424091306515,"stage":"he_core"},{"from_step":11883,"sim_time":111.60507282195611,"stage":"main_sequence"},{"from_step":12027,"sim_time":113.0484500802122,"stage":"he_core"},{"from_step":14683,"sim_time":138.4052968560718,"stage":"o_burn"},{"from_step":16363,"sim_time":152.94247658597305,"stage":"si_burn"},{"from_step":16923,"sim_time":157.57683504885065,"stage":"main_sequence"},{"from_step":17195,"sim_time":159.7748649851419,"stage":"iron_core"},{"from_step":21099,"sim_time":187.28408981161192,"stage":"o_burn"},{"from_step":21195,"sim_time":187.85739020071924,"stage":"main_sequence"},{"from_step":21371,"sim_time":188.89260700019076,"stage":"o_burn"},{"from_step":21499,"sim_time":189.6403950471431,"stage":"main_sequence"},{"from_step":22491,"sim_time":195.13943870319056,"stage":"core_collapse"},{"from_step":22573,"sim_time":195.56882631964984,"stage":"o_burn"},{"from_step":22637,"sim_time":195.9006649684161,"stage":"main_sequence"},{"from_step":22733,"sim_time":196.39869066048416,"stage":"o_burn"},{"from_step":22781,"sim_time":196.6478087902069,"stage":"main_sequence"},{"from_step":23085,"sim_time":198.22200663480908,"stage":"core_collapse"},{"from_step":23145,"sim_time":198.53057265793905,"stage":"neutron_star"},{"from_step":23369,"sim_time":199.66596721718088,"stage":"main_sequence"},{"from_step":23801,"sim_time":201.8754157437943,"stage":"core_collapse"},{"from_step":23842,"sim_time":202.10106570692733,"stage":"neutron_star"}]}]
+touch: the edits: Err("the erase took 19.8 % of the mass (9874.2 → 7917.8 sb), under 20 %")
+
+thread 'age::the_age_of_the_massive_star_never_falls_and_never_jumps_under_a_paint_and_an_erase' (1454252) panicked at crates/sr-engine/tests/gpu/age.rs:398:19:
+touch: the erase took 19.8 % of the mass (9874.2 → 7917.8 sb), under 20 %
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    age::the_age_of_the_massive_star_never_falls_and_never_jumps_under_a_paint_and_an_erase
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 538 filtered out; finished in 360.00s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`

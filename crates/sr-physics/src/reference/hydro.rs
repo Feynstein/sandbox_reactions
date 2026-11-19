@@ -25,7 +25,14 @@
 //! — both ghosts copy the edge cell with the normal velocity clamped outward, the boundary face's flux is HLL between the
 //! edge cell's predicted face and the ghost's, and a face whose mass flux points inward is a wall instead, so inflow is
 //! exactly 0; whatever crosses — mass, momentum, energy, each species' mass — is booked into [`State::escaped`] from that
-//! face flux, face by face in the GPU booking's layout. Bounce books nothing.
+//! face flux, face by face in the GPU booking's layout. [M0-D194] Bounce books its walls' pressure impulse there, the
+//! box's recoil (§2.9 [M0-D194]); its mass, energy and species stay 0.
+//!
+//! [M0-D194] Gravity's net kick on the gas's own field — Σ Δt·Σ_src,mid·g_mid over the free cells plus Σ Δt·Σ_src,mid·
+//! g_pull_mid over the held ones, the sinks' part left out, so the held core's and the sinks' pulls (booked `held`, and by
+//! P3) cancel out of it: 0 in exact arithmetic, ~4 × 10⁻⁹ of its gross a step through the GPU's f32 FFT — is taken back
+//! after the update from the densest free cell's momentum (the largest Σ_src, the lowest index on a tie), E as it is
+//! (§1.4.2 [M0-D194]); here, in f64, it is ~10⁻¹⁷ of the gross.
 //!
 //! Gravity's source (§1.4.2; M0-T36), when a step is given P2's field ([`Hydro::step_with`]): the Hancock predictor kicks
 //! each face state by half a step of g — its velocity by ½Δt·g, its energy by the work Σ(u + ¼Δt·g)·g·½Δt, so the kick
@@ -828,22 +835,31 @@ impl Hydro {
                 })
                 .collect();
             let mut solver = grav::Gravity::new(grav::G);
+            // Each solve returns the field the step reads and [M0-D194] the gas's own, without the sinks' part.
             let mut solve = |source: &[f64], given: &Field, base: &[f64]| {
                 let own = solver.field(source, self.sigma_vac, w, h).expect("the step's world pads within the FFT");
                 let at_n = solver.field(base, self.sigma_vac, w, h).expect("the step's world pads within the FFT");
                 let plus = |a: &[f64], g: &[f64], b: &[f64]| (0..n).map(|i| a[i] + (g[i] - b[i])).collect::<Vec<f64>>();
-                Field { phi: plus(&own.phi, &given.phi, &at_n.phi), gx: plus(&own.gx, &given.gx, &at_n.gx), gy: plus(&own.gy, &given.gy, &at_n.gy) }
+                let total =
+                    Field { phi: plus(&own.phi, &given.phi, &at_n.phi), gx: plus(&own.gx, &given.gx, &at_n.gx), gy: plus(&own.gy, &given.gy, &at_n.gy) };
+                (total, own)
             };
-            let field = solve(&src, given, st.plane(0));
-            let pull = pull.filter(|_| !held.is_empty()).map(|p| {
-                let free = |v: &[f64]| (0..n).map(|i| if is_held(i) { 0.0 } else { v[i] }).collect::<Vec<f64>>();
-                solve(&free(&src), p, &free(st.plane(0)))
-            });
-            (src, field, pull)
+            let (field, gas) = solve(&src, given, st.plane(0));
+            let (pull, gas_pull) = pull
+                .filter(|_| !held.is_empty())
+                .map(|p| {
+                    let free = |v: &[f64]| (0..n).map(|i| if is_held(i) { 0.0 } else { v[i] }).collect::<Vec<f64>>();
+                    solve(&free(&src), p, &free(st.plane(0)))
+                })
+                .unzip();
+            (src, field, pull, gas, gas_pull)
         });
         let mut spared = [0.0f64; 2];
         // The radiation force's push each cell took (§2.4.4 [M0-D184]), its net taken back after the update.
         let mut push = vec![[0.0f64; 2]; n];
+        // [M0-D194] Gravity's net kick on the gas's own field and the densest free cell (Σ_src, index), the net taken back there.
+        let mut kick_net = [0.0f64; 2];
+        let mut densest: Option<(f64, usize)> = None;
 
         // The update, in place; a cell with no gas around it stays empty.
         let mut next = st.clone();
@@ -881,9 +897,17 @@ impl Hydro {
                 // work across φ_mid and the pairs' impulses (module doc): each face as its low cell and its high cell both
                 // read it. A face on the world's edge does none (its φ difference is 0). A held cell's kick and impulses are
                 // booked, not taken; no work crosses a still face (§1.4.2 [M0-TG2]).
-                if let Some((src, f, pull)) = &mid_field {
+                if let Some((src, f, pull, gas, gas_pull)) = &mid_field {
                     let m = mids[i];
                     let mut kick = [dt * src[i] * f.gx[i], dt * src[i] * f.gy[i]];
+                    // [M0-D194] The net kick on the gas's own field — a free cell's g_mid, a held cell's g_pull_mid (its spared
+                    // kick) —, so the held core's and the sinks' pulls, booked elsewhere, cancel out of it; and the densest free
+                    // cell (the lowest index on a tie).
+                    let own = if held_here { gas_pull.as_ref().unwrap_or(gas) } else { gas };
+                    kick_net = [kick_net[0] + dt * src[i] * own.gx[i], kick_net[1] + dt * src[i] * own.gy[i]];
+                    if !held_here && src[i] > 0.0 && densest.is_none_or(|(s, _)| src[i] > s) {
+                        densest = Some((src[i], i));
+                    }
                     let p = f.phi[i];
                     let next = |nx: usize, ny: usize| (f.phi[ny * w + nx], mids[ny * w + nx]);
                     let (pr, mr) = if x + 1 < w { next(x + 1, y) } else { (p, m) };
@@ -927,9 +951,10 @@ impl Hydro {
                     u[1] += push[i][0];
                     u[2] += push[i][1];
                 }
-                // Escaped, leaving (§2.8): each boundary face of a cell this step moved, its flux as the cell took it — the
-                // grid loses dt·f through a high face, −dt·f through a low one.
-                if self.edge == Edge::Leave {
+                // Escaped (§2.8): each boundary face of a cell this step moved, its flux as the cell took it — the grid
+                // loses dt·f through a high face, −dt·f through a low one; [M0-D194] in bounce, the wall's pressure impulse
+                // alone (its mass, energy and species fluxes 0), the box's recoil.
+                {
                     let crossing = [
                         (x == 0, -1.0, &fx[y * (w + 1)], st.face(0, y)),
                         (x + 1 == w, 1.0, &fx[y * (w + 1) + w], st.face(1, y)),
@@ -939,7 +964,7 @@ impl Hydro {
                     let faces = st.faces();
                     // [M0-D182] The crossing mass's potential energy leaves with it (W rises by δm·|φ|): booked into
                     // `escaped` energy at the edge cell's φ_mid, the face work's; none without gravity.
-                    let phi_edge = mid_field.as_ref().map_or(0.0, |(_, f, _)| f.phi[i]);
+                    let phi_edge = mid_field.as_ref().map_or(0.0, |(_, f, ..)| f.phi[i]);
                     for (edge, sign, f, slot) in crossing {
                         if edge {
                             for (k, fk) in f.iter().enumerate() {
@@ -968,6 +993,11 @@ impl Hydro {
                 next.planes[n + i] -= m * net[0] / net[2];
                 next.planes[2 * n + i] -= m * net[1] / net[2];
             }
+        }
+        // [M0-D194] Gravity's net kick taken back from the densest free cell (module doc), E as it is.
+        if let Some((_, i)) = densest {
+            next.planes[n + i] -= kick_net[0];
+            next.planes[2 * n + i] -= kick_net[1];
         }
         // [M0-D172] The sticky wall (module doc): a free gas cell's momentum into a held face-neighbour stops, E as it is,
         // and is booked `held`; a cell left under Σ_vac is P8's to reset, its momentum booked nowhere.

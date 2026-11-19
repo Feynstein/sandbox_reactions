@@ -1,0 +1,169 @@
+== 2026-11-19T10:33:05-05:00 boot · task M0-D197 · box laserax-ai :: bash tests/smoke.sh headless-boot
+-- boot · exit=0 · 10.68 s
+headless-boot: ready - exit 0, 2.9s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D197.launch.headless-boot.log)
+headless-boot: pid 431186 not signalled - gone
+headless-boot: log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D197.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of §2.12.2, steps = 200
+git revision: a clean tree -> 3b59264
+git revision: only assets/calibration.json rewritten and a log written -> 3b59264
+git revision: a source changed -> 3b59264-dirty
+git revision: a new source untracked -> 3b59264-dirty
+git revision: no repository -> unknown
+--- summary.json (verbatim, as checked) ---
+{
+  "adapter": {
+    "backend": "Vulkan",
+    "driver": "NVIDIA",
+    "name": "Quadro RTX 4000"
+  },
+  "events": [],
+  "git": "a3ad8b2-dirty",
+  "ledger": {
+    "end": {
+      "energy": {
+        "cold": 163417.2586135753,
+        "edit_potential": 0.0,
+        "escaped": 0.0,
+        "floor_added": -0.4547589143490739,
+        "invariant": -180592.08891914968,
+        "kinetic": 61362.03863488081,
+        "neutrino_deposited": 0.0,
+        "neutrino_lost": 0.0,
+        "nuclear_released": 649.9355078935623,
+        "potential": -517425.3605502168,
+        "radiated": 64.1666167190167,
+        "swallowed": 0.0,
+        "thermal": 112639.2885148712,
+        "tools": 0.0
+      },
+      "mass": {
+        "cleared": 0.0,
+        "erased": 0.0,
+        "escaped": 0.0,
+        "grid": 3136.7055075381236,
+        "invariant": 3136.720256499037,
+        "painted": 0.0,
+        "preset_dropped": 0.0,
+        "sinks": 0.0,
+        "vacuum_reset": 0.01474896091335065
+      },
+      "momentum": {
+        "escaped": [
+          0.0,
+          0.0
+        ],
+        "grid": [
+          0.00007848395443943446,
+          8.762048764765495e-6
+        ],
+        "held": [
+          0.0,
+          0.0
+        ],
+        "invariant": [
+          0.00007848395443943446,
+          8.762048764765495e-6
+        ],
+        "sinks": [
+          0.0,
+          0.0
+        ]
+      },
+      "sim_time": 3.5298921894282103,
+      "step": 200
+    },
+    "start": {
+      "energy": {
+        "cold": 34684.23563502729,
+        "edit_potential": 0.0,
+        "escaped": 0.0,
+        "floor_added": 0.0,
+        "invariant": -180593.01331861631,
+        "kinetic": 10.254819960391615,
+        "neutrino_deposited": 0.0,
+        "neutrino_lost": 0.0,
+        "nuclear_released": 0.0,
+        "potential": -239194.62623005817,
+        "radiated": 0.0,
+        "swallowed": 0.0,
+        "thermal": 23907.122456454195,
+        "tools": 0.0
+      },
+      "mass": {
+        "cleared": 0.0,
+        "erased": 0.0,
+        "escaped": 0.0,
+        "grid": 3136.7201981313733,
+        "invariant": 3136.7201981313733,
+        "painted": 0.0,
+        "preset_dropped": 0.0,
+        "sinks": 0.0,
+        "vacuum_reset": 0.0
+      },
+      "momentum": {
+        "escaped": [
+          0.0,
+          0.0
+        ],
+        "grid": [
+          4.284083843231201e-8,
+          -7.916241884231567e-7
+        ],
+        "held": [
+          0.0,
+          0.0
+        ],
+        "invariant": [
+          4.284083843231201e-8,
+          -7.916241884231567e-7
+        ],
+        "sinks": [
+          0.0,
+          0.0
+        ]
+      },
+      "sim_time": 0.030442580580711365,
+      "step": 1
+    }
+  },
+  "max_gas_speed": 9.507055128408075,
+  "objects": [
+    {
+      "age_years": null,
+      "ending": null,
+      "id": 1,
+      "mass_sb": 3136.2062617558986,
+      "mass_suns": 0.9976324319363906,
+      "predicted_ending": [
+        "white_dwarf"
+      ],
+      "stage": null,
+      "stages": []
+    }
+  ],
+  "scene": "preset:sun",
+  "sim_time": 3.5298921894282103,
+  "standins": {
+    "s1": false,
+    "s2": false
+  },
+  "steps": 200,
+  "tool": "sandbox-reactions 0.0.0",
+  "until": {
+    "condition": "steps:200",
+    "met": true
+  },
+  "version": 1,
+  "wall_s": 1.651351843,
+  "world": {
+    "edge": "leave",
+    "height": 400,
+    "width": 600
+  }
+}
+
+--- end summary.json ---
+boot headless-boot: built in 0 s, booted and checked in 10 s
+=== GO ===
+

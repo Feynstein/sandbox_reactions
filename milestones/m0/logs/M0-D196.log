@@ -1,0 +1,40 @@
+M0-D196 log — opened 2026-11-19T09:46:30-05:00 on linux-pc (laserax-ai)
+--- verify edges 2026-11-19T09:48:30-05:00
+anchor: 448 paths checked · 461 skipped (3 classes) · 12 never checked · 13 stale · 0 unclassified · 0 owed · 473 covered of 934 visible
+verify: 7 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 11.80 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 2.43->3.72
+=== GO ===
+--- adversarial injection 2026-11-19T09:49:07-05:00
+test edges::gpu_bounce_returns_the_pulse ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-EDGE-BOUNCE gpu 256x64: 1417 steps to t = 200.1105, v at 0 2.000000e-3, at the end -1.999629e-3, 0.019 % from -v0; mass 1.6e-7 relative; the walls booked (8.202643e0, -2.878904e-5) of gross 1.2812e5, the reversal 2·M·v0 8.203585e0 (0.011 % off); grid + es
+
+thread 'edges::gpu_bounce_returns_the_pulse' (3823804) panicked at crates/sr-engine/tests/gpu/edges.rs:108:9:
+gpu: bounce booked escaped component 0 — only momentum (§2.9 [M0-D194])
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+--
+test edges::gpu_bounce_walls_are_the_twins ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-EDGE-WALLS gpu 128x64 bounce: 209 steps to t = 20.0311; against the twin (Σ, Σu, Σv, E) relative L1 1.54e-7 3.00e-7 1.06e-6 1.50e-7 ≤ 1e-4; the walls' booked impulse (2.410846e3, 3.028199e3) against the twin's (2.410846e3, 3.028199e3): 4.55e-8 1.50e-8 
+
+thread 'edges::gpu_bounce_walls_are_the_twins' (3823822) panicked at crates/sr-engine/tests/gpu/edges.rs:108:9:
+gpu: bounce booked escaped component 0 — only momentum (§2.9 [M0-D194])
+FAILED
+--
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 534 filtered out; finished in 3.13s
+
+--- verify edges + redarm 2026-11-19T09:49:42-05:00
+=== GO ===
+edges · clean: proven by M0-D196 2026-11-19T09:49:48-05:00 (a run of the scope; fingerprint c6510a12bc4e) - not re-run
+edges · plant wall-copy · RED (proven: 1 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope edges · 18.46 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D196.edges.redarm.log
+=== GO ===
+--- claim 2026-11-19T09:50:27-05:00
+CAP: stopping 3827715 and its gpu.sh groups at 2026-11-19T09:59:43-05:00
+--- HEAD a3ad8b2 held_core::gravity_kick 2026-11-19T10:00:15-05:00
+SR-HELD-GRAVITY Δt g M 1.753625e-1 (the held column's share 1.131371e-1); held [0.11720851665833892, 6.029155044040221e-14]; drift [0.010415299427230934, 3.3808096442761735e-13]
+
+thread 'held_core::gravity_kick_on_a_held_cell_is_booked' (4010963) panicked at crates/sr-engine/tests/gpu/held_core.rs:325:5:
+grid + held momentum gained other than Δt·g·M: [0.010415299427230934, 3.3808096442761735e-13]
+--
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 535 filtered out; finished in 0.00s
+

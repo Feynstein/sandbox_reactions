@@ -170,6 +170,7 @@ fn small_dump() -> Dump {
         latch_since: 0.25,
         box_record: [8, 16, 24, 32, 64, 64, 17, 3],
         box_args: [3, 4, 1, 3, 1, 1],
+        mass_carry: 0.0,
     };
     Dump { world, step: 17, sim_time: 7.123456789012345, sinks: Vec::new(), resume, planes, flux: None, rate: None, held: None }
 }

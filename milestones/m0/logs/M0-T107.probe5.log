@@ -1,0 +1,32 @@
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test age::the_age_of_the_massive_star_never_falls_and_never_jumps_under_a_paint_and_an_erase ... graders graded on hand-made values
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+touch step=3200 t=24.71 stage=main_sequence id=1 M=9499.5 X_H,c=0.660 Σ_c=5.665 R=52.7 age=1.1926e6 yr
+touch step=6400 t=57.73 stage=main_sequence id=1 M=11684.3 X_H,c=0.594 Σ_c=10.466 R=50.0 age=4.1611e6 yr
+touch step=9600 t=93.01 stage=main_sequence id=1 M=10379.5 X_H,c=0.497 Σ_c=8.876 R=194.6 age=6.9235e6 yr
+touch step=12800 t=126.05 stage=main_sequence id=1 M=9576.9 X_H,c=0.305 Σ_c=14.121 R=95.5 age=9.9770e6 yr
+touch step=16012 t=154.74 stage=he_core id=1 M=6825.3 X_H,c=0.157 Σ_c=26.165 R=181.8 age=1.7943e7 yr
+touch step=19212 t=184.64 stage=o_burn id=1 M=5763.9 X_H,c=0.041 Σ_c=53.543 R=191.0 age=2.0898e7 yr
+touch step=22412 t=210.24 stage=iron_core id=1 M=4594.6 X_H,c=0.001 Σ_c=118.153 R=200.6 age=3.4464e7 yr
+touch step=25612 t=231.09 stage=main_sequence id=1 M=3814.7 X_H,c=0.086 Σ_c=200.251 R=154.1 age=1.0492e8 yr
+SR-HEADLESS DONE steps=28478 sim_time=246.200774 until=met
+touch: 28478 steps, exit 0, 1796 ticks with an age, summary objects [{"age_years":1108419913.844027,"at_x_h":{"luminosity":104702.03052673672,"radius":92.5471237806167,"sim_time":119.45665563829245,"x_h_c":0.35},"ending":"neutron_star","id":1,"mass_sb":3326.804059751332,"mass_suns":1.563006474664073,"predicted_ending":["white_dwarf"],"stage":"neutron_star","stages":[{"from_step":3,"sim_time":0.03981781657785177,"stage":"protostar"},{"from_step":664,"sim_time":3.929624699056149,"stage":"main_sequence"},{"from_step":6452,"sim_time":58.20438050990924,"stage":"he_core"},{"from_step":6648,"sim_time":59.57403394766152,"stage":"main_sequence"},{"from_step":13276,"sim_time":128.79884160216898,"stage":"he_core"},{"from_step":13484,"sim_time":130.11225419025868,"stage":"main_sequence"},{"from_step":15900,"sim_time":153.64467858988792,"stage":"he_core"},{"from_step":19052,"sim_time":183.2426090585068,"stage":"o_burn"},{"from_step":21084,"sim_time":200.1996595254168,"stage":"si_burn"},{"from_step":21612,"sim_time":204.29577297531068,"stage":"main_sequence"},{"from_step":22412,"sim_time":210.2364636976272,"stage":"iron_core"},{"from_step":22508,"sim_time":210.9415476708673,"stage":"main_sequence"},{"from_step":22716,"sim_time":212.45552337821573,"stage":"iron_core"},{"from_step":23132,"sim_time":215.40045379381627,"stage":"main_sequence"},{"from_step":23212,"sim_time":215.9521510154009,"stage":"iron_core"},{"from_step":24204,"sim_time":222.5522898058407,"stage":"main_sequence"},{"from_step":25948,"sim_time":232.97419678978625,"stage":"iron_core"},{"from_step":26044,"sim_time":233.49974144995213,"stage":"main_sequence"},{"from_step":26060,"sim_time":233.58626111689955,"stage":"core_collapse"},{"from_step":26061,"sim_time":233.59168964019045,"stage":"supernova"},{"from_step":26221,"sim_time":234.42550946073607,"stage":"o_burn"},{"from_step":26333,"sim_time":234.99814386712387,"stage":"core_collapse"},{"from_step":26366,"sim_time":235.17215020162985,"stage":"supernova"},{"from_step":26558,"sim_time":236.16577919153497,"stage":"neutron_star"}]},{"age_years":102198.80877994,"ending":null,"id":3,"mass_sb":96.62618807703257,"mass_suns":1.086890065847369e-22,"predicted_ending":["failed_star"],"stage":"cloud","stages":[{"from_step":28286,"sim_time":245.17878633970395,"stage":"cloud"}]}]
+touch: the edits: Ok((0.09316450357437134, 0.3914767029010544))
+touch: the paint raised X_H,c by 0.093; the erase took 39.1 % of the mass
+
+thread 'age::the_age_of_the_massive_star_never_falls_and_never_jumps_under_a_paint_and_an_erase' (1511750) panicked at crates/sr-engine/tests/gpu/age.rs:474:62:
+touch: the age jumped in main_sequence at step 13164: 1.8301e6 years per t.u., 24.7 × the median 7.4218e4 of this visit of the stage (bound 10 ×)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    age::the_age_of_the_massive_star_never_falls_and_never_jumps_under_a_paint_and_an_erase
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 538 filtered out; finished in 443.08s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`

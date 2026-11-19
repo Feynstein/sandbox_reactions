@@ -146,6 +146,7 @@ impl Summary {
     /// The summary for `state`'s world over `boxfit`'s box: φ from `phi` (none: read as 0), the sinks from P3's state
     /// buffer when the step has one; with `mid` (P2's field, whose plane 7 holds φ_mid — a step with P2 and P4) Σm·φ reads
     /// φ at the step's end, 2φ_mid − φⁿ (M0-D193).
+    #[allow(clippy::too_many_arguments)]
     pub(crate) fn new(
         device: &wgpu::Device,
         state: &State,

@@ -405,7 +405,8 @@ impl Step {
 
     /// What a state dump carries beyond the cells (§2.12.3, contract §0.5 [M0-T26]): the GPU's step count (the next
     /// step's index), the sim time of those steps (the Δt record's, M0-D21), and the records no cell holds — Δt_n and Δt_{n+1}, the
-    /// latch's sim time since its last set, the box's record and indirect sizes. Read at a step boundary, after every
+    /// latch's sim time since its last set, the box's record and indirect sizes, [M0-D195] P4's mass carry (0 without P4).
+    /// Read at a step boundary, after every
     /// submitted step; blocks on the device (tests and headless runs only).
     pub fn resume_records(&self, device: &wgpu::Device, queue: &wgpu::Queue) -> (u64, f64, Resume) {
         let buffers = [self.dt.record(), self.boxfit.active(), self.boxfit.args(), &self.latch.record];
@@ -417,6 +418,7 @@ impl Step {
             latch_since: f32::from_bits(w[DT_WORDS + 8 + 6 + 5]),
             box_record: std::array::from_fn(|i| w[DT_WORDS + i]),
             box_args: std::array::from_fn(|i| w[DT_WORDS + 8 + i]),
+            mass_carry: self.hydro.as_ref().map_or(0.0, |h| h.mass_carry(device, queue)),
         };
         (u64::from(w[3]), dt::sim_time(&w), resume)
     }
@@ -488,6 +490,9 @@ impl Step {
         queue.write_buffer(self.boxfit.args(), 0, &bytes(&r.box_args));
         queue.write_buffer(&self.latch.record, 0, &bytes(&[0]));
         queue.write_buffer(&self.latch.record, SINCE_BYTE, &bytes(&[r.latch_since.to_bits()]));
+        if let Some(h) = &self.hydro {
+            h.set_mass_carry(queue, r.mass_carry);
+        }
         self.next.set(step);
     }
 }

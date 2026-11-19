@@ -426,6 +426,9 @@ fn the_terms_and_the_invariants_on_a_hand_made_summary() {
     booked[index("escaped.mom_x")] = 0.5;
     booked[index("escaped.mom_y")] = -0.25;
     booked[index("escaped.energy")] = 3.0;
+    // [M0-D199] P8's vacuum reset books the momentum it removed beside the walls', both into `momentum.escaped`.
+    booked[index("vacuum_reset.mom_x")] = 0.125;
+    booked[index("vacuum_reset.mom_y")] = 0.0625;
     booked[index("mass.erased")] = 1.0;
     booked[index("mass.painted")] = 4.0;
     booked[index("energy.floor_added")] = 0.5;
@@ -444,7 +447,7 @@ fn the_terms_and_the_invariants_on_a_hand_made_summary() {
     ledger.update(&summary(acc.clone(), vec![sink]), &booked, At { step: 2, sim_time: 1.0 });
     let end = ledger.update(&summary(acc, vec![sink]), &booked, At { step: 3, sim_time: 1.5 }).clone();
     assert_eq!((end.mass.escaped, end.mass.erased, end.mass.painted), (4.0, 2.0, 8.0));
-    assert_eq!(end.momentum.escaped, [1.0, -0.5]);
+    assert_eq!(end.momentum.escaped, [1.0 + 0.25, -0.5 + 0.125], "momentum.escaped is escaped.mom_* + vacuum_reset.mom_*");
     assert_eq!(end.mass.invariant(), end.mass.grid + 100.0 + 4.0 + 2.0 - 8.0);
     assert_eq!((end.energy.radiated, end.energy.nuclear_released, end.energy.neutrino_lost, end.energy.neutrino_deposited), (1.5, 1.0, 4.0, 1.0));
     assert_eq!((end.energy.escaped, end.energy.floor_added, end.energy.tools, end.energy.swallowed), (6.0, 1.0, -1.5, 0.25));
@@ -454,7 +457,7 @@ fn the_terms_and_the_invariants_on_a_hand_made_summary() {
     let e = &end.energy;
     let want = e.kinetic + 12.0 + 6.0 - 24.0 + 1.5 + 4.0 - 1.0 + 6.0 + 0.25 - 1.0 - 1.0 + 1.5 + 1.5;
     assert!((e.invariant() - want).abs() < 1e-12, "{} against {want}", e.invariant());
-    assert_eq!(end.momentum.invariant(), [1.5 + 50.0 + 1.0, -1.75 - 25.0 - 0.5]);
+    assert_eq!(end.momentum.invariant(), [1.5 + 50.0 + 1.25, -1.75 - 25.0 - 0.375]);
     // The json carries the start, the end and the three invariants.
     let json = ledger.json();
     assert_eq!(json["start"]["step"], 1);
@@ -594,7 +597,8 @@ fn gas_driven_against_a_held_block_books_held_and_the_momentum_holds() {
 /// A snapshot written before [M0-TG2] (§2.9, §0.5 [M0-D76]): its `booked` list ends before the hold's four terms and its
 /// records carry no `momentum.held` — restored, they read 0, every other term as written; today's snapshot keeps `held`
 /// through the round trip; a list of any other length is refused. [M0-D109]: one written before `energy.edit_potential`
-/// (41 terms, no `energy.edit_potential` in its records) restores it 0. NOT PROVEN (synthetic): a hand-made ledger.
+/// (41 terms, no `energy.edit_potential` in its records) restores it 0. [M0-D199]: one written before `vacuum_reset.mom_*`
+/// (42 terms) restores them 0, its `momentum.escaped` as written. NOT PROVEN (synthetic): a hand-made ledger.
 #[test]
 fn a_snapshot_from_before_the_hold_restores_with_the_held_terms_zero() {
     let physics = Physics::shipped().unwrap();
@@ -604,6 +608,8 @@ fn a_snapshot_from_before_the_hold_restores_with_the_held_terms_zero() {
     ledger.restart(&summary, At { step: 1, sim_time: 0.5 });
     let mut booked = [0f64; N_TERMS];
     booked[index("escaped.mom_x")] = 0.5;
+    booked[index("vacuum_reset.mom_x")] = 0.125;
+    booked[index("vacuum_reset.mom_y")] = -0.25;
     for (k, name) in HELD_TERMS.iter().enumerate() {
         booked[index(name)] = 0.25 * (k + 1) as f64;
     }
@@ -611,7 +617,8 @@ fn a_snapshot_from_before_the_hold_restores_with_the_held_terms_zero() {
     let end = ledger.update(&summary, &booked, At { step: 2, sim_time: 1.0 }).clone();
     assert_eq!(end.energy.edit_potential, -2.0);
     assert_eq!(end.momentum.held, [0.25 + 0.75, 0.5 + 1.0]);
-    assert_eq!(end.momentum.invariant(), [4.0 + 0.5 + 1.0, -8.0 + 1.5]);
+    assert_eq!(end.momentum.escaped, [0.5 + 0.125, -0.25], "escaped.mom_* + vacuum_reset.mom_*");
+    assert_eq!(end.momentum.invariant(), [4.0 + 0.625 + 1.0, -8.0 - 0.25 + 1.5]);
     assert_eq!(ledger.json()["end"]["momentum"]["held"], serde_json::json!([1.0, 1.5]));
 
     // Today's snapshot round-trips the hold.
@@ -619,10 +626,23 @@ fn a_snapshot_from_before_the_hold_restores_with_the_held_terms_zero() {
     let back = Ledger::restore(world, &physics, &now).unwrap();
     assert_eq!(back.last(), Some(&end));
 
+    // The same ledger as a pre-[M0-D199] tree wrote it: 42 terms, no `vacuum_reset.mom_*`; the records, `momentum.escaped`
+    // among them, as written.
+    let reset = index("vacuum_reset.mom_x");
+    assert_eq!((reset, N_TERMS), (42, 44), "vacuum_reset.mom_x, _y are TERMS' last two");
+    let mut before_reset = now.clone();
+    before_reset["booked"].as_array_mut().unwrap().truncate(reset);
+    let back = Ledger::restore(world, &physics, &before_reset).unwrap();
+    let last = back.last().unwrap();
+    assert_eq!(last.momentum.escaped, end.momentum.escaped, "momentum.escaped as written");
+    assert_eq!(last.momentum.invariant(), end.momentum.invariant());
+    assert_eq!(back.snapshot()["booked"].as_array().unwrap()[reset..], ["0.0", "0.0"], "vacuum_reset.mom_* restored 0");
+    assert_eq!(back.snapshot()["booked"][index("escaped.mom_x")], now["booked"][index("escaped.mom_x")]);
+
     // The same ledger as a pre-[M0-D109] tree wrote it: 41 terms, no `energy.edit_potential` in either record.
     let edit = index("energy.edit_potential");
-    assert_eq!((edit, N_TERMS), (41, 42), "edit_potential is TERMS' last");
-    let mut before_edit = now.clone();
+    assert_eq!((edit, reset), (41, 42), "edit_potential is the term before vacuum_reset.mom_x");
+    let mut before_edit = before_reset.clone();
     before_edit["booked"].as_array_mut().unwrap().truncate(edit);
     for r in ["start", "last"] {
         before_edit[r]["energy"].as_object_mut().unwrap().remove("edit_potential");
@@ -645,20 +665,21 @@ fn a_snapshot_from_before_the_hold_restores_with_the_held_terms_zero() {
     let last = back.last().unwrap();
     assert_eq!(last.momentum.held, [0.0, 0.0]);
     assert_eq!((last.momentum.grid, last.momentum.escaped), (end.momentum.grid, end.momentum.escaped));
-    assert_eq!(last.momentum.invariant(), [4.0 + 0.5, -8.0]);
+    assert_eq!(last.momentum.invariant(), [4.0 + 0.625, -8.0 - 0.25]);
     assert_eq!(last.mass, end.mass);
     assert_eq!(last.energy, Energy { edit_potential: 0.0, ..end.energy.clone() });
     let restored = back.snapshot();
     let tail: Vec<&str> = restored["booked"].as_array().unwrap()[first..].iter().map(|v| v.as_str().unwrap()).collect();
-    assert_eq!(tail, ["0.0"; 5], "the hold's terms and edit_potential restored");
+    assert_eq!(tail, ["0.0"; 7], "the hold's terms, edit_potential and vacuum_reset.mom_* restored");
     for k in 0..first {
         assert_eq!(restored["booked"][k], now["booked"][k], "booked term {k}");
     }
 
-    // Any other length is refused.
-    for len in [first - 1, first + 2] {
+    // Any other length is refused (the 42, 41 and 37 above are the ones accepted): first − 1, first + 2, 43 — one of
+    // [M0-D199]'s pair — and 45 (padded).
+    for len in [first - 1, first + 2, reset + 1, N_TERMS + 1] {
         let mut bad = now.clone();
-        bad["booked"].as_array_mut().unwrap().truncate(len);
+        bad["booked"].as_array_mut().unwrap().resize(len, serde_json::json!("0.0"));
         assert!(Ledger::restore(world, &physics, &bad).is_err(), "a {len}-term booked list restored");
     }
 }

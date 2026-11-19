@@ -8,7 +8,8 @@
 //
 // The floors read μ, Y_e and X_n of the fractions as the renormalisation will leave them (`renormalised`, the one
 // helper both kernels call), so the gas they floor is the gas the step ends with. A cell below Σ_vac is reset to the
-// floor state — Σ_floor, u = 0, T = T_floor, its fractions kept — and the mass it loses is booked `vacuum_reset`;
+// floor state — Σ_floor, u = 0, T = T_floor, its fractions kept — and the mass it loses is booked `vacuum_reset`, the
+// momentum it held `vacuum_reset.mom_*` ([M0-D199]: the ledger's `momentum.escaped`, §2.7, §2.9);
 // any other cell whose ε_th = E/Σ − ½|u|² − ε_cold is below T_floor/μ is raised to it. Every energy P8 changes, the
 // reset's and the floor's, is booked `floor_added` (signed; §2.9 has no other term for it — §2.7 [M0-T19]). Each
 // invocation adds into its own booking slot, no atomic. A NaN Σ or E is left to P9's guard, and so is a cell holding
@@ -74,6 +75,10 @@ struct Hold {
 }
 
 @group(0) @binding(7) var<uniform> hold_params: Hold;
+
+// [M0-D199] booking.vacuum_reset_mom (state.rs BOOK_GROUPS): vacuum_reset.mom_x's plane, then vacuum_reset.mom_y's, one
+// slot per cell — `floor_cells` alone binds it.
+@group(0) @binding(8) var<storage, read_write> reset_book: array<f32>;
 
 const PLANES_A: u32 = 5u;
 const PLANES_B: u32 = 5u;
@@ -156,6 +161,9 @@ fn floor_cells(@builtin(global_invocation_id) id: vec3<u32>) {
     if (sigma < eos.sigma_vac) {
         let s = eos.sigma_floor;
         let e = s * (eps_floor + eps_cold(s, comp.y_e, x_n));
+        // [M0-D199] The momentum the reset removes leaves the grid with the gas: booked, as its mass is.
+        reset_book[cell] += hydro[n + cell];
+        reset_book[n + cell] += hydro[2u * n + cell];
         hydro[cell] = s;
         hydro[n + cell] = 0.0;
         hydro[2u * n + cell] = 0.0;

@@ -1,0 +1,10 @@
+# M0-D194 Verify 2 — the lead's run, pasted by the lead 2026-11-19 (linux-pc laserax-ai, RTX 5090, 820.60 s): bash tests/gpu.sh conservation physics
+test result: FAILED. 5 passed; 2 failed — conservation::the_sun_like_life_in_a_bounce_world_keeps_the_mass_invariant, …_keeps_the_momentum_invariant
+sun: 170657 steps, 170 checkpoints, t 0.03 → 1790.69; edge "bounce"; invariants at the end: mass 3.136722e3 (start 3.136720e3), momentum (-3.6011e0, +5.1758e-2) (start (-8.3819e-8, -4.4703e-8)), energy -1.791030e5 (start -1.805930e5); |W| 1.4464e6
+sun: energy invariant drift 9.743e-6 |W| per τ_dyn at worst, bound 1e-3 (0 of 170 windows over)
+sun: mass invariant drift 1.086e-6 relative at worst (step 160001); bound 1e-6 — FAILED
+sun: momentum invariant drift 3.803e-3 of the running peak Σm|u| at worst (step 136001); over the instant Σm|u| 8.678e-3 (step 106001, not graded); at the end Δp (-3.6011e0, +5.1758e-2) of Σm|u| 4.0730e4; bound 1e-5 — FAILED
+sun: the whole life's momentum terms — steps 1..170001, Δinvariant (-3.6011e0, +5.1758e-2): grid (+1.0884e1, +1.1016e0) · sinks (+0.0000e0, +0.0000e0) · escaped (-1.4485e1, -1.0498e0) · held (+0.0000e0, +0.0000e0)
+sun: |Δp| along the life — 1009: 2.92e-4 (Σm|u| 9.62e2) · 15009: 1.24e-3 (Σm|u| 1.21e2) · 29009: 1.59e-2 (Σm|u| 1.03e2) · 43009: 8.83e-2 (Σm|u| 1.10e2) · 57009: 1.92e-1 (Σm|u| 1.22e2) · 71009: 4.59e-1 (Σm|u| 1.52e2) · 85009: 1.05e0 (Σm|u| 2.00e2) · 99009: 1.90e0 (Σm|u| 2.42e2) · 113009: 2.73e0 (Σm|u| 3.49e2) · 127009: 3.03e0 (Σm|u| 3.85e2) · 141009: 3.65e0 (Σm|u| 9.59e2) · 155009: 3.65e0 (Σm|u| 2.89e3) · 169009: 3.65e0 (Σm|u| 4.33e4)
+supernova (leave, 23346 steps): mass 1.754e-7 (bound 1e-6) ok · momentum 7.081e-6 of the running peak (step 23010; bound 1e-5) ok — terms grid (-1.6633e3, +2.3668e3) · escaped (-2.0687e1, -1.6457e1) · held (+1.6841e3, -2.3502e3) · energy 1.178e-5 |W| per τ_dyn (0 of 46 windows over) ok
+the grader on hand-made records: ok

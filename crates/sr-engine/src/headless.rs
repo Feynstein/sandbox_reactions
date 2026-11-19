@@ -624,6 +624,7 @@ pub fn twin_dump(twin: &Twin, world: WorldConfig) -> Dump {
             latch_since: 0.0,
             box_record: [0, 0, w, h, fft(w), fft(h), 0, 0],
             box_args: [w.div_ceil(8), h.div_ceil(8), 1, (world.cells() as u32).div_ceil(256), 1, 1],
+            mass_carry: 0.0,
         },
         planes: twin.state.planes.iter().map(|&v| v as f32).collect(),
         flux: None,

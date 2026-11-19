@@ -486,7 +486,7 @@ impl Step {
         let mut passes: [Vec<Dispatch>; 10] = Default::default();
         passes[Pass::Dt as usize] = std::mem::take(&mut dt.advance);
         passes[Pass::Gravity as usize] = gravity.as_mut().map(|g| std::mem::take(&mut g.dispatches)).unwrap_or_default();
-        let g = gravity.as_ref().map(Gravity::field);
+        let g = gravity.as_ref().map(|gr| (gr.field(), gr.gas_field()));
         // The block summary's φ: P2's plane, else the one P3 reads (a test's synthetic world), else none.
         let phi = side.or(sinks.map(|s| s.side)).map(SideFields::phi);
         // With P2 and P4 the half step's φ_mid is in the field's plane 7: W reads φ at the step's end, 2φ_mid − φⁿ (M0-D193).
@@ -915,7 +915,7 @@ pub(crate) fn compute_pipeline(device: &wgpu::Device, module: &wgpu::ShaderModul
     })
 }
 
-/// P8 floors (§1.3.2): `floor_cells` — the vacuum reset and the temperature floor, booked into P8's booking buffer —
+/// P8 floors (§1.3.2): `floor_cells` — the vacuum reset and the temperature floor, booked into P8's booking buffers —
 /// then `renormalise_species`, which ends with the hold's mask (§2.7 [M0-TG2]), both over the box's 8 × 8 tiles; and
 /// `hold_cells`, the hold alone, for the initial state. σ_hold, η_hold and r_hold are the run's physics.json keys
 /// `sigma_hold`, `eta_hold` and `r_hold` (§2.7 [M0-D71g], a scene's `overrides` included), uploaded in f32 with m_tov_sb
@@ -929,6 +929,8 @@ fn floors(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu,
         .iter()
         .position(|g| TERMS[g.terms.start].writer == Pass::Floors)
         .expect("a booking buffer written by P8");
+    // [M0-D199] The vacuum reset's momentum, `floor_cells`' second booking buffer.
+    let reset_book = BOOK_GROUPS.iter().position(|g| g.name == "booking.vacuum_reset_mom").expect("the reset's momentum booking");
 
     let floor_cells = compute_pipeline(device, &module, "floor_cells");
     let cells_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
@@ -941,6 +943,7 @@ fn floors(device: &wgpu::Device, state: &State, booking: &Booking, eos: &EosGpu,
             wgpu::BindGroupEntry { binding: 3, resource: state.group(0).as_entire_binding() },
             wgpu::BindGroupEntry { binding: 4, resource: booking.group(book).as_entire_binding() },
             wgpu::BindGroupEntry { binding: 5, resource: boxfit.active().as_entire_binding() },
+            wgpu::BindGroupEntry { binding: 8, resource: booking.group(reset_book).as_entire_binding() },
         ],
     });
     let eos_group = eos.bind_group(device, &floor_cells);

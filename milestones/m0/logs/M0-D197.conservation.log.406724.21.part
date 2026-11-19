@@ -1,0 +1,7 @@
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 7 tests
+test conservation::the_grader_is_graded_on_hand_made_records ... ok
+test conservation::the_sun_like_life_in_a_bounce_world_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+sun step=64001 t=729.53 stage=main_sequence

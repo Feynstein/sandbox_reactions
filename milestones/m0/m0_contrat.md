@@ -1353,6 +1353,71 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     2026-11-17 (tasks/M0-D193.md); with W at the step's end 0 of 46 (worst 1.2 × 10⁻⁵), and the ledger's W matches the f64
     ½Σmφ of the dumps (63 at every 370 steps) to 1.7 × 10⁻⁷ of |W| — the lead at M0-D192, 2026-11-17: «End of step, 2φ_mid −
     φⁿ (Recommended)», «Work here, W as new D (Recommended)».
+  - [M0-D194] §1.4.2's «so the masses that pull are the masses pulled and the pairs' pulls cancel» as exact, and §2.8's bounce
+    wall / §2.9's «escaped stays 0 in bounce mode» read for momentum too · **(a) what f32 leaves of the pulls' net — K = Σ
+    Δt·Σ_src,mid·g_mid over the free cells, each term the f32 product P4 added, summed exactly in fixed point (2⁻²⁸) — is taken
+    back each step from the densest free cell's momentum (the largest Σ_src,mid, the lowest index on a tie), E as it is; (b) in
+    bounce, the walls' pressure impulse, Δt·Π at each wall face as P4 applied it, is booked `escaped` momentum — the box's
+    recoil; bounce's escaped mass, energy and species stay exactly 0** — GPU (`hydro_push_sum` sums K and finds the cell,
+    `hydro_commit` takes K back; `hydro_edges` books the walls in both modes) and twin alike; no key added, summary.json's
+    `momentum.escaped` carries the walls · measured on linux-pc's RTX 5090, 2026-11-19 (tasks/M0-D194.md), the Sun-like preset
+    in bounce, steps 1–15,000 (the life the `conservation` case runs, bit for bit): the grid drifted (−0.0348, −0.0044) —
+    gravity's kick net (−0.0371, −0.0097), ~4 × 10⁻⁹ of its gross a step and one-signed (P2's f32 FFT, as M0-D186 found on
+    the Massive), the walls (+0.0032, +0.0035), the push's take-back residual (+0.0001, +0.0019), the vacuum reset (−0.0005,
+    +0.0008), the interior fluxes and face work (+0.0002, −0.0004), (−0.0007, −0.0004) unexplained; bounce and leave drift
+    alike (−0.0375, −0.0087) vs (−0.0379, −0.0088) with the walls booked; M0-D186's take-back spread over g (a = K/M) was
+    under one ulp and lost, one cell's momentum holds it — summed over the free cells' total field it took back the held core's
+    real pull (`ledger`'s held disk 3.98 of Σm|u|; with the held cells' g_pull and the gas's own field, 2.96 × 10⁻⁵); with (a)
+    and (b) the window's invariant moves (−1.6 × 10⁻⁵, +1.24 × 10⁻³), 1.04 × 10⁻⁶ of the running peak Σm|u| 1,197 (2.9 × 10⁻⁵
+    before), the walls' impulse (−0.0017, −0.0073) booked, flat after step 3,000; no cost seen — the
+    lead at M0-D194, 2026-11-19: «Take-back, densest cell (Recommended)», «Book as escaped (Recommended)», «Measure first
+    (Recommended)» (the push residual and the vacuum reset's momentum left for the whole life's reading).
+  - [M0-D199] §2.7 [M0-T19]'s «the momentum a vacuum reset removes is booked nowhere», and §2.4.4 [M0-D184]'s give-back
+    read as f32 performs it · **(a) the momentum a vacuum reset removes — the cell's as P8 found it — is booked
+    `vacuum_reset.mom_*` (two booked planes appended, P8's), which the ledger carries in `momentum.escaped`: the gas left the
+    grid by that route, as its mass did into `mass.vacuum_reset`; summary.json's keys unchanged, an observers' snapshot written
+    before [M0-D199] (42 booked terms) restores them 0; (b) what f32 drops of [M0-D184]'s give-backs — each free cell's
+    fl(p − t) − p, t = |d|·N/S, summed exactly in fixed point to 2⁻⁴⁸, against −N — is given back at the densest free cell
+    with K (a step that runs P5 without P2 finds that cell by Σⁿ⁺¹), each cell's share unchanged** — GPU (`floor_cells`
+    books (a); `hydro_push_sum` sums (b) off the next state's momentum, `hydro_commit` gives it back with K); the twin, in f64,
+    drops nothing and books no momentum term (no twin ledger reads one) · measured on linux-pc's RTX 5090, 2026-11-19
+    (tasks/M0-D199.md), the Sun-like preset in bounce, steps 1–45,000 (the `conservation` case's life, bit for bit): until
+    step ~21,000 every cell holds Σ ≥ Σ_vac; then the thin gas resets, the box shrinks to 120 × 128 and the grid drifts
+    (−6.3 × 10⁻², +6.5 × 10⁻²) by 45,000, unbooked — 7.88 × 10⁻⁵ of the running peak Σm|u| (1,197); by term on steps
+    22,000–45,000: the vacuum reset (+6.7 × 10⁻², −6.8 × 10⁻²), every face's flux and face work cancelling exactly (0), the
+    update's own rounding ~10⁻⁴, the push's TwoSum N against its exact sum (−9 × 10⁻⁵, +6 × 10⁻⁵), `hydro_commit`'s give-back
+    short of N by (4.2 × 10⁻³, 2.3 × 10⁻³) — most shares under half an ulp of their cell's momentum; with the reset and P4's
+    net booked the window's invariant held to 1.1 × 10⁻⁵ absolute; an f32 form of what f32 drops, (fl(p − t) − p) + t, is
+    folded to 0 by the driver (the life the base's bit for bit), and a 2⁻²⁸ fixed point quantised the small momenta of
+    `radiation_force`'s slab (4.6 × 10⁻⁴ off its oracle) — with (a) and (b) 3.40 × 10⁻⁶ of the running peak at worst over the
+    45,000 steps (step 44,000), the invariant flat from step 22,000 (|Δp| 3.9–4.1 × 10⁻³) while the reset books (−1.4 × 10⁻²,
+    +5.5 × 10⁻²) — the lead at M0-D199, 2026-11-19: «Into escaped (Recommended)», «Keep D184, settle rest (Recommended)».
+  - [M0-D195] G-CONS's «Mass … *by construction*» (§5.1) as P4's f32 update performs it, each cell's Σ − Δt·ΔF rounded to its
+    own f32 · **P4's mass rounding given back: each step `hydro_push_sum` sums, exactly in fixed point (2⁻⁸, 2⁻²⁸, 2⁻⁴⁸),
+    Σⁿ⁺¹ − Σⁿ over the box's free cells plus the mass each boundary face let out (the f32 product booked `escaped`; 0 at a
+    bounce wall), adds the last step's carry, and `hydro_commit` gives the total G back to every free cell in proportion to
+    its Σ (Σ += G·Σ/M, M = the free cells' ΣΣⁿ⁺¹; fractions, momentum and E as they are); `hydro_settle` sums exactly what
+    f32 kept of the shares and carries the rest to the next step — a dump's `resume.mass_carry` (§2.12.3), so a resume goes
+    on bit for bit; the carry, under ~M·2⁻²⁴, is outside the ledger's grid** — GPU only; the twin, in f64, rounds nothing
+    to give back · measured on linux-pc's RTX 5090, 2026-11-19 (tasks/M0-D195.md), the Sun-like preset in bounce from the
+    cloud to its white dwarf, in resumed runs (each bit-identical to the straight life): the invariant moved ±2 × 10⁻⁷
+    to step 136,000 with the vacuum reset booking; from there the envelope fills the world, nothing resets, no sink, edit or
+    hold, the walls' mass flux exactly 0 — and the grid lost 4.7 × 10⁻³ sb by the ending (the dumps' f64 sums), 1.27 × 10⁻⁶
+    of the life's 3,136.720 stitched (bound 10⁻⁶; an unbiased f32 walk of the dense cells' rounding alone is ~1–3 × 10⁻³ sb
+    there); with the give-back the ledger's mass invariant peaks at 6.7 × 10⁻⁸ over the whole life, grid + carry constant
+    to f64's last digit at 100-step checkpoints, no cost seen. A single-cell give-back (the densest free cell, first ruled)
+    held the life too but put a whole step's rounding in one cell: `sod`'s identical rows read 2.15 × 10⁻⁵ apart (bound
+    10⁻⁵; 1.79 × 10⁻⁶ before) — the lead at M0-D195, 2026-11-19: «Take-back + carry (Recommended)», then «Proportional
+    (Recommended)».
+  - [M0-D201] §1.9.3's display hold as [M0-D134] reads it («the displayed stage never steps back — an ignited object never
+    shows cloud, collapsing or protostar again …») · **and once iron_core, core_collapse, supernova, neutron_star or
+    black_hole is shown, no burning stage — main_sequence, h_shell, he_core, he_shell, c_burn, ne_burn, o_burn, si_burn —
+    shows again (white_dwarf, planetary_nebula and the burning stages themselves leave the ladder free); the raw stage still
+    reads every row, and the age clock, which banks the shown stage (§1.10.4), earns none of their years there** · measured
+    by M0-T107 on linux-pc's RTX 5090, 2026-11-19 (tasks/M0-T107.md), the Massive preset under scenes/age_touch.json (hydrogen
+    painted onto its core at X_H,c 0.5, ≈ 32 % of its mass erased at 0.3): shown iron_core → main_sequence → iron_core at steps
+    22,235–24,155, X_H,c 0.05–0.11 mixed back into the collapsing centre, its age 1.8 × 10⁷ → 8.9 × 10⁷ yr between steps 22,413
+    and 24,908, a rate 100 × the main sequence's — the lead at M0-D201, 2026-11-19: «Tracker, narrow (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1458,7 +1523,9 @@ sizes (§1.3.3). g = −∇φ by central differences. P4 adds the momentum sourc
 §0.5 [M0-D64]/[M0-D68]'s face work across φ_mid: Σ_src,mid is ~~Σ_src at the predictor's half step~~ [M0-D192] ½(Σⁿ + Σⁿ⁺¹), the
 midpoint of the step's own mass update by its HLL fluxes (§0.5 [M0-D192]) (its Σ where ≥ Σ_vac, else 0; a
 held cell's own Σ), φ_mid = K ∗ Σ_src,mid plus the sinks' §1.4.3 as P2 added them, g_mid = −∇φ_mid — solved in P4 after the
-predictor, so the masses that pull are the masses pulled and the pairs' pulls cancel; P2's g still drives the predictor's half
+predictor, so the masses that pull are the masses pulled and the pairs' pulls cancel — [M0-D194] what f32 leaves of their net,
+Σ Δt·Σ_src,mid·g_mid over the free cells summed exactly, taken back each step from the densest free cell's momentum (§0.5
+[M0-D194]); P2's g still drives the predictor's half
 kick and P9's Δt. [M0-TG2] A held cell (§2.3.4, §2.7) takes neither source,
 its Σg·Δt booked `held` — [M0-D149] g there being g_pull = −∇φ_pull, φ_pull = K ∗ Σ_src with the held cells emptied plus
 the sinks' §1.4.3, which P2 solves beside φ while the mask holds a cell ([M0-D183] at the half step: Σ_src,mid·g_pull,mid, the
@@ -1856,7 +1923,9 @@ buffers per shader stage (TW-E15), which binds native builds too (§6.2.2). Not 
   dense cell's face beside thin gas at the thin cell's Σ and a third of its own Π (M0-D155) —; HLL fluxes with Davis wave speeds S_L = min(u_L − c_L,
   u_R − c_R), S_R = max(u_L + c_L, u_R + c_R); unsplit (both directions' fluxes from the half-step
   states); species advected with the mass flux; the gravity source of §1.4.2 and the radiation force
-  of §2.4.4.
+  of §2.4.4. [M0-D195] The f32 rounding of each cell's Σ update, summed exactly over the box with what the edges let out,
+  is given back each step to every free cell in proportion to its Σ, what f32 does not keep carried to the next step
+  (§0.5 [M0-D195]).
   [M0-TG2] **Held cells** (§2.7's hold; M0-R11's H, reports/unresolved_remnant.md): P4 leaves a held cell as it is —
   no flux difference, no gravity source, no radiation force — and books `held` (§2.9) the momentum its flux
   differences and Σg·Δt would have given it ([M0-D149] g the pull of all but the held cells, §1.4.2 [M0-D149]). A face between two held cells, or between a held cell and the world's
@@ -1902,7 +1971,9 @@ buffers per shader stage (TW-E15), which binds native builds too (§6.2.2). Not 
   |p₀ + s Δt f|² − |p₀|² = 2ΣA, with p₀ and A = Σ(ε_th − T_floor/μ) the cell's momentum and heat above its floor after
   P4's other terms (s = 0 when A ≤ 0). [M0-D184] The force never moves the grid's momentum: with d_i = s_i Δt f_i the
   push each cell took, N = Σ_i d_i over the grid and S = Σ_i |d_i|, each cell gives back |d_i|·N/S (nothing when S = 0),
-  E unchanged, before the sticky wall (§2.3.4 [M0-D172]) — the light's own recoil is not kept.
+  E unchanged, before the sticky wall (§2.3.4 [M0-D172]) — the light's own recoil is not kept. [M0-D199] What f32 drops of
+  those give-backs, Σ_i r_i with r_i = (fl(p_i − t_i) − p_i) + t_i, t_i = |d_i|·N/S, p_i the cell's momentum, is given back
+  at the densest free cell with gravity's K (§0.5 [M0-D194], [M0-D199]); the twin, in f64, drops nothing.
 - **2.4.5** No photon particles: luminosity is the heat flux leaving the gas (SM M4), and the glow is
   drawn from T (§1.11).
 
@@ -1987,8 +2058,10 @@ buffers per shader stage (TW-E15), which binds native builds too (§6.2.2). Not 
 floors read μ, Y_e and X_n of the fractions as the renormalisation will leave them (clamped ≥ 0, divided by their sum);
 a cell whose fractions are all ≤ 0 becomes pure hydrogen (M0-T3's default); the vacuum reset keeps the cell's
 fractions; every energy P8 changes — the vacuum reset's E_floor − E as well as the temperature floor's — is booked
-`floor_added` (signed; §2.9 has no other energy term for it); the momentum a vacuum reset removes is booked nowhere
-(§2.9's momentum lists no such term; G-CONS grades mass and energy only).
+`floor_added` (signed; §2.9 has no other energy term for it); ~~the momentum a vacuum reset removes is booked nowhere
+(§2.9's momentum lists no such term; G-CONS grades mass and energy only)~~ [M0-D199] the momentum a vacuum reset removes,
+the cell's as P8 found it, is booked `vacuum_reset.mom_*`, which the ledger carries in `momentum.escaped` (§2.9, §0.5
+[M0-D199]).
 
 [M0-TG2] **The hold** — P8's last act, after the floors and the renormalisation, writes the mask the next step's P4
 reads (§2.3.4). A cell is held when Σ ≥ σ_hold and ε_th ≤ η_hold · ε_cold — ε_th as the temperature floor leaves it,
@@ -2022,7 +2095,8 @@ the twin's P8 and the GPU's alike (the lead at M0-TG2: «Code now, move later (R
     boundary face's mass flux is clamped to outflow, so inflow is exactly 0 (SM-O16); whatever
     crosses — mass, momentum, energy, each species — is booked `escaped`.
   - *bounce:* ghosts mirror the edge cell with the normal velocity negated; the wall face's mass and
-    energy fluxes are set to exactly 0, its momentum flux to the pressure term alone.
+    energy fluxes are set to exactly 0, its momentum flux to the pressure term alone — [M0-D194] that impulse, the box's
+    recoil, booked `escaped` momentum (§0.5 [M0-D194]).
   - Gravity is free space in both (§1.4.1). Heat and light leave through the edge in both (D1;
     else a walled box fills with heat and nothing cools into a white dwarf — SM M7).
 
@@ -2033,7 +2107,8 @@ the twin's P8 and the GPU's alike (the lead at M0-TG2: «Code now, move later (R
   floor_added · tools (painted, erased, heated, cooled, preset, cleared) · [M0-D109] edit_potential — the potential energy
   P0's mass changes brought, ½ Σ ΔΣ (φ_before + φ_after) over the cells, booked by P2 on the edit's step (§0.5 [M0-D109]);
   summary.json's ledger records carry it as `energy.edit_potential`, a record or snapshot written before [M0-D109] reads it 0.
-- **Momentum:** grid · sinks · escaped · held [M0-TG2] — the momentum the hold took from the grid (§2.7, §2.3.4): a
+- **Momentum:** grid · sinks · escaped ([M0-D194] bounce's walls; [M0-D199] and the vacuum reset's, P8's booked
+  `vacuum_reset.mom_*` summed in — §2.7) · held [M0-TG2] — the momentum the hold took from the grid (§2.7, §2.3.4): a
   newly held cell's, the impulse P4 spares a held cell and what one-way inflow carries into it; signed. summary.json's
   ledger records carry it as `momentum.held`; a ledger record or an observers' snapshot (§0.5 [M0-D76]) written
   before [M0-TG2] reads it, and the booking terms it lacks, as 0.
@@ -2041,7 +2116,8 @@ the twin's P8 and the GPU's alike (the lead at M0-TG2: «Code now, move later (R
   count mass that left the grid by that route; painted and preset_dropped mass that entered;
   floor_added, tools and edit_potential [M0-D109] are net energies added (signed).
 - **Invariants (G-CONS):** mass — grid + sinks + escaped + erased + vacuum_reset − painted −
-  preset_dropped is constant (escaped stays 0 in bounce mode). Energy — kinetic + thermal + cold + W
+  preset_dropped is constant (escaped stays 0 in bounce mode — [M0-D194] its mass, energy and species; its momentum is the
+  walls' pressure impulse, §2.8, [M0-D199] and the vacuum reset's in either mode, §2.7). Energy — kinetic + thermal + cold + W
   + radiated + neutrino_lost − neutrino_deposited + escaped + swallowed − nuclear_released −
   floor_added − tools − edit_potential [M0-D109] is constant, within G-CONS's tolerance. Clear world restarts the ledger.
 
@@ -2127,7 +2203,9 @@ the twin's P8 and the GPU's alike (the lead at M0-TG2: «Code now, move later (R
   held and 0 free, row-major, after F's two planes and P5's rate plane (§0.5 [M0-D33], [M0-D85]); with no cell held
   the key is not written, and a header without it — every dump written before [M0-TG2] — reads as none held, so such
   a dump keeps its bytes; `--load-dump` restores the mask, which carries the hold's hysteresis (a resume without it
-  differs from the straight run), and the twin's dumps (`--cpu-reference`) write it as the GPU's do.
+  differs from the straight run), and the twin's dumps (`--cpu-reference`) write it as the GPU's do. [M0-D195] The
+  header's `resume` carries `"mass_carry": <f32>`, P4's mass carry (§0.5 [M0-D195]), when it is not 0; a header without
+  it reads 0, and `--load-dump` restores it (a resume without it differs from the straight run).
 - **2.12.4 Coordinates:** x to the right, y down, cell (0, 0) at the top-left, in every file, API
   and readout.
 - **2.12.5 Edits file** (`--edits`, for G-TOUCH and G-AGE): a list of `{"at": <trigger>, "edit":
@@ -2652,7 +2730,7 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
 - **G-CONS · conservation.** A whole Sun-like life (bounce) and a supernova (leave; the Massive
   preset from its iron core): the mass invariant of §2.9 constant to 10⁻⁶ relative; momentum (grid
   + sinks + escaped + held [M0-TG2]) to ~~10⁻⁶ of Σm|u|~~ [M0-D186] 10⁻⁵ of the running peak Σm|u| (§0.5 [M0-D186]); the energy invariant drifting ≤ 10⁻³ |W| per τ_dyn (SM-O10).
-  Mass and momentum *by construction*; energy *UNVERIFIED* — source-term gravity conserves it only
+  Mass and momentum *by construction* ([M0-D195] mass with P4's f32 rounding given back, §0.5 [M0-D195]); energy *UNVERIFIED* — source-term gravity conserves it only
   approximately (SM, from memory): more drift calls for a conservative gravity formulation, never a
   looser bound (§0.4). Scope `conservation` ⏱. Plant `no-grav-work`: the energy source Σu·g dropped.
 - **G-BURN · the rate law.** One cell, T pinned, flow off, k = AΣ^a f(T): H_burn (order 2)

@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/age.rs	2026-10-28 13:40:19.069861688 -0400
++++ b/crates/sr-physics/src/observe/age.rs	2026-10-28 13:40:19.070740580 -0400
+@@ -188,7 +188,7 @@
+             }
+             None => (prog.phi + dt / self.duration(stage, o.mass)).clamp(0.0, 1.0),
+         };
+-        let gained = (phi - prog.phi).max(0.0) * tau;
++        let gained = (phi - prog.phi) * tau;
+         prog.phi = phi;
+         gained
+     }

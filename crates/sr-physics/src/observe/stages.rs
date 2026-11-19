@@ -315,8 +315,29 @@ pub fn ignites(o: &Object, h: &History) -> Option<Ignition> {
 /// Whether showing `stage` would take the display back before the life it has shown (§0.5 [M0-D134]; the lead, «Display holds
 /// (Recommended)»): an ignited object never shows cloud, collapsing or protostar again, and before ignition those go only
 /// forward — cloud, collapsing, protostar — a cloud never following a failed star either. The rows are unchanged: the raw stage
-/// still reads them, only the shown one stays.
+/// still reads them, only the shown one stays. Once iron_core or a stage after it (core_collapse, supernova, neutron_star,
+/// black_hole) is shown, no burning stage — main_sequence, h_shell, he_core, he_shell, c/ne/o/si_burn — shows again (§0.5
+/// [M0-D201]; the lead, «Tracker, narrow (Recommended)»): a touched core's mixed-in hydrogen reads main_sequence's row while it
+/// collapses, and the age clock, which follows the shown stage, re-earned main_sequence's years there.
 pub fn steps_back(stage: Stage, shown: Option<Stage>, ignited: bool) -> bool {
+    let burning = matches!(
+        stage,
+        Stage::MainSequence
+            | Stage::HShell
+            | Stage::HeCore
+            | Stage::HeShell
+            | Stage::CBurn
+            | Stage::NeBurn
+            | Stage::OBurn
+            | Stage::SiBurn
+    );
+    let past_iron = matches!(
+        shown,
+        Some(Stage::IronCore | Stage::CoreCollapse | Stage::Supernova | Stage::NeutronStar | Stage::BlackHole)
+    );
+    if burning && past_iron {
+        return true;
+    }
     let rank = |s: Stage| match s {
         Stage::Cloud => Some(0),
         Stage::Collapsing => Some(1),
@@ -918,6 +939,49 @@ mod tests {
         let mut t = StageTracker::new(M_CH);
         t.update(&[lit.clone()], 0.0);
         assert_eq!(shown_after(&mut t, &dim, 1.0, 5), None);
+    }
+
+    #[test]
+    fn past_iron_core_no_burning_stage_shows_again() {
+        // §0.5 [M0-D201]: from iron_core on, the burning rows never show; the remnant rows, white_dwarf and the
+        // planetary nebula still do, and before iron_core the ladder is free (a hydrogen paint shows main_sequence again).
+        let burning = [
+            Stage::MainSequence,
+            Stage::HShell,
+            Stage::HeCore,
+            Stage::HeShell,
+            Stage::CBurn,
+            Stage::NeBurn,
+            Stage::OBurn,
+            Stage::SiBurn,
+        ];
+        let late = [Stage::IronCore, Stage::CoreCollapse, Stage::Supernova, Stage::NeutronStar, Stage::BlackHole];
+        for shown in late {
+            for s in stage_order() {
+                let early = matches!(s, Stage::Cloud | Stage::Collapsing | Stage::Protostar);
+                assert_eq!(steps_back(s, Some(shown), true), early || burning.contains(&s), "{s:?} after {shown:?}");
+            }
+        }
+        for shown in burning.into_iter().chain([Stage::WhiteDwarf, Stage::PlanetaryNebula]) {
+            for s in burning {
+                assert!(!steps_back(s, Some(shown), true), "{s:?} after {shown:?}");
+            }
+        }
+        // Through the tracker: lit (main_sequence), then an iron core, then main_sequence's row for longer than the hold —
+        // iron_core stays shown while the raw stage reads the row.
+        let mut lit = cloud();
+        lit.l_group = [10.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+        lit.l_nuc = 10.0;
+        let mut iron = cloud();
+        with_x(&mut iron, X_FE, 0.6);
+        let mut mixed = lit.clone();
+        mixed.x_c[X_H] = 0.08;
+        mixed.x_c[X_FE] = 0.4;
+        let mut t = StageTracker::new(M_CH);
+        assert_eq!(shown_after(&mut t, &lit, 0.0, 3), Some(Stage::MainSequence));
+        assert_eq!(shown_after(&mut t, &iron, 3.0, 3), Some(Stage::IronCore));
+        assert_eq!(shown_after(&mut t, &mixed, 6.0, 10), Some(Stage::IronCore), "main_sequence's row past iron_core");
+        assert_eq!(t.stage(1).unwrap().raw, Stage::MainSequence);
     }
 
     #[test]

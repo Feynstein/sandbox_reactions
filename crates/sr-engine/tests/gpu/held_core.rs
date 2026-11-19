@@ -307,12 +307,15 @@ fn gravity_kick_on_a_held_cell_is_booked() {
     let hydro = warm_hydro();
     let (mut st, held) = strip(|x| if x == COLUMN { 20.0 } else { 1.0 }, |_| 0.0);
     let before = st.clone();
-    // A uniform g along +x: φ = −g x.
+    // A uniform g along +x, φ = −g x, added to P2's field of the strip: the step reads what it is given less P2's solve on
+    // Σⁿ as the sinks' part (§1.4.2 [M0-D183]), so the uniform g is that part and the strip's own pull, solved on
+    // Σ_src,mid, cancels over it ([M0-D194]) — a bare φ = −g x would read −K∗Σⁿ as a pull from outside (drift 1.04e-2).
     let g = 0.01;
+    let own = Gravity::new(1.0).field(before.plane(0), physics().get("sigma_vac").unwrap(), W, H).unwrap();
     let field = sr_physics::reference::grav::Field {
-        phi: (0..W * H).map(|i| -g * (i % W) as f64).collect(),
-        gx: vec![g; W * H],
-        gy: vec![0.0; W * H],
+        phi: (0..W * H).map(|i| own.phi[i] - g * (i % W) as f64).collect(),
+        gx: own.gx.iter().map(|a| a + g).collect(),
+        gy: own.gy.clone(),
     };
     let dt = hydro.dt(&st, Some((&field.gx, &field.gy)));
     let spared = hydro.step_held(&mut st, dt, Some(&field), None, None, &held);
@@ -320,8 +323,7 @@ fn gravity_kick_on_a_held_cell_is_booked() {
     let held_mass: f64 = (0..H).map(|y| before.get(0, y * W + COLUMN)).sum();
     let kick = dt * g * mass;
     let drift = momentum_drift(&before, &st, spared, [kick, 0.0], kick);
-    println!("SR-HELD-GRAVITY Δt g M {kick:.6e} (the held column's share {:.6e}); held {spared:?}; drift {drift:?}", dt * g * held_mass);
-    assert_column_kept(&before, &st);
+    println!("SR-HELD-GRAVITY Δt g M {kick:.6e} (the held column's share {:.6e}); held {spared:?}; drift {drift:?}", dt * g * held_mass);    assert_column_kept(&before, &st);
     assert!(drift[0] <= STRIP_BAND && drift[1] <= STRIP_BAND, "grid + held momentum gained other than Δt·g·M: {drift:?}");
 }
 
@@ -397,7 +399,8 @@ fn a_free_cell_stops_at_a_held_wall() {
 const PW: usize = 32;
 
 /// The pull cases' state: held C/O cells (Σ 20 to 30, uneven, ε_th ½η_hold ε_cold) at `core`, warm hydrogen (Σ 1) at
-/// `gas`, vacuum elsewhere, all at rest — so each cell's half-step Σ is its Σ — and the twin of it, on [`gate_off`]'s physics
+/// `gas`, vacuum elsewhere, all at rest — the warm gas spreads over a step, so its half-step Σ, Σ_src,mid, is not its Σ
+/// (§1.4.2 [M0-D192]; [`sigma_mid`]) — and the twin of it, on [`gate_off`]'s physics
 /// (a world of such cells holds ≈ 4 × 10⁴ within r ≤ 24).
 fn pull_world(core: &[(usize, usize)], gas: &[(usize, usize)]) -> (Twin, State) {
     pull_world_of(PW, core, gas)
@@ -427,12 +430,30 @@ fn pull_world_of(size: usize, core: &[(usize, usize)], gas: &[(usize, usize)]) -
     (twin, st)
 }
 
-/// Σ Δt·Σ_i·g_i over the cells `on` picks, (x, y): g the field P2 solves from the Σ of the cells `sources` picks.
-fn pull_on(st: &State, dt: f64, sources: impl Fn(usize) -> bool, on: impl Fn(usize) -> bool) -> [f64; 2] {
+/// Σ Δt·m_i·g_i over the cells `on` picks, (x, y), m_i = `mass[i]`: g the field P2 solves from the Σ of the cells
+/// `sources` picks.
+fn pull_on(st: &State, mass: &[f64], dt: f64, sources: impl Fn(usize) -> bool, on: impl Fn(usize) -> bool) -> [f64; 2] {
     let n = st.cells();
     let sigma: Vec<f64> = (0..n).map(|i| if sources(i) { st.get(0, i) } else { 0.0 }).collect();
     let f = Gravity::new(1.0).field(&sigma, physics().get("sigma_vac").unwrap(), PW, PW).unwrap();
-    (0..n).filter(|&i| on(i)).fold([0.0, 0.0], |a, i| [a[0] + dt * st.get(0, i) * f.gx[i], a[1] + dt * st.get(0, i) * f.gy[i]])
+    (0..n).filter(|&i| on(i)).fold([0.0, 0.0], |a, i| [a[0] + dt * mass[i] * f.gx[i], a[1] + dt * mass[i] * f.gy[i]])
+}
+
+/// Σ_src,mid of the cells `on` picks (§1.4.2 [M0-D183], [M0-D192]), 0 elsewhere: ½(Σⁿ + Σⁿ⁺¹) of a step from `before` to
+/// `after`, 0 below Σ_vac — the mass the step's held kick and the gas's kick both read. (Σⁿ⁺¹ after P8: equal to P4's where
+/// the midpoint clears Σ_vac.)
+fn sigma_mid(before: &State, after: &State, on: impl Fn(usize) -> bool) -> Vec<f64> {
+    let vac = physics().get("sigma_vac").unwrap();
+    (0..before.cells())
+        .map(|i| {
+            let s = 0.5 * (before.get(0, i) + after.get(0, i));
+            if on(i) && s >= vac {
+                s
+            } else {
+                0.0
+            }
+        })
+        .collect()
 }
 
 /// §1.4.2 [M0-D149]: a held core books none of its own pull — a world of held C/O cells, its Σ uneven, one step: every
@@ -445,7 +466,7 @@ fn a_held_core_books_none_of_its_own_pull() {
     let (mut twin, st) = pull_world(&core, &[]);
     twin.step();
     let in_core = |i: usize| core.contains(&(i % PW, i / PW));
-    let own = pull_on(&st, twin.dt(), |_| true, in_core);
+    let own = pull_on(&st, st.plane(0), twin.dt(), |_| true, in_core);
     println!("SR-HELD-OWN-PULL held {:?}; P2's whole field summed over the core {own:?}", twin.held);
     assert_eq!(twin.held_mask().iter().filter(|&&m| m).count(), core.len(), "the world is not held as built: the case grades no hold");
     assert!(own != [0.0, 0.0], "the whole field sums to 0 over the core: the case cannot tell its own pull from none");
@@ -454,8 +475,9 @@ fn a_held_core_books_none_of_its_own_pull() {
 
 /// §1.4.2 [M0-D149]: what a held core books is the free gas's pull on it, the reaction of the core's pull on that gas
 /// (Newton's third law, which P2's even K keeps) — a 4 × 4 held block, a 6 × 6 square of warm hydrogen below and to its
-/// right, one step: `held` toward the gas, within 10⁻⁹ of minus Σ Δt·Σ·g_core over the gas (g_core the block's field
-/// alone). A booking that drops the pull fails here; one that keeps the core's own, the case above.
+/// right, one step: `held` toward the gas, within 10⁻⁹ of minus Σ Δt·Σ_src,mid·g_core over the free cells (g_core the
+/// block's field alone; Σ_src,mid the mass both kicks read since §1.4.2 [M0-D183], [M0-D192] — on the gas's Σⁿ it reads
+/// 5.67 × 10⁻⁴ off, M0-D197). A booking that drops the pull fails here; one that keeps the core's own, the case above.
 #[test]
 fn a_held_core_books_the_free_gas_pull_as_its_reaction() {
     let core: Vec<(usize, usize)> = (8..12).flat_map(|y| (6..10).map(move |x| (x, y))).collect();
@@ -464,7 +486,11 @@ fn a_held_core_books_the_free_gas_pull_as_its_reaction() {
     twin.step();
     let in_core = |i: usize| core.contains(&(i % PW, i / PW));
     let in_gas = |i: usize| gas.contains(&(i % PW, i / PW));
-    let reaction = pull_on(&st, twin.dt(), in_core, in_gas);
+    // The gas spreads over the step: the core pulls the mass at the half step, Σ_src,mid, on every free cell it reaches.
+    let mid = sigma_mid(&st, &twin.state, |i| !in_core(i));
+    let reaction = pull_on(&st, &mid, twin.dt(), in_core, |i| !in_core(i));
+    let at_n = pull_on(&st, st.plane(0), twin.dt(), in_core, in_gas);
+    println!("SR-HELD-GAS-PULL-N minus the core's pull on the gas's Σⁿ {:?}", at_n.map(|r| -r));
     let off = (twin.held[0] + reaction[0]).hypot(twin.held[1] + reaction[1]) / reaction[0].hypot(reaction[1]);
     println!("SR-HELD-GAS-PULL held {:?}; minus the core's pull on the gas {:?} (off {off:.3e})", twin.held, reaction.map(|r| -r));
     assert_eq!(twin.held_mask().iter().filter(|&&m| m).count(), core.len(), "the block is not held as built: the case grades no hold");

@@ -1,0 +1,16 @@
+SR-HELD-GAS-PULL-N minus the core's pull on the gas's Σⁿ [1.0128070249707597, 0.3840593557936977]
+SR-HELD-GAS-PULL held [1.0133797678284149, 0.3842799179360292]; minus the core's pull on the gas [1.0133797678484344, 0.38427991794238] (off 1.938e-11)
+test held_core::a_held_core_books_the_free_gas_pull_as_its_reaction ... ok
+SR-HELD-OWN-PULL held [0.0, 0.0]; P2's whole field summed over the core [1.5134560271690134e-12, -4.483524662646232e-12]
+test held_core::a_held_core_books_none_of_its_own_pull ... ok
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 534 filtered out; finished in 0.04s
+SR-HELD-GRAVITY Δt g M 1.753625e-1 (the held column's share 1.131371e-1); held [0.11720851665830329, 6.029155044040221e-14]; drift [0.010415299427434159, 1.8997658308011435e-14]
+thread 'held_core::gravity_kick_on_a_held_cell_is_booked' (385724) panicked at crates/sr-engine/tests/gpu/held_core.rs:325:5:
+test held_core::gravity_kick_on_a_held_cell_is_booked ... FAILED
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 535 filtered out; finished in 0.00s
+SR-HELD-GRAVITY Δt g M 1.753625e-1 (the held column's share 1.131371e-1); held [0.11720851665830329, 6.029155044040221e-14]; drift [0.010415299427434159, 1.8997658308011435e-14]
+PROBE escaped mom [0.0, 0.0]; grid Δp [0.056327512320360186, -5.696007393236977e-14]; Σ Δt Σⁿ g_self(Σⁿ) 5.6288307348495437e-14, over the column -1.1744527496428714e0
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 535 filtered out; finished in 0.00s
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+SR-HELD-GRAVITY Δt g M 5.779016e-2 (the held column's share 3.728397e-2); held [-0.39020877553406197, 7.105427357601002e-15]; drift [7.204230922913578e-15, 1.5801279824257113e-13]
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 535 filtered out; finished in 0.00s

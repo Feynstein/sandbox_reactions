@@ -339,3 +339,6 @@ mod touch;
 
 /// M0-T106 — conservation over whole lives (contract §5.1's G-CONS).
 mod conservation;
+
+/// M0-T107 — the age clock over a touched life (contract §5.4's G-AGE).
+mod age;

@@ -23,6 +23,9 @@
 //!   it (`held.mom_*`) and what P4 spared the held cells or stopped at their walls (`held.spared.mom_*`, §2.3.4 [M0-D172]).
 //!   What the initial state's hold zeroed before step 0 is booked before the ledger starts and dropped with the first
 //!   interval, as every term booked then is.
+//! - The momentum `escaped` (§2.9 [M0-D199]) is P4's and P8's booking summed: what crossed the world's edge, or bounce's
+//!   walls pushed ([M0-D194]), (`escaped.mom_*`) and what P8's vacuum reset removed with the gas it set to the floor state
+//!   (`vacuum_reset.mom_*`, §2.7 [M0-D199]).
 //! - `edit_potential` (§2.9 [M0-D109]) is the potential energy P0's mass changes brought: ½ ΔΣ (φ_before + φ_after) a cell,
 //!   booked by P2 on the edit's step (step/grav.rs) — what W = ½ Σ m φ, sinks included, moves by under an instantaneous
 //!   edit. W itself is ½ m φ with φ at the step's end (§2.9 [M0-D193]) when the step runs P2 and P4's half step: the summary
@@ -284,15 +287,17 @@ impl Ledger {
 
     /// The ledger [`Ledger::snapshot`] wrote, in `world` under `physics` (the run's own). A snapshot written before
     /// [M0-TG2] books no hold: its list ends before the `held.*` terms, which read 0 (§2.9); one written before [M0-D109]
-    /// ends before `energy.edit_potential`, which reads 0.
+    /// ends before `energy.edit_potential`, which reads 0; one written before [M0-D199] before `vacuum_reset.mom_*`, 0.
     pub fn restore(world: WorldConfig, physics: &Physics, v: &Value) -> Result<Ledger, String> {
         let mut ledger = Ledger::new(world, physics);
         let booked = read_list(v, "booked")?;
         let before = |name: &str| TERMS.iter().position(|t| t.name.starts_with(name)).expect("a booked term of that name");
         let (before_held, before_edit) = (before("held."), before("energy.edit_potential"));
-        if ![N_TERMS, before_edit, before_held].contains(&booked.len()) {
+        let before_reset = before("vacuum_reset.mom_");
+        if ![N_TERMS, before_reset, before_edit, before_held].contains(&booked.len()) {
             return Err(format!(
-                "ledger.booked: {} terms, expected {N_TERMS} (or {before_edit}, before [M0-D109]; {before_held}, before [M0-TG2])",
+                "ledger.booked: {} terms, expected {N_TERMS} (or {before_reset}, before [M0-D199]; {before_edit}, before [M0-D109]; \
+                 {before_held}, before [M0-TG2])",
                 booked.len()
             ));
         }
@@ -380,7 +385,7 @@ impl Ledger {
             momentum: Momentum {
                 grid: [px, py],
                 sinks: [sink_px, sink_py],
-                escaped: [t("escaped.mom_x"), t("escaped.mom_y")],
+                escaped: [t("escaped.mom_x") + t("vacuum_reset.mom_x"), t("escaped.mom_y") + t("vacuum_reset.mom_y")],
                 held: [t("held.mom_x") + t("held.spared.mom_x"), t("held.mom_y") + t("held.spared.mom_y")],
             },
         }

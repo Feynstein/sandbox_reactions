@@ -6,12 +6,15 @@
 //! sound speed) holding a right-going acoustic pulse 32 cells wide (u = v₀ = 0.002, Π + Σc·v₀, Σ + Σv₀/c: one simple
 //! wave, Mach 1.4e-3, so the reflection is linear acoustics' within O(Mach)). It reaches the right wall at t ≈ 113 and
 //! has left it by t ≈ 140; at t = 200 the pulse's mass-weighted normal velocity — the world's x momentum over the pulse
-//! slab's mass, v₀ at t = 0 — is within 2 % of −v₀ (G-EDGE), with nothing booked and the mass kept (the wall's mass flux
-//! exactly 0). That oracle cannot see the ghosts: the wall's flux alone sets the impulse that turns the pulse (measured
+//! slab's mass, v₀ at t = 0 — is within 2 % of −v₀ (G-EDGE), the mass kept (the wall's mass flux exactly 0) and, since
+//! §2.9 [M0-D194], the walls' pressure impulse — the box's recoil — booked `escaped` momentum and nothing else: the escaped
+//! mass, energy and species exactly 0, the momentum grid + escaped constant to 1e-6 of the walls' gross booked impulse
+//! (G-EDGE's form; the twin to 1e-12), and the pulse's reversal, 2·M·v₀, in the walls' net x booking within its 2 %. That oracle cannot see the ghosts: the wall's flux alone sets the impulse that turns the pulse (measured
 //! on the twin, copy ghosts in place of mirrors: −2.000013e-3 both ways). So `wall-copy` — the shader's bounce ghosts
 //! copying instead of mirroring — is graded against the twin's mirrors: the wind below run under bounce to t = 20 on the
 //! GPU and on the twin to the GPU's time, Σ, Σu, Σv and E each within 1e-4 relative L1 (fixed before the first GPU run;
-//! copy ghosts move the twin's by 2.6e-4, 6.4e-4, 2.6e-3, 3.5e-4).
+//! copy ghosts move the twin's by 2.6e-4, 6.4e-4, 2.6e-3, 3.5e-4) — and the GPU's escaped momentum within G-REF's 1e-3 of
+//! the twin's.
 //!
 //! Leave: a wind — the 128 × 64 world moving at (0.6, 0.4), out through the right and bottom sides, away from the left
 //! and top ones, with a helium block riding it (Σ + 2, Π + 0.02) so species and gradients cross the edge — to t = 40,
@@ -21,7 +24,8 @@
 //! booked mass ever falls in a step (the twin, every step) or is negative in a step's booking (the GPU, read every
 //! step), while HLL's diffusion still lets a little out of the left and top sides where the gas lies stagnant against
 //! them; the GPU's escaped totals within G-REF's 1e-3 of the twin's. `set_edge_mode` lands at the next step boundary: a
-//! run switched from bounce to leave between two submissions is, bit for bit, a leave run started there.
+//! run switched from bounce to leave between two submissions is, bit for bit, a leave run started there — its booking
+//! before the switch a bounce run's, after it the leave run's.
 
 use std::path::{Path, PathBuf};
 
@@ -95,6 +99,27 @@ fn rel_l1(a: &[f64], b: &[f64]) -> f64 {
     d / b.iter().map(|y| y.abs()).sum::<f64>()
 }
 
+/// §2.9 [M0-D194]: a bounce wall books its pressure impulse, the box's recoil, as `escaped` momentum and nothing else —
+/// the mass, energy and species planes of `escaped` (`COMPONENTS` planes of its slots) exactly 0.
+fn assert_bounce_books_momentum_alone(escaped: &[f64], label: &str) {
+    let slots = escaped.len() / COMPONENTS;
+    for k in (0..COMPONENTS).filter(|&k| k != 1 && k != 2) {
+        let plane = &escaped[k * slots..(k + 1) * slots];
+        assert!(plane.iter().all(|&e| e == 0.0), "{label}: bounce booked escaped component {k} — only momentum (§2.9 [M0-D194])");
+    }
+}
+
+/// The walls' gross booked impulse: Σ|e| over `escaped`'s two momentum planes, slot by slot (each slot one wall face).
+fn walls_gross(escaped: &[f64]) -> f64 {
+    let slots = escaped.len() / COMPONENTS;
+    escaped[slots..3 * slots].iter().map(|e| e.abs()).sum()
+}
+
+/// The momentum invariant's drift, (x, y): grid + escaped at the end less the grid at the start.
+fn momentum_drift(start: &[f64; COMPONENTS], end: &[f64; COMPONENTS], esc: &[f64; COMPONENTS]) -> [f64; 2] {
+    [1, 2].map(|k| (end[k] + esc[k]) - start[k])
+}
+
 // ---- the twin ----
 
 #[test]
@@ -109,18 +134,29 @@ fn twin_bounce_returns_the_pulse() {
     let mut st = first.clone();
     let steps = twin(&physics, Edge::Bounce).advance(&mut st, 0.0, T_PULSE);
     let v_end = pulse_velocity(&st, m_slab);
-    let (start, end) = (first.totals(), st.totals());
+    let (start, end, esc) = (first.totals(), st.totals(), st.escaped_total());
+    let (gross, reversal) = (walls_gross(&st.escaped), 2.0 * m_slab * V0);
+    let drift = momentum_drift(&start, &end, &esc);
     println!(
         "SR-EDGE-BOUNCE twin 256x4: {steps} steps to t = {T_PULSE}, v at 0 {v_start:.6e} (v0 {V0}), at {T_PULSE} {v_end:.6e}, \
-         {:.3} % from -v0; mass {:.1e} relative, escaped {:?}",
+         {:.3} % from -v0; mass {:.1e} relative, escaped mass {:?}; the walls booked ({:.6e}, {:.6e}) of gross {gross:.4e}, the \
+         reversal 2·M·v0 {reversal:.6e} ({:.3} % off); grid + escaped drift ({:.2e}, {:.2e}) = {:.2e} of the gross",
         100.0 * rel(v_end, -V0),
         rel(end[0], start[0]),
-        st.escaped_total()[0]
+        esc[0],
+        esc[1],
+        esc[2],
+        100.0 * rel(esc[1], reversal),
+        drift[0],
+        drift[1],
+        drift[0].hypot(drift[1]) / gross
     );
     assert!(rel(v_start, V0) <= 1e-6, "the slab moves at v0");
     assert!(rel(v_end, -V0) <= 0.02, "the pulse returns at {v_end:e}, not -v0 = {:e}", -V0);
     assert!(rel(end[0], start[0]) <= 1e-12, "mass: the walls pass none");
-    assert!(st.escaped.iter().all(|&e| e == 0.0), "bounce books nothing");
+    assert_bounce_books_momentum_alone(&st.escaped, "twin");
+    assert!(drift[0].hypot(drift[1]) <= 1e-12 * gross, "momentum: grid + escaped drifts {drift:?}, gross {gross:e}");
+    assert!(rel(esc[1], reversal) <= 0.02, "the walls' net x booking {:e} is not the pulse's reversal 2·M·v0 = {reversal:e}", esc[1]);
 }
 
 #[test]
@@ -181,6 +217,8 @@ fn twin_leave_books_what_crosses() {
 struct GpuRun {
     state: State,
     escaped: Vec<f64>,
+    /// With `Run::switch`, the booking before the switch (the bounce steps'), `escaped` holding the steps after; else empty.
+    escaped_before_switch: Vec<f64>,
     /// The smallest mass any face booked in one batch.
     least_face: f64,
     sim_time: f64,
@@ -231,11 +269,13 @@ fn gpu_run(physics: &Physics, first: &State, edge: EdgeMode, run: Run) -> GpuRun
     let step = Step::with_passes(&gpu.device, &state, &booking, &eos, physics, &passes).unwrap();
     let (base, slots) = escaped_span(world);
     let mut escaped = vec![0f64; COMPONENTS * slots];
+    let mut escaped_before_switch = Vec::new();
     let mut least_face = f64::INFINITY;
     loop {
         let before = step.read_dt(&gpu.device, &gpu.queue);
         if switch == Some(before.steps) {
             step.set_edge_mode(&gpu.queue, edge);
+            escaped_before_switch = std::mem::replace(&mut escaped, vec![0f64; COMPONENTS * slots]);
         }
         let mut batch = if single { 1 } else { 32u64 };
         if let Some(n) = steps {
@@ -271,6 +311,7 @@ fn gpu_run(physics: &Physics, first: &State, edge: EdgeMode, run: Run) -> GpuRun
     GpuRun {
         state: State::new(first.width, first.height, planes),
         escaped,
+        escaped_before_switch,
         least_face,
         sim_time: report.sim_time,
         steps: report.steps,
@@ -306,18 +347,29 @@ fn gpu_bounce_returns_the_pulse() {
     println!("{}", run.adapter);
     let m_slab = slab_mass(&first);
     let (v_start, v_end) = (pulse_velocity(&first, m_slab), pulse_velocity(&run.state, m_slab));
-    let (start, end) = (first.totals(), run.state.totals());
+    let (start, end, esc) = (first.totals(), run.state.totals(), escaped_totals(&run));
+    let (gross, reversal) = (walls_gross(&run.escaped), 2.0 * m_slab * V0);
+    let drift = momentum_drift(&start, &end, &esc);
     println!(
         "SR-EDGE-BOUNCE gpu 256x64: {} steps to t = {:.4}, v at 0 {v_start:.6e}, at the end {v_end:.6e}, {:.3} % from -v0; \
-         mass {:.1e} relative",
+         mass {:.1e} relative; the walls booked ({:.6e}, {:.6e}) of gross {gross:.4e}, the reversal 2·M·v0 {reversal:.6e} \
+         ({:.3} % off); grid + escaped drift ({:.2e}, {:.2e}) = {:.2e} of the gross",
         run.steps,
         run.sim_time,
         100.0 * rel(v_end, -V0),
-        rel(end[0], start[0])
+        rel(end[0], start[0]),
+        esc[1],
+        esc[2],
+        100.0 * rel(esc[1], reversal),
+        drift[0],
+        drift[1],
+        drift[0].hypot(drift[1]) / gross
     );
     assert!(rel(v_end, -V0) <= 0.02, "the pulse returns at {v_end:e}, not -v0 = {:e}", -V0);
     assert!(rel(end[0], start[0]) <= 1e-6, "mass: the walls pass none");
-    assert!(run.escaped.iter().all(|&e| e == 0.0), "bounce books nothing");
+    assert_bounce_books_momentum_alone(&run.escaped, "gpu");
+    assert!(drift[0].hypot(drift[1]) <= 1e-6 * gross, "momentum: grid + escaped drifts {drift:?}, gross {gross:e} (G-EDGE 1e-6)");
+    assert!(rel(esc[1], reversal) <= 0.02, "the walls' net x booking {:e} is not the pulse's reversal 2·M·v0 = {reversal:e}", esc[1]);
 }
 
 #[test]
@@ -332,14 +384,24 @@ fn gpu_bounce_walls_are_the_twins() {
     let mut st = first.clone();
     twin(&physics, Edge::Bounce).advance(&mut st, 0.0, run.sim_time);
     let diff = [0usize, 1, 2, 3].map(|c| rel_l1(run.state.plane(c), st.plane(c)));
+    let (esc, twin_esc) = (escaped_totals(&run), st.escaped_total());
+    let vs_twin = [1usize, 2].map(|k| rel(esc[k], twin_esc[k]));
     println!(
-        "SR-EDGE-WALLS gpu 128x64 bounce: {} steps to t = {:.4}; against the twin (Σ, Σu, Σv, E) relative L1 {} ≤ 1e-4",
+        "SR-EDGE-WALLS gpu 128x64 bounce: {} steps to t = {:.4}; against the twin (Σ, Σu, Σv, E) relative L1 {} ≤ 1e-4; the \
+         walls' booked impulse ({:.6e}, {:.6e}) against the twin's ({:.6e}, {:.6e}): {} ≤ 1e-3",
         run.steps,
         run.sim_time,
-        diff.map(|d| format!("{d:.2e}")).join(" ")
+        diff.map(|d| format!("{d:.2e}")).join(" "),
+        esc[1],
+        esc[2],
+        twin_esc[1],
+        twin_esc[2],
+        vs_twin.map(|d| format!("{d:.2e}")).join(" ")
     );
-    assert!(run.escaped.iter().all(|&e| e == 0.0), "bounce books nothing");
+    assert_bounce_books_momentum_alone(&run.escaped, "gpu");
+    assert_bounce_books_momentum_alone(&st.escaped, "twin");
     assert!(diff.iter().all(|&d| d <= 1e-4), "the GPU's bounce differs from the twin's: {diff:?}");
+    assert!(vs_twin.iter().all(|&d| d <= 1e-3), "the walls' booked impulse {esc:?} vs the twin's {twin_esc:?} (G-REF 1e-3)");
 }
 
 #[test]
@@ -383,21 +445,28 @@ fn gpu_set_edge_mode_lands_at_the_step_boundary() {
     let physics = scene.physics().unwrap();
     let first = world_of(&scene, &physics);
     let bounced = gpu_run(&physics, &first, EdgeMode::Bounce, Run { steps: Some(64), ..Run::default() });
-    assert!(bounced.escaped.iter().all(|&e| e == 0.0), "bounce books nothing");
+    assert_bounce_books_momentum_alone(&bounced.escaped, "gpu, 64 bounce steps");
     let switched =
         gpu_run(&physics, &first, EdgeMode::Leave, Run { steps: Some(128), switch: Some(64), ..Run::default() });
     let fresh = gpu_run(&physics, &bounced.state, EdgeMode::Leave, Run { steps: Some(64), ..Run::default() });
     println!("{}", switched.adapter);
     let same_state = switched.state.planes.iter().zip(&fresh.state.planes).all(|(a, b)| a.to_bits() == b.to_bits());
-    let same_book = switched.escaped.iter().zip(&fresh.escaped).all(|(a, b)| a.to_bits() == b.to_bits());
+    let bits = |a: &[f64], b: &[f64]| a.len() == b.len() && a.iter().zip(b).all(|(x, y)| x.to_bits() == y.to_bits());
+    // After the switch, the leave run's booking; before it, the bounce run's — the walls' impulse (§2.9 [M0-D194]).
+    let same_book = bits(&switched.escaped, &fresh.escaped);
+    let same_before = bits(&switched.escaped_before_switch, &bounced.escaped);
     println!(
-        "SR-EDGE-SWITCH gpu: bounce 64 then leave 64 — state {}, escaped {} (mass {:.4}) against a leave run from step 64",
+        "SR-EDGE-SWITCH gpu: bounce 64 then leave 64 — state {}, escaped after the switch {} (mass {:.4}) against a leave run \
+         from step 64, before it {} against the bounce run (its walls' impulse ({:.4e}, {:.4e}))",
         if same_state { "bit for bit" } else { "DIFFERS" },
         if same_book { "bit for bit" } else { "DIFFERS" },
-        escaped_totals(&switched)[0]
+        escaped_totals(&switched)[0],
+        if same_before { "bit for bit" } else { "DIFFERS" },
+        escaped_totals(&bounced)[1],
+        escaped_totals(&bounced)[2]
     );
     assert!(escaped_totals(&switched)[0] > 0.0, "leave after the switch lets gas out");
-    assert!(same_state && same_book, "the switch did not land at the step boundary");
+    assert!(same_state && same_book && same_before, "the switch did not land at the step boundary");
 }
 
 #[test]

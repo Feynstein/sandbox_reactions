@@ -21,7 +21,7 @@
 // edge cell, its normal velocity clamped outward; the boundary face's flux is HLL between the edge cell's predicted face
 // and the ghost's, and a face whose mass flux points inward is a wall instead (inflow exactly 0). `hydro_edges` books
 // what crosses each boundary face into `escaped` — the same `boundary` flux on the same state, so the grid's loss is
-// the booking; bounce books nothing.
+// the booking; [M0-D194] bounce books its walls' pressure impulse there too, the box's recoil (its mass and energy 0).
 //
 // Gravity's source (§1.4.2; M0-T36), when the step runs P2 (`edges.gravity`): `face_state`'s Hancock predictor kicks each
 // face state by half a step of the cell's g — velocity by ½Δt·g, energy by the work Σ(u + ¼Δt·g)·g·½Δt, leaving its
@@ -46,6 +46,23 @@
 // the moved mass does to W at the half step's φ_mid (§1.4.2 [M0-D183]), and the impulses cancel in the momentum. A ghost's g and φ are its edge cell's, so
 // no work is done across the world's edge. `hydro_edges` recomputes the same predictor, so it binds g too. The twin's
 // `Hydro::step_with` is the reference.
+// [M0-D194] The kick's net taken back: P2's f32 FFT is not exactly circulant, so Σ Δt·Σ_src,mid·g_mid over the free
+// cells keeps ~4 × 10⁻⁹ of its gross a step, one-signed while a star is one blob ((−0.037, −0.010) over the Sun-like's
+// first 15,000 steps, 107 % of the grid's drift — tasks/M0-D194.md). `hydro_push_sum` sums the kicks `hydro_update`
+// added, each f32 product as it was added, exactly in fixed point (2⁻²⁸) — on the gas's own field, the free cells' g_mid
+// and the held cells' g_pull_mid (their spared kick, booked `held`), so the held core's pull and the sinks', real
+// exchanges booked elsewhere, cancel out of it — and finds the densest free cell; `hydro_commit`
+// takes the net K back from that one cell's momentum, E as it is — spread over every cell (a = K/M) it was under one ulp
+// of g and lost (M0-D186), in one cell it is well above one ulp of its momentum.
+// [M0-D195] The mass update's rounding given back: the faces' mass fluxes cancel exactly (M0-D199), but each cell's
+// Σ − Δt·ΔF rounds to its own f32, so Σ over the grid walks off (−4.7 × 10⁻³ sb over the Sun-like bounce life's last 35,000
+// steps, nothing else moving its mass — tasks/M0-D195.md). `hydro_push_sum` sums, exactly in fixed point (2⁻⁸, 2⁻²⁸,
+// 2⁻⁴⁸), each free box cell's Σⁿ⁺¹ − Σⁿ and the mass each boundary face let out (`hydro_edges`' f32 product, as booked
+// `escaped`; 0 at a bounce wall), adds the carry the last step left, and sums the free box cells' mass M = ΣΣⁿ⁺¹;
+// `hydro_commit` gives the total G back to every free cell in proportion to its Σ, Σ += G·Σ/M — a uniform rescale, so
+// equal cells stay equal (one cell taking it all left `sod`'s identical rows 2 × 10⁻⁵ apart) — its fractions, momentum
+// and E as they are; `hydro_settle` sums exactly what f32 kept of the shares (most are under half an ulp and wait) and
+// carries G less that to the next step (`push_net`'s MASS_CARRY, a dump's `resume.mass_carry`).
 //
 // The radiation force (§2.4.4; M0-T43), when the step runs P5 (`edges.radiation`): `hydro_update` adds Δt·f to a gas
 // cell's momentum, f = κΣF/c_sb from the cell as the step found it and F as P5 left it in `side.flux` at the end of the
@@ -58,6 +75,11 @@
 // F over the whole box after P4), 0 in every other box cell; `hydro_push_sum`, one workgroup, sums it over the box — the
 // net N and the gross S = Σ|s·d| in compensated f32, a fixed order —; `hydro_commit` takes |s·d|·N/S back from each
 // pushed cell, E as it is, before the sticky wall. The twin's `Hydro::step_forced` is the reference.
+// [M0-D199] Most of those shares are under half an ulp of their cell's momentum, so f32 rounds them away (on the Sun-like
+// bounce life, steps 22,000–45,000, the commit gave back (4.2 × 10⁻³, 2.3 × 10⁻³) less than N — tasks/M0-D199.md):
+// `hydro_push_sum` forms each free cell's subtraction as `hydro_commit` will, fl(m − t), t = |s·d|·N/S, sums what it keeps,
+// fl(m − t) − m, exactly in fixed point (to 2⁻⁴⁸), and the densest free cell gives the rest, −N − Σ kept, back with K —
+// the share each cell gives stays [M0-D184]'s, what f32 drops is settled in one place. The twin, in f64, drops nothing.
 //
 // Held cells (§2.3.4 [M0-TG2], §1.4.2 [M0-TG2]; M0-D71c), the mask the last P8 wrote (state.rs `State::held`, read here
 // as a sampled texture: the update's 8 storage slots are full): a face between two held cells, or between a held cell and
@@ -150,8 +172,19 @@ struct Edges {
 // P2's field as `hydro_mid` writes it (the same buffer as `grav`, never bound both ways in one dispatch): Σ_src at the
 // half step into plane MID_SRC (§1.4.2 [M0-D183], [M0-D192]).
 @group(0) @binding(17) var<storage, read_write> mid_out: array<f32>;
-// [M0-D184] The radiation force's sums over the box (`hydro_push_sum`): the net push N (x, y), the gross S = Σ|s·d|.
+// [M0-D184] The radiation force's sums over the box (`hydro_push_sum`): the net push N (x, y), the gross S = Σ|s·d|;
+// [M0-D194] words 4–7: gravity's net kick K (x, y) — [M0-D199] less the push's remainder — and the densest free cell's
+// index (−1: none), taken back from it. [M0-D195] Words 8–11: the mass given back G, the free box cells' mass M = ΣΣⁿ⁺¹
+// its shares divide by, the carry (`hydro_settle`'s), a pad; from word 12 (FACE_MASS) one per boundary-face slot, the mass
+// `hydro_edges` let out of it this step.
 @group(0) @binding(18) var<storage, read_write> push_net: array<f32>;
+const MASS_G: u32 = 8u;
+const MASS_TOTAL: u32 = 9u;
+const MASS_CARRY: u32 = 10u;
+const FACE_MASS: u32 = 12u;
+// [M0-D194] P2's field of the gas alone (step/grav.rs `Gravity::gas_field`; `grav` itself when the step runs no P3): its
+// half-step planes are g_mid and g_pull_mid without the sinks' pull, which `hydro_push_sum` sums K on — `hydro_push_sum`'s.
+@group(0) @binding(19) var<storage, read> grav_gas: array<f32>;
 
 // The field's half-step planes (step/grav.rs `FIELD_PLANES`): g_mid's x (y the next), φ_mid, g_pull_mid's x (y the next),
 // Σ_src at the half step.
@@ -1111,19 +1144,22 @@ fn hydro_mid(@builtin(global_invocation_id) id: vec3<u32>) {
     mid_out[MID_SRC * dims.cells + cell] = select(0.0, s, s >= eos.sigma_vac);
 }
 
-// One invocation per boundary-face slot, leaving only: the face's `boundary` flux, as `hydro_update` applied it to its
-// edge cell, added to the slot's escaped terms — the grid loses dt·f through a high face, −dt·f through a low one. A face
-// whose cell `hydro_update` did not move (outside the box, left empty, or held) books nothing. Runs before `hydro_commit`, on
-// the state as the step found it.
+// One invocation per boundary-face slot: the face's `boundary` flux, as `hydro_update` applied it to its edge cell, added
+// to the slot's escaped terms — the grid loses dt·f through a high face, −dt·f through a low one. Leaving, what crossed;
+// [M0-D194] bouncing, the wall's flux — mass, energy and species exactly 0, so only the wall's pressure impulse, the
+// box's recoil, is booked (§2.8, §2.9 [M0-D194]). A face whose cell `hydro_update` did not move (outside the box, left
+// empty, or held) books nothing. Runs before `hydro_commit`, on the state as the step found it.
 @compute @workgroup_size(64)
 fn hydro_edges(@builtin(global_invocation_id) id: vec3<u32>) {
     let w = dims.width;
     let h = dims.height;
     let slots = 2u * (w + h);
     let slot = id.x;
-    if (slot >= slots || edges.leave == 0u) {
+    if (slot >= slots) {
         return;
     }
+    // [M0-D195] The mass this face let out this step, for `hydro_push_sum`: 0 unless booked below.
+    push_net[FACE_MASS + slot] = 0.0;
     var cx = 0u;
     var cy = 0u;
     var side = 0u;
@@ -1157,6 +1193,7 @@ fn hydro_edges(@builtin(global_invocation_id) id: vec3<u32>) {
     for (var k = 0u; k < COMPONENTS; k++) {
         escaped[k * slots + slot] += s * f[k];
     }
+    push_net[FACE_MASS + slot] = s * f[0];
     // [M0-D182] The mass that crosses takes its potential energy with it: W = ½Σmφ rises by δm·|φ| when δm leaves the edge
     // cell, so the energy booked `escaped` is the gas's plus δm·φ_mid there — the same φ_mid the face work reads, a ghost's
     // its edge cell's (§2.8, §2.9 [M0-D182]). With P2 off there is no φ and nothing more to book.
@@ -1182,9 +1219,57 @@ fn push_add(a: PushSum, b: vec3<f32>, lo: vec3<f32>) -> PushSum {
 const PUSH_GROUP: u32 = 256u;
 var<workgroup> push_part: array<PushSum, 256>;
 
+// [M0-D194] The kick's net in fixed point, exact whatever the order: `a` in units of 2⁻⁸, `b` the rest in units of 2⁻²⁸,
+// kept in [0, 2²⁰) by carrying into `a` — and the densest free cell, (Σ_src, its index), −1 for none.
+struct KickSum {
+    a: vec2<i32>,
+    b: vec2<i32>,
+    best: vec2<f32>,
+}
+var<workgroup> kick_part: array<KickSum, 256>;
+// [M0-D199] (N_x, N_y, S) as `hydro_push_sum` writes them, for every invocation.
+var<workgroup> push_ns: vec3<f32>;
+
+// `s` with `b` carried into `a`: b's floor of 2²⁰ moved over (`>>` on i32 is arithmetic, so a negative `b` borrows).
+fn kick_carry(s: KickSum) -> KickSum {
+    let c = s.b >> vec2<u32>(20u);
+    return KickSum(s.a + c, s.b - (c << vec2<u32>(20u)), s.best);
+}
+
+// `v` in the sum's two words: a = v·2⁸ rounded, then what is left, |r| ≤ 2⁻⁹ and exact in f32, at 2⁻²⁸.
+fn kick_fixed(v: vec2<f32>) -> array<vec2<i32>, 2> {
+    let a = round(v * 256.0);
+    let r = v - a / 256.0;
+    return array<vec2<i32>, 2>(vec2<i32>(a), vec2<i32>(round(r * 268435456.0)));
+}
+
+// [M0-D199] `v` in three words, `kick_fixed`'s two and a third at 2⁻⁴⁸ for what is left of the second (|r₂| ≤ 2⁻²⁹, exact
+// in f32): the push's give-back is summed over cells whose momentum can sit far under 2⁻²⁸.
+fn settle_fixed(v: vec2<f32>) -> array<vec2<i32>, 3> {
+    let a = round(v * 256.0);
+    let r = v - a / 256.0;
+    let b = round(r * 268435456.0);
+    let r2 = r - b / 268435456.0;
+    return array<vec2<i32>, 3>(vec2<i32>(a), vec2<i32>(b), vec2<i32>(round(r2 * 281474976710656.0)));
+}
+
+// The denser of two (Σ_src, index) candidates, the lower index on a tie.
+fn denser(p: vec2<f32>, q: vec2<f32>) -> vec2<f32> {
+    return select(p, q, q.x > p.x || (q.x == p.x && q.y < p.y));
+}
+
 // [M0-D184] The radiation force's net push N and its gross S = Σ|s·d| over the box (the header comment), one workgroup:
 // each invocation sums the box cells k ≡ its index (mod 256) in order, then a fixed tree joins the 256 — the same push,
 // the same sums, bit for bit. Writes (N_x, N_y, S, 0) to `push_net`, zeros when the step runs no P5.
+// [M0-D194] Then, when the step runs P2, gravity's net kick K = Σ Δt·Σ_src,mid·g_mid over the box's free cells plus
+// Σ Δt·Σ_src,mid·g_pull_mid over its held ones, g the gas's own (`grav_gas`), each term the f32 product `hydro_update`
+// forms, summed exactly in fixed point (`KickSum`), and the densest free cell (the largest
+// Σ_src, the lowest index on a tie): (K_x, K_y, its index, 0) into `push_net`'s words 4–7, the index −1 when there is none
+// or the step runs no P2 — `hydro_commit` takes K back from that cell (the header comment).
+// [M0-D199] Between the two, when the step runs P5 and S > 0, what f32 keeps of each free cell's give-back, t = |s·d|·N/S
+// off the momentum m `hydro_update` left in the next state — fl(m − t) − m, summed exactly to 2⁻⁴⁸ —, and the rest,
+// −N − Σ kept, taken out of K's words, so the densest free cell gives it back with K (a step that runs P5 without P2 finds
+// that cell by its Σⁿ⁺¹ instead of Σ_src, and K is 0) — the header comment.
 @compute @workgroup_size(256)
 fn hydro_push_sum(@builtin(local_invocation_index) li: u32) {
     var acc = PushSum(vec3<f32>(0.0), vec3<f32>(0.0));
@@ -1211,6 +1296,181 @@ fn hydro_push_sum(@builtin(local_invocation_index) li: u32) {
         push_net[1] = total.y;
         push_net[2] = total.z;
         push_net[3] = 0.0;
+        push_ns = total;
+    }
+    workgroupBarrier();
+
+    // [M0-D199] What f32 keeps of the push's give-back, cell by cell as `hydro_commit` subtracts it (a held cell gives
+    // none): fl(m − |s·d|·N/S) − m, each side in fixed point to 2⁻⁴⁸ (`settle_fixed`) — an f32 form of what it drops,
+    // (fl(m − t) − m) + t, is folded to 0 by the driver (M0-D199) — summed exactly; the third word reduced on its own.
+    let ns = push_ns;
+    let settle = edges.radiation != 0u && ns.z > 0.0;
+    var kept_ab = KickSum(vec2<i32>(0), vec2<i32>(0), vec2<f32>(-1.0, -1.0));
+    var kept_c = vec2<i32>(0);
+    if (settle) {
+        let cells = abox.w * abox.h;
+        for (var k = li; k < cells; k += PUSH_GROUP) {
+            let x = i32(abox.x0 + k % abox.w);
+            let y = i32(abox.y0 + k / abox.w);
+            let cell = u32(y) * dims.width + u32(x);
+            if (!held_at(x, y)) {
+                let p = vec2<f32>(rad_flux[cell], rad_flux[dims.cells + cell]);
+                let m = vec2<f32>(next_lo[dims.cells + cell], next_lo[2u * dims.cells + cell]);
+                let fa = settle_fixed(m - length(p) * vec2<f32>(ns.x, ns.y) / ns.z);
+                let fm = settle_fixed(m);
+                let c = kept_c + fa[2] - fm[2];
+                let carry = c >> vec2<u32>(20u);
+                kept_c = c - (carry << vec2<u32>(20u));
+                kept_ab = kick_carry(KickSum(kept_ab.a + fa[0] - fm[0], kept_ab.b + fa[1] - fm[1] + carry, kept_ab.best));
+            }
+        }
+    }
+    kick_part[li] = kept_ab;
+    workgroupBarrier();
+    for (var half = PUSH_GROUP / 2u; half > 0u; half = half / 2u) {
+        if (li < half) {
+            let p = kick_part[li];
+            let q = kick_part[li + half];
+            kick_part[li] = kick_carry(KickSum(p.a + q.a, p.b + q.b, p.best));
+        }
+        workgroupBarrier();
+    }
+    let ab = kick_part[0];
+    workgroupBarrier();
+    kick_part[li] = KickSum(kept_c, vec2<i32>(0), vec2<f32>(-1.0, -1.0));
+    workgroupBarrier();
+    for (var half = PUSH_GROUP / 2u; half > 0u; half = half / 2u) {
+        if (li < half) {
+            kick_part[li].a += kick_part[li + half].a;
+        }
+        workgroupBarrier();
+    }
+    var rest = vec2<f32>(0.0, 0.0);
+    if (settle) {
+        let kept = vec2<f32>(ab.a) / 256.0 + vec2<f32>(ab.b) / 268435456.0 + vec2<f32>(kick_part[0].a) / 281474976710656.0;
+        rest = -vec2<f32>(ns.x, ns.y) - kept;
+    }
+    workgroupBarrier();
+
+    // [M0-D194] Gravity's net kick and the densest free cell.
+    var kick = KickSum(vec2<i32>(0), vec2<i32>(0), vec2<f32>(-1.0, -1.0));
+    if (edges.gravity == 0u && settle) {
+        let cells = abox.w * abox.h;
+        for (var k = li; k < cells; k += PUSH_GROUP) {
+            let x = i32(abox.x0 + k % abox.w);
+            let y = i32(abox.y0 + k / abox.w);
+            let cell = u32(y) * dims.width + u32(x);
+            if (!held_at(x, y)) {
+                kick.best = denser(kick.best, vec2<f32>(next_lo[cell], f32(cell)));
+            }
+        }
+    }
+    if (edges.gravity != 0u) {
+        let dt = dt_rec.x;
+        let cells = abox.w * abox.h;
+        for (var k = li; k < cells; k += PUSH_GROUP) {
+            let x = i32(abox.x0 + k % abox.w);
+            let y = i32(abox.y0 + k / abox.w);
+            // A free cell's Σ_src·g_mid, a held cell's Σ_src·g_pull_mid (its spared kick, booked `held`), both the gas's
+            // own pull: so the free cells' pull on the held and theirs on the free cancel in K, as do the sinks' (P3 books
+            // the sinks' side), and K is what f32 left of the gas's pull on itself.
+            let cell = u32(y) * dims.width + u32(x);
+            let n = dims.cells;
+            let free = !held_at(x, y);
+            let s = mid_kick_at(x, y).z;
+            let plane = select(MID_PULL, MID_G, free);
+            let g = vec2<f32>(grav_gas[plane * n + cell], grav_gas[(plane + 1u) * n + cell]);
+            let f = kick_fixed(dt * s * g);
+            kick = kick_carry(KickSum(kick.a + f[0], kick.b + f[1], kick.best));
+            if (free && s > 0.0) {
+                kick.best = denser(kick.best, vec2<f32>(s, f32(cell)));
+            }
+        }
+    }
+    kick_part[li] = kick;
+    workgroupBarrier();
+    for (var half = PUSH_GROUP / 2u; half > 0u; half = half / 2u) {
+        if (li < half) {
+            let p = kick_part[li];
+            let q = kick_part[li + half];
+            kick_part[li] = kick_carry(KickSum(p.a + q.a, p.b + q.b, denser(p.best, q.best)));
+        }
+        workgroupBarrier();
+    }
+    if (li == 0u) {
+        let s = kick_part[0];
+        let net = vec2<f32>(s.a) / 256.0 + vec2<f32>(s.b) / 268435456.0 - rest;
+        push_net[4] = net.x;
+        push_net[5] = net.y;
+        push_net[6] = s.best.y;
+        push_net[7] = 0.0;
+    }
+    workgroupBarrier();
+
+    // [M0-D195] The mass update's rounding (the header comment): Σⁿ⁺¹ − Σⁿ over the box's free cells and the mass the
+    // boundary faces let out, exactly in three words, and the densest free cell by Σⁿ⁺¹ (a held cell keeps its Σ).
+    var mass_ab = KickSum(vec2<i32>(0), vec2<i32>(0), vec2<f32>(-1.0, -1.0));
+    var mass_c = vec2<i32>(0);
+    var free_mass = 0.0;
+    let box_cells = abox.w * abox.h;
+    for (var k = li; k < box_cells; k += PUSH_GROUP) {
+        let x = i32(abox.x0 + k % abox.w);
+        let y = i32(abox.y0 + k / abox.w);
+        let cell = u32(y) * dims.width + u32(x);
+        if (!held_at(x, y)) {
+            let after = next_lo[cell];
+            let before = hydro[cell];
+            // Each side in the words while its first stays well inside i32 (Σ < 2²²); past that, the f32 difference —
+            // exact there, the two within a factor 2 under the CFL step, every bit of it at or above 2⁻¹.
+            let dense = max(after, before) >= 4194304.0;
+            let fa = settle_fixed(vec2<f32>(select(after, after - before, dense), 0.0));
+            let fm = settle_fixed(vec2<f32>(select(before, 0.0, dense), 0.0));
+            let c = mass_c + fa[2] - fm[2];
+            let carry = c >> vec2<u32>(20u);
+            mass_c = c - (carry << vec2<u32>(20u));
+            mass_ab = kick_carry(KickSum(mass_ab.a + fa[0] - fm[0], mass_ab.b + fa[1] - fm[1] + carry, mass_ab.best));
+            free_mass += after;
+        }
+    }
+    let face_slots = 2u * (dims.width + dims.height);
+    for (var k = li; k < face_slots; k += PUSH_GROUP) {
+        let fo = settle_fixed(vec2<f32>(push_net[FACE_MASS + k], 0.0));
+        let c = mass_c + fo[2];
+        let carry = c >> vec2<u32>(20u);
+        mass_c = c - (carry << vec2<u32>(20u));
+        mass_ab = kick_carry(KickSum(mass_ab.a + fo[0], mass_ab.b + fo[1] + carry, mass_ab.best));
+    }
+    kick_part[li] = KickSum(mass_ab.a, mass_ab.b, vec2<f32>(free_mass, 0.0));
+    workgroupBarrier();
+    for (var half = PUSH_GROUP / 2u; half > 0u; half = half / 2u) {
+        if (li < half) {
+            let p = kick_part[li];
+            let q = kick_part[li + half];
+            kick_part[li] = kick_carry(KickSum(p.a + q.a, p.b + q.b, p.best + q.best));
+        }
+        workgroupBarrier();
+    }
+    let lost = kick_part[0];
+    workgroupBarrier();
+    kick_part[li] = KickSum(mass_c, vec2<i32>(0), vec2<f32>(-1.0, -1.0));
+    workgroupBarrier();
+    for (var half = PUSH_GROUP / 2u; half > 0u; half = half / 2u) {
+        if (li < half) {
+            kick_part[li].a += kick_part[li + half].a;
+        }
+        workgroupBarrier();
+    }
+    if (li == 0u) {
+        // G = the carry less what the cells gained and the faces let out: three words, the third's sum carried into
+        // the second, each converted alone.
+        let fc = settle_fixed(vec2<f32>(push_net[MASS_CARRY], 0.0));
+        let c3 = fc[2] - kick_part[0].a;
+        let carry3 = c3 >> vec2<u32>(20u);
+        let t = kick_carry(KickSum(fc[0] - lost.a, fc[1] - lost.b + carry3, lost.best));
+        let g = f32(t.a.x) / 256.0 + f32(t.b.x) / 268435456.0 + f32(c3.x - (carry3.x << 20u)) / 281474976710656.0;
+        push_net[MASS_G] = g;
+        push_net[MASS_TOTAL] = lost.best.x;
+        push_net[11] = 0.0;
     }
 }
 
@@ -1237,6 +1497,11 @@ fn hydro_commit(@builtin(global_invocation_id) id: vec3<u32>) {
         let p = vec2<f32>(rad_flux[cell], rad_flux[n + cell]);
         mom -= length(p) * vec2<f32>(push_net[0], push_net[1]) / push_net[2];
     }
+    // [M0-D194] Gravity's net kick taken back from the densest free cell, E as it is, [M0-D199] with what f32 dropped of
+    // the push's give-back (the header comment).
+    if (push_net[6] >= 0.0 && cell == u32(push_net[6])) {
+        mom -= vec2<f32>(push_net[4], push_net[5]);
+    }
     var stopped = vec2<f32>(0.0, 0.0);
     let gas = get_next(0u, cell) >= eos.sigma_vac;
     if (gas && ((held_at(x - 1, y) && mom.x < 0.0) || (held_at(x + 1, y) && mom.x > 0.0))) {
@@ -1251,7 +1516,15 @@ fn hydro_commit(@builtin(global_invocation_id) id: vec3<u32>) {
         held_book[cell] += stopped.x;
         held_book[n + cell] += stopped.y;
     }
-    out_hydro[cell] = get_next(0u, cell);
+    // [M0-D195] The mass update's rounding given back to every free cell in proportion to its Σ (the header comment):
+    // what f32 does not keep of the shares, `hydro_settle` carries to the next step.
+    var sigma = get_next(0u, cell);
+    let total = push_net[MASS_TOTAL];
+    let g = push_net[MASS_G];
+    if (total > 0.0 && abs(g) < 0.5 * total) {
+        sigma += g * (sigma / total);
+    }
+    out_hydro[cell] = sigma;
     out_hydro[n + cell] = mom.x;
     out_hydro[2u * n + cell] = mom.y;
     out_hydro[3u * n + cell] = get_next(3u, cell);
@@ -1260,5 +1533,58 @@ fn hydro_commit(@builtin(global_invocation_id) id: vec3<u32>) {
     }
     for (var i = 0u; i < PLANES_B; i++) {
         out_b[i * n + cell] = get_next(4u + PLANES_A + i, cell);
+    }
+}
+
+// [M0-D195] After `hydro_commit`, one workgroup: what f32 kept of the give-back's shares, Σ over the box's free cells of
+// the committed Σ less the next state's, exactly in the words (an f32 form of it is folded by the driver, M0-D199), and
+// the carry G − kept into `push_net`'s MASS_CARRY for the next step's `hydro_push_sum` (the header comment).
+@compute @workgroup_size(256)
+fn hydro_settle(@builtin(local_invocation_index) li: u32) {
+    var kept_ab = KickSum(vec2<i32>(0), vec2<i32>(0), vec2<f32>(0.0, 0.0));
+    var kept_c = vec2<i32>(0);
+    let cells = abox.w * abox.h;
+    for (var k = li; k < cells; k += PUSH_GROUP) {
+        let x = i32(abox.x0 + k % abox.w);
+        let y = i32(abox.y0 + k / abox.w);
+        let cell = u32(y) * dims.width + u32(x);
+        if (!held_at(x, y)) {
+            let after = out_hydro[cell];
+            let before = next_lo[cell];
+            let dense = max(after, before) >= 4194304.0;
+            let fa = settle_fixed(vec2<f32>(select(after, after - before, dense), 0.0));
+            let fm = settle_fixed(vec2<f32>(select(before, 0.0, dense), 0.0));
+            let c = kept_c + fa[2] - fm[2];
+            let carry = c >> vec2<u32>(20u);
+            kept_c = c - (carry << vec2<u32>(20u));
+            kept_ab = kick_carry(KickSum(kept_ab.a + fa[0] - fm[0], kept_ab.b + fa[1] - fm[1] + carry, kept_ab.best));
+        }
+    }
+    kick_part[li] = kept_ab;
+    workgroupBarrier();
+    for (var half = PUSH_GROUP / 2u; half > 0u; half = half / 2u) {
+        if (li < half) {
+            let p = kick_part[li];
+            let q = kick_part[li + half];
+            kick_part[li] = kick_carry(KickSum(p.a + q.a, p.b + q.b, p.best));
+        }
+        workgroupBarrier();
+    }
+    let kept = kick_part[0];
+    workgroupBarrier();
+    kick_part[li] = KickSum(kept_c, vec2<i32>(0), vec2<f32>(0.0, 0.0));
+    workgroupBarrier();
+    for (var half = PUSH_GROUP / 2u; half > 0u; half = half / 2u) {
+        if (li < half) {
+            kick_part[li].a += kick_part[li + half].a;
+        }
+        workgroupBarrier();
+    }
+    if (li == 0u) {
+        let fg = settle_fixed(vec2<f32>(push_net[MASS_G], 0.0));
+        let c3 = fg[2] - kick_part[0].a;
+        let carry3 = c3 >> vec2<u32>(20u);
+        let r = kick_carry(KickSum(fg[0] - kept.a, fg[1] - kept.b + carry3, kept.best));
+        push_net[MASS_CARRY] = f32(r.a.x) / 256.0 + f32(r.b.x) / 268435456.0 + f32(c3.x - (carry3.x << 20u)) / 281474976710656.0;
     }
 }

@@ -358,13 +358,15 @@ fn field(c: &Constants, world: WorldConfig) -> Vec<f32> {
     planes
 }
 
-/// One step of the field: the state before and after, and P8's two booking planes (vacuum_reset, floor_added).
+/// One step of the field: the state before and after, and P8's booking planes (vacuum_reset, floor_added, and since
+/// [M0-D199] the reset's momentum, `vacuum_reset.mom_x` and `_y`).
 struct Run {
     world: WorldConfig,
     before: Vec<f32>,
     after: Vec<f32>,
     vacuum_reset: Vec<f32>,
     floor_added: Vec<f32>,
+    reset_mom: [Vec<f32>; 2],
     totals: Vec<(&'static str, f64)>,
 }
 
@@ -388,6 +390,7 @@ fn run_p8_on(c: &Constants, world: WorldConfig, before: Vec<f32>) -> Run {
         world,
         vacuum_reset: plane("mass.vacuum_reset"),
         floor_added: plane("energy.floor_added"),
+        reset_mom: [plane("vacuum_reset.mom_x"), plane("vacuum_reset.mom_y")],
         totals: TERMS.iter().map(|t| t.name).zip(totals).collect(),
         before,
         after,
@@ -547,6 +550,7 @@ fn a_cell_with_a_non_finite_fraction_is_left_for_the_guard() {
             assert_eq!(a.to_bits(), b.to_bits(), "cell {i}: {} {b} → {a}, P8 touched a non-finite cell", CHANNELS[k]);
         }
         assert_eq!((run.vacuum_reset[i], run.floor_added[i]), (0.0, 0.0), "cell {i}: P8 booked a non-finite cell");
+        assert_eq!((run.reset_mom[0][i], run.reset_mom[1][i]), (0.0, 0.0), "cell {i}: P8 booked a non-finite cell's momentum");
     }
     let mut others = 0;
     for i in (0..cells).filter(|i| !planted.iter().any(|p| p.0 == *i)) {
@@ -564,6 +568,8 @@ fn booked_terms_equal_the_mass_and_energy_changed() {
     let c = shipped();
     let run = run_p8(&c);
     let (mut mass, mut mass_abs, mut energy, mut energy_abs) = (0f64, 0f64, 0f64, 0f64);
+    // [M0-D199] the momentum the reset cells held, per component: what the step took off the grid, summed and in |·|.
+    let (mut mom, mut mom_abs, mut reset_cells) = ([0f64; 2], [0f64; 2], 0);
     for i in 0..run.cells() {
         // what the step changed, exactly, from the f32 states
         let dm = run.get(&run.before, 0, i) as f64 - run.get(&run.after, 0, i) as f64;
@@ -572,19 +578,43 @@ fn booked_terms_equal_the_mass_and_energy_changed() {
         assert!((bm - dm).abs() <= BOOK_TOL * dm.abs(), "cell {i}: vacuum_reset booked {bm:e}, Σ fell by {dm:e}");
         assert!((be - de).abs() <= BOOK_TOL * de.abs(), "cell {i}: floor_added booked {be:e}, E rose by {de:e}");
         (mass, mass_abs, energy, energy_abs) = (mass + dm, mass_abs + dm.abs(), energy + de, energy_abs + de.abs());
+        // The momentum a reset cell held is booked `vacuum_reset.mom_*`; a cell P8 left alone books none. The hold
+        // zeroes none of this field's momentum (a held cell is at rest as uploaded), so what the step took off a cell
+        // is the reset's.
+        for k in 0..2 {
+            let dp = run.get(&run.before, 1 + k, i) as f64 - run.get(&run.after, 1 + k, i) as f64;
+            let bp = run.reset_mom[k][i] as f64;
+            assert!((bp - dp).abs() <= BOOK_TOL * dp.abs(), "cell {i}: vacuum_reset.mom_{} booked {bp:e}, the cell lost {dp:e}", ["x", "y"][k]);
+            mom[k] += dp;
+            mom_abs[k] += dp.abs();
+        }
+        reset_cells += usize::from(run.reset_mom[0][i] != 0.0 || run.reset_mom[1][i] != 0.0);
     }
     let total = |name: &str| run.totals.iter().find(|(n, _)| *n == name).unwrap().1;
     let (booked_mass, booked_energy) = (total("mass.vacuum_reset"), total("energy.floor_added"));
     assert!(mass_abs > 0.0 && energy_abs > 0.0, "the field moved no mass or no energy: the case grades nothing");
     assert!((booked_mass - mass).abs() <= BOOK_TOL * mass_abs, "vacuum_reset {booked_mass:e}, Σ fell by {mass:e}");
     assert!((booked_energy - energy).abs() <= BOOK_TOL * energy_abs, "floor_added {booked_energy:e}, E rose by {energy:e}");
+    let booked_mom = [total("vacuum_reset.mom_x"), total("vacuum_reset.mom_y")];
+    assert!(reset_cells >= 100 && mom_abs.iter().all(|&a| a > 0.0), "{reset_cells} cells reset with momentum {mom_abs:?}: the case grades nothing");
+    for k in 0..2 {
+        assert!(
+            (booked_mom[k] - mom[k]).abs() <= BOOK_TOL * mom_abs[k],
+            "vacuum_reset.mom_{}: {:e}, the reset cells held {:e}",
+            ["x", "y"][k],
+            booked_mom[k],
+            mom[k]
+        );
+    }
     for (name, t) in &run.totals {
-        if *name != "mass.vacuum_reset" && *name != "energy.floor_added" {
-            assert_eq!(*t, 0.0, "{name}: P8 books only its two terms");
+        if !["mass.vacuum_reset", "energy.floor_added", "vacuum_reset.mom_x", "vacuum_reset.mom_y"].contains(name) {
+            assert_eq!(*t, 0.0, "{name}: P8 books only its four terms");
         }
     }
     println!(
-        "vacuum_reset {booked_mass:e} (Σ fell by {mass:e}, Σ|ΔΣ| {mass_abs:e}); floor_added {booked_energy:e} (E rose by {energy:e}, Σ|ΔE| {energy_abs:e}); tol {BOOK_TOL:e}"
+        "vacuum_reset {booked_mass:e} (Σ fell by {mass:e}, Σ|ΔΣ| {mass_abs:e}); floor_added {booked_energy:e} (E rose by {energy:e}, Σ|ΔE| {energy_abs:e}); \
+         vacuum_reset.mom ({:e}, {:e}) of {reset_cells} cells (held ({:e}, {:e}), Σ|Δp| ({:e}, {:e})); tol {BOOK_TOL:e}",
+        booked_mom[0], booked_mom[1], mom[0], mom[1], mom_abs[0], mom_abs[1]
     );
 }
 
