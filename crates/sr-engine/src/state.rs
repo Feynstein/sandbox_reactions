@@ -48,7 +48,8 @@ const _: () = {
     }
 };
 
-/// The world's size in cells (§2.8): a setting, never built in — default 600 × 400, any width and height that are
+/// The world's size in cells (§2.8): a setting, never built in — default ~~600 × 400~~ [M0-D203] 800 × 800 (§0.5 [M0-D203];
+/// `sr_physics::calibration::DEFAULT_WORLD`, which G-CAL checks a calibration against), any width and height that are
 /// multiples of 8 within [64, 2048].
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct WorldConfig {
@@ -58,7 +59,8 @@ pub struct WorldConfig {
 
 impl Default for WorldConfig {
     fn default() -> Self {
-        Self { width: 600, height: 400 }
+        let [width, height] = sr_physics::calibration::DEFAULT_WORLD;
+        Self { width, height }
     }
 }
 

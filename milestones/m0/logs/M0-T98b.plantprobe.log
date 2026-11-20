@@ -1,0 +1,20 @@
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 14.46s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test squeeze::zz_sun_probe ... sunplant: preset sun at 3136.7; calibration physics_hash 02a1e635d87aa4c27b69eb13e7c00aa1e46fa411f6f61bd2f1ae68402a4fad6e; Q_H 87
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+sunplant step=17 t=0.42 shown=none M=3136.7 X_H,c=0.735
+sunplant step=65 t=1.54 shown=collapsing M=3136.7 X_H,c=0.735
+sunplant step=545 t=7.16 shown=failed_star M=3133.1 X_H,c=0.732
+sunplant step=657 t=8.58 shown=collapsing M=3131.5 X_H,c=0.732
+sunplant step=785 t=10.04 shown=failed_star M=3129.1 X_H,c=0.732
+SR-HEADLESS DONE steps=20000 sim_time=200.471251 until=unmet
+sunplant: 20000 steps, exit 2, durations (t.u.) {"collapsing": 7.082127006724477, "failed_star": 191.84749250952154}
+probe sun readings 0 aborted None
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 544 filtered out; finished in 93.66s
+

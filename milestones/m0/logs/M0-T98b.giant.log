@@ -1,0 +1,34 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 9.03s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test squeeze::zz_giant_probe ... giant: preset giant at 18578.6; calibration physics_hash 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402; Q_H 8700
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+giant step=17 t=0.15 shown=none M=18578.5 X_H,c=0.735
+giant step=33 t=0.26 shown=protostar M=18578.6 X_H,c=0.735
+giant step=785 t=4.05 shown=main_sequence M=18561.8 X_H,c=0.733
+giant step=1169 t=6.09 shown=he_core M=18547.5 X_H,c=0.717
+giant step=1489 t=7.74 shown=main_sequence M=18523.5 X_H,c=0.680
+giant step=2897 t=20.39 shown=he_core M=17986.2 X_H,c=0.626
+giant step=2961 t=20.95 shown=main_sequence M=17965.6 X_H,c=0.611
+giant step=3617 t=27.96 shown=he_core M=17518.6 X_H,c=0.556
+giant step=3777 t=29.31 shown=main_sequence M=17425.9 X_H,c=0.526
+giant step=4305 t=35.03 shown=he_core M=16934.2 X_H,c=0.482
+giant step=4417 t=36.02 shown=main_sequence M=16859.4 X_H,c=0.462
+giant step=4817 t=40.19 shown=he_core M=16580.3 X_H,c=0.421
+giant step=4977 t=41.60 shown=main_sequence M=16504.9 X_H,c=0.396
+giant step=5329 t=45.14 shown=he_core M=16355.9 X_H,c=0.346
+giant step=5489 t=46.60 shown=main_sequence M=16295.1 X_H,c=0.324
+giant step=5761 t=49.17 shown=he_core M=16092.1 X_H,c=0.286
+giant step=6401 t=54.52 shown=o_burn M=15660.4 X_H,c=0.218
+giant step=6865 t=57.73 shown=si_burn M=15154.1 X_H,c=0.195
+giant step=7057 t=58.92 shown=main_sequence M=14929.7 X_H,c=0.186
+giant step=7969 t=63.66 shown=core_collapse M=13768.1 X_H,c=0.081
+SR-HEADLESS DONE steps=7969 sim_time=63.655745 until=met
+giant: 7969 steps, exit 0, durations (t.u.) {"he_core": 12.769897541496903, "main_sequence": 42.43988221604377, "o_burn": 3.2059224913828075, "protostar": 3.7871084585785866, "si_burn": 1.189441038761288}
+probe giant ms {"he_core": 12.769897541496903, "main_sequence": 42.43988221604377, "o_burn": 3.2059224913828075, "protostar": 3.7871084585785866, "si_burn": 1.189441038761288}
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 544 filtered out; finished in 51.43s
+

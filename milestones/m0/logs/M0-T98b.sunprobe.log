@@ -1,0 +1,24 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 11.10s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test squeeze::zz_sun_probe ... sunprobe: preset sun at 3136.7; calibration physics_hash 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402; Q_H 8700
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+sunprobe step=17 t=0.42 shown=none M=3136.7 X_H,c=0.735
+sunprobe step=65 t=1.54 shown=collapsing M=3136.7 X_H,c=0.735
+sunprobe step=705 t=9.24 shown=main_sequence M=3130.3 X_H,c=0.731
+sunprobe step=2001 t=24.6 X_H,c=0.728 M=3117.6 M_core=1271.0 τ_dyn=1.118 τ_KH=126.05 τ_nuc=3623.6 τ_KH/τ_dyn=112.8 τ_nuc/τ_KH=28.7
+sunprobe step=4001 t=47.4 X_H,c=0.723 M=3124.7 M_core=1412.6 τ_dyn=0.978 τ_KH=169.78 τ_nuc=4972.3 τ_KH/τ_dyn=173.6 τ_nuc/τ_KH=29.3
+sunprobe step=6001 t=69.7 X_H,c=0.717 M=3126.3 M_core=1461.4 τ_dyn=0.964 τ_KH=206.61 τ_nuc=6050.1 τ_KH/τ_dyn=214.2 τ_nuc/τ_KH=29.3
+sunprobe step=8001 t=91.9 X_H,c=0.710 M=3126.6 M_core=1475.3 τ_dyn=0.956 τ_KH=202.08 τ_nuc=5872.0 τ_KH/τ_dyn=211.3 τ_nuc/τ_KH=29.1
+sunprobe step=10001 t=114.0 X_H,c=0.702 M=3127.3 M_core=1472.8 τ_dyn=0.957 τ_KH=203.98 τ_nuc=5860.4 τ_KH/τ_dyn=213.1 τ_nuc/τ_KH=28.7
+sunprobe step=12001 t=136.2 X_H,c=0.695 M=3127.6 M_core=1460.8 τ_dyn=0.964 τ_KH=197.55 τ_nuc=5599.7 τ_KH/τ_dyn=204.9 τ_nuc/τ_KH=28.3
+sunprobe step=14000 t=158.4 X_H,c=0.687 M=3127.6 M_core=1448.2 τ_dyn=0.972 τ_KH=194.96 τ_nuc=5450.8 τ_KH/τ_dyn=200.7 τ_nuc/τ_KH=28.0
+SR-HEADLESS DONE steps=14000 sim_time=158.409104 until=unmet
+sunprobe: 14000 steps, exit 2, durations (t.u.) {"collapsing": 7.702013506554067, "main_sequence": 149.1654584221542}
+probe sun readings 7 aborted None
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 544 filtered out; finished in 99.88s
+

@@ -4,7 +4,9 @@
 //! masses, the top rung). It is true only of the constants it was measured on, so it carries `physics_hash`: the
 //! SHA-256 of the canonical JSON of `elements.json`, `reactions.json` and `physics.json`. The engine refuses a
 //! calibration whose hash differs from its embedded assets — `SR-ERROR calibration out of date`, exit 6: change a
-//! constant, calibrate again.
+//! constant, calibrate again. [M0-D203] It is true only of the world its lives ran on too: `measured.world` names it
+//! (`"<width>x<height>"`), and the engine refuses one measured on any world but [`DEFAULT_WORLD`] — or on none named, a
+//! file written before [M0-D203] — with the same exit 6.
 //!
 //! **The hash.** Each file is parsed and written back canonically — keys sorted, no whitespace, every number as the
 //! shortest f64 text (so `2`, `2.0` and `2e0` are one value) — and the three go into one object
@@ -30,6 +32,15 @@ const PHYSICS_JSON: &str = include_str!("../../../assets/physics.json");
 pub const EXIT_CALIBRATION: i32 = 6;
 /// §2.11's schema version.
 pub const VERSION: u64 = 1;
+
+/// [M0-D203] §2.8's default world, `[width, height]` in cells — the one `calibrate`'s lives run on, so the one a calibration
+/// is true of. `sr_engine`'s `WorldConfig::default()` reads it: the default and the check cannot disagree.
+pub const DEFAULT_WORLD: [u32; 2] = [800, 800];
+
+/// [M0-D203] `measured.world`'s text for a world: `"<width>x<height>"`, as `--world` writes it.
+pub fn world_text([width, height]: [u32; 2]) -> String {
+    format!("{width}x{height}")
+}
 
 #[path = "calibration_embed.rs"]
 pub mod embed;
@@ -180,6 +191,8 @@ pub fn physics_hash() -> Result<String, CalibrationError> {
 pub enum CalibrationError {
     /// The file's `physics_hash` is not the embedded assets' (G-CAL).
     OutOfDate { file: String, assets: String },
+    /// [M0-D203] The file was measured on another world than the default (`None`: it names none) (G-CAL).
+    OtherWorld { file: Option<String>, default: String },
     /// The file is not §2.11's, or breaks one of its bounds; names the key.
     Invalid { key: String, message: String },
     /// A run that needs a calibration (it names a preset) has none.
@@ -201,6 +214,11 @@ impl CalibrationError {
             CalibrationError::OutOfDate { file, assets } => format!(
                 "SR-ERROR calibration out of date: its physics_hash is {file}, the assets' is {assets} \
                  (change a constant, calibrate again: sandbox-reactions calibrate)"
+            ),
+            CalibrationError::OtherWorld { file, default } => format!(
+                "SR-ERROR calibration out of date: it was measured on {}, the default world is {default} \
+                 (calibrate again on it: sandbox-reactions calibrate)",
+                file.as_ref().map_or_else(|| "no named world (a file from before M0-D203)".to_string(), |w| format!("the {w} world"))
             ),
             CalibrationError::Invalid { key, message } => format!("SR-ERROR calibration invalid: {key}: {message}"),
             CalibrationError::Missing => "SR-ERROR calibration missing: a preset needs assets/calibration.json \
@@ -228,6 +246,9 @@ pub struct Measured {
     pub adapter: String,
     /// The `box` key: the machine's hostname.
     pub machine: String,
+    /// [M0-D203] The `world` key: the world the lives ran on, `"<width>x<height>"`; `None` in a file written before it, which
+    /// G-CAL refuses.
+    pub world: Option<String>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -402,8 +423,10 @@ impl Calibration {
         if physics_hash.len() != 64 || !physics_hash.bytes().all(|b| matches!(b, b'0'..=b'9' | b'a'..=b'f')) {
             return Err(CalibrationError::invalid("physics_hash", "must be 64 lowercase hex digits"));
         }
-        let m = Fields::new(top.get("measured")?, "measured", &["date", "git", "adapter", "box"])?;
-        let measured = Measured { date: m.text("date")?, git: m.text("git")?, adapter: m.text("adapter")?, machine: m.text("box")? };
+        let m = Fields::new(top.get("measured")?, "measured", &["date", "git", "adapter", "box", "world"])?;
+        let world = m.map.contains_key("world").then(|| m.text("world")).transpose()?;
+        let measured =
+            Measured { date: m.text("date")?, git: m.text("git")?, adapter: m.text("adapter")?, machine: m.text("box")?, world };
         let p = Fields::new(top.get("preset_mass_sb")?, "preset_mass_sb", &["sun", "massive", "giant"])?;
         let preset_mass_sb =
             PresetMasses { sun: p.number("sun", false)?, massive: p.number("massive", false)?, giant: p.number("giant", false)? };
@@ -480,6 +503,15 @@ impl Calibration {
         Ok(())
     }
 
+    /// [M0-D203] G-CAL's world: the file was measured on `world` (the default's, in [`resolve`]).
+    pub fn check_world(&self, world: [u32; 2]) -> Result<(), CalibrationError> {
+        let default = world_text(world);
+        if self.measured.world.as_deref() != Some(default.as_str()) {
+            return Err(CalibrationError::OtherWorld { file: self.measured.world.clone(), default });
+        }
+        Ok(())
+    }
+
     /// The file's JSON, keys sorted, with a trailing newline — what `calibrate` writes (M0-T66); without
     /// `render_reserve_ms` while it is `None`.
     pub fn to_json(&self) -> String {
@@ -494,6 +526,7 @@ impl Calibration {
             "measured": {
                 "date": self.measured.date, "git": self.measured.git,
                 "adapter": self.measured.adapter, "box": self.measured.machine,
+                "world": self.measured.world,
             },
             "m_ch_sb": self.m_ch_sb,
             "m_tov_sb": self.m_tov_sb,
@@ -514,17 +547,27 @@ impl Calibration {
         if self.render_reserve_ms.is_none() {
             value.as_object_mut().expect("an object").remove("render_reserve_ms");
         }
+        if self.measured.world.is_none() {
+            value["measured"].as_object_mut().expect("an object").remove("world");
+        }
         let mut text = serde_json::to_string_pretty(&value).expect("a Value always serialises");
         text.push('\n');
         text
     }
 
     /// A valid calibration for a physics hash, with round numbers near §2.7's arithmetic — the "test calibration" that
-    /// scopes use before M0-V9 measures the real one (M0-T69). Never a measurement: `measured.git` reads `test`.
+    /// scopes use before M0-V9 measures the real one (M0-T69). Never a measurement: `measured.git` reads `test`; its world is
+    /// the default's [M0-D203].
     pub fn test_calibration(physics_hash: &str) -> Calibration {
         Calibration {
             physics_hash: physics_hash.to_string(),
-            measured: Measured { date: "1970-01-01T00:00:00Z".into(), git: "test".into(), adapter: "test".into(), machine: "test".into() },
+            measured: Measured {
+                date: "1970-01-01T00:00:00Z".into(),
+                git: "test".into(),
+                adapter: "test".into(),
+                machine: "test".into(),
+                world: Some(world_text(DEFAULT_WORLD)),
+            },
             m_ch_sb: 3970.0,
             m_tov_sb: 6000.0,
             ns_sigma_max_sb: 3200.0,
@@ -550,28 +593,31 @@ impl Calibration {
 ///
 /// A run that needs none (headless, test and `calibrate` runs whose scene names no preset: the step never reads
 /// calibration, G-WATCH) gets `Ok(None)` whatever the file says — `calibrate` must run on a stale one. A run that needs
-/// one gets it parsed, validated and checked against the embedded assets ([`Calibration::check_against`]), or the
-/// [`CalibrationError`] that is exit 6.
+/// one gets it parsed, validated and checked against the embedded assets ([`Calibration::check_against`]) and the default
+/// world ([`DEFAULT_WORLD`], [`Calibration::check_world`] — [M0-D203]), or the [`CalibrationError`] that is exit 6.
 pub fn resolve(text: Option<&str>, needs_calibration: bool) -> Result<Option<Calibration>, CalibrationError> {
     if !needs_calibration {
         return Ok(None);
     }
     let physics = Physics::shipped().map_err(|e| CalibrationError::invalid("physics.json", e.to_string()))?;
     let c_sb = physics.get("c_sb").ok_or_else(|| CalibrationError::invalid("physics.json", "c_sb is missing"))?;
-    resolve_against(text, true, &physics_hash()?, c_sb)
+    resolve_against(text, true, &physics_hash()?, c_sb, DEFAULT_WORLD)
 }
 
-/// [`resolve`] against a given hash and c_sb — the assets' identity, passed in so a test can stand in for the assets.
+/// [`resolve`] against a given hash, c_sb and default world — the assets' and the world's identity, passed in so a test can
+/// stand in for them.
 pub fn resolve_against(
     text: Option<&str>,
     needs_calibration: bool,
     assets_hash: &str,
     c_sb: f64,
+    world: [u32; 2],
 ) -> Result<Option<Calibration>, CalibrationError> {
     if !needs_calibration {
         return Ok(None);
     }
     let cal = Calibration::parse(text.ok_or(CalibrationError::Missing)?)?;
     cal.check_against(assets_hash, c_sb)?;
+    cal.check_world(world)?;
     Ok(Some(cal))
 }

@@ -55,9 +55,10 @@
 //! written by the drawing lot's `--measure-ui` run (§3.3, item 7): `calibrate` keeps the file's and refuses `--only` for it.
 //!
 //! **The file.** `--out` is plain JSON with §2.11's keys — `version`, `physics_hash` (the assets' now), `measured` {date, git,
-//! adapter, box} and the items measured so far. A file already there under this physics hash is the base: `--only`
-//! re-measures one item and keeps the rest; a file under another hash is dropped whole (`SR-WARN`), its numbers belong to
-//! other constants. It is a complete [`Calibration`](sr_physics::calibration::Calibration) once every item has run; until the
+//! adapter, box, world [M0-D203] — the default world the lives run on} and the items measured so far. A file already there
+//! under this physics hash is the base: `--only` re-measures one item and keeps the rest; a file under another hash is dropped
+//! whole (`SR-WARN`), its numbers belong to other constants (a base measured on another world is kept as well: M0-D205). It is
+//! a complete [`Calibration`](sr_physics::calibration::Calibration) once every item has run; until the
 //! drawing lot writes `render_reserve_ms` it has none, and R_reserve is §1.8.3's 3.0 (M0-D62). The next build embeds it
 //! (`sr-physics`'s build.rs). `calibrate` needs no calibration itself and runs on a stale one.
 //!
@@ -1368,6 +1369,7 @@ fn run_inner(args: &[String], overrides: &[(String, f64)], progress_every: u64, 
     let physics = Physics::shipped().and_then(|p| p.with(&pairs)).map_err(|e| CalError::Failed(e.to_string()))?;
     let elements = Elements::shipped().map_err(|e| CalError::Failed(e.to_string()))?;
     let (eos, vac) = (Eos::from_physics(&physics).map_err(|e| CalError::Failed(e.to_string()))?, constant(&physics, "sigma_vac")?);
+    let world = calibration::world_text(calibration::DEFAULT_WORLD);
     let (mut file, dropped) = base_of(&opts.out, &hash);
     if let Some(why) = dropped {
         say(&format!("SR-WARN {why}"));
@@ -1488,6 +1490,7 @@ fn run_inner(args: &[String], overrides: &[(String, f64)], progress_every: u64, 
             "git": git_rev(),
             "adapter": adapter,
             "box": hostname(),
+            "world": world,
         }),
     );
     if let Some(parent) = opts.out.parent().filter(|p| !p.as_os_str().is_empty()) {

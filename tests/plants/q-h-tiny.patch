@@ -1,0 +1,22 @@
+--- a/assets/physics.json
++++ b/assets/physics.json
+@@ -5,7 +5,7 @@
+   "t_ne": 118,
+   "t_o": 122,
+   "t_si": 135,
+-  "q_h": 8700,
++  "q_h": 87,
+   "a_h_burn": 5e-4,
+   "a_he_burn": 1e-3,
+   "a_c_alpha": 1e-3,
+--- a/assets/calibration.json
++++ b/assets/calibration.json
+@@ -13,7 +13,7 @@
+     "git": "255ec37-dirty"
+   },
+   "ns_sigma_max_sb": 4853.169981814195,
+-  "physics_hash": "8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402",
++  "physics_hash": "02a1e635d87aa4c27b69eb13e7c00aa1e46fa411f6f61bd2f1ae68402a4fad6e",
+   "preset_mass_sb": {
+     "giant": 18578.60539133799,
+     "massive": 9810.393781245308,

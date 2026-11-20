@@ -342,3 +342,9 @@ mod conservation;
 
 /// M0-T107 — the age clock over a touched life (contract §5.4's G-AGE).
 mod age;
+
+/// M0-T98b — the clocks' order (contract §5.2's G-SQUEEZE; K1–K3).
+mod squeeze;
+
+/// M0-T99b — every life fits the world (contract §5.2's G-FIT, §0.5 [M0-T99a]).
+mod fit;

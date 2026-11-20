@@ -1,0 +1,34 @@
+== 2026-11-20T09:08:51-05:00 edges · task M0-R16 · box laserax-ai :: bash tests/gpu.sh edges physics
+-- edges · exit=0 · 17.15 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 7 tests
+test edges::a_new_world_starts_in_leave ... ok
+test edges::gpu_bounce_returns_the_pulse ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-EDGE-BOUNCE gpu 256x64: 1417 steps to t = 200.1105, v at 0 2.000000e-3, at the end -2.000206e-3, 0.010 % from -v0; mass 2.7e-8 relative; the walls booked (8.203997e0, -7.928908e-5) of gross 1.2812e5, the reversal 2·M·v0 8.203585e0 (0.005 % off); grid + escaped drift (-1.04e-5, 5.94e-5) = 4.71e-10 of the gross
+ok
+test edges::gpu_bounce_walls_are_the_twins ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-EDGE-WALLS gpu 128x64 bounce: 209 steps to t = 20.0311; against the twin (Σ, Σu, Σv, E) relative L1 1.55e-7 3.12e-7 1.05e-6 1.52e-7 ≤ 1e-4; the walls' booked impulse (2.410846e3, 3.028199e3) against the twin's (2.410846e3, 3.028199e3): 2.94e-8 1.64e-8 ≤ 1e-3
+ok
+test edges::gpu_leave_books_what_crosses ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-EDGE-LEAVE gpu 128x64: 384 steps to t = 40.0638, escaped mass 3545.3454 of 8960.0000 (39.6 %), loss − escaped 2.73e-8 of escaped; against the twin's escaped (Σ, Σu, Σv, E, H, He) 4.19e-8 3.57e-8 8.02e-8 1.09e-8 4.10e-8 2.43e-8; the least mass a face booked in a step 0e0
+ok
+test edges::gpu_set_edge_mode_lands_at_the_step_boundary ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-EDGE-SWITCH gpu: bounce 64 then leave 64 — state bit for bit, escaped after the switch bit for bit (mass 4.5452) against a leave run from step 64, before it bit for bit against the bounce run (its walls' impulse (7.0085e2, 9.1435e2))
+ok
+test edges::twin_bounce_returns_the_pulse ... SR-EDGE-BOUNCE twin 256x4: 1417 steps to t = 200, v at 0 2.000000e-3 (v0 0.002), at 200 -2.000013e-3, 0.001 % from -v0; mass 2.2e-16 relative, escaped mass 0.0; the walls booked (5.127257e-1, -2.211209e-11) of gross 1.0404e5, the reversal 2·M·v0 5.127241e-1 (0.000 % off); grid + escaped drift (-1.31e-12, -2.21e-11) = 2.13e-16 of the gross
+ok
+test edges::twin_leave_books_what_crosses ... SR-EDGE-LEAVE twin 128x64: 384 steps to t = 40, escaped mass 3540.1971 of 8960.0000 (39.5 %), loss − escaped 1.16e-15 of escaped, worst component 1.30e-15; by side [40.410683745030184, 1593.4087293297164, 83.63581938233126, 1822.7418222728545]; a face's mass fell 0 times
+SR-EDGE-SPECIES twin: Σ species escaped 3540.197066 for mass 3540.197055, the scene's |ΣX − 1| ≤ 3.0e-8
+ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 540 filtered out; finished in 17.00s
+
+

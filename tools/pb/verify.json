@@ -963,6 +963,46 @@
         }
       ]
     },
+    "squeeze": {
+      "desc": "The clocks' order (contract §5.2's G-SQUEEZE; M0-T98b; ⏱, R12): crates/sr-engine/tests/gpu/squeeze.rs — `bash tests/gpu.sh squeeze physics`, five cases (expected 5), the presets at calibration's masses on the physics adapter (the calibration refused when stale, G-CAL; its physics_hash and Q_H printed beside every verdict): the graders on hand-made values (the clocks of a hand-made snapshot and Σ plane, a gap just under 10 or a NaN refused, τ_nuc/τ_KH not graded under X_H,c 0.35, the stage clock banking to the first core_collapse, the chain H > He > C > {Ne, O} > Si with its parenthesised C and Ne shown and not, a tie, a missing required stage, K3's order and a tie); the Sun-like life to its first he_core with a checkpoint every 2,000 steps, at each showing main_sequence τ_dyn (the tracker's), τ_KH = |W|/2L and τ_nuc = X_H,c · M_core(8 cells) · Q_H / L read from the checkpoint's snapshot and dump — one case per ratio; the Massive's life to core_collapse (displayed stage durations); and the Giant's with both (main-sequence durations). Pass: τ_KH/τ_dyn ≥ 10 at every main-sequence checkpoint and τ_nuc/τ_KH ≥ 10 at every one with X_H,c ≥ 0.35 (§1.10.2's Sun anchor; τ_nuc goes to 0 with the fuel, so the readings under it are printed, never graded), each over at least 10 readings, the life ending in he_core (exit 0); the Massive's displayed durations (sim time shown before the first core_collapse, summed over visits, banked to the earlier tick's stage) main_sequence > he_core > c_burn > {ne_burn, o_burn} > si_burn strictly, main_sequence, he_core, o_burn and si_burn all shown, c_burn and ne_burn graded only when shown (§0.5 [M0-D169] parenthesised them); main_sequence's displayed time Sun-like > Massive > Giant, each shown. Fail: NO-GO — G-SQUEEZE is UNVERIFIED (§5.5): a red is a D or a question, never a looser number. The first broken gap, or a Sun-like cloud showing failed_star before any main_sequence, cuts the life at once (the readings so far kept). Measured on the RTX 5090, 2026-11-20 (M0-T98b): Massive main_sequence 103.5 > he_core 30.6 > o_burn 12.0 > si_burn 3.6 t.u. (c_burn and ne_burn never shown), 20,273 steps in 131 s; Giant main_sequence 42.4 t.u., 7,969 steps in 51 s; the Sun-like's first 14,000 steps (100 s): τ_KH/τ_dyn 113–214, τ_nuc/τ_KH 28–29 at t 25–158 (the whole main sequence ≈ 130,000 steps, over 10 minutes: the lead's run, `timeout_s` 21,600). Plant q-h-tiny (§5.2: Q_H ÷ 100 — physics.json's q_h 8700 → 87, with the calibration's physics_hash rewritten to the new assets' so G-CAL stays green and the red is physics': the cloud shows failed_star at step 545, no main sequence; the Sun-like cases red in 4 s, RTX 5090). Paths: its own test, `tests/gpu.sh` and the plant — not crates/** (R12).",
+      "cmd": "bash tests/gpu.sh squeeze physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 5,
+      "timeout_s": 21600,
+      "arms_at_once": 1,
+      "paths": [
+        "crates/sr-engine/tests/gpu/squeeze.rs",
+        "tests/gpu.sh",
+        "tests/plants/q-h-tiny.patch"
+      ],
+      "plants": [
+        {
+          "id": "q-h-tiny",
+          "patch": "tests/plants/q-h-tiny.patch"
+        }
+      ]
+    },
+    "fit": {
+      "desc": "G-FIT, every life fits the world (contract §5.2, as §0.5 [M0-T99a] words it; M0-T99b; ⏱, R12): crates/sr-engine/tests/gpu/fit.rs — `bash tests/gpu.sh fit physics`, three cases (expected 3, one life each: Sun-like, Massive, Giant), the preset at calibration's mass (`Scene::preset_mass`, the calibration refused when stale, G-CAL; its physics_hash printed) run through `run_scene_captured` to `--until ending` on the physics adapter with a checkpoint every 100 steps (the Sun-like every 1,000; a checkpoint moves nothing the life computes, M0-D77), each checkpoint's dump read: φ the §1.4.2 kernel's solve over Σ by the CPU reference with the sinks' softened pull, ε_th the equation of state's own from the dump's energy, momentum and mass fractions (exact — lives.md bracketed it), a cell bound when ½|u|² + ε_th + φ < 0, its distance its centre's to the nearest world edge. Each case grades its graders on hand-made values first (a bound dense clump 5.5 cells from each edge refused, the same clump hot, fast, under the floor or 16.5 cells out accepted, a sink's pull counted, a NaN Σ and a short plane refused). Pass: at every checkpoint no bound gas at Σ ≥ 1e-2 within 16 cells of an edge (§0.5 [M0-T99a]'s floor; a fainter bound halo allowed), the life ends (exit 0), at least 10 checkpoints; each life prints its closest bound gas at Σ ≥ 1e-4, 1e-3, 1e-2, 1e-1 beside M0-T99a's table. Fail: NO-GO — G-FIT is UNVERIFIED (§5.5, a tuning target): a red is a D or a question to the lead, never a looser number. The first violation cuts the life at once (the readings so far kept); `SR_FIT_NO_CUT=1` reads a red life to its end (every reading still graded; for a D). Measured on the RTX 5090, 2026-11-20 (M0-T99b): Massive GO (23,170 steps, 222 s, closest bound gas at Σ ≥ 1e-2 17.5 cells at step 13,809, t 131.2: a margin of 1.5 cells); Giant RED (cut at step 2,913, t 20.5, 15.5 cells; read on, 76 of 167 checkpoints break it, steps 2,913–12,002 = t 20.5–77.6, bound gas up to Σ 0.033 on the edge, 0.5 cells, along the world's centre column — M0-D202); the Sun-like case NOT RUN (≈ 180,000 steps, over 10 minutes: the lead's run, `timeout_s` 21,600). Plant preset-wide (§5.2: preset radii × 3 — scene.rs `cloud_shape`'s a × 3: the cloud crowds the edge at once, the Massive case red at step 113 in 2 s, RTX 5090). Paths: its own test, `tests/gpu.sh` and the plant — not crates/** (R12).",
+      "cmd": "bash tests/gpu.sh fit physics",
+      "parse": "regex",
+      "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
+      "expected": 3,
+      "timeout_s": 21600,
+      "arms_at_once": 1,
+      "paths": [
+        "crates/sr-engine/tests/gpu/fit.rs",
+        "tests/gpu.sh",
+        "tests/plants/preset-wide.patch"
+      ],
+      "plants": [
+        {
+          "id": "preset-wide",
+          "patch": "tests/plants/preset-wide.patch"
+        }
+      ]
+    },
     "ending": {
       "desc": "ending (contract §1.9.5; M0-T72): sr_physics::observe::ending on synthetic anchors (no GPU) — the four bands read from the mass in Suns (below 0.08 failed star, below 8 white dwarf, below 25 supernova then neutron star, else black hole; zero and the end segments extended; NaN refused), each of the three thresholds a close call between its two fates, both edges of every band at exactly ±10 % in sandbox mass a close call and a hair outside not (the band closed), the band taken in sandbox mass and not in Suns on a squeezed ladder (1.08 × M_up is 13 % over 8 Suns yet close), the nearer threshold naming the pair where two bands meet, a remnant stage (white_dwarf, neutron_star, black_hole, failed_star) displayed for max(10 t.u., 20 τ_dyn) — stages::ending_hold, §0.5 [M0-D78] — showing the ending instead of the prediction (9.999 t.u. not, 10 t.u. yes; τ_dyn 1 needs 20), no other stage ending it, and the strings keys. Synthetic anchors only — NOT PROVEN against assets/calibration.json's real thresholds; the readout panel wiring is the drawing lots'. Plant ending-band-swap (M_up where M_BH belongs, in the unit).",
       "cmd": "bash tests/cpu.sh sr-physics observe::ending",
@@ -2539,11 +2579,11 @@
       ]
     },
     "calibration": {
-      "desc": "G-CAL, the calibration file and its physics hash (contract §2.11, §3.1, §3.3, §5.4; M0-T65): SHA-256 against FIPS 180-4's vectors (empty, abc, the 448- and 896-bit messages, a million a's, the padding edges); the physics hash over the canonical bytes (keys sorted, compact, numbers as f64) of elements.json + reactions.json + physics.json — a small triple by hand, a reformatted or re-ordered physics.json keeping its hash, a changed constant, key, element or reaction not; §2.11's schema parsed (every key, unknown and missing keys and bad values refused naming the key) and K9's order checked; a calibration written from the embedded assets accepted and a stale one refused with exit 6 (`SR-ERROR calibration out of date`), a scene with no preset running on it, a preset with none refused as missing, c_sb ≤ 2 × max_gas_speed refused; assets/calibration.json (once M0-V9 writes it) against the assets' hash, the assets' hash against its pin until then — NOT PROVEN against a real calibration; headless on a scene with no preset running with none; [M0-D62] a calibration without render_reserve_ms (before the drawing lot's item 7) accepted, written back without the key, a preset run's gate open on it and its time control on §1.8.3's 3.0, a present reserve still finite and ≥ 0; the file embedded whenever it exists (build.rs's choice on a folder with and without it, and this binary following the tree's file); [M0-D162] every number read back as written — assets/calibration.json written back byte for byte, 2,000 shortest-form doubles over twenty decades bit for bit at a float key and in a stage pair. Plant render-reserve-required: the key required again. Plant calibration-lossy-parse: the parse's literals left to serde_json's best-effort read",
+      "desc": "G-CAL, the calibration file and its physics hash (contract §2.11, §3.1, §3.3, §5.4; M0-T65): SHA-256 against FIPS 180-4's vectors (empty, abc, the 448- and 896-bit messages, a million a's, the padding edges); the physics hash over the canonical bytes (keys sorted, compact, numbers as f64) of elements.json + reactions.json + physics.json — a small triple by hand, a reformatted or re-ordered physics.json keeping its hash, a changed constant, key, element or reaction not; §2.11's schema parsed (every key, unknown and missing keys and bad values refused naming the key) and K9's order checked; a calibration written from the embedded assets accepted and a stale one refused with exit 6 (`SR-ERROR calibration out of date`), a scene with no preset running on it, a preset with none refused as missing, c_sb ≤ 2 × max_gas_speed refused; assets/calibration.json (once M0-V9 writes it) against the assets' hash, the assets' hash against its pin until then — NOT PROVEN against a real calibration; headless on a scene with no preset running with none; [M0-D62] a calibration without render_reserve_ms (before the drawing lot's item 7) accepted, written back without the key, a preset run's gate open on it and its time control on §1.8.3's 3.0, a present reserve still finite and ≥ 0; the file embedded whenever it exists (build.rs's choice on a folder with and without it, and this binary following the tree's file); [M0-D162] every number read back as written — assets/calibration.json written back byte for byte, 2,000 shortest-form doubles over twenty decades bit for bit at a float key and in a stage pair; [M0-D203] a calibration measured on another world than the default (800 × 800, §2.8) or on none named refused with exit 6, the line naming the worlds, the default's accepted, a run with no preset running on it, measured.world optional (written back without it) and a bad value naming its key, and assets/calibration.json measured on the default world. Plant render-reserve-required: the key required again. Plant calibration-lossy-parse: the parse's literals left to serde_json's best-effort read. Plant calibration-world-ignored: G-CAL's world check passes any world",
       "cmd": "bash tests/gpu.sh calibration",
       "parse": "regex",
       "regex": "test result: \\w+\\. (?P<passed>\\d+) passed; (?P<failed>\\d+) failed; (?P<skipped>\\d+) ignored",
-      "expected": 13,
+      "expected": 14,
       "timeout_s": 900,
       "arms_at_once": 1,
       "paths": [
@@ -2559,7 +2599,8 @@
         "tests/cargo.sh",
         "tests/plants/const-drift.patch",
         "tests/plants/render-reserve-required.patch",
-        "tests/plants/calibration-lossy-parse.patch"
+        "tests/plants/calibration-lossy-parse.patch",
+        "tests/plants/calibration-world-ignored.patch"
       ],
       "plants": [
         {
@@ -2573,6 +2614,10 @@
         {
           "id": "calibration-lossy-parse",
           "patch": "tests/plants/calibration-lossy-parse.patch"
+        },
+        {
+          "id": "calibration-world-ignored",
+          "patch": "tests/plants/calibration-world-ignored.patch"
         }
       ]
     },

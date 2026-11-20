@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/calibration.rs
++++ b/crates/sr-physics/src/calibration.rs
+@@ -506,7 +506,7 @@
+     /// [M0-D203] G-CAL's world: the file was measured on `world` (the default's, in [`resolve`]).
+     pub fn check_world(&self, world: [u32; 2]) -> Result<(), CalibrationError> {
+         let default = world_text(world);
+-        if self.measured.world.as_deref() != Some(default.as_str()) {
++        if false && self.measured.world.as_deref() != Some(default.as_str()) {
+             return Err(CalibrationError::OtherWorld { file: self.measured.world.clone(), default });
+         }
+         Ok(())

@@ -5,8 +5,8 @@ use serde_json::{json, Value};
 use sr_engine::headless::{calibration_gate, run_captured};
 use sr_physics::calibration::embed::{embedded_source, FILE as EMBED_FILE};
 use sr_physics::calibration::{
-    canonical_json, physics_hash, physics_hash_of, resolve, resolve_against, sha256_hex, Calibration, CalibrationError,
-    EMBEDDED, EXIT_CALIBRATION,
+    canonical_json, physics_hash, physics_hash_of, resolve, resolve_against, sha256_hex, world_text, Calibration,
+    CalibrationError, DEFAULT_WORLD, EMBEDDED, EXIT_CALIBRATION,
 };
 use sr_physics::time::{TimeControl, RENDER_RESERVE_MS};
 
@@ -295,7 +295,7 @@ fn a_mismatched_calibration_is_refused_with_exit_6() {
     let fresh = Calibration::test_calibration(&hash()).to_json();
     let drifted_hash = physics_hash_of(ELEMENTS, REACTIONS, &drifted.to_string()).unwrap();
     assert!(matches!(
-        resolve_against(Some(&fresh), true, &drifted_hash, C_SB),
+        resolve_against(Some(&fresh), true, &drifted_hash, C_SB, DEFAULT_WORLD),
         Err(CalibrationError::OutOfDate { .. })
     ));
 
@@ -322,6 +322,51 @@ fn a_mismatched_calibration_is_refused_with_exit_6() {
 }
 
 #[test]
+fn a_calibration_from_another_world_is_refused_with_exit_6() {
+    // [M0-D203] (§2.11, G-CAL): a calibration is true of the world its lives ran on. One measured on another world than
+    // the default — or on none named, a file written before measured.world — is refused like a stale hash: exit 6, and
+    // the line names the worlds.
+    assert_eq!(DEFAULT_WORLD, [800, 800], "§2.8's default (§0.5 [M0-D203])");
+    let default = world_text(DEFAULT_WORLD);
+    assert_eq!(default, "800x800");
+    let fresh = Calibration::test_calibration(&hash());
+    assert_eq!(fresh.measured.world.as_deref(), Some("800x800"));
+    assert_eq!(resolve(Some(&fresh.to_json()), true), Ok(Some(fresh.clone())), "the default world's is accepted");
+
+    let other = file_with(|v| v["measured"]["world"] = json!("600x400"));
+    let err = resolve(Some(&other), true).expect_err("a calibration from another world is refused");
+    assert_eq!(err, CalibrationError::OtherWorld { file: Some("600x400".into()), default: default.clone() });
+    assert_eq!(err.exit_code(), 6);
+    let line = err.line();
+    assert!(line.starts_with("SR-ERROR calibration out of date"), "{line}");
+    assert!(line.contains("600x400") && line.contains("800x800"), "the line names both worlds: {line}");
+    assert_eq!(calibration_gate(Some(&other), true), Err((6, line)));
+    // A run that reads no calibration runs on it (calibrate must).
+    assert_eq!(calibration_gate(Some(&other), false), Ok(()));
+
+    // A file from before measured.world: it parses (the key may be absent) and is refused as from no named world.
+    let unnamed = file_with(|v| {
+        v["measured"].as_object_mut().unwrap().remove("world");
+    });
+    let cal = Calibration::parse(&unnamed).expect("a file without measured.world parses");
+    assert_eq!(cal.measured.world, None);
+    assert!(!cal.to_json().contains("\"world\""), "written back without the key");
+    let err = resolve(Some(&unnamed), true).expect_err("a file that names no world is refused");
+    assert_eq!(err, CalibrationError::OtherWorld { file: None, default: default.clone() });
+    assert!(err.line().contains("no named world") && err.line().contains("800x800"), "{}", err.line());
+
+    // The world stood in for: the same file is fresh on its own world and stale on another; a bad value names its key.
+    let text = fresh.to_json();
+    assert!(resolve_against(Some(&text), true, &hash(), C_SB, [800, 800]).is_ok());
+    assert!(matches!(
+        resolve_against(Some(&text), true, &hash(), C_SB, [600, 400]),
+        Err(CalibrationError::OtherWorld { file: Some(ref w), .. }) if w == "800x800"
+    ));
+    assert_eq!(invalid_key(&file_with(|v| v["measured"]["world"] = json!(""))), "measured.world");
+    assert_eq!(invalid_key(&file_with(|v| v["measured"]["world"] = json!([800, 800]))), "measured.world");
+}
+
+#[test]
 fn the_calibration_the_binary_embeds_matches_the_assets() {
     // G-CAL itself. Once M0-V9 writes assets/calibration.json and embeds it, that file's physics_hash must equal the
     // assets' — a constant changed without calibrating again is exactly this red. Until the file exists, the hash is
@@ -332,6 +377,10 @@ fn the_calibration_the_binary_embeds_matches_the_assets() {
             assert!(EMBEDDED.is_some(), "assets/calibration.json exists but the engine does not embed it (sr-physics build.rs)");
             let cal = Calibration::parse(&text).expect("assets/calibration.json is §2.11's");
             assert_eq!(cal.physics_hash, hash(), "calibration.json is out of date: change a constant, calibrate again");
+            // [M0-D203] and of the default world: one measured on another world, or on none named, is as stale.
+            if let Err(e) = cal.check_world(DEFAULT_WORLD) {
+                panic!("calibration.json is out of date: {e} — calibrate again on the default world");
+            }
             assert_eq!(EMBEDDED, Some(text.as_str()), "the embedded text is the file");
         }
         Err(_) => {

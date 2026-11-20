@@ -1,0 +1,31 @@
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test squeeze::the_massive_stage_durations_run_h_he_c_ne_o_si ... massive: preset massive at 9810.4; calibration physics_hash 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402; Q_H 8700
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+massive step=17 t=0.16 shown=none M=9810.4 X_H,c=0.735
+massive step=33 t=0.30 shown=protostar M=9810.4 X_H,c=0.735
+massive step=705 t=4.17 shown=main_sequence M=9798.0 X_H,c=0.734
+massive step=10097 t=95.34 shown=he_core M=9070.5 X_H,c=0.243
+massive step=10273 t=97.13 shown=main_sequence M=9050.8 X_H,c=0.231
+massive step=10433 t=98.76 shown=he_core M=9031.3 X_H,c=0.223
+massive step=10625 t=100.71 shown=main_sequence M=9006.3 X_H,c=0.211
+massive step=10785 t=102.33 shown=he_core M=8983.7 X_H,c=0.204
+massive step=10977 t=104.27 shown=main_sequence M=8954.4 X_H,c=0.193
+massive step=11121 t=105.72 shown=he_core M=8930.8 X_H,c=0.186
+massive step=11329 t=107.80 shown=main_sequence M=8894.0 X_H,c=0.174
+massive step=11425 t=108.77 shown=he_core M=8875.7 X_H,c=0.170
+massive step=13857 t=131.63 shown=o_burn M=8064.9 X_H,c=0.063
+massive step=15313 t=143.59 shown=si_burn M=7275.0 X_H,c=0.037
+massive step=15777 t=147.14 shown=main_sequence M=6987.5 X_H,c=0.030
+massive step=16689 t=153.78 shown=iron_core M=6412.6 X_H,c=0.001
+massive step=20273 t=175.73 shown=core_collapse M=4753.6 X_H,c=0.079
+SR-HEADLESS DONE steps=20273 sim_time=175.725213 until=met
+massive: 20273 steps, exit 0, durations (t.u.) {"he_core": 30.628981767222285, "iron_core": 21.9417251101695, "main_sequence": 103.4799227528274, "o_burn": 11.952008720021695, "protostar": 3.8739708601497114, "si_burn": 3.551278526894748}
+massive: durations before the core collapse {"he_core": 30.628981767222285, "iron_core": 21.9417251101695, "main_sequence": 103.4799227528274, "o_burn": 11.952008720021695, "protostar": 3.8739708601497114, "si_burn": 3.551278526894748}; not shown (parenthesised, §0.5 [M0-D169]): ["c_burn", "ne_burn"]
+massive: H > He > C > {Ne, O} > Si over {"he_core": 30.628981767222285, "iron_core": 21.9417251101695, "main_sequence": 103.4799227528274, "o_burn": 11.952008720021695, "protostar": 3.8739708601497114, "si_burn": 3.551278526894748} (calibration physics_hash 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402, Q_H 8700)
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 543 filtered out; finished in 131.15s
+

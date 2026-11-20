@@ -1418,8 +1418,19 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     painted onto its core at X_H,c 0.5, ≈ 32 % of its mass erased at 0.3): shown iron_core → main_sequence → iron_core at steps
     22,235–24,155, X_H,c 0.05–0.11 mixed back into the collapsing centre, its age 1.8 × 10⁷ → 8.9 × 10⁷ yr between steps 22,413
     and 24,908, a rate 100 × the main sequence's — the lead at M0-D201, 2026-11-19: «Tracker, narrow (Recommended)».
+  - [M0-D203] §2.8's default «600 × 400 cells — the size the lead was shown (B13)» · **800 × 800 cells** — so §5.2's «the
+    default world» (G-FIT, and every life scope that runs a preset on it) is 800 × 800, and the words that name the default
+    (§0.7's *cell*, the plan's goal paragraph) say so; amended in place with it, by the fork's ruling: §2.11's `measured`
+    gains `world` («<width>x<height>», the default world the lives ran on) and G-CAL (§2.11, §5.4) refuses a calibration
+    measured on another world, or on none named — a file written before [M0-D203] — exit 6, the line naming the worlds,
+    until `calibrate` measures it again on the default · measured by M0-R16 on linux-pc's RTX 5090, 2026-11-20
+    (reports/world_size.md § 2.2): the Giant preset's bound gas at Σ ≥ 10⁻² sits on the 600 × 400 world's edge at 76 of 167
+    checkpoints (M0-D202) and comes no nearer than 114.5 cells to an 800 × 800 world's (0 of 189 checkpoints in G-FIT's band),
+    the Massive's margin 1.5 → 201.5 cells; the step costs 2.3 × whenever the gas fills the world (Quadro RTX 4000: 20.8 → 47.2
+    ms), and 800 is inside gravity's 1,024-cell ceiling (§0.5 [M0-V4]) — the lead at M0-R16, 2026-11-20: «800 × 800
+    (Recommended)»; at M0-D203, 2026-11-20: «World in `measured` (Recommended)».
 - **0.6 Arithmetic corrections:** none.
-- **0.7 Words.** *cell* — one square of the 600 × 400 world (§2.8); *step* — one pass sequence P0–P9
+- **0.7 Words.** *cell* — one square of the ~~600 × 400~~ [M0-D203] 800 × 800 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
   the object a readout shows; *sandbox units* — §2.1; *real-equivalent* — a readout's translation
   to real astronomy (§1.10); *the box* — the active box (§1.3.3); *plant* — a red-arm patch (§5.0);
@@ -2084,8 +2095,9 @@ radius `r_hold` 24 (§0.5 [M0-T130], M0-D153's flag), read through the run's phy
 the twin's P8 and the GPU's alike (the lead at M0-TG2: «Code now, move later (Recommended)»).
 
 ### 2.8 World and edges (B20, I8, I9; D1, D9)
-- **WorldConfig {width, height}** is a setting, never built in (I9; D9): default 600 × 400 cells —
-  the size the lead was shown (B13); any width and height that are multiples of 8 within [64, 2048].
+- **WorldConfig {width, height}** is a setting, never built in (I9; D9): default ~~600 × 400 cells —
+  the size the lead was shown (B13)~~ [M0-D203] 800 × 800 cells (§0.5 [M0-D203]); any width and height that are multiples
+  of 8 within [64, 2048].
   M0's UI never changes it (choosing it by graphics card is a later milestone, B21); headless runs
   and tests may.
 - **Edge mode {leave, bounce}.** A new world starts in *leave* — "It leaves for good (Recommended)",
@@ -2137,7 +2149,7 @@ the twin's P8 and the GPU's alike (the lead at M0-TG2: «Code now, move later (R
 
 ### 2.11 Calibration — `assets/calibration.json`, written by `sandbox-reactions calibrate` (§3.3)
 - **Schema:** `{"version": 1, "physics_hash": "<sha256 of the canonical JSON of elements.json +
-  reactions.json + physics.json>", "measured": {"date", "git", "adapter", "box"}, "m_ch_sb",
+  reactions.json + physics.json>", "measured": {"date", "git", "adapter", "box", "world"}, "m_ch_sb",
   "m_tov_sb", "ns_sigma_max_sb", "m_ign_sb", "m_up_sb", "m_bh_sb", "preset_mass_sb": {"sun",
   "massive", "giant"}, "t_eff_sun_sb", "life_sun_sb", "top_rung", "stage_durations_sb":
   {"<stage id>": [[mass_sb, t.u.], …]}, "render_reserve_ms", "max_gas_speed"}`.
@@ -2166,7 +2178,10 @@ the twin's P8 and the GPU's alike (the lead at M0-TG2: «Code now, move later (R
      max_gas_speed over every run (c_sb must exceed twice it — else exit 6).
   7. render_reserve_ms is written by the drawing lot's `--measure-ui` run (§3.3); calibrate keeps it.
 - The engine refuses a calibration whose physics_hash differs from its embedded assets (G-CAL):
-  change a constant, calibrate again. A run over 10 minutes is the lead's (§6.4).
+  change a constant, calibrate again. [M0-D203] `measured.world` is the world the lives ran on, `"<width>x<height>"` —
+  `calibrate` runs them on the default world (§2.8) and writes it; the engine refuses, as out of date, a calibration
+  measured on another world than the default or naming none (a file written before [M0-D203], where the key is absent):
+  change the default, calibrate again. A run over 10 minutes is the lead's (§6.4).
 
 ### 2.12 File formats — tests and headless runs only (none is a save format)
 - **2.12.1 Scene** (`scenes/*.json`):
@@ -2791,7 +2806,7 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   `edit-ignored`: P0 drops edits on non-vacuum cells.
 - **G-FIT · every life fits the world.** Through each preset's life no bound gas
   (½|u|² + ε_th + φ < 0) denser than Σ = 10⁻² comes within 16 cells of an edge of the default world
-  (D5's squeezed ladder); a fainter bound halo may [M0-T99a]. *UNVERIFIED* (a tuning target). Scope `fit` ⏱. Plant `preset-wide`: preset radii × 3.
+  ([M0-D203] 800 × 800, §2.8) (D5's squeezed ladder); a fainter bound halo may [M0-T99a]. *UNVERIFIED* (a tuning target). Scope `fit` ⏱. Plant `preset-wide`: preset radii × 3.
 - **G-MULTI · several clouds allowed** (B15: "Allowed, one promised"). Two Sun-like presets
   240 cells apart, 20 τ_dyn: two objects with stable ids, no non-finite value, both readouts filled.
   *By construction*. Scope `multi`. Plant `one-object`: the tracker joins blocks across empty
@@ -2845,9 +2860,10 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   1 Sun, §1.10.4; SP's ~11 Gyr arithmetic). *By construction* and by calibration. Scope `age` ⏱.
   Plant `phi-unclamped`: Δφ < 0 not clamped.
 - **G-CAL · calibration matches the physics** (§2.11). calibration.json's physics_hash equals the
-  embedded assets' hash; on a mismatch the engine refuses (`SR-ERROR calibration out of date`, exit
-  6). *By construction*. Scope `calibration`. Plant `const-drift`: one physics.json constant changed
-  without recalibrating.
+  embedded assets' hash [M0-D203] and its `measured.world` the default world's (§2.8); on a mismatch — a world named
+  otherwise or none — the engine refuses (`SR-ERROR calibration out of date`, exit
+  6; [M0-D203] the world's line names the file's world and the default). *By construction*. Scope `calibration`. Plant `const-drift`: one physics.json constant changed
+  without recalibrating. [M0-D203] Plant `calibration-world-ignored`: the world check passes any world.
 - **G-STR · the string table** (§4.1). crates/sr-app/src/strings.rs equals §4.1's block both ways —
   the same keys, byte-identical texts; web/index.html carries each `web.*` text verbatim. *By
   construction*. Scope `strings`. Plant `string-typo`: one character changed in `stage.supernova`.

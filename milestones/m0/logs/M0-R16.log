@@ -1,0 +1,28 @@
+M0-R16 log opened 2026-11-20T13:33:50Z on laserax-ai
+== scratch build (probe: fit.rs + SR_FIT_WORLD, scratch copy /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/a592e1e6-a449-44f7-8ad3-fff8c836469f/scratchpad/tree) 2026-11-20T13:37:42Z
+   Compiling sr-physics v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/a592e1e6-a449-44f7-8ad3-fff8c836469f/scratchpad/tree/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/a592e1e6-a449-44f7-8ad3-fff8c836469f/scratchpad/tree/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 11.38s
+  Executable tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+real	0m11.435s
+user	0m56.306s
+sys	0m1.434s
+== Quadro step cost, fill_world at 800x800, 200 steps --timing 2026-11-20T13:57:55Z
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=14.284754 until=none
+
+real	0m22.047s
+user	0m12.978s
+sys	0m1.092s
+exit 0
+== Quadro step cost, fill_world at the default 600x400 (the baseline of the same scene), 200 steps --timing 2026-11-20T13:58:24Z
+SR-ADAPTER name=Quadro RTX 4000 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=14.538642 until=none
+
+real	0m8.930s
+user	0m4.904s
+sys	0m0.652s
+exit 0
+q600 600 400 20.76 {'P0 edits': 0.01, 'P1 dt': 0.01, 'P2 gravity': 1.22, 'P3 sinks': 0.47, 'P4 hydro': 12.67, 'P5 heat': 4.79, 'P6 reactions': 1.19, 'P7 neutrino heating': 0.03, 'P8 floors': 0.17, 'P9 reductions': 0.08}
+q800 800 800 47.23 {'P0 edits': 0.01, 'P1 dt': 0.0, 'P2 gravity': 2.42, 'P3 sinks': 1.1, 'P4 hydro': 32.51, 'P5 heat': 7.34, 'P6 reactions': 3.05, 'P7 neutrino heating': 0.05, 'P8 floors': 0.43, 'P9 reductions': 0.18}

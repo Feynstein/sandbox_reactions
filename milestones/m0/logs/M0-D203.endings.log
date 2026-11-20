@@ -1,0 +1,61 @@
+== 2026-11-20T09:28:06-05:00 endings · task M0-D203 · box laserax-ai :: bash tests/gpu.sh endings physics
+-- endings · exit=101 · 0.11 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 9 tests
+test endings::a_cloud_at_m_bh_over_1_25_ends_a_neutron_star ... 
+thread 'endings::a_cloud_at_m_bh_over_1_25_ends_a_neutron_star' (392707) panicked at crates/sr-engine/tests/gpu/endings.rs:153:65:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test endings::a_cloud_at_m_bh_times_1_25_ends_a_black_hole ... 
+thread 'endings::a_cloud_at_m_bh_times_1_25_ends_a_black_hole' (392708) panicked at crates/sr-engine/tests/gpu/endings.rs:153:65:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+test endings::a_cloud_at_m_ign_over_1_25_fails_to_light ... 
+thread 'endings::a_cloud_at_m_ign_over_1_25_fails_to_light' (392709) panicked at crates/sr-engine/tests/gpu/endings.rs:153:65:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+test endings::a_cloud_at_m_ign_times_1_25_ends_a_white_dwarf ... 
+thread 'endings::a_cloud_at_m_ign_times_1_25_ends_a_white_dwarf' (392711) panicked at crates/sr-engine/tests/gpu/endings.rs:153:65:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+test endings::a_cloud_at_m_up_over_1_25_ends_a_white_dwarf ... 
+thread 'endings::a_cloud_at_m_up_over_1_25_ends_a_white_dwarf' (392712) panicked at crates/sr-engine/tests/gpu/endings.rs:153:65:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+test endings::a_cloud_at_m_up_times_1_25_ends_a_neutron_star ... 
+thread 'endings::a_cloud_at_m_up_times_1_25_ends_a_neutron_star' (392713) panicked at crates/sr-engine/tests/gpu/endings.rs:153:65:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+test endings::the_giant_preset_ends_a_black_hole_as_predicted ... 
+thread 'endings::the_giant_preset_ends_a_black_hole_as_predicted' (392715) panicked at crates/sr-engine/tests/gpu/endings.rs:153:65:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+test endings::the_massive_preset_ends_a_supernova_then_a_neutron_star_as_predicted ... 
+thread 'endings::the_massive_preset_ends_a_supernova_then_a_neutron_star_as_predicted' (392716) panicked at crates/sr-engine/tests/gpu/endings.rs:153:65:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+test endings::the_sun_like_preset_ends_a_white_dwarf_as_predicted ... 
+thread 'endings::the_sun_like_preset_ends_a_white_dwarf_as_predicted' (392717) panicked at crates/sr-engine/tests/gpu/endings.rs:153:65:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+
+failures:
+
+failures:
+    endings::a_cloud_at_m_bh_over_1_25_ends_a_neutron_star
+    endings::a_cloud_at_m_bh_times_1_25_ends_a_black_hole
+    endings::a_cloud_at_m_ign_over_1_25_fails_to_light
+    endings::a_cloud_at_m_ign_times_1_25_ends_a_white_dwarf
+    endings::a_cloud_at_m_up_over_1_25_ends_a_white_dwarf
+    endings::a_cloud_at_m_up_times_1_25_ends_a_neutron_star
+    endings::the_giant_preset_ends_a_black_hole_as_predicted
+    endings::the_massive_preset_ends_a_supernova_then_a_neutron_star_as_predicted
+    endings::the_sun_like_preset_ends_a_white_dwarf_as_predicted
+
+test result: FAILED. 0 passed; 9 failed; 0 ignored; 0 measured; 539 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
