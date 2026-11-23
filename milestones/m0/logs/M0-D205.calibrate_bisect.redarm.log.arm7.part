@@ -1,0 +1,3 @@
+==== 2026-11-23T08:40:14-05:00 calibrate_bisect · plant calibrate-progress-every-ignored · a fresh scratch copy of the tree
+planted calibrate-progress-every-ignored: tests/plants/calibrate-progress-every-ignored.patch -> crates/sr-engine/src/calibrate.rs
+== 2026-11-23T08:40:14-05:00 calibrate_bisect · task M0-D205 · box laserax-ai :: bash tests/gpu.sh calibrate_bisect physics

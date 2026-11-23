@@ -129,21 +129,25 @@ fn the_box_is_the_non_vacuum_cells_grown_by_8_rounded_to_8_and_clamped_at_known_
     let world = WorldConfig::default();
     let sigma_vac = c.f32_of("sigma_vac");
     let below = f32::from_bits(sigma_vac.to_bits() - 1);
+    // The default world's far corner (w − 1, h − 1), by hand from §1.3.3 (800 × 800: (799, 799)): +8 → 807, rounded up to
+    // the 8-grid 808, clamped to 800; −8 → 791, rounded down 784 — so the box starts at (w − 16, h − 16) and is 16 × 16.
+    let (w, h) = (world.width, world.height);
     // (gas cells, the box [x0, y0, w, h] worked by hand from §1.3.3)
     let rect_cells: Vec<(u32, u32)> = (50..60).flat_map(|y| (100..200).map(move |x| (x, y))).collect();
-    let places: Vec<(&str, Vec<(u32, u32)>, [u32; 4])> = vec![
-        ("empty world", vec![], [0, 0, 0, 0]),
-        ("one cell, middle", vec![(300, 200)], [288, 192, 24, 24]),
-        ("on the 8-grid", vec![(8, 8)], [0, 0, 24, 24]),
-        ("on the 8-grid, inside", vec![(16, 16)], [8, 8, 24, 24]),
-        ("one off the grid", vec![(7, 7)], [0, 0, 16, 16]),
-        ("corner (0, 0)", vec![(0, 0)], [0, 0, 16, 16]),
-        ("corner (599, 399)", vec![(599, 399)], [584, 384, 16, 16]),
-        ("left edge", vec![(0, 200)], [0, 192, 16, 24]),
-        ("right edge", vec![(599, 200)], [584, 192, 16, 24]),
-        ("top edge", vec![(300, 0)], [288, 0, 24, 16]),
-        ("a 100 × 10 block", rect_cells, [88, 40, 120, 32]),
-        ("two far corners", vec![(10, 390), (590, 5)], [0, 0, 600, 400]),
+    let places: Vec<(String, Vec<(u32, u32)>, [u32; 4])> = vec![
+        ("empty world".into(), vec![], [0, 0, 0, 0]),
+        ("one cell, middle".into(), vec![(300, 200)], [288, 192, 24, 24]),
+        ("on the 8-grid".into(), vec![(8, 8)], [0, 0, 24, 24]),
+        ("on the 8-grid, inside".into(), vec![(16, 16)], [8, 8, 24, 24]),
+        ("one off the grid".into(), vec![(7, 7)], [0, 0, 16, 16]),
+        ("corner (0, 0)".into(), vec![(0, 0)], [0, 0, 16, 16]),
+        (format!("corner ({}, {})", w - 1, h - 1), vec![(w - 1, h - 1)], [w - 16, h - 16, 16, 16]),
+        ("left edge".into(), vec![(0, 200)], [0, 192, 16, 24]),
+        (format!("right edge ({}, 200)", w - 1), vec![(w - 1, 200)], [w - 16, 192, 16, 24]),
+        ("top edge".into(), vec![(300, 0)], [288, 0, 24, 16]),
+        ("a 100 × 10 block".into(), rect_cells, [88, 40, 120, 32]),
+        // 10 off the left and bottom edge, 10 off the right and top: +8 / −8 clamps all four sides to the world.
+        ("two far corners".into(), vec![(10, h - 10), (w - 10, 5)], [0, 0, w, h]),
     ];
     for (name, cells, want) in &places {
         let start = with_gas(world, cells);
@@ -284,11 +288,15 @@ fn the_whole_world_switch_holds_the_box_at_the_world() {
     let gpu = device();
     let c = constants();
     let world = WorldConfig::default();
+    let (w, h) = (world.width, world.height);
     for cells in [vec![], vec![(0, 0)], vec![(300, 200)]] {
         let run = Run::new(&gpu, &c, world, &with_gas(world, &cells), BoxMode::WholeWorld);
         for (n, from, fits) in [(1, 1, 2), (16, 17, 3)] {
             let r = run.run(&gpu, n);
-            assert_eq!((rect(&r), r.fft, r.tiles), ([0, 0, 600, 400], [2048, 1024], [75, 50, 1]), "gas on {cells:?}");
+            // The whole default world: its FFT the smallest power of two ≥ 2 × the side (§1.3.3), its tiles 8 cells a side.
+            let fft = |n: u32| (2 * n).next_power_of_two().max(32);
+            let want = ([0, 0, w, h], [fft(w), fft(h)], [w / 8, h / 8, 1]);
+            assert_eq!((rect(&r), r.fft, r.tiles), want, "gas on {cells:?}");
             assert_eq!((r.from_step, r.fits), (from, fits), "gas on {cells:?}: the switch keeps the re-fit's schedule");
         }
     }

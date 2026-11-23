@@ -1,0 +1,21 @@
+== state
+state     12/0/0       1.57 s  GO
+logs: milestones/m0/logs/M0-D206.<scope>.log · record: loop_times.jsonl · tree db7e360b2250+bf4ac1fa5a6c
+anchor: 0 path×scope entries moved by this run
+anchor: 196 paths checked · 477 skipped (3 classes) · 286 never checked · 1 stale · 0 unclassified · 0 owed · 483 covered of 960 visible
+verify: 12 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.57 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 6.39->6.39
+=== GO ===
+== booking
+booking   4/0/0        1.12 s  GO
+logs: milestones/m0/logs/M0-D206.<scope>.log · record: loop_times.jsonl · tree db7e360b2250+bf4ac1fa5a6c
+anchor: 0 path×scope entries moved by this run
+anchor: 196 paths checked · 477 skipped (3 classes) · 286 never checked · 1 stale · 0 unclassified · 0 owed · 483 covered of 960 visible
+verify: 4 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 6.39->6.39
+=== GO ===
+== box
+box       8/0/0        6.63 s  GO
+logs: milestones/m0/logs/M0-D206.<scope>.log · record: loop_times.jsonl · tree db7e360b2250+bf4ac1fa5a6c
+anchor: 0 path×scope entries moved by this run
+anchor: 196 paths checked · 477 skipped (3 classes) · 286 never checked · 1 stale · 0 unclassified · 0 owed · 483 covered of 960 visible
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 6.63 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 6.39->5.56
+=== GO ===

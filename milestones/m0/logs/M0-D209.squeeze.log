@@ -1,0 +1,46 @@
+== 2026-11-23T14:11:31-05:00 squeeze · task M0-D209 · box laserax-ai :: bash tests/gpu.sh squeeze physics
+-- squeeze · exit=101 · 0.31 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.27s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 5 tests
+test squeeze::the_graders_are_graded_on_hand_made_values ... 
+thread 'squeeze::the_graders_are_graded_on_hand_made_values' (2720873) panicked at crates/sr-engine/tests/gpu/squeeze.rs:229:55:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test squeeze::the_main_sequences_run_sun_like_massive_giant ... 
+thread 'squeeze::the_main_sequences_run_sun_like_massive_giant' (2720874) panicked at crates/sr-engine/tests/gpu/squeeze.rs:229:55:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+test squeeze::the_massive_stage_durations_run_h_he_c_ne_o_si ... 
+thread 'squeeze::the_massive_stage_durations_run_h_he_c_ne_o_si' (2720875) panicked at crates/sr-engine/tests/gpu/squeeze.rs:229:55:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+test squeeze::the_sun_like_main_sequence_keeps_tau_kh_over_tau_dyn_at_ten ... 
+thread 'squeeze::the_sun_like_main_sequence_keeps_tau_kh_over_tau_dyn_at_ten' (2720876) panicked at crates/sr-engine/tests/gpu/squeeze.rs:229:55:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+test squeeze::the_sun_like_main_sequence_keeps_tau_nuc_over_tau_kh_at_ten ... 
+thread 'squeeze::the_sun_like_main_sequence_keeps_tau_nuc_over_tau_kh_at_ten' (2720877) panicked at crates/sr-engine/tests/gpu/squeeze.rs:229:55:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+
+failures:
+
+failures:
+    squeeze::the_graders_are_graded_on_hand_made_values
+    squeeze::the_main_sequences_run_sun_like_massive_giant
+    squeeze::the_massive_stage_durations_run_h_he_c_ne_o_si
+    squeeze::the_sun_like_main_sequence_keeps_tau_kh_over_tau_dyn_at_ten
+    squeeze::the_sun_like_main_sequence_keeps_tau_nuc_over_tau_kh_at_ten
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 546 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

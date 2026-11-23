@@ -1,0 +1,12 @@
+--- a/crates/sr-app/src/web.rs
++++ b/crates/sr-app/src/web.rs
+@@ -195,7 +195,8 @@
+                     }
+                 }
+                 // §4.8 [M0-D207]: a refused calibration says so; only the rest reads as a missing graphics card.
+-                Some(Err(StartError::Calibration(detail))) => fail(strings::get("error.calibration"), &detail),
++                // plant web-calibration-as-adapter (G-WEB, M0-D207): a refused calibration shown as error.no_adapter
++                Some(Err(StartError::Calibration(detail))) => fail(strings::get("error.no_adapter"), &detail),
+                 Some(Err(StartError::Other(detail))) => fail(strings::get("error.no_adapter"), &detail),
+                 None => {}
+             }

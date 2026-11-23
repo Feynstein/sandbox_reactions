@@ -1,0 +1,42 @@
+M0-D208 2026-11-23T13:25:31-05:00 22304.223 continued from s_7000 to t=53.41, dumps every 25, RTX 5090
+D208 m_tov_sb=4853.17 preset=sun mass=22304.223 world=800x800 edge=leave until=sim_time:53.41
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+D208 step=7250 t=51.475 stage=main_sequence/main_sequence M=19998 R=275.1 M_unb=6583 sigma_c=215.9 d_c=0.607 Ye_c=0.547 X_n_c=0.000 vr/vdyn=0.501 sinks=0 sink_M=-0 escaped=2305 objects=1
+D208 step=7417 t=52.226 stage=supernova/supernova M=19929 R=281.2 M_unb=7203 sigma_c=300.1 d_c=0.628 Ye_c=0.534 X_n_c=0.001 vr/vdyn=0.502 sinks=0 sink_M=-0 escaped=2374 objects=1
+D208 step=7750 t=53.385 stage=black_hole/black_hole M=19827 R=290.3 M_unb=5746 sigma_c=0.5 d_c=0.082 Ye_c=0.810 X_n_c=0.000 vr/vdyn=0.630 sinks=1 sink_M=7951 escaped=2476 objects=1
+SR-HEADLESS DONE steps=7758 sim_time=53.411511 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=7758 sim_time=53.411511 until=met
+D208 exit=0 wall_s=18.1
+exit=0
+D208core step=7025 t=50.360 peak=(399,400) sigma_max=144.7 div_u=-2.4112 Ye_peak=0.565 M_r4=3854 Ye_r3=0.592 M_r8=6188 M_r16=7303 M_r32=8247 M_r64=9849 M_r128=13338 grid_M=20102 sinks=[]
+D208core step=7050 t=50.489 peak=(399,400) sigma_max=151.3 div_u=-2.5212 Ye_peak=0.563 M_r4=3962 Ye_r3=0.591 M_r8=6264 M_r16=7335 M_r32=8250 M_r64=9822 M_r128=13275 grid_M=20090 sinks=[]
+D208core step=7075 t=50.618 peak=(399,400) sigma_max=158.2 div_u=-2.6363 Ye_peak=0.561 M_r4=4071 Ye_r3=0.589 M_r8=6339 M_r16=7366 M_r32=8253 M_r64=9795 M_r128=13213 grid_M=20078 sinks=[]
+D208core step=7100 t=50.745 peak=(399,400) sigma_max=165.4 div_u=-2.7571 Ye_peak=0.559 M_r4=4182 Ye_r3=0.588 M_r8=6414 M_r16=7396 M_r32=8255 M_r64=9769 M_r128=13151 grid_M=20066 sinks=[]
+D208core step=7125 t=50.870 peak=(399,400) sigma_max=172.8 div_u=-2.8830 Ye_peak=0.557 M_r4=4294 Ye_r3=0.587 M_r8=6489 M_r16=7427 M_r32=8258 M_r64=9743 M_r128=13090 grid_M=20054 sinks=[]
+D208core step=7150 t=50.994 peak=(399,400) sigma_max=180.6 div_u=-3.0158 Ye_peak=0.555 M_r4=4408 Ye_r3=0.586 M_r8=6564 M_r16=7457 M_r32=8260 M_r64=9718 M_r128=13030 grid_M=20042 sinks=[]
+D208core step=7175 t=51.116 peak=(399,400) sigma_max=188.8 div_u=-3.1559 Ye_peak=0.553 M_r4=4524 Ye_r3=0.585 M_r8=6639 M_r16=7487 M_r32=8262 M_r64=9694 M_r128=12971 grid_M=20031 sinks=[]
+D208core step=7200 t=51.237 peak=(399,400) sigma_max=197.4 div_u=-3.3057 Ye_peak=0.551 M_r4=4642 Ye_r3=0.584 M_r8=6714 M_r16=7517 M_r32=8264 M_r64=9670 M_r128=12913 grid_M=20020 sinks=[]
+D208core step=7225 t=51.357 peak=(399,400) sigma_max=206.4 div_u=-3.4644 Ye_peak=0.549 M_r4=4763 Ye_r3=0.583 M_r8=6789 M_r16=7547 M_r32=8266 M_r64=9647 M_r128=12855 grid_M=20009 sinks=[]
+D208core step=7250 t=51.475 peak=(399,400) sigma_max=215.9 div_u=-3.6336 Ye_peak=0.547 M_r4=4887 Ye_r3=0.582 M_r8=6865 M_r16=7576 M_r32=8268 M_r64=9624 M_r128=12798 grid_M=19998 sinks=[]
+D208core step=7275 t=51.591 peak=(399,400) sigma_max=226.0 div_u=-3.8200 Ye_peak=0.545 M_r4=5015 Ye_r3=0.581 M_r8=6942 M_r16=7606 M_r32=8270 M_r64=9601 M_r128=12742 grid_M=19987 sinks=[]
+D208core step=7300 t=51.707 peak=(399,400) sigma_max=236.7 div_u=-4.0156 Ye_peak=0.543 M_r4=5148 Ye_r3=0.581 M_r8=7019 M_r16=7636 M_r32=8272 M_r64=9579 M_r128=12687 grid_M=19977 sinks=[]
+D208core step=7325 t=51.820 peak=(399,400) sigma_max=248.2 div_u=-4.2283 Ye_peak=0.541 M_r4=5285 Ye_r3=0.580 M_r8=7097 M_r16=7665 M_r32=8275 M_r64=9558 M_r128=12632 grid_M=19966 sinks=[]
+D208core step=7350 t=51.933 peak=(399,400) sigma_max=260.6 div_u=-4.4577 Ye_peak=0.539 M_r4=5429 Ye_r3=0.580 M_r8=7176 M_r16=7694 M_r32=8277 M_r64=9537 M_r128=12578 grid_M=19956 sinks=[]
+D208core step=7375 t=52.043 peak=(399,400) sigma_max=274.1 div_u=-4.7196 Ye_peak=0.537 M_r4=5582 Ye_r3=0.580 M_r8=7257 M_r16=7723 M_r32=8280 M_r64=9516 M_r128=12525 grid_M=19946 sinks=[]
+D208core step=7400 t=52.153 peak=(399,400) sigma_max=289.0 div_u=-5.0070 Ye_peak=0.535 M_r4=5745 Ye_r3=0.580 M_r8=7340 M_r16=7752 M_r32=8283 M_r64=9496 M_r128=12473 grid_M=19936 sinks=[]
+D208core step=7425 t=52.260 peak=(399,400) sigma_max=315.6 div_u=-7.3294 Ye_peak=0.518 M_r4=5921 Ye_r3=0.578 M_r8=7422 M_r16=7781 M_r32=8287 M_r64=9476 M_r128=12422 grid_M=19926 sinks=[]
+D208core step=7450 t=52.365 peak=(399,400) sigma_max=889.6 div_u=-33.8502 Ye_peak=0.261 M_r4=6338 Ye_r3=0.448 M_r8=7504 M_r16=7808 M_r32=8290 M_r64=9457 M_r128=12373 grid_M=19917 sinks=[]
+D208core step=7475 t=52.445 peak=(399,400) sigma_max=1201.9 div_u=-38.1428 Ye_peak=0.273 M_r4=6956 Ye_r3=0.372 M_r8=7569 M_r16=7830 M_r32=8294 M_r64=9442 M_r128=12335 grid_M=19910 sinks=[]
+D208core step=7500 t=52.522 peak=(399,400) sigma_max=1358.1 div_u=-25.5920 Ye_peak=0.263 M_r4=7358 Ye_r3=0.364 M_r8=7633 M_r16=7852 M_r32=8298 M_r64=9429 M_r128=12299 grid_M=19903 sinks=[]
+D208core step=7525 t=52.602 peak=(399,400) sigma_max=1610.8 div_u=-26.6109 Ye_peak=0.263 M_r4=7558 Ye_r3=0.358 M_r8=7688 M_r16=7874 M_r32=8303 M_r64=9416 M_r128=12262 grid_M=19896 sinks=[]
+D208core step=7550 t=52.686 peak=(399,400) sigma_max=1454.0 div_u=-23.1391 Ye_peak=0.275 M_r4=7660 Ye_r3=0.357 M_r8=7736 M_r16=7898 M_r32=8309 M_r64=9402 M_r128=12223 grid_M=19888 sinks=[]
+D208core step=7575 t=52.774 peak=(399,400) sigma_max=1441.3 div_u=-23.1317 Ye_peak=0.293 M_r4=7723 Ye_r3=0.355 M_r8=7780 M_r16=7923 M_r32=8315 M_r64=9388 M_r128=12184 grid_M=19880 sinks=[]
+D208core step=7600 t=52.864 peak=(399,400) sigma_max=1462.8 div_u=-23.7571 Ye_peak=0.298 M_r4=7773 Ye_r3=0.354 M_r8=7818 M_r16=7948 M_r32=8323 M_r64=9375 M_r128=12143 grid_M=19872 sinks=[]
+D208core step=7625 t=52.954 peak=(399,400) sigma_max=1449.8 div_u=-23.2029 Ye_peak=0.301 M_r4=7814 Ye_r3=0.353 M_r8=7853 M_r16=7973 M_r32=8331 M_r64=9362 M_r128=12103 grid_M=19864 sinks=[]
+D208core step=7650 t=53.044 peak=(399,400) sigma_max=1446.4 div_u=-23.1510 Ye_peak=0.306 M_r4=7850 Ye_r3=0.351 M_r8=7885 M_r16=7997 M_r32=8340 M_r64=9349 M_r128=12064 grid_M=19856 sinks=[]
+D208core step=7675 t=53.133 peak=(395,398) sigma_max=0.3 div_u=-5.3354 Ye_peak=0.808 M_r4=8 Ye_r3=0.808 M_r8=33 M_r16=138 M_r32=467 M_r64=1456 M_r128=4144 grid_M=11969 sinks=[7880@(400,400)]
+D208core step=7700 t=53.217 peak=(397,400) sigma_max=0.5 div_u=-28.3019 Ye_peak=0.809 M_r4=12 Ye_r3=0.808 M_r8=44 M_r16=144 M_r32=460 M_r64=1429 M_r128=4091 grid_M=11944 sinks=[7897@(400,400)]
+D208core step=7725 t=53.301 peak=(399,402) sigma_max=0.6 div_u=-28.4379 Ye_peak=0.809 M_r4=12 Ye_r3=0.809 M_r8=42 M_r16=137 M_r32=442 M_r64=1391 M_r128=4028 grid_M=11910 sinks=[7924@(400,400)]
+D208core step=7750 t=53.385 peak=(397,400) sigma_max=0.5 div_u=-28.7347 Ye_peak=0.810 M_r4=11 Ye_r3=0.810 M_r8=41 M_r16=131 M_r32=425 M_r64=1354 M_r128=3966 grid_M=11876 sinks=[7951@(400,400)]
+D208core step=7758 t=53.412 peak=(397,400) sigma_max=0.5 div_u=-28.8563 Ye_peak=0.810 M_r4=11 Ye_r3=0.810 M_r8=40 M_r16=130 M_r32=420 M_r64=1343 M_r128=3947 grid_M=11865 sinks=[7960@(400,400)]

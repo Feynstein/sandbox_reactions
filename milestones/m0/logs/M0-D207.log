@@ -1,0 +1,26 @@
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+    Checking sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Checking sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.31s
+    Checking sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+warning: unused variable: `frame`
+   --> crates/sr-app/src/desktop.rs:284:41
+    |
+284 |     fn ui(&mut self, ui: &mut egui::Ui, frame: &mut eframe::Frame) {
+    |                                         ^^^^^ help: if this is intentional, prefix it with an underscore: `_frame`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `centre_on` is never used
+  --> crates/sr-app/src/ui/zoom.rs:78:12
+   |
+26 | impl Zoom {
+   | --------- method in this implementation
+...
+78 |     pub fn centre_on(&mut self, z: u32, cell: [u32; 2], world: WorldConfig) {
+   |            ^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-app` (bin "sandbox-reactions") generated 2 warnings (run `cargo fix --bin "sandbox-reactions" -p sr-app` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.32s

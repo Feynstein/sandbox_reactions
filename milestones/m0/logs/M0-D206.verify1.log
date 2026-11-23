@@ -1,0 +1,12 @@
+anchor: 127 path×scope entries moved by this run
+anchor: 194 paths checked · 476 skipped (3 classes) · 288 never checked · 1 stale · 0 unclassified · 0 owed · 483 covered of 959 visible
+verify: 12 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 8.79 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 1.52->1.75
+=== GO ===
+anchor: 97 path×scope entries moved by this run
+anchor: 195 paths checked · 476 skipped (3 classes) · 287 never checked · 1 stale · 0 unclassified · 0 owed · 483 covered of 959 visible
+verify: 4 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 1.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 1.75->1.75
+=== GO ===
+anchor: 128 path×scope entries moved by this run
+anchor: 196 paths checked · 476 skipped (3 classes) · 286 never checked · 1 stale · 0 unclassified · 0 owed · 483 covered of 959 visible
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 6.58 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 1.75->2.33
+=== GO ===

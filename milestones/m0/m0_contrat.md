@@ -549,7 +549,7 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     (ceiling steps 2,517, 2,520 and 2,523) books no 10-step floor over 1.03 × 10⁶ (logs/M0-D89.*, tasks/M0-D89.md) — the lead,
     2026-10-23, at M0-D89: «Limited fluxes (Recommended)».
   - [M0-R6] §2.6's Formation ("all four at one cell … Σ ≥ Σ_BH") · **a sink also forms at a cell that is a local Σ maximum whose disk r ≤
-    r_core = 4 cells holds M_core ≥ m_tov_sb (§2.11 item 2's value) with the disk's mass-weighted Y_e over r ≤ 3 at most 0.35 (§0.5
+    r_core = 4 cells holds M_core ≥ m_tov_sb (§2.11 item 2's value) with the disk's mass-weighted Y_e over r ≤ 3 at most ~~0.35~~ 0.40 [M0-D208] (§0.5
     [M0-D79]'s bound), the cell passing §2.6's other three tests (∇·u < 0, φ no greater than its 8 neighbours, bound); that sink takes the
     disk's mass above the floor and its momentum, its thermal and cold energy booked `swallowed`; Σ ≥ Σ_BH alone still forms one** — a
     one-cell grid holds a neutron star's mass in a block of a few cells and never drives Σ past Σ_BH (densest cell 1,554 over every probe,
@@ -1429,6 +1429,28 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     the Massive's margin 1.5 → 201.5 cells; the step costs 2.3 × whenever the gas fills the world (Quadro RTX 4000: 20.8 → 47.2
     ms), and 800 is inside gravity's 1,024-cell ceiling (§0.5 [M0-V4]) — the lead at M0-R16, 2026-11-20: «800 × 800
     (Recommended)»; at M0-D203, 2026-11-20: «World in `measured` (Recommended)».
+  - [M0-D207] §4.8's errors as the page's only fatal texts (no adapter, a lost device), every failure to start the app on
+    the page shown as `error.no_adapter` · **§4.1 gains `error.calibration`, the page's text for a calibration the engine
+    refuses (§4.8), kept apart from `error.no_adapter`; §3.5 gains the test hook `calibration=stale`, and G-WEB its case**
+    — measured by M0-D203's claim on linux-pc, 2026-11-20 (logs/M0-D203.web.log): web[ready] read «No compatible graphics
+    card found …» on the RTX 5090 box whose desktop app, same tree, printed `SR-ERROR calibration out of date` — the lead
+    at M0-D207, 2026-11-23: «(a) New key (Recommended)», its words as proposed, and «URL test hook (Recommended)».
+  - [M0-D208] [M0-R6]'s sink from mass, «the disk's mass-weighted Y_e over r ≤ 3 at most 0.35 ([M0-D79]'s bound)» · **at
+    most 0.40** — the neutron_star row (§1.9.3, [M0-D79], [M0-D88]) keeps Y_e,c ≤ 0.35 · measured by M0-D208 on linux-pc's
+    RTX 5090, 2026-11-23 (tasks/M0-D208.md): a collapsing core's r ≤ 3 mean falls 0.578 → 0.448 → 0.372 in 50 steps, then
+    crawls 0.364, 0.358 … 0.351 while its r ≤ 4 disk already holds 1.2–1.9 m_tov_sb; the sink forms the step it crosses 0.35
+    (22,304 sb: 7,880; 27,414 sb: 9,260), where the RTX 4090 of 2026-11-20 never crossed it and read a neutron star for the
+    same clouds — the ending followed the plateau's last digits, GPU by GPU, not the mass (M0-D203's m_bh ladder, the Massive
+    preset's exit 6) — the lead at M0-D208, 2026-11-23: «Y_e gate 0.35→0.40 (Recommended)».
+  - [M0-D204] §1.11's «s = 2 in the default window (§4.2)», §4.2's Centre «at the default size s = 2, so the world is
+    1200 × 800 px» and §3.3's Bench «the default window's world size (1200 × 800» · **s = 1 in the default window: the whole
+    800 × 800 world at one pixel a cell, 800 × 800 px, the legend as wide (800 px); the wheel zooms in (z up to 8, [M0-R12])
+    and Home returns to the whole world, as before** — §1.11's rule is unchanged and gives it on the default world of §0.5
+    [M0-D203]: the default window's centre is 1,240 × 872 px (1,760 − 220 − 300; 940 − 44 − 24), less the 72 px under the world
+    (the 8 px gap, the 44 px legend, the 20 px hint line — `legend::layout`) leaves 1,240 × 800, and ⌊min(1,240 / 800,
+    800 / 800)⌋ = 1; on a 2,560 × 1,440 screen s = 1, at 3,840 × 2,160 s = 2 (reports/world_size.md § 2.1). It gives up B13's
+    «each drawn as a 2–3 pixel square» in the default window (2-pixel cells come back at z = 2) and keeps «a whole star's life …
+    squeezed to fit one screen» — the lead at M0-D204, 2026-11-23: «Whole world, 1 px (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the ~~600 × 400~~ [M0-D203] 800 × 800 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1825,7 +1847,7 @@ between the listed masses, held constant beyond them:
 - **The cell image.** A compute pass writes a W × H RGBA8 texture from the state (blended with the
   previous state by α in slow motion, §1.8.3) for the active view; drawn as a quad with nearest
   filtering at an integer scale s = max(1, ⌊min(available width / W, available height / H)⌋) —
-  visible square cells (B12); s = 2 in the default window (§4.2).
+  visible square cells (B12); s = ~~2~~ [M0-D204] 1 in the default window (§4.2, §0.5 [M0-D204]).
 - **Glow view** (the default): colour = blackbody(T_K) · b + haze · (1 − b), with T_K the translated
   temperature (§1.10.2), b = 1 − exp(−(T_K / 3000 K)⁴), haze = #2A3550 ·
   clamp((log₁₀ Σ + 8) / 8, 0, 1) · 0.6. blackbody(T): Planck's B_λ(λ, T) = (2hc²/λ⁵) / (e^{c₂/(λT)} − 1)
@@ -2289,7 +2311,7 @@ Unit-tested without a GPU against §1.8.
     the scan of the run's last step (the message names the step, cell and channel) · 6 calibration failed (§2.11) · 101 a panic.
 - **Bench:** `sandbox-reactions bench --scene … --rung <label|max> (--frames N | --until <condition>)
   --adapter S [--slowdown on|off] [--load-dump FILE] --out DIR` [M0-TJ2: `max`, was `top`] — §1.8's frame loop
-  with every frame rendered offscreen at the default window's world size (1200 × 800, Glow view with glow;
+  with every frame rendered offscreen at the default window's world size (~~1200 × 800~~ [M0-D204] 800 × 800, Glow view with glow;
   the UI panels' cost is R_reserve), no vsync. Writes DIR/bench.json: `{"adapter", "rung", "frames",
   "f_target_switches", "frame_ms": {"p50", "p95", "max"}, "steps_per_frame": {"p50", "max"}, "off_cap",
   "sim_time", "life_wall_s", "until": {…}}`, life_wall_s = Σ_frames max(frame_ms, 1000/f_target) /
@@ -2297,6 +2319,9 @@ Unit-tested without a GPU against §1.8.
   exceeded that frame's N_max, or at Max differed from it.
 - **Calibrate:** `sandbox-reactions calibrate --adapter S --out assets/calibration.json
   [--only <item>] [--resume <dir>] [--progress-every N] [--checkpoint-every M]` — §2.11; `--only` re-measures one item and keeps the rest.
+  [M0-D205] The rest is the `--out` file's when its physics_hash is the assets' and its `measured.world` the default's (§2.8); a
+  file of another hash, or of another world or none named (§0.5 [M0-D203]), is dropped whole with an `SR-WARN` naming why —
+  `render_reserve_ms` with it, until the drawing lot's `--measure-ui` writes it again (§2.11 item 7).
   [M0-D77] `--checkpoint-every M` is the save interval of a running life's checkpoint (default 10,000 steps), apart from `--progress-every`;
   `--resume` continues a cut life from it, `continued from step <k>` on its run line.
   [M0-D75] `--progress-every N` is the tick of every life's progress line and `progress.json` (default 10,000 steps). [M0-D80] A life's
@@ -2305,7 +2330,8 @@ Unit-tested without a GPU against §1.8.
   an earlier invocation's `build/calibrate_runs/<stamp>/`, reads that invocation's finished lives back instead of running
   them (run NN ← `<dir>/<label>-<NN>/summary.json`, when it parses, its `until.met` is true and its `scene` is this run's
   `calibrate:<label>:<mass to 3 decimals>`; its run line says `replayed`), runs the first life with no such record and every
-  one after it fresh in `<dir>`; a record of another label or mass, an adapter `--adapter` does not match, a `<dir>` with no
+  one after it fresh in `<dir>`; a record of another label or mass, [M0-D205] of another world than the default or naming none
+  (its `world`, as §0.5 [M0-D203] reads a calibration of another world), an adapter `--adapter` does not match, a `<dir>` with no
   first life of the run's label or one that is not a folder is exit 4 before any life runs; items 1–2 ignore it. [M0-R4] Items 1–2 run on
   the CPU in f64 and open no adapter; `--adapter` is needed only when an item that runs the GPU is
   measured (`measured.adapter` names it, or `cpu` when none did).
@@ -2347,10 +2373,12 @@ Unit-tested without a GPU against §1.8.
   `document.body.dataset.srState = "no-webgpu"` and never loads the wasm (Q4).
 - The app sets `srState` to `"loading"`, then `"ready"` after its first presented frame, and
   `document.body.dataset.srAdapter` to the adapter's description; on a fatal error `"error"` with
-  §4.8's message. [M0-D144] `document.body.dataset.srWorld` is the world's place on the canvas at z = 1 (§4.2), "x y w h" in
+  §4.8's message (`srError`; `srErrorDetail` the line that says why — [M0-D207] a calibration the engine refuses shows
+  `error.calibration`, never `error.no_adapter`). [M0-D144] `document.body.dataset.srWorld` is the world's place on the canvas at z = 1 (§4.2), "x y w h" in
   the page's CSS px, written when it moves — where G-WEB reads the dropped star.
 - URL parameters (smoke and captures): `preset=<sun|massive|giant>` drops it at the world's centre ·
-  `steps=<n>` runs n steps then pauses · `view=<glow|heat|element|density>` · `rung=<k>`.
+  `steps=<n>` runs n steps then pauses · `view=<glow|heat|element|density>` · `rung=<k>` · [M0-D207] `calibration=stale`,
+  the test hook: the app starts on the embedded calibration with `measured.world` set to 1x1, which G-CAL refuses (§4.8).
 
 ### 3.6 Launch manifest entries (`launch.json`, written by the build blocks that boot each service [M0-TG])
 | Service | Command | Ready | Ask |
@@ -2502,6 +2530,7 @@ units.years_trillion = "{value} trillion years"
 status.line = "{adapter} · {fps} fps · {steps} steps per frame · {width} × {height} cells"
 error.no_adapter = "No compatible graphics card found. Sandbox Reactions needs a graphics card with Vulkan, Metal or DirectX 12 support."
 error.device_lost = "The graphics card stopped responding. Please restart Sandbox Reactions."
+error.calibration = "This build's star calibration is out of date, so Sandbox Reactions cannot start. The build needs recalibrating (sandbox-reactions calibrate)."
 web.loading = "Loading Sandbox Reactions…"
 web.no_webgpu_title = "Sandbox Reactions needs WebGPU"
 web.no_webgpu_body = "Your browser does not support WebGPU yet. Sandbox Reactions uses it to run its physics on your graphics card."
@@ -2533,7 +2562,7 @@ colour and brightness"`, `legend.heat = "Temperature"`, `legend.density = "Densi
   (From kept ≥ 0.1 decade under To), `views.fit`, `views.reset` (10 K – 10 billion K); Density — the same over Σ 10⁻⁶ – 10⁴ in
   §4.12's inspector numbers; Element — none.
 - **Centre:** the world at integer scale s (§1.11), centred on `bg.space`; at the default size
-  s = 2, so the world is 1200 × 800 px. While a preset is armed, `presets.place_hint` shows under
+  s = ~~2, so the world is 1200 × 800 px~~ [M0-D204] 1, so the whole world is 800 × 800 px (§0.5 [M0-D204]). While a preset is armed, `presets.place_hint` shows under
   the world and its outline follows the cursor. [M0-R12] Under the world, 8 px below it and as wide as it, the **legend** (M0-T128,
   the lead at M0-R12: «Under the world (Recommended)»): its title (`legend.glow`, `legend.heat`, `legend.density` or
   `legend.element`, small, `text.secondary`), a 12 px bar and its ticks — Glow: the colour of each temperature over 10 K – 10
@@ -2585,7 +2614,10 @@ each preset reaches (B3, RT17 — guaranteed by G-END).
 
 ### 4.8 Errors
 No adapter: the desktop app prints `SR-ERROR` + `error.no_adapter` and exits 3 (§3.3); a lost
-device shows `error.device_lost` in a dialog and stops stepping.
+device shows `error.device_lost` in a dialog and stops stepping. [M0-D207] A calibration the engine refuses (§2.11, G-CAL —
+out of date, of another world, invalid or missing): the desktop app prints its `SR-ERROR calibration …` line and exits 6;
+the web page shows `error.calibration` (srState "error", the `SR-ERROR` line in `srErrorDetail`); `error.no_adapter` there
+is every other failure to start.
 
 ### 4.9 Web pages
 Loading: `web.loading` centred on `bg.space`. Without WebGPU (Q4): `web.no_webgpu_title` as a
@@ -2887,10 +2919,12 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   the world's centre (`srWorld`, §3.5) hold opaque pixels more than 2 levels off `bg.space` on a channel while the world's two
   corners read `bg.space` within 1 (egui-wgpu's dither) [M0-D144 — was "the canvas's central 100 × 100 px are not all black",
   which an empty canvas meets; a Chrome screenshot reads none of the WebGPU canvas]; `/?no-webgpu=1` shows
-  srState "no-webgpu" and the three `web.no_webgpu_*` texts exactly. *UNVERIFIED* (WebGPU in
+  srState "no-webgpu" and the three `web.no_webgpu_*` texts exactly; [M0-D207] `/?calibration=stale` (§3.5) reaches srState
+  "error" with srError `error.calibration` exactly and the `SR-ERROR calibration` line in srErrorDetail. *UNVERIFIED* (WebGPU in
   headless Chrome on linux-pc — ES — and on win-laptop, §6.2.3). Box: linux-pc or win-laptop, each
   with §6.2.3's Chrome [M0-TJ3 — was "Box: linux-pc"]. Scope `web`. Plant `never-ready`: srState never
-  set to "ready"; plant `web-preset-not-dropped` [M0-D144]: the URL's preset armed, never dropped, srState still "ready".
+  set to "ready"; plant `web-preset-not-dropped` [M0-D144]: the URL's preset armed, never dropped, srState still "ready";
+  plant `web-calibration-as-adapter` [M0-D207]: a refused calibration shown as `error.no_adapter`.
 
 ### 5.5 UNVERIFIED — the satisfiability register
 G-VIR, G-JEANS, G-CONS (energy), G-THERMO, G-REF, G-SQUEEZE, G-END, G-STAGES, G-TOUCH,

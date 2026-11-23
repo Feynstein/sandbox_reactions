@@ -1,0 +1,10 @@
+== 2026-11-23T14:11:38-05:00 measure_ui[run] · task M0-D209 · box laserax-ai :: bash tests/measure/check.sh {case}
+-- measure_ui[run] · exit=1 · 0.21 s
+SR-ERROR calibration out of date: it was measured on no named world (a file from before M0-D203), the default world is 800x800 (calibrate again on it: sandbox-r
+=== NO-GO: the measure run exited 6, expected 0 ===
+
+== 2026-11-23T14:11:38-05:00 measure_ui[refuse] · task M0-D209 · box laserax-ai :: bash tests/measure/check.sh {case}
+-- measure_ui[refuse] · exit=1 · 0.41 s
+SR-ERROR calibration out of date: it was measured on no named world (a file from before M0-D203), the default world is 800x800 (calibrate again on it: sandbox-reactions calibrate)
+=== NO-GO: expected exit 3 for --measure-ui 5 --calibration /tmp/tmp.8Jx8nTt4Ov/not-a-calibration.json, got 6 ===
+

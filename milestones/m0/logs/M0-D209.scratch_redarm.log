@@ -1,0 +1,18 @@
+# verify.py --redarm capture in scratch copy /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/3ac1ab62-046a-4f45-80bf-06a4f79b8d2a/scratchpad/d209 (measured.world=800x800), linux-pc 2026-11-23T14:05:59-05:00
+capture · clean: proven by M0-D209 2026-11-23T14:05:32-05:00 (a run of the scope; fingerprint 8754754b8f0d) - not re-run
+capture · plant capture-no-captions · RED (proven: capture[smoke]: 1 failed; capture[smoke]: its own verdict NO-GO: the captures do not match §3.3; capture[actions]: 1 fai) · arm 1/9, 8 left
+capture · plant capture-edge-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the top bar of edge-leave is the same as edge's: th) · arm 2/9, 7 left
+capture · plant capture-paint-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the world's upper-left corner of paint differs from) · arm 3/9, 6 left
+capture · plant capture-star-panel-blank · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the right panel of select holds 3835 lit pixels, st) · arm 4/9, 5 left
+capture · plant capture-hover-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the right panel of hover is the same as select's: t) · arm 5/9, 4 left
+capture · plant capture-hover-off-world · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the right panel of hover-outside holds 10071 lit pi) · arm 6/9, 3 left
+capture · plant capture-glow-white-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the world of star-glow-white is the same as star-gl) · arm 7/9, 2 left
+capture · plant capture-zoom-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the world of star-zoom is the same as star-heat-fit) · arm 8/9, 1 left
+capture · plant capture-preset-at-ignored · RED (proven: capture[actions]: 1 failed; capture[actions]: its own verdict NO-GO: the dropped star spans x 532..548, y 136..152 px (c) · arm 9/9, 0 left
+redarm: 9 plants · 9 red · 0 green · 0 errors · scope capture · 277.76 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D209.capture.redarm.log
+=== GO ===
+
+real	4m38.028s
+user	19m44.624s
+sys	1m52.169s
+rc=0

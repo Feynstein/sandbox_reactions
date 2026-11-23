@@ -1,0 +1,12 @@
+# bash tests/capture/check.sh actions in scratch copy /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/3ac1ab62-046a-4f45-80bf-06a4f79b8d2a/scratchpad/d209 (measured.world=800x800), linux-pc 2026-11-23T14:04:05-05:00
+SR-CAPTURE-STATUS star-heat-fit llvmpipe (LLVM 20.1.2, 256 bits) · 30 fps · 129 steps per frame · 800 × 800 cells
+SR-CAPTURE star-zoom star-zoom.png 1760x940
+SR-CAPTURE-STATUS star-zoom llvmpipe (LLVM 20.1.2, 256 bits) · 34 fps · 1 steps per frame · 800 × 800 cells
+SR-CAPTURE drop-at drop-at.png 1760x940
+SR-CAPTURE-STATUS drop-at llvmpipe (LLVM 20.1.2, 256 bits) · 39 fps · 1 steps per frame · 800 × 800 cells
+SR-CAPTURE drop-no-room drop-no-room.png 1760x940
+SR-CAPTURE-STATUS drop-no-room llvmpipe (LLVM 20.1.2, 256 bits) · 44 fps · 1 steps per frame · 800 × 800 cells
+SR-CAPTURE DONE 24 /tmp/tmp.NA8Jf1Ho6M/out
+24 PNGs of (1760, 940); the bar changed after each action; accent at x = 219 (x1), 288 (x10), 413 (Max); the left panel's accent at y = 327 (Brush), 336 (Heat), 374 (Iron); 490 pixels painted; the right panel 5031 lit pixels without a star, 6594 with one, 6981 with the pointer off the world; Glow toned down differs, its Reset matches the default, Heat fitted differs; the world 800 x 800 at s = 1 from (440, 44); zoom 8 about (400, 400) matches the whole world on 6 probed cells (6 colours), 8 px a cell; the preset dropped at (80, 80) spans x 481..559 px about (520, 124), the one at (10, 10) refused (402 red pixels, preset armed, world as it was)
+capture actions: ok
+=== GO ===

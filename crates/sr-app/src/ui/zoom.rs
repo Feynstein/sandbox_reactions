@@ -137,130 +137,131 @@ impl Wheel {
 mod zoom_tests {
     use super::*;
 
-    const WORLD: WorldConfig = WorldConfig { width: 600, height: 400 };
-
-    fn viewport() -> egui::Rect {
-        egui::Rect::from_min_size(egui::pos2(230.0, 60.0), egui::vec2(1200.0, 800.0))
+    /// The default view (M0-D204): the default world where the default window draws it, and its points a cell at z = 1 (s).
+    fn view() -> (WorldConfig, egui::Rect, f32) {
+        let (world, vp) = crate::ui::legend::default_view();
+        (world, vp, vp.width() / world.width as f32)
     }
 
     #[test]
     fn at_z_one_the_mapping_is_todays() {
-        let zoom = Zoom::home(WORLD);
-        let vp = viewport();
-        assert_eq!(zoom.image(vp, WORLD, 1.0), vp);
+        let (world, vp, s) = view();
+        let zoom = Zoom::home(world);
+        assert_eq!(zoom.image(vp, world, 1.0), vp);
         for pos in [
-            egui::pos2(230.0, 60.0),
-            egui::pos2(231.9, 61.9),
-            egui::pos2(232.0, 62.0),
-            egui::pos2(829.5, 460.5),
-            egui::pos2(1429.9, 859.9),
-            egui::pos2(1430.0, 860.0),
-            egui::pos2(229.0, 100.0),
+            vp.min,
+            vp.min + egui::vec2(s - 0.1, s - 0.1),
+            vp.min + egui::vec2(s, s),
+            vp.center() + egui::vec2(-0.5, 0.5),
+            vp.max - egui::vec2(0.1, 0.1),
+            vp.max,
+            egui::pos2(vp.min.x - 1.0, vp.min.y + 40.0),
         ] {
-            assert_eq!(zoom.cell_at(pos, vp, WORLD, 1.0), left::cell_at(pos, vp, WORLD), "{pos:?}");
+            assert_eq!(zoom.cell_at(pos, vp, world, 1.0), left::cell_at(pos, vp, world), "{pos:?}");
         }
         assert_eq!(zoom.uv(vp, vp), egui::Rect::from_min_max(egui::pos2(0.0, 0.0), egui::pos2(1.0, 1.0)));
     }
 
     #[test]
     fn the_wheel_keeps_the_cell_under_the_cursor() {
-        let vp = viewport();
-        // A cursor off the middle: each step in, the cell under it stays the same.
-        let pos = egui::pos2(230.0 + 301.0, 60.0 + 101.0);
-        let mut zoom = Zoom::home(WORLD);
-        let before = zoom.cell_at(pos, vp, WORLD, 1.0);
+        let (world, vp, s) = view();
+        // A cursor off the middle, mid-cell: each step in, the cell under it stays the same.
+        let pos = vp.min + egui::vec2(150.5 * s, 50.5 * s);
+        let mut zoom = Zoom::home(world);
+        let before = zoom.cell_at(pos, vp, world, 1.0);
         assert_eq!(before, Some([150, 50]));
         for z in 2..=MAX_Z {
-            zoom.step(1, pos, vp, WORLD);
+            zoom.step(1, pos, vp, world);
             assert_eq!(zoom.z(), z);
-            assert_eq!(zoom.cell_at(pos, vp, WORLD, 1.0), before, "z = {z}");
+            assert_eq!(zoom.cell_at(pos, vp, world, 1.0), before, "z = {z}");
         }
         // And out again, down to the whole world.
         for z in (1..MAX_Z).rev() {
-            zoom.step(-1, pos, vp, WORLD);
+            zoom.step(-1, pos, vp, world);
             assert_eq!(zoom.z(), z);
             if z > 1 {
-                assert_eq!(zoom.cell_at(pos, vp, WORLD, 1.0), before, "z = {z}");
+                assert_eq!(zoom.cell_at(pos, vp, world, 1.0), before, "z = {z}");
             }
         }
-        assert_eq!(zoom, Zoom::home(WORLD));
+        assert_eq!(zoom, Zoom::home(world));
     }
 
     #[test]
     fn z_stops_at_one_and_eight() {
-        let vp = viewport();
+        let (world, vp, _) = view();
         let pos = vp.center();
-        let mut zoom = Zoom::home(WORLD);
-        zoom.step(-3, pos, vp, WORLD);
+        let mut zoom = Zoom::home(world);
+        zoom.step(-3, pos, vp, world);
         assert_eq!(zoom.z(), 1);
-        zoom.step(20, pos, vp, WORLD);
+        zoom.step(20, pos, vp, world);
         assert_eq!(zoom.z(), MAX_Z);
-        zoom.step(1, pos, vp, WORLD);
+        zoom.step(1, pos, vp, world);
         assert_eq!(zoom.z(), MAX_Z);
     }
 
     #[test]
     fn the_image_always_covers_the_viewport() {
-        let vp = viewport();
+        let (world, vp, _) = view();
         // Zoomed at a corner, then dragged far every way: the image never leaves a gap.
-        let mut zoom = Zoom::home(WORLD);
-        zoom.step(7, egui::pos2(230.0, 60.0), vp, WORLD);
+        let mut zoom = Zoom::home(world);
+        zoom.step(7, vp.min, vp, world);
         for delta in [egui::vec2(5000.0, 5000.0), egui::vec2(-9000.0, -9000.0), egui::vec2(-300.0, 4000.0)] {
-            zoom.pan(delta, vp, WORLD);
-            let image = zoom.image(vp, WORLD, 1.0);
+            zoom.pan(delta, vp, world);
+            let image = zoom.image(vp, world, 1.0);
             assert!(image.contains_rect(vp), "{delta:?}: {image:?} leaves a gap in {vp:?}");
             assert_eq!(image.size(), vp.size() * 8.0);
         }
         // The far corner of the world is the last cell the drag reaches.
-        zoom.pan(egui::vec2(-1e6, -1e6), vp, WORLD);
-        assert_eq!(zoom.cell_at(egui::pos2(1429.9, 859.9), vp, WORLD, 1.0), Some([599, 399]));
+        zoom.pan(egui::vec2(-1e6, -1e6), vp, world);
+        assert_eq!(zoom.cell_at(vp.max - egui::vec2(0.1, 0.1), vp, world, 1.0), Some([world.width - 1, world.height - 1]));
     }
 
     #[test]
     fn a_drag_moves_the_world_with_the_pointer() {
-        let vp = viewport();
-        let mut zoom = Zoom::home(WORLD);
-        zoom.step(3, vp.center(), vp, WORLD); // z = 4: 8 px a cell
-        let pos = egui::pos2(500.0, 300.0);
-        let under = zoom.cell_at(pos, vp, WORLD, 1.0).unwrap();
-        zoom.pan(egui::vec2(80.0, -40.0), vp, WORLD); // ten cells right, five up
-        assert_eq!(zoom.cell_at(pos, vp, WORLD, 1.0), Some([under[0] - 10, under[1] + 5]));
+        let (world, vp, s) = view();
+        let mut zoom = Zoom::home(world);
+        zoom.step(3, vp.center(), vp, world); // z = 4: 4 s px a cell
+        let cell = 4.0 * s;
+        let pos = vp.center() + egui::vec2(-100.3, -70.3);
+        let under = zoom.cell_at(pos, vp, world, 1.0).unwrap();
+        zoom.pan(egui::vec2(10.0 * cell, -5.0 * cell), vp, world); // ten cells right, five up
+        assert_eq!(zoom.cell_at(pos, vp, world, 1.0), Some([under[0] - 10, under[1] + 5]));
         // At z = 1 there is nothing to drag.
-        let mut whole = Zoom::home(WORLD);
-        whole.pan(egui::vec2(300.0, 300.0), vp, WORLD);
-        assert_eq!(whole, Zoom::home(WORLD));
+        let mut whole = Zoom::home(world);
+        whole.pan(egui::vec2(300.0, 300.0), vp, world);
+        assert_eq!(whole, Zoom::home(world));
     }
 
     #[test]
     fn home_returns_to_the_whole_world_and_is_the_default() {
-        let vp = viewport();
-        let mut zoom = Zoom::home(WORLD);
-        zoom.step(5, egui::pos2(300.0, 100.0), vp, WORLD);
-        zoom.pan(egui::vec2(-50.0, 20.0), vp, WORLD);
-        assert_ne!(zoom, Zoom::home(WORLD));
-        zoom.reset(WORLD);
-        assert_eq!(zoom, Zoom::home(WORLD));
+        let (world, vp, _) = view();
+        let mut zoom = Zoom::home(world);
+        zoom.step(5, vp.min + egui::vec2(70.0, 40.0), vp, world);
+        zoom.pan(egui::vec2(-50.0, 20.0), vp, world);
+        assert_ne!(zoom, Zoom::home(world));
+        zoom.reset(world);
+        assert_eq!(zoom, Zoom::home(world));
         assert_eq!(zoom.z(), 1);
     }
 
     #[test]
     fn nothing_outside_the_viewport_or_the_world_is_a_cell() {
-        let vp = viewport();
-        let mut zoom = Zoom::home(WORLD);
-        zoom.step(7, vp.center(), vp, WORLD);
-        assert_eq!(zoom.cell_at(egui::pos2(229.0, 100.0), vp, WORLD, 1.0), None);
-        assert_eq!(zoom.cell_at(egui::pos2(1430.0, 100.0), vp, WORLD, 1.0), None);
-        assert!(zoom.cell_at(vp.center(), vp, WORLD, 1.0).is_some());
+        let (world, vp, _) = view();
+        let mut zoom = Zoom::home(world);
+        zoom.step(7, vp.center(), vp, world);
+        assert_eq!(zoom.cell_at(egui::pos2(vp.min.x - 1.0, vp.min.y + 40.0), vp, world, 1.0), None);
+        assert_eq!(zoom.cell_at(egui::pos2(vp.max.x, vp.min.y + 40.0), vp, world, 1.0), None);
+        assert!(zoom.cell_at(vp.center(), vp, world, 1.0).is_some());
     }
 
     #[test]
     fn the_image_corner_sits_on_a_physical_pixel() {
-        let vp = viewport();
-        let mut zoom = Zoom::home(WORLD);
-        zoom.step(5, egui::pos2(333.3, 111.1), vp, WORLD);
-        zoom.pan(egui::vec2(-13.37, 7.77), vp, WORLD);
+        let (world, vp, _) = view();
+        let mut zoom = Zoom::home(world);
+        zoom.step(5, vp.min + egui::vec2(103.3, 51.1), vp, world);
+        zoom.pan(egui::vec2(-13.37, 7.77), vp, world);
         for ppp in [1.0, 1.5, 2.0] {
-            let image = zoom.image(vp, WORLD, ppp);
+            let image = zoom.image(vp, world, ppp);
             for v in [image.min.x, image.min.y] {
                 assert_eq!(v * ppp, (v * ppp).round(), "ppp {ppp}: {v}");
             }
@@ -269,15 +270,16 @@ mod zoom_tests {
 
     #[test]
     fn centre_on_puts_the_cell_in_the_middle_as_far_as_the_world_allows() {
-        let vp = viewport();
-        let mut zoom = Zoom::home(WORLD);
-        zoom.centre_on(8, [300, 200], WORLD);
+        let (world, vp, _) = view();
+        let mut zoom = Zoom::home(world);
+        let middle = [world.width / 2, world.height / 2];
+        zoom.centre_on(8, middle, world);
         assert_eq!(zoom.z(), 8);
-        assert_eq!(zoom.cell_at(vp.center(), vp, WORLD, 1.0), Some([300, 200]));
+        assert_eq!(zoom.cell_at(vp.center(), vp, world, 1.0), Some(middle));
         // A cell at the corner cannot be centred: the clamp keeps it in the view.
-        zoom.centre_on(8, [0, 0], WORLD);
-        assert_eq!(zoom.cell_at(vp.min, vp, WORLD, 1.0), Some([0, 0]));
-        zoom.centre_on(99, [599, 399], WORLD);
+        zoom.centre_on(8, [0, 0], world);
+        assert_eq!(zoom.cell_at(vp.min, vp, world, 1.0), Some([0, 0]));
+        zoom.centre_on(99, [world.width - 1, world.height - 1], world);
         assert_eq!(zoom.z(), MAX_Z);
     }
 
@@ -286,18 +288,20 @@ mod zoom_tests {
         use sr_engine::step::edit::Edit;
         use sr_physics::registry::Elements;
 
-        let vp = viewport();
+        let (world, vp, s) = view();
         let tools = left::Tools::new(&Elements::shipped().unwrap());
-        let mut zoom = Zoom::home(WORLD);
-        zoom.centre_on(MAX_Z, [300, 200], WORLD);
-        // 16 px a cell, the view centred on cell (300, 200): the pointer 3 cells right and 2 up of the centre, a hair into the cell.
-        let pos = vp.center() + egui::vec2(3.0 * 16.0 + 1.0, -2.0 * 16.0 + 1.0);
-        let cell = zoom.cell_at(pos, vp, WORLD, 1.0);
-        assert_eq!(cell, Some([303, 198]));
+        let mut zoom = Zoom::home(world);
+        let [cx, cy] = [world.width / 2, world.height / 2];
+        zoom.centre_on(MAX_Z, [cx, cy], world);
+        // 8 s px a cell, the view centred on the middle cell: the pointer 3 cells right and 2 up of the centre, a hair into the cell.
+        let px = MAX_Z as f32 * s;
+        let pos = vp.center() + egui::vec2(3.0 * px + 1.0, -2.0 * px + 1.0);
+        let cell = zoom.cell_at(pos, vp, world, 1.0);
+        assert_eq!(cell, Some([cx + 3, cy - 2]));
         // The edit the frame queues (what the state will paint) names that cell, not the one z = 1 would give the same pointer.
         let Some(Edit::Paint { cell: painted, .. }) = left::frame_edit(&tools, cell) else { panic!("no paint edit") };
-        assert_eq!(painted, [303, 198]);
-        assert_ne!(Some(painted), left::cell_at(pos, vp, WORLD));
+        assert_eq!(painted, [cx + 3, cy - 2]);
+        assert_ne!(Some(painted), left::cell_at(pos, vp, world));
     }
 
     #[test]

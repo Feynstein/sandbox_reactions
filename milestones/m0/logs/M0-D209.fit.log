@@ -1,0 +1,35 @@
+== 2026-11-23T14:11:31-05:00 fit · task M0-D209 · box laserax-ai :: bash tests/gpu.sh fit physics
+-- fit · exit=101 · 0.36 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.28s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 3 tests
+test fit::the_giant_life_keeps_its_bound_gas_16_cells_from_the_edge ... 
+thread 'fit::the_giant_life_keeps_its_bound_gas_16_cells_from_the_edge' (2720881) panicked at crates/sr-engine/tests/gpu/fit.rs:83:55:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test fit::the_massive_life_keeps_its_bound_gas_16_cells_from_the_edge ... 
+thread 'fit::the_massive_life_keeps_its_bound_gas_16_cells_from_the_edge' (2720958) panicked at crates/sr-engine/tests/gpu/fit.rs:83:55:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+test fit::the_sun_like_life_keeps_its_bound_gas_16_cells_from_the_edge ... 
+thread 'fit::the_sun_like_life_keeps_its_bound_gas_16_cells_from_the_edge' (2720961) panicked at crates/sr-engine/tests/gpu/fit.rs:83:55:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+
+failures:
+
+failures:
+    fit::the_giant_life_keeps_its_bound_gas_16_cells_from_the_edge
+    fit::the_massive_life_keeps_its_bound_gas_16_cells_from_the_edge
+    fit::the_sun_like_life_keeps_its_bound_gas_16_cells_from_the_edge
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 548 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

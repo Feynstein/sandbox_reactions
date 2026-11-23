@@ -1,0 +1,114 @@
+== 2026-11-23T08:00:53-05:00 box · task M0-TM20 · box laserax-ai :: bash tests/gpu.sh box physics
+-- box · exit=101 · 12.15 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on shared package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.20s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 8 tests
+test r#box::a_blob_at_the_box_edge_loses_no_mass_in_bounce_mode ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-BOX box_blob chunk 0: centroid at 294.256, 0.3277 cells per step leftward
+SR-BOX box_blob chunk 1: centroid at 289.109, 0.3217 cells per step leftward
+SR-BOX box_blob chunk 2: centroid at 284.044, 0.3166 cells per step leftward
+SR-BOX box_blob chunk 3: centroid at 279.076, 0.3105 cells per step leftward
+SR-BOX box_blob chunk 4: centroid at 274.061, 0.3134 cells per step leftward
+SR-BOX box_blob chunk 5: centroid at 269.040, 0.3139 cells per step leftward
+SR-BOX box_blob, masses sigma: 2.560023993624e2 vs 2.560023974409e2, |Δ| 1.921e-6 = 7.51e-9 of scale 2.5600e2
+SR-BOX box_blob, masses x_H: 2.560023993624e2 vs 2.560023974409e2, |Δ| 1.921e-6 = 7.51e-9 of scale 2.5600e2
+SR-BOX box_blob, masses x_He: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_C: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_O: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_Ne: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_Mg: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_Si: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_S: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_Fe: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX box_blob, masses x_n: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+ok
+test r#box::an_edit_outside_the_box_refits_it_in_p0_and_the_flag_clears ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+step 4, edit flagged: box [192, 88, 24, 24], from step 4, 3 fits
+ok
+test r#box::sun_disk_in_the_box_matches_the_whole_world_at_step_100_and_its_masses_at_2000 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-BOX sun_disk step 100: box [232, 136, 136, 128] FFT [512, 256]; vacuum_reset 7.378449355877947e-3 vs 7.378481102721324e-3, escaped.mass 0e0 vs 0e0
+SR-BOX sun_disk step 100 sigma: 3.351034496833e3 vs 3.351034521135e3, |Δ| 2.430e-5 = 7.25e-9 of scale 3.3510e3
+SR-BOX sun_disk step 100 mom_x: 5.289114312745e-6 vs 6.591603029449e-5, |Δ| 6.063e-5 = 7.50e-9 of scale 8.0820e3
+SR-BOX sun_disk step 100 mom_y: 3.118341601294e-5 vs 3.231354685340e-5, |Δ| 1.130e-6 = 1.40e-10 of scale 8.0820e3
+SR-BOX sun_disk step 100 energy: 1.096441479225e5 vs 1.096441998424e5, |Δ| 5.192e-2 = 4.74e-7 of scale 1.0964e5
+SR-BOX sun_disk step 100 x_H: 2.461672674549e3 vs 2.461672709247e3, |Δ| 3.470e-5 = 1.41e-8 of scale 2.4617e3
+SR-BOX sun_disk step 100 x_He: 8.327296243355e2 vs 8.327296154709e2, |Δ| 8.865e-6 = 1.06e-8 of scale 8.3273e2
+SR-BOX sun_disk step 100 x_C: 3.082942896778e1 vs 3.082942862299e1, |Δ| 3.448e-7 = 1.12e-8 of scale 3.0829e1
+SR-BOX sun_disk step 100 x_O: 2.580288903197e1 vs 2.580288889004e1, |Δ| 1.419e-7 = 5.50e-9 of scale 2.5803e1
+SR-BOX sun_disk step 100 x_Ne: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 100 x_Mg: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 100 x_Si: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 100 x_S: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 100 x_Fe: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 100 x_n: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 2000: box [8, 0, 584, 400] FFT [2048, 1024]; vacuum_reset 5.878772825225891e-1 vs 5.874934845549955e-1, escaped.mass 1.265512863255367e0 vs 1.2499408928467801e0
+SR-BOX sun_disk step 2000, masses sigma: 3.351034500705e3 vs 3.351034438669e3, |Δ| 6.204e-5 = 1.85e-8 of scale 3.3492e3
+SR-BOX sun_disk step 2000, masses x_H: 2.461828048486e3 vs 2.461827985665e3, |Δ| 6.282e-5 = 2.55e-8 of scale 2.4603e3
+SR-BOX sun_disk step 2000, masses x_He: 8.325840765700e2 vs 8.325840676264e2, |Δ| 8.944e-6 = 1.07e-8 of scale 8.3227e2
+SR-BOX sun_disk step 2000, masses x_C: 3.082408807575e1 vs 3.082409305434e1, |Δ| 4.979e-6 = 1.62e-7 of scale 3.0813e1
+SR-BOX sun_disk step 2000, masses x_O: 2.579838048040e1 vs 2.579838266495e1, |Δ| 2.185e-6 = 8.47e-8 of scale 2.5789e1
+SR-BOX sun_disk step 2000, masses x_Ne: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 2000, masses x_Mg: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 2000, masses x_Si: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 2000, masses x_S: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 2000, masses x_Fe: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+SR-BOX sun_disk step 2000, masses x_n: 0.000000000000e0 vs 0.000000000000e0, |Δ| 0.000e0 = NaN of scale 0.0000e0
+ok
+test r#box::the_box_is_refit_after_p9_at_step_indices_0_mod_16_and_never_between ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+after 1 steps: box [32, 32, 24, 24], from step 1, 2 fits
+after 16 steps: box [32, 32, 24, 24], from step 1, 2 fits
+after 17 steps: box [192, 88, 24, 24], from step 17, 3 fits
+after 32 steps: box [192, 88, 24, 24], from step 17, 3 fits
+after 33 steps: box [32, 32, 24, 24], from step 33, 4 fits
+ok
+test r#box::the_box_is_the_non_vacuum_cells_grown_by_8_rounded_to_8_and_clamped_at_known_places_edges_and_corners ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+empty world: box [0, 0, 0, 0]
+one cell, middle: box [288, 192, 24, 24]
+on the 8-grid: box [0, 0, 24, 24]
+on the 8-grid, inside: box [8, 8, 24, 24]
+one off the grid: box [0, 0, 16, 16]
+corner (0, 0): box [0, 0, 16, 16]
+corner (599, 399): box [584, 384, 24, 24]
+
+thread 'r#box::the_box_is_the_non_vacuum_cells_grown_by_8_rounded_to_8_and_clamped_at_known_places_edges_and_corners' (3706751) panicked at crates/sr-engine/tests/gpu/box.rs:152:9:
+assertion `left == right` failed: corner (599, 399): the oracle against the hand-worked box
+  left: [584, 384, 24, 24]
+ right: [584, 384, 16, 16]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test r#box::the_fft_size_per_axis_is_the_smallest_power_of_two_at_least_twice_the_box_and_32 ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+600 × 400, gas on []: box [0, 0, 0, 0], FFT [32, 32]
+600 × 400, gas on [(4, 4)]: box [0, 0, 16, 16], FFT [32, 32]
+600 × 400, gas on [(300, 200)]: box [288, 192, 24, 24], FFT [64, 64]
+600 × 400, gas on [(0, 0), (599, 399)]: box [0, 0, 600, 400], FFT [2048, 1024]
+2048 × 64, gas on [(0, 0), (2047, 63)]: box [0, 0, 2048, 64], FFT [4096, 128]
+ok
+test r#box::the_passes_read_their_dispatch_sizes_from_the_box ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+Fit: box [88, 40, 40, 32], tiles [5, 4, 1], cells [5, 1, 1], Δt_0 9.108400344848633e-1 (want 9.108400612990104e-1)
+WholeWorld: box [0, 0, 256, 128], tiles [32, 16, 1], cells [128, 1, 1], Δt_0 4.4721364974975586e-1 (want 4.4721359216795703e-1)
+ok
+test r#box::the_whole_world_switch_holds_the_box_at_the_world ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+thread 'r#box::the_whole_world_switch_holds_the_box_at_the_world' (3707051) panicked at crates/sr-engine/tests/gpu/box.rs:291:13:
+assertion `left == right` failed: gas on []
+  left: ([0, 0, 800, 800], [2048, 2048], [100, 100, 1])
+ right: ([0, 0, 600, 400], [2048, 1024], [75, 50, 1])
+FAILED
+
+failures:
+
+failures:
+    r#box::the_box_is_the_non_vacuum_cells_grown_by_8_rounded_to_8_and_clamped_at_known_places_edges_and_corners
+    r#box::the_whole_world_switch_holds_the_box_at_the_world
+
+test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 540 filtered out; finished in 11.84s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

@@ -1,0 +1,52 @@
+== 2026-11-23T11:41:29-05:00 conservation · task M0-D207 · box laserax-ai :: bash tests/gpu.sh conservation physics
+-- conservation · exit=101 · 0.42 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.35s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 7 tests
+test conservation::the_grader_is_graded_on_hand_made_records ... ok
+test conservation::the_sun_like_life_in_a_bounce_world_keeps_the_energy_invariant_within_g_cons ... 
+thread 'conservation::the_sun_like_life_in_a_bounce_world_keeps_the_energy_invariant_within_g_cons' (1509774) panicked at crates/sr-engine/tests/gpu/conservation.rs:367:69:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test conservation::the_sun_like_life_in_a_bounce_world_keeps_the_mass_invariant ... 
+thread 'conservation::the_sun_like_life_in_a_bounce_world_keeps_the_mass_invariant' (1509775) panicked at crates/sr-engine/tests/gpu/conservation.rs:367:69:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+test conservation::the_sun_like_life_in_a_bounce_world_keeps_the_momentum_invariant ... 
+thread 'conservation::the_sun_like_life_in_a_bounce_world_keeps_the_momentum_invariant' (1509776) panicked at crates/sr-engine/tests/gpu/conservation.rs:367:69:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+test conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons ... 
+thread 'conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons' (1509777) panicked at crates/sr-engine/tests/gpu/conservation.rs:380:69:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+test conservation::the_supernova_in_a_leave_world_keeps_the_mass_invariant ... 
+thread 'conservation::the_supernova_in_a_leave_world_keeps_the_mass_invariant' (1509779) panicked at crates/sr-engine/tests/gpu/conservation.rs:380:69:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+test conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant ... 
+thread 'conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant' (1509780) panicked at crates/sr-engine/tests/gpu/conservation.rs:380:69:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+
+failures:
+
+failures:
+    conservation::the_sun_like_life_in_a_bounce_world_keeps_the_energy_invariant_within_g_cons
+    conservation::the_sun_like_life_in_a_bounce_world_keeps_the_mass_invariant
+    conservation::the_sun_like_life_in_a_bounce_world_keeps_the_momentum_invariant
+    conservation::the_supernova_in_a_leave_world_keeps_the_energy_invariant_within_g_cons
+    conservation::the_supernova_in_a_leave_world_keeps_the_mass_invariant
+    conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant
+
+test result: FAILED. 1 passed; 6 failed; 0 ignored; 0 measured; 543 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

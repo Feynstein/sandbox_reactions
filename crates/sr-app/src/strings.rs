@@ -133,6 +133,7 @@ pub const STRINGS: &[(&str, &str)] = &[
     ("status.line", "{adapter} · {fps} fps · {steps} steps per frame · {width} × {height} cells"),
     ("error.no_adapter", "No compatible graphics card found. Sandbox Reactions needs a graphics card with Vulkan, Metal or DirectX 12 support."),
     ("error.device_lost", "The graphics card stopped responding. Please restart Sandbox Reactions."),
+    ("error.calibration", "This build's star calibration is out of date, so Sandbox Reactions cannot start. The build needs recalibrating (sandbox-reactions calibrate)."),
     ("web.loading", "Loading Sandbox Reactions…"),
     ("web.no_webgpu_title", "Sandbox Reactions needs WebGPU"),
     ("web.no_webgpu_body", "Your browser does not support WebGPU yet. Sandbox Reactions uses it to run its physics on your graphics card."),
@@ -140,7 +141,6 @@ pub const STRINGS: &[(&str, &str)] = &[
 ];
 
 /// The text of `key`. A key the table does not hold is a bug in the caller, not a runtime condition.
-#[cfg_attr(target_arch = "wasm32", allow(dead_code))]
 pub fn get(key: &str) -> &'static str {
     STRINGS.iter().find(|(k, _)| *k == key).map(|(_, text)| *text).unwrap_or_else(|| panic!("no string `{key}` (§4.1)"))
 }

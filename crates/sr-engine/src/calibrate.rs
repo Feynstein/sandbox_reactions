@@ -57,7 +57,8 @@
 //! **The file.** `--out` is plain JSON with §2.11's keys — `version`, `physics_hash` (the assets' now), `measured` {date, git,
 //! adapter, box, world [M0-D203] — the default world the lives run on} and the items measured so far. A file already there
 //! under this physics hash is the base: `--only` re-measures one item and keeps the rest; a file under another hash is dropped
-//! whole (`SR-WARN`), its numbers belong to other constants (a base measured on another world is kept as well: M0-D205). It is
+//! whole (`SR-WARN`), its numbers belong to other constants — and so is one measured on another world than the default, or
+//! naming none (M0-D205: its lives are another calibration's; `render_reserve_ms` goes with it). It is
 //! a complete [`Calibration`](sr_physics::calibration::Calibration) once every item has run; until the
 //! drawing lot writes `render_reserve_ms` it has none, and R_reserve is §1.8.3's 3.0 (M0-D62). The next build embeds it
 //! (`sr-physics`'s build.rs). `calibrate` needs no calibration itself and runs on a stale one.
@@ -844,7 +845,8 @@ impl Lives<'_> {
 impl Lives<'_> {
     /// `--resume` (M0-D72): the life a finished record in `out` holds, when `out/summary.json` parses and its `until` was met; none
     /// when there is no such record (a file cut while it was written does not parse: the life runs fresh). A record whose `scene`
-    /// is not this run's label and mass, or whose adapter `--adapter` does not match, is not this calibration's: refused (exit 4)
+    /// is not this run's label and mass, whose `world` is not the default's (M0-D205), or whose adapter `--adapter` does not
+    /// match, is not this calibration's: refused (exit 4)
     /// before any life runs, as is a folder with no first life of this run's label. The match on every run is the guard, never
     /// the run number alone.
     fn replay(&mut self, out: &Path, label: &str, mass: f64) -> Result<Option<PresetRun>, CalError> {
@@ -859,6 +861,21 @@ impl Lives<'_> {
         }
         if summary["scene"].as_str() != Some(format!("calibrate:{label}:{mass:.3}").as_str()) {
             return Err(foreign());
+        }
+        // M0-D205: a life of another world is another calibration's, as its checkpoint would be (`pair`).
+        let world = WorldConfig::default();
+        let ran = &summary["world"];
+        if ran["width"].as_u64() != Some(u64::from(world.width)) || ran["height"].as_u64() != Some(u64::from(world.height)) {
+            let on = match (ran["width"].as_u64(), ran["height"].as_u64()) {
+                (Some(w), Some(h)) => format!("the {w}x{h} world"),
+                _ => "no named world".to_string(),
+            };
+            return Err(CalError::Args(format!(
+                "{} is not this calibration's: its {label} life at mass {mass:.3} ran on {on}, the default world is {}x{} — start without --resume",
+                self.dir.display(),
+                world.width,
+                world.height
+            )));
         }
         let (run, adapter) = life_of(&summary, mass);
         if self.adapter.as_ref().is_some_and(|q| !adapter.to_lowercase().contains(&q.to_lowercase())) {
@@ -1187,14 +1204,27 @@ fn hostname() -> String {
         .unwrap_or_else(|| "unknown".to_string())
 }
 
-/// The file at `path` as the base of this run: its object, when it parses and its `physics_hash` is `hash`; otherwise an
-/// empty one (the second value says why a file was dropped).
-fn base_of(path: &Path, hash: &str) -> (Map<String, Value>, Option<String>) {
+/// The file at `path` as the base of this run: its object, when it parses, its `physics_hash` is `hash` and its
+/// `measured.world` is `world` (M0-D205: the lives of another world, or of none named, are not this calibration's — G-CAL
+/// refuses such a file, so its items are no base either); otherwise an empty one (the second value says why a file was
+/// dropped). Dropped whole, `render_reserve_ms` with the rest: it was measured on the same other world.
+fn base_of(path: &Path, hash: &str, world: &str) -> (Map<String, Value>, Option<String>) {
     let Ok(text) = std::fs::read_to_string(path) else { return (Map::new(), None) };
-    match serde_json::from_str::<Value>(&text) {
-        Ok(Value::Object(map)) if map.get("physics_hash").and_then(Value::as_str) == Some(hash) => (map, None),
-        Ok(Value::Object(_)) => (Map::new(), Some(format!("{} holds another physics_hash: its items are dropped", path.display()))),
-        _ => (Map::new(), Some(format!("{} is not a JSON object: replaced", path.display()))),
+    let map = match serde_json::from_str::<Value>(&text) {
+        Ok(Value::Object(map)) => map,
+        _ => return (Map::new(), Some(format!("{} is not a JSON object: replaced", path.display()))),
+    };
+    if map.get("physics_hash").and_then(Value::as_str) != Some(hash) {
+        return (Map::new(), Some(format!("{} holds another physics_hash: its items are dropped", path.display())));
+    }
+    match map.get("measured").and_then(|m| m.get("world")).and_then(Value::as_str) {
+        Some(named) if named == world => (map, None),
+        named => {
+            let on = named.map_or_else(|| "no named world (a file from before M0-D203)".to_string(), |w| format!("the {w} world"));
+            let reserve = if map.contains_key("render_reserve_ms") { ", render_reserve_ms with them (--measure-ui writes it again)" } else { "" };
+            let why = format!("{} was measured on {on}, another world than the default {world}: its items are dropped{reserve}", path.display());
+            (Map::new(), Some(why))
+        }
     }
 }
 
@@ -1370,7 +1400,7 @@ fn run_inner(args: &[String], overrides: &[(String, f64)], progress_every: u64, 
     let elements = Elements::shipped().map_err(|e| CalError::Failed(e.to_string()))?;
     let (eos, vac) = (Eos::from_physics(&physics).map_err(|e| CalError::Failed(e.to_string()))?, constant(&physics, "sigma_vac")?);
     let world = calibration::world_text(calibration::DEFAULT_WORLD);
-    let (mut file, dropped) = base_of(&opts.out, &hash);
+    let (mut file, dropped) = base_of(&opts.out, &hash, &world);
     if let Some(why) = dropped {
         say(&format!("SR-WARN {why}"));
     }

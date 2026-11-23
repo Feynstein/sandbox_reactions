@@ -1,0 +1,3 @@
+# M0-D204 | launch headless-boot | 2026-11-23T13:49:59-0500
+$ build/target/release/sandbox-reactions headless --scene preset:sun --steps 200 --out /tmp/pb-launch-headless-boot-0si1lcn1
+SR-ERROR calibration out of date: it was measured on no named world (a file from before M0-D203), the default world is 800x800 (calibrate again on it: sandbox-reactions calibrate)

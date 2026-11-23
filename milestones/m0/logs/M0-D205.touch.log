@@ -1,0 +1,30 @@
+== 2026-11-23T08:31:20-05:00 touch · task M0-D205 · box laserax-ai :: bash tests/gpu.sh touch physics
+-- touch · exit=101 · 0.16 s
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 2 tests
+test touch::hydrogen_painted_onto_the_sun_like_star_ends_it_a_neutron_star_or_a_black_hole_as_its_new_prediction_says ... 
+thread 'touch::hydrogen_painted_onto_the_sun_like_star_ends_it_a_neutron_star_or_a_black_hole_as_its_new_prediction_says' (1128768) panicked at crates/sr-engine/tests/gpu/touch.rs:404:10:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says ... 
+thread 'touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says' (1128769) panicked at crates/sr-engine/tests/gpu/touch.rs:404:10:
+called `Result::unwrap()` on an `Err` value: OtherWorld { file: None, default: "800x800" }
+FAILED
+
+failures:
+
+failures:
+    touch::hydrogen_painted_onto_the_sun_like_star_ends_it_a_neutron_star_or_a_black_hole_as_its_new_prediction_says
+    touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 548 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

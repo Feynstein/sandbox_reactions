@@ -314,6 +314,14 @@ pub fn layout(area: egui::Rect, world: (u32, u32), pixels_per_point: f32) -> Lay
     Layout { world, legend, hint }
 }
 
+/// The default world and the rectangle `layout` gives it in the default window's centre at one pixel a point — the view the
+/// UI tests read, so they follow the default world and window and copy neither's numbers (M0-D204).
+#[cfg(test)]
+pub fn default_view() -> (sr_engine::state::WorldConfig, egui::Rect) {
+    let world = sr_engine::state::WorldConfig::default();
+    (world, layout(crate::desktop::default_centre(), (world.width, world.height), 1.0).world)
+}
+
 /// The lines under the legend, as (top, index into `notices`): the hint slot holds one, so while the refusal shows (the last line) it
 /// stands in the hint's place, never under it (M0-D136).
 pub fn notice_slots(hint: egui::Rect, notices: &[String]) -> Vec<(f32, usize)> {
@@ -612,12 +620,15 @@ mod legend_tests {
 
     #[test]
     fn the_world_the_legend_and_the_hint_fit_the_centre_of_the_default_window() {
-        // 1760 × 940 less the bars (44, 24) and the panels (220, 300): 1240 × 872.
-        let area = egui::Rect::from_min_size(egui::pos2(220.0, 44.0), egui::vec2(1240.0, 872.0));
-        let l = layout(area, (600, 400), 1.0);
-        assert_eq!(l.world.size(), egui::vec2(1200.0, 800.0), "s stays 2");
+        // The default window's centre and the default world (§0.5 [M0-D204]): the whole world at s = 1 (1,240 × 872 of centre for
+        // a world 800 cells tall leaves ⌊1.0⌋), the legend as wide as it.
+        let (world, _) = default_view();
+        let area = crate::desktop::default_centre();
+        let l = layout(area, (world.width, world.height), 1.0);
+        let whole = egui::vec2(world.width as f32, world.height as f32);
+        assert_eq!(l.world.size(), whole, "s = 1: the whole world, one pixel a cell");
         assert_eq!(l.legend.top(), l.world.bottom() + 8.0);
-        assert_eq!((l.legend.left(), l.legend.width(), l.legend.height()), (l.world.left(), 1200.0, 44.0));
+        assert_eq!((l.legend.left(), l.legend.width(), l.legend.height()), (l.world.left(), whole.x, 44.0));
         assert_eq!(l.hint.top(), l.legend.bottom());
         assert!(l.hint.bottom() <= area.bottom() + 1e-3 && l.world.top() >= area.top() - 1e-3, "{l:?}");
         assert!(l.world.left() >= area.left() && l.world.right() <= area.right());
@@ -633,8 +644,9 @@ mod legend_tests {
 
     #[test]
     fn the_hint_and_the_refusal_together_stay_clear_of_the_legend_and_inside_the_slot() {
-        let area = egui::Rect::from_min_size(egui::pos2(220.0, 44.0), egui::vec2(1240.0, 872.0));
-        let l = layout(area, (600, 400), 1.0);
+        let (world, _) = default_view();
+        let area = crate::desktop::default_centre();
+        let l = layout(area, (world.width, world.height), 1.0);
         let hint = "Click in the world to drop the star. Esc cancels.".to_string();
         let refusal = "Not enough room here for this star.".to_string();
         for notices in [vec![hint.clone()], vec![hint.clone(), refusal.clone()], vec![refusal.clone()]] {

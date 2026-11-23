@@ -1,8 +1,9 @@
 //! The web entry (m0_contrat.md §3.5, §4.8, §4.9): runs `desktop::SandboxApp` — the one app type of both targets — in
 //! web/index.html's `<canvas id="sr-canvas">` through eframe's web runner. The page tells the world where the app
 //! stands through `document.body.dataset`: `srState` is "loading" while the device comes up, "ready" after the first
-//! presented frame, "error" on a fatal one (with §4.8's message on the page and in `srError`); `srAdapter` is the
-//! adapter's description. index.html has already checked WebGPU — without it this code never loads (Q4).
+//! presented frame, "error" on a fatal one (with §4.8's message on the page and in `srError`, the line that says why in
+//! `srErrorDetail` — a calibration the engine refuses is `error.calibration`, never `error.no_adapter`, [M0-D207]);
+//! `srAdapter` is the adapter's description. index.html has already checked WebGPU — without it this code never loads (Q4).
 
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -16,26 +17,26 @@ use wasm_bindgen_futures::JsFuture;
 
 use sr_engine::render::View;
 
-use crate::desktop::{wgpu_setup, SandboxApp};
+use sr_physics::calibration;
+
+use crate::desktop::{wgpu_setup, SandboxApp, StartError};
+use crate::strings;
 use crate::ui::left::{self, Preset};
 use crate::ui::theme::{self, BG_SPACE};
-
-/// `error.no_adapter` and `error.device_lost` (§4.1, §4.8), verbatim; the string table (strings.rs) comes with M0-T13.
-const ERROR_NO_ADAPTER: &str =
-    "No compatible graphics card found. Sandbox Reactions needs a graphics card with Vulkan, Metal or DirectX 12 support.";
-const ERROR_DEVICE_LOST: &str = "The graphics card stopped responding. Please restart Sandbox Reactions.";
 
 const CANVAS_ID: &str = "sr-canvas";
 const LOADING_ID: &str = "sr-loading";
 
 /// The page's URL parameters (§3.5): `preset=<sun|massive|giant>` dropped at the world's centre, `steps=<n>` run and then
-/// paused, `view=<glow|heat|element|density>`, `rung=<k>` (the bar's key, 0 for Max). None is the default page.
+/// paused, `view=<glow|heat|element|density>`, `rung=<k>` (the bar's key, 0 for Max), and the test hook `calibration=stale`
+/// (§3.5 [M0-D207]): the app starts on a calibration the engine refuses. None is the default page.
 #[derive(Default)]
 pub struct Query {
     pub preset: Option<Preset>,
     pub steps: Option<u64>,
     pub view: Option<View>,
     pub rung: Option<usize>,
+    pub stale_calibration: bool,
 }
 
 impl Query {
@@ -51,6 +52,8 @@ impl Query {
                 "steps" => query.steps = Some(value.parse().map_err(|_| bad("not a whole number"))?),
                 "view" => query.view = Some(left::parse_view(value).ok_or_else(|| bad("not glow, heat, element or density"))?),
                 "rung" => query.rung = Some(value.parse().ok().filter(|k| *k <= 9).ok_or_else(|| bad("not a key from 0 to 9"))?),
+                "calibration" if value == "stale" => query.stale_calibration = true,
+                "calibration" => return Err(bad("not stale")),
                 _ => {}
             }
         }
@@ -108,7 +111,7 @@ pub fn start() {
     set_data("srState", "loading");
     wasm_bindgen_futures::spawn_local(async {
         if let Err(detail) = run().await {
-            fail(ERROR_NO_ADAPTER, &detail);
+            fail(strings::get("error.no_adapter"), &detail);
         }
     });
 }
@@ -140,7 +143,7 @@ async fn run() -> Result<(), String> {
                 // The callback runs on a lost device and on a destroyed one (the page closing): only the first is fatal.
                 render.device.set_device_lost_callback(|reason, detail| {
                     if reason != wgpu::DeviceLostReason::Destroyed {
-                        fail(ERROR_DEVICE_LOST, &detail);
+                        fail(strings::get("error.device_lost"), &detail);
                     }
                 });
                 Ok(Box::new(Warming::start(cc.egui_ctx.clone(), render.clone())))
@@ -153,7 +156,7 @@ async fn run() -> Result<(), String> {
 /// The app while its pipelines compile: it draws `bg.space` until `warm` has run and `SandboxApp::new` built the world,
 /// then is that app — "ready" stays the app's own first presented frame.
 struct Warming {
-    built: Rc<RefCell<Option<Result<SandboxApp, String>>>>,
+    built: Rc<RefCell<Option<Result<SandboxApp, StartError>>>>,
     app: Option<SandboxApp>,
     /// The page's URL parameters, read when the app is built and applied before its first pass.
     query: Result<Query, String>,
@@ -161,17 +164,22 @@ struct Warming {
 
 impl Warming {
     fn start(ctx: egui::Context, render: egui_wgpu::RenderState) -> Self {
+        let search = web_sys::window().and_then(|w| w.location().search().ok()).unwrap_or_default();
+        let query = Query::parse(&search);
+        let text = match &query {
+            Ok(q) if q.stale_calibration => stale(calibration::EMBEDDED),
+            _ => calibration::EMBEDDED.map(str::to_string),
+        };
         let built = Rc::new(RefCell::new(None));
         let slot = built.clone();
-        let warmed = warm(&render.device, &render.queue);
+        let warmed = warm(&render.device, &render.queue, text.as_deref());
         wasm_bindgen_futures::spawn_local(async move {
             // A rejected compile is the real build's to report: allSettled never rejects.
             let _ = JsFuture::from(warmed).await;
-            *slot.borrow_mut() = Some(SandboxApp::new(&render));
+            *slot.borrow_mut() = Some(SandboxApp::new(&render, text.as_deref()));
             ctx.request_repaint();
         });
-        let search = web_sys::window().and_then(|w| w.location().search().ok()).unwrap_or_default();
-        Self { built, app: None, query: Query::parse(&search) }
+        Self { built, app: None, query }
     }
 }
 
@@ -186,7 +194,9 @@ impl eframe::App for Warming {
                         Err(detail) => fail(&detail, &detail),
                     }
                 }
-                Some(Err(detail)) => fail(ERROR_NO_ADAPTER, &detail),
+                // §4.8 [M0-D207]: a refused calibration says so; only the rest reads as a missing graphics card.
+                Some(Err(StartError::Calibration(detail))) => fail(strings::get("error.calibration"), &detail),
+                Some(Err(StartError::Other(detail))) => fail(strings::get("error.no_adapter"), &detail),
                 None => {}
             }
         }
@@ -200,6 +210,20 @@ impl eframe::App for Warming {
     }
 }
 
+/// The `calibration=stale` test hook's file (§3.5 [M0-D207]): the embedded calibration with `measured.world` set to 1x1, a
+/// world no build's default is, so the engine's own check (G-CAL) refuses it — on a stale shipped calibration and on a fresh
+/// one alike. A file that is not JSON goes through as it is (the engine refuses it too).
+fn stale(text: Option<&str>) -> Option<String> {
+    let text = text?;
+    let Ok(mut value) = serde_json::from_str::<serde_json::Value>(text) else {
+        return Some(text.to_string());
+    };
+    if let Some(measured) = value.get_mut("measured").and_then(|m| m.as_object_mut()) {
+        measured.insert("world".to_string(), "1x1".into());
+    }
+    Some(value.to_string())
+}
+
 /// Chrome's D3D12 backend compiles each sync `createComputePipeline` on the spot, one after another: the app's 73 compute
 /// pipelines held its first frame 11–31 s on win-laptop (M0-D118). The warm-up builds the app's device work once
 /// (`SandboxApp::dry_run`) with `createComputePipeline` shadowed on the device: each descriptor goes to
@@ -207,7 +231,7 @@ impl eframe::App for Warming {
 /// creations find it done (≈ 5 s for all 73, then 0.1 s) — and the dry build gets an invalid pipeline back (an entry point
 /// no module has: nothing compiles twice). Its errors, and those of the bind groups made from those pipelines, stay in a
 /// validation error scope. Resolves once every compile has settled.
-fn warm(device: &wgpu::Device, queue: &wgpu::Queue) -> Promise {
+fn warm(device: &wgpu::Device, queue: &wgpu::Queue, calibration: Option<&str>) -> Promise {
     let done = Promise::resolve(&JsValue::UNDEFINED);
     let Some(raw) = device.as_webgpu() else {
         return done;
@@ -239,7 +263,7 @@ fn warm(device: &wgpu::Device, queue: &wgpu::Queue) -> Promise {
     };
     let scope = device.push_error_scope(wgpu::ErrorFilter::Validation);
     let _ = Reflect::set(&raw, &key, shadow.as_ref());
-    let dry = SandboxApp::dry_run(device, queue);
+    let dry = SandboxApp::dry_run(device, queue, calibration);
     let _ = Reflect::delete_property(raw.unchecked_ref::<Object>(), &key);
     drop(scope);
     if let Err(detail) = dry {

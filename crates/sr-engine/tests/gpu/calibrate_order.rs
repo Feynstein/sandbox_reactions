@@ -12,7 +12,7 @@ use std::path::PathBuf;
 
 use serde_json::{json, Map, Value};
 use sr_engine::calibrate::{check_order, check_speed, measure_presets, run_with, CalError, Life, PresetRun, PRESET_TABLE};
-use sr_physics::calibration::physics_hash;
+use sr_physics::calibration::{physics_hash, world_text, DEFAULT_WORLD};
 use sr_physics::observe::translate::MassScale;
 use sr_physics::registry::Physics;
 
@@ -293,7 +293,8 @@ fn calibrate(args: &[&str]) -> (i32, Vec<String>) {
 fn base(path: &std::path::Path, mut items: Value) {
     items["version"] = json!(1);
     items["physics_hash"] = json!(physics_hash().unwrap());
-    items["measured"] = json!({"date": "2026-10-19T00:00:00Z", "git": "test", "adapter": "RTX 5090", "box": "test"});
+    // The default world's (M0-D205: a base of another world, or naming none, is dropped).
+    items["measured"] = json!({"date": "2026-10-19T00:00:00Z", "git": "test", "adapter": "RTX 5090", "box": "test", "world": world_text(DEFAULT_WORLD)});
     std::fs::write(path, items.to_string()).unwrap();
 }
 

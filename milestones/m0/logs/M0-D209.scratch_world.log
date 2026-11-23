@@ -1,0 +1,12 @@
+# bash tests/smoke.sh world in scratch copy /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/3ac1ab62-046a-4f45-80bf-06a4f79b8d2a/scratchpad/d209 (measured.world=800x800), linux-pc 2026-11-23T14:04:41-05:00
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE empty empty.png 1760x940
+SR-CAPTURE-STATUS empty llvmpipe (LLVM 20.1.2, 256 bits) · 8 fps · 1 steps per frame · 800 × 800 cells
+SR-CAPTURE dropped dropped.png 1760x940
+SR-CAPTURE-STATUS dropped llvmpipe (LLVM 20.1.2, 256 bits) · 12 fps · 1 steps per frame · 800 × 800 cells
+SR-CAPTURE running running.png 1760x940
+SR-CAPTURE-STATUS running llvmpipe (LLVM 20.1.2, 256 bits) · 15 fps · 1 steps per frame · 800 × 800 cells
+SR-CAPTURE DONE 3 /tmp/tmp.BLtVcODOoO
+world drawn at s = 1 (1760x940); centre (20, 25, 38); 1 steps per frame; 15 fps at x1 (the box's window route)
+world game-xvfb: built in 0 s, the empty world on bg.space, the star drawn, steps per frame > 0
+=== GO ===

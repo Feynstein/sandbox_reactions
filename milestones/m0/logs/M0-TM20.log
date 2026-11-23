@@ -1,0 +1,152 @@
+# M0-TM20 — rating pass — log opened 2026-11-23T07:53:08-05:00 on laserax-ai
+## the probe (§B.3)
+CLAUDECODE=1
+CLAUDE_EFFORT=high
+AI_AGENT=claude-code_2-1-330_agent
+## rung_record.py report
+report: 422 DONE blocks · 17 class/rung rows · 2 session folder(s) (-home-ybelanger-private-sandbox-reactions, -home-ybelanger) · 372 block(s) with no session file readable (rung from the handoff, cost null) · 0 block(s) priced from tokens (a session file with no cost line) · 0 priced from list prices · 24 D block(s) naming no cause in the record · $338.70 read from the sessions' own cost
+BUILD on Fable 5.2, high: 1 block(s) · first-try 1/1 · $11.28 per DONE block · above (usual)
+BUILD on Opus 5.5, high: 162 block(s) · first-try 73/154 · $15.09 per DONE block · usual
+BUILD on Opus 5.5, xhigh: 5 block(s) · first-try 1/5 · n/a per DONE block · above (usual)
+BUILD on Sonnet 5.5, high: 114 block(s) · first-try 77/109 · $3.65 per DONE block · cheaper on Sonnet 5.5, high · vs same class on (usual)
+BUILD on Sonnet 5.5, medium: 1 block(s) · first-try 0/1 · n/a per DONE block · n<10
+BUILD on unknown: 49 block(s) · first-try 32/43 · n/a per DONE block · off the ladder
+BUILD·E on Haiku 5.5, high: 8 block(s) · first-try 8/8 · n/a per DONE block · off the ladder
+BUILD·E on Opus 5.5, high: 3 block(s) · first-try 1/3 · n/a per DONE block · usual
+BUILD·E on Sonnet 5.5, medium: 6 block(s) · first-try 5/5 · n/a per DONE block · n<10
+BUILD·E on unknown: 9 block(s) · first-try 7/7 · n/a per DONE block · off the ladder
+CHECK on Opus 5.5, max: 18 block(s) · first-try 11/17 · n/a per DONE block · above (usual)
+CHECK on unknown: 1 block(s) · first-try 0/1 · n/a per DONE block · off the ladder
+MOVE on Haiku 5.5, high: 4 block(s) · first-try 3/4 · n/a per DONE block · off the ladder
+MOVE on Sonnet 5.5, medium: 6 block(s) · first-try 5/5 · n/a per DONE block · n<10
+MOVE on unknown: 4 block(s) · first-try 3/4 · n/a per DONE block · off the ladder
+PLAN on Opus 5.5, max: 28 block(s) · first-try 19/28 · $6.38 per DONE block · above (usual)
+PLAN on unknown: 3 block(s) · first-try n/a · n/a per DONE block · off the ladder
+=== GO ===
+## the ladder re-read, 2026-11-23 (linux-pc)
+- claude-api skill bundled with Claude Code 2.1.330: model table "cached: 2026-11-03" (the same cache the 2026-11-17 read cites) — Fable 5.2 $8/$40 · Fable 5.1 $10/$50 (still served) · Opus 5.5 $4/$20 · Sonnet 5.5 $2/$10 · Haiku 5.5 $0.10/$0.50; effort levels low/medium/high/xhigh/max on Fable 5.2, Opus 5.5, Sonnet 5.5
+- live docs, fetched 2026-11-23 07:54 America/Toronto (curl, HTTP 200): platform.claude.com/docs/en/about-claude/models/overview.md and about-claude/pricing.md — the same IDs and prices; retirement not sooner than 2027-11-09 (Fable 5.2), 2027-09-22 (Opus 5.5), 2027-09-28 (Sonnet 5.5); default effort Fable 5.2 high, Opus 5.5 medium, Sonnet 5.5 high
+- verdict: no model retired, renamed or added on the ladder, no price or level changed → the Models: line re-dated only, no rung changes, no question to the lead
+## plan.py lint at the start
+lint: checks=939 failed=0 warnings=26 · blocks=452 · flow_rows=452 · verify_fences=0 · history=0 · flow=per-task · header=652/600 · pipeline=9/60 · ladder=6 rungs · refresh=6/5
+WARN: M0-TC14: DONE outside the current phase and 21 lines long - stub it (§2.6)
+WARN: M0-TM16: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-D162: DONE outside the current phase and 33 lines long - stub it (§2.6)
+WARN: M0-D163: DONE outside the current phase and 39 lines long - stub it (§2.6)
+WARN: M0-D165: DONE outside the current phase and 14 lines long - stub it (§2.6)
+WARN: M0-TM17: DONE outside the current phase and 18 lines long - stub it (§2.6)
+WARN: M0-R15: DONE outside the current phase and 11 lines long - stub it (§2.6)
+WARN: M0-D168: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D169: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D166: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D171: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D170: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D172: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D173: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D174: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D167: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-TM18: DONE outside the current phase and 9 lines long - stub it (§2.6)
+WARN: M0-T132: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D175: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D176: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-TM20 2 · M0-D206 1 · M0-D208 1
+=== GO ===
+## plan.py register — Model ratings
+register: checks=1 failed=0 warnings=0 · set=1 · replaced=1 · appended=0
+=== GO ===
+## the diff against the start snapshot (scratch plan_start.md = the start record's bytes)
+23c23
+647c647
+changed lines (< and >): 4
+34c34
+< 2026-11-17
+---
+> 2026-11-23
+43c43
+< 2.1.326,
+---
+> 2.1.330,
+45c45,53
+< 2026-11-03),
+---
+> 2026-11-03)
+> and
+> platform.claude.com's
+> live
+> models
+> overview
+> and
+> pricing
+> pages,
+647:- Model ratings: 2026-11-23 by M0-TM20
+## plan.py lint after the two edits
+lint: checks=939 failed=0 warnings=26 · blocks=452 · flow_rows=452 · verify_fences=0 · history=0 · flow=per-task · header=652/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+WARN: M0-TC14: DONE outside the current phase and 21 lines long - stub it (§2.6)
+WARN: M0-TM16: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-D162: DONE outside the current phase and 33 lines long - stub it (§2.6)
+WARN: M0-D163: DONE outside the current phase and 39 lines long - stub it (§2.6)
+WARN: M0-D165: DONE outside the current phase and 14 lines long - stub it (§2.6)
+WARN: M0-TM17: DONE outside the current phase and 18 lines long - stub it (§2.6)
+WARN: M0-R15: DONE outside the current phase and 11 lines long - stub it (§2.6)
+WARN: M0-D168: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D169: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D166: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D171: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D170: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D172: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D173: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D174: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D167: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-TM18: DONE outside the current phase and 9 lines long - stub it (§2.6)
+WARN: M0-T132: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D175: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D176: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-TM20 2 · M0-D206 1 · M0-D208 1
+=== GO ===
+## Verify 1 — 2026-11-23T07:56:47-05:00
+plan_lint  939/0/0      0.11 s  GO
+logs: milestones/m0/logs/M0-TM20.<scope>.log · record: loop_times.jsonl · tree db7e360b2250+035e29dbc6e8
+anchor: 1 path×scope entries moved by this run
+anchor: 192 paths checked · 474 skipped (3 classes) · 290 never checked · 0 stale · 0 unclassified · 0 owed · 482 covered of 956 visible
+verify: 939 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 5.67->5.67
+=== GO ===
+## verify.py touched — 2026-11-23T07:56:57-05:00
+touched: 0 task(s) · 0 path(s) · 367 claim record(s) naming their files · 71 without (before the field) · 0 foreign
+=== NO-GO: no claim record of M0-TM20 names its files ===
+## the refresh count's flags — stamps after 2026-11-17 on open blocks (read-only scan)
+M0-D204 [BUILD]: 1 — counts: [M0-D203, 2026-11-20]
+M0-T99b [BUILD]: 3 — counts: [M0-R16, 2026-11-20] · [M0-D203, 2026-11-20] · [M0-D203, 2026-11-23]
+M0-V15 [CHECK]: 9 — never counts (CHECK): [M0-D197, 2026-11-19] · [M0-D197, 2026-11-19] · [M0-D199, 2026-11-19] · [M0-D200, 2026-11-19] · [M0-D195, 2026-11-19] · [M0-R16, 2026-11-20] · [M0-D203, 2026-11-20] · [M0-D203, 2026-11-20] · [M0-D203, 2026-11-23]
+M0-T124 [BUILD]: 1 — counts: [M0-R16, 2026-11-20]
+M0-T112 [BUILD]: 1 — counts: [M0-R16, 2026-11-20]
+## rule (1)'s scan — escalation trails in open blocks (read-only)
+open blocks scanned: 25 · hits: 0
+## the claim — launched 2026-11-23T08:00:52-05:00, capped 585 s (scratch claim_capped.sh), output logs/M0-TM20.claim.log
+## plan.py close — 2026-11-23T08:04:45-05:00
+close: checks=3 failed=0 warnings=0 · handoff_lines=1 · flow=per-task
+=== GO ===
+## after the close — plan_lint re-verified scoped (R9 step 7) 2026-11-23T08:04:52-05:00
+plan_lint  938/0/0      0.11 s  GO
+logs: milestones/m0/logs/M0-TM20-close.<scope>.log · record: loop_times.jsonl · tree db7e360b2250+8ce7a6eba98a
+anchor: 1 path×scope entries moved by this run
+anchor: 192 paths checked · 475 skipped (3 classes) · 290 never checked · 0 stale · 0 unclassified · 0 owed · 482 covered of 957 visible
+verify: 938 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 4.5->4.5
+=== GO ===
+## lint and diff after the close
+lint: checks=938 failed=0 warnings=26 · blocks=452 · flow_rows=452 · verify_fences=0 · history=0 · flow=per-task · header=652/600 · pipeline=9/60 · ladder=6 rungs · refresh=0/5
+=== GO ===
+23c23
+462c462
+647c647
+3634c3634
+3641c3641

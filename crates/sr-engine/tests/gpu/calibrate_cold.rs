@@ -11,7 +11,7 @@ use std::path::{Path, PathBuf};
 
 use serde_json::{json, Value};
 use sr_engine::calibrate::{cold_disk_scene, radius_holding, run_with, Matter};
-use sr_physics::calibration::physics_hash;
+use sr_physics::calibration::{physics_hash, world_text, DEFAULT_WORLD};
 use sr_physics::eos::Eos;
 use sr_physics::reference::sheet::{self, ColdMatter};
 use sr_physics::registry::{Elements, Physics, N_SPECIES};
@@ -53,11 +53,13 @@ fn near(value: f64, expected: f64, share: f64, what: &str) {
     assert!((value / expected - 1.0).abs() <= share, "{what}: {value} is not within {share} of {expected}");
 }
 
-/// A base file under this build's physics hash, as an earlier `calibrate` run would have left it.
+/// A base file under this build's physics hash, measured on the default world (M0-D205: a base of another world, or naming
+/// none, is dropped), as an earlier `calibrate` run would have left it.
 fn write_base(path: &Path, items: Value) {
     let mut file = items;
     file["version"] = json!(1);
     file["physics_hash"] = json!(physics_hash().expect("the shipped assets are JSON"));
+    file["measured"] = json!({"date": "2026-11-20T00:00:00Z", "git": "test", "adapter": "cpu", "box": "test", "world": world_text(DEFAULT_WORLD)});
     std::fs::write(path, serde_json::to_string_pretty(&file).unwrap()).unwrap();
 }
 
@@ -141,6 +143,50 @@ fn a_file_under_another_hash_is_dropped_with_sr_warn() {
     assert_eq!(code, 0, "{lines:?}");
     assert!(lines.iter().any(|l| l.starts_with("SR-WARN")), "{lines:?}");
     near(number(&read(&out), "m_ch_sb"), M_CH, 0.005, "m_ch_sb after a corrupt file");
+}
+
+/// M0-D205: a base under this physics hash measured on another world than the default, or naming none (the shipped file of
+/// 2026-11-13, 600 × 400, from before M0-D203), is dropped whole with an `SR-WARN` naming its world — `render_reserve_ms` with
+/// it, said so — as a base of another hash is; one of the default world is kept.
+#[test]
+fn a_base_measured_on_another_world_is_dropped_with_sr_warn() {
+    let dir = scratch("world");
+    let out = dir.join("calibration.json");
+    let default = world_text(DEFAULT_WORLD);
+    // 9,999 would break K9 against this run's m_ch_sb if it were kept: the run succeeding shows it was dropped.
+    let items = json!({"m_tov_sb": 9999.0, "m_ign_sb": 111.0, "max_gas_speed": 20.0, "render_reserve_ms": 4.25});
+    let measured = |world: Option<&str>| {
+        let mut m = json!({"date": "2026-11-13T00:00:00Z", "git": "test", "adapter": "RTX 4090", "box": "test"});
+        if let Some(w) = world {
+            m["world"] = json!(w);
+        }
+        m
+    };
+    for (what, world, named) in [("600 × 400", Some("600x400"), "the 600x400 world"), ("none named", None, "no named world")] {
+        let mut file = items.clone();
+        file["version"] = json!(1);
+        file["physics_hash"] = json!(physics_hash().unwrap());
+        file["measured"] = measured(world);
+        std::fs::write(&out, file.to_string()).unwrap();
+        let (code, lines) = calibrate(&["--out", out.to_str().unwrap(), "--only", "m_ch_sb"], &[]);
+        assert_eq!(code, 0, "{what}: {lines:?}");
+        let warn = lines.iter().find(|l| l.starts_with("SR-WARN")).unwrap_or_else(|| panic!("{what}: an SR-WARN: {lines:?}"));
+        assert!(warn.contains(named) && warn.contains("another world") && warn.contains(&default), "{what}: {warn}");
+        assert!(warn.contains("render_reserve_ms"), "{what}: the drawing lot's reserve is said to go too: {warn}");
+        let written = read(&out);
+        let mut keys: Vec<&str> = written.as_object().unwrap().keys().map(String::as_str).collect();
+        keys.sort_unstable();
+        assert_eq!(keys, ["m_ch_sb", "measured", "physics_hash", "version"], "{what}: the base dropped whole: {written}");
+        assert_eq!(written["measured"]["world"], json!(default), "{what}: the file now names the default world");
+        near(number(&written, "m_ch_sb"), M_CH, 0.005, "m_ch_sb");
+    }
+    // The default world's base is kept, every item and the reserve with it, and no warning.
+    write_base(&out, json!({"m_tov_sb": 4800.0, "m_ign_sb": 111.0, "render_reserve_ms": 4.25}));
+    let (code, lines) = calibrate(&["--out", out.to_str().unwrap(), "--only", "m_ch_sb"], &[]);
+    assert_eq!(code, 0, "{lines:?}");
+    assert!(lines.iter().all(|l| !l.starts_with("SR-WARN")), "{lines:?}");
+    let written = read(&out);
+    assert_eq!((number(&written, "m_tov_sb"), number(&written, "m_ign_sb"), number(&written, "render_reserve_ms")), (4800.0, 111.0, 4.25));
 }
 
 #[test]

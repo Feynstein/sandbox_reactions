@@ -1,0 +1,25 @@
+== ui_legend
+anchor: 7 path×scope entries moved by this run
+anchor: 196 paths checked · 479 skipped (3 classes) · 287 never checked · 2 stale · 0 unclassified · 0 owed · 485 covered of 964 visible
+verify: 25 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 2.62 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 5.88->5.88
+=== GO ===
+== ui_zoom
+anchor: 7 path×scope entries moved by this run
+anchor: 196 paths checked · 479 skipped (3 classes) · 287 never checked · 2 stale · 0 unclassified · 0 owed · 485 covered of 964 visible
+verify: 11 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.17 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 5.88->5.88
+=== GO ===
+== ui_remnant
+anchor: 7 path×scope entries moved by this run
+anchor: 196 paths checked · 479 skipped (3 classes) · 287 never checked · 2 stale · 0 unclassified · 0 owed · 485 covered of 964 visible
+verify: 6 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.17 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 6.61->6.61
+=== GO ===
+== ui_tools
+anchor: 7 path×scope entries moved by this run
+anchor: 196 paths checked · 479 skipped (3 classes) · 287 never checked · 2 stale · 0 unclassified · 0 owed · 485 covered of 964 visible
+verify: 18 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.17 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 6.61->6.61
+=== GO ===
+== ui_presets
+FAILED:
+  ui_presets: 1 failed · log milestones/m0/logs/M0-D204.ui_presets.log
+verify: 6 passed, 1 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.12 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 6.61->6.61
+=== NO-GO: ui_presets: 1 failed · log milestones/m0/logs/M0-D204.ui_presets.log ===

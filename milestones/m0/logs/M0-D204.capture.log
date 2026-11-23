@@ -1,0 +1,29 @@
+   Compiling sr-app v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/0f16efdd-8baf-4afb-89d8-835c70cd7b86/scratchpad/d204/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 5.30s
+build rc=0
+env: ‘build/target/release/sandbox-reactions’: No such file or directory
+capture rc=127
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-CAPTURE default default.png 1760x940
+SR-CAPTURE-STATUS default llvmpipe (LLVM 20.1.2, 256 bits) · 4 fps · 1 steps per frame · 800 × 800 cells
+SR-CAPTURE no-room no-room.png 1760x940
+SR-CAPTURE-STATUS no-room llvmpipe (LLVM 20.1.2, 256 bits) · 9 fps · 1 steps per frame · 800 × 800 cells
+SR-CAPTURE zoom2 zoom2.png 1760x940
+SR-CAPTURE-STATUS zoom2 llvmpipe (LLVM 20.1.2, 256 bits) · 14 fps · 1 steps per frame · 800 × 800 cells
+SR-CAPTURE DONE 3 build/m0-d204/out
+capture rc=0
+== 2026-11-23T13:50:11-05:00 capture[smoke] · task M0-D204 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[smoke] · exit=1 · 0.21 s
+SR-ERROR calibration out of date: it was measured on no named world (a file from before M0-D203), the default world is 800x800 (calibrate again on it: sandbox-reactions calibrate)
+=== NO-GO: the capture run exited 6, expected 0 ===
+
+== 2026-11-23T13:50:11-05:00 capture[refuse] · task M0-D204 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[refuse] · exit=0 · 0.21 s
+capture refuse: a malformed hover, select, glow_white, range, fit, display_reset, zoom and preset (a bad or extra key beside it), an unknown action and a bad id each refused, exit 4
+=== GO ===
+
+== 2026-11-23T13:50:11-05:00 capture[actions] · task M0-D204 · box laserax-ai :: bash tests/capture/check.sh {case}
+-- capture[actions] · exit=1 · 0.21 s
+SR-ERROR calibration out of date: it was measured on no named world (a file from before M0-D203), the default world is 800x800 (calibrate again on it: sandbox-reactions calibrate)
+=== NO-GO: the capture run exited 6, expected 0 ===
+

@@ -80,7 +80,8 @@ fn bits(v: &[f32]) -> Vec<u32> {
 
 #[test]
 fn world_config_takes_multiples_of_8_within_64_to_2048() {
-    assert_eq!(WorldConfig::default(), WorldConfig { width: 600, height: 400 });
+    // The default world is §2.8's 800 × 800 (M0-D203); the test names that world on purpose, it is the config's pin.
+    assert_eq!(WorldConfig::default(), WorldConfig { width: 800, height: 800 });
     assert!(WorldConfig::default().validate().is_ok());
     for (w, h) in [(64, 64), (2048, 2048), (600, 400), (72, 2040)] {
         assert_eq!(WorldConfig::new(w, h).map(|c| c.cells()), Ok(w as usize * h as usize), "{w} × {h}");

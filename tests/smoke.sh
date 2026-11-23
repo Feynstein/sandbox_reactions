@@ -44,11 +44,14 @@ if [ $world -eq 1 ]; then
   [ $rc -eq 0 ] || { echo "=== NO-GO: the capture run exited $rc, expected 0 ==="; exit 1; }
   echo "$out" | grep -q '^SR-CAPTURE DONE 3 ' || { echo "=== NO-GO: no 'SR-CAPTURE DONE 3' line ==="; exit 1; }
   printf '%s\n' "$out" > "$dir/stdout.txt"
-  $PY -I - "$dir" <<'PY' || { echo "=== NO-GO: the world is not in the window ==="; exit 1; }
+  # The default world (§2.8): the one constant the app starts on, read, never written here (M0-D209).
+  world="$(sed -n 's/^pub const DEFAULT_WORLD: \[u32; 2\] = \[\([0-9]*\), \([0-9]*\)\];.*/\1 \2/p' crates/sr-physics/src/calibration.rs)"
+  [ -n "$world" ] || { echo "=== NO-GO: no DEFAULT_WORLD in crates/sr-physics/src/calibration.rs ==="; exit 1; }
+  $PY -I - "$dir" $world <<'PY' || { echo "=== NO-GO: the world is not in the window ==="; exit 1; }
 import re, struct, sys, zlib
-d = sys.argv[1]
+d, W, H = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])  # the default world's cells (§2.8, sr_physics::calibration::DEFAULT_WORLD)
 BG = (0x05, 0x07, 0x0D)
-W, H, TOP, BAR = 600, 400, 44, 24  # the world's cells (§1.11), the top bar's and the status bar's heights (§4.2)
+TOP, BAR = 44, 24                  # the top bar's and the status bar's heights (§4.2)
 BELOW = 8 + 44 + 20                 # under the world (§4.2 [M0-R12], M0-T128): the gap, the legend strip and the hint's line
 LEFT, RIGHT = 220, 300             # the panels' widths (§4.2): the world is centred between them (M0-T92: the right one)
 def read(name):
@@ -75,8 +78,8 @@ def read(name):
     return w, h, lambda x, y: tuple(rows[y][3 * x:3 * x + 3])
 w, h, empty = read("empty")
 _, _, running = read("running")
-s = max(1, min(w // W, (h - TOP - BAR - BELOW) // H))        # the integer scale (§1.11), 2 in the default window
 left, right = round(LEFT * w / 1760), round(RIGHT * w / 1760)
+s = max(1, min((w - left - right) // W, (h - TOP - BAR - BELOW) // H))   # the integer scale (§1.11) over the centre's room
 x0, y0 = left + (w - left - right - W * s) // 2, TOP + (h - TOP - BAR - BELOW - H * s) // 2   # the world, legend and hint centred as one block
 cx, cy = left + (w - left - right) // 2, TOP + (h - TOP - BAR) // 2
 for name, (x, y) in {"centre": (cx, cy), "top-left cell": (x0, y0), "bottom-right cell": (x0 + W * s - 1, y0 + H * s - 1)}.items():

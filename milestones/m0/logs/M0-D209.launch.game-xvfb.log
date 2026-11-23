@@ -1,0 +1,4 @@
+# M0-D209 | launch game-xvfb | 2026-11-23T14:11:31-0500
+# private X display :100, its X server pid 2721114
+$ build/target/release/sandbox-reactions --status-port 47811 --adapter llvmpipe
+SR-ERROR calibration out of date: it was measured on no named world (a file from before M0-D203), the default world is 800x800 (calibrate again on it: sandbox-reactions calibrate)

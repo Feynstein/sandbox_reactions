@@ -6,7 +6,7 @@
 //   left, which holds the sinks' own −GM/√(r² + r_acc²) once P2 has added it (§1.4.3, M0-T52a); bound, ½|u|² + ε_th + φ < 0 — cells on the world's outer ring
 //   never; the tile's best (the densest, ties the lowest row-major index, so the lowest y then x) by a fixed tree in
 //   workgroup memory, into its slot of `st.cand`. A cell under Σ_BH is a candidate too by §0.5 [M0-R6]'s mass test: a local
-//   Σ maximum (no less than its 8 neighbours) whose disk r ≤ 4 holds m_tov_sb or more, mass-weighted Y_e ≤ 0.35 over r ≤ 3,
+//   Σ maximum (no less than its 8 neighbours) whose disk r ≤ 4 holds m_tov_sb or more, mass-weighted Y_e ≤ 0.40 over r ≤ 3,
 //   and the other three criteria; that sink takes the disk's cells (row-major, Σ ≥ Σ_vac and above the floor).
 // - `sink_update`, one workgroup: the tiles' best by a strided scan and a fixed tree, then the formation (at most one, none
 //   past 16); accretion sink by sink in index order — each sink's square of cells split over the invocations in a fixed
@@ -165,10 +165,12 @@ fn velocity(cell: u32) -> vec2<f32> {
     return vec2<f32>(hydro[n + cell], hydro[2u * n + cell]) / sigma;
 }
 
-// §0.5 [M0-R6]: the disk r ≤ 4 and r ≤ 3 (centre to centre) of the mass test, and the neutronized core's Y_e bound.
+// §0.5 [M0-R6]: the disk r ≤ 4 and r ≤ 3 (centre to centre) of the mass test, and the neutronized core's Y_e bound — 0.40
+// since §0.5 [M0-D208]: a collapsing core's r ≤ 3 mean falls through 0.40 inside 25 steps, then crawls 0.364 … 0.351, so a
+// bound of 0.35 left the sink to which side of it the plateau landed on, GPU by GPU.
 const R_CORE: i32 = 4;
 const R_Y_E: i32 = 3;
-const CORE_Y_E: f32 = 0.35;
+const CORE_Y_E: f32 = 0.40;
 
 // Whether cell (x, y), inside the world's outer ring, is a local Σ maximum: no less than at any of its 8 neighbours.
 fn peak(x: u32, y: u32) -> bool {
@@ -193,7 +195,7 @@ fn disk_cell(x: u32, y: u32, dx: i32, dy: i32, r: i32) -> u32 {
     return u32(cy) * dims.width + u32(cx);
 }
 
-// The mass test at (x, y): the disk r ≤ 4 holds m_tov_sb or more, the disk r ≤ 3 has a mass-weighted Y_e ≤ 0.35; row-major
+// The mass test at (x, y): the disk r ≤ 4 holds m_tov_sb or more, the disk r ≤ 3 has a mass-weighted Y_e ≤ 0.40; row-major
 // sums, as the twin's.
 fn core(x: u32, y: u32) -> bool {
     var mass = 0.0;

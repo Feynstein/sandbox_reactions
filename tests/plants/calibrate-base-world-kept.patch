@@ -1,0 +1,11 @@
+--- a/crates/sr-engine/src/calibrate.rs
++++ b/crates/sr-engine/src/calibrate.rs
+@@ -1218,7 +1218,7 @@
+         return (Map::new(), Some(format!("{} holds another physics_hash: its items are dropped", path.display())));
+     }
+     match map.get("measured").and_then(|m| m.get("world")).and_then(Value::as_str) {
+-        Some(named) if named == world => (map, None),
++        named if named == Some(world) || !world.is_empty() => (map, None),
+         named => {
+             let on = named.map_or_else(|| "no named world (a file from before M0-D203)".to_string(), |w| format!("the {w} world"));
+             let reserve = if map.contains_key("render_reserve_ms") { ", render_reserve_ms with them (--measure-ui writes it again)" } else { "" };

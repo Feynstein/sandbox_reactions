@@ -1,0 +1,15 @@
+# verify.py capture + desktop in scratch copy /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/3ac1ab62-046a-4f45-80bf-06a4f79b8d2a/scratchpad/d209 (measured.world=800x800), linux-pc 2026-11-23T14:05:06-05:00
+capture   3/0/0       28.27 s  GO
+logs: milestones/m0/logs/M0-D209.<scope>.log · record: loop_times.jsonl · tree b69cf1fd9ade
+anchor: 159 path×scope entries moved by this run
+anchor: 209 paths checked · 479 skipped (3 classes) · 275 never checked · 1 stale · 0 unclassified · 0 owed · 485 covered of 964 visible
+verify: 3 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 25.59 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 3.88->3.14
+=== GO ===
+rc=0
+desktop   5/0/0       59.86 s  GO
+logs: milestones/m0/logs/M0-D209.<scope>.log · record: loop_times.jsonl · tree b69cf1fd9ade
+anchor: 160 path×scope entries moved by this run
+anchor: 221 paths checked · 479 skipped (3 classes) · 263 never checked · 1 stale · 0 unclassified · 0 owed · 485 covered of 964 visible
+verify: 5 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 19.51 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 3.14->2.93
+=== GO ===
+rc=0

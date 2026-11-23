@@ -1,0 +1,57 @@
+M0-D208 2026-11-23T13:03:05-05:00 probe build (scratch crate d208probe, target build/m0-d208/target)
+   Compiling parking_lot v0.12.5
+   Compiling ordered-float v5.5.0
+   Compiling thiserror-impl v2.0.21
+   Compiling bytemuck_derive v1.12.1
+   Compiling naga-types v30.0.1
+   Compiling bytemuck v1.25.2
+   Compiling wgpu-types v30.0.1
+   Compiling zerocopy-derive v0.8.62
+   Compiling half v2.7.1
+   Compiling gpu-allocator v0.28.0
+   Compiling wgpu-naga-bridge v30.0.1
+   Compiling wgpu-core-deps-windows-linux-android v30.0.1
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+   Compiling d208probe v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/5eae3262-6522-4c79-862c-c3122e972656/scratchpad/d208probe)
+    Finished `release` profile [optimized] target(s) in 14.83s
+M0-D208 2026-11-23T13:03:31-05:00 life 27414.392 sun to t=100, leave, 800x800, RTX 5090 (linux-pc)
+M0-D208 2026-11-23T13:14:13-05:00 27414.392 continued from its s_6000 dump to t=45.35, dumps every 25, RTX 5090 (linux-pc)
+M0-D208 2026-11-23T13:15:14-05:00 massive 13874.329 to t=112, leave, 800x800, dumps every 500, RTX 5090 (linux-pc)
+M0-D208 2026-11-23T13:19:06-05:00 massive continued from s_14500 to t=130, dumps every 100, RTX 5090
+M0-D208 2026-11-23T13:21:41-05:00 life 22304.223 sun to t=62, leave, 800x800, dumps every 500, RTX 5090 (linux-pc)
+M0-D208 2026-11-23T13:25:31-05:00 22304.223 continued from s_7000 to t=53.41, dumps every 25, RTX 5090
+M0-D208 2026-11-23T13:26:20-05:00 massive continued from s_12500 (leave until then) to t=125 with edge BOUNCE, dumps every 500, RTX 5090
+M0-D208 2026-11-23T13:32:43-05:00 verify.py sink (linux-pc)
+sink      0/0/0        7.23 s  NO-GO
+logs: milestones/m0/logs/M0-D208.<scope>.log · record: loop_times.jsonl · tree db7e360b2250+51ef0b21a7f3
+anchor: 132 path×scope entries moved by this run
+anchor: 191 paths checked · 479 skipped (3 classes) · 294 never checked · 0 stale · 0 unclassified · 0 owed · 485 covered of 964 visible
+FAILED:
+  sink: `regex` matched nothing; 0 case(s) < expected 35 · log milestones/m0/logs/M0-D208.sink.log
+verify: 0 passed, 0 failed, 0 skipped · 0/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 7.23 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 7.46->7.42
+=== NO-GO: sink: `regex` matched nothing; 0 case(s) < expected 35 · log milestones/m0/logs/M0-D208.sink.log ===
+M0-D208 2026-11-23T13:32:59-05:00 verify.py sink, after a type fix in the test (linux-pc)
+sink      35/0/0      13.70 s  GO
+logs: milestones/m0/logs/M0-D208.<scope>.log · record: loop_times.jsonl · tree db7e360b2250+e7f4fd7ba86a
+anchor: 133 path×scope entries moved by this run
+anchor: 198 paths checked · 479 skipped (3 classes) · 287 never checked · 0 stale · 0 unclassified · 0 owed · 485 covered of 964 visible
+verify: 35 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 13.71 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 6.59->5.72
+=== GO ===
+M0-D208 2026-11-23T13:33:18-05:00 verify.py --redarm sink (linux-pc)
+sink · clean: proven by M0-D208 2026-11-23T13:33:13-05:00 (a run of the scope; fingerprint a65b7b113334) - not re-run
+sink · plant sink-momentum · RED (proven: 3 failed) · arm 1/6, 5 left
+sink · plant sink-phi-skip · RED (proven: 2 failed) · arm 2/6, 4 left
+sink · plant sink-latch-off · RED (proven: 1 failed) · arm 3/6, 3 left
+sink · plant sink-pull-grid · RED (proven: 10 failed) · arm 4/6, 2 left
+sink · plant sink-ye-filter-off · RED (proven: 4 failed) · arm 5/6, 1 left
+sink · plant sink-ye-gate-035 · RED (proven: 2 failed) · arm 6/6, 0 left
+redarm: 6 plants · 6 red · 0 green · 0 errors · scope sink · 116.92 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D208.sink.redarm.log
+=== GO ===
+M0-D208 2026-11-23T13:35:48-05:00 FIX (CORE_Y_E 0.40): 22304.223 continued from s_7000 to t=53.0, dumps every 25, RTX 5090
+M0-D208 2026-11-23T13:37:31-05:00 verify.py plan_lint, build (linux-pc)
+build      2/0/0       15.98 s  GO · step 2/2, 0 left
+logs: milestones/m0/logs/M0-D208.<scope>.log · record: loop_times.jsonl · tree db7e360b2250+b15bf1f9d961
+anchor: 4 path×scope entries moved by this run
+anchor: 197 paths checked · 479 skipped (3 classes) · 287 never checked · 1 stale · 0 unclassified · 0 owed · 485 covered of 964 visible
+verify: 936 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 14.51 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 12.73->20.81
+=== GO ===

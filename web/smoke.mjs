@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* web/smoke.mjs - the web smoke (G-WEB; m0_contrat.md §5.4, §6.2.3). Project code, M0-T15.
  *
- *   node web/smoke.mjs <ready|no-webgpu|preset> [--base http://127.0.0.1:47840] [--timeout-s 30]
+ *   node web/smoke.mjs <ready|no-webgpu|preset|calibration> [--base http://127.0.0.1:47840] [--timeout-s 30]
  *
  * Launches the box's installed Chrome through playwright-core, headless, with §6.2.3's flags (never `--no-sandbox`):
  *   linux-pc   /usr/bin/google-chrome   --headless=new --use-angle=vulkan --enable-features=Vulkan
@@ -21,6 +21,10 @@
  *              screenshot reads none of the WebGPU canvas under §6.2.3's flags (M0-D144 measured it all transparent).
  *   no-webgpu  `/?no-webgpu=1` sets srState "no-webgpu", shows the three web.no_webgpu_* texts exactly as
  *              crates/sr-app/src/strings.rs holds them (G-STR keeps that file equal to §4.1) and never fetches the wasm.
+ *   calibration `/?calibration=stale` (§3.5's test hook, M0-D207) sets srState "error" within 30 s, srError and the page's
+ *              line exactly `error.calibration` as strings.rs holds it, never `error.no_adapter`, and srErrorDetail the engine's
+ *              `SR-ERROR calibration …` line: a calibration the engine refuses is shown as itself (§4.8). The hook makes
+ *              the embedded calibration's world 1x1, so the case holds on a fresh calibration as on a stale one.
  * Ends in `=== GO ===` (exit 0) or `=== NO-GO: <reason> ===` (exit 1).
  */
 import { createRequire } from 'node:module';
@@ -30,7 +34,7 @@ import { fileURLToPath } from 'node:url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..');
-const CASES = ['ready', 'no-webgpu', 'preset'];
+const CASES = ['ready', 'no-webgpu', 'preset', 'calibration'];
 
 const args = process.argv.slice(2);
 const flag = (name, dflt) => { const i = args.indexOf(name); return i >= 0 && args[i + 1] ? args[i + 1] : dflt; };
@@ -61,15 +65,15 @@ const chromeArgs = win
   ? ['--headless=new', '--enable-unsafe-webgpu']
   : ['--headless=new', '--use-angle=vulkan', '--enable-features=Vulkan', '--disable-vulkan-surface', '--enable-unsafe-webgpu'];
 
-// The three texts come from the string table G-STR holds equal to §4.1.
-function noWebgpuTexts() {
+// The texts come from the string table G-STR holds equal to §4.1.
+function stringText(key) {
   const src = fs.readFileSync(path.join(ROOT, 'crates', 'sr-app', 'src', 'strings.rs'), 'utf8');
-  const get = (key) => {
-    const m = src.match(new RegExp(`\\("${key.replace('.', '\\.')}",\\s*"([^"]*)"\\)`));
-    if (!m) nogo(`crates/sr-app/src/strings.rs has no ${key}`);
-    return m[1];
-  };
-  return { title: get('web.no_webgpu_title'), body: get('web.no_webgpu_body'), browsers: get('web.no_webgpu_browsers') };
+  const m = src.match(new RegExp(`\\("${key.replace('.', '\\.')}",\\s*"([^"]*)"\\)`));
+  if (!m) nogo(`crates/sr-app/src/strings.rs has no ${key}`);
+  return m[1];
+}
+function noWebgpuTexts() {
+  return { title: stringText('web.no_webgpu_title'), body: stringText('web.no_webgpu_body'), browsers: stringText('web.no_webgpu_browsers') };
 }
 
 const browser = await chromium.launch({ executablePath: chrome, headless: true, args: chromeArgs, chromiumSandbox: true });
@@ -94,8 +98,8 @@ try {
   page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') problems.push(`console.${m.type()}: ${m.text().split('\n')[0].slice(0, 200)}`); });
   page.on('requestfailed', (r) => problems.push(`requestfailed: ${new URL(r.url()).pathname} ${r.failure()?.errorText ?? ''}`));
   page.on('response', (r) => { if (r.status() >= 400) problems.push(`HTTP ${r.status()}: ${new URL(r.url()).pathname}`); });
-  const states = kase !== 'no-webgpu' ? ['ready', 'error', 'no-webgpu'] : ['no-webgpu', 'ready', 'error'];
-  const url = kase === 'ready' ? `${base}/` : kase === 'preset' ? `${base}/?preset=sun&steps=200` : `${base}/?no-webgpu=1`;
+  const states = kase === 'no-webgpu' ? ['no-webgpu', 'ready', 'error'] : kase === 'calibration' ? ['error', 'ready', 'no-webgpu'] : ['ready', 'error', 'no-webgpu'];
+  const url = { ready: `${base}/`, preset: `${base}/?preset=sun&steps=200`, 'no-webgpu': `${base}/?no-webgpu=1`, calibration: `${base}/?calibration=stale` }[kase];
   const resp = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: timeoutMs });
   if (!resp || !resp.ok()) throw new Error(`GET ${url} answered ${resp ? resp.status() : 'nothing'}`);
   const started = Date.now();
@@ -125,7 +129,23 @@ try {
     console.log(`SR-CHROME-ADAPTER vendor=${chromeAdapter.vendor} architecture=${chromeAdapter.architecture} device=${chromeAdapter.device} description=${chromeAdapter.description} fallback=${chromeAdapter.fallback}`);
   }
 
-  if (kase !== 'no-webgpu') {
+  if (kase === 'calibration') {
+    // §4.8 [M0-D207]: the refusal is the page's own text, the engine's line beside it; the error's console.error is expected.
+    const want = stringText('error.calibration');
+    const adapterText = stringText('error.no_adapter');
+    const got = await page.evaluate(() => ({
+      error: document.body.dataset.srError ?? null, detail: document.body.dataset.srErrorDetail ?? null,
+      line: document.getElementById('sr-loading')?.textContent ?? null, lineHidden: document.getElementById('sr-loading')?.hidden ?? null,
+    }));
+    console.log(`calibration: srState "${state}" after ${took} s; srError ${JSON.stringify(got.error)}; srErrorDetail ${JSON.stringify(got.detail)}`);
+    const bad = [];
+    if (state !== 'error') bad.push(`srState "${state}", not "error"`);
+    if (got.error === adapterText) bad.push('srError is error.no_adapter: the refused calibration reads as a missing graphics card');
+    else if (got.error !== want) bad.push(`srError ${JSON.stringify(got.error)} is not error.calibration`);
+    if (got.line !== want || got.lineHidden) bad.push(`the page's line ${JSON.stringify(got.line)}${got.lineHidden ? ' (hidden)' : ''} is not error.calibration, shown`);
+    if (!got.detail || !got.detail.startsWith('SR-ERROR calibration')) bad.push(`srErrorDetail ${JSON.stringify(got.detail)} is not the engine's SR-ERROR calibration line`);
+    if (bad.length) throw new Error(bad.join('; '));
+  } else if (kase !== 'no-webgpu') {
     if (state !== 'ready') throw new Error(`srState "${state}"${info.error ? ` (${info.error})` : ''} - not "ready"${problems.length ? '; ' + problems.join(' | ') : ''}`);
     if (!info.adapter) throw new Error('srState "ready" but srAdapter is not set');
     const named = `${info.adapter} ${chromeAdapter ? Object.values(chromeAdapter).join(' ') : ''}`;

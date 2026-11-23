@@ -46,12 +46,6 @@ mod remnant_tests {
     use crate::ui::right::{view, Facts};
     use sr_physics::observe::ending::{Ending, Readout};
 
-    const WORLD: WorldConfig = WorldConfig { width: 600, height: 400 };
-
-    fn viewport() -> egui::Rect {
-        egui::Rect::from_min_size(egui::pos2(230.0, 60.0), egui::vec2(1200.0, 800.0))
-    }
-
     /// The tracker's centre of a remnant in cell `cell`: the cell's centre, as c is the max-Σ cell's.
     fn centre_of(cell: [u32; 2]) -> [f64; 2] {
         [f64::from(cell[0]) + 0.5, f64::from(cell[1]) + 0.5]
@@ -59,28 +53,28 @@ mod remnant_tests {
 
     #[test]
     fn the_ring_sits_on_the_remnants_cell_at_z_one() {
-        let vp = viewport();
-        let zoom = Zoom::home(WORLD);
-        for cell in [[300, 200], [123, 77], [0, 0], [599, 399]] {
-            let got = rings(&[centre_of(cell)], &zoom, vp, WORLD, 1.0);
+        let (world, vp) = crate::ui::legend::default_view();
+        let zoom = Zoom::home(world);
+        for cell in [[300, 200], [123, 77], [0, 0], [world.width - 1, world.height - 1]] {
+            let got = rings(&[centre_of(cell)], &zoom, vp, world, 1.0);
             assert_eq!(got.len(), 1, "{cell:?}");
-            assert_eq!(zoom.cell_at(got[0].centre, vp, WORLD, 1.0), Some(cell), "{cell:?}");
+            assert_eq!(zoom.cell_at(got[0].centre, vp, world, 1.0), Some(cell), "{cell:?}");
         }
     }
 
     #[test]
     fn the_ring_sits_on_the_remnants_cell_at_z_eight() {
-        let vp = viewport();
+        let (world, vp) = crate::ui::legend::default_view();
         for ppp in [1.0, 1.5, 2.0] {
             for (view_at, cell) in [([300, 200], [300, 200]), ([300, 200], [303, 198]), ([120, 80], [131, 74]), ([0, 0], [2, 3])] {
-                let mut zoom = Zoom::home(WORLD);
-                zoom.centre_on(8, view_at, WORLD);
-                let got = rings(&[centre_of(cell)], &zoom, vp, WORLD, ppp);
+                let mut zoom = Zoom::home(world);
+                zoom.centre_on(8, view_at, world);
+                let got = rings(&[centre_of(cell)], &zoom, vp, world, ppp);
                 assert_eq!(got.len(), 1, "ppp {ppp}, view at {view_at:?}, {cell:?}");
-                assert_eq!(zoom.cell_at(got[0].centre, vp, WORLD, ppp), Some(cell), "ppp {ppp}, view at {view_at:?}");
+                assert_eq!(zoom.cell_at(got[0].centre, vp, world, ppp), Some(cell), "ppp {ppp}, view at {view_at:?}");
                 // Not where z = 1 would put it, unless the cell is the view's centre.
                 if cell != view_at {
-                    let home = rings(&[centre_of(cell)], &Zoom::home(WORLD), vp, WORLD, ppp)[0].centre;
+                    let home = rings(&[centre_of(cell)], &Zoom::home(world), vp, world, ppp)[0].centre;
                     assert_ne!(got[0].centre, home, "ppp {ppp}, {cell:?}: the ring follows the zoom");
                 }
             }
@@ -89,20 +83,20 @@ mod remnant_tests {
 
     #[test]
     fn a_remnant_the_zoomed_view_does_not_show_has_no_ring() {
-        let vp = viewport();
-        let mut zoom = Zoom::home(WORLD);
-        zoom.centre_on(8, [100, 100], WORLD);
-        // 600 / 8 = 75 cells across: (300, 200) is far outside the view.
-        assert_eq!(rings(&[centre_of([300, 200])], &zoom, vp, WORLD, 1.0), Vec::new());
-        let both = rings(&[centre_of([300, 200]), centre_of([101, 99])], &zoom, vp, WORLD, 1.0);
+        let (world, vp) = crate::ui::legend::default_view();
+        let mut zoom = Zoom::home(world);
+        zoom.centre_on(8, [100, 100], world);
+        // W / 8 cells across around (100, 100) — 100 on the default world: (300, 200) is far outside the view.
+        assert_eq!(rings(&[centre_of([300, 200])], &zoom, vp, world, 1.0), Vec::new());
+        let both = rings(&[centre_of([300, 200]), centre_of([101, 99])], &zoom, vp, world, 1.0);
         assert_eq!(both.len(), 1);
-        assert_eq!(zoom.cell_at(both[0].centre, vp, WORLD, 1.0), Some([101, 99]));
+        assert_eq!(zoom.cell_at(both[0].centre, vp, world, 1.0), Some([101, 99]));
     }
 
     #[test]
     fn no_remnant_no_ring() {
-        let vp = viewport();
-        assert_eq!(rings(&[], &Zoom::home(WORLD), vp, WORLD, 1.0), Vec::new());
+        let (world, vp) = crate::ui::legend::default_view();
+        assert_eq!(rings(&[], &Zoom::home(world), vp, world, 1.0), Vec::new());
         let ringed_stages: Vec<Stage> = sr_physics::observe::stages::stage_order().into_iter().filter(|s| ringed(*s)).collect();
         assert_eq!(ringed_stages.len(), 4, "{ringed_stages:?}");
         for stage in [Stage::CoreCollapse, Stage::Supernova, Stage::NeutronStar, Stage::BlackHole] {
@@ -115,11 +109,11 @@ mod remnant_tests {
 
     #[test]
     fn the_ring_keeps_its_size_on_screen_at_every_z() {
-        let vp = viewport();
+        let (world, vp) = crate::ui::legend::default_view();
         for z in 1..=8 {
-            let mut zoom = Zoom::home(WORLD);
-            zoom.centre_on(z, [300, 200], WORLD);
-            let got = rings(&[centre_of([300, 200])], &zoom, vp, WORLD, 1.0);
+            let mut zoom = Zoom::home(world);
+            zoom.centre_on(z, [300, 200], world);
+            let got = rings(&[centre_of([300, 200])], &zoom, vp, world, 1.0);
             assert_eq!(got.iter().map(|r| r.radius).collect::<Vec<_>>(), [RING_RADIUS], "z {z}");
         }
     }

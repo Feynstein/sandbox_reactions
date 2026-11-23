@@ -1,0 +1,24 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 13.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test calibrate_bisect::a_finished_life_of_another_world_is_not_resumed ... FAILED
+
+failures:
+
+---- calibrate_bisect::a_finished_life_of_another_world_is_not_resumed stdout ----
+
+thread 'calibrate_bisect::a_finished_life_of_another_world_is_not_resumed' (1088957) panicked at crates/sr-engine/tests/gpu/calibrate_bisect.rs:501:9:
+assertion `left == right` failed: the first life on 600 × 400: ["SR-CALIBRATE run item=m_up_sb side=Light mass=3351.000 ignited=false core_collapse=false ending=white_dwarf steps=1000 sim_time=50.000 wall_s=1.0 replayed record=/tmp/sr-calibrate-world-1088956/m_up_sb-01", "SR-CALIBRATE run item=m_up_sb side=Heavy mass=3380.000 ignited=false core_collapse=false ending=neutron_star steps=1000 sim_time=50.000 wall_s=1.0 replayed record=/tmp/sr-calibrate-world-1088956/m_up_sb-02", "SR-CALIBRATE item=m_up_sb value=3365.469 bracket=3351.000..3380.000 runs=2 wall_s=0.0", "SR-CALIBRATE item=max_gas_speed value=1.0000", "SR-CALIBRATE DONE out=/tmp/sr-calibrate-world-1088956/calibration.json wall_s=0.0"]
+  left: 0
+ right: 4
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    calibrate_bisect::a_finished_life_of_another_world_is_not_resumed
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 549 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`

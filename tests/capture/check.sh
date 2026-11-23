@@ -5,23 +5,27 @@
 #            llvmpipe` on linux-pc, `--offscreen-window` on win-laptop (R4, R15). Pass: exit 0; two PNGs of the window's
 #            size (the IHDR matching captions.json's viewport) whose pixels DIFFER (a screenshot taken before the frame it
 #            names is presented would show the previous state); a valid captions.json in review_page.py's shape.
-#   actions — tests/capture/actions.json (M0-T85, M0-T127c): one step per action built (pause, steps, preset, rung, slowdown, edge x2, tool, element, paint, view, select, hover x2, glow_white, display_reset, fit, zoom, preset's at), run on the same
+#   actions — tests/capture/actions.json (M0-T85, M0-T127c), its cells resolved first (M0-D209): "@centre" is the default world's
+#            centre (W / 2, H / 2) — where a preset with no `at` drops, the star's centre — and "@off-world" the cell (W + 100,
+#            H + 100), off the world; W × H is sr_physics::calibration::DEFAULT_WORLD (§2.8), the one constant the app starts on,
+#            and the world's place in the window is §1.11's rule (s, centred with the legend between the panels, §4.2) — the
+#            status line's «W × H cells» must agree. One step per action built (pause, steps, preset, rung, slowdown, edge x2, tool, element, paint, view, select, hover x2, glow_white, display_reset, fit, zoom, preset's at), run on the same
 #            route. Pass: exit 0; a PNG per step, in the script's order, each the window's size; the top bar (§4.2's 44 px)
 #            differs from the previous step's after `paused`, `rung`, `slowdown`, `rung-max` and `edge-leave` (a paused readout both times, so only the radios differ); the accent (the selected
 #            rung's text) sits further right in `rung` than in `start`, and further right again in `rung-max`. The left panel
 #            (§4.2's 220 px) differs after `tool` and after `element`, its accent (the selected tool and element) sitting lower
 #            in `tool` than in `edge-leave` and lower again in `element`; the world's upper-left corner (35 % each way) differs in `paint`
-#            (two blobs of iron painted at cells (100, 100) and (130, 100), far from the star at the centre); the right panel (§4.2's 300 px)
+#            (two blobs of iron painted at cells (100, 100) and (130, 100), far from the star at the centre: 75 cells' pixels or more); the right panel (§4.2's 300 px)
 #            differs in `select` from `start`'s "No star yet" and holds more lit pixels (the star's readout, M0-T92), and differs in `hover`
 #            from `select`'s one "Hover over a cell" line and holds more lit pixels (the Cell inspector's four lines for the star's
-#            centre, M0-T93b); `hover-outside` (hover on cell (700, 500), off the 600 x 400 world, M0-D137) takes it back: its right panel holds
+#            centre, M0-T93b); `hover-outside` (hover on "@off-world", M0-D137) takes it back: its right panel holds
 #            fewer lit pixels than `hover`'s by more than 100 (the inspector's four lines gone for its «Hover over a cell» line). Then the Massive preset at its supergiant (step 768, paused): the world (the centre between the
 #            panels) after `glow_white` 10^8 K differs from the default Glow step's, after `display_reset` equals it pixel for pixel
 #            (the two steps hold the same paused state), and Heat after `fit` differs from Heat's default (M0-T127c). Then `star-zoom` (M0-T129):
-#            zoom 8 about cell (300, 200) of that same paused state — the world differs from `star-heat-fit`'s, and six cells read off both
-#            shots (2 x 2 px whole, 16 x 16 px at z = 8) are the same colour, three colours at least.
-#            Then `drop-at` and `drop-no-room` (M0-D145): the preset's `at` — a Sun-like star dropped at cell (80, 80) shows as a cloud about (400, 204) px,
-#            over 120 px wide, in the world's upper-left; the one armed at (10, 10), too near the edge, shows `presets.no_room` in red under the world
+#            zoom 8 about "@centre" of that same paused state — the world differs from `star-heat-fit`'s, and six cells read off both
+#            shots (s x s px whole, 8 s x 8 s px at z = 8, each read at its middle) are the same colour, three colours at least.
+#            Then `drop-at` and `drop-no-room` (M0-D145): the preset's `at` — a Sun-like star dropped at cell (80, 80) shows as a cloud centred
+#            within 3 cells of that cell's place on screen, over 60 cells wide, in the world's upper-left; the one armed at (10, 10), too near the edge, shows `presets.no_room` in red under the world
 #            (100 pixels or more, none after the drop that fit), the left panel holds the armed button, and the world is as `drop-at`'s.
 #   refuse — a malformed hover, a malformed select, a malformed glow_white, range, fit, display_reset and zoom, an unknown action and a bad id each → exit 4 and an `SR-ERROR` line naming the
 #            culprit, before any window opens (no display needed).
@@ -90,13 +94,33 @@ PY
     echo "=== GO ==="
     ;;
   actions)
-    out="$("${runner[@]}" "$bin" "${window[@]}" --capture tests/capture/actions.json --out "$dir" 2>&1)"; rc=$?
+    # The default world (§2.8), read from the one constant the app starts on (M0-D209): the script's cells and every pixel below
+    # derive from it and the window, never from a world size written here.
+    world="$(sed -n 's/^pub const DEFAULT_WORLD: \[u32; 2\] = \[\([0-9]*\), \([0-9]*\)\];.*/\1 \2/p' crates/sr-physics/src/calibration.rs)"
+    [ -n "$world" ] || { echo "=== NO-GO: no DEFAULT_WORLD in crates/sr-physics/src/calibration.rs ==="; exit 1; }
+    $PY -I - tests/capture/actions.json "$dir/actions.json" $world <<'PY' || { echo "=== NO-GO: tests/capture/actions.json's cells did not resolve ==="; exit 1; }
+import json, sys
+src, dst, W, H = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4])
+cells = {"@centre": [W // 2, H // 2], "@off-world": [W + 100, H + 100]}
+def resolve(v):
+    if isinstance(v, str) and v.startswith("@"):
+        if v not in cells: sys.exit(f"unknown cell token {v}")
+        return cells[v]
+    return {k: resolve(x) for k, x in v.items()} if isinstance(v, dict) else [resolve(x) for x in v] if isinstance(v, list) else v
+json.dump(resolve(json.load(open(src, encoding="utf-8"))), open(dst, "w", encoding="utf-8"), ensure_ascii=False)
+PY
+    out="$("${runner[@]}" "$bin" "${window[@]}" --capture "$dir/actions.json" --out "$dir/out" 2>&1)"; rc=$?
     echo "$out" | grep -v '^$' | tail -n 8
     [ $rc -eq 0 ] || { echo "=== NO-GO: the capture run exited $rc, expected 0 ==="; exit 1; }
     echo "$out" | grep -q '^SR-CAPTURE DONE 24 ' || { echo "=== NO-GO: no 'SR-CAPTURE DONE 24' line ==="; exit 1; }
-    why="$($PY -I - "$dir" 2>&1 <<'PY'
-import json, struct, sys, zlib
-d = sys.argv[1]
+    printf '%s\n' "$out" > "$dir/stdout.txt"
+    why="$($PY -I - "$dir/out" "$dir/actions.json" "$dir/stdout.txt" $world 2>&1 <<'PY'
+import json, re, struct, sys, zlib
+d, W, H = sys.argv[1], int(sys.argv[4]), int(sys.argv[5])
+script = {step["id"]: step for step in json.load(open(sys.argv[2], encoding="utf-8"))}
+m = re.search(r"^SR-CAPTURE-STATUS start .* · (\d+) × (\d+) cells$", open(sys.argv[3], encoding="utf-8").read(), re.M)
+if not m or (int(m.group(1)), int(m.group(2))) != (W, H):
+    sys.exit(f"the status line reads {m and m.group(0)!r}: expected the default world's {W} × {H} cells")
 WANT = ["start", "paused", "dropped", "stepped", "rung", "slowdown", "rung-max", "edge", "edge-leave", "tool", "element", "paint", "view", "select", "hover", "hover-outside", "star-glow", "star-glow-white", "star-glow-reset", "star-heat", "star-heat-fit", "star-zoom", "drop-at", "drop-no-room"]
 caps = json.load(open(f"{d}/captions.json", encoding="utf-8"))
 if [c.get("id") for c in caps] != WANT:
@@ -167,11 +191,21 @@ if None in (y_edge, y_tool, y_element):
     sys.exit(f"no accent text in the left panel: edge-leave {y_edge}, tool {y_tool}, element {y_element}")
 if not y_edge < y_tool < y_element:
     sys.exit(f"the selected tool and element's accent should move down: edge-leave {y_edge:.0f}, tool {y_tool:.0f}, element {y_element:.0f}")
-def quarter(name):                                     # the centre's upper-left 35 % each way: both blobs, not the star's halo
-    rows = full[name][2][bar:bar + (h - bar - status) * 35 // 100]
-    return [r[3 * left_w:3 * (left_w + (w - left_w) * 35 // 100)] for r in rows]
+# The world's place (§1.11, §4.2): the integer scale s of the default window's centre, the world, the legend and the hint's line
+# centred there as one block (as tests/smoke.sh's `world` reads it); a cell (x, y) is s x s px from (x0 + s x, y0 + s y).
+if w != 1760:
+    sys.exit(f"the world's place is read in the 1760-px window, got {w}")
+right_w = round(300 * w / 1760)
+BELOW = 8 + 44 + 20                                    # under the world (§4.2 [M0-R12]): the gap, the legend strip and the hint's line
+s = max(1, min((w - left_w - right_w) // W, (h - bar - status - BELOW) // H))
+x0, y0 = left_w + (w - left_w - right_w - W * s) // 2, bar + (h - bar - status - BELOW - H * s) // 2
+def at(cell):                                          # the middle pixel of a cell at z = 1
+    return x0 + s * cell[0] + s // 2, y0 + s * cell[1] + s // 2
+def quarter(name):                                     # the world's upper-left 35 % each way: both blobs, not the star's halo
+    rows = full[name][2][y0:y0 + H * s * 35 // 100]
+    return [r[3 * x0:3 * (x0 + W * s * 35 // 100)] for r in rows]
 changed = sum(ra[i:i + 3] != rb[i:i + 3] for ra, rb in zip(quarter("element"), quarter("paint")) for i in range(0, len(ra), 3))
-if changed < 300:
+if changed < 75 * s * s:
     sys.exit(f"the world's upper-left corner of paint differs from element's in {changed} pixels: the paint did not reach the world")
 if left_panel("view") == left_panel("paint"):
     sys.exit("the left panel of view is the same as paint's: the view action did not reach the panel")
@@ -179,7 +213,6 @@ def right_panel(name):                                 # the right panel (300 px
     return [r[3 * (w - right_w):] for r in full[name][2][bar:h - status]]
 def lit(name):                                         # pixels of the right panel that are not bg.panel (#10141E): text and the border
     return sum(any(abs(p[i] - q) > 24 for i, q in enumerate((0x10, 0x14, 0x1E))) for r in right_panel(name) for p in (r[i:i + 3] for i in range(0, len(r), 3)))
-right_w = round(300 * w / 1760)
 if right_panel("select") == right_panel("start"):
     sys.exit("the right panel of select is the same as start's: the star's readout never reached it")
 if lit("select") <= lit("start") + 100:
@@ -198,42 +231,45 @@ if centre("star-glow-reset") != centre("star-glow"):
     sys.exit("the world of star-glow-reset differs from star-glow's: display_reset did not bring Glow back to its default")
 if centre("star-heat-fit") == centre("star-heat"):
     sys.exit("the world of star-heat-fit is the same as star-heat's: fit did not change Heat's range")
-# The zoom (M0-T129): `star-zoom` is `star-heat-fit`'s state (paused, the same view and range) at z = 8 around cell (300, 200). The world's
-# place is the viewport at z = 1 (s = 2 in the 1760 x 940 window: x from 240, y from 44, 1200 x 800), so a cell (300 + dx, 200 + dy) is
-# 2 x 2 px there and 16 x 16 px at z = 8, the cell (300, 200) centred on the viewport's centre (840, 444).
-if w != 1760:
-    sys.exit(f"the zoom's check reads the 1760-px window, got {w}")
+# The zoom (M0-T129): `star-zoom` is `star-heat-fit`'s state (paused, the same view and range) at z around the script's cell (cx, cy).
+# The world's place at z = 1 is the viewport, so a cell (cx + dx, cy + dy) is s x s px there and z s x z s px zoomed, the cell (cx, cy)
+# centred on the viewport's centre (ui::zoom's centre_on): each probe reads a cell's middle pixel in both shots.
+zoom = next(a for a in script["star-zoom"]["actions"] if "zoom" in a)
+z, (cx, cy) = zoom["zoom"], zoom["at"]
+vx, vy = x0 + W * s // 2, y0 + H * s // 2
 def pixel(name, x, y):
     return full[name][2][y][3 * x:3 * x + 3]
 if centre("star-zoom") == centre("star-heat-fit"):
     sys.exit("the world of star-zoom is the same as star-heat-fit's: zoom did not reach the view")
 colours = set()
 for dx, dy in [(0, 0), (-3, 2), (4, -4), (10, 7), (-12, -9), (20, 11)]:
-    whole = pixel("star-heat-fit", 240 + 2 * (300 + dx), 44 + 2 * (200 + dy))
-    zoomed = pixel("star-zoom", 840 + 16 * dx, 444 + 16 * dy)
+    whole = pixel("star-heat-fit", *at((cx + dx, cy + dy)))
+    zoomed = pixel("star-zoom", vx + z * s * dx, vy + z * s * dy)
     if whole != zoomed:
-        sys.exit(f"the cell ({300 + dx}, {200 + dy}) is {tuple(whole)} whole and {tuple(zoomed)} at z = 8: the zoom is not about (300, 200) at 16 px a cell")
+        sys.exit(f"the cell ({cx + dx}, {cy + dy}) is {tuple(whole)} whole and {tuple(zoomed)} at z = {z}: the zoom is not about ({cx}, {cy}) at {z * s} px a cell")
     colours.add(whole)
 if len(colours) < 3:
     sys.exit(f"the zoom's probes read {len(colours)} colours: they prove nothing")
 # The preset's `at` (M0-D145): `drop-at` is `star-zoom`'s paused state back at z = 1 (the zoom's own action) with a Sun-like star dropped by the
-# panel's path on cell (80, 80) — 2 x 2 px a cell from (240, 44), so centred on (400, 204) px, a cloud of 39 cells' radius — and `drop-no-room`
-# arms it again at cell (10, 10), too near the edge: the refusal on screen, the preset armed, no cell of the world changed.
+# panel's path on the script's cell (80, 80) — a cloud of 39 cells' radius centred on that cell's place — and `drop-no-room` arms it again at
+# cell (10, 10), too near the edge: the refusal on screen, the preset armed, no cell of the world changed.
+drop = next(a["at"] for a in script["drop-at"]["actions"] if "preset" in a)
 if centre("drop-at") == centre("star-heat-fit"):
-    sys.exit("the world of drop-at is the same as star-heat-fit's: the drop at (80, 80) never reached the world")
+    sys.exit(f"the world of drop-at is the same as star-heat-fit's: the drop at {tuple(drop)} never reached the world")
 def moved(a, b):                                       # bounding box (px) of the pixels that differ in the world's upper-left, left of the iron blob and the supergiant
     xs, ys = [], []
-    for y in range(44, 44 + 300):
+    for y in range(y0, y0 + 150 * s):                  # cells 0-149 down
         ra, rb = full[a][2][y], full[b][2][y]
-        for x in range(240, 481):                      # up to the cloud's right edge (478): the iron blob painted at (130, 100) lies past it
+        for x in range(x0, x0 + 120 * s + 1):          # cells 0-120 across, the cloud's right edge (119): the iron blob painted at (130, 100) lies past it
             if ra[3 * x:3 * x + 3] != rb[3 * x:3 * x + 3]: xs.append(x); ys.append(y)
     return (min(xs), max(xs), min(ys), max(ys)) if xs else None
 box = moved("star-heat-fit", "drop-at")
 if box is None:
-    sys.exit("the world's upper-left of drop-at is the same as star-heat-fit's: a preset with `at` was not dropped at (80, 80)")
-cx, cy, wide = (box[0] + box[1]) / 2, (box[2] + box[3]) / 2, box[1] - box[0]
-if abs(cx - 400) > 6 or abs(cy - 204) > 6 or wide < 120:
-    sys.exit(f"the dropped star spans x {box[0]}..{box[1]}, y {box[2]}..{box[3]} px (centre {cx:.0f}, {cy:.0f}, {wide} wide): expected a cloud about (400, 204), over 120 px wide")
+    sys.exit(f"the world's upper-left of drop-at is the same as star-heat-fit's: a preset with `at` was not dropped at {tuple(drop)}")
+px, py = at(drop)
+bx, by, wide = (box[0] + box[1]) / 2, (box[2] + box[3]) / 2, box[1] - box[0]
+if abs(bx - px) > 3 * s or abs(by - py) > 3 * s or wide < 60 * s:
+    sys.exit(f"the dropped star spans x {box[0]}..{box[1]}, y {box[2]}..{box[3]} px (centre {bx:.0f}, {by:.0f}, {wide} wide): expected a cloud about ({px}, {py}), the cell {tuple(drop)}, over {60 * s} px wide")
 def error_text(name):                                  # pixels near ERROR_TEXT (#FF6B6B) in the strip under the legend's labels (the bar above is pink): the refusal's line
     return sum(abs(p[0] - 0xFF) < 40 and abs(p[1] - 0x6B) < 40 and abs(p[2] - 0x6B) < 40
                for r in full[name][2][h - status - 24:h - status] for p in (r[i:i + 3] for i in range(3 * left_w, 3 * (w - right_w), 3)))
@@ -243,7 +279,7 @@ if left_panel("drop-no-room") == left_panel("drop-at"):
     sys.exit("the left panel of drop-no-room is the same as drop-at's: the refused preset is not armed")
 if moved("drop-at", "drop-no-room") is not None:
     sys.exit("the world's upper-left changed between drop-at and drop-no-room: a drop that did not fit changed the world")
-print(f"24 PNGs of {next(iter(size))}; the bar changed after each action; accent at x = {x_start:.0f} (x1), {x_rung:.0f} (x10), {x_max:.0f} (Max); the left panel's accent at y = {y_edge:.0f} (Brush), {y_tool:.0f} (Heat), {y_element:.0f} (Iron); {changed} pixels painted; the right panel {lit('start')} lit pixels without a star, {lit('select')} with one, {lit('hover-outside')} with the pointer off the world; Glow toned down differs, its Reset matches the default, Heat fitted differs; zoom 8 about (300, 200) matches the whole world on 6 probed cells ({len(colours)} colours), 16 px a cell; the preset dropped at (80, 80) spans x {box[0]}..{box[1]} px about ({cx:.0f}, {cy:.0f}), the one at (10, 10) refused ({error_text('drop-no-room')} red pixels, preset armed, world as it was)")
+print(f"24 PNGs of {next(iter(size))}; the bar changed after each action; accent at x = {x_start:.0f} (x1), {x_rung:.0f} (x10), {x_max:.0f} (Max); the left panel's accent at y = {y_edge:.0f} (Brush), {y_tool:.0f} (Heat), {y_element:.0f} (Iron); {changed} pixels painted; the right panel {lit('start')} lit pixels without a star, {lit('select')} with one, {lit('hover-outside')} with the pointer off the world; Glow toned down differs, its Reset matches the default, Heat fitted differs; the world {W} x {H} at s = {s} from ({x0}, {y0}); zoom {z} about ({cx}, {cy}) matches the whole world on 6 probed cells ({len(colours)} colours), {z * s} px a cell; the preset dropped at {tuple(drop)} spans x {box[0]}..{box[1]} px about ({bx:.0f}, {by:.0f}), the one at (10, 10) refused ({error_text('drop-no-room')} red pixels, preset armed, world as it was)")
 PY
 )" || { echo "=== NO-GO: ${why##*$'\n'} ==="; exit 1; }
     echo "$why"

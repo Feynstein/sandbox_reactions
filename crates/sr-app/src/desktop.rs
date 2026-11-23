@@ -90,11 +90,49 @@ pub struct SandboxApp {
     sim_cost: std::time::Duration,
 }
 
+/// Why the app could not start, each with the line that says why: a calibration the engine refuses (§2.11, G-CAL — the
+/// page's `error.calibration`, §4.8 [M0-D207]) or anything else (the page's `error.no_adapter`).
+#[derive(Debug)]
+pub enum StartError {
+    Calibration(String),
+    Other(String),
+}
+
+impl StartError {
+    /// The line that says why (a calibration's is its `SR-ERROR` line).
+    pub fn detail(&self) -> &str {
+        match self {
+            StartError::Calibration(detail) | StartError::Other(detail) => detail,
+        }
+    }
+}
+
+impl From<String> for StartError {
+    fn from(detail: String) -> Self {
+        StartError::Other(detail)
+    }
+}
+
+impl From<&str> for StartError {
+    fn from(detail: &str) -> Self {
+        StartError::Other(detail.to_string())
+    }
+}
+
+impl std::fmt::Display for StartError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(self.detail())
+    }
+}
+
+impl std::error::Error for StartError {}
+
 impl SandboxApp {
-    /// A new world — empty, at ×1, running (§1.8.2) — on the render state's device; an error is the `SR-ERROR` line that
-    /// says why the engine could not start (a stale calibration is exit 6 on the desktop, §2.11).
-    pub fn new(render: &egui_wgpu::RenderState) -> Result<Self, String> {
-        let sim = sim::Sim::new(render)?;
+    /// A new world — empty, at ×1, running (§1.8.2) — on the render state's device, `calibration` its §2.11 file (the
+    /// embedded one, `sr_physics::calibration::EMBEDDED`, but for the page's `calibration=stale` test hook, §3.5 [M0-D207]);
+    /// an error says why the engine could not start (a stale calibration is exit 6 on the desktop, §2.11).
+    pub fn new(render: &egui_wgpu::RenderState, calibration: Option<&str>) -> Result<Self, StartError> {
+        let sim = sim::Sim::new(render, calibration)?;
         Ok(Self {
             frames: 0,
             recent: VecDeque::new(),
@@ -119,8 +157,8 @@ impl SandboxApp {
 
     /// The device work of `new`, built and dropped (web.rs's warm-up, M0-D118).
     #[cfg(target_arch = "wasm32")]
-    pub fn dry_run(device: &wgpu::Device, queue: &wgpu::Queue) -> Result<(), String> {
-        sim::Sim::dry_run(device, queue)
+    pub fn dry_run(device: &wgpu::Device, queue: &wgpu::Queue, calibration: Option<&str>) -> Result<(), StartError> {
+        sim::Sim::dry_run(device, queue, calibration)
     }
 
     /// The active view when it is one of `views`, else the error naming `action` (the display controls exist under these views only).
@@ -701,6 +739,16 @@ const LEFT_PANEL_WIDTH: f32 = 220.0;
 /// The right panel's width in logical px (§4.2).
 const RIGHT_PANEL_WIDTH: f32 = 300.0;
 
+/// The default window's centre (§4.2): `WINDOW_SIZE` less the two bars and the two panels — the area §1.11's s is read in.
+/// The UI tests take the default view from it and the default world, never a copy of either's numbers (M0-D204).
+#[cfg(test)]
+pub fn default_centre() -> egui::Rect {
+    egui::Rect::from_min_max(
+        egui::pos2(LEFT_PANEL_WIDTH, TOP_BAR_HEIGHT),
+        egui::pos2(WINDOW_SIZE[0] - RIGHT_PANEL_WIDTH, WINDOW_SIZE[1] - STATUS_BAR_HEIGHT),
+    )
+}
+
 /// The cell inspector as the view model gives it (§4.6): the heading, one line each.
 fn draw_cell_panel(ui: &mut egui::Ui, panel: &CellPanel) {
     ui.spacing_mut().item_spacing = egui::vec2(8.0, 6.0);
@@ -934,6 +982,7 @@ mod sim {
     use sr_physics::registry::{Elements, Physics, Reactions};
     use sr_physics::time::{Estimates, TimeControl};
 
+    use super::StartError;
     use crate::ui::banner::{Banner, Frames, Pass};
     use crate::ui::display::{self, DisplayCommand};
     use crate::ui::left::{self, Presets, Tools, Views};
@@ -1038,10 +1087,10 @@ mod sim {
     }
 
     impl Sim {
-        pub fn new(render: &egui_wgpu::RenderState) -> Result<Sim, String> {
+        pub fn new(render: &egui_wgpu::RenderState, calibration: Option<&str>) -> Result<Sim, StartError> {
             let (device, queue) = (render.device.clone(), render.queue.clone());
             let Parts { cal, physics, elements, world, world_bar, state, previous, step, renderer, image, target } =
-                Self::parts(&device, &queue)?;
+                Self::parts(&device, &queue, calibration)?;
             // IMAGE_FORMAT holds sRGB-encoded bytes in a UNORM texture, "the display draws it as is" (render.rs): egui-wgpu
             // reads its textures as gamma-encoded bytes in Rgba8Unorm too, so the quad needs no view of its own.
             let texture = render.renderer.write().register_native_texture(&device, &target, wgpu::FilterMode::Nearest);
@@ -1090,14 +1139,15 @@ mod sim {
         /// `new`'s device work alone, built and dropped: web.rs's dry run, whose pipeline creations it turns into
         /// parallel compiles the real build then finds done (M0-D118).
         #[cfg(target_arch = "wasm32")]
-        pub fn dry_run(device: &wgpu::Device, queue: &wgpu::Queue) -> Result<(), String> {
-            Self::parts(device, queue).map(drop)
+        pub fn dry_run(device: &wgpu::Device, queue: &wgpu::Queue, calibration: Option<&str>) -> Result<(), StartError> {
+            Self::parts(device, queue, calibration).map(drop)
         }
 
-        fn parts(device: &wgpu::Device, queue: &wgpu::Queue) -> Result<Parts, String> {
-            let cal = calibration::resolve(calibration::EMBEDDED, true)
-                .map_err(|e| e.line())?
-                .ok_or("calibration missing: the game needs assets/calibration.json (sandbox-reactions calibrate writes it)")?;
+        /// `text` is the §2.11 file; its refusal is a `StartError::Calibration` (the page's own text, [M0-D207]).
+        fn parts(device: &wgpu::Device, queue: &wgpu::Queue, text: Option<&str>) -> Result<Parts, StartError> {
+            let cal = calibration::resolve(text, true)
+                .map_err(|e| StartError::Calibration(e.line()))?
+                .ok_or_else(|| StartError::Calibration(calibration::CalibrationError::Missing.line()))?;
             let physics = Physics::shipped().map_err(|e| e.to_string())?;
             let elements = Elements::shipped().map_err(|e| e.to_string())?;
             let reactions = Reactions::shipped(&elements, &physics).map_err(|e| e.to_string())?;
@@ -1630,7 +1680,7 @@ mod native {
             Box::new(move |cc| {
                 let render = cc.wgpu_render_state.as_ref().ok_or("eframe gave no wgpu render state")?;
                 crate::ui::theme::install(&cc.egui_ctx);
-                let mut app = SandboxApp::new(render)?;
+                let mut app = SandboxApp::new(render, sr_physics::calibration::EMBEDDED)?;
                 let info: AdapterDesc = (&render.adapter.get_info()).into();
                 println!("{}", info.sr_adapter_line());
                 if let Some(status) = &status {

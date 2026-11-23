@@ -1,0 +1,49 @@
+M0-D208 2026-11-23T13:03:31-05:00 life 27414.392 sun to t=100, leave, 800x800, RTX 5090 (linux-pc)
+D208 m_tov_sb=4853.17 preset=sun mass=27414.392 world=800x800 edge=leave until=sim_time:100
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+D208 step=257 t=1.352 stage=protostar/protostar M=27411 R=102.0 M_unb=25 sigma_c=1.1 d_c=0.118 Ye_c=0.867 X_n_c=0.000 vr/vdyn=-0.044 sinks=0 sink_M=-0 escaped=0 objects=1
+D208 step=513 t=2.486 stage=protostar/cloud M=27404 R=102.8 M_unb=47 sigma_c=1.2 d_c=0.131 Ye_c=0.867 X_n_c=0.000 vr/vdyn=-0.099 sinks=0 sink_M=-0 escaped=0 objects=1
+D208 step=753 t=3.608 stage=protostar/collapsing M=27397 R=104.0 M_unb=65 sigma_c=1.5 d_c=0.146 Ye_c=0.866 X_n_c=0.000 vr/vdyn=-0.163 sinks=0 sink_M=-0 escaped=0 objects=1
+D208 step=1000 t=4.814 stage=main_sequence/main_sequence M=27388 R=104.8 M_unb=84 sigma_c=2.1 d_c=0.165 Ye_c=0.865 X_n_c=0.000 vr/vdyn=-0.234 sinks=0 sink_M=-0 escaped=0 objects=1
+D208 step=1256 t=6.089 stage=he_core/he_core M=27377 R=104.7 M_unb=120 sigma_c=3.7 d_c=0.146 Ye_c=0.858 X_n_c=0.000 vr/vdyn=-0.238 sinks=0 sink_M=-0 escaped=0 objects=1
+D208 step=1752 t=8.357 stage=main_sequence/main_sequence M=27354 R=111.1 M_unb=447 sigma_c=3.0 d_c=0.124 Ye_c=0.818 X_n_c=0.000 vr/vdyn=0.394 sinks=0 sink_M=-0 escaped=0 objects=1
+D208 step=2256 t=10.779 stage=main_sequence/main_sequence M=27324 R=129.6 M_unb=540 sigma_c=1.3 d_c=0.145 Ye_c=0.796 X_n_c=0.000 vr/vdyn=0.524 sinks=0 sink_M=-0 escaped=7 objects=1
+D208 step=3000 t=15.198 stage=main_sequence/main_sequence M=27255 R=168.6 M_unb=519 sigma_c=0.9 d_c=0.188 Ye_c=0.796 X_n_c=0.000 vr/vdyn=0.257 sinks=0 sink_M=-0 escaped=65 objects=1
+D208 step=3512 t=19.234 stage=main_sequence/main_sequence M=27158 R=201.5 M_unb=445 sigma_c=3.1 d_c=0.282 Ye_c=0.795 X_n_c=0.000 vr/vdyn=-0.052 sinks=0 sink_M=-0 escaped=200 objects=1
+D208 step=3752 t=21.413 stage=he_core/he_core M=27070 R=214.7 M_unb=367 sigma_c=7.5 d_c=0.254 Ye_c=0.784 X_n_c=0.000 vr/vdyn=-0.096 sinks=0 sink_M=-0 escaped=300 objects=1
+D208 step=4000 t=23.493 stage=main_sequence/main_sequence M=26975 R=226.5 M_unb=833 sigma_c=3.9 d_c=0.182 Ye_c=0.758 X_n_c=0.000 vr/vdyn=0.189 sinks=0 sink_M=-0 escaped=407 objects=1
+D208 step=4512 t=28.288 stage=he_core/he_core M=26727 R=256.2 M_unb=1544 sigma_c=9.8 d_c=0.271 Ye_c=0.739 X_n_c=0.000 vr/vdyn=-0.057 sinks=0 sink_M=-0 escaped=672 objects=1
+D208 step=4752 t=30.326 stage=main_sequence/main_sequence M=26622 R=269.2 M_unb=2162 sigma_c=7.0 d_c=0.237 Ye_c=0.713 X_n_c=0.000 vr/vdyn=0.277 sinks=0 sink_M=-0 escaped=782 objects=1
+D208 step=5256 t=35.291 stage=he_core/he_core M=26039 R=291.4 M_unb=2109 sigma_c=12.2 d_c=0.327 Ye_c=0.670 X_n_c=0.000 vr/vdyn=0.170 sinks=0 sink_M=-0 escaped=1369 objects=1
+D208 step=5752 t=39.370 stage=o_burn/o_burn M=25330 R=296.1 M_unb=2210 sigma_c=34.1 d_c=0.456 Ye_c=0.636 X_n_c=0.000 vr/vdyn=0.246 sinks=0 sink_M=-0 escaped=2083 objects=1
+D208 step=6000 t=41.036 stage=si_burn/si_burn M=25024 R=295.8 M_unb=2306 sigma_c=64.5 d_c=0.516 Ye_c=0.614 X_n_c=0.000 vr/vdyn=0.291 sinks=0 sink_M=-0 escaped=2389 objects=1
+D208 step=6256 t=42.501 stage=main_sequence/main_sequence M=24756 R=294.8 M_unb=2609 sigma_c=125.3 d_c=0.563 Ye_c=0.585 X_n_c=0.000 vr/vdyn=0.349 sinks=0 sink_M=-0 escaped=2657 objects=1
+D208 step=6577 t=44.013 stage=supernova/supernova M=24478 R=293.1 M_unb=5115 sigma_c=293.4 d_c=0.649 Ye_c=0.551 X_n_c=0.012 vr/vdyn=0.387 sinks=0 sink_M=-0 escaped=2935 objects=1
+D208 step=7000 t=45.348 stage=black_hole/black_hole M=24234 R=290.7 M_unb=2741 sigma_c=0.8 d_c=0.095 Ye_c=0.793 X_n_c=0.000 vr/vdyn=0.483 sinks=1 sink_M=9469 escaped=3180 objects=1
+D208 step=7512 t=46.883 stage=black_hole/black_hole M=23964 R=286.3 M_unb=1147 sigma_c=0.5 d_c=0.080 Ye_c=0.815 X_n_c=0.000 vr/vdyn=0.436 sinks=1 sink_M=10080 escaped=3449 objects=1
+D208 step=8256 t=49.054 stage=black_hole/black_hole M=23613 R=292.8 M_unb=796 sigma_c=0.4 d_c=0.066 Ye_c=0.820 X_n_c=0.000 vr/vdyn=0.396 sinks=1 sink_M=10694 escaped=3801 objects=1
+D208 step=9000 t=51.180 stage=black_hole/black_hole M=23304 R=311.1 M_unb=1054 sigma_c=0.3 d_c=0.056 Ye_c=0.825 X_n_c=0.000 vr/vdyn=0.375 sinks=1 sink_M=11152 escaped=4110 objects=1
+D208 step=9512 t=52.624 stage=black_hole/black_hole M=23115 R=323.1 M_unb=1243 sigma_c=0.2 d_c=0.050 Ye_c=0.827 X_n_c=0.000 vr/vdyn=0.363 sinks=1 sink_M=11411 escaped=4298 objects=1
+D208 step=10256 t=54.701 stage=black_hole/black_hole M=22875 R=339.9 M_unb=1476 sigma_c=0.2 d_c=0.045 Ye_c=0.829 X_n_c=0.000 vr/vdyn=0.349 sinks=1 sink_M=11731 escaped=4539 objects=1
+D208 step=11000 t=56.756 stage=black_hole/black_hole M=22647 R=355.3 M_unb=1657 sigma_c=0.2 d_c=0.041 Ye_c=0.829 X_n_c=0.000 vr/vdyn=0.337 sinks=1 sink_M=12004 escaped=4766 objects=1
+D208 step=11512 t=58.162 stage=black_hole/black_hole M=22358 R=361.7 M_unb=1581 sigma_c=0.2 d_c=0.038 Ye_c=0.829 X_n_c=0.000 vr/vdyn=0.319 sinks=1 sink_M=12172 escaped=5055 objects=1
+D208 step=12256 t=60.192 stage=black_hole/black_hole M=21870 R=367.1 M_unb=1339 sigma_c=0.1 d_c=0.035 Ye_c=0.830 X_n_c=0.000 vr/vdyn=0.289 sinks=1 sink_M=12391 escaped=5544 objects=1
+D208 step=13000 t=62.209 stage=black_hole/black_hole M=21371 R=372.7 M_unb=1089 sigma_c=0.1 d_c=0.032 Ye_c=0.830 X_n_c=0.000 vr/vdyn=0.259 sinks=1 sink_M=12589 escaped=6043 objects=1
+D208 step=13512 t=63.589 stage=black_hole/black_hole M=21029 R=376.7 M_unb=987 sigma_c=0.1 d_c=0.031 Ye_c=0.831 X_n_c=0.000 vr/vdyn=0.238 sinks=1 sink_M=12714 escaped=6384 objects=1
+D208 step=14256 t=65.585 stage=black_hole/black_hole M=20506 R=380.1 M_unb=1145 sigma_c=0.1 d_c=0.029 Ye_c=0.831 X_n_c=0.000 vr/vdyn=0.205 sinks=1 sink_M=12882 escaped=6907 objects=1
+D208 step=15000 t=67.572 stage=black_hole/black_hole M=19972 R=380.5 M_unb=938 sigma_c=0.1 d_c=0.028 Ye_c=0.832 X_n_c=0.000 vr/vdyn=0.169 sinks=1 sink_M=13038 escaped=7441 objects=1
+D208 step=15512 t=68.934 stage=black_hole/black_hole M=19619 R=379.4 M_unb=798 sigma_c=0.1 d_c=0.027 Ye_c=0.832 X_n_c=0.000 vr/vdyn=0.145 sinks=1 sink_M=13139 escaped=7794 objects=1
+D208 step=16256 t=70.906 stage=black_hole/black_hole M=19153 R=376.3 M_unb=619 sigma_c=0.1 d_c=0.026 Ye_c=0.833 X_n_c=0.000 vr/vdyn=0.113 sinks=1 sink_M=13277 escaped=8260 objects=1
+D208 step=17000 t=72.871 stage=black_hole/black_hole M=18742 R=371.4 M_unb=470 sigma_c=0.1 d_c=0.024 Ye_c=0.834 X_n_c=0.000 vr/vdyn=0.085 sinks=1 sink_M=13406 escaped=8671 objects=1
+D208 step=17512 t=74.218 stage=black_hole/black_hole M=18490 R=367.0 M_unb=382 sigma_c=0.1 d_c=0.024 Ye_c=0.834 X_n_c=0.000 vr/vdyn=0.067 sinks=1 sink_M=13490 escaped=8923 objects=1
+D208 step=18256 t=76.172 stage=black_hole/black_hole M=18163 R=358.8 M_unb=274 sigma_c=0.1 d_c=0.022 Ye_c=0.835 X_n_c=0.000 vr/vdyn=0.044 sinks=1 sink_M=13605 escaped=9251 objects=1
+D208 step=19000 t=78.121 stage=black_hole/black_hole M=17882 R=348.6 M_unb=188 sigma_c=0.1 d_c=0.021 Ye_c=0.835 X_n_c=0.000 vr/vdyn=0.026 sinks=1 sink_M=13714 escaped=9531 objects=1
+D208 step=19512 t=79.459 stage=black_hole/black_hole M=17714 R=340.9 M_unb=141 sigma_c=0.1 d_c=0.021 Ye_c=0.835 X_n_c=0.000 vr/vdyn=0.015 sinks=1 sink_M=13785 escaped=9700 objects=1
+exit=124
+D208core step=5000 t=32.784 peak=(400,400) sigma_max=5.8 M_r4=277 Ye_r3=0.689 M_r8=1041 M_r16=3404 M_r32=7990 M_r64=14183 M_r128=18561 grid_M=26396 sinks=[]
+D208core step=6000 t=41.036 peak=(400,400) sigma_max=64.5 M_r4=2320 Ye_r3=0.626 M_r8=5172 M_r16=7616 M_r32=9576 M_r64=12553 M_r128=17087 grid_M=25024 sinks=[]
+D208core step=7000 t=45.348 peak=(400,402) sigma_max=0.8 M_r4=16 Ye_r3=0.793 M_r8=58 M_r16=187 M_r32=606 M_r64=1939 M_r128=5630 grid_M=14765 sinks=[9469@(400,400)]
+D208core step=8000 t=48.312 peak=(400,398) sigma_max=0.4 M_r4=8 Ye_r3=0.818 M_r8=29 M_r16=89 M_r32=277 M_r64=930 M_r128=3303 grid_M=13225 sinks=[10504@(400,400)]
+D208core step=10000 t=53.988 peak=(402,400) sigma_max=0.2 M_r4=4 Ye_r3=0.829 M_r8=15 M_r16=45 M_r32=137 M_r64=436 M_r128=1543 grid_M=11326 sinks=[11627@(400,400)]
+D208core step=15000 t=67.572 peak=(400,402) sigma_max=0.1 M_r4=2 Ye_r3=0.832 M_r8=7 M_r16=21 M_r32=62 M_r64=189 M_r128=613 grid_M=6934 sinks=[13038@(400,400)]
+D208core step=19000 t=78.121 peak=(400,402) sigma_max=0.1 M_r4=1 Ye_r3=0.835 M_r8=5 M_r16=14 M_r32=42 M_r64=127 M_r128=398 grid_M=4168 sinks=[13714@(400,400)]

@@ -13,7 +13,7 @@
 //! *A sink from mass* (§0.5 [M0-R6]): a cell under Σ_BH is a candidate too when it is a local Σ maximum (no less than its 8
 //! neighbours) whose disk of cells with centres r ≤ [`R_CORE`] = 4 from its own holds M_core ≥ m_tov_sb (§2.11 item 2, the
 //! sheet's neutron-matter ceiling for the run's physics, [`m_tov_sb`]), the mass-weighted Y_e over r ≤ [`R_Y_E`] = 3 at most
-//! [`CORE_Y_E`] = 0.35, and the other three criteria at the cell; such a sink takes the disk's mass above the floor (cell by
+//! [`CORE_Y_E`] = 0.40 (§0.5 [M0-D208]), and the other three criteria at the cell; such a sink takes the disk's mass above the floor (cell by
 //! cell, row-major) and its momentum. A cell at Σ ≥ Σ_BH forms as before, taking its cell alone, unless its disk passes the
 //! mass test too.
 //!
@@ -49,11 +49,12 @@ const R_MIN: f64 = 0.5;
 /// The species planes of the state (§2.2: channels 4–13) and neutron matter's slot (§1.5).
 const FIRST_SPECIES: usize = 4;
 const ID_N: usize = 9;
-/// §0.5 [M0-R6]: the mass test's disk, its Y_e disk (cells, centre to centre) and the neutronized core's Y_e bound (§0.5
-/// [M0-D79]'s).
+/// §0.5 [M0-R6]: the mass test's disk, its Y_e disk (cells, centre to centre) and the neutronized core's Y_e bound — 0.40
+/// since §0.5 [M0-D208] (was [M0-D79]'s 0.35, which the neutron-star row keeps): a collapsing core's r ≤ 3 mean falls through
+/// 0.40 inside 25 steps, then crawls 0.364 … 0.351, so 0.35 left the sink, and the ending, to the plateau's last digits.
 pub const R_CORE: f64 = 4.0;
 pub const R_Y_E: f64 = 3.0;
-pub const CORE_Y_E: f64 = 0.35;
+pub const CORE_Y_E: f64 = 0.40;
 
 /// A sink: position (cells), velocity (cells per t.u.) and mass.
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -205,7 +206,7 @@ impl Sinks {
     }
 
     /// The mass test (§0.5 [M0-R6]) at cell (x, y): its disk r ≤ 4 holds m_tov_sb or more and the disk r ≤ 3 is neutronized
-    /// (mass-weighted Y_e ≤ 0.35).
+    /// (mass-weighted Y_e ≤ [`CORE_Y_E`]).
     fn core(&self, st: &State, x: usize, y: usize) -> bool {
         let (w, h) = (st.width, st.height);
         let mass: f64 = disk(x, y, R_CORE, w, h).map(|i| st.get(0, i)).sum();

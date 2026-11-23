@@ -682,18 +682,19 @@ mod tools_tests {
 
     #[test]
     fn the_pointer_maps_to_cells_and_the_outline_follows_the_cell() {
-        let world = WorldConfig { width: 600, height: 400 };
-        let rect = egui::Rect::from_min_size(egui::pos2(100.0, 50.0), egui::vec2(1200.0, 800.0));
-        assert_eq!(cell_at(egui::pos2(100.0, 50.0), rect, world), Some([0, 0]));
-        assert_eq!(cell_at(egui::pos2(101.9, 51.9), rect, world), Some([0, 0]));
-        assert_eq!(cell_at(egui::pos2(102.0, 52.0), rect, world), Some([1, 1]));
-        assert_eq!(cell_at(egui::pos2(1299.9, 849.9), rect, world), Some([599, 399]));
-        assert_eq!(cell_at(egui::pos2(1300.0, 850.0), rect, world), None);
-        assert_eq!(cell_at(egui::pos2(99.0, 60.0), rect, world), None);
+        // The default world where the default window draws it, s points a cell (M0-D204).
+        let (world, rect) = crate::ui::legend::default_view();
+        let s = rect.width() / world.width as f32;
+        assert_eq!(cell_at(rect.min, rect, world), Some([0, 0]));
+        assert_eq!(cell_at(rect.min + egui::vec2(s - 0.1, s - 0.1), rect, world), Some([0, 0]));
+        assert_eq!(cell_at(rect.min + egui::vec2(s, s), rect, world), Some([1, 1]));
+        assert_eq!(cell_at(rect.max - egui::vec2(0.1, 0.1), rect, world), Some([world.width - 1, world.height - 1]));
+        assert_eq!(cell_at(rect.max, rect, world), None);
+        assert_eq!(cell_at(egui::pos2(rect.min.x - 1.0, rect.min.y + 10.0), rect, world), None);
         let mut tools = fresh();
         tools.apply(Command::SetRadius(10));
         let (centre, radius) = outline(&tools, rect, world, [300, 200]);
-        assert_eq!((centre, radius), (egui::pos2(100.0 + 601.0, 50.0 + 401.0), 21.0));
+        assert_eq!((centre, radius), (rect.min + egui::vec2(300.5, 200.5) * s, 10.5 * s));
     }
 
     fn views_of(views: &Views) -> ViewsSection {
@@ -912,8 +913,9 @@ mod presets_tests {
     fn the_outline_is_the_clouds_radius_and_agrees_with_the_refusal() {
         use sr_engine::scene::{MAX_RADIUS, UNIT_MASS};
         let (physics, elements) = (Physics::shipped().unwrap(), elements());
-        let world = WorldConfig { width: 600, height: 400 };
-        let rect = egui::Rect::from_min_size(egui::pos2(100.0, 50.0), egui::vec2(1200.0, 800.0));
+        // The default world where the default window draws it, s points a cell (M0-D204).
+        let (world, rect) = crate::ui::legend::default_view();
+        let s = rect.width() / world.width as f32;
         let uncapped = |mass: f64| 40.0 * (mass / UNIT_MASS).sqrt();
         let heavy = 40.0 * UNIT_MASS;
         assert!(uncapped(heavy) > 200.0, "the cap matters for the heavy cloud: {}", uncapped(heavy));
@@ -922,13 +924,15 @@ mod presets_tests {
             assert_eq!(cloud_radius(mass), uncapped(mass).min(MAX_RADIUS), "{preset:?} at {mass}");
         }
         assert_eq!(cloud_radius(heavy), 150.0);
-        let cells = [[300, 200], [140, 200], [160, 200], [300, 100], [300, 260], [20, 20], [599, 399], [60, 200], [100, 200], [200, 120]];
+        // The middle, cells straddling each cloud's radius from the left, top and bottom edges, and the corners.
+        let [w, h] = [world.width, world.height];
+        let cells = [[w / 2, h / 2], [140, h / 2], [160, h / 2], [w / 2, 100], [w / 2, h - 140], [20, 20], [w - 1, h - 1], [60, h / 2], [100, h / 2], [200, 120]];
         let mut outcomes = (0, 0);
         for &(preset, mass) in &clouds {
             let radius = cloud_radius(mass);
             for cell in cells {
                 let (centre, r) = cloud_outline(rect, world, cell, radius);
-                assert_eq!(r, radius as f32 * 2.0, "{preset:?} at {cell:?}: the outline is drawn at the cloud's radius");
+                assert_eq!(r, radius as f32 * s, "{preset:?} at {cell:?}: the outline is drawn at the cloud's radius");
                 let inside = centre.x - r >= rect.min.x && centre.x + r <= rect.max.x && centre.y - r >= rect.min.y && centre.y + r <= rect.max.y;
                 match Edit::drop_preset(preset.name(), mass, cell, world, &physics, &elements) {
                     Ok(_) => {

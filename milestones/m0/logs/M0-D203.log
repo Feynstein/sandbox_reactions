@@ -4,3 +4,292 @@ SR-ERROR calibration out of date: it was measured on no named world (a file from
 exit=6
 === 2026-11-20T09:27:56-05:00 Verify 4: --changed (cap 590 s)
 exit=1
+=== 2026-11-23T07:41:30-05:00 M0-D203 return: reading the server run ===
+total 16
+drwxrwxr-x  2 ybelanger ybelanger 4096 Nov 20 17:01 .
+drwxrwxr-x 22 ybelanger ybelanger 4096 Nov 20 10:40 ..
+-rw-rw-r--  1 ybelanger ybelanger  531 Nov 20 16:16 calibration.json
+-rw-rw-r--  1 ybelanger ybelanger    0 Nov 20 17:01 run.done
+-rw-rw-r--  1 ybelanger ybelanger  264 Nov 20 17:01 steps.txt
+---
+1 build exit=0 2026-11-20T10:40:46-0500
+2 cal_items_1_2 exit=0 2026-11-20T10:40:46-0500
+3 cal_m_ign exit=0 2026-11-20T10:43:48-0500
+4 cal_m_up exit=0 2026-11-20T14:20:20-0500
+5 cal_m_bh exit=0 2026-11-20T16:16:10-0500
+6 cal_presets exit=6 2026-11-20T17:01:22-0500
+---
+m0d203: 1 windows (created Fri Nov 20 10:40:46 2026)
+---
+  core   sigma_c   0.02319 T_c         14.45 d_c       0.01452 Ye_c       0.8351
+  centre X_Fe    1.733e-14 X_n             0 v_r         2.951 vr/vdyn    0.6501
+  light  L            5119 L_nuc           0 L_N             0 L_nu            0
+  world  escaped      5934 objects         1 sinks           1 sink_M       4895
+SR-CALIBRATE progress item=preset_massive mass=13874.329 step=18002 sim_time=127.058 heat_unconverged=0 stage=black_hole | raw=black_hole
+  frame  steps          16 dt       0.004245 s/step    0.03752 P5_ceil         0
+  star   M            6916 R           371.7 tau_dyn     86.17 M_unb        1197
+  core   sigma_c   0.02574 T_c         15.45 d_c       0.01505 Ye_c       0.8365
+  centre X_Fe    1.382e-14 X_n             0 v_r         1.599 vr/vdyn    0.3708
+  light  L            2466 L_nuc           0 L_N             0 L_nu            0
+  world  escaped      6957 objects         1 sinks           1 sink_M       4990
+SR-CALIBRATE progress item=preset_massive mass=13874.329 step=20002 sim_time=135.430 heat_unconverged=0 stage=black_hole | raw=black_hole
+  frame  steps          16 dt       0.004145 s/step    0.03878 P5_ceil         0
+  star   M            6316 R           333.8 tau_dyn     76.73 M_unb       621.7
+  core   sigma_c  0.009939 T_c         12.45 d_c      0.007342 Ye_c       0.8375
+  centre X_Fe    1.144e-14 X_n             0 v_r        0.7851 vr/vdyn    0.1805
+  light  L            1901 L_nuc           0 L_N             0 L_nu            0
+  world  escaped      7558 objects         1 sinks           1 sink_M       5061
+SR-CALIBRATE progress item=preset_massive mass=13874.329 step=22002 sim_time=143.944 heat_unconverged=0 stage=black_hole | raw=black_hole
+  frame  steps          16 dt       0.004278 s/step    0.03940 P5_ceil         0
+  star   M            5979 R           260.1 tau_dyn     54.24 M_unb       292.9
+  core   sigma_c   0.01048 T_c         12.62 d_c      0.007634 Ye_c       0.8383
+  centre X_Fe    1.288e-14 X_n             0 v_r        0.3512 vr/vdyn   0.07323
+  light  L            1672 L_nuc           0 L_N             0 L_nu            0
+  world  escaped      7894 objects         1 sinks           1 sink_M       5116
+SR-HEADLESS DONE steps=23362 sim_time=149.679087 until=met
+SR-CALIBRATE run item=preset_massive suns=15 mass=13874.329 ignited=true core_collapse=true ending=black_hole steps=23362 sim_time=149.679 wall_s=644.5 record=build/calibrate_runs/2026-11-20T21-16-10Z/preset_massive-02
+SR-ERROR calibration failed: preset_massive: 15 Suns at mass 13874.3 ended as black_hole, not neutron_star — the preset is not inside its ending (reported, not re-tuned)
+=== step 6 cal_presets end exit=6 · 2026-11-20T17:01:22-0500
+=== calibration STOPPED — nothing after it runs (restart: START=<the failed step>, a stopped item adds --resume build/calibrate_runs/<its stamp>) · 2026-11-20T17:01:22-0500
+{
+  "m_bh_sb": 27651.048323671264,
+  "m_ch_sb": 3216.4199210979236,
+  "m_ign_sb": 2636.2983247717016,
+  "m_tov_sb": 4853.169981814195,
+  "m_up_sb": 5938.210284049939,
+  "max_gas_speed": 149.79526522330775,
+  "measured": {
+    "adapter": "NVIDIA GeForce RTX 4090",
+    "box": "laserax-ai-server",
+    "date": "2026-11-20T21:16:10Z",
+    "git": "255ec37-dirty",
+    "world": "800x800"
+  },
+  "ns_sigma_max_sb": 4853.169981814195,
+  "physics_hash": "8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402",
+  "version": 1
+}
+
+---
+12:SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+14:=== step 2 cal_items_1_2 end exit=0 · 2026-11-20T10:40:46-0500
+15:=== step 3 cal_m_ign start · 2026-11-20T10:40:46-0500
+31:SR-HEADLESS DONE steps=2289 sim_time=103.303349 until=met
+32:SR-CALIBRATE run item=m_ign_sb side=Light mass=167.552 ignited=false core_collapse=false ending=failed_star steps=2289 sim_time=103.303 wall_s=26.7 record=build/calibrate_runs/2026-11-20T15-40-46Z/m_ign_sb-01
+34:SR-HEADLESS DONE steps=289 sim_time=4.364588 until=met
+35:SR-CALIBRATE run item=m_ign_sb side=Heavy mass=3351.032 ignited=true core_collapse=false ending=none steps=289 sim_time=4.365 wall_s=2.7 record=build/calibrate_runs/2026-11-20T15-40-46Z/m_ign_sb-02
+44:SR-HEADLESS DONE steps=1937 sim_time=42.918373 until=met
+45:SR-CALIBRATE run item=m_ign_sb side=Light mass=749.314 ignited=false core_collapse=false ending=failed_star steps=1937 sim_time=42.918 wall_s=17.8 record=build/calibrate_runs/2026-11-20T15-40-46Z/m_ign_sb-03
+54:SR-HEADLESS DONE steps=1985 sim_time=31.535264 until=met
+55:SR-CALIBRATE run item=m_ign_sb side=Light mass=1584.605 ignited=false core_collapse=false ending=failed_star steps=1985 sim_time=31.535 wall_s=20.1 record=build/calibrate_runs/2026-11-20T15-40-46Z/m_ign_sb-04
+71:SR-HEADLESS DONE steps=2241 sim_time=30.343499 until=met
+72:SR-CALIBRATE run item=m_ign_sb side=Light mass=2304.357 ignited=false core_collapse=false ending=failed_star steps=2241 sim_time=30.343 wall_s=23.3 record=build/calibrate_runs/2026-11-20T15-40-46Z/m_ign_sb-05
+74:SR-HEADLESS DONE steps=705 sim_time=9.476968 until=met
+75:SR-CALIBRATE run item=m_ign_sb side=Heavy mass=2778.844 ignited=true core_collapse=false ending=none steps=705 sim_time=9.477 wall_s=6.7 record=build/calibrate_runs/2026-11-20T15-40-46Z/m_ign_sb-06
+91:SR-HEADLESS DONE steps=2161 sim_time=28.181574 until=met
+92:SR-CALIBRATE run item=m_ign_sb side=Light mass=2530.504 ignited=false core_collapse=false ending=failed_star steps=2161 sim_time=28.182 wall_s=22.4 record=build/calibrate_runs/2026-11-20T15-40-46Z/m_ign_sb-07
+94:SR-HEADLESS DONE steps=737 sim_time=9.987457 until=met
+95:SR-CALIBRATE run item=m_ign_sb side=Heavy mass=2651.769 ignited=true core_collapse=false ending=none steps=737 sim_time=9.987 wall_s=7.1 record=build/calibrate_runs/2026-11-20T15-40-46Z/m_ign_sb-08
+111:SR-HEADLESS DONE steps=2161 sim_time=27.998464 until=met
+112:SR-CALIBRATE run item=m_ign_sb side=Light mass=2590.427 ignited=false core_collapse=false ending=failed_star steps=2161 sim_time=27.998 wall_s=22.1 record=build/calibrate_runs/2026-11-20T15-40-46Z/m_ign_sb-09
+128:SR-HEADLESS DONE steps=2209 sim_time=28.443345 until=met
+129:SR-CALIBRATE run item=m_ign_sb side=Light mass=2620.918 ignited=false core_collapse=false ending=failed_star steps=2209 sim_time=28.443 wall_s=22.7 record=build/calibrate_runs/2026-11-20T15-40-46Z/m_ign_sb-10
+130:SR-CALIBRATE item=m_ign_sb value=2636.298 bracket=2620.918..2651.769 runs=10 wall_s=181.1
+131:SR-CALIBRATE item=max_gas_speed value=20.7826
+133:=== step 3 cal_m_ign end exit=0 · 2026-11-20T10:43:48-0500
+134:=== step 4 cal_m_up start · 2026-11-20T10:43:48-0500
+318:SR-HEADLESS DONE steps=134241 sim_time=1385.427038 until=met
+319:SR-CALIBRATE run item=m_up_sb side=Light mass=3351.032 ignited=true core_collapse=false ending=white_dwarf steps=134241 sim_time=1385.427 wall_s=1877.8 record=build/calibrate_runs/2026-11-20T15-43-48Z/m_up_sb-01
+328:SR-HEADLESS DONE steps=5393 sim_time=31.296031 until=met
+329:SR-CALIBRATE run item=m_up_sb side=Heavy mass=46914.450 ignited=true core_collapse=true ending=none steps=5393 sim_time=31.296 wall_s=113.5 record=build/calibrate_runs/2026-11-20T15-43-48Z/m_up_sb-02
+352:SR-HEADLESS DONE steps=16129 sim_time=130.756776 until=met
+353:SR-CALIBRATE run item=m_up_sb side=Heavy mass=12538.414 ignited=true core_collapse=true ending=none steps=16129 sim_time=130.757 wall_s=347.1 record=build/calibrate_runs/2026-11-20T15-43-48Z/m_up_sb-03
+404:SR-HEADLESS DONE steps=35137 sim_time=320.708641 until=met
+405:SR-CALIBRATE run item=m_up_sb side=Heavy mass=6482.024 ignited=true core_collapse=true ending=none steps=35137 sim_time=320.709 wall_s=734.1 record=build/calibrate_runs/2026-11-20T15-43-48Z/m_up_sb-04
+568:SR-HEADLESS DONE steps=116785 sim_time=916.838431 until=met
+569:SR-CALIBRATE run item=m_up_sb side=Light mass=4660.630 ignited=true core_collapse=false ending=white_dwarf steps=116785 sim_time=916.838 wall_s=2965.2 record=build/calibrate_runs/2026-11-20T15-43-48Z/m_up_sb-05
+634:SR-HEADLESS DONE steps=47601 sim_time=439.372956 until=met
+635:SR-CALIBRATE run item=m_up_sb side=Light mass=5496.391 ignited=true core_collapse=false ending=white_dwarf steps=47601 sim_time=439.373 wall_s=992.7 record=build/calibrate_runs/2026-11-20T15-43-48Z/m_up_sb-06
+707:SR-HEADLESS DONE steps=51441 sim_time=428.165032 until=met
+708:SR-CALIBRATE run item=m_up_sb side=Heavy mass=5968.897 ignited=true core_collapse=true ending=none steps=51441 sim_time=428.165 wall_s=1556.7 record=build/calibrate_runs/2026-11-20T15-43-48Z/m_up_sb-07
+773:SR-HEADLESS DONE steps=45489 sim_time=415.432984 until=met
+774:SR-CALIBRATE run item=m_up_sb side=Light mass=5727.774 ignited=true core_collapse=false ending=white_dwarf steps=45489 sim_time=415.433 wall_s=954.7 record=build/calibrate_runs/2026-11-20T15-43-48Z/m_up_sb-08
+867:SR-HEADLESS DONE steps=66273 sim_time=511.280349 until=met
+868:SR-CALIBRATE run item=m_up_sb side=Light mass=5847.093 ignited=true core_collapse=false ending=white_dwarf steps=66273 sim_time=511.280 wall_s=2556.0 record=build/calibrate_runs/2026-11-20T15-43-48Z/m_up_sb-09
+926:SR-HEADLESS DONE steps=42801 sim_time=388.447900 until=met
+927:SR-CALIBRATE run item=m_up_sb side=Light mass=5907.681 ignited=true core_collapse=false ending=white_dwarf steps=42801 sim_time=388.448 wall_s=887.7 record=build/calibrate_runs/2026-11-20T15-43-48Z/m_up_sb-10
+928:SR-CALIBRATE item=m_up_sb value=5938.210 bracket=5907.681..5968.897 runs=10 wall_s=12992.7
+929:SR-CALIBRATE item=max_gas_speed value=60.5579
+931:=== step 4 cal_m_up end exit=0 · 2026-11-20T14:20:20-0500
+932:=== step 5 cal_m_bh start · 2026-11-20T14:20:20-0500
+1123:SR-HEADLESS DONE steps=32860 sim_time=282.500069 until=met
+1124:SR-CALIBRATE run item=m_bh_sb side=Light mass=7422.763 ignited=true core_collapse=true ending=neutron_star steps=32860 sim_time=282.500 wall_s=739.3 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-01
+1350:SR-HEADLESS DONE steps=31010 sim_time=72.509871 until=met
+1351:SR-CALIBRATE run item=m_bh_sb side=Heavy mass=67020.643 ignited=true core_collapse=true ending=black_hole steps=31010 sim_time=72.510 wall_s=1363.8 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-02
+1409:SR-HEADLESS DONE steps=14210 sim_time=86.751829 until=met
+1410:SR-CALIBRATE run item=m_bh_sb side=Light mass=22304.223 ignited=true core_collapse=true ending=neutron_star steps=14210 sim_time=86.752 wall_s=324.7 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-03
+1538:SR-HEADLESS DONE steps=35170 sim_time=99.745369 until=met
+1539:SR-CALIBRATE run item=m_bh_sb side=Heavy mass=38663.204 ignited=true core_collapse=true ending=black_hole steps=35170 sim_time=99.745 wall_s=1467.7 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-04
+1625:SR-HEADLESS DONE steps=23010 sim_time=123.407718 until=met
+1626:SR-CALIBRATE run item=m_bh_sb side=Heavy mass=29365.842 ignited=true core_collapse=true ending=black_hole steps=23010 sim_time=123.408 wall_s=610.6 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-05
+1677:SR-HEADLESS DONE steps=13266 sim_time=76.365214 until=met
+1678:SR-CALIBRATE run item=m_bh_sb side=Light mass=25592.622 ignited=true core_collapse=true ending=neutron_star steps=13266 sim_time=76.365 wall_s=309.2 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-06
+1729:SR-HEADLESS DONE steps=13746 sim_time=76.961112 until=met
+1730:SR-CALIBRATE run item=m_bh_sb side=Light mass=27414.392 ignited=true core_collapse=true ending=neutron_star steps=13746 sim_time=76.961 wall_s=322.1 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-07
+1844:SR-HEADLESS DONE steps=31522 sim_time=107.956799 until=met
+1845:SR-CALIBRATE run item=m_bh_sb side=Heavy mass=28373.345 ignited=true core_collapse=true ending=black_hole steps=31522 sim_time=107.957 wall_s=1256.4 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-08
+1924:SR-HEADLESS DONE steps=21506 sim_time=120.225466 until=met
+1925:SR-CALIBRATE run item=m_bh_sb side=Heavy mass=27889.747 ignited=true core_collapse=true ending=black_hole steps=21506 sim_time=120.225 wall_s=549.3 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-09
+1926:SR-CALIBRATE item=m_bh_sb value=27651.048 bracket=27414.392..27889.747 runs=9 wall_s=6950.1
+1927:SR-CALIBRATE item=max_gas_speed value=149.7953
+1929:=== step 5 cal_m_bh end exit=0 · 2026-11-20T16:16:10-0500
+1930:=== step 6 cal_presets start · 2026-11-20T16:16:10-0500
+2527:SR-HEADLESS DONE steps=171201 sim_time=1807.403819 until=met
+2528:SR-CALIBRATE run item=preset_sun suns=1 mass=3136.718 ignited=true core_collapse=false ending=white_dwarf steps=171201 sim_time=1807.404 wall_s=2065.6 record=build/calibrate_runs/2026-11-20T21-16-10Z/preset_sun-01
+2614:SR-HEADLESS DONE steps=23362 sim_time=149.679087 until=met
+2615:SR-CALIBRATE run item=preset_massive suns=15 mass=13874.329 ignited=true core_collapse=true ending=black_hole steps=23362 sim_time=149.679 wall_s=644.5 record=build/calibrate_runs/2026-11-20T21-16-10Z/preset_massive-02
+2616:SR-ERROR calibration failed: preset_massive: 15 Suns at mass 13874.3 ended as black_hole, not neutron_star — the preset is not inside its ending (reported, not re-tuned)
+2617:=== step 6 cal_presets end exit=6 · 2026-11-20T17:01:22-0500
+2618:=== calibration STOPPED — nothing after it runs (restart: START=<the failed step>, a stopped item adds --resume build/calibrate_runs/<its stamp>) · 2026-11-20T17:01:22-0500
+---
+2026-11-13T14-22-20Z
+2026-11-13T15-00-37Z
+2026-11-13T15-29-03Z
+2026-11-20T15-40-46Z
+2026-11-20T15-43-48Z
+2026-11-20T19-20-20Z
+2026-11-20T21-16-10Z
+d87_cont
+SR-CALIBRATE run item=m_bh_sb side=Light mass=7422.763 ignited=true core_collapse=true ending=neutron_star steps=32860 sim_time=282.500 wall_s=739.3 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-01
+SR-CALIBRATE run item=m_bh_sb side=Heavy mass=67020.643 ignited=true core_collapse=true ending=black_hole steps=31010 sim_time=72.510 wall_s=1363.8 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-02
+SR-CALIBRATE run item=m_bh_sb side=Light mass=22304.223 ignited=true core_collapse=true ending=neutron_star steps=14210 sim_time=86.752 wall_s=324.7 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-03
+SR-CALIBRATE run item=m_bh_sb side=Heavy mass=38663.204 ignited=true core_collapse=true ending=black_hole steps=35170 sim_time=99.745 wall_s=1467.7 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-04
+SR-CALIBRATE run item=m_bh_sb side=Heavy mass=29365.842 ignited=true core_collapse=true ending=black_hole steps=23010 sim_time=123.408 wall_s=610.6 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-05
+SR-CALIBRATE run item=m_bh_sb side=Light mass=25592.622 ignited=true core_collapse=true ending=neutron_star steps=13266 sim_time=76.365 wall_s=309.2 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-06
+SR-CALIBRATE run item=m_bh_sb side=Light mass=27414.392 ignited=true core_collapse=true ending=neutron_star steps=13746 sim_time=76.961 wall_s=322.1 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-07
+SR-CALIBRATE run item=m_bh_sb side=Heavy mass=28373.345 ignited=true core_collapse=true ending=black_hole steps=31522 sim_time=107.957 wall_s=1256.4 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-08
+SR-CALIBRATE run item=m_bh_sb side=Heavy mass=27889.747 ignited=true core_collapse=true ending=black_hole steps=21506 sim_time=120.225 wall_s=549.3 record=build/calibrate_runs/2026-11-20T19-20-20Z/m_bh_sb-09
+SR-CALIBRATE run item=preset_massive suns=15 mass=13874.329 ignited=true core_collapse=true ending=black_hole steps=23362 sim_time=149.679 wall_s=644.5 record=build/calibrate_runs/2026-11-20T21-16-10Z/preset_massive-02
+=== M0-D203 server run start on laserax-ai-server (START=1, SR_TEST_ADAPTER=RTX 4090) · 2026-11-20T10:40:46-0500
+a495b6fc4fb0aea4b99fdb3c269cf552fc926ceb7b20ea41b7ae882e935f9fae  assets/elements.json
+24acf4aa6773903ea432cf1e25dde9ffbb1ad7ac9a7f514b901ee727408e3500  assets/reactions.json
+cc2685135a28ce6a88d22567ed7940e0bb977193afdf0550b1f533b00f458742  assets/physics.json
+8096991d80c1d0978d0f47753e260feb20c757fe8412fc9bc44abab926b27f58  assets/calibration.json
+=== step 1 build start · 2026-11-20T10:40:46-0500
+    Finished `release` profile [optimized] target(s) in 0.06s
+=== step 1 build end exit=0 · 2026-11-20T10:40:46-0500
+=== step 2 cal_items_1_2 start · 2026-11-20T10:40:46-0500
+SR-CALIBRATE item=m_ch_sb value=3216.419921 worst_virial=1.56e-5 wall_s=0.0
+SR-CALIBRATE item=m_tov_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+SR-CALIBRATE item=ns_sigma_max_sb value=4853.169982 worst_virial=1.51e-5 wall_s=0.0
+#!/bin/bash
+# M0-D203 — the lead's weekend run on laserax-ai-server's RTX 4090 (the lead, 2026-11-20: «start that run in a tmux terminal on
+# laserax-ai-server … make it so all the owed tests are run one after the others, the ones that were owed to the next v gate …
+# Use a fire and forget tmux»). Started by M0-D203 in tmux `m0d203`, from the repo root of ~/workspace/sandbox_reactions.
+#   1. the recalibration on the 800 × 800 default, into a fresh --out (never the 600 × 400 file as base, M0-D205), then copied into
+#      assets/ (the old file kept beside it) and embedded by a rebuild; a calibration item that fails stops the run there;
+#   2. the new calibration accepted (Verify 3's command, now expecting exit 0);
+#   3. every scope on the recalibrated tree, the ⏱ lives included — the claims, lives and scopes owed to M0-V15
+#      (`verify.py --all --task M0-V15`);
+#   4. the red-arm sweep (`verify.py --redarm --moved --task M0-V15`) — the owed red-arms (calibration, held_core, stages,
+#      conservation, touch, endings, squeeze, fit …), each on its green run.
+# Progress: build/m0-d203/steps.txt (one line per finished step: name, exit), milestones/m0/logs/M0-D203.server.log (all output),
+# build/m0-d203/run.done when it ends. Restart from a step: START=<step number> bash milestones/m0/tasks/M0-D203.server_run.sh
+cd ~/workspace/sandbox_reactions || exit 1
+export SR_TEST_ADAPTER="RTX 4090"
+OUT=build/m0-d203
+LOG=milestones/m0/logs/M0-D203.server.log
+START=${START:-1}
+mkdir -p "$OUT"
+stamp() { echo "=== $1 · $(date '+%Y-%m-%dT%H:%M:%S%z')"; }
+step() {
+  local n=$1 name=$2; shift 2
+  if [ "$n" -lt "$START" ]; then stamp "step $n $name skipped (START=$START)"; return 0; fi
+  stamp "step $n $name start"
+  "$@"; local rc=$?
+  stamp "step $n $name end exit=$rc"
+  echo "$n $name exit=$rc $(date '+%Y-%m-%dT%H:%M:%S%z')" >> "$OUT/steps.txt"
+  return $rc
+}
+cal() { build/target/release/sandbox-reactions calibrate --adapter "RTX 4090" --out "$OUT/calibration.json" --checkpoint-every 3000 "$@"; }
+install_cal() {
+  [ -f "$OUT/calibration.2026-11-13.json" ] || cp assets/calibration.json "$OUT/calibration.2026-11-13.json"
+  cp "$OUT/calibration.json" assets/calibration.json && cargo build --release --locked -p sr-app
+}
+summary() {
+  python3 -c 'import json; c=json.load(open("assets/calibration.json")); print({k: c.get(k) for k in ("physics_hash","measured","m_ign_sb","m_ch_sb","m_up_sb","m_bh_sb","m_tov_sb","preset_mass_sb","life_sun_sb","top_rung","max_gas_speed")})'
+}
+main() {
+  stamp "M0-D203 server run start on $(hostname) (START=$START, SR_TEST_ADAPTER=$SR_TEST_ADAPTER)"
+  sha256sum assets/elements.json assets/reactions.json assets/physics.json assets/calibration.json
+mass=7422.763 ignited=true core_collapse=true ending=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=7422.763 step=32012 sim_time=278.150 heat_unconverged=0 stage=neutron_star | raw=neutron_star
+  star   M            3358 R           2.000 tau_dyn   0.04881 M_unb           0
+  world  escaped      3537 objects         1 sinks           0 sink_M          0
+
+mass=67020.643 ignited=true core_collapse=true ending=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=67020.643 step=30002 sim_time=70.887 heat_unconverged=0 stage=black_hole | raw=black_hole
+  star   M           40845 R           99.71 tau_dyn     4.926 M_unb       1.774
+  world  escaped     26175 objects         1 sinks           1 sink_M      36344
+
+mass=22304.223 ignited=true core_collapse=true ending=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=22304.223 step=14002 sim_time=85.494 heat_unconverged=0 stage=neutron_star | raw=neutron_star
+  star   M           12563 R           351.3 tau_dyn     58.76 M_unb        3843
+  world  escaped      9741 objects         1 sinks           0 sink_M          0
+
+mass=38663.204 ignited=true core_collapse=true ending=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=38663.204 step=34002 sim_time=97.340 heat_unconverged=0 stage=black_hole | raw=black_hole
+  star   M           25511 R           111.3 tau_dyn     7.348 M_unb       1.074
+  world  escaped     13151 objects         1 sinks           1 sink_M      22688
+
+mass=29365.842 ignited=true core_collapse=true ending=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=29365.842 step=22002 sim_time=118.332 heat_unconverged=0 stage=black_hole | raw=black_hole
+  star   M           12991 R           141.8 tau_dyn     14.81 M_unb           0
+  world  escaped     16373 objects         1 sinks           1 sink_M       8396
+
+mass=25592.622 ignited=true core_collapse=true ending=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=25592.622 step=12002 sim_time=69.829 heat_unconverged=0 stage=neutron_star | raw=neutron_star
+  star   M           16485 R           369.1 tau_dyn     55.23 M_unb        5164
+  world  escaped      9107 objects         1 sinks           0 sink_M          0
+
+mass=27414.392 ignited=true core_collapse=true ending=neutron_star
+SR-CALIBRATE progress item=m_bh_sb mass=27414.392 step=12002 sim_time=68.036 heat_unconverged=0 stage=neutron_star | raw=neutron_star
+  star   M           17745 R           372.0 tau_dyn     53.86 M_unb        5149
+  world  escaped      9669 objects         1 sinks           0 sink_M          0
+
+mass=28373.345 ignited=true core_collapse=true ending=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=28373.345 step=30002 sim_time=104.191 heat_unconverged=0 stage=black_hole | raw=black_hole
+  star   M           17129 R           125.9 tau_dyn     10.79 M_unb      0.4598
+  world  escaped     11243 objects         1 sinks           1 sink_M      15242
+
+mass=27889.747 ignited=true core_collapse=true ending=black_hole
+SR-CALIBRATE progress item=m_bh_sb mass=27889.747 step=20002 sim_time=112.071 heat_unconverged=0 stage=black_hole | raw=black_hole
+  star   M           11551 R           185.6 tau_dyn     23.53 M_unb       13.09
+  world  escaped     16338 objects         1 sinks           1 sink_M       7144
+
+mass=13874.329 ignited=true core_collapse=true ending=black_hole
+SR-CALIBRATE progress item=preset_massive mass=13874.329 step=22002 sim_time=143.944 heat_unconverged=0 stage=black_hole | raw=black_hole
+  star   M            5979 R           260.1 tau_dyn     54.24 M_unb       292.9
+  world  escaped      7894 objects         1 sinks           1 sink_M       5116
+
+## preset_massive
+step=2001 sim_time=11.091 stage=main_sequence raw=main_sequence 
+step=4001 sim_time=26.604 stage=he_core raw=he_core 
+step=6001 sim_time=47.358 stage=main_sequence raw=main_sequence 
+step=8001 sim_time=67.548 stage=he_core raw=he_core 
+step=10001 sim_time=85.087 stage=o_burn raw=o_burn 
+step=12001 sim_time=98.657 stage=main_sequence raw=main_sequence 
+step=13010 sim_time=104.394 stage=supernova raw=supernova 
+step=16002 sim_time=118.601 stage=black_hole raw=black_hole 
+## m_bh_sb mass=27414
+step=2001 sim_time=9.524 stage=main_sequence raw=main_sequence 
+step=6001 sim_time=41.044 stage=si_burn raw=si_burn 
+step=6578 sim_time=44.019 stage=supernova raw=supernova 
+step=12002 sim_time=68.036 stage=neutron_star raw=neutron_star 
+## m_bh_sb mass=27889
+step=2001 sim_time=9.477 stage=main_sequence raw=main_sequence 
+step=6001 sim_time=40.787 stage=si_burn raw=si_burn 
+step=6530 sim_time=43.465 stage=supernova raw=supernova 
+step=12002 sim_time=68.327 stage=black_hole raw=black_hole 
+2528:SR-CALIBRATE run item=preset_sun suns=1 mass=3136.718 ignited=true core_collapse=false ending=white_dwarf steps=171201 sim_time=1807.404 wall_s=2065.6 record=build/calibrate_runs/2026-11-20T21-16-10Z/preset_sun-01
+=== 2026-11-23T07:44:44-05:00 M0-D203 return: verify.py --changed ===

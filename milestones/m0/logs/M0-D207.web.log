@@ -1,0 +1,124 @@
+== 2026-11-23T11:40:04-05:00 web[calibration] · task M0-D207 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[calibration] · exit=0 · 8.34 s
+web build: trunk 0.21.14, 5.5M wasm; check on line 38, wasm on line 48
+web: ready on port 47840, 0.0s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D207.launch.web.log)
+services: 1, ready: 1
+web smoke calibration: /usr/bin/google-chrome (157.0.8103.78) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47840
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=turing device= description= fallback=false
+calibration: srState "error" after 0.6 s; srError "This build's star calibration is out of date, so Sandbox Reactions cannot start. The build needs recalibrating (sandbox-reactions calibrate)."; srErrorDetail "SR-ERROR calibration out of date: it was measured on the 1x1 world, the default world is 800x800 (calibrate again on it: sandbox-reactions calibrate)"
+=== GO ===
+
+== 2026-11-23T11:40:20-05:00 web[build] · task M0-D207 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-11-23T11:40:20-05:00 web[ready] · task M0-D207 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-11-23T11:40:20-05:00 web[no-webgpu] · task M0-D207 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-11-23T11:40:20-05:00 web[preset] · task M0-D207 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-11-23T11:40:20-05:00 web[ready-held] · task M0-D207 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-11-23T11:40:20-05:00 web[calibration] · task M0-D207 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[no-webgpu] · exit=0 · 1.12 s
+web: ready on port 47840, 0.1s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D207.launch.web.log)
+services: 1, ready: 1
+web smoke no-webgpu: /usr/bin/google-chrome (157.0.8103.78) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47840
+sandbox: on (--no-sandbox absent from Chrome's command line)
+no-webgpu: srState "no-webgpu" after 0.0 s, the three web.no_webgpu_* texts exact, no wasm fetched
+=== GO ===
+
+-- web[build] · exit=0 · 6.39 s
+web build: trunk 0.21.14, 5.5M wasm; check on line 38, wasm on line 48
+=== GO ===
+
+-- web[ready-held] · exit=1 · 8.49 s
+web: ready on port 47841, 0.0s (port 47840 held by a process we did not start) (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D207.launch.web.log)
+services: 1, ready: 1
+web ready-held: 47840 held, the server on 47841
+web smoke ready: /usr/bin/google-chrome (157.0.8103.78) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47841
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=turing device= description= fallback=false
+=== NO-GO: ready: srState "error" (This build's star calibration is out of date, so Sandbox Reactions cannot start. The build needs recalibrating (sandbox-reactions calibrate).) - not "ready"; console.error: Failed to load resource: the server responded with a status of 404 (File not found) | console.warning: A valid external Instance reference no longer exists. ===
+
+-- web[calibration] · exit=0 · 10.14 s
+web: ready on port 47840, 0.0s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D207.launch.web.log)
+services: 1, ready: 1
+web smoke calibration: /usr/bin/google-chrome (157.0.8103.78) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47840
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=turing device= description= fallback=false
+calibration: srState "error" after 0.4 s; srError "This build's star calibration is out of date, so Sandbox Reactions cannot start. The build needs recalibrating (sandbox-reactions calibrate)."; srErrorDetail "SR-ERROR calibration out of date: it was measured on the 1x1 world, the default world is 800x800 (calibrate again on it: sandbox-reactions calibrate)"
+=== GO ===
+
+-- web[ready] · exit=1 · 12.25 s
+web: ready on port 47840, 0.0s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D207.launch.web.log)
+services: 1, ready: 1
+web smoke ready: /usr/bin/google-chrome (157.0.8103.78) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47840
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=turing device= description= fallback=false
+=== NO-GO: ready: srState "error" (This build's star calibration is out of date, so Sandbox Reactions cannot start. The build needs recalibrating (sandbox-reactions calibrate).) - not "ready"; console.error: Failed to load resource: the server responded with a status of 404 (File not found) | console.warning: A valid external Instance reference no longer exists. ===
+
+-- web[preset] · exit=1 · 14.26 s
+web: ready on port 47840, 0.0s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D207.launch.web.log)
+services: 1, ready: 1
+web smoke preset: /usr/bin/google-chrome (157.0.8103.78) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47840
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=turing device= description= fallback=false
+=== NO-GO: preset: srState "error" (This build's star calibration is out of date, so Sandbox Reactions cannot start. The build needs recalibrating (sandbox-reactions calibrate).) - not "ready"; console.error: Failed to load resource: the server responded with a status of 404 (File not found) | console.warning: A valid external Instance reference no longer exists. ===
+
+== 2026-11-23T11:41:33-05:00 web[build] · task M0-D207 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-11-23T11:41:33-05:00 web[ready] · task M0-D207 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-11-23T11:41:33-05:00 web[no-webgpu] · task M0-D207 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-11-23T11:41:37-05:00 web[preset] · task M0-D207 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[build] · exit=0 · 4.64 s
+web build: trunk 0.21.14, 5.5M wasm; check on line 38, wasm on line 48
+=== GO ===
+
+== 2026-11-23T11:41:38-05:00 web[ready-held] · task M0-D207 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-11-23T11:41:38-05:00 web[calibration] · task M0-D207 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[ready-held] · exit=1 · 1.57 s
+web: ready on port 47841, 0.0s (port 47840 held by a process we did not start) (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D207.launch.web.log)
+services: 1, ready: 1
+web ready-held: 47840 held, the server on 47841
+web smoke ready: /usr/bin/google-chrome (157.0.8103.78) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47841
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=turing device= description= fallback=false
+=== NO-GO: ready: srState "error" (This build's star calibration is out of date, so Sandbox Reactions cannot start. The build needs recalibrating (sandbox-reactions calibrate).) - not "ready"; console.error: Failed to load resource: the server responded with a status of 404 (File not found) | console.warning: A valid external Instance reference no longer exists. ===
+
+-- web[no-webgpu] · exit=0 · 7.10 s
+web: ready on port 47840, 0.0s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D207.launch.web.log)
+services: 1, ready: 1
+web smoke no-webgpu: /usr/bin/google-chrome (157.0.8103.78) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47840
+sandbox: on (--no-sandbox absent from Chrome's command line)
+no-webgpu: srState "no-webgpu" after 0.0 s, the three web.no_webgpu_* texts exact, no wasm fetched
+=== GO ===
+
+-- web[calibration] · exit=0 · 3.22 s
+web: ready on port 47840, 0.0s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D207.launch.web.log)
+services: 1, ready: 1
+web smoke calibration: /usr/bin/google-chrome (157.0.8103.78) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47840
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=turing device= description= fallback=false
+calibration: srState "error" after 0.4 s; srError "This build's star calibration is out of date, so Sandbox Reactions cannot start. The build needs recalibrating (sandbox-reactions calibrate)."; srErrorDetail "SR-ERROR calibration out of date: it was measured on the 1x1 world, the default world is 800x800 (calibrate again on it: sandbox-reactions calibrate)"
+=== GO ===
+
+-- web[ready] · exit=1 · 10.15 s
+web: ready on port 47840, 0.0s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D207.launch.web.log)
+services: 1, ready: 1
+web smoke ready: /usr/bin/google-chrome (157.0.8103.78) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47840
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=turing device= description= fallback=false
+=== NO-GO: ready: srState "error" (This build's star calibration is out of date, so Sandbox Reactions cannot start. The build needs recalibrating (sandbox-reactions calibrate).) - not "ready"; console.error: Failed to load resource: the server responded with a status of 404 (File not found) | console.warning: A valid external Instance reference no longer exists. ===
+
+-- web[preset] · exit=1 · 7.18 s
+web: ready on port 47840, 0.1s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D207.launch.web.log)
+services: 1, ready: 1
+web smoke preset: /usr/bin/google-chrome (157.0.8103.78) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47840
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=turing device= description= fallback=false
+=== NO-GO: preset: srState "error" (This build's star calibration is out of date, so Sandbox Reactions cannot start. The build needs recalibrating (sandbox-reactions calibrate).) - not "ready"; console.error: Failed to load resource: the server responded with a status of 404 (File not found) | console.warning: A valid external Instance reference no longer exists. ===
+

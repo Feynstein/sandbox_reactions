@@ -18,6 +18,7 @@
 //! A sink from mass (§0.5 [M0-R6], M0-D90): under the shipped physics (the cold pressure on, so m_tov_sb is the sheet's), a
 //! neutronized core holding m_tov_sb within 4 cells forms a sink that takes the disk; 0.95 of it, the same mass as iron
 //! (Y_e 0.464) or diverging does not, and Σ ≥ Σ_BH alone still forms one that takes its cell — on the twin and on the GPU.
+//! The Y_e bound is 0.40 (§0.5 [M0-D208]): a core at Y_e 0.38, where a collapse's r ≤ 3 mean crawls, forms; 0.42 does not.
 
 use std::path::{Path, PathBuf};
 
@@ -448,6 +449,40 @@ fn core_world(w: usize, h: usize, (cx, cy): (usize, usize), mass: f64, species: 
     let mut st = State::new(w, h, planes);
     free_of_the_hold(&mut st);
     (st, phi)
+}
+
+/// [`core_world`] of iron and neutrons mixed in the core to `y_e` (iron's 26/56 at most): the collapse's partly neutronized
+/// core, whose r ≤ 3 mean crawls 0.364 … 0.351 on the RTX 5090 (§0.5 [M0-D208]); the core again [`free_of_the_hold`].
+fn mixed_core_world(w: usize, h: usize, at: (usize, usize), mass: f64, y_e: f64) -> (State, Vec<f64>) {
+    let els = elements();
+    let (k_fe, k_n) = (els.index_of("Fe").unwrap(), els.index_of("n").unwrap());
+    let iron: [f64; N_SPECIES] = std::array::from_fn(|s| if s == k_fe { 1.0 } else { 0.0 });
+    let f_n = 1.0 - y_e / els.composition(&iron).y_e;
+    let (mut st, phi) = core_world(w, h, at, mass, "Fe", -1.0);
+    let n = w * h;
+    for i in disk(at.0, at.1, R_CORE, w, h) {
+        st.planes[(4 + k_fe) * n + i] = 1.0 - f_n;
+        st.planes[(4 + k_n) * n + i] = f_n;
+    }
+    let centre = at.1 * w + at.0;
+    let x: [f64; N_SPECIES] = std::array::from_fn(|s| st.get(4 + s, centre));
+    assert!((els.composition(&x).y_e - y_e).abs() < 1e-9, "the core's Y_e {} against {y_e}", els.composition(&x).y_e);
+    free_of_the_hold(&mut st);
+    (st, phi)
+}
+
+#[test]
+fn a_core_at_the_collapse_s_y_e_plateau_forms_a_sink_and_one_over_the_bound_does_not() {
+    let m_tov = mass_sinks().m_tov();
+    let (mut st, phi) = mixed_core_world(24, 24, (12, 12), 1.05 * m_tov, 0.38);
+    let mut s = mass_sinks();
+    assert_eq!(s.form(&mut st, &phi), Some((12, 12)), "Y_e 0.38 ≤ 0.40: the core forms its sink");
+    assert!(rel(s.sinks[0].m, 1.05 * m_tov) < 1e-6, "the disk's mass: {}", s.sinks[0].m);
+    let (mut st, phi) = mixed_core_world(24, 24, (12, 12), 1.05 * m_tov, 0.42);
+    let before = st.clone();
+    let mut s = mass_sinks();
+    assert_eq!(s.form(&mut st, &phi), None, "Y_e 0.42 > 0.40: none");
+    assert!(s.sinks.is_empty() && st == before, "Y_e 0.42: the world was touched");
 }
 
 #[test]
@@ -1333,6 +1368,24 @@ fn gpu_a_neutronized_core_holding_m_tov_sb_forms_a_sink_from_mass_as_the_twin() 
         // The step's other passes (P8) may move E; no cell of the disk gave its mass.
         let cells = r.cells();
         assert!(core.iter().all(|&i| cells.get(0, i) == st.get(0, i)), "{name}: a cell of the disk was taken");
+    }
+    // The Y_e bound (§0.5 [M0-D208]): the collapse's plateau, Y_e 0.38, forms as the twin; 0.42 forms none.
+    for (y_e, forms) in [(0.38, true), (0.42, false)] {
+        let (st, phi) = mixed_core_world(64, 64, (32, 32), 1.05 * m_tov, y_e);
+        let (st, phi) = (rounded(&st), phi.iter().map(|&v| f64::from(v as f32)).collect::<Vec<f64>>());
+        assert_none_held("the Y_e bound", &st);
+        let r = rig_with(&phys, &st, Some(&phi), false, None, &[]);
+        let report = r.run(1);
+        let mut twin = mass_sinks();
+        let tr = twin.step(&mut st.clone(), &Field { phi: phi.clone(), gx: vec![0.0; 4096], gy: vec![0.0; 4096] }, r.dt());
+        println!("SR-SINK gpu Y_e bound, core at Y_e {y_e}: {report:?}; twin {tr:?}");
+        assert_eq!((report.formed, tr.formed), (forms.then_some((32, 32)), forms.then_some((32, 32))), "Y_e {y_e}");
+        if forms {
+            assert!(rel(report.sinks[0].m, twin.sinks[0].m) < 1e-6, "Y_e {y_e}: {report:?}");
+        } else {
+            let cells = r.cells();
+            assert!(core.iter().all(|&i| cells.get(0, i) == st.get(0, i)), "Y_e {y_e}: a cell of the disk was taken");
+        }
     }
     // Σ ≥ Σ_BH alone, hydrogen: the cell alone, as §2.6. Its cells at Σ ≥ σ_hold free of the hold, as the core's: the
     // centre's ε_cold ≈ 17,937 under the shipped physics, so ε_th ≈ 4,484, bound in the bowl deepened by 10⁴.

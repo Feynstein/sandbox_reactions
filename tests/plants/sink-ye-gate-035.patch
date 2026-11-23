@@ -1,0 +1,22 @@
+--- a/crates/sr-physics/src/reference/sinks.rs
++++ b/crates/sr-physics/src/reference/sinks.rs
+@@ -54,7 +54,7 @@
+ /// 0.40 inside 25 steps, then crawls 0.364 … 0.351, so 0.35 left the sink, and the ending, to the plateau's last digits.
+ pub const R_CORE: f64 = 4.0;
+ pub const R_Y_E: f64 = 3.0;
+-pub const CORE_Y_E: f64 = 0.40;
++pub const CORE_Y_E: f64 = 0.35;
+ 
+ /// A sink: position (cells), velocity (cells per t.u.) and mass.
+ #[derive(Debug, Clone, Copy, PartialEq)]
+--- a/crates/sr-engine/shaders/sinks.wgsl
++++ b/crates/sr-engine/shaders/sinks.wgsl
+@@ -170,7 +170,7 @@
+ // bound of 0.35 left the sink to which side of it the plateau landed on, GPU by GPU.
+ const R_CORE: i32 = 4;
+ const R_Y_E: i32 = 3;
+-const CORE_Y_E: f32 = 0.40;
++const CORE_Y_E: f32 = 0.35;
+ 
+ // Whether cell (x, y), inside the world's outer ring, is a local Σ maximum: no less than at any of its 8 neighbours.
+ fn peak(x: u32, y: u32) -> bool {

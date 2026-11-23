@@ -1,0 +1,35 @@
+M0-D208 2026-11-23T13:21:41-05:00 life 22304.223 sun to t=62, leave, 800x800, dumps every 500, RTX 5090 (linux-pc)
+D208 m_tov_sb=4853.17 preset=sun mass=22304.223 world=800x800 edge=leave until=sim_time:62
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+D208 step=257 t=1.403 stage=protostar/protostar M=22301 R=92.0 M_unb=27 sigma_c=1.1 d_c=0.129 Ye_c=0.867 X_n_c=0.000 vr/vdyn=-0.046 sinks=0 sink_M=-0 escaped=0 objects=1
+D208 step=500 t=2.515 stage=protostar/collapsing M=22295 R=93.4 M_unb=46 sigma_c=1.2 d_c=0.143 Ye_c=0.867 X_n_c=0.000 vr/vdyn=-0.101 sinks=0 sink_M=-0 escaped=0 objects=1
+D208 step=756 t=3.760 stage=protostar/main_sequence M=22288 R=94.7 M_unb=66 sigma_c=1.6 d_c=0.162 Ye_c=0.866 X_n_c=0.000 vr/vdyn=-0.170 sinks=0 sink_M=-0 escaped=0 objects=1
+D208 step=1000 t=5.000 stage=main_sequence/main_sequence M=22279 R=95.7 M_unb=86 sigma_c=2.5 d_c=0.187 Ye_c=0.865 X_n_c=0.000 vr/vdyn=-0.236 sinks=0 sink_M=-0 escaped=0 objects=1
+D208 step=1256 t=6.316 stage=he_core/he_core M=22269 R=95.9 M_unb=149 sigma_c=4.4 d_c=0.162 Ye_c=0.858 X_n_c=0.000 vr/vdyn=-0.170 sinks=0 sink_M=-0 escaped=0 objects=1
+D208 step=1756 t=8.698 stage=main_sequence/main_sequence M=22246 R=103.8 M_unb=395 sigma_c=2.4 d_c=0.123 Ye_c=0.818 X_n_c=0.000 vr/vdyn=0.470 sinks=0 sink_M=-0 escaped=0 objects=1
+D208 step=2256 t=11.299 stage=main_sequence/main_sequence M=22215 R=118.9 M_unb=398 sigma_c=1.1 d_c=0.171 Ye_c=0.811 X_n_c=0.000 vr/vdyn=0.434 sinks=0 sink_M=-0 escaped=5 objects=1
+D208 step=2756 t=14.272 stage=main_sequence/main_sequence M=22173 R=141.0 M_unb=380 sigma_c=1.0 d_c=0.198 Ye_c=0.811 X_n_c=0.000 vr/vdyn=0.235 sinks=0 sink_M=-0 escaped=26 objects=1
+D208 step=3256 t=17.983 stage=main_sequence/main_sequence M=22111 R=167.4 M_unb=335 sigma_c=2.4 d_c=0.273 Ye_c=0.811 X_n_c=0.000 vr/vdyn=-0.052 sinks=0 sink_M=-0 escaped=90 objects=1
+D208 step=3756 t=22.320 stage=main_sequence/main_sequence M=22018 R=187.4 M_unb=475 sigma_c=4.5 d_c=0.197 Ye_c=0.783 X_n_c=0.000 vr/vdyn=0.125 sinks=0 sink_M=-0 escaped=214 objects=1
+D208 step=4256 t=26.983 stage=main_sequence/main_sequence M=21869 R=209.9 M_unb=330 sigma_c=5.7 d_c=0.306 Ye_c=0.771 X_n_c=0.000 vr/vdyn=-0.149 sinks=0 sink_M=-0 escaped=382 objects=1
+D208 step=4500 t=29.110 stage=he_core/main_sequence M=21796 R=219.4 M_unb=1421 sigma_c=7.0 d_c=0.233 Ye_c=0.749 X_n_c=0.000 vr/vdyn=0.159 sinks=0 sink_M=-0 escaped=461 objects=1
+D208 step=4756 t=31.552 stage=main_sequence/main_sequence M=21710 R=232.6 M_unb=1176 sigma_c=3.4 d_c=0.240 Ye_c=0.727 X_n_c=0.000 vr/vdyn=0.297 sinks=0 sink_M=-0 escaped=549 objects=1
+D208 step=5000 t=34.176 stage=main_sequence/he_core M=21605 R=246.2 M_unb=986 sigma_c=10.1 d_c=0.328 Ye_c=0.721 X_n_c=0.000 vr/vdyn=-0.021 sinks=0 sink_M=-0 escaped=652 objects=1
+D208 step=5256 t=36.460 stage=main_sequence/main_sequence M=21444 R=253.3 M_unb=1557 sigma_c=7.8 d_c=0.275 Ye_c=0.699 X_n_c=0.000 vr/vdyn=0.236 sinks=0 sink_M=-0 escaped=820 objects=1
+D208 step=5756 t=41.310 stage=he_core/he_core M=21028 R=259.2 M_unb=1483 sigma_c=14.1 d_c=0.354 Ye_c=0.660 X_n_c=0.000 vr/vdyn=0.233 sinks=0 sink_M=-0 escaped=1275 objects=1
+D208 step=6256 t=45.508 stage=he_core/o_burn M=20585 R=247.9 M_unb=1302 sigma_c=33.5 d_c=0.476 Ye_c=0.627 X_n_c=0.000 vr/vdyn=0.304 sinks=0 sink_M=-0 escaped=1718 objects=1
+D208 step=6500 t=47.246 stage=o_burn/o_burn M=20407 R=241.7 M_unb=1969 sigma_c=54.5 d_c=0.528 Ye_c=0.615 X_n_c=0.000 vr/vdyn=0.342 sinks=0 sink_M=-0 escaped=1896 objects=1
+D208 step=6756 t=48.860 stage=si_burn/main_sequence M=20246 R=254.6 M_unb=2515 sigma_c=88.2 d_c=0.559 Ye_c=0.587 X_n_c=0.000 vr/vdyn=0.401 sinks=0 sink_M=-0 escaped=2057 objects=1
+D208 step=7000 t=50.228 stage=main_sequence/main_sequence M=20114 R=265.4 M_unb=4037 sigma_c=138.4 d_c=0.586 Ye_c=0.567 X_n_c=0.000 vr/vdyn=0.456 sinks=0 sink_M=-0 escaped=2189 objects=1
+D208 step=7417 t=52.226 stage=supernova/supernova M=19929 R=281.2 M_unb=7203 sigma_c=300.1 d_c=0.628 Ye_c=0.534 X_n_c=0.001 vr/vdyn=0.502 sinks=0 sink_M=-0 escaped=2374 objects=1
+D208 step=7756 t=53.405 stage=black_hole/black_hole M=19825 R=290.5 M_unb=5695 sigma_c=0.5 d_c=0.082 Ye_c=0.810 X_n_c=0.000 vr/vdyn=0.630 sinks=1 sink_M=7958 escaped=2478 objects=1
+D208 step=8256 t=55.045 stage=black_hole/black_hole M=19691 R=302.7 M_unb=4734 sigma_c=0.4 d_c=0.069 Ye_c=0.817 X_n_c=0.000 vr/vdyn=0.610 sinks=1 sink_M=8361 escaped=2613 objects=1
+D208 step=8756 t=56.647 stage=black_hole/black_hole M=19572 R=314.3 M_unb=4816 sigma_c=0.3 d_c=0.059 Ye_c=0.822 X_n_c=0.000 vr/vdyn=0.595 sinks=1 sink_M=8651 escaped=2731 objects=1
+D208 step=9256 t=58.226 stage=black_hole/black_hole M=19376 R=328.5 M_unb=4853 sigma_c=0.2 d_c=0.052 Ye_c=0.828 X_n_c=0.000 vr/vdyn=0.583 sinks=1 sink_M=8883 escaped=2927 objects=1
+D208 step=9756 t=59.787 stage=black_hole/black_hole M=19114 R=339.8 M_unb=4796 sigma_c=0.2 d_c=0.047 Ye_c=0.831 X_n_c=0.000 vr/vdyn=0.568 sinks=1 sink_M=9078 escaped=3189 objects=1
+D208 step=10256 t=61.335 stage=black_hole/black_hole M=18859 R=351.2 M_unb=4701 sigma_c=0.2 d_c=0.043 Ye_c=0.833 X_n_c=0.000 vr/vdyn=0.554 sinks=1 sink_M=9249 escaped=3444 objects=1
+SR-HEADLESS DONE steps=10473 sim_time=62.002525 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=10473 sim_time=62.002525 until=met
+D208 exit=0 wall_s=215.7
+exit=0

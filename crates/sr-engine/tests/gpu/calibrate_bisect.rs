@@ -17,6 +17,7 @@ use sr_engine::headless::{capturing, run_captured, run_scene_captured, say, unco
 use sr_engine::calibrate::{bisect, measure, run_with, run_with_progress, side_bh, side_ign, side_up, CalError, Life, Side, Threshold, BISECT_TOLERANCE};
 use sr_engine::scene::Scene;
 use sr_engine::watch::{RunEvent, Until, Watch};
+use sr_physics::calibration::DEFAULT_WORLD;
 use sr_physics::registry::Physics;
 
 /// A stub that is Light under `threshold` and Heavy from it, recording every mass asked for.
@@ -451,6 +452,68 @@ fn m_up_stops_at_a_collapse_and_the_others_keep_their_conditions() {
     assert!(!watch.holds(Until::CollapseOrEnding, &[]), "a frame with no event and no remnant shown does not stop it");
 }
 
+/// summary.json's `world` as a calibrate life on the default world writes it (§2.12.2; M0-D205: `--resume` reads it).
+fn default_world() -> serde_json::Value {
+    serde_json::json!({"width": DEFAULT_WORLD[0], "height": DEFAULT_WORLD[1], "edge": "leave"})
+}
+
+/// M0-D205: `--resume` reads back a finished life only when it ran on the default world — a record of another world (the
+/// 600 × 400 of before M0-D203) or naming none is another calibration's, refused (exit 4) before any life runs and naming
+/// both worlds, whether it is the first life or a later one; the default's replays. No GPU: records written by hand.
+#[test]
+fn a_finished_life_of_another_world_is_not_resumed() {
+    let dir = std::env::temp_dir().join(format!("sr-calibrate-world-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    let (lo, hi) = (3351.0, 3380.0);
+    let record = |nn: u32, mass: f64, world: Option<serde_json::Value>, ending: &str| {
+        let mut summary = serde_json::json!({
+            "scene": format!("calibrate:m_up_sb:{mass:.3}"), "until": {"condition": "collapse|ending", "met": true}, "steps": 1000, "sim_time": 50.0,
+            "wall_s": 1.0, "adapter": {"name": "test adapter"}, "max_gas_speed": 1.0,
+            "events": [{"step": 99, "sim_time": 11.0, "kind": "ending", "object": 1, "detail": {"stage": ending}}],
+            "objects": [{"id": 1, "stage": ending, "mass_sb": mass, "stages": [{"stage": ending, "from_step": 5, "sim_time": 0.5}]}],
+        });
+        if let Some(w) = world {
+            summary["world"] = w;
+        }
+        let folder = dir.join(format!("m_up_sb-{nn:02}"));
+        std::fs::create_dir_all(&folder).unwrap();
+        std::fs::write(folder.join("summary.json"), summary.to_string()).unwrap();
+    };
+    let resume = || {
+        let args: Vec<String> = ["--out", dir.join("calibration.json").to_str().unwrap(), "--only", "m_up_sb", "--bracket", "3351,3380", "--resume", dir.to_str().unwrap()]
+            .map(String::from)
+            .to_vec();
+        let mut lines = Vec::new();
+        let code = run_with(&args, &[], &mut |l| lines.push(l.to_string()));
+        (code, lines)
+    };
+    let old = || Some(serde_json::json!({"width": 600, "height": 400, "edge": "leave"}));
+    let default = format!("the default world is {}x{}", DEFAULT_WORLD[0], DEFAULT_WORLD[1]);
+    let cases: [(&str, Option<serde_json::Value>, Option<serde_json::Value>, &str); 3] = [
+        ("the first life on 600 × 400", old(), Some(default_world()), "ran on the 600x400 world"),
+        ("the second life on 600 × 400", Some(default_world()), old(), "ran on the 600x400 world"),
+        ("the first life naming no world", None, Some(default_world()), "ran on no named world"),
+    ];
+    for (what, first, second, said) in cases {
+        record(1, lo, first, "white_dwarf");
+        record(2, hi, second, "neutron_star");
+        let (code, lines) = resume();
+        assert_eq!(code, 4, "{what}: {lines:?}");
+        let error = lines.iter().find(|l| l.starts_with("SR-ERROR")).cloned().unwrap_or_default();
+        assert!(error.contains("is not this calibration's") && error.contains(said) && error.contains(&default) && error.contains("start without --resume"), "{what}: {error}");
+        assert!(lines.iter().all(|l| !l.starts_with("SR-ADAPTER") && !l.starts_with("SR-CALIBRATE progress")), "{what}: no life ran: {lines:?}");
+        assert!(!dir.join("calibration.json").exists(), "{what}: nothing written");
+    }
+    // Both on the default world: replayed, the item closes.
+    record(1, lo, Some(default_world()), "white_dwarf");
+    record(2, hi, Some(default_world()), "neutron_star");
+    let (code, lines) = resume();
+    assert_eq!(code, 0, "{lines:?}");
+    assert_eq!(lines.iter().filter(|l| l.starts_with("SR-CALIBRATE run") && l.contains(" replayed")).count(), 2, "{lines:?}");
+    assert!(lines.iter().any(|l| l.starts_with("SR-CALIBRATE item=m_up_sb value=")), "{lines:?}");
+    let _ = std::fs::remove_dir_all(&dir);
+}
+
 /// M0-D75: a life's side from the record the engine wrote — read back by `--resume`, no GPU. A record of the binary before
 /// M0-D75 (run to its ending) sides as it did; one cut at the core collapse (no `ending` event) sides heavy; so does one that
 /// shows a neutron star or a black hole without the event; a white dwarf's ending stays light.
@@ -467,7 +530,7 @@ fn a_record_sides_the_same_whichever_condition_stopped_it() {
         let stages: Vec<serde_json::Value> = stages.iter().map(|s| serde_json::json!({"stage": s, "from_step": 5, "sim_time": 0.5})).collect();
         let summary = serde_json::json!({
             "scene": format!("calibrate:m_up_sb:{mass:.3}"), "until": {"condition": condition, "met": true}, "steps": 1000, "sim_time": 50.0, "wall_s": 1.0,
-            "adapter": {"name": "test adapter"}, "max_gas_speed": 1.0, "events": events,
+            "adapter": {"name": "test adapter"}, "max_gas_speed": 1.0, "events": events, "world": default_world(),
             "objects": [{"id": 1, "stage": null, "mass_sb": mass, "stages": stages}],
         });
         let folder = dir.join(format!("m_up_sb-{nn:02}"));
@@ -527,6 +590,7 @@ fn a_fragments_ending_is_none_of_the_lifes() {
         let summary = serde_json::json!({
             "scene": format!("calibrate:m_bh_sb:{mass:.3}"), "until": {"condition": "ending", "met": true}, "steps": 1000, "sim_time": 50.0,
             "wall_s": 1.0, "adapter": {"name": "test adapter"}, "max_gas_speed": 1.0, "events": events, "objects": objects,
+            "world": default_world(),
         });
         let folder = dir.join(format!("m_bh_sb-{nn:02}"));
         std::fs::create_dir_all(&folder).unwrap();

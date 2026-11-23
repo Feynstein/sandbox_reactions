@@ -1,0 +1,9 @@
+web build: trunk 0.21.14, 5.5M wasm; check on line 38, wasm on line 48
+web: ready on port 47840, 0.1s (log /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/ad147846-0903-412d-9173-b27c5da146b6/scratchpad/arm-plant/milestones/m0/logs/M0-D207.launch.web.log)
+services: 1, ready: 1
+web smoke calibration: /usr/bin/google-chrome (157.0.8103.78) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47840
+sandbox: on (--no-sandbox absent from Chrome's command line)
+SR-ADAPTER  (BrowserWebGpu, Other, driver )
+SR-CHROME-ADAPTER vendor=nvidia architecture=turing device= description= fallback=false
+calibration: srState "error" after 0.6 s; srError "No compatible graphics card found. Sandbox Reactions needs a graphics card with Vulkan, Metal or DirectX 12 support."; srErrorDetail "SR-ERROR calibration out of date: it was measured on the 1x1 world, the default world is 800x800 (calibrate again on it: sandbox-reactions calibrate)"
+=== NO-GO: calibration: srError is error.no_adapter: the refused calibration reads as a missing graphics card; the page's line "No compatible graphics card found. Sandbox Reactions needs a graphics card with Vulkan, Metal or DirectX 12 support." is not error.calibration, shown ===

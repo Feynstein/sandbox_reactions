@@ -1,0 +1,25 @@
+M0-D208 2026-11-23T13:26:20-05:00 massive continued from s_12500 (leave until then) to t=125 with edge BOUNCE, dumps every 500, RTX 5090
+D208 m_tov_sb=4853.17 preset=massive mass=13874.329 world=800x800 edge=bounce until=sim_time:125
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+D208 step=12756 t=102.926 stage=iron_core/main_sequence M=10738 R=380.7 M_unb=5301 sigma_c=247.5 d_c=0.684 Ye_c=0.466 X_n_c=0.000 vr/vdyn=0.836 sinks=0 sink_M=-0 escaped=3135 objects=1
+D208 step=13000 t=104.246 stage=iron_core/o_burn M=10738 R=395.6 M_unb=5350 sigma_c=285.0 d_c=0.691 Ye_c=0.481 X_n_c=0.000 vr/vdyn=0.798 sinks=0 sink_M=-0 escaped=3135 objects=1
+D208 step=13113 t=104.823 stage=supernova/supernova M=10738 R=398.8 M_unb=5335 sigma_c=337.8 d_c=0.963 Ye_c=0.484 X_n_c=0.053 vr/vdyn=0.732 sinks=0 sink_M=-0 escaped=3135 objects=1
+D208 step=13756 t=107.975 stage=supernova/supernova M=10738 R=416.5 M_unb=5372 sigma_c=634.4 d_c=0.997 Ye_c=0.252 X_n_c=0.615 vr/vdyn=0.738 sinks=0 sink_M=-0 escaped=3135 objects=1
+D208 step=14256 t=110.421 stage=supernova/supernova M=10738 R=430.1 M_unb=5457 sigma_c=634.4 d_c=0.997 Ye_c=0.252 X_n_c=0.615 vr/vdyn=0.672 sinks=0 sink_M=-0 escaped=3135 objects=1
+D208 step=14756 t=112.853 stage=supernova/supernova M=10738 R=443.4 M_unb=5166 sigma_c=634.4 d_c=0.997 Ye_c=0.252 X_n_c=0.615 vr/vdyn=0.556 sinks=0 sink_M=-0 escaped=3135 objects=1
+D208 step=15256 t=115.218 stage=supernova/supernova M=10738 R=456.2 M_unb=4527 sigma_c=634.4 d_c=0.996 Ye_c=0.252 X_n_c=0.615 vr/vdyn=0.550 sinks=0 sink_M=-0 escaped=3135 objects=1
+D208 step=15756 t=117.377 stage=supernova/supernova M=10738 R=467.7 M_unb=3375 sigma_c=328.4 d_c=1.000 Ye_c=0.292 X_n_c=0.594 vr/vdyn=0.464 sinks=0 sink_M=-0 escaped=3135 objects=1
+D208 step=16256 t=119.959 stage=supernova/supernova M=10738 R=481.6 M_unb=2697 sigma_c=230.4 d_c=1.000 Ye_c=0.292 X_n_c=0.594 vr/vdyn=0.461 sinks=0 sink_M=-0 escaped=3135 objects=1
+D208 step=16756 t=122.842 stage=supernova/supernova M=10738 R=497.1 M_unb=2228 sigma_c=167.9 d_c=0.996 Ye_c=0.292 X_n_c=0.594 vr/vdyn=0.339 sinks=0 sink_M=-0 escaped=3135 objects=1
+SR-HEADLESS DONE steps=17118 sim_time=125.000374 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=17118 sim_time=125.000374 until=met
+D208 exit=0 wall_s=105.6
+exit=0
+D208core step=13500 t=106.720 peak=(399,399) sigma_max=634.4 div_u=0.0000 Ye_peak=0.252 M_r4=4672 Ye_r3=0.416 M_r8=4677 M_r16=4688 M_r32=4722 M_r64=4847 M_r128=5345 grid_M=10738 sinks=[]
+D208core step=14500 t=111.618 peak=(399,399) sigma_max=634.4 div_u=0.0000 Ye_peak=0.252 M_r4=4783 Ye_r3=0.419 M_r8=4786 M_r16=4792 M_r32=4812 M_r64=4884 M_r128=5172 grid_M=10738 sinks=[]
+D208core step=15000 t=114.000 peak=(399,399) sigma_max=634.4 div_u=0.0000 Ye_peak=0.252 M_r4=4822 Ye_r3=0.345 M_r8=4824 M_r16=4829 M_r32=4846 M_r64=4904 M_r128=5131 grid_M=10738 sinks=[]
+D208core step=15500 t=116.212 peak=(399,399) sigma_max=699.2 div_u=-5.0575 Ye_peak=0.286 M_r4=4852 Ye_r3=0.292 M_r8=4855 M_r16=4860 M_r32=4874 M_r64=4922 M_r128=5110 grid_M=10738 sinks=[]
+D208core step=16000 t=118.603 peak=(400,399) sigma_max=307.1 div_u=-2.4700 Ye_peak=0.292 M_r4=3890 Ye_r3=0.292 M_r8=4391 M_r16=4852 M_r32=4902 M_r64=4943 M_r128=5099 grid_M=10738 sinks=[]
+D208core step=16500 t=121.354 peak=(401,400) sigma_max=200.7 div_u=-2.8014 Ye_peak=0.292 M_r4=2921 Ye_r3=0.292 M_r8=3663 M_r16=4758 M_r32=4932 M_r64=4967 M_r128=5096 grid_M=10738 sinks=[]
+D208core step=17000 t=124.289 peak=(402,399) sigma_max=166.9 div_u=-2.9940 Ye_peak=0.292 M_r4=2552 Ye_r3=0.292 M_r8=3457 M_r16=4442 M_r32=4961 M_r64=4991 M_r128=5100 grid_M=10738 sinks=[]

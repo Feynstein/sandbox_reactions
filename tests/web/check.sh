@@ -12,6 +12,8 @@
 #   ready-held `ready` with a foreign listener on launch.json's `web` port: launch.py starts the server on the next free port of
 #              the service's `port_range`, prints it, and the page reaches "ready" there (M0-D107); the listener binds as
 #              launch.py's server does and a bind it cannot make is the case's own NO-GO, never launch.py's (M0-D128)
+#   calibration `/?calibration=stale` (§3.5's test hook) reaches srState "error" with `error.calibration` exactly, never
+#              `error.no_adapter`, and the engine's `SR-ERROR calibration` line in srErrorDetail (§4.8, M0-D207)
 # Every case that serves stops its server itself once the smoke ends, and the port it printed must bind again within 30 s: a
 # server that outlives launch.py's stop is a NO-GO naming its pid, and the case stops it (M0-D128).
 # The scope's cases run in parallel, yet they share one dist, one port (launch.json's `web`, 47840 or the next free one of its range) and one pid file. Two locks, each
@@ -20,7 +22,7 @@
 #     build` (its `rm -rf dist` included), `npm ci`, the launch and the smoke; no case rebuilds dist under another's smoke
 #   the port lock (outside any tree) - taken after the build and `npm ci`, held for `launch.py start web`, the
 #     smoke and the stop, so one red-arm copy's trunk run overlaps another copy's Chrome run
-# The shared target's lock (tests/cargo.sh) still covers a whole trunk run, wasm-opt included. `ready`, `no-webgpu` and `preset` serve the
+# The shared target's lock (tests/cargo.sh) still covers a whole trunk run, wasm-opt included. `ready`, `no-webgpu`, `preset` and `calibration` serve the
 # dist of a build that is fresh against every input (build/web-built.stamp), else they build it first - a smoke never runs
 # against a stale dist. In a red-arm copy (no .git) build/ is the arm's own: the first case to build records its verdict
 # (build/web-build.result) and its siblings reuse it while no input is newer - the arm runs trunk once, pass or fail; `build`
@@ -32,7 +34,7 @@ source "$(dirname "${BASH_SOURCE[0]}")/../cargo.sh"
 root="$_sr_root"
 die() { echo "web $case_: $1"; echo "=== NO-GO: $1 ==="; exit 1; }
 
-case "$case_" in build | ready | no-webgpu | preset | ready-held) ;; *) die "unknown case '$case_' (build|ready|no-webgpu|preset|ready-held)" ;; esac
+case "$case_" in build | ready | no-webgpu | preset | ready-held | calibration) ;; *) die "unknown case '$case_' (build|ready|no-webgpu|preset|ready-held|calibration)" ;; esac
 case "$(uname -s)" in
   MINGW* | MSYS* | CYGWIN*) PY="py -3.12" ;;
   *) PY="python3" ;;
@@ -188,7 +190,7 @@ if [ "$case_" = build ]; then
   exit 0
 fi
 
-# ready, no-webgpu, preset: serve web/dist through launch.py's `web` service and run web/smoke.mjs against it
+# ready, no-webgpu, preset, calibration: serve web/dist through launch.py's `web` service and run web/smoke.mjs against it
 command -v node >/dev/null 2>&1 || die "node not found on PATH (web/smoke.mjs)"
 cd "$root/web" || die "no web/ folder"
 if [ ! -d node_modules/playwright-core ]; then   # a red-arm scratch copy leaves node_modules out by name

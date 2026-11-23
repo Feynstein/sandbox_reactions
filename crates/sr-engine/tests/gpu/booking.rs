@@ -271,9 +271,15 @@ fn the_layout_names_every_term_and_accumulator_with_its_writer() {
         let planes = (group.terms.end - group.terms.start) as u64;
         assert_eq!(booking.group(g).size(), planes * group.domain.slots(world) as u64 * 4, "{}", group.name);
     }
-    assert_eq!(Domain::EdgeFaces.slots(world), 2000);
+    // Every buffer of the default world sits inside the 128 MiB default binding (checked, not read off the size above).
+    let (w, h) = (world.width as usize, world.height as usize);
+    for (g, group) in BOOK_GROUPS.iter().enumerate() {
+        assert!(booking.group(g).size() <= 128 << 20, "{}: {} B past WebGPU's default binding size", group.name, booking.group(g).size());
+    }
+    // The default world's faces and rows, worked from its own width and height (2 (w + h) faces; a row of w cells each).
+    assert_eq!(Domain::EdgeFaces.slots(world), 2 * (w + h));
     let rows = Domain::Cells.rows(world);
-    assert_eq!((rows.len(), rows[0].clone(), rows[399].clone()), (400, 0..600, 239_400..240_000));
+    assert_eq!((rows.len(), rows[0].clone(), rows[h - 1].clone()), (h, 0..w, (h - 1) * w..h * w));
 
     // The side fields: φ, F (two components) and S_ν, a plane of the world's cells each, zeroed.
     let side = SideFields::new(&gpu.device, world).unwrap();
