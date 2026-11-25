@@ -1,0 +1,26 @@
+web: ready on port 47840, 0.1s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D216.launch.web.log)
+services: 1, ready: 1
+=== GO ===
+TR 3.26 submit #1 (1 cmd) done in 1.393 s; maps=0 state=loading
+TR 5.33 submit #2 (1 cmd) done in 1.927 s; maps=3 state=loading
+TR 5.33 submit #3 (1 cmd) done in 1.895 s; maps=3 state=loading
+TR 7.14 submit #4 (1 cmd) done in 2.203 s; maps=4 state=loading
+TR 7.14 submit #5 (1 cmd) done in 2.203 s; maps=4 state=loading
+TR 7.15 submit #6 (1 cmd) done in 0.701 s; maps=4 state=loading
+TR 7.15 submit #7 (1 cmd) done in 0.700 s; maps=4 state=loading
+TR 7.97 submit #8 (1 cmd) done in 0.019 s; maps=5 state=ready
+TR 7.98 submit #9 (1 cmd) done in 0.018 s; maps=5 state=ready
+state ready after 8.083 s
+TR 9.47 submit #10 (1 cmd) done in 0.008 s; maps=5 state=ready
+TR 9.47 submit #11 (1 cmd) done in 0.007 s; maps=5 state=ready
+TR 10.97 submit #12 (1 cmd) done in 0.009 s; maps=5 state=ready
+TR 10.98 submit #13 (1 cmd) done in 0.009 s; maps=5 state=ready
+TR 12.48 submit #14 (1 cmd) done in 0.007 s; maps=5 state=ready
+TR 12.48 submit #15 (1 cmd) done in 0.006 s; maps=5 state=ready
+TR 13.98 submit #16 (1 cmd) done in 0.009 s; maps=5 state=ready
+TR 13.98 submit #17 (1 cmd) done in 0.012 s; maps=5 state=ready
+TR 15.48 submit #18 (1 cmd) done in 0.008 s; maps=5 state=ready
+TR 15.48 submit #19 (1 cmd) done in 0.007 s; maps=5 state=ready
+web: pid 191716 stopped
+services: 1, stopped: 1
+=== GO ===

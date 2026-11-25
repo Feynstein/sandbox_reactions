@@ -1,0 +1,30 @@
+import { createRequire } from 'node:module';
+const req = createRequire('/home/ybelanger/private/sandbox_reactions/web/package.json');
+const { chromium } = req('playwright-core');
+const base = process.argv[2], q = process.argv[3] || '/';
+const browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome', headless: true, chromiumSandbox: true,
+  args: ['--headless=new', '--use-angle=vulkan', '--enable-features=Vulkan', '--disable-vulkan-surface', '--enable-unsafe-webgpu'] });
+const page = await browser.newPage();
+page.on('console', (m) => { if (m.text().startsWith('TR ')) console.log(m.text()); });
+await page.addInitScript(() => {
+  const t0 = performance.now(); const t = () => ((performance.now() - t0) / 1000).toFixed(2);
+  const log = (s) => console.log(`TR ${t()} ${s}`);
+  const counts = {}; window.__trc = counts;
+  const wrapSync = (proto, name, label) => { const f = proto[name]; proto[name] = function (...a) { const s = performance.now(); const r = f.apply(this, a); const d = performance.now() - s; counts[name] = (counts[name] || 0) + 1; if (d > 200) log(`${name} #${counts[name]} ${label ? label(a) : ''} took ${(d/1000).toFixed(2)} s`); return r; }; };
+  const wrapAsync = (proto, name, label) => { const f = proto[name]; proto[name] = function (...a) { const s = performance.now(); counts[name] = (counts[name] || 0) + 1; const n = counts[name]; const p = f.apply(this, a); const d = performance.now() - s; if (d > 200) log(`${name} #${n} call took ${(d/1000).toFixed(2)} s`); p.then(() => { const w = performance.now() - s; if (w > 500 || name === 'mapAsync' && n <= 3) log(`${name} #${n} ${label ? label(a, this) : ''} resolved after ${(w/1000).toFixed(2)} s`); }, (e) => log(`${name} #${n} rejected ${e}`)); return p; }; };
+  const ep = (a) => a[0]?.compute?.entryPoint ?? '';
+  wrapSync(GPUDevice.prototype, 'createComputePipeline', ep);
+  wrapAsync(GPUDevice.prototype, 'createComputePipelineAsync', ep);
+  wrapSync(GPUDevice.prototype, 'createShaderModule', (a) => a[0]?.label ?? '');
+  wrapSync(GPUQueue.prototype, 'submit', (a) => `${a[0]?.length} cmd`);
+  wrapSync(GPUQueue.prototype, 'writeBuffer', (a) => `${a[0]?.label} ${a[0]?.size}`);
+  wrapAsync(GPUBuffer.prototype, 'mapAsync', (a, b) => `${b.label} size ${b.size}`);
+  wrapAsync(GPUQueue.prototype, 'onSubmittedWorkDone');
+  setInterval(() => log(`counts ${JSON.stringify(counts)} state=${document.body?.dataset.srState}`), 5000);
+});
+const s0 = Date.now();
+await page.goto(base + q, { waitUntil: 'domcontentloaded' });
+await page.waitForFunction(() => ['ready', 'error'].includes(document.body.dataset.srState), null, { timeout: 240000, polling: 200 });
+console.log('state', await page.evaluate(() => document.body.dataset.srState), 'after', (Date.now() - s0) / 1000, 's');
+await page.waitForTimeout(3000);
+await browser.close();

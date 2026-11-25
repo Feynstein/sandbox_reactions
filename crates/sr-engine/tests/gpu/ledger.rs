@@ -32,6 +32,10 @@
 //!
 //! M0-D173: summary.json is read as written ([`read_as_written`]), so an exact comparison grades the ledger, not serde_json's
 //! best-effort float parse.
+//!
+//! M0-D214: since §0.5 [M0-D194], [M0-D212] the momentum invariant holds by construction — P4's commit gives the update's
+//! whole net back from the densest free cell — so a force that does not conserve momentum no longer drifts it; the leave
+//! run's take-back (summary.json's `ledger.taken_back`) is graded within [`TAKEN_BACK`] of Σm|u|, printed by the bounce run.
 
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
@@ -56,6 +60,13 @@ const BAND: f64 = 1e-6;
 /// gravity on §0.5 [M0-D68]'s source, not the edge: the same disk with no edge near drifts 1.15 × 10⁻², and one whose rim
 /// just touches the edge drifts as it does in a wider world (M0-T106 carries it). The one-sided ring's 8.05e-3 stays red.
 const LEAVE_MOMENTUM: f64 = 7e-3;
+/// [M0-D214] The take-back's band, relative to Σm|u|: since §0.5 [M0-D194], [M0-D212] P4's commit takes the update's whole net
+/// momentum back from the densest free cell, so the momentum invariant holds by construction and no force error moves it
+/// (the one-sided ring of M0-D69: drift 1.7e-8 against 7.8e-9 here). What the commit gave back — summary.json's
+/// `ledger.taken_back`, Σ over the steps of |net| — is where such an error shows: 6.05e-3 (1.8e-6 of Σm|u|) on the free-space
+/// ring, 16.0 (4.7e-3) under plant `grav-ring-one-sided` (linux-pc's RTX 5090, 2026-11-25; §0.5 [M0-D214], the lead:
+/// «Expose take-back (Recommended)»).
+const TAKEN_BACK: f64 = 1e-4;
 /// The disk's T: U_th ≈ 0.1|W|₀ (M0-D66, the lead's «Disk T 2.3 + edge D», 2026-10-20). At M0-T57's T 0.05 the pressureless
 /// disk falls to a point; once §0.5 [M0-D64]'s face work stopped the Σu·g source heating it there, it stays collapsed:
 /// bounce's Σm|u| fell 9 × under an alike drift (2.8e-6), and leave's collapse beside the world's edge drifted 5.7e-2 (21 in a
@@ -175,6 +186,11 @@ fn num(v: &Value, path: &[&str]) -> f64 {
 }
 
 impl Out {
+    /// [M0-D214] summary.json's `ledger.taken_back`: the momentum P4's commit gave back, |·| summed over the run's steps.
+    fn taken_back(&self) -> f64 {
+        num(&self.summary, &["ledger", "taken_back"])
+    }
+
     fn start(&self) -> &Value {
         &self.summary["ledger"]["start"]
     }
@@ -241,7 +257,8 @@ fn bounce_500_steps_the_mass_and_the_momentum_hold() {
     let out = run("bounce", &scene("bounce", 64.0, 0.0, true));
     let d = drift(&out);
     println!(
-        "bounce: steps {}..{}, mass drift {:.3e}, momentum drift {:.3e} of Σm|u| = {:.3e}, energy drift {:.3e} (reported), escaped {}",
+        "bounce: steps {}..{}, mass drift {:.3e}, momentum drift {:.3e} of Σm|u| = {:.3e}, energy drift {:.3e} (reported), escaped {}, \
+         taken back {:.3e} (reported)",
         num(out.start(), &["step"]),
         num(out.end(), &["step"]),
         d.mass,
@@ -249,6 +266,7 @@ fn bounce_500_steps_the_mass_and_the_momentum_hold() {
         out.momentum_scale(),
         d.energy,
         num(out.end(), &["mass", "escaped"]),
+        out.taken_back(),
     );
     assert_eq!(num(out.start(), &["step"]), 1.0, "the ledger starts after the run's first step");
     assert_eq!(num(out.end(), &["step"]), STEPS as f64);
@@ -264,10 +282,11 @@ fn leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_t
     // The disk sits across the right edge and drifts out of it: gas crosses from the first steps on.
     let out = run("leave", &scene("leave", 116.0, 0.5, true));
     let d = drift(&out);
+    let taken = out.taken_back() / out.momentum_scale();
     let (escaped, total) = (num(out.end(), &["mass", "escaped"]), num(out.end(), &["mass", "invariant"]));
     println!(
         "leave: escaped mass {escaped:.6e} of {total:.6e} ({:.3e}), momentum escaped {:?}, mass drift {:.3e}, momentum drift {:.3e} of Σm|u| = {:.3e}, \
-         energy drift {:.3e} (reported), escaped energy {:.6e}",
+         energy drift {:.3e} (reported), escaped energy {:.6e}, taken back {:.6e} = {taken:.3e} of Σm|u| (band {TAKEN_BACK:e})",
         escaped / total,
         out.end()["momentum"]["escaped"],
         d.mass,
@@ -275,11 +294,14 @@ fn leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_t
         out.momentum_scale(),
         d.energy,
         num(out.end(), &["energy", "escaped"]),
+        out.taken_back(),
     );
     // The escaped term is what makes this run worth reading: mass left, by an amount the band could not hide.
     assert!(escaped > 1e-3 * total, "mass left through the edge: {escaped} of {total}");
     assert!(d.mass <= BAND, "mass invariant drift {:.3e} (escaped {escaped})", d.mass);
     assert!(d.momentum <= LEAVE_MOMENTUM, "momentum drift {:.3e} of Σm|u|", d.momentum);
+    // [M0-D214] The invariant cannot move (the take-back holds it); what the commit gave back is graded instead.
+    assert!(taken <= TAKEN_BACK, "the commit took back {taken:.3e} of Σm|u| (band {TAKEN_BACK:e}): a force that is not P4's own");
     assert_grid_matches_the_state(&out);
     let grid_start = num(out.start(), &["mass", "grid"]);
     assert!(num(out.end(), &["mass", "grid"]) < grid_start - escaped * 0.99, "the grid lost what escaped");

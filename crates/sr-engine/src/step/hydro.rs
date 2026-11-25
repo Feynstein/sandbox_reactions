@@ -11,7 +11,9 @@
 //! `hydro_commit` copies the next state back over the box — after, when the step runs P5, `hydro_push_sum` (one workgroup)
 //! has summed the radiation force's pushes the update wrote over F, and the commit takes the net back (§2.4.4 [M0-D184]);
 //! [M0-D194] when it runs P2, the same workgroup sums gravity's kicks exactly (fixed point) and the commit takes their net
-//! back from the densest free cell (§1.4.2 [M0-D194]); [M0-D195] on every step it sums the mass update's rounding exactly
+//! back from the densest free cell (§1.4.2 [M0-D194]) — [M0-D212] the update's whole net on the momentum invariant instead,
+//! T, which `hydro_net` (over the box tiles, after the update) sums exactly one partial a tile and `hydro_push_sum` adds
+//! with the faces' booked momentum (§0.5 [M0-D212]); [M0-D195] on every step it sums the mass update's rounding exactly
 //! — Σⁿ⁺¹ − Σⁿ over the box and what the faces let out, plus the last step's carry — and the commit gives it back to every
 //! free cell in proportion to its Σ; `hydro_settle` (one workgroup, last) sums exactly what f32 kept of the shares and
 //! carries the rest to the next step ([`Hydro::mass_carry`], a dump's `resume.mass_carry`). The update binds the state's three buffers, the next
@@ -51,7 +53,11 @@ use crate::state::{read_buffers, Booking, State, WorldConfig, BOOK_GROUPS, N_CHA
 const EDGE_GROUP: u32 = 64;
 /// [M0-D195] `push_net`'s mass carry (hydro.wgsl MASS_CARRY) and its first boundary-face word (FACE_MASS).
 const MASS_CARRY_WORD: usize = 10;
+/// [M0-D214] `push_net`'s word 7: the take-back's |net| (hydro.wgsl words 4–5) summed over every step since the buffer was made.
+const TAKEN_BACK_WORD: usize = 7;
 const FACE_MASS_WORD: usize = 12;
+/// [M0-D212] The words of one box tile's partial in `hydro.net_tiles` (hydro.wgsl `NET_WORDS`).
+const NET_WORDS: u64 = 8;
 /// The planes in each of the next state's two buffers (hydro.wgsl `NEXT_LO`).
 pub const NEXT_PLANES: usize = 7;
 
@@ -129,6 +135,19 @@ impl Hydro {
     pub fn mass_carry(&self, device: &wgpu::Device, queue: &wgpu::Queue) -> f32 {
         let words = read_buffers(device, queue, "hydro.push_net.readback", std::iter::once(&self.push_net));
         words[MASS_CARRY_WORD]
+    }
+
+    /// [M0-D214] The momentum the densest free cell gave back, |net| summed over every step since this pass was made or
+    /// [`Hydro::set_taken_back`] (§2.9 [M0-D214]): f32, a diagnostic, not a booked term — headless's observers' snapshot
+    /// carries it, not the dump. Blocks on the device (tests and headless runs only).
+    pub fn taken_back(&self, device: &wgpu::Device, queue: &wgpu::Queue) -> f32 {
+        let words = read_buffers(device, queue, "hydro.push_net.readback", std::iter::once(&self.push_net));
+        words[TAKEN_BACK_WORD]
+    }
+
+    /// [M0-D214] Sets the take-back's sum (`queue.write_buffer`: ahead of the next submission).
+    pub fn set_taken_back(&self, queue: &wgpu::Queue, sum: f32) {
+        queue.write_buffer(&self.push_net, 4 * TAKEN_BACK_WORD as u64, &sum.to_le_bytes());
     }
 
     /// [M0-D195] Restores the carry a dump holds, for the next step's give-back (`queue.write_buffer`: ahead of the next
@@ -221,8 +240,9 @@ fn dispatches(
     // drops of the push's give-back, which `hydro_push_sum` reads off the next state's momentum (`next[0]`). [M0-D195] Then
     // the mass given back, its cell, the carry and a pad, and one word per boundary face, the mass `hydro_edges` let out:
     // the carry, [`MASS_CARRY_WORD`], is read and restored with a dump's records.
+    // [M0-D212] Then two words per boundary face, the momentum `hydro_edges` booked from it (`hydro_push_sum` sums T on them).
     let usage = wgpu::BufferUsages::STORAGE | wgpu::BufferUsages::COPY_SRC | wgpu::BufferUsages::COPY_DST;
-    let push_net = init_buffer(device, "hydro.push_net", usage, &vec![0; FACE_MASS_WORD + faces as usize]);
+    let push_net = init_buffer(device, "hydro.push_net", usage, &vec![0; FACE_MASS_WORD + 3 * faces as usize]);
     let edges = compute_pipeline(device, &module, "hydro_edges");
     let edges_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
         label: Some("P4 hydro_edges"),
@@ -243,6 +263,33 @@ fn dispatches(
     });
     let edges_eos = eos.bind_group(device, &edges);
 
+    // [M0-D212] One partial per box tile of the update's whole net momentum T and the tile's densest free cell
+    // (hydro.wgsl `hydro_net`, `NET_WORDS` i32 a tile), which `hydro_push_sum` adds.
+    let tiles_max = (world.width.div_ceil(8) * world.height.div_ceil(8)) as u64;
+    let net_tiles = device.create_buffer(&wgpu::BufferDescriptor {
+        label: Some("hydro.net_tiles"),
+        size: tiles_max * NET_WORDS * 4,
+        usage: wgpu::BufferUsages::STORAGE,
+        mapped_at_creation: false,
+    });
+    let net = compute_pipeline(device, &module, "hydro_net");
+    let net_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
+        label: Some("P4 hydro_net"),
+        layout: &net.get_bind_group_layout(0),
+        entries: &[
+            entry(0, state.dims()),
+            entry(1, state.group(0)),
+            entry(4, &next[0]),
+            entry(7, boxfit.active()),
+            entry(8, dt_record),
+            entry(13, edge),
+            entry(14, gravity),
+            held(15, state),
+            entry(19, gas),
+            entry(20, &net_tiles),
+        ],
+    });
+
     let push_sum = compute_pipeline(device, &module, "hydro_push_sum");
     let push_sum_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
         label: Some("P4 hydro_push_sum"),
@@ -253,12 +300,10 @@ fn dispatches(
             entry(4, &next[0]),
             entry(6, flux),
             entry(7, boxfit.active()),
-            entry(8, dt_record),
             entry(13, edge),
-            entry(14, gravity),
             held(15, state),
             entry(18, &push_net),
-            entry(19, gas),
+            entry(20, &net_tiles),
         ],
     });
 
@@ -325,6 +370,7 @@ fn dispatches(
             bind_groups: vec![edges_group, edges_eos],
             size: Size::Fixed([faces.div_ceil(EDGE_GROUP), 1, 1]),
         },
+        Dispatch { label: "hydro_net", pipeline: net, bind_groups: vec![net_group], size: tiles() },
         Dispatch { label: "hydro_push_sum", pipeline: push_sum, bind_groups: vec![push_sum_group], size: Size::Fixed([1, 1, 1]) },
         Dispatch { label: "hydro_commit", pipeline: commit, bind_groups: vec![commit_group, commit_eos], size: tiles() },
         Dispatch { label: "hydro_settle", pipeline: settle, bind_groups: vec![settle_group], size: Size::Fixed([1, 1, 1]) },

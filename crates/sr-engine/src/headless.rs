@@ -265,8 +265,9 @@ fn edit_fields<'a>(v: &'a serde_json::Value, at: &str, known: &[&str]) -> Result
 }
 
 impl EditPlan {
-    /// Reads `path`: a list of `{"at": <trigger>, "edit": {"kind", "x", "y", "radius", "species", "frames"}}`. Every unknown
-    /// key, a cell outside the world, a radius outside 1–40, an unknown species and a `frames` outside 1–8 are refused.
+    /// Reads `path`: a list of `{"at": <trigger>, "edit": {"kind", "x", "y", "radius", "species", "frames"}}`, the cell
+    /// given as `dx`, `dy` from the world's centre instead of `x`, `y` [M0-D210]. Every unknown key, both forms at once, a
+    /// cell outside the world, a radius outside 1–40, an unknown species and a `frames` outside 1–8 are refused.
     pub fn read(path: &Path, world: WorldConfig, elements: &Elements) -> Result<EditPlan, String> {
         let text = std::fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
         EditPlan::parse(&text, world, elements)
@@ -368,12 +369,33 @@ fn parse_trigger(v: &serde_json::Value, at: &str) -> Result<Trigger, String> {
 }
 
 fn parse_edit(v: &serde_json::Value, at: &str, world: WorldConfig, elements: &Elements) -> Result<(Edit, usize), String> {
-    let map = edit_fields(v, at, &["kind", "x", "y", "radius", "species", "frames"])?;
+    let map = edit_fields(v, at, &["kind", "x", "y", "dx", "dy", "radius", "species", "frames"])?;
     let whole = |key: &str| -> Result<u32, String> {
         let v = map.get(key).ok_or_else(|| format!("{at}.{key}: missing"))?;
         v.as_u64().and_then(|n| u32::try_from(n).ok()).ok_or_else(|| format!("{at}.{key}: must be a whole number"))
     };
-    let (x, y, radius) = (whole("x")?, whole("y")?, whole("radius")?);
+    // [M0-D210] The cell is `x`, `y`, or `dx`, `dy` cells from the world's centre (W / 2, H / 2) — where `--scene
+    // preset:<name>` drops its cloud — so a file aimed at a preset holds on any world size.
+    let relative = map.contains_key("dx") || map.contains_key("dy");
+    if relative && (map.contains_key("x") || map.contains_key("y")) {
+        return Err(format!("{at}: give x, y or dx, dy, not both"));
+    }
+    let (x, y) = if relative {
+        let signed = |key: &str| -> Result<i64, String> {
+            let v = map.get(key).ok_or_else(|| format!("{at}.{key}: missing"))?;
+            v.as_i64().ok_or_else(|| format!("{at}.{key}: must be a whole number"))
+        };
+        let (dx, dy) = (signed("dx")?, signed("dy")?);
+        let (x, y) = (i64::from(world.width / 2) + dx, i64::from(world.height / 2) + dy);
+        let fit = |c: i64, size: u32| u32::try_from(c).ok().filter(|&c| c < size);
+        match (fit(x, world.width), fit(y, world.height)) {
+            (Some(x), Some(y)) => (x, y),
+            _ => return Err(format!("{at}: cell ({x}, {y}) (dx {dx}, dy {dy} from the centre) is outside the {}x{} world", world.width, world.height)),
+        }
+    } else {
+        (whole("x")?, whole("y")?)
+    };
+    let radius = whole("radius")?;
     if x >= world.width || y >= world.height {
         return Err(format!("{at}: cell ({x}, {y}) is outside the {}x{} world", world.width, world.height));
     }
@@ -418,6 +440,8 @@ struct Carried {
     one_step: bool,
     watch: Watch,
     ledger: Ledger,
+    /// [M0-D214] The take-back's sum at the cut (§2.9 [M0-D214]); 0 in a snapshot without the key.
+    taken_back: f64,
 }
 
 /// The snapshot beside `path` for `dump`, refused unless it is the same step (index and sim time, bit for bit), scene label
@@ -453,6 +477,7 @@ fn read_carried(path: &Path, dump: &Dump, scene: &str, physics: &Physics) -> Res
         one_step: v["one_step"].as_bool().unwrap_or(false),
         watch: Watch::restore(physics, world_width, &v["watch"]).map_err(refused)?,
         ledger: Ledger::restore(dump.world, physics, &v["ledger"]).map_err(refused)?,
+        taken_back: if v.get("taken_back").is_some() { read_exact(&v["taken_back"], "taken_back").map_err(refused)? } else { 0.0 },
     })
 }
 
@@ -1085,6 +1110,10 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
                 say(&format!("SR-ERROR bad dump: {e}"));
                 return EXIT_ARGS;
             }
+            // [M0-D214] A continued life's take-back goes on from the cut's (an f32 sum, carried exactly).
+            if let Some(c) = &carried {
+                step.set_taken_back(&gpu.queue, c.taken_back as f32);
+            }
             d.step
         }
         None => {
@@ -1165,7 +1194,8 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
     let carry = |done: u64, dt_next: f64, unconverged: u64, one_step: bool, watch: &Watch, ledger: &Ledger| {
         let wall_s = wall_before + started.elapsed().as_secs_f64();
         json!({"done": done, "wall_s": exact(wall_s), "dt_next": exact(dt_next), "heat_unconverged": unconverged,
-               "one_step": one_step, "watch": watch.snapshot(), "ledger": ledger.snapshot()})
+               "one_step": one_step, "watch": watch.snapshot(), "ledger": ledger.snapshot(),
+               "taken_back": exact(step.taken_back(&gpu.device, &gpu.queue))})
     };
     while done < target && !until_met {
         let mut n = (target - done).min(if args.until.is_some() { FRAME } else { CHUNK });
@@ -1340,6 +1370,8 @@ fn execute(args: Args, given: Option<Scene>, mut progress: Option<Progress>) -> 
             "max_gas_speed": watch.max_gas_speed(),
             "until": {"condition": condition, "met": met},
         });
+        // [M0-D214] The momentum the commit took back over this process's steps (§2.9 [M0-D214]), beside the records.
+        summary["ledger"]["taken_back"] = json!(step.taken_back(&gpu.device, &gpu.queue));
         // The life's ending names its object (§0.5 [M0-D95]): the heaviest of the last frame, a lighter one's never.
         if let Some(ending) = watch.life_ending() {
             summary["until"]["object"] = json!(ending.object);

@@ -1,7 +1,0 @@
-    Finished `release` profile [optimized] target(s) in 0.06s
-     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
-
-running 2 tests
-test touch::hydrogen_painted_onto_the_sun_like_star_ends_it_a_neutron_star_or_a_black_hole_as_its_new_prediction_says ... paint sun preset of 3136.718 sb under touch_paint.json — the edit aims at 8144.4 sb (m_up 6515.5), the fate leaving WhiteDwarf for one of [Supernova, BlackHole]
-SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
-paint the drop: step=16 M=3136.697 sb

@@ -1,0 +1,174 @@
+web: ready on port 47840, 0.1s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D216.launch.web.log)
+services: 1, ready: 1
+=== GO ===
+TR 1.96 createComputePipelineAsync #1 grav_rows_pull resolved after 0.77 s
+TR 1.96 createComputePipelineAsync #3 grav_rows_inverse resolved after 0.77 s
+TR 1.96 createComputePipelineAsync #4 grav_gradient_pull resolved after 0.77 s
+TR 1.96 createComputePipelineAsync #5 grav_rows resolved after 0.77 s
+TR 1.96 createComputePipelineAsync #7 grav_rows_inverse resolved after 0.77 s
+TR 1.96 createComputePipelineAsync #8 grav_gradient resolved after 0.77 s
+TR 1.96 createComputePipelineAsync #9 grav_sinks resolved after 0.77 s
+TR 1.96 createComputePipelineAsync #10 grav_rows_pull resolved after 0.76 s
+TR 1.96 createComputePipelineAsync #11 grav_columns resolved after 0.76 s
+TR 1.96 createComputePipelineAsync #12 grav_rows_inverse resolved after 0.76 s
+TR 1.96 createComputePipelineAsync #13 grav_gradient_pull_mid resolved after 0.76 s
+TR 1.96 createComputePipelineAsync #14 grav_rows resolved after 0.76 s
+TR 1.96 createComputePipelineAsync #15 grav_columns resolved after 0.76 s
+TR 1.96 createComputePipelineAsync #16 grav_rows_inverse resolved after 0.76 s
+TR 1.96 createComputePipelineAsync #17 grav_gradient_mid resolved after 0.76 s
+TR 1.96 createComputePipelineAsync #18 grav_sinks_mid resolved after 0.76 s
+TR 1.96 createComputePipelineAsync #19 dt_advance resolved after 0.76 s
+TR 1.96 createComputePipelineAsync #21 dt_partials resolved after 0.76 s
+TR 1.96 createComputePipelineAsync #24 guard_scan resolved after 0.76 s
+TR 1.96 createComputePipelineAsync #25 guard_stamp resolved after 0.76 s
+TR 1.96 createComputePipelineAsync #26 box_cells resolved after 0.76 s
+TR 1.96 createComputePipelineAsync #27 box_fit resolved after 0.76 s
+TR 1.96 createComputePipelineAsync #28 box_gate resolved after 0.76 s
+TR 1.96 createComputePipelineAsync #29 box_cells resolved after 0.76 s
+TR 1.96 createComputePipelineAsync #30 box_fit resolved after 0.76 s
+TR 2.05 createComputePipelineAsync #2 grav_columns resolved after 0.86 s
+TR 2.05 createComputePipelineAsync #6 grav_columns resolved after 0.86 s
+TR 2.05 createComputePipelineAsync #20 dt_cells resolved after 0.86 s
+TR 2.05 createComputePipelineAsync #22 dt_cells resolved after 0.86 s
+TR 2.05 createComputePipelineAsync #23 dt_refresh resolved after 0.86 s
+TR 2.05 createComputePipelineAsync #31 summary_cells resolved after 0.85 s
+TR 2.05 createComputePipelineAsync #32 summary_book resolved after 0.85 s
+TR 2.05 createComputePipelineAsync #33 sink_candidates resolved after 0.78 s
+TR 2.05 createComputePipelineAsync #34 sink_update resolved after 0.78 s
+TR 2.05 createComputePipelineAsync #35 sink_pull resolved after 0.78 s
+TR 2.05 createComputePipelineAsync #36 sink_kick_drift resolved after 0.78 s
+TR 2.05 createComputePipelineAsync #37 sink_pull resolved after 0.78 s
+TR 2.05 createComputePipelineAsync #38 sink_kick_merge resolved after 0.78 s
+TR 2.05 createComputePipelineAsync #41 hydro_net resolved after 0.78 s
+TR 2.05 createComputePipelineAsync #43 hydro_commit resolved after 0.78 s
+TR 2.05 createComputePipelineAsync #44 hydro_settle resolved after 0.78 s
+TR 2.05 createComputePipelineAsync #45 hydro_mid resolved after 0.78 s
+TR 2.33 createComputePipelineAsync #39 hydro_update resolved after 1.06 s
+TR 2.33 createComputePipelineAsync #40 hydro_edges resolved after 1.06 s
+TR 2.33 createComputePipelineAsync #42 hydro_push_sum resolved after 1.06 s
+TR 2.33 createComputePipelineAsync #46 heat_round resolved after 1.05 s
+TR 2.33 createComputePipelineAsync #47 heat_cells resolved after 1.05 s
+TR 2.33 createComputePipelineAsync #48 heat_law resolved after 1.05 s
+TR 2.33 createComputePipelineAsync #49 heat_open resolved after 1.05 s
+TR 2.33 createComputePipelineAsync #50 heat_close resolved after 1.05 s
+TR 2.33 createComputePipelineAsync #51 heat_limit resolved after 1.05 s
+TR 2.33 createComputePipelineAsync #52 heat_sum resolved after 1.05 s
+TR 2.33 createComputePipelineAsync #53 heat_apply resolved after 1.05 s
+TR 2.33 createComputePipelineAsync #54 heat_park resolved after 1.05 s
+TR 2.33 createComputePipelineAsync #55 mg_level0 resolved after 1.05 s
+TR 2.33 createComputePipelineAsync #56 mg_coarsen resolved after 1.05 s
+TR 2.33 createComputePipelineAsync #57 mg_smooth resolved after 1.05 s
+TR 2.33 createComputePipelineAsync #58 mg_restrict resolved after 1.05 s
+TR 2.33 createComputePipelineAsync #59 mg_coarse resolved after 1.05 s
+TR 2.33 createComputePipelineAsync #60 heat_matvec resolved after 1.05 s
+TR 2.33 createComputePipelineAsync #61 react_begin resolved after 1.05 s
+TR 2.33 createComputePipelineAsync #62 react_cells resolved after 1.05 s
+TR 2.33 createComputePipelineAsync #63 nu_tiles resolved after 0.66 s
+TR 2.33 createComputePipelineAsync #64 nu_gate resolved after 0.66 s
+TR 2.33 createComputePipelineAsync #65 conv_rows resolved after 0.66 s
+TR 2.33 createComputePipelineAsync #66 nu_columns resolved after 0.66 s
+TR 2.33 createComputePipelineAsync #67 conv_rows_inverse resolved after 0.66 s
+TR 2.33 createComputePipelineAsync #68 nu_deposit resolved after 0.66 s
+TR 2.33 createComputePipelineAsync #69 nu_share resolved after 0.66 s
+TR 2.33 createComputePipelineAsync #70 nu_apply resolved after 0.66 s
+TR 2.33 createComputePipelineAsync #71 nu_close resolved after 0.66 s
+TR 2.33 createComputePipelineAsync #72 floor_cells resolved after 0.66 s
+TR 2.33 createComputePipelineAsync #73 renormalise_species resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #74 hold_cells resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #75 latch_begin resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #76 latch_check resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #77 latch_end resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #78 latch_hook resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #79 latch_probe resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #80 latch_hold resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #81 latch_carry resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #82 react_latch resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #83 sink_latch resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #84 edit_gate resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #85 edit_sigma_before resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #86 edit_cells resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #87 edit_sigma_delta resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #88 edit_finish resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #89 grav_rows_edit resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #90 grav_columns resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #91 grav_rows_inverse resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #92 grav_edit_before resolved after 0.59 s
+TR 2.33 createComputePipelineAsync #93 grav_edit_after resolved after 0.59 s
+TR 2.34 createComputePipelineAsync #95 extent_bins resolved after 0.51 s
+TR 2.34 createComputePipelineAsync #94 render_cells resolved after 0.51 s
+TR 75.04 mapAsync #140 call took 70.51 s
+TR 77.19 counts {"createShaderModule":28,"createComputePipelineAsync":99,"createComputePipeline":198,"writeBuffer":157,"submit":147,"mapAsync":143} state=loading
+TR 77.19 mapAsync #1 latch.readback size 7713484 resolved after 73.82 s
+TR 77.19 mapAsync #2 latch.readback size 7713484 resolved after 73.80 s
+TR 77.19 mapAsync #3 egui_screen_capture_buffer size 3686400 resolved after 73.80 s
+TR 77.20 mapAsync #4 latch.readback size 7713484 resolved after 73.80 s
+TR 77.20 mapAsync #5 egui_screen_capture_buffer size 3686400 resolved after 73.80 s
+TR 77.20 mapAsync #6 latch.readback size 7713484 resolved after 73.79 s
+TR 77.20 mapAsync #7 egui_screen_capture_buffer size 3686400 resolved after 73.79 s
+TR 77.21 mapAsync #8 latch.readback size 7713484 resolved after 73.78 s
+TR 77.21 mapAsync #9 egui_screen_capture_buffer size 3686400 resolved after 73.78 s
+TR 77.21 mapAsync #10 latch.readback size 7713484 resolved after 73.76 s
+TR 77.22 mapAsync #11 egui_screen_capture_buffer size 3686400 resolved after 73.76 s
+TR 77.22 mapAsync #12 latch.readback size 7713484 resolved after 73.76 s
+TR 77.22 mapAsync #13 egui_screen_capture_buffer size 3686400 resolved after 73.75 s
+TR 77.22 mapAsync #14 latch.readback size 7713484 resolved after 73.74 s
+TR 77.22 mapAsync #15 egui_screen_capture_buffer size 3686400 resolved after 73.74 s
+TR 77.22 mapAsync #16 latch.readback size 7713484 resolved after 73.73 s
+TR 77.22 mapAsync #17 egui_screen_capture_buffer size 3686400 resolved after 73.73 s
+TR 77.22 mapAsync #18 latch.readback size 7713484 resolved after 73.71 s
+TR 77.22 mapAsync #19 egui_screen_capture_buffer size 3686400 resolved after 73.71 s
+TR 77.23 mapAsync #20 latch.readback size 7713484 resolved after 73.70 s
+TR 77.23 mapAsync #21 egui_screen_capture_buffer size 3686400 resolved after 73.70 s
+TR 77.23 mapAsync #22 latch.readback size 7713484 resolved after 73.69 s
+TR 77.23 mapAsync #23 egui_screen_capture_buffer size 3686400 resolved after 73.68 s
+TR 77.23 mapAsync #24 latch.readback size 7713484 resolved after 73.67 s
+TR 77.23 mapAsync #25 egui_screen_capture_buffer size 3686400 resolved after 73.67 s
+TR 77.23 mapAsync #26 latch.readback size 7713484 resolved after 73.66 s
+TR 77.23 mapAsync #27 egui_screen_capture_buffer size 3686400 resolved after 73.65 s
+TR 77.24 mapAsync #28 latch.readback size 7713484 resolved after 73.64 s
+TR 77.24 mapAsync #29 egui_screen_capture_buffer size 3686400 resolved after 73.64 s
+TR 77.24 mapAsync #30 latch.readback size 7713484 resolved after 73.63 s
+TR 77.24 mapAsync #31 egui_screen_capture_buffer size 3686400 resolved after 73.63 s
+TR 77.24 mapAsync #32 latch.readback size 7713484 resolved after 73.61 s
+TR 77.24 mapAsync #33 egui_screen_capture_buffer size 3686400 resolved after 73.61 s
+TR 77.25 mapAsync #34 latch.readback size 7713484 resolved after 73.60 s
+TR 77.25 mapAsync #35 egui_screen_capture_buffer size 3686400 resolved after 73.60 s
+TR 77.25 mapAsync #36 latch.readback size 7713484 resolved after 73.59 s
+TR 77.25 mapAsync #37 egui_screen_capture_buffer size 3686400 resolved after 73.59 s
+TR 77.25 mapAsync #38 latch.readback size 7713484 resolved after 73.57 s
+TR 77.25 mapAsync #39 egui_screen_capture_buffer size 3686400 resolved after 73.57 s
+TR 77.26 mapAsync #40 latch.readback size 7713484 resolved after 73.56 s
+TR 77.26 mapAsync #41 egui_screen_capture_buffer size 3686400 resolved after 73.56 s
+TR 77.26 mapAsync #42 latch.readback size 7713484 resolved after 73.55 s
+TR 77.26 mapAsync #43 egui_screen_capture_buffer size 3686400 resolved after 73.55 s
+TR 77.26 mapAsync #44 latch.readback size 7713484 resolved after 73.53 s
+TR 77.26 mapAsync #45 egui_screen_capture_buffer size 3686400 resolved after 73.53 s
+TR 77.26 mapAsync #46 latch.readback size 7713484 resolved after 73.52 s
+TR 77.26 mapAsync #47 egui_screen_capture_buffer size 3686400 resolved after 73.52 s
+TR 77.27 mapAsync #48 latch.readback size 7713484 resolved after 73.51 s
+TR 77.27 mapAsync #49 egui_screen_capture_buffer size 3686400 resolved after 73.50 s
+TR 77.27 mapAsync #50 latch.readback size 7713484 resolved after 73.49 s
+TR 77.27 mapAsync #51 egui_screen_capture_buffer size 3686400 resolved after 73.49 s
+TR 77.28 mapAsync #52 latch.readback size 7713484 resolved after 73.48 s
+TR 77.28 mapAsync #53 egui_screen_capture_buffer size 3686400 resolved after 73.48 s
+TR 77.28 mapAsync #54 latch.readback size 7713484 resolved after 73.46 s
+TR 77.28 mapAsync #55 egui_screen_capture_buffer size 3686400 resolved after 73.46 s
+TR 77.28 mapAsync #56 latch.readback size 7713484 resolved after 73.46 s
+TR 77.28 mapAsync #57 egui_screen_capture_buffer size 3686400 resolved after 73.45 s
+TR 77.29 mapAsync #58 latch.readback size 7713484 resolved after 73.44 s
+TR 77.29 mapAsync #59 egui_screen_capture_buffer size 3686400 resolved after 73.44 s
+TR 77.29 mapAsync #60 latch.readback size 7713484 resolved after 73.43 s
+TR 77.29 mapAsync #61 egui_screen_capture_buffer size 3686400 resolved after 73.43 s
+TR 77.29 mapAsync #62 latch.readback size 7713484 resolved after 73.42 s
+TR 77.29 mapAsync #63 egui_screen_capture_buffer size 3686400 resolved after 73.42 s
+TR 79.01 mapAsync #64 latch.readback size 7713484 resolved after 75.11 s
+TR 79.01 mapAsync #65 egui_screen_capture_buffer size 3686400 resolved after 75.11 s
+TR 79.01 mapAsync #66 latch.readback size 7713484 resolved after 75.10 s
+TR 79.01 mapAsync #67 egui_screen_capture_buffer size 3686400 resolved after 75.10 s
+state ready after 79.034 s
+TR 80.74 counts {"createShaderModule":28,"createComputePipelineAsync":99,"createComputePipeline":198,"writeBuffer":167,"submit":157,"mapAsync":144} state=ready
+TR 80.74 mapAsync #68 latch.readback size 7713484 resolved after 76.81 s
+TR 80.74 mapAsync #69 egui_screen_capture_buffer size 3686400 resolved after 76.81 s
+web: pid 4131492 stopped
+services: 1, stopped: 1
+=== GO ===

@@ -1,0 +1,111 @@
+== 2026-11-25T09:27:35-05:00 M0-D212 · linux-pc · build then the supernova to 23,000 on the RTX 5090
+    Finished `release` profile [optimized] target(s) in 0.06s
+== 2026-11-25T09:27:42-05:00 supernova 0→23,000, dumps every 500, RTX 5090
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=23000 sim_time=192.540477 until=none
+    500 |dp| 5.789e-05 /peak 2.404e-09 (peak 2.4077e+04, inst 2.408e+04) inv (-4.334e-05,-3.838e-05) grid (+1.2784e-04,+1.8985e-04) walls (+0.000e+00,+0.000e+00) reset (-1.716e-04,-2.288e-04) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+   1500 |dp| 3.383e-04 /peak 1.405e-08 (peak 2.4077e+04, inst 8.549e+03) inv (-4.661e-05,-3.350e-04) grid (-2.5635e-04,-4.8726e-03) walls (+0.000e+00,+0.000e+00) reset (+2.093e-04,+4.537e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+   2500 |dp| 2.459e-04 /peak 1.021e-08 (peak 2.4077e+04, inst 8.469e+03) inv (-8.535e-05,-2.306e-04) grid (+1.5004e-02,+1.6673e-02) walls (-1.526e-02,-1.989e-02) reset (+1.737e-04,+2.987e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+   3500 |dp| 2.142e-04 /peak 8.894e-09 (peak 2.4077e+04, inst 6.636e+03) inv (-1.413e-04,-1.609e-04) grid (+6.9269e-02,+7.2323e-02) walls (-6.959e-02,-7.542e-02) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+   4500 |dp| 2.299e-04 /peak 9.550e-09 (peak 2.4077e+04, inst 3.902e+03) inv (-1.546e-04,-1.702e-04) grid (+5.5653e-02,+5.9052e-02) walls (-5.599e-02,-6.216e-02) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+   5500 |dp| 2.278e-04 /peak 9.460e-09 (peak 2.4077e+04, inst 2.243e+03) inv (-1.673e-04,-1.545e-04) grid (+4.1903e-02,+4.4409e-02) walls (-4.225e-02,-4.750e-02) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+   6500 |dp| 1.917e-04 /peak 7.963e-09 (peak 2.4077e+04, inst 1.938e+03) inv (-1.354e-04,-1.358e-04) grid (+3.2892e-02,+3.8588e-02) walls (-3.321e-02,-4.166e-02) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+   7500 |dp| 1.634e-04 /peak 6.786e-09 (peak 2.4077e+04, inst 2.093e+03) inv (-1.184e-04,-1.126e-04) grid (+2.0812e-02,+3.3427e-02) walls (-2.111e-02,-3.648e-02) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+   8500 |dp| 1.244e-04 /peak 5.168e-09 (peak 2.4077e+04, inst 2.728e+03) inv (-1.172e-04,-4.176e-05) grid (+1.5675e-02,+3.0821e-02) walls (-1.598e-02,-3.380e-02) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+   9500 |dp| 1.416e-04 /peak 5.881e-09 (peak 2.4077e+04, inst 3.822e+03) inv (-1.374e-04,+3.430e-05) grid (+1.6249e-02,+2.9326e-02) walls (-1.657e-02,-3.223e-02) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  10500 |dp| 1.035e-04 /peak 4.300e-09 (peak 2.4077e+04, inst 5.503e+03) inv (-9.399e-05,+4.339e-05) grid (+2.1989e-02,+5.0613e-02) walls (-2.227e-02,-5.351e-02) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  11500 |dp| 9.037e-05 /peak 3.753e-09 (peak 2.4077e+04, inst 8.651e+03) inv (-9.026e-05,-4.410e-06) grid (+1.7992e-02,+1.7225e-02) walls (-1.827e-02,-2.017e-02) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  12500 |dp| 2.995e-04 /peak 1.244e-08 (peak 2.4077e+04, inst 1.181e+04) inv (-2.973e-04,-3.582e-05) grid (-1.0637e-03,+1.1806e-02) walls (+5.827e-04,-1.478e-02) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  13500 |dp| 4.415e-04 /peak 1.834e-08 (peak 2.4077e+04, inst 1.536e+04) inv (-4.388e-04,-4.894e-05) grid (+2.1423e-02,+1.9454e-02) walls (-2.205e-02,-2.244e-02) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  14500 |dp| 5.044e-04 /peak 2.095e-08 (peak 2.4077e+04, inst 2.034e+04) inv (-5.044e-04,+8.700e-06) grid (+3.5136e-02,+2.9334e-02) walls (-3.582e-02,-3.227e-02) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  15500 |dp| 8.865e-04 /peak 3.528e-08 (peak 2.5128e+04, inst 2.513e+04) inv (-8.782e-04,+1.213e-04) grid (+6.2648e-02,+5.3228e-03) walls (-6.371e-02,-8.142e-03) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  16500 |dp| 6.216e-04 /peak 2.158e-08 (peak 2.8799e+04, inst 2.880e+04) inv (-6.060e-04,+1.382e-04) grid (-1.6091e-02,-2.2786e-02) walls (+1.530e-02,+1.998e-02) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  17500 |dp| 1.050e-02 /peak 3.374e-07 (peak 3.1115e+04, inst 3.112e+04) inv (-7.076e-04,-1.048e-02) grid (-2.4329e-01,+3.1875e-01) walls (+2.424e-01,-3.322e-01) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  18500 |dp| 9.132e-03 /peak 2.935e-07 (peak 3.1115e+04, inst 3.012e+04) inv (-4.378e-04,-9.121e-03) grid (-1.3299e+00,+1.5981e+00) walls (+1.329e+00,-1.610e+00) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  19500 |dp| 8.950e-03 /peak 2.876e-07 (peak 3.1115e+04, inst 2.828e+04) inv (+1.992e-03,-8.725e-03) grid (-2.6064e+00,+3.8821e+00) walls (+2.608e+00,-3.894e+00) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  20500 |dp| 1.195e-01 /peak 3.841e-06 (peak 3.1115e+04, inst 2.595e+04) inv (-1.121e-03,+1.195e-01) grid (-5.0904e+00,+7.0531e+00) walls (+5.089e+00,-6.937e+00) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  21500 |dp| 2.335e-01 /peak 7.503e-06 (peak 3.1115e+04, inst 2.343e+04) inv (+7.796e-04,+2.335e-01) grid (-8.7733e+00,+1.1531e+01) walls (+8.774e+00,-1.130e+01) reset (+1.833e-04,+2.940e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  22500 |dp| 4.436e-01 /peak 1.426e-05 (peak 3.1115e+04, inst 2.263e+04) inv (+9.236e-02,+4.338e-01) grid (+5.8716e+01,+9.1270e+02) walls (+1.967e+01,-3.175e+01) reset (+1.833e-04,+2.940e-03) held (-7.829e+01,-8.805e+02) sinks (+0.00e+00,+0.00e+00)
+  23000 |dp| 4.487e-01 /peak 1.442e-05 (peak 3.1115e+04, inst 2.239e+04) inv (+5.535e-02,+4.452e-01) grid (+3.1186e+03,+3.6111e+03) walls (+3.272e+01,-5.574e+01) reset (+1.833e-04,+2.940e-03) held (-3.151e+03,-3.555e+03) sinks (+0.00e+00,+0.00e+00)
+WORST 1.4419e-05 of the running peak at step 23000 over 46 checkpoints; bound 1e-5 -> FAIL
+== 2026-11-25T09:32:54-05:00 resume s_19500 → 21,500 (check: bit-identical to the straight life?)
+cmp: build/m0-d212/sn_r/dumps/s_20000.bin: No such file or directory
+cmp: build/m0-d212/sn_r/dumps/s_21500.bin: No such file or directory
+s_20000 identical
+s_21500 identical
+== 2026-11-25T09:37:50-05:00 probe build (scratch, CARGO_TARGET_DIR=/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/c6d2ba16-da85-4b20-a767-007417495c13/scratchpad/target)
+== 2026-11-25T09:38:25-05:00 probe A/B: s_19500 → 21,500
+dynamics identical to base at 21,500
+ledger start step 19501 grid0 (-2.6065831088781124, 3.8855052730068564) escaped0 (0.0, 0.0)
+ 19750 Δinv (-1.4440e-04,+3.2993e-02) | update rounding (-1.6675e-04,+3.2985e-02) | commit (-9.4424e-07,+2.2480e-06) | rest (+2.3297e-05,+5.3436e-06) | walls (+2.806e-01,-1.009e+00) reset (+0.00e+00,+0.00e+00)
+ 20000 Δinv (+1.8016e-03,+5.7998e-02) | update rounding (+1.8561e-03,+5.8005e-02) | commit (+1.3976e-05,+1.0364e-05) | rest (-6.8500e-05,-1.6574e-05) | walls (+8.539e-01,-2.069e+00) reset (+0.00e+00,+0.00e+00)
+ 20250 Δinv (-5.5588e-04,+8.4080e-02) | update rounding (-4.7025e-04,+8.4167e-02) | commit (+1.6946e-05,+1.6261e-05) | rest (-1.0257e-04,-1.0348e-04) | walls (+1.649e+00,-2.738e+00) reset (+0.00e+00,+0.00e+00)
+ 20500 Δinv (-3.1430e-03,+1.2807e-01) | update rounding (-3.1354e-03,+1.2814e-01) | commit (+2.4336e-05,+7.8800e-07) | rest (-3.1970e-05,-7.5180e-05) | walls (+2.481e+00,-3.040e+00) reset (+0.00e+00,+0.00e+00)
+ 20750 Δinv (-3.1891e-03,+1.5678e-01) | update rounding (-3.1866e-03,+1.5679e-01) | commit (+2.1486e-06,+1.5570e-05) | rest (-4.6398e-06,-2.8911e-05) | walls (+3.026e+00,-3.269e+00) reset (+0.00e+00,+0.00e+00)
+ 21000 Δinv (-1.6846e-03,+1.8507e-01) | update rounding (-1.7197e-03,+1.8516e-01) | commit (+1.3498e-05,+6.7485e-06) | rest (+2.1654e-05,-9.2890e-05) | walls (+3.797e+00,-4.026e+00) reset (+0.00e+00,+0.00e+00)
+ 21250 Δinv (+5.9549e-04,+2.1059e-01) | update rounding (+4.7382e-04,+2.1093e-01) | commit (+1.0403e-05,-1.5424e-05) | rest (+1.1126e-04,-3.2905e-04) | walls (+4.656e+00,-5.342e+00) reset (+0.00e+00,+0.00e+00)
+ 21500 Δinv (-1.2423e-03,+2.4201e-01) | update rounding (-1.1192e-03,+2.4218e-01) | commit (-8.7653e-06,-2.3037e-05) | rest (-1.1430e-04,-1.4822e-04) | walls (+6.166e+00,-7.403e+00) reset (+0.00e+00,+0.00e+00)
+== 2026-11-25T09:41:57-05:00 probe C (flux, work, kick as applied): s_19500 → 21,500
+ 19750 update (-1.4671e-03,+3.2751e-02) = flux (-1.2801e-04,-1.1867e-05) + work (+4.9229e-05,+3.6927e-05) + kick (+2.5684e-05,-4.8108e-05) + accumulation (-1.4141e-03,+3.2774e-02) | commit (-2.7967e-06,-2.9095e-06)
+ 20000 update (+9.1501e-05,+5.6870e-02) = flux (-9.9771e-04,+1.8139e-05) + work (+2.7539e-05,+8.1445e-05) + kick (+6.8123e-05,-8.9248e-05) + accumulation (+9.9355e-04,+5.6860e-02) | commit (-1.3640e-06,-2.3411e-05)
+ 20250 update (-1.9223e-03,+8.1352e-02) = flux (-1.2384e-03,-3.3404e-04) + work (+1.9161e-05,+7.5091e-05) + kick (+1.2685e-04,-1.2900e-04) + accumulation (-8.2998e-04,+8.1740e-02) | commit (-1.3269e-05,-4.3847e-05)
+ 20500 update (-3.4116e-03,+1.2639e-01) = flux (-1.0386e-03,+5.9726e-04) + work (-2.4576e-06,+3.6167e-05) + kick (+1.3820e-04,-1.5008e-04) + accumulation (-2.5088e-03,+1.2591e-01) | commit (-2.6130e-05,+3.7542e-06)
+ 20750 update (-4.3076e-03,+1.5383e-01) = flux (-1.3996e-03,+5.2966e-04) + work (-3.8347e-05,+7.6702e-05) + kick (+1.5463e-04,-1.2742e-04) + accumulation (-3.0243e-03,+1.5336e-01) | commit (-3.0809e-05,+2.3237e-06)
+ 21000 update (-1.4671e-03,+1.8245e-01) = flux (-9.1955e-04,+3.5238e-04) + work (+2.7734e-05,+5.6199e-05) + kick (+1.9807e-04,-1.0756e-04) + accumulation (-7.7339e-04,+1.8215e-01) | commit (-3.8036e-05,-1.1028e-05)
+ 21250 update (+4.9405e-04,+2.0918e-01) = flux (-7.8614e-04,+1.0167e-03) + work (+9.5360e-06,+4.3079e-05) + kick (+2.7933e-04,-8.8408e-05) + accumulation (+9.9133e-04,+2.0821e-01) | commit (-3.7266e-05,-6.3488e-06)
+ 21500 update (-3.3272e-03,+2.4106e-01) = flux (-4.0353e-03,-1.1584e-04) + work (+3.7377e-05,+9.6735e-05) + kick (+3.4480e-04,-1.4847e-04) + accumulation (+3.2592e-04,+2.4123e-01) | commit (-4.1680e-05,-1.6215e-05)
+== 2026-11-25T09:46:14-05:00 fixed tree (T taken back): s_19500 → 21,500, then the straight life 0 → 23,000
+ledger start step 19501 grid0 (-2.6065220737218624, 3.885444
+ 19750 Δinv (-3.1847e-05,-7.6109e-05) | update rounding (+2
+ 20000 Δinv (+5.8071e-06,-6.4837e-05) | update rounding (+8
+ 20250 Δinv (-3.8093e-05,-2.2893e-05) | update rounding (+1
+ 20500 Δinv (-1.4467e-04,-6.9461e-05) | update rounding (+2
+ 20750 Δinv (-1.2706e-04,+3.5080e-05) | update rounding (+3
+ 21000 Δinv (-1.7103e-04,+1.2467e-04) | update rounding (+3
+ 21250 Δinv (+3.3163e-04,+7.2915e-07) | update rounding (+4
+ 21500 Δinv (+1.9064e-04,-2.2695e-04) | update rounding (+6
+== 2026-11-25T09:47:02-05:00 conservation::the_supernova…momentum on the fixed tree, RTX 5090
+    Finished `release` profile [optimized] target(s) in 9.52s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+real	9m50.011s
+user	0m44.782s
+sys	0m1.257s
+== 2026-11-25T09:57:03-05:00 fixed tree: supernova 0 → ending, dumps every 500, RTX 5090 (headless)
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+real	9m45.126s
+user	4m29.394s
+sys	1m42.332s
+== 2026-11-25T10:08:21-05:00 fixed tree v2 (hydro_net tiles): s_19500 → 21,500
+ledger start step 19501 grid0 (-2.6065220737218624, 3.885444
+ 19750 Δinv (-3.1847e-05,-7.6109e-05) | update rounding (+2
+ 20000 Δinv (+5.8071e-06,-6.4837e-05) | update rounding (+8
+ 20250 Δinv (-3.8093e-05,-2.2893e-05) | update rounding (+1
+ 20500 Δinv (-1.4467e-04,-6.9461e-05) | update rounding (+2
+ 20750 Δinv (-1.2706e-04,+3.5080e-05) | update rounding (+3
+ 21000 Δinv (-6.1791e-05,+1.0959e-05) | update rounding (+3
+ 21250 Δinv (+3.2574e-06,-8.2701e-05) | update rounding (+4
+ 21500 Δinv (-1.8579e-04,-2.2684e-04) | update rounding (+6
+== 2026-11-25T10:09:26-05:00 fixed tree v2: supernova 0 → ending, dumps every 500, RTX 5090 (headless)
+real	9m45.181s
+user	4m50.701s
+sys	2m11.923s
+-- grade of the fixed supernova 0 → 24,500 (cut by the 585 s cap; ending not reached)
+    500 |dp| 6.181e-06 /peak 2.567e-10 (peak 2.4078e+04, inst 2.408e+04) inv (-4.648e-07,-6.164e-06) grid (+1.4168e-04,+1.5802e-04) walls (+0.000e+00,+0.000e+00) reset (-1.425e-04,-1.647e-04) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+   2500 |dp| 6.500e-06 /peak 2.700e-10 (peak 2.4078e+04, inst 8.470e+03) inv (+5.607e-06,+3.289e-06) grid (+1.5232e-02,+1.8492e-02) walls (-1.536e-02,-1.754e-02) reset (+1.343e-04,-9.482e-04) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+   4500 |dp| 7.489e-07 /peak 3.110e-11 (peak 2.4078e+04, inst 3.900e+03) inv (-6.940e-07,-2.815e-07) grid (+5.6049e-02,+5.7629e-02) walls (-5.611e-02,-5.660e-02) reset (+5.771e-05,-1.030e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+   6500 |dp| 1.364e-06 /peak 5.666e-11 (peak 2.4078e+04, inst 1.939e+03) inv (+1.154e-06,+7.281e-07) grid (+3.8895e-02,+2.9598e-02) walls (-3.895e-02,-2.857e-02) reset (+5.771e-05,-1.030e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+   8500 |dp| 1.621e-06 /peak 6.731e-11 (peak 2.4078e+04, inst 2.729e+03) inv (-1.137e-06,-1.154e-06) grid (+3.8965e-02,+1.6118e-02) walls (-3.902e-02,-1.509e-02) reset (+5.771e-05,-1.030e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  10500 |dp| 3.764e-06 /peak 1.563e-10 (peak 2.4078e+04, inst 5.503e+03) inv (-1.290e-06,+3.536e-06) grid (+2.7709e-02,+1.6142e-02) walls (-2.777e-02,-1.511e-02) reset (+5.771e-05,-1.030e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  12500 |dp| 1.369e-05 /peak 5.684e-10 (peak 2.4078e+04, inst 1.185e+04) inv (-1.298e-05,+4.344e-06) grid (+4.9455e-02,+4.5557e-02) walls (-4.953e-02,-4.452e-02) reset (+5.771e-05,-1.030e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  14500 |dp| 1.605e-05 /peak 6.667e-10 (peak 2.4078e+04, inst 2.033e+04) inv (-1.445e-05,-6.991e-06) grid (+1.1695e-01,+1.0889e-01) walls (-1.170e-01,-1.079e-01) reset (+5.771e-05,-1.030e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  16500 |dp| 3.438e-05 /peak 1.195e-09 (peak 2.8768e+04, inst 2.877e+04) inv (-3.381e-05,+6.232e-06) grid (+5.0431e-02,+8.6205e-03) walls (-5.052e-02,-7.585e-03) reset (+5.771e-05,-1.030e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  18500 |dp| 4.663e-06 /peak 1.513e-10 (peak 3.0824e+04, inst 3.001e+04) inv (+1.242e-07,-4.661e-06) grid (+2.0380e+00,+1.7774e+00) walls (-2.038e+00,-1.776e+00) reset (+5.771e-05,-1.030e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  20500 |dp| 1.126e-04 /peak 3.652e-09 (peak 3.0824e+04, inst 2.544e+04) inv (+7.945e-05,-7.973e-05) grid (+8.3221e+00,+6.9676e+00) walls (-8.322e+00,-6.967e+00) reset (+5.771e-05,-1.030e-03) held (+0.000e+00,+0.000e+00) sinks (+0.00e+00,+0.00e+00)
+  22500 |dp| 3.063e-03 /peak 9.937e-08 (peak 3.0824e+04, inst 2.493e+04) inv (-3.063e-03,-9.954e-06) grid (-1.7050e+03,-1.8370e+02) walls (-5.224e+01,-3.575e+01) reset (+5.771e-05,-1.030e-03) held (+1.757e+03,+2.194e+02) sinks (+0.00e+00,+0.00e+00)
+  24500 |dp| 8.649e-03 /peak 2.806e-07 (peak 3.0824e+04, inst 1.627e+04) inv (-5.369e-03,-6.780e-03) grid (+1.2132e+03,+1.0568e+03) walls (-2.846e+01,-4.063e+01) reset (+5.771e-05,-1.030e-03) held (-1.185e+03,-1.016e+03) sinks (+0.00e+00,+0.00e+00)
+WORST 2.8058e-07 of the running peak at step 24500 over 49 checkpoints; bound 1e-5 -> PASS

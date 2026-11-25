@@ -1,0 +1,192 @@
+== 2026-11-25T12:54:29-05:00 observe_run · task M0-D214 · box laserax-ai :: bash tests/gpu.sh observe physics
+-- observe_run · exit=101 · 402.45 s
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 10.34s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 14 tests
+test observe::a_black_hole_that_eats_its_whole_cloud_meets_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.245207 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1249 sim_time=11.852886 until=met
+T 3: ending at step 1289 (t 11.853), object 1 of 1799.9796142578125 sb, the sink at (35.00, 30.09), 2 events; the box empty, Δt 0.447214
+ok
+test observe::a_cloud_over_a_hundredth_of_the_calibrated_sun_is_listed ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.096945 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.096945 until=none
+ok
+test observe::a_continued_lifes_ages_are_the_unbroken_lifes ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1627 sim_time=20.000116 until=met
+unbroken: 1627 steps, events [{"detail":{"by":"light","mass_sb":3349.6102791372687},"kind":"ignition","object":1,"sim_time":4.3553253104910254,"step":288}]
+stages [{"from_step":65,"sim_time":1.5212653521448374,"stage":"collapsing"},{"from_step":320,"sim_time":4.657537480816245,"stage":"main_sequence"}]
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=768 sim_time=9.853323 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1627 sim_time=20.000116 until=met
+ages at the cut [Number(4093009.3277184144)], unbroken and continued [Number(15953894.085913954)]
+ok
+test observe::a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary ... 
+thread 'observe::a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary' (3740768) panicked at crates/sr-engine/tests/gpu/observe.rs:467:5:
+assertion `left == right` failed: summary.json, wall_s aside
+  left: ["{", "  \"adapter\": {", "    \"backend\": \"Vulkan\",", "    \"driver\": \"NVIDIA\",", "    \"name\": \"NVIDIA GeForce RTX 5090\"", "  },", "  \"events\": [", "    {", "      \"detail\": {", "        \"by\": \"light\",", "        \"mass_sb\": 3349.6102791372687", "      },", "      \"kind\": \"ignition\",", "      \"object\": 1,", "      \"sim_time\": 4.3553253104910254,", "      \"step\": 288", "    }", "  ],", "  \"git\": \"0e06ff0-dirty\",", "  \"ledger\": {", "    \"end\": {", "      \"energy\": {", "        \"cold\": 168258.05958597976,", "        \"edit_potential\": 0.0,", "        \"escaped\": 0.0,", "        \"floor_added\": -61.61163083938048,", "        \"invariant\": -200628.32629135743,", "        \"kinetic\": 564.731274169164,", "        \"neutrino_deposited\": 0.0,", "        \"neutrino_lost\": 0.0,", "        \"nuclear_released\": 57129.33000657909,", "        \"potential\": -588666.5899714016,", "        \"radiated\": 142191.97088617113,", "        \"swallowed\": 0.0,", "        \"thermal\": 134091.2203094638,", "        \"tools\": 0.0", "      },", "      \"mass\": {", "        \"cleared\": 0.0,", "        \"erased\": 0.0,", "        \"escaped\": 0.0,", "        \"grid\": 3350.458809175365,", "        \"invariant\": 3351.038428229438,", "        \"painted\": 0.0,", "        \"preset_dropped\": 0.0,", "        \"sinks\": 0.0,", "        \"vacuum_reset\": 0.5796190540733734", "      },", "      \"momentum\": {", "        \"escaped\": [", "          -0.00033796534323083565,", "          -0.00008347291016891833", "        ],", "        \"grid\": [", "          0.00033643388344728464,", "          0.00007936203996905533", "        ],", "        \"held\": [", "          0.0,", "          0.0", "        ],", "        \"invariant\": [", "          -1.5314597835510042e-6,", "          -4.110870199863e-6", "        ],", "        \"sinks\": [", "          0.0,", "          0.0", "        ]", "      },", "      \"sim_time\": 20.000115603208542,", "      \"step\": 1627", "    },", "    \"start\": {", "      \"energy\": {", "        \"cold\": 37036.16128675151,", "        \"edit_potential\": 0.0,", "        \"escaped\": 0.0,", "        \"floor_added\": 0.0,", "        \"invariant\": -200642.14585753498,", "        \"kinetic\": 10.918199235922657,", "        \"neutrino_deposited\": 0.0,", "        \"neutrino_lost\": 0.0,", "        \"nuclear_released\": 0.0,", "        \"potential\": -264083.5451843581,", "        \"radiated\": 0.0,", "        \"swallowed\": 0.0,", "        \"thermal\": 26394.319840835666,", "        \"tools\": 0.0", "      },", "      \"mass\": {", "        \"cleared\": 0.0,", "        \"erased\": 0.0,", "        \"escaped\": 0.0,", "        \"grid\": 3351.038540461531,", "        \"invariant\": 3351.038540461531,", "        \"painted\": 0.0,", "        \"preset_dropped\": 0.0,", "        \"sinks\": 0.0,", "        \"vacuum_reset\": 0.0", "      },", "      \"momentum\": {", "        \"escaped\": [", "          0.0,", "          0.0", "        ],", "        \"grid\": [", "          8.396455086767673e-8,", "          7.808557711541653e-7", "        ],", "        \"held\": [", "          0.0,", "          0.0", "        ],", "        \"invariant\": [", "          8.396455086767673e-8,", "          7.808557711541653e-7", "        ],", "        \"sinks\": [", "          0.0,", "          0.0", "        ]", "      },", "      \"sim_time\": 0.030266789719462395,", "      \"step\": 1", "    },", "    \"taken_back\": 0.0065535008907318115", "  },", "  \"max_gas_speed\": 21.56010368848916,", "  \"objects\": [", "    {", "      \"age_years\": 15953894.085913954,", "      \"ending\": null,", "      \"id\": 1,", "      \"mass_sb\": 3323.7540450450033,", "      \"mass_suns\": 1.5784593151426818,", "      \"predicted_ending\": [", "        \"white_dwarf\"", "      ],", "      \"stage\": \"main_sequence\",", "      \"stages\": [", "        {", "          \"from_step\": 65,", "          \"sim_time\": 1.5212653521448374,", "          \"stage\": \"collapsing\"", "        },", "        {", "          \"from_step\": 320,", "          \"sim_time\": 4.657537480816245,", "          \"stage\": \"main_sequence\"", "        }", "      ]", "    }", "  ],", "  \"scene\": \"life:sun\",", "  \"sim_time\": 20.000115603208542,", "  \"standins\": {", "    \"s1\": false,", "    \"s2\": false", "  },", "  \"steps\": 1627,", "  \"tool\": \"sandbox-reactions 0.0.0\",", "  \"until\": {", "    \"condition\": \"sim_time:20\",", "    \"met\": true", "  },", "  \"version\": 1,", "  \"world\": {", "    \"edge\": \"leave\",", "    \"height\": 800,", "    \"width\": 800", "  }", "}"]
+ right: ["{", "  \"adapter\": {", "    \"backend\": \"Vulkan\",", "    \"driver\": \"NVIDIA\",", "    \"name\": \"NVIDIA GeForce RTX 5090\"", "  },", "  \"events\": [", "    {", "      \"detail\": {", "        \"by\": \"light\",", "        \"mass_sb\": 3349.6102791372687", "      },", "      \"kind\": \"ignition\",", "      \"object\": 1,", "      \"sim_time\": 4.3553253104910254,", "      \"step\": 288", "    }", "  ],", "  \"git\": \"0e06ff0-dirty\",", "  \"ledger\": {", "    \"end\": {", "      \"energy\": {", "        \"cold\": 168258.05958597976,", "        \"edit_potential\": 0.0,", "        \"escaped\": 0.0,", "        \"floor_added\": -61.61163083938048,", "        \"invariant\": -200628.32629135743,", "        \"kinetic\": 564.731274169164,", "        \"neutrino_deposited\": 0.0,", "        \"neutrino_lost\": 0.0,", "        \"nuclear_released\": 57129.33000657909,", "        \"potential\": -588666.5899714016,", "        \"radiated\": 142191.97088617113,", "        \"swallowed\": 0.0,", "        \"thermal\": 134091.2203094638,", "        \"tools\": 0.0", "      },", "      \"mass\": {", "        \"cleared\": 0.0,", "        \"erased\": 0.0,", "        \"escaped\": 0.0,", "        \"grid\": 3350.458809175365,", "        \"invariant\": 3351.038428229438,", "        \"painted\": 0.0,", "        \"preset_dropped\": 0.0,", "        \"sinks\": 0.0,", "        \"vacuum_reset\": 0.5796190540733734", "      },", "      \"momentum\": {", "        \"escaped\": [", "          -0.00033796534323083565,", "          -0.00008347291016891833", "        ],", "        \"grid\": [", "          0.00033643388344728464,", "          0.00007936203996905533", "        ],", "        \"held\": [", "          0.0,", "          0.0", "        ],", "        \"invariant\": [", "          -1.5314597835510042e-6,", "          -4.110870199863e-6", "        ],", "        \"sinks\": [", "          0.0,", "          0.0", "        ]", "      },", "      \"sim_time\": 20.000115603208542,", "      \"step\": 1627", "    },", "    \"start\": {", "      \"energy\": {", "        \"cold\": 37036.16128675151,", "        \"edit_potential\": 0.0,", "        \"escaped\": 0.0,", "        \"floor_added\": 0.0,", "        \"invariant\": -200642.14585753498,", "        \"kinetic\": 10.918199235922657,", "        \"neutrino_deposited\": 0.0,", "        \"neutrino_lost\": 0.0,", "        \"nuclear_released\": 0.0,", "        \"potential\": -264083.5451843581,", "        \"radiated\": 0.0,", "        \"swallowed\": 0.0,", "        \"thermal\": 26394.319840835666,", "        \"tools\": 0.0", "      },", "      \"mass\": {", "        \"cleared\": 0.0,", "        \"erased\": 0.0,", "        \"escaped\": 0.0,", "        \"grid\": 3351.038540461531,", "        \"invariant\": 3351.038540461531,", "        \"painted\": 0.0,", "        \"preset_dropped\": 0.0,", "        \"sinks\": 0.0,", "        \"vacuum_reset\": 0.0", "      },", "      \"momentum\": {", "        \"escaped\": [", "          0.0,", "          0.0", "        ],", "        \"grid\": [", "          8.396455086767673e-8,", "          7.808557711541653e-7", "        ],", "        \"held\": [", "          0.0,", "          0.0", "        ],", "        \"invariant\": [", "          8.396455086767673e-8,", "          7.808557711541653e-7", "        ],", "        \"sinks\": [", "          0.0,", "          0.0", "        ]", "      },", "      \"sim_time\": 0.030266789719462395,", "      \"step\": 1", "    },", "    \"taken_back\": 0.017722466960549355", "  },", "  \"max_gas_speed\": 21.56010368848916,", "  \"objects\": [", "    {", "      \"age_years\": 15953894.085913954,", "      \"ending\": null,", "      \"id\": 1,", "      \"mass_sb\": 3323.7540450450033,", "      \"mass_suns\": 1.5784593151426818,", "      \"predicted_ending\": [", "        \"white_dwarf\"", "      ],", "      \"stage\": \"main_sequence\",", "      \"stages\": [", "        {", "          \"from_step\": 65,", "          \"sim_time\": 1.5212653521448374,", "          \"stage\": \"collapsing\"", "        },", "        {", "          \"from_step\": 320,", "          \"sim_time\": 4.657537480816245,", "          \"stage\": \"main_sequence\"", "        }", "      ]", "    }", "  ],", "  \"scene\": \"life:sun\",", "  \"sim_time\": 20.000115603208542,", "  \"standins\": {", "    \"s1\": false,", "    \"s2\": false", "  },", "  \"steps\": 1627,", "  \"tool\": \"sandbox-reactions 0.0.0\",", "  \"until\": {", "    \"condition\": \"sim_time:20\",", "    \"met\": true", "  },", "  \"version\": 1,", "  \"world\": {", "    \"edge\": \"leave\",", "    \"height\": 800,", "    \"width\": 800", "  }", "}"]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test observe::a_lighter_objects_ending_never_ends_the_life ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.445989 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=2.912058 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2712 sim_time=13.064773 until=met
+two clouds: object 2 (306.0) ended at step 2560 (t 11.98), the life on object 1 (1485.5) at step 2752 (t 13.06)
+ok
+test observe::a_sink_outside_the_box_is_an_object_of_its_own ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.417093 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.879021 until=met
+lone sink: object 2 black_hole at step 73 beside the cloud
+ok
+test observe::a_watch_with_no_calibration_writes_the_four_as_null ... ok
+test observe::an_unmet_condition_is_exit_2_with_until_unmet ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=100 sim_time=2.817350 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=1.318461 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=1.318461 until=none
+ok
+test observe::events_jsonl_and_the_ending_of_a_black_hole ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.417093 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1857 sim_time=11.967414 until=met
+ending at step 1897: black_hole shown from step 73, held 10.089 t.u. of 10.000
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1841 sim_time=11.876391 until=unmet
+ok
+test observe::the_age_never_decreases_over_the_frames ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1605 sim_time=20.010917 until=met
+readouts life: 1605 steps, 107 frames, objects [{"age_years":27869655.09974674,"ending":null,"id":1,"mass_sb":3112.804213138297,"mass_suns":0.8947460028703125,"predicted_ending":["white_dwarf"],"stage":"main_sequence","stages":[{"from_step":65,"sim_time":1.5416669473052025,"stage":"collapsing"},{"from_step":705,"sim_time":9.243259593844414,"stage":"main_sequence"}]}]
+age over 103 frames: 102 rises, the largest 1.0985e6 of 2.7870e7 years
+ok
+test observe::the_four_readouts_are_the_librarys_for_the_last_frame ... readouts: 0.8947460028703125 Suns, ["white_dwarf"], age 2.786966e7 years ("main_sequence" shown)
+ok
+test observe::until_a_stage_stops_at_the_frame_that_shows_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=49 sim_time=2.074066 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.709623 until=unmet
+ok
+test observe::until_is_checked_before_a_device_is_touched ... SR-ERROR bad arguments: give --steps N or --until <condition>, one of the two
+SR-ERROR bad arguments: give --steps N or --until <condition>, one of the two
+SR-ERROR bad arguments: --until "later": expected sim_time:<t>, event:<kind>, stage:<id> or ending
+SR-ERROR bad arguments: --until "stage:nova": a stage is one of black_hole|supernova|neutron_star|core_collapse|white_dwarf|failed_star|planetary_nebula|iron_core|si_burn|o_burn|ne_burn|c_burn|he_core|he_shell|h_shell|main_sequence|collapsing|protostar|cloud, got "nova"
+SR-ERROR bad arguments: --until "event:ending": an event is one of ignition|core_collapse|supernova|sink_formed, got "ending"
+SR-ERROR bad arguments: --until "sim_time:-3": sim_time takes a time of 0 or more, got "-3"
+SR-ERROR bad arguments: --until is the GPU's: it has no meaning with --cpu-reference
+ok
+test observe::until_sim_time_stops_at_the_first_step_past_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1318 sim_time=5.000149 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1317 sim_time=4.994723 until=none
+sim_time:5 met at step 1318, sim time 5.000149181; the step before: 4.994722811
+ok
+
+failures:
+
+failures:
+    observe::a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary
+
+test result: FAILED. 13 passed; 1 failed; 0 ignored; 0 measured; 537 filtered out; finished in 391.86s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+== 2026-11-25T13:07:23-05:00 observe_run · task M0-D214 · box laserax-ai :: bash tests/gpu.sh observe physics
+-- observe_run · exit=0 · 280.34 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 14 tests
+test observe::a_black_hole_that_eats_its_whole_cloud_meets_its_ending ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.245207 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1249 sim_time=11.852886 until=met
+T 3: ending at step 1289 (t 11.853), object 1 of 1799.9796142578125 sb, the sink at (35.00, 30.09), 2 events; the box empty, Δt 0.447214
+ok
+test observe::a_cloud_over_a_hundredth_of_the_calibrated_sun_is_listed ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.096945 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1 sim_time=0.096945 until=none
+ok
+test observe::a_continued_lifes_ages_are_the_unbroken_lifes ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1627 sim_time=20.000116 until=met
+unbroken: 1627 steps, events [{"detail":{"by":"light","mass_sb":3349.6102791372687},"kind":"ignition","object":1,"sim_time":4.3553253104910254,"step":288}]
+stages [{"from_step":65,"sim_time":1.5212653521448374,"stage":"collapsing"},{"from_step":320,"sim_time":4.657537480816245,"stage":"main_sequence"}]
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=768 sim_time=9.853323 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1627 sim_time=20.000116 until=met
+ages at the cut [Number(4093009.3277184144)], unbroken and continued [Number(15953894.085913954)]
+ok
+test observe::a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary ... SR-ERROR bad dump: --continue: /tmp/sr-observe-3755466-continue/cut/dumps/s_768.observers.json is step 512 at 6.629093611612916, the dump's 768 at 9.853323114104569
+SR-ERROR bad dump: --continue: /tmp/sr-observe-3755466-continue/cut/dumps/s_768.observers.json: No such file or directory (os error 2)
+SR-ERROR bad arguments: --continue needs --load-dump (the dump it goes on from)
+ok
+test observe::a_lighter_objects_ending_never_ends_the_life ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.445989 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=200 sim_time=2.912058 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=2712 sim_time=13.064773 until=met
+two clouds: object 2 (306.0) ended at step 2560 (t 11.98), the life on object 1 (1485.5) at step 2752 (t 13.06)
+ok
+test observe::a_sink_outside_the_box_is_an_object_of_its_own ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.417093 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.879021 until=met
+lone sink: object 2 black_hole at step 73 beside the cloud
+ok
+test observe::a_watch_with_no_calibration_writes_the_four_as_null ... ok
+test observe::an_unmet_condition_is_exit_2_with_until_unmet ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=100 sim_time=2.817350 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=1.318461 until=unmet
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=20 sim_time=1.318461 until=none
+ok
+test observe::events_jsonl_and_the_ending_of_a_black_hole ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=40 sim_time=1.417093 until=none
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1857 sim_time=11.967414 until=met
+ending at step 1897: black_hole shown from step 73, held 10.089 t.u. of 10.000
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1841 sim_time=11.876391 until=unmet
+ok
+test observe::the_age_never_decreases_over_the_frames ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1605 sim_time=20.010917 until=met
+readouts life: 1605 steps, 107 frames, objects [{"age_years":27869655.09974674,"ending":null,"id":1,"mass_sb":3112.804213138297,"mass_suns":0.8947460028703125,"predicted_ending":["white_dwarf"],"stage":"main_sequence","stages":[{"from_step":65,"sim_time":1.5416669473052025,"stage":"collapsing"},{"from_step":705,"sim_time":9.243259593844414,"stage":"main_sequence"}]}]
+age over 103 frames: 102 rises, the largest 1.0985e6 of 2.7870e7 years
+ok
+test observe::the_four_readouts_are_the_librarys_for_the_last_frame ... readouts: 0.8947460028703125 Suns, ["white_dwarf"], age 2.786966e7 years ("main_sequence" shown)
+ok
+test observe::until_a_stage_stops_at_the_frame_that_shows_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=49 sim_time=2.074066 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=33 sim_time=1.709623 until=unmet
+ok
+test observe::until_is_checked_before_a_device_is_touched ... SR-ERROR bad arguments: give --steps N or --until <condition>, one of the two
+SR-ERROR bad arguments: give --steps N or --until <condition>, one of the two
+SR-ERROR bad arguments: --until "later": expected sim_time:<t>, event:<kind>, stage:<id> or ending
+SR-ERROR bad arguments: --until "stage:nova": a stage is one of black_hole|supernova|neutron_star|core_collapse|white_dwarf|failed_star|planetary_nebula|iron_core|si_burn|o_burn|ne_burn|c_burn|he_core|he_shell|h_shell|main_sequence|collapsing|protostar|cloud, got "nova"
+SR-ERROR bad arguments: --until "event:ending": an event is one of ignition|core_collapse|supernova|sink_formed, got "ending"
+SR-ERROR bad arguments: --until "sim_time:-3": sim_time takes a time of 0 or more, got "-3"
+SR-ERROR bad arguments: --until is the GPU's: it has no meaning with --cpu-reference
+ok
+test observe::until_sim_time_stops_at_the_first_step_past_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1318 sim_time=5.000149 until=met
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1317 sim_time=4.994723 until=none
+sim_time:5 met at step 1318, sim time 5.000149181; the step before: 4.994722811
+ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 537 filtered out; finished in 280.20s
+
+

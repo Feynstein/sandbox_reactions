@@ -372,7 +372,7 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     steps an arg to the program, id like to try 1000 steps for larger stars and higher values for smaller stars».
   - [M0-D76] §2.12.3's dump (with [M0-T26]'s `resume` and [M0-D33]'s F) and §3.3's headless line · beside every dump a GPU run
     writes, the observers' snapshot `dumps/s_<step>.observers.json`: `{"version": 1, "step", "sim_time", "scene", "world": [w, h],
-    "done", "wall_s", "dt_next", "heat_unconverged", "watch", "ledger"}` — the steps run since the run's own start, its wall time,
+    "done", "wall_s", "dt_next", "heat_unconverged", "watch", "ledger"[, "taken_back" — M0-D214, §0.5 [M0-D214]]}` — the steps run since the run's own start, its wall time,
     the next Δt its chunks were sized by, the steps that reached P5's ceiling ([M0-D74]), the observers (the tracker's next id, the
     last frame's block weights and objects; each object's `ignited`, last core collapse, last result, streak, shown stage and
     events fired; the last frame's sim time, the events, the stage trails, the remnant holds, the objects ended, the at_x_h marks,
@@ -702,7 +702,8 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     × 10⁻³ → 5.54 × 10⁻³; the rest is source-term gravity on [M0-D68]'s source, not the edge — the same disk with no edge near
     drifts 1.15 × 10⁻² (1.04 × 10⁻² at T 0.05), and a disk whose rim touches the edge drifts as in a wider world (39.8 against
     39.3) under either ring rule (M0-V7 observation 1, carried to M0-T106) — measured on linux-pc, CPU f64 twin, and
-    laserax-ai-server, RTX 4090, 2026-10-28 (tasks/M0-D69.md) — the lead's answer at M0-D69, 2026-10-28: «7e-3 (Recommended)».
+    laserax-ai-server, RTX 4090, 2026-10-28 (tasks/M0-D69.md) — the lead's answer at M0-D69, 2026-10-28: «7e-3 (Recommended)». The band
+    no longer sees the ring since [M0-D212]'s take-back; the ledger reds it through `ledger.taken_back` (§0.5 [M0-D214]).
   - [M0-D110] §1.3.2's P1 row "Δt_n is the reduction P9 made at the end of step n−1 (step 0 reduces the initial state first)" ·
     **on a step whose P0 paints or drops a preset, P0 re-makes the CFL term after its edits: C / the largest (|u|+c)/Δx +
     (|v|+c)/Δy over the box P0 left (§1.3.3, re-fit when the edit landed outside it; an empty box's the floor gas's, §0.5
@@ -1451,6 +1452,45 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     800 / 800)⌋ = 1; on a 2,560 × 1,440 screen s = 1, at 3,840 × 2,160 s = 2 (reports/world_size.md § 2.1). It gives up B13's
     «each drawn as a 2–3 pixel square» in the default window (2-pixel cells come back at z = 2) and keeps «a whole star's life …
     squeezed to fit one screen» — the lead at M0-D204, 2026-11-23: «Whole world, 1 px (Recommended)».
+  - [M0-D210] §2.12.5's edit cell, `"x", "y"` only · **`"x", "y"` or `"dx", "dy"` from the world's centre (W / 2, H / 2), the
+    preset's drop; both at once, a half pair, a fraction or a cell off the world refused (exit 4)** — amended in place;
+    scenes/touch_paint.json, touch_erase.json and age_touch.json written as offsets (they named the 600 × 400 world's cells and
+    missed the 800 × 800 world's drop, §0.5 [M0-D203]), touch_paint.json's frames 51 → 43 on today's calibration (0.02 Σ × 5,025
+    cells = 100.5 sb a frame onto 3,121.3 sb → 7,442.8 against 1.25 × m_up_sb = 7,422.8), touch_erase.json's fourth ring's four
+    diagonal disks at 53 cells (was 54: 3,186.8 sb against m_up_sb ÷ 2 = 2,969.1; now 2,978.7) · measured on linux-pc's RTX
+    5090, 2026-11-25 (tasks/M0-D210.md) — the lead at M0-D210, 2026-11-25: «Offsets from centre (Recommended)».
+  - [M0-D212] §1.4.2 [M0-D194]'s take-back of K alone, and G-CONS's «Mass and momentum *by construction*» (§5.1) as P4's f32
+    update performs momentum · **when the step runs P2, the densest free cell takes back T, P4's whole update on the momentum
+    invariant (§2.9): the free box cells' Σⁿ⁺¹u − Σⁿu as the next state holds it, plus the held cells' spared (booked `held`)
+    and the boundary faces' momentum (the f32 products booked `escaped`), less the sinks' pull (the update's product on the
+    whole field less the one on the gas's own; P3 books the sinks' side) — each term exactly in fixed point (2⁻⁸, 2⁻²⁸, 2⁻⁴⁸),
+    one partial per box tile (`hydro_net`), the tiles and the faces added in `hydro_push_sum`; less the push N its shares give
+    back, with [M0-D199]'s rest, so the commit's whole take-back is T. In exact arithmetic T is K + N, the faces cancelling —
+    it also holds what each cell's f32 sum Σu − Δt·ΔF + kick + work + push rounded away. Without P2, as before** — GPU only;
+    the twin, in f64, takes back K, which T is in exact arithmetic · measured on linux-pc's RTX 5090, 2026-11-25
+    (tasks/M0-D212.md), the Massive preset in leave on 800 × 800 from the cloud: 1.44 × 10⁻⁵ of the running peak Σm|u| at step
+    23,000 (the RTX 4090's 1.078 × 10⁻⁵ at 22,514); over steps 19,500–21,500 (a resume bit-identical to the straight life)
+    the invariant moved (−1.2 × 10⁻³, +0.242), every term summed exactly: the update's own rounding (−1.1 × 10⁻³, +0.242) —
+    the cells' f32 sums (+3 × 10⁻⁴, +0.241), the flux differences against the walls' booking ≤ 4 × 10⁻³, the face work ≤ 10⁻⁴,
+    the kick against K ≤ 3.4 × 10⁻⁴ — the commit's ≤ 4 × 10⁻⁵, the other passes ≤ 3 × 10⁻⁴; with T taken back the window moves
+    (−1.9 × 10⁻⁴, −2.3 × 10⁻⁴) and the life to step 24,500 (past the collapse) reads 2.81 × 10⁻⁷ of the running peak at worst;
+    summed in `hydro_push_sum`'s one workgroup alone the step cost 2.2 × at the collapse, in `hydro_net`'s tiles the window ran
+    37.7 s against the base's 41.3 s — declared by M0-D212 (§9), the lead's word owed: the take-back the lead ruled at M0-D194
+    («Take-back, densest cell (Recommended)») carrying the update's whole net instead of K.
+  - [M0-D214] §0.5 [M0-D69]'s leave momentum band as what reds plant `grav-ring-one-sided` in the ledger (tasks/M0-D69.md:
+    «the ledger stays red under that plant»), and §2.12.2's
+    `"ledger": {"start", "end"}` · **summary.json's `ledger` also carries `taken_back`: the momentum P4's commit gave back from
+    the densest free cell (§0.5 [M0-D212]'s net, `push_net`'s words 4–5), |·| summed in f32 over the steps the run's process
+    ran (hydro.wgsl's `push_net` word 7) — a diagnostic, not a booked term: no invariant holds it; the observers' snapshot
+    ([M0-D76]) carries it as `"taken_back"` (a JSON string, exact; a snapshot without the key reads 0), restored into word 7 by
+    `--continue`, so a continued life's summary.json is the unbroken life's (observe_run); the state dump is unchanged, and a
+    `--load-dump` without `--continue` counts from 0; the CPU reference writes none. The ledger scope's leave run grades it
+    within 10⁻⁴ of Σm|u|** — the take-back holds the momentum invariant by construction, so a force that is not P4's own no longer moves
+    it: the one-sided ring (plant `grav-ring-one-sided`) drifts the leave run 1.7 × 10⁻⁸ against 7.8 × 10⁻⁹ clean (band
+    7 × 10⁻³, [M0-D69]'s, kept) while the take-back reads 16.0 = 4.7 × 10⁻³ of Σm|u| against 6.05 × 10⁻³ = 1.8 × 10⁻⁶ clean ·
+    measured on linux-pc's RTX 5090, 2026-11-25 (tasks/M0-D214.md) — the lead at M0-D214, 2026-11-25: «Expose take-back
+    (Recommended)», then, the continued life's summary read apart, «Carry it in the dump (Rec.)» — carried in the dump's
+    observers' snapshot, beside it, which the dump's own `Resume` would have changed in another scope's test.
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the ~~600 × 400~~ [M0-D203] 800 × 800 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1557,8 +1597,9 @@ sizes (§1.3.3). g = −∇φ by central differences. P4 adds the momentum sourc
 midpoint of the step's own mass update by its HLL fluxes (§0.5 [M0-D192]) (its Σ where ≥ Σ_vac, else 0; a
 held cell's own Σ), φ_mid = K ∗ Σ_src,mid plus the sinks' §1.4.3 as P2 added them, g_mid = −∇φ_mid — solved in P4 after the
 predictor, so the masses that pull are the masses pulled and the pairs' pulls cancel — [M0-D194] what f32 leaves of their net,
-Σ Δt·Σ_src,mid·g_mid over the free cells summed exactly, taken back each step from the densest free cell's momentum (§0.5
-[M0-D194]); P2's g still drives the predictor's half
+~~Σ Δt·Σ_src,mid·g_mid over the free cells summed exactly,~~ [M0-D212] with all P4's update leaves of the momentum invariant —
+T, the free cells' Σⁿ⁺¹u − Σⁿu, the held cells' spared and the faces' booked momentum, less the sinks' pull, summed exactly —
+taken back each step from the densest free cell's momentum (§0.5 [M0-D194], [M0-D212]); P2's g still drives the predictor's half
 kick and P9's Δt. [M0-TG2] A held cell (§2.3.4, §2.7) takes neither source,
 its Σg·Δt booked `held` — [M0-D149] g there being g_pull = −∇φ_pull, φ_pull = K ∗ Σ_src with the held cells emptied plus
 the sinks' §1.4.3, which P2 solves beside φ while the mask holds a cell ([M0-D183] at the half step: Σ_src,mid·g_pull,mid, the
@@ -2146,6 +2187,9 @@ the twin's P8 and the GPU's alike (the lead at M0-TG2: «Code now, move later (R
   newly held cell's, the impulse P4 spares a held cell and what one-way inflow carries into it; signed. summary.json's
   ledger records carry it as `momentum.held`; a ledger record or an observers' snapshot (§0.5 [M0-D76]) written
   before [M0-TG2] reads it, and the booking terms it lacks, as 0.
+- [M0-D214] **Taken back** (not a term): the momentum P4's commit gave back, |·| summed over the process's steps —
+  summary.json's `ledger.taken_back`, beside the records, carried across `--continue` by the observers' snapshot; outside
+  every invariant, the one place a force that is not P4's own shows once the take-back holds momentum (§0.5 [M0-D214]).
 - Each booked term is cumulative since the ledger (re)started: escaped, erased and vacuum_reset
   count mass that left the grid by that route; painted and preset_dropped mass that entered;
   floor_added, tools and edit_potential [M0-D109] are net energies added (signed).
@@ -2226,7 +2270,7 @@ the twin's P8 and the GPU's alike (the lead at M0-TG2: «Code now, move later (R
   `overrides` are for tests only; a run with overrides never writes calibration.
 - **2.12.2 Run summary** (`summary.json`): `{"version": 1, "tool": "sandbox-reactions <semver>",
   "git", "adapter": {"name", "backend", "driver"}, "scene", "world", "steps", "sim_time", "wall_s",
-  "ledger": {"start": {…}, "end": {…}}, "events": [{"step", "sim_time", "kind":
+  "ledger": {"start": {…}, "end": {…}[, "taken_back" — M0-D214: GPU runs, §2.9, §0.5 [M0-D214]]}, "events": [{"step", "sim_time", "kind":
   "ignition|core_collapse|supernova|sink_formed|ending", "object", "detail"}], "objects": [{"id",
   "stage", "mass_sb", "mass_suns", "predicted_ending", "ending", "age_years", "stages": [{"stage",
   "from_step", "sim_time"}]}], "standins": {"s1", "s2"} [M0-T104], "until": {"condition", "met"[, "object" — M0-D95: the life's ending's object, §0.5 [M0-D95]]}, "timing": {"per_pass_ms": {…},
@@ -2246,7 +2290,9 @@ the twin's P8 and the GPU's alike (the lead at M0-TG2: «Code now, move later (R
 - **2.12.4 Coordinates:** x to the right, y down, cell (0, 0) at the top-left, in every file, API
   and readout.
 - **2.12.5 Edits file** (`--edits`, for G-TOUCH and G-AGE): a list of `{"at": <trigger>, "edit":
-  {"kind": "paint|erase|heat|cool", "x", "y", "radius", "species", "frames"}}`, applied in P0 at the
+  {"kind": "paint|erase|heat|cool", "x", "y", "radius", "species", "frames"}}` — [M0-D210] or the cell as `"dx", "dy"`, whole
+  cells from the world's centre (W / 2, H / 2), where `--scene preset:<name>` drops its cloud, never both forms in one edit —
+  applied in P0 at the
   first step its trigger holds — `{"step": n}`, or `{"object_until": {"x_h_c_below": 0.5}}` (the
   heaviest object's central hydrogen first falls below the value), or `{"mass_until":
   {"at_least": m}}` / `{"at_most": m}` (the edit repeats each step until that object's mass in
@@ -2777,7 +2823,8 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
 - **G-CONS · conservation.** A whole Sun-like life (bounce) and a supernova (leave; the Massive
   preset from its iron core): the mass invariant of §2.9 constant to 10⁻⁶ relative; momentum (grid
   + sinks + escaped + held [M0-TG2]) to ~~10⁻⁶ of Σm|u|~~ [M0-D186] 10⁻⁵ of the running peak Σm|u| (§0.5 [M0-D186]); the energy invariant drifting ≤ 10⁻³ |W| per τ_dyn (SM-O10).
-  Mass and momentum *by construction* ([M0-D195] mass with P4's f32 rounding given back, §0.5 [M0-D195]); energy *UNVERIFIED* — source-term gravity conserves it only
+  Mass and momentum *by construction* ([M0-D195] mass with P4's f32 rounding given back, §0.5 [M0-D195]; [M0-D212] momentum
+  with P4's whole update taken back, §0.5 [M0-D212]); energy *UNVERIFIED* — source-term gravity conserves it only
   approximately (SM, from memory): more drift calls for a conservative gravity formulation, never a
   looser bound (§0.4). Scope `conservation` ⏱. Plant `no-grav-work`: the energy source Σu·g dropped.
 - **G-BURN · the rate law.** One cell, T pinned, flow off, k = AΣ^a f(T): H_burn (order 2)

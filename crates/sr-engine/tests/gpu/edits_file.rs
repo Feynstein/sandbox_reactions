@@ -245,6 +245,12 @@ fn a_bad_edits_file_is_refused() {
     let entry = |at: &str, edit: &str| format!(r#"[{{"at": {at}, "edit": {edit}}}]"#);
     assert!(EditPlan::parse(&entry(r#"{"step": 0}"#, &edit("")), world, &elements).is_ok());
     assert!(EditPlan::parse("[]", world, &elements).is_ok());
+    // [M0-D210] dx, dy from the centre (32, 32): the far corners (0, 0) and (63, 63) are in, one past them out.
+    for (dx, dy) in [(-32, -32), (31, 31), (0, 0)] {
+        let rel = entry(r#"{"step": 0}"#, &format!(r#"{{"kind": "erase", "dx": {dx}, "dy": {dy}, "radius": 3}}"#));
+        assert!(EditPlan::parse(&rel, world, &elements).is_ok(), "dx {dx}, dy {dy}");
+    }
+    let rel = |dx: i32, dy: i32| entry(r#"{"step": 1}"#, &format!(r#"{{"kind": "erase", "dx": {dx}, "dy": {dy}, "radius": 3}}"#));
     let cases: Vec<(&str, String)> = vec![
         ("not a list", r#"{"at": {"step": 1}}"#.to_string()),
         ("unknown entry key", format!(r#"[{{"at": {{"step": 1}}, "edit": {}, "when": 1}}]"#, edit(""))),
@@ -264,6 +270,11 @@ fn a_bad_edits_file_is_refused() {
         ("an unknown kind", entry(r#"{"step": 1}"#, &edit("").replace("paint", "smear"))),
         ("frames of 0", entry(r#"{"step": 1}"#, &edit(r#", "frames": 0"#))),
         ("frames of 9", entry(r#"{"step": 1}"#, &edit(r#", "frames": 9"#))),
+        ("dx past the right edge", rel(32, 0)),
+        ("dy past the top edge", rel(0, -33)),
+        ("dx with no dy", entry(r#"{"step": 1}"#, r#"{"kind": "erase", "dx": 1, "radius": 1}"#)),
+        ("a fractional dx", entry(r#"{"step": 1}"#, r#"{"kind": "erase", "dx": 1.5, "dy": 0, "radius": 1}"#)),
+        ("x and dx at once", entry(r#"{"step": 1}"#, r#"{"kind": "erase", "x": 1, "y": 1, "dx": 0, "dy": 0, "radius": 1}"#)),
     ];
     for (what, text) in &cases {
         let e = EditPlan::parse(text, world, &elements).expect_err(what);

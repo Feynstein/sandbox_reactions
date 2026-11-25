@@ -1,0 +1,111 @@
+web: ready on port 47840, 0.0s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D218.launch.web.log)
+services: 1, ready: 1
+=== GO ===
+1.85 submit #1 encoder="egui_webpainter_paint_and_update_textures" passes=1 span=0.0 ms sum=0.0 ms state=loading
+1.85          0.0 ms  ×1  egui_render
+3.70 submit #2 encoder="frame" passes=19 span=56.5 ms sum=35.6 ms state=loading
+3.70         21.1 ms  ×1  heat_cells,heat_law,heat_open,heat_round,mg_level0,mg_coarsen,mg_smooth,mg_restrict,mg_coarse,heat_matvec,heat_park,latch_carry,heat_close,heat_limit,heat_sum,heat_apply
+3.70          3.6 ms  ×1  box_cells,box_fit,hold_cells,grav_rows_pull,grav_columns,grav_rows_inverse,grav_gradient_pull,grav_rows_edit,grav_rows,grav_gradient,grav_edit_before,grav_sinks,grav_edit_after,dt_cells,dt_partials
+3.70          3.2 ms  ×1  render_cells
+3.70          3.2 ms  ×1  glow_composite
+3.70          1.6 ms  ×1  glow_blur_h
+3.70          1.6 ms  ×1  glow_bright
+3.70          0.3 ms  ×1  hydro_update,hydro_mid,grav_rows_pull,grav_columns,grav_rows_inverse,grav_gradient_pull_mid,grav_rows,grav_gradient_mid,grav_sinks_mid,hydro_edges,hydro_net,hydro_push_sum,hydro_commit,hydro_settle
+3.70          0.2 ms  ×1  dt_cells,dt_partials,guard_scan,guard_stamp,box_cells,box_fit,latch_check
+3.70 submit #3 encoder="egui_webpainter_paint_and_update_textures" passes=1 span=0.0 ms sum=0.0 ms state=loading
+3.70          0.0 ms  ×1  egui_pipeline
+4.20 submit #4 encoder="frame" passes=5 span=0.3 ms sum=0.3 ms state=loading
+4.20          0.1 ms  ×1  render_cells
+4.20          0.1 ms  ×1  glow_composite
+4.20          0.0 ms  ×1  glow_blur_v
+4.20          0.0 ms  ×1  glow_blur_h
+4.20          0.0 ms  ×1  glow_bright
+4.20 submit #5 encoder="egui_webpainter_paint_and_update_textures" passes=2 span=4.6 ms sum=0.1 ms state=loading
+4.20          0.0 ms  ×1  egui_pipeline
+4.20          0.0 ms  ×1  texture_copy
+5.70 submit #6 encoder="frame" passes=5 span=1.4 ms sum=1.4 ms state=ready
+5.70          1.1 ms  ×1  render_cells
+5.70          0.2 ms  ×1  glow_composite
+5.70          0.1 ms  ×1  glow_bright
+5.70          0.1 ms  ×1  glow_blur_v
+5.70          0.0 ms  ×1  glow_blur_h
+5.71 submit #7 encoder="egui_webpainter_paint_and_update_textures" passes=2 span=9.0 ms sum=0.1 ms state=ready
+5.71          0.1 ms  ×1  egui_pipeline
+5.71          0.1 ms  ×1  texture_copy
+state ready after 5.86 s
+7.20 submit #8 encoder="frame" passes=5 span=1.4 ms sum=1.4 ms state=ready
+7.20          1.1 ms  ×1  render_cells
+7.20          0.2 ms  ×1  glow_composite
+7.20          0.1 ms  ×1  glow_bright
+7.20          0.0 ms  ×1  glow_blur_v
+7.20          0.0 ms  ×1  glow_blur_h
+7.20 submit #9 encoder="egui_webpainter_paint_and_update_textures" passes=1 span=0.1 ms sum=0.1 ms state=ready
+7.20          0.1 ms  ×1  egui_pipeline
+8.70 submit #10 encoder="frame" passes=5 span=1.4 ms sum=1.4 ms state=ready
+8.70          1.1 ms  ×1  render_cells
+8.70          0.2 ms  ×1  glow_composite
+8.70          0.1 ms  ×1  glow_bright
+8.70          0.0 ms  ×1  glow_blur_h
+8.70          0.0 ms  ×1  glow_blur_v
+8.70 submit #11 encoder="egui_webpainter_paint_and_update_textures" passes=1 span=0.1 ms sum=0.1 ms state=ready
+8.70          0.1 ms  ×1  egui_pipeline
+=== GO ===
+--- /?preset=sun&steps=200
+1.86 submit #1 encoder="egui_webpainter_paint_and_update_textures" passes=1 span=0.0 ms sum=0.0 ms state=loading
+1.86          0.0 ms  ×1  egui_render
+3.76 submit #2 encoder="frame" passes=19 span=61.0 ms sum=40.1 ms state=loading
+3.76         24.7 ms  ×1  heat_cells,heat_law,heat_open,heat_round,mg_level0,mg_coarsen,mg_smooth,mg_restrict,mg_coarse,heat_matvec,heat_park,latch_carry,heat_close,heat_limit,heat_sum,heat_apply
+3.76          3.6 ms  ×1  box_cells,box_fit,hold_cells,grav_rows_pull,grav_columns,grav_rows_inverse,grav_gradient_pull,grav_rows_edit,grav_rows,grav_gradient,grav_edit_before,grav_sinks,grav_edit_after,dt_cells,dt_partials
+3.76          3.2 ms  ×1  render_cells
+3.76          3.2 ms  ×1  glow_composite
+3.76          1.6 ms  ×1  glow_blur_h
+3.76          1.6 ms  ×1  glow_bright
+3.76          0.6 ms  ×1  hydro_update,hydro_mid,grav_rows_pull,grav_columns,grav_rows_inverse,grav_gradient_pull_mid,grav_rows,grav_gradient_mid,grav_sinks_mid,hydro_edges,hydro_net,hydro_push_sum,hydro_commit,hydro_settle
+3.76          0.3 ms  ×1  latch_hold,edit_gate,edit_sigma_before,edit_cells,edit_sigma_delta,edit_finish,box_gate,box_cells,box_fit,dt_cells,dt_refresh
+3.76 submit #3 encoder="egui_webpainter_paint_and_update_textures" passes=1 span=0.0 ms sum=0.0 ms state=loading
+3.76          0.0 ms  ×1  egui_pipeline
+5.11 submit #4 encoder="frame" passes=18 span=42.9 ms sum=31.3 ms state=loading
+5.11         29.2 ms  ×1  heat_cells,heat_law,heat_open,heat_round,mg_level0,mg_coarsen,mg_smooth,mg_restrict,mg_coarse,heat_matvec,heat_park,latch_carry,heat_close,heat_limit,heat_sum,heat_apply
+5.11          0.7 ms  ×1  hydro_update,hydro_mid,grav_rows_pull,grav_columns,grav_rows_inverse,grav_gradient_pull_mid,grav_rows,grav_gradient_mid,grav_sinks_mid,hydro_edges,hydro_net,hydro_push_sum,hydro_commit,hydro_settle
+5.11          0.4 ms  ×1  grav_rows_pull,grav_columns,grav_rows_inverse,grav_gradient_pull,grav_rows_edit,grav_rows,grav_gradient,grav_edit_before,grav_sinks,grav_edit_after
+5.11          0.2 ms  ×1  sink_candidates,sink_update,sink_pull,sink_kick_drift,sink_kick_merge,sink_latch
+5.11          0.1 ms  ×1  render_cells
+5.11          0.1 ms  ×1  react_begin,react_cells,react_latch
+5.11          0.1 ms  ×1  summary_cells,summary_book
+5.11          0.1 ms  ×1  dt_cells,dt_partials,guard_scan,guard_stamp,box_cells,box_fit,latch_check
+5.11 submit #5 encoder="egui_webpainter_paint_and_update_textures" passes=2 span=4.6 ms sum=0.1 ms state=loading
+5.11          0.0 ms  ×1  egui_pipeline
+5.11          0.0 ms  ×1  texture_copy
+state ready after 5.876 s
+6.39 submit #6 encoder="frame" passes=18 span=35.4 ms sum=23.8 ms state=ready
+6.39         21.7 ms  ×1  heat_cells,heat_law,heat_open,heat_round,mg_level0,mg_coarsen,mg_smooth,mg_restrict,mg_coarse,heat_matvec,heat_park,latch_carry,heat_close,heat_limit,heat_sum,heat_apply
+6.39          0.7 ms  ×1  hydro_update,hydro_mid,grav_rows_pull,grav_columns,grav_rows_inverse,grav_gradient_pull_mid,grav_rows,grav_gradient_mid,grav_sinks_mid,hydro_edges,hydro_net,hydro_push_sum,hydro_commit,hydro_settle
+6.39          0.4 ms  ×1  grav_rows_pull,grav_columns,grav_rows_inverse,grav_gradient_pull,grav_rows_edit,grav_rows,grav_gradient,grav_edit_before,grav_sinks,grav_edit_after
+6.39          0.2 ms  ×1  sink_candidates,sink_update,sink_pull,sink_kick_drift,sink_kick_merge,sink_latch
+6.39          0.1 ms  ×1  render_cells
+6.39          0.1 ms  ×1  react_begin,react_cells,react_latch
+6.39          0.1 ms  ×1  summary_cells,summary_book
+6.39          0.1 ms  ×1  dt_cells,dt_partials,guard_scan,guard_stamp,box_cells,box_fit,latch_check
+6.39 submit #7 encoder="egui_webpainter_paint_and_update_textures" passes=2 span=4.6 ms sum=0.1 ms state=ready
+6.39          0.0 ms  ×1  egui_pipeline
+6.39          0.0 ms  ×1  texture_copy
+7.73 submit #8 encoder="frame" passes=18 span=35.1 ms sum=23.5 ms state=ready
+7.73         21.5 ms  ×1  heat_cells,heat_law,heat_open,heat_round,mg_level0,mg_coarsen,mg_smooth,mg_restrict,mg_coarse,heat_matvec,heat_park,latch_carry,heat_close,heat_limit,heat_sum,heat_apply
+7.73          0.6 ms  ×1  hydro_update,hydro_mid,grav_rows_pull,grav_columns,grav_rows_inverse,grav_gradient_pull_mid,grav_rows,grav_gradient_mid,grav_sinks_mid,hydro_edges,hydro_net,hydro_push_sum,hydro_commit,hydro_settle
+7.73          0.4 ms  ×1  grav_rows_pull,grav_columns,grav_rows_inverse,grav_gradient_pull,grav_rows_edit,grav_rows,grav_gradient,grav_edit_before,grav_sinks,grav_edit_after
+7.73          0.2 ms  ×1  sink_candidates,sink_update,sink_pull,sink_kick_drift,sink_kick_merge,sink_latch
+7.73          0.1 ms  ×1  render_cells
+7.73          0.1 ms  ×1  react_begin,react_cells,react_latch
+7.73          0.1 ms  ×1  summary_cells,summary_book
+7.73          0.1 ms  ×1  dt_cells,dt_partials,guard_scan,guard_stamp,box_cells,box_fit,latch_check
+7.73 submit #9 encoder="egui_webpainter_paint_and_update_textures" passes=1 span=0.0 ms sum=0.0 ms state=ready
+7.73          0.0 ms  ×1  egui_pipeline
+9.26 submit #10 encoder="frame" passes=18 span=49.5 ms sum=27.2 ms state=ready
+9.26         23.0 ms  ×1  heat_cells,heat_law,heat_open,heat_round,mg_level0,mg_coarsen,mg_smooth,mg_restrict,mg_coarse,heat_matvec,heat_park,latch_carry,heat_close,heat_limit,heat_sum,heat_apply
+9.26          1.0 ms  ×1  render_cells
+9.26          0.9 ms  ×1  hydro_update,hydro_mid,grav_rows_pull,grav_columns,grav_rows_inverse,grav_gradient_pull_mid,grav_rows,grav_gradient_mid,grav_sinks_mid,hydro_edges,hydro_net,hydro_push_sum,hydro_commit,hydro_settle
+9.26          0.5 ms  ×1  grav_rows_pull,grav_columns,grav_rows_inverse,grav_gradient_pull,grav_rows_edit,grav_rows,grav_gradient,grav_edit_before,grav_sinks,grav_edit_after
+9.26          0.3 ms  ×1  react_begin,react_cells,react_latch
+9.26          0.3 ms  ×1  sink_candidates,sink_update,sink_pull,sink_kick_drift,sink_kick_merge,sink_latch
+9.26          0.2 ms  ×1  summary_cells,summary_book
+9.26          0.2 ms  ×1  glow_composite

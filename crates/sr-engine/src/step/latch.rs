@@ -403,6 +403,21 @@ impl Step {
         read_buffers(device, queue, "latch.probe", std::iter::once(&self.latch.hook))[3].to_bits()
     }
 
+    /// [M0-D214] The momentum P4's commit took back (§2.9 [M0-D214]), summed in |·| over the steps since the Step was made
+    /// or [`Step::set_taken_back`] — f32, as the shader sums it; 0 without P4. Blocks on the device (tests and headless runs
+    /// only).
+    pub fn taken_back(&self, device: &wgpu::Device, queue: &wgpu::Queue) -> f64 {
+        self.hydro.as_ref().map_or(0.0, |h| f64::from(h.taken_back(device, queue)))
+    }
+
+    /// [M0-D214] Restores the take-back's sum a continued life's observers' snapshot carries, so its summary.json reads as the
+    /// unbroken life's (`queue.write_buffer`: ahead of the next submission).
+    pub fn set_taken_back(&self, queue: &wgpu::Queue, sum: f32) {
+        if let Some(h) = &self.hydro {
+            h.set_taken_back(queue, sum);
+        }
+    }
+
     /// What a state dump carries beyond the cells (§2.12.3, contract §0.5 [M0-T26]): the GPU's step count (the next
     /// step's index), the sim time of those steps (the Δt record's, M0-D21), and the records no cell holds — Δt_n and Δt_{n+1}, the
     /// latch's sim time since its last set, the box's record and indirect sizes, [M0-D195] P4's mass carry (0 without P4).

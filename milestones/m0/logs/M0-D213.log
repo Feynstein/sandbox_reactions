@@ -1,0 +1,17 @@
+redarm: refused - nothing run
+=== NO-GO: `ledger` has no green run of the whole scope on these bytes on this box (laserax-ai) - never run, run red, a path or plant edited since, or another adapter; the red-arm runs the plants only: run `python3 tools/pb/verify.py ledger --task M0-D213` first, then this call again (or `--redarm ledger --with-clean` for a fresh clean arm) ===
+ledger    8/0/0       49.26 s  GO
+logs: milestones/m0/logs/M0-D213.<scope>.log · record: loop_times.jsonl · tree 0e06ff0e1f79+7b9437e76823
+anchor: 3 path×scope entries moved by this run
+anchor: 257 paths checked · 496 skipped (3 classes) · 223 never checked · 5 stale · 0 unclassified · 0 owed · 485 covered of 981 visible
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 49.26 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 5.95->5.75
+=== GO ===
+ledger · clean: proven by M0-D213 2026-11-25T13:16:42-05:00 (a run of the scope; fingerprint a1024e581fdc) - not re-run
+ledger · plant ledger-no-escaped · RED (proven: 4 failed) · arm 1/6, 5 left
+ledger · plant ledger-cell-grav-work · RED (proven: 1 failed) · arm 2/6, 4 left
+ledger · plant grav-ring-one-sided · RED (proven: 1 failed) · arm 3/6, 3 left
+ledger · plant ledger-no-held · RED (proven: 3 failed) · arm 4/6, 2 left
+ledger · plant held-core-gpu-whole-g · RED (proven: 1 failed) · arm 5/6, 1 left
+ledger · plant held-wall-gpu-unbooked · RED (proven: 1 failed) · arm 6/6, 0 left
+redarm: 6 plants · 6 red · 0 green · 0 errors · scope ledger · 416.52 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D213.ledger.redarm.log
+=== GO ===

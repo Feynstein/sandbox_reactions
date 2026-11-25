@@ -166,9 +166,10 @@ wasm_line="$(grep -n 'sandbox-reactions\(_bg\.wasm\|\.js\)' "$page" | head -1 | 
 echo "web build: $(trunk --version), $(du -h "$dist"/*.wasm | cut -f1) wasm; check on line $gpu_line, wasm on line $wasm_line"
 }
 
-# no input newer than $1 (a web/ source, a crate, the lockfile, the toolchain pin)
+# no input newer than $1 (a web/ source, a crate, assets/ - the crates embed its four files by include_str!, the calibration
+# among them (M0-D216) - the lockfile, the toolchain pin)
 inputs_older_than() {
-  [ -f "$1" ] && [ -z "$(find "$root/web/index.html" "$root/web/Trunk.toml" "$root/web/strip-autoload.mjs" "$root/crates" "$root/Cargo.toml"     "$root/Cargo.lock" "$root/rust-toolchain.toml" "$root/.cargo" -newer "$1" -type f -print -quit 2>/dev/null)" ]
+  [ -f "$1" ] && [ -z "$(find "$root/web/index.html" "$root/web/Trunk.toml" "$root/web/strip-autoload.mjs" "$root/crates" "$root/assets" "$root/Cargo.toml"     "$root/Cargo.lock" "$root/rust-toolchain.toml" "$root/.cargo" -newer "$1" -type f -print -quit 2>/dev/null)" ]
 }
 # fresh = built, and no input newer than the build
 dist_is_fresh() { [ -f "$root/web/dist/index.html" ] && inputs_older_than "$root/build/web-built.stamp"; }

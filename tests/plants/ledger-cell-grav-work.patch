@@ -1,9 +1,9 @@
 --- a/crates/sr-engine/shaders/hydro.wgsl
 +++ b/crates/sr-engine/shaders/hydro.wgsl
-@@ -981,20 +981,7 @@
-         let g = accel_at(x, y);
-         u[1] += dt * pred.mid.x * g.x;
-         u[2] += dt * pred.mid.x * g.y;
+@@ -1117,20 +1117,7 @@
+         let k = mid_kick_at(x, y);
+         u[1] += dt * k.z * k.x;
+         u[2] += dt * k.z * k.y;
 -        let p = phi_at(x, y);
 -        let m = pred.mid;
 -        let ml = mids[select(64u + lid.y, lid.y * TILE + lid.x - 1u, lid.x > 0u)];
@@ -18,7 +18,7 @@
 -        u[1] += r.x - l.x;
 -        u[2] += dn.x - up.x;
 -        u[3] += r.y + l.z + dn.y + up.z;
-+        u[3] += dt * (pred.mid.y * g.x + pred.mid.z * g.y);
++        u[3] += dt * (pred.mid.y * k.x + pred.mid.z * k.y);
      }
-     // The radiation force from the previous step's flux (§2.4.4): momentum only, E as it is.
-     if (edges.radiation != 0u && !empty_here) {
+     // The radiation force from the previous step's flux (§2.4.4): momentum only, E as it is; the push taken written over
+     // the cell's F for `hydro_push_sum` (§2.4.4 [M0-D184]).

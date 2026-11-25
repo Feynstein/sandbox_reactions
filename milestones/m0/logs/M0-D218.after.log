@@ -1,0 +1,22 @@
+web: ready on port 47840, 0.0s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D218.launch.web.log)
+services: 1, ready: 1
+=== GO ===
+--- trace (M0-D216.trace.mjs, no rAF delay) /
+TR 3.36 mapAsync #1 latch.readback size 7713484 resolved after 1.49 s
+TR 4.21 mapAsync #2 latch.readback size 7713484 resolved after 2.33 s
+TR 4.21 mapAsync #3 egui_screen_capture_buffer size 3686400 resolved after 2.33 s
+state ready after 4.295 s
+TR 5.44 mapAsync #4 latch.readback size 7713484 resolved after 1.65 s
+TR 6.78 mapAsync #5 latch.readback size 7713484 resolved after 2.13 s
+--- trace (M0-D216.trace.mjs, no rAF delay) /?preset=sun&steps=200
+TR 3.41 mapAsync #1 latch.readback size 7713484 resolved after 1.52 s
+TR 4.25 mapAsync #2 latch.readback size 7713484 resolved after 2.35 s
+TR 4.25 mapAsync #3 egui_screen_capture_buffer size 3686400 resolved after 2.35 s
+state ready after 4.312 s
+TR 5.13 mapAsync #4 latch.readback size 7713484 resolved after 1.71 s
+TR 5.81 mapAsync #5 latch.readback size 7713484 resolved after 1.56 s
+TR 6.67 mapAsync #6 latch.readback size 7713484 resolved after 1.53 s
+TR 6.98 mapAsync #7 latch.readback size 7713484 resolved after 1.16 s
+web: pid 687295 stopped
+services: 1, stopped: 1
+=== GO ===

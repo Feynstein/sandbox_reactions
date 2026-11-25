@@ -17,7 +17,7 @@
  *   preset     `/?preset=sun&steps=200` reaches "ready" within 30 s and the dropped star is drawn (M0-T94; M0-D144): the
  *              100 x 100 px at the world's centre (srWorld, the app's own report of the world's place) hold opaque pixels more
  *              than 2 levels off bg.space #05070D on a channel (egui-wgpu's dither moves an empty world by 1) while the
- *              world's two corners read bg.space (±1, opaque), so a read that sees nothing of the frame cannot pass. The pixels come from the canvas's own image (`toDataURL`): a Chrome
+ *              world's two corners read bg.space (±1, opaque), so a read that sees nothing of the frame cannot pass. The page is 1760 x 940 (the desktop's window) so the 800 x 800 world lies whole on the canvas; a corner off the image is a NO-GO naming it (M0-D219). The pixels come from the canvas's own image (`toDataURL`): a Chrome
  *              screenshot reads none of the WebGPU canvas under §6.2.3's flags (M0-D144 measured it all transparent).
  *   no-webgpu  `/?no-webgpu=1` sets srState "no-webgpu", shows the three web.no_webgpu_* texts exactly as
  *              crates/sr-app/src/strings.rs holds them (G-STR keeps that file equal to §4.1) and never fetches the wasm.
@@ -90,7 +90,9 @@ try {
   const sandboxOff = /(^|\s)--no-sandbox(\s|$)/.test(cmdline);
   console.log(`sandbox: ${sandboxOff ? 'OFF (--no-sandbox in' : 'on (--no-sandbox absent from'} Chrome's command line)`);
   if (sandboxOff) throw new Error('Chrome runs with --no-sandbox, which contract §6.2.3 leaves out (playwright-core adds it unless chromiumSandbox is on)');
-  const page = await browser.newPage();
+  // The preset case's page is the desktop's window (1760 x 940, §4.2): the 800 x 800 world at z = 1 lies whole on the canvas
+  // between the bars, so the two corner samples read the world's own corners (M0-D219; at 1280 x 720 it overflows by 148 px).
+  const page = await browser.newPage(kase === 'preset' ? { viewport: { width: 1760, height: 940 } } : {});
   const fetched = [];
   const problems = [];
   page.on('request', (r) => fetched.push(new URL(r.url()).pathname));
@@ -172,7 +174,12 @@ try {
         // egui-wgpu dithers what it draws: an empty world reads bg.space give or take 1 level a channel (M0-D144 measured ≤ 1).
         const off = (p) => Math.max(Math.abs(p[0] - 0x05), Math.abs(p[1] - 0x07), Math.abs(p[2] - 0x0d));
         const bg = (p) => p[3] === 0xff && off(p) <= 1;
-        const corners = [at(x + 2, y + 2), at(x + w - 3, y + h - 3)];
+        // A corner off the canvas's image reads transparent black from getImageData, not a blind canvas: refuse it by name (M0-D219).
+        const [wx0, wy0, wx1, wy1] = [x + 2, y + 2, x + w - 3, y + h - 3];
+        if ([wx0, wx1].some((v) => v < 0 || v * sx >= bmp.width) || [wy0, wy1].some((v) => v < 0 || v * sy >= bmp.height)) {
+          return { error: `the world ${world.join(' ')} (CSS px) does not lie whole on the ${bmp.width}x${bmp.height} canvas image: a corner sample would fall off it` };
+        }
+        const corners = [at(wx0, wy0), at(wx1, wy1)];
         const cx = Math.round((x + w / 2) * sx - 50), cy = Math.round((y + h / 2) * sy - 50);
         if (cx < 0 || cy < 0 || cx + 100 > bmp.width || cy + 100 > bmp.height) return { error: `the world's centre clip (${cx}, ${cy}) falls off the ${bmp.width}x${bmp.height} image` };
         const d = ctx.getImageData(cx, cy, 100, 100).data;

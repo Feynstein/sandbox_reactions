@@ -1,0 +1,15 @@
+== 2026-11-25T10:28:57-05:00 web[build] · task M0-D212 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[build] · exit=0 · 9.14 s
+web build: trunk 0.21.14, 5.5M wasm; check on line 38, wasm on line 48
+=== GO ===
+
+== 2026-11-25T10:29:06-05:00 web[ready] · task M0-D212 · box laserax-ai :: bash tests/web/check.sh {case}
+== 2026-11-25T10:29:22-05:00 web[no-webgpu] · task M0-D212 · box laserax-ai :: bash tests/web/check.sh {case}
+-- web[ready] · exit=1 · 89.06 s
+web: ready on port 47840, 0.1s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D212.launch.web.log)
+services: 1, ready: 1
+web smoke ready: /usr/bin/google-chrome (157.0.8103.78) on linux, flags --headless=new --use-angle=vulkan --enable-features=Vulkan --disable-vulkan-surface --enable-unsafe-webgpu, http://127.0.0.1:47840
+sandbox: on (--no-sandbox absent from Chrome's command line)
+=== NO-GO: ready: srState is "loading" after 30 s; never ready - console.error: Failed to load resource: the server responded with a status of 404 (File not found) | console.warning: A valid external Instance reference no longer exists. ===
+
+== 2026-11-25T10:30:35-05:00 web[preset] · task M0-D212 · box laserax-ai :: bash tests/web/check.sh {case}

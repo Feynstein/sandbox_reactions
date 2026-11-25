@@ -1,0 +1,430 @@
+
+=== M0-V15 on linux-pc (laserax-ai) 2026-11-25T13:42:27-05:00 — rung_record: model=claude-fable-5-2 level=high ===
+--- the eight leftover GPU test groups (M0-D219's verify.py 2411127, M0-D214's 3701479, both gone), stopped on the lead's word («Stop them (Recommended)», 2026-11-25) ---
+TERM 2417209 (/usr/bin/bash tests/gpu.sh endings physics) children: 2417215  grandchildren:  2417318 
+TERM 2417238 (/usr/bin/bash tests/gpu.sh touch physics) children: 2417244  grandchildren:  2417323 
+TERM 2419170 (/usr/bin/bash tests/gpu.sh conservation physics) children: 2419182  grandchildren:  2419274 
+TERM 2425729 (/usr/bin/bash tests/gpu.sh age physics) children: 2425734  grandchildren:  2425770 
+TERM 2426195 (/usr/bin/bash tests/gpu.sh squeeze physics) children: 2426206  grandchildren:  2426251 
+TERM 2444179 (/usr/bin/bash tests/gpu.sh fit physics) children: 2444184  grandchildren:  2444257 
+TERM 3724030 (/usr/bin/bash tests/gpu.sh squeeze physics) children: 3724035  grandchildren:  3724070 
+TERM 3725820 (/usr/bin/bash tests/gpu.sh fit physics) children: 3725825  grandchildren:  3725841 
+--- after ---
+NVIDIA GeForce RTX 5090, 0 %, 38 MiB
+Quadro RTX 4000, 54 %, 441 MiB
+--- probe P1 2026-11-25T13:46:34-05:00: the Massive in leave to its ending, ledger.taken_back read (today's tree, calibration dfb6919b…, RTX 5090) ---
+exit=124
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+real	9m45.116s
+user	5m36.020s
+sys	1m56.205s
+P1: cut at 585 s before the ending, no summary.json (no checkpoint asked) — the life is over 10 minutes on this box: the lead's
+--- 2026-11-25T14:04:24-05:00 read-only probe of laserax-ai-server (the lead: «give me something I can paste on the server thats running in tmux») ---
+HOST=laserax-ai-server
+2026-11-25T14:04:25-05:00
+m0t133: 1 windows (created Mon Nov 23 14:30:06 2026)
+m0t133:0.0 cmd=bash path=/home/ybelanger/workspace/sandbox_reactions
+255ec37
+11530
+dfb6919bac8a
+1 build exit=0 2026-11-23T14:30:12-0500
+2 cal_m_bh exit=0 2026-11-23T16:23:37-0500
+3 cal_presets exit=0 2026-11-23T17:24:25-0500
+4 install_calibration exit=0 2026-11-23T17:24:30-0500
+5 accepted exit=0 2026-11-23T17:24:32-0500
+6 verify_all exit=1 2026-11-24T12:09:55-0500
+1 build exit=0 2026-11-20T10:40:46-0500
+2 cal_items_1_2 exit=0 2026-11-20T10:40:46-0500
+3 cal_m_ign exit=0 2026-11-20T10:43:48-0500
+4 cal_m_up exit=0 2026-11-20T14:20:20-0500
+5 cal_m_bh exit=0 2026-11-20T16:16:10-0500
+6 cal_presets exit=6 2026-11-20T17:01:22-0500
+NVIDIA GeForce RTX 3060, 0 %, 13 MiB
+NVIDIA GeForce RTX 4090, 0 %, 20 MiB
+ 14:04:25 up 9 days, 18:30,  4 users,  load average: 0.00, 0.00, 0.00
+/dev/nvme2n1p2  937G  464G  427G  53% /
+calibrate_runs m0-d155 m0-d163 m0-d164 m0-d165 m0-d167 m0-d170 m0-d172 m0-d173 m0-d174 m0-d175 m0-d176 m0-d176.mk.sh m0-d203 m0-t133 m0-tm18 r15 r6_evidence target toolchain-target v14 v9-sun-life web-build.result --- 2026-11-25T14:05:34-05:00 rsync linux-pc tree → laserax-ai-server (rsync -a --exclude .git --exclude build --exclude .venv --exclude tools/pb/.launch.pid.json), for the lead's server run ---
+rsync exit=0
+SIX HASHES MATCH on both ends
+--- 2026-11-25T14:07:49-05:00 the lead: «make it so everything runs without having me to paste anything» — rsync again, then tmux m0v15 on laserax-ai-server: bash milestones/m0/tasks/M0-V15.server_run.sh ---
+rsync exit=0
+3a6bfb6f14f0
+ls: cannot access 'build/m0-v15': No such file or directory
+0
+no m0v15 yet
+NVIDIA GeForce RTX 3060, 0 %
+NVIDIA GeForce RTX 4090, 0 %
+STARTED
+2026-11-25T14:08:02-05:00
+m0t133: 1 windows (created Mon Nov 23 14:30:06 2026)
+m0v15: 1 windows (created Wed Nov 25 14:08:02 2026)
+--- 2026-11-25T14:10:05-05:00 cleanup on linux-pc, the lead: «also delete any stale files here or on the server so we dont bloat anything with this run» ---
+/dev/nvme0n1p2  937G  789G  101G  89% /
+KEEP (live or fresh) /tmp/sr-age-2425770-sun
+KEEP (live or fresh) /tmp/sr-age-3896125-touch
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-1054349
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-1166338
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-1168208
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-1169331
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-1171113
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-1172179
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-1253213
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-2041039
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-2573999
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-2588359
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-3165309
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-3400968
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-3613506
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-367152
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-3849072
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-398156
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-445056
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-447577
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-578370
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-801000
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-928769
+KEEP (no pid in name) /tmp/sr-calibrate-bisect-992854
+KEEP (no pid in name) /tmp/sr-calibrate-checkpoint-1168208
+KEEP (no pid in name) /tmp/sr-calibrate-checkpoint-1172923
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1053751-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1053751-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1053751-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1053751-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1053751-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1053751-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1053751-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1053751-world
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1064887-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1064887-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1064887-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1064887-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1064887-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1064887-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1064887-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1064887-world
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1066794-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1066794-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1066794-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1066794-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1066794-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1066794-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1066794-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1066794-world
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1252669-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1252669-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1252669-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1252669-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1252669-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1252669-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1252669-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-1252669-world
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2032899-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2032899-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2032899-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2032899-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2032899-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2032899-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2032899-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2032899-world
+KEEP (no pid in name) /tmp/sr-calibrate-cold-226929-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-226929-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-226929-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-226929-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-226929-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-226929-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-226929-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2573309-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2573309-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2573309-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2573309-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2573309-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2573309-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2573309-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2573309-world
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2587786-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2587786-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2587786-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2587786-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2587786-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2587786-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2587786-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2587786-world
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2688262-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2688262-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2688262-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2688262-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2688262-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2688262-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-2688262-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3163487-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3163487-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3163487-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3163487-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3163487-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3163487-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3163487-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3383104-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3383104-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3383104-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3383104-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3383104-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3383104-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3383104-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3612160-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3612160-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3612160-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3612160-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3612160-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3612160-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3612160-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-366326-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-366326-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-366326-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-366326-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-366326-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-366326-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-366326-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3848451-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3848451-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3848451-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3848451-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3848451-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3848451-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-3848451-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-397657-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-397657-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-397657-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-397657-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-397657-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-397657-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-397657-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-443916-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-443916-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-443916-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-443916-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-443916-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-443916-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-443916-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-444749-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-444749-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-444749-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-444749-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-444749-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-444749-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-444749-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-564127-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-564127-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-564127-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-564127-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-564127-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-564127-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-564127-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-626918-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-626918-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-626918-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-626918-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-626918-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-626918-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-626918-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-626918-world
+KEEP (no pid in name) /tmp/sr-calibrate-cold-801094-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-801094-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-801094-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-801094-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-801094-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-801094-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-801094-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-883680-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-883680-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-883680-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-883680-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-883680-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-883680-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-883680-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-883680-world
+KEEP (no pid in name) /tmp/sr-calibrate-cold-928185-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-928185-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-928185-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-928185-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-928185-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-928185-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-928185-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-cold-992189-args
+KEEP (no pid in name) /tmp/sr-calibrate-cold-992189-hash
+KEEP (no pid in name) /tmp/sr-calibrate-cold-992189-k9
+KEEP (no pid in name) /tmp/sr-calibrate-cold-992189-limits
+KEEP (no pid in name) /tmp/sr-calibrate-cold-992189-only
+KEEP (no pid in name) /tmp/sr-calibrate-cold-992189-overrides
+KEEP (no pid in name) /tmp/sr-calibrate-cold-992189-sigma-bh
+KEEP (no pid in name) /tmp/sr-calibrate-collapse-1172923
+KEEP (no pid in name) /tmp/sr-calibrate-ends-at-once-627365
+KEEP (no pid in name) /tmp/sr-calibrate-order-1111871-keep
+KEEP (no pid in name) /tmp/sr-calibrate-record-1168208
+KEEP (no pid in name) /tmp/sr-calibrate-record-1169331
+KEEP (no pid in name) /tmp/sr-calibrate-resume-1168208
+KEEP (no pid in name) /tmp/sr-calibrate-tick-1168208
+KEEP (no pid in name) /tmp/sr-calibrate-tick-884570
+KEEP (no pid in name) /tmp/sr-calibrate-world-1088956
+KEEP (no pid in name) /tmp/sr-cold-core-1138985-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-1252672-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-2033736-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-2573947-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-2587943-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-3163684-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-3384784-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-3612226-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-366634-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-3848663-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-397865-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-444177-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-445163-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-565368-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-627197-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-802151-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-883928-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-928487-calibration
+KEEP (no pid in name) /tmp/sr-cold-core-992381-calibration
+KEEP (live or fresh) /tmp/sr-conservation-3894746-sun
+KEEP (no pid in name) /tmp/sr-edits-file-1129071
+KEEP (no pid in name) /tmp/sr-edits-file-1246846
+KEEP (no pid in name) /tmp/sr-edits-file-225963
+KEEP (no pid in name) /tmp/sr-edits-file-2529735
+KEEP (no pid in name) /tmp/sr-edits-file-2570691
+KEEP (no pid in name) /tmp/sr-edits-file-2583192
+KEEP (no pid in name) /tmp/sr-edits-file-2687745
+KEEP (no pid in name) /tmp/sr-edits-file-3153253
+KEEP (no pid in name) /tmp/sr-edits-file-3307495
+KEEP (no pid in name) /tmp/sr-edits-file-3338850
+KEEP (no pid in name) /tmp/sr-edits-file-356737
+KEEP (no pid in name) /tmp/sr-edits-file-3582607
+KEEP (no pid in name) /tmp/sr-edits-file-3605524
+KEEP (no pid in name) /tmp/sr-edits-file-3607353
+KEEP (no pid in name) /tmp/sr-edits-file-3608510
+KEEP (no pid in name) /tmp/sr-edits-file-3745786
+KEEP (no pid in name) /tmp/sr-edits-file-3832122
+KEEP (no pid in name) /tmp/sr-edits-file-3884416
+KEEP (no pid in name) /tmp/sr-edits-file-392974
+KEEP (no pid in name) /tmp/sr-edits-file-3950867
+KEEP (no pid in name) /tmp/sr-edits-file-422654
+KEEP (no pid in name) /tmp/sr-edits-file-426798
+KEEP (no pid in name) /tmp/sr-edits-file-512119
+KEEP (no pid in name) /tmp/sr-edits-file-618730
+KEEP (no pid in name) /tmp/sr-edits-file-804758
+KEEP (no pid in name) /tmp/sr-edits-file-823596
+KEEP (no pid in name) /tmp/sr-edits-file-914470
+KEEP (no pid in name) /tmp/sr-edits-file-981133
+KEEP (live or fresh) /tmp/sr-endings-2417318-ign_over
+KEEP (live or fresh) /tmp/sr-endings-3889477-bh_under
+KEEP (live or fresh) /tmp/sr-fit-3900586-giant
+KEEP (no pid in name) /tmp/sr-held-core-1138989-window
+KEEP (no pid in name) /tmp/sr-held-core-1252966-window
+KEEP (no pid in name) /tmp/sr-held-core-1292842-window
+KEEP (no pid in name) /tmp/sr-held-core-1512419-window
+KEEP (no pid in name) /tmp/sr-held-core-2587949-window
+KEEP (no pid in name) /tmp/sr-held-core-2723434-window
+KEEP (no pid in name) /tmp/sr-held-core-366813-window
+KEEP (no pid in name) /tmp/sr-held-core-3707542-window
+KEEP (no pid in name) /tmp/sr-held-core-397971-window
+KEEP (live or fresh) /tmp/sr-ledger-3805786-bounce
+KEEP (live or fresh) /tmp/sr-ledger-3805786-held
+KEEP (live or fresh) /tmp/sr-ledger-3805786-held-wall
+KEEP (live or fresh) /tmp/sr-ledger-3805786-leave
+KEEP (live or fresh) /tmp/sr-ledger-3805786-leave-flat
+KEEP (live or fresh) /tmp/sr-ledger-3805786-remnant
+KEEP (live or fresh) /tmp/sr-ledger-3806650-bounce
+KEEP (live or fresh) /tmp/sr-ledger-3806650-held
+KEEP (live or fresh) /tmp/sr-ledger-3806650-held-wall
+KEEP (live or fresh) /tmp/sr-ledger-3806650-leave
+KEEP (live or fresh) /tmp/sr-ledger-3806650-leave-flat
+KEEP (live or fresh) /tmp/sr-ledger-3806650-remnant
+KEEP (live or fresh) /tmp/sr-ledger-3807624-bounce
+KEEP (live or fresh) /tmp/sr-ledger-3807624-held
+KEEP (live or fresh) /tmp/sr-ledger-3807624-held-wall
+KEEP (live or fresh) /tmp/sr-ledger-3807624-leave
+KEEP (live or fresh) /tmp/sr-ledger-3807624-leave-flat
+KEEP (live or fresh) /tmp/sr-ledger-3807624-remnant
+KEEP (live or fresh) /tmp/sr-ledger-3828135-bounce
+KEEP (live or fresh) /tmp/sr-ledger-3828135-held
+KEEP (live or fresh) /tmp/sr-ledger-3828135-held-wall
+KEEP (live or fresh) /tmp/sr-ledger-3828135-leave
+KEEP (live or fresh) /tmp/sr-ledger-3828135-leave-flat
+KEEP (live or fresh) /tmp/sr-ledger-3828135-remnant
+KEEP (live or fresh) /tmp/sr-ledger-3839067-bounce
+KEEP (live or fresh) /tmp/sr-ledger-3839067-held
+KEEP (live or fresh) /tmp/sr-ledger-3839067-held-wall
+KEEP (live or fresh) /tmp/sr-ledger-3839067-leave
+KEEP (live or fresh) /tmp/sr-ledger-3839067-leave-flat
+KEEP (live or fresh) /tmp/sr-ledger-3839067-remnant
+KEEP (live or fresh) /tmp/sr-ledger-3853535-bounce
+KEEP (live or fresh) /tmp/sr-ledger-3853535-held
+KEEP (live or fresh) /tmp/sr-ledger-3853535-held-wall
+KEEP (live or fresh) /tmp/sr-ledger-3853535-leave
+KEEP (live or fresh) /tmp/sr-ledger-3853535-leave-flat
+KEEP (live or fresh) /tmp/sr-ledger-3853535-remnant
+KEEP (live or fresh) /tmp/sr-ledger-3867396-bounce
+KEEP (live or fresh) /tmp/sr-ledger-3867396-held
+KEEP (live or fresh) /tmp/sr-ledger-3867396-held-wall
+KEEP (live or fresh) /tmp/sr-ledger-3867396-leave
+KEEP (live or fresh) /tmp/sr-ledger-3867396-leave-flat
+KEEP (live or fresh) /tmp/sr-ledger-3867396-remnant
+KEEP (live or fresh) /tmp/sr-multi-3909071-block
+KEEP (live or fresh) /tmp/sr-multi-3909071-early
+KEEP (live or fresh) /tmp/sr-multi-3909071-preset-giant
+KEEP (live or fresh) /tmp/sr-multi-3909071-preset-massive
+KEEP (live or fresh) /tmp/sr-multi-3909071-preset-sun
+KEEP (live or fresh) /tmp/sr-multi-3909071-run
+KEEP (live or fresh) /tmp/sr-observe-3755466-ending
+KEEP (live or fresh) /tmp/sr-observe-3755466-ending-run
+KEEP (live or fresh) /tmp/sr-observe-3755466-ending-seed
+KEEP (live or fresh) /tmp/sr-observe-3755466-ending-short
+KEEP (live or fresh) /tmp/sr-observe-3755466-lone
+KEEP (live or fresh) /tmp/sr-observe-3755466-lone-run
+KEEP (live or fresh) /tmp/sr-observe-3755466-lone-seed
+KEEP (live or fresh) /tmp/sr-observe-3755466-readouts
+KEEP (live or fresh) /tmp/sr-observe-3755466-sim
+KEEP (live or fresh) /tmp/sr-observe-3755466-sim-before
+KEEP (live or fresh) /tmp/sr-observe-3755466-stage
+KEEP (live or fresh) /tmp/sr-observe-3755466-stage-short
+KEEP (live or fresh) /tmp/sr-observe-3755466-steps-cut
+KEEP (live or fresh) /tmp/sr-observe-3755466-steps-plain
+KEEP (live or fresh) /tmp/sr-observe-3755466-unmet
+KEEP (live or fresh) /tmp/sr-scene-3983889
+KEEP (live or fresh) /tmp/sr-squeeze-2426251-giant
+KEEP (live or fresh) /tmp/sr-squeeze-3896218-sun
+KEEP (live or fresh) /tmp/sr-touch-3893571-paint
+KEEP (live or fresh) /tmp/sr-twin-3961662-128
+KEEP (live or fresh) /tmp/sr-twin-3961662-136x64
+KEEP (live or fresh) /tmp/sr-twin-3961662-200x200
+KEEP (live or fresh) /tmp/sr-twin-3961662-64x136
+KEEP (live or fresh) /tmp/sr-twin-3961662-run
+A. /tmp/sr-*: removed 1417, kept 337
+A. pass 2 (pid parsed from any field, dead): removed 337, kept 0; left 2
+B. removed build/m0-d212/{fix_sn,fixw2,pAB,pC} (tasks/M0-D212.md § Left on disk: deletable on the lead's word; sn, sn_r kept while Verify 2 is open)
+B. removed build/m0-d199/{vac_all,vac_edge3,push_exact,flux_q,budget,commitq,proto_densest,proto_rest} (tasks/M0-D199.md § Left on disk; base, tree and the .out/.trail files kept)
+B. removed build/m0-d195/{adv100,prop_c,rcheck,rcheck2} (tasks/M0-D195.md line 79; a, b, c, life1–3 kept: its evidence)
+2.1G	build/m0-d212
+1.4G	build/m0-d199
+4.6G	build/m0-d195
+C. removed 11 build caches / tree copies in closed sessions' scratchpads (5c96dd23 target, tree, bin · c6d2ba16 target, tree — its trail.py, split.py, splitc.py kept · 0f16efdd d204 · 3ac1ab62 d209 · f04a2f4d d214-probe · 57296ca9 tree · a592e1e6 tree · 40c7e9b6 hp-target)
+16M	/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions
+D. .part logs removed 53, left: milestones/m0/logs/M0-D199.conservation.log.907652.20.part milestones/m0/logs/M0-D199.endings.log.907652.18.part milestones/m0/logs/M0-D199.touch.log.907652.19.part milestones/m0/logs/M0-D205.calibrate_bisect.redarm.log.arm1.part milestones/m0/logs/M0-D205.calibrate_bisect.redarm.log.arm2.part milestones/m0/logs/M0-D205.calibrate_bisect.redarm.log.arm3.part milestones/m0/logs/M0-D205.calibrate_bisect.redarm.log.arm4.part milestones/m0/logs/M0-D205.calibrate_bisect.redarm.log.arm5.part milestones/m0/logs/M0-D205.calibrate_bisect.redarm.log.arm6.part milestones/m0/logs/M0-D205.calibrate_bisect.redarm.log.arm7.part milestones/m0/logs/M0-D205.calibrate_bisect.redarm.log.arm7.part.1124442.87.part 
+/dev/nvme0n1p2  937G  763G  127G  86% /
+--- 2026-11-25T14:11:42-05:00 cleanup on laserax-ai-server (the lead's word, same message); the run in tmux m0v15 untouched: build/m0-v15, build/target, build/calibrate_runs, ~/.cache/sandbox-reactions ---
+/dev/nvme2n1p2  937G  464G  427G  53% /
+-rw-rw-r--  1 ybelanger ybelanger      115 Nov 12 12:21 ld_k15.json
+-rw-rw-r--  1 ybelanger ybelanger 16320394 Nov 13 13:24 s_13900.bin
+-rw-rw-r--  1 ybelanger ybelanger     9394 Nov 13 13:24 s_13900.observers.json
+removed build/m0-d164, m0-d167, m0-d170, m0-d172, m0-d175, m0-d176
+put back: build/m0-d167/ld_k15.json, build/m0-d176/cut/tree/dumps/s_13900.{bin,observers.json}
+removed ~/scratch/d167, d170, d172*, d173*, d174* (13 tree copies; their .out files kept) and /tmp/d176
+/tmp/sr-*: removed 332, kept 0
+.part logs removed 111, left 13
+12G	build
+/dev/nvme2n1p2  937G  348G  542G  40% /
+calibrate_runs m0-d155 m0-d163 m0-d165 m0-d167 m0-d173 m0-d174 m0-d176 m0-d176.mk.sh m0-d203 m0-t133 m0-tm18 m0-v15 r15 r6_evidence target toolchain-target v14 v9-sun-life web-build.result 
+1 build exit=0 2026-11-25T14:08:08-0500
+2 cal_items_1_2 exit=0 2026-11-25T14:08:08-0500
+3 cal_m_ign exit=0 2026-11-25T14:11:09-0500
+ 693053      35 build/target/release/sandbox-reactions calibrate --adapter RTX 4090 --out build/m0-v
+--- 2026-11-25T14:14:58-05:00 git add -A, commit, push — on the lead's word («do git add -A, commit and push») ---

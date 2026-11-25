@@ -1,0 +1,50 @@
+web: ready on port 47840, 0.0s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D218.launch.web.log)
+services: 1, ready: 1
+=== GO ===
+--- /
+1.22 burst 1: 99 sync createComputePipeline (99 the warm-up's invalid ones) in 0.34 s of JS (0.00 s inside the calls)
+1.27 createComputePipelineAsync #1 resolved after 0.39 s
+1.27 createComputePipelineAsync #20 resolved after 0.39 s
+1.31 createComputePipelineAsync #40 resolved after 0.39 s
+1.47 createComputePipelineAsync #60 resolved after 0.55 s
+1.47 createComputePipelineAsync #80 resolved after 0.31 s
+1.93 burst 2: 99 sync createComputePipeline (0 the warm-up's invalid ones) in 0.27 s of JS (0.00 s inside the calls)
+1.93 submit #1 (sent 1.22) done 0.705 s after; state=loading
+1.93 burst 1: the GPU process done with it 0.70 s after
+2.20 burst 2: the GPU process done with it 0.27 s after
+3.78 submit #2 (sent 2.74) done 1.043 s after; state=loading
+3.78 submit #3 (sent 2.75) done 1.032 s after; state=loading
+4.27 submit #4 (sent 4.26) done 0.015 s after; state=loading
+4.27 submit #5 (sent 4.26) done 0.017 s after; state=loading
+5.76 submit #6 (sent 5.76) done 0.006 s after; state=ready
+5.77 submit #7 (sent 5.76) done 0.013 s after; state=ready
+state ready after 5.966 s
+7.26 submit #8 (sent 7.26) done 0.005 s after; state=ready
+7.26 submit #9 (sent 7.26) done 0.004 s after; state=ready
+8.77 submit #10 (sent 8.76) done 0.005 s after; state=ready
+8.77 submit #11 (sent 8.76) done 0.004 s after; state=ready
+--- /?preset=sun&steps=200
+1.17 burst 1: 99 sync createComputePipeline (99 the warm-up's invalid ones) in 0.33 s of JS (0.00 s inside the calls)
+1.22 createComputePipelineAsync #1 resolved after 0.38 s
+1.22 createComputePipelineAsync #20 resolved after 0.38 s
+1.43 createComputePipelineAsync #40 resolved after 0.55 s
+1.43 createComputePipelineAsync #60 resolved after 0.55 s
+1.43 createComputePipelineAsync #80 resolved after 0.32 s
+1.43 submit #1 (sent 1.17) done 0.264 s after; state=loading
+1.43 burst 1: the GPU process done with it 0.26 s after
+1.88 burst 2: 99 sync createComputePipeline (0 the warm-up's invalid ones) in 0.26 s of JS (0.00 s inside the calls)
+2.15 burst 2: the GPU process done with it 0.27 s after
+3.75 submit #2 (sent 2.69) done 1.059 s after; state=loading
+3.75 submit #3 (sent 2.71) done 1.043 s after; state=loading
+5.10 submit #4 (sent 4.22) done 0.883 s after; state=loading
+5.10 submit #5 (sent 4.22) done 0.885 s after; state=loading
+state ready after 5.924 s
+6.38 submit #6 (sent 5.72) done 0.655 s after; state=ready
+6.38 submit #7 (sent 5.72) done 0.654 s after; state=ready
+7.73 submit #8 (sent 7.22) done 0.506 s after; state=ready
+7.73 submit #9 (sent 7.23) done 0.506 s after; state=ready
+9.27 submit #10 (sent 8.73) done 0.540 s after; state=ready
+9.27 submit #11 (sent 8.73) done 0.539 s after; state=ready
+web: pid 681965 stopped
+services: 1, stopped: 1
+=== GO ===

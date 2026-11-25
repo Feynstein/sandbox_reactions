@@ -1,0 +1,70 @@
+== 2026-11-25T12:39:48-05:00 M0-D214 · verify.py ledger, then --redarm ledger (linux-pc)
+anchor: 2 path×scope entries moved by this run
+anchor: 260 paths checked · 495 skipped (3 classes) · 223 never checked · 2 stale · 0 unclassified · 0 owed · 485 covered of 980 visible
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 31.68 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 53.27->43.71
+=== GO ===
+ledger · plant ledger-cell-grav-work · ERROR (the patch tests/plants/ledger-cell-grav-work.patch does not apply: crates/sr-engine/shaders/hydro.wgsl @@ -981,20 +981,7 @@: its old lines appear 0 times in the file, not once) · arm 2/6, 4 left
+ledger · plant grav-ring-one-sided · GREEN (unfailable) · arm 3/6, 3 left
+ledger · plant ledger-no-held · RED (proven: 3 failed) · arm 4/6, 2 left
+ledger · plant held-core-gpu-whole-g · ERROR (the patch tests/plants/held-core-gpu-whole-g.patch does not apply: crates/sr-engine/shaders/hydro.wgsl @@ -973,7 +973,8 @@: its old lines appear 0 times in the file, not once) · arm 5/6, 1 left
+ledger · plant held-wall-gpu-unbooked · ERROR (the patch tests/plants/held-wall-gpu-unbooked.patch does not apply: crates/sr-engine/shaders/hydro.wgsl @@ -1111,8 +1111,9 @@: its old lines appear 0 times in the file, not once) · arm 6/6, 0 left
+FAILED:
+  plant ledger-cell-grav-work: the patch tests/plants/ledger-cell-grav-work.patch does not apply: crates/sr-engine/shaders/hydro.wgsl @@ -981,20 +981,7 @@: its old lines appear 0 times in the file, not once - an error, not a red
+  plant grav-ring-one-sided: stayed GO - the scope cannot see this bug
+  plant held-core-gpu-whole-g: the patch tests/plants/held-core-gpu-whole-g.patch does not apply: crates/sr-engine/shaders/hydro.wgsl @@ -973,7 +973,8 @@: its old lines appear 0 times in the file, not once - an error, not a red
+  plant held-wall-gpu-unbooked: the patch tests/plants/held-wall-gpu-unbooked.patch does not apply: crates/sr-engine/shaders/hydro.wgsl @@ -1111,8 +1111,9 @@: its old lines appear 0 times in the file, not once - an error, not a red
+redarm: 6 plants · 2 red · 1 green · 3 errors · scope ledger · 195.96 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D214.ledger.redarm.log
+=== NO-GO: plant ledger-cell-grav-work: the patch tests/plants/ledger-cell-grav-work.patch does not apply: crates/sr-engine/shaders/hydro.wgsl @@ -981,20 +981,7 @@: its old lines appear 0 times in the file, not once - an error, not a red; plant grav-ring-one-sided: stayed GO - the scope cannot see this bug; plant held-core-gpu-whole-g: the patch tests/plants/held-core-gpu-whole-g.patch does not app... ===
+== 2026-11-25T12:44:32-05:00 probe T, free-space ring (the tree), scratch /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/f04a2f4d-9998-49ee-9cd7-fcbcd90ccd6c/scratchpad/d214-probe
+   Compiling sr-physics v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/f04a2f4d-9998-49ee-9cd7-fcbcd90ccd6c/scratchpad/d214-probe/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/f04a2f4d-9998-49ee-9cd7-fcbcd90ccd6c/scratchpad/d214-probe/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 35.31s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-PROBE-T gross_sum_abs_T 6.053927e-3 sum_Tx 1.682522e-4
+SR-HEADLESS DONE steps=500 sim_time=3.713864 until=none
+leave: escaped mass 1.456414e1 of 1.017499e3 (1.431e-2), momentum escaped Array [Number(199.5381047440125), Number(0.00005663490340495833)], mass drift 3.110e-8, momentum drift 7.825e-9 of Σm|u| = 3.384e3, energy drift 2.679e-6 (reported), escaped energy -1.062852e2
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 550 filtered out; finished in 1.70s
+
+== 2026-11-25T12:45:15-05:00 probe T, plant grav-ring-one-sided
+   Compiling sr-physics v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/f04a2f4d-9998-49ee-9cd7-fcbcd90ccd6c/scratchpad/d214-probe/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/f04a2f4d-9998-49ee-9cd7-fcbcd90ccd6c/scratchpad/d214-probe/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 33.90s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-PROBE-T gross_sum_abs_T 1.599431e1 sum_Tx 1.130226e1
+SR-HEADLESS DONE steps=500 sim_time=3.696208 until=none
+leave: escaped mass 1.786261e1 of 1.017436e3 (1.756e-2), momentum escaped Array [Number(235.00908600811925), Number(-0.09569096374002231)], mass drift 1.077e-8, momentum drift 1.711e-8 of Σm|u| = 3.425e3, energy drift 2.633e-6 (reported), escaped energy -2.883834e2
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 550 filtered out; finished in 1.47s
+
+== 2026-11-25T12:49:24-05:00 verify.py ledger (iterate)
+anchor: 260 paths checked · 495 skipped (3 classes) · 223 never checked · 2 stale · 0 unclassified · 0 owed · 485 covered of 980 visible
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 42.82 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 10.84->11.93
+=== GO ===
+== 2026-11-25T12:50:33-05:00 verify.py --redarm ledger
+ledger · plant ledger-no-escaped · RED (proven: 4 failed) · arm 1/6, 5 left
+ledger · plant ledger-cell-grav-work · ERROR (the patch tests/plants/ledger-cell-grav-work.patch does not apply: crates/sr-engine/shaders/hydro.wgsl @@ -981,20 +981,7 @@: its old lines appear 0 times in the file, not o
+ledger · plant grav-ring-one-sided · RED (proven: 1 failed) · arm 3/6, 3 left
+ledger · plant ledger-no-held · RED (proven: 3 failed) · arm 4/6, 2 left
+ledger · plant held-core-gpu-whole-g · ERROR (the patch tests/plants/held-core-gpu-whole-g.patch does not apply: crates/sr-engine/shaders/hydro.wgsl @@ -973,7 +973,8 @@: its old lines appear 0 times in the file, not on
+ledger · plant held-wall-gpu-unbooked · ERROR (the patch tests/plants/held-wall-gpu-unbooked.patch does not apply: crates/sr-engine/shaders/hydro.wgsl @@ -1111,8 +1111,9 @@: its old lines appear 0 times in the file, no
+redarm: 6 plants · 3 red · 0 green · 3 errors · scope ledger · 134.63 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D214.ledger.redarm.log
+=== NO-GO: plant ledger-cell-grav-work: the patch tests/plants/ledger-cell-grav-work.patch does not apply: crates/sr-engine/shaders/hydro.wgsl @@ -981,20 +981,7 @@: its old lines appear 0 times in the file, not once - an
+== 2026-11-25T12:54:20-05:00 claim: verify.py --changed --task M0-D214
+== 2026-11-25T13:06:16-05:00 after the carry: verify.py ledger
+verify: 8 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 56.77 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 6.21->6.89
+=== GO ===
+== 2026-11-25T13:07:22-05:00 verify.py observe_run
+verify: 14 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 280.35 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 6.69->11.31
+=== GO ===
+== 2026-11-25T13:12:29-05:00 verify.py build
+verify: 2 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 5.78 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 9.51->10.43
+=== GO ===

@@ -57,12 +57,17 @@ pub fn wgpu_setup() -> egui_wgpu::WgpuSetupCreateNew {
     setup
 }
 
+/// The presented-frame screenshot's re-ask when no frame in flight can tell whether it was dropped (`SandboxApp::ui`).
+const SCREENSHOT_RETRY_S: f64 = 1.0;
+
 pub struct SandboxApp {
     frames: u64,
     /// The times (egui's clock, s) of the frames of the last second, for `fps`.
     recent: VecDeque<f64>,
     /// Raised by the first frame known to be presented (see `ui`), never by the window's creation.
     presented: bool,
+    /// The presented-frame screenshot asked and not yet answered: egui's time then, and the sim's frames sent then.
+    asked: Option<(f64, u64)>,
     /// The adapter's name, for `status.line`.
     adapter: String,
     /// The world and its frame loop (§1.8.3).
@@ -137,6 +142,7 @@ impl SandboxApp {
             frames: 0,
             recent: VecDeque::new(),
             presented: false,
+            asked: None,
             adapter: render.adapter.get_info().name,
             zoom: Zoom::home(sim.world()),
             wheel: zoom::Wheel::default(),
@@ -285,14 +291,25 @@ impl eframe::App for SandboxApp {
         // The presented-frame callback: egui-wgpu delivers a screenshot only for a frame whose surface texture it
         // acquired, and presents that frame right after starting the copy — so the event, read here a pass later,
         // proves a frame reached the screen. A frame that could not acquire its texture drops the request, so it is
-        // re-asked every pass until one arrives.
+        // asked again — once it is known lost, never a request a pass (M0-D218: each one is a 3.7 MB buffer mapped, and
+        // the web queued one a tick behind a slow GPU). Lost: a frame sent after the asking pass has read back and no reply
+        // came (the copy was submitted before that frame, its map asked before that frame's, so its reply is in this pass's
+        // events); or, with no frame in flight to tell, a second has passed.
         if !self.presented {
             if ui.input(|i| i.raw.events.iter().any(|e| matches!(e, egui::Event::Screenshot { .. }))) {
                 self.presented = true;
+                self.asked = None;
                 #[cfg(target_arch = "wasm32")]
                 crate::web::signal_ready();
             } else {
-                ui.ctx().send_viewport_cmd(egui::ViewportCommand::Screenshot(egui::UserData::default()));
+                let (now, sent, read) = (ui.input(|i| i.time), self.sim.frames_sent(), self.sim.frames_read());
+                let lost = self
+                    .asked
+                    .is_none_or(|(at, then)| read >= then + 2 || (read == sent && now - at >= SCREENSHOT_RETRY_S));
+                if lost {
+                    ui.ctx().send_viewport_cmd(egui::ViewportCommand::Screenshot(egui::UserData::default()));
+                    self.asked = Some((now, sent));
+                }
             }
         }
 
@@ -380,7 +397,7 @@ impl eframe::App for SandboxApp {
         // draws the image in.
         #[cfg(not(target_arch = "wasm32"))]
         let planned = std::time::Instant::now();
-        self.sim.frame(now, frozen);
+        let ran = self.sim.frame(now, frozen);
         #[cfg(not(target_arch = "wasm32"))]
         {
             self.sim_cost += planned.elapsed();
@@ -600,10 +617,13 @@ impl eframe::App for SandboxApp {
         }
         // A refused edit (the step's queue holds MAX_EDITS already) is asked again next frame, as the button is still held.
         let _ = self.sim.edit(held);
+        // A capture's `frames` count the frames the loop ran: a pass held by the frames in flight is not one (M0-D218).
         #[cfg(not(target_arch = "wasm32"))]
-        if let Some(driver) = &mut self.capture {
+        if let Some(driver) = self.capture.as_mut().filter(|_| ran) {
             driver.end(ui.ctx(), &status_line);
         }
+        #[cfg(target_arch = "wasm32")]
+        let _ = ran;
         ui.ctx().request_repaint();
     }
 
@@ -999,6 +1019,12 @@ mod sim {
     #[cfg(target_arch = "wasm32")]
     const FORCED_CHUNK: u64 = 1;
 
+    /// Frames with steps whose readback may be in flight at once (§1.8.3: Δt_est is the last Δt read back, ≤ 2 frames
+    /// late). A pass that finds this many plans and submits nothing until one reads back (M0-D218): the web's
+    /// requestAnimationFrame does not wait for the GPU, and it queued a frame a tick — each with a new 7.7 MB readback, each
+    /// at P5's slot ceiling, which only a readback lowers — until Chrome stalled the page ≈ 70 s in mapAsync.
+    const FRAMES_IN_FLIGHT: u64 = 2;
+
     /// A Δt that is a CFL step: finite, above zero and below the empty world's `f32::MAX` (see `sr_physics::time`).
     fn real_dt(dt: f64) -> Option<f64> {
         (dt.is_finite() && dt > 0.0 && dt < f64::from(f32::MAX)).then_some(dt)
@@ -1051,6 +1077,9 @@ mod sim {
         /// (time, steps) of the frames of the last second.
         recent: VecDeque<(f64, u32)>,
         submitted: u64,
+        /// Frames with steps submitted, and of those the ones read back ([`FRAMES_IN_FLIGHT`]).
+        frames_sent: u64,
+        frames_read: u64,
         sim_time: f64,
         /// Held so the image outlives its view.
         _image: wgpu::Texture,
@@ -1131,6 +1160,8 @@ mod sim {
                 last_now: None,
                 recent: VecDeque::new(),
                 submitted: 0,
+                frames_sent: 0,
+                frames_read: 0,
                 sim_time: 0.0,
                 _image: image,
             })
@@ -1436,17 +1467,29 @@ mod sim {
         /// events its block summary names to the slow-down (§1.8.5), through `Frames`. Never blocks.
         fn poll_frames(&mut self) {
             for frame in self.step.poll_frames(&self.device) {
+                self.frames_read += 1;
                 self.sim_time = frame.report.sim_time;
                 self.dt_est = real_dt(f64::from(frame.report.dt_next));
                 self.frames.read_back(&mut self.time, &frame, self.last_now.unwrap_or(0.0));
             }
         }
 
+        /// Frames with steps submitted since the world began, and of those the ones read back (the presented-frame
+        /// screenshot's re-ask, `SandboxApp::ui`).
+        pub fn frames_sent(&self) -> u64 {
+            self.frames_sent
+        }
+
+        pub fn frames_read(&self) -> u64 {
+            self.frames_read
+        }
+
         /// One frame at egui time `now` (s), the pass's read-back (`Pass::poll`) done. `frozen`: a capture is waiting for its screenshot, so nothing advances and the
-        /// image on screen stays the one drawn last.
-        pub fn frame(&mut self, now: f64, frozen: bool) {
-            if frozen {
-                return;
+        /// image on screen stays the one drawn last. Held, too, while [`FRAMES_IN_FLIGHT`] frames are unread: nothing is
+        /// planned, owed or submitted, and the next frame's wall time spans the wait. False when the pass ran no frame.
+        pub fn frame(&mut self, now: f64, frozen: bool) -> bool {
+            if frozen || self.frames_sent - self.frames_read >= FRAMES_IN_FLIGHT {
+                return false;
             }
             self.inspect_frame();
             let wall_s = self.last_now.replace(now).map_or(1.0 / 60.0, |t| (now - t).max(0.0));
@@ -1479,9 +1522,11 @@ mod sim {
                 self.step.encode_frame(&FramePlan { steps, slow_down }, &mut encoder);
                 self.frames.submitted(forced);
                 self.submitted += u64::from(steps);
+                self.frames_sent += 1;
             }
             self.renderer.render(self.views.active(), self.alpha, &self.target, &mut encoder);
             self.queue.submit([encoder.finish()]);
+            true
         }
 
         /// α (§1.8.3, TW-E4): when less than one step per frame is owed, the cell image is the blend of the last two states —

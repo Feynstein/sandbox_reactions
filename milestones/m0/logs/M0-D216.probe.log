@@ -1,0 +1,17 @@
+web: ready on port 47840, 0.0s (log /home/ybelanger/private/sandbox_reactions/milestones/m0/logs/M0-D216.launch.web.log)
+services: 1, ready: 1
+=== GO ===
+0.0 HTTP 200 /
+0.0 srState=loading
+0.0 console.error: Failed to load resource: the server responded with a status of 404 (File not found)
+0.5 console.warning: A valid external Instance reference no longer exists.
+0.5 HTTP 200 /sandbox-reactions.js
+0.5 HTTP 200 /sandbox-reactions_bg.wasm
+45.3 evaluate took 42.0 s (main thread blocked?)
+46.7 evaluate took 1.2 s (main thread blocked?)
+48.0 evaluate took 1.1 s (main thread blocked?)
+48.0 srState=ready
+48.0 final dataset {"srState":"ready","srAdapter":" (BrowserWebGpu, Other, driver )","srWorld":"200 -66 800 800"}
+web: pid 3803973 stopped
+services: 1, stopped: 1
+=== GO ===

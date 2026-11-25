@@ -1,9 +1,8 @@
 [
-  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "paint", "x": 300, "y": 200, "radius": 40, "species": "H", "frames": 8}},
-  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "paint", "x": 300, "y": 200, "radius": 40, "species": "H", "frames": 8}},
-  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "paint", "x": 300, "y": 200, "radius": 40, "species": "H", "frames": 8}},
-  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "paint", "x": 300, "y": 200, "radius": 40, "species": "H", "frames": 8}},
-  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "paint", "x": 300, "y": 200, "radius": 40, "species": "H", "frames": 8}},
-  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "paint", "x": 300, "y": 200, "radius": 40, "species": "H", "frames": 8}},
-  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "paint", "x": 300, "y": 200, "radius": 40, "species": "H", "frames": 3}}
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "paint", "dx": 0, "dy": 0, "radius": 40, "species": "H", "frames": 8}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "paint", "dx": 0, "dy": 0, "radius": 40, "species": "H", "frames": 8}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "paint", "dx": 0, "dy": 0, "radius": 40, "species": "H", "frames": 8}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "paint", "dx": 0, "dy": 0, "radius": 40, "species": "H", "frames": 8}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "paint", "dx": 0, "dy": 0, "radius": 40, "species": "H", "frames": 8}},
+  {"at": {"object_until": {"x_h_c_below": 0.5}}, "edit": {"kind": "paint", "dx": 0, "dy": 0, "radius": 40, "species": "H", "frames": 3}}
 ]

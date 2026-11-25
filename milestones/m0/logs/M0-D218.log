@@ -1,0 +1,11 @@
+== 2026-11-25T11:31:13-05:00 build native + wasm check (linux-pc)
+    Checking sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 0.35s
+...
+78 |     pub fn centre_on(&mut self, z: u32, cell: [u32; 2], world: WorldConfig) {
+   |            ^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `sr-app` (bin "sandbox-reactions") generated 2 warnings (run `cargo fix --bin "sandbox-reactions" -p sr-app` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.24s

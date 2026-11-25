@@ -1,0 +1,68 @@
+== 2026-11-25T08:02:00-05:00 M0-D210 · linux-pc · cargo build --release
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+   Compiling sr-app v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-app)
+    Finished `release` profile [optimized] target(s) in 9.95s
+
+real	0m10.023s
+user	0m31.043s
+sys	0m0.961s
+== 2026-11-25T08:02:17-05:00 erase probe: massive + touch_erase.json to 8000 steps, RTX 5090
+exit 124
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+
+real	9m50.280s
+user	3m3.555s
+sys	4m4.811s
+== 2026-11-25T08:12:26-05:00 plain massive to 7000, dumps every 200, RTX 5090
+exit 0
+
+real	2m3.874s
+user	1m33.725s
+sys	0m8.618s
+== 2026-11-25T08:14:50-05:00 erase from plain s_7000, --continue, 1200 steps, RTX 5090
+exit 2
+== 2026-11-25T08:15:00-05:00 erase from plain s_7000, --continue to step 8200, RTX 5090
+exit 0
+
+real	1m12.096s
+user	0m35.537s
+sys	0m24.151s
+== 2026-11-25T08:17:04-05:00 erase variant A from erase7000 s_7104 to 7400, RTX 5090
+exit 0
+== 2026-11-25T08:17:51-05:00 erase variant B from erase7000 s_7104 to 7400, RTX 5090
+exit 0
+== 2026-11-25T08:18:58-05:00 erase variant C from erase7000 s_7104 to 7400, RTX 5090
+exit 0
+== 2026-11-25T08:19:20-05:00 erase variant D from erase7000 s_7104 to 7400, RTX 5090
+exit 0
+== 2026-11-25T08:20:08-05:00 age probe: plain s_7000 + age_touch.json to 16000, RTX 5090
+exit 124
+== 2026-11-25T08:30:05-05:00 age probe 2: from age s_13440 to 16000, RTX 5090
+exit 0
+== 2026-11-25T08:34:14-05:00 age probe 2 ended (its session stopped at the lead's word; the run kept going): sys	1m50.990s
+== 2026-11-25T08:34:28-05:00 age probe 3: age s_13440 + the file's 18 erases only, to 16000, RTX 5090
+exit 0
+== 2026-11-25T08:38:10-05:00 verify.py edits_file scene · linux-pc
+edits_file  6/0/0       16.76 s  GO · step 1/2, 1 left
+scene       8/0/0       14.87 s  GO · step 2/2, 0 left
+logs: milestones/m0/logs/M0-D210.<scope>.log · record: loop_times.jsonl · tree 0e06ff0e1f79+50f36200ce77
+anchor: 164 path×scope entries moved by this run
+anchor: 232 paths checked · 483 skipped (3 classes) · 251 never checked · 2 stale · 0 unclassified · 0 owed · 485 covered of 968 visible
+verify: 14 passed, 0 failed, 0 skipped · 2/2 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 16.76 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 9.73->11.92
+=== GO ===
+== 2026-11-25T08:38:32-05:00 verify.py --redarm edits_file · linux-pc
+edits_file · clean: proven by M0-D210 2026-11-25T08:38:27-05:00 (a run of the scope; fingerprint 052525588ab9) - not re-run
+edits_file · plant edits-trigger-late · RED (proven: 3 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope edits_file · 16.08 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D210.edits_file.redarm.log
+=== GO ===
+== 2026-11-25T08:39:08-05:00 injected: the both-forms refusal off (headless.rs), bash tests/gpu.sh edits_file physics
+exit 101
+thread 'edits_file::a_bad_edits_file_is_refused' (3608511) panicked at crates/sr-engine/tests/gpu/edits_file.rs:280:57:
+x and dx at once: EditPlan { entries: [Entry { trigger: Step(1), edit: Erase { cell: [32, 32], radius: 1 }, copies: 1, spent: false }], backlog: [] }
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 545 filtered out; finished in 2.57s
+== 2026-11-25T08:39:36-05:00 restored; verify.py edits_file
+edits_file  GO (already GO on this tree at 2026-11-25T08:38:27-05:00 — not re-run)
+logs: milestones/m0/logs/M0-D210.<scope>.log · record: loop_times.jsonl · tree 0e06ff0e1f79+50f36200ce77
+verify: 6 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 1 not re-run · 0 NOT RUN · 0 not impacted · 0.00 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 7.16->7.16
+=== GO ===
+== 2026-11-25T08:53:38-05:00 deleted build/m0-d210/ (24 GB) and build/m0-d210.*.out on the lead's word
