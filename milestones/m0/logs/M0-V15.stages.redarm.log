@@ -1,0 +1,245 @@
+==== 2026-11-24T12:45:08-05:00 stages · clean · a fresh scratch copy of the tree
+== 2026-11-24T12:45:08-05:00 stages · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh stages physics
+-- stages · exit=0 · 2832.22 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-zr3gva8l/arm0/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-zr3gva8l/arm0/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 12.48s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 3 tests
+test stages::the_giant_preset_shows_its_stages_down_to_black_hole ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+giant step=33 t=0.26 shown=protostar raw=protostar M=19271.1 (m_up_sb 5938.2)
+giant step=769 t=3.96 shown=main_sequence raw=main_sequence M=19254.5 (m_up_sb 5938.2)
+giant step=1169 t=6.07 shown=he_core raw=he_core M=19240.0 (m_up_sb 5938.2)
+giant step=1505 t=7.72 shown=main_sequence raw=main_sequence M=19226.2 (m_up_sb 5938.2)
+giant step=3457 t=20.52 shown=he_core raw=he_core M=19044.8 (m_up_sb 5938.2)
+giant step=3537 t=21.18 shown=main_sequence raw=main_sequence M=19031.9 (m_up_sb 5938.2)
+giant step=4273 t=27.91 shown=he_core raw=he_core M=18875.7 (m_up_sb 5938.2)
+giant step=4433 t=29.26 shown=main_sequence raw=main_sequence M=18837.7 (m_up_sb 5938.2)
+giant step=4977 t=34.88 shown=he_core raw=he_core M=18653.4 (m_up_sb 5938.2)
+giant step=5105 t=36.01 shown=main_sequence raw=main_sequence M=18655.0 (m_up_sb 5938.2)
+giant step=5489 t=39.98 shown=he_core raw=he_core M=18495.5 (m_up_sb 5938.2)
+giant step=5665 t=41.54 shown=main_sequence raw=main_sequence M=18404.1 (m_up_sb 5938.2)
+giant step=6049 t=45.34 shown=he_core raw=he_core M=18140.5 (m_up_sb 5938.2)
+giant step=6241 t=47.10 shown=main_sequence raw=main_sequence M=18016.1 (m_up_sb 5938.2)
+giant step=6305 t=47.69 shown=he_core raw=he_core M=17976.0 (m_up_sb 5938.2)
+giant step=6881 t=52.48 shown=o_burn raw=o_burn M=17673.3 (m_up_sb 5938.2)
+giant step=7313 t=55.46 shown=si_burn raw=si_burn M=17510.9 (m_up_sb 5938.2)
+giant step=7505 t=56.64 shown=main_sequence raw=main_sequence M=17451.9 (m_up_sb 5938.2)
+giant step=8353 t=61.02 shown=core_collapse raw=core_collapse M=17177.5 (m_up_sb 5938.2)
+giant step=8354 t=61.03 shown=supernova raw=supernova M=17177.1 (m_up_sb 5938.2)
+giant step=8434 t=61.35 shown=black_hole raw=black_hole M=17144.6 (m_up_sb 5938.2)
+SR-HEADLESS DONE steps=8434 sim_time=61.354852 until=met
+giant shown (8434 steps, exit 0): [("protostar", 33), ("main_sequence", 769), ("he_core", 1169), ("main_sequence", 1505), ("he_core", 3457), ("main_sequence", 3537), ("he_core", 4273), ("main_sequence", 4433), ("he_core", 4977), ("main_sequence", 5105), ("he_core", 5489), ("main_sequence", 5665), ("he_core", 6049), ("main_sequence", 6241), ("he_core", 6305), ("o_burn", 6881), ("si_burn", 7313), ("main_sequence", 7505), ("core_collapse", 8353), ("supernova", 8354), ("black_hole", 8434)]
+ok
+test stages::the_massive_preset_shows_its_stages_down_to_neutron_star ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+massive step=33 t=0.30 shown=protostar raw=protostar M=9404.5 (m_up_sb 5938.2)
+massive step=721 t=4.31 shown=main_sequence raw=main_sequence M=9391.9 (m_up_sb 5938.2)
+massive step=11361 t=103.57 shown=he_core raw=he_core M=8747.3 (m_up_sb 5938.2)
+massive step=11521 t=105.20 shown=main_sequence raw=main_sequence M=8739.5 (m_up_sb 5938.2)
+massive step=11697 t=106.98 shown=he_core raw=he_core M=8730.2 (m_up_sb 5938.2)
+massive step=11873 t=108.76 shown=main_sequence raw=main_sequence M=8721.4 (m_up_sb 5938.2)
+massive step=12033 t=110.38 shown=he_core raw=he_core M=8712.5 (m_up_sb 5938.2)
+massive step=12225 t=112.31 shown=main_sequence raw=main_sequence M=8701.9 (m_up_sb 5938.2)
+massive step=12353 t=113.60 shown=he_core raw=he_core M=8694.4 (m_up_sb 5938.2)
+massive step=12593 t=116.00 shown=main_sequence raw=main_sequence M=8680.2 (m_up_sb 5938.2)
+massive step=12657 t=116.64 shown=he_core raw=he_core M=8675.8 (m_up_sb 5938.2)
+massive step=15105 t=139.73 shown=o_burn raw=o_burn M=8482.6 (m_up_sb 5938.2)
+massive step=16625 t=152.34 shown=si_burn raw=si_burn M=8123.0 (m_up_sb 5938.2)
+massive step=17105 t=156.06 shown=main_sequence raw=main_sequence M=7956.7 (m_up_sb 5938.2)
+massive step=18081 t=163.27 shown=iron_core raw=iron_core M=7545.5 (m_up_sb 5938.2)
+massive step=21585 t=185.39 shown=core_collapse raw=core_collapse M=5808.0 (m_up_sb 5938.2)
+massive step=21586 t=185.39 shown=supernova raw=supernova M=5807.6 (m_up_sb 5938.2)
+massive step=25570 t=205.61 shown=neutron_star raw=neutron_star M=4652.1 (m_up_sb 5938.2)
+SR-HEADLESS DONE steps=25570 sim_time=205.609866 until=met
+massive shown (25570 steps, exit 0): [("protostar", 33), ("main_sequence", 721), ("he_core", 11361), ("main_sequence", 11521), ("he_core", 11697), ("main_sequence", 11873), ("he_core", 12033), ("main_sequence", 12225), ("he_core", 12353), ("main_sequence", 12593), ("he_core", 12657), ("o_burn", 15105), ("si_burn", 16625), ("main_sequence", 17105), ("iron_core", 18081), ("core_collapse", 21585), ("supernova", 21586), ("neutron_star", 25570)]
+ok
+test stages::the_sun_like_preset_shows_its_stages_down_to_white_dwarf ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+sun step=65 t=1.54 shown=collapsing raw=collapsing M=3136.7 (m_up_sb 5938.2)
+sun step=705 t=9.24 shown=main_sequence raw=main_sequence M=3130.3 (m_up_sb 5938.2)
+sun step=32001 t=361.57 shown=main_sequence raw=main_sequence
+sun step=64001 t=729.50 shown=main_sequence raw=main_sequence
+sun step=96001 t=1092.76 shown=main_sequence raw=main_sequence
+sun step=128001 t=1438.61 shown=main_sequence raw=main_sequence
+sun step=135873 t=1517.67 shown=he_core raw=he_core M=3054.2 (m_up_sb 5938.2)
+sun step=146209 t=1617.90 shown=main_sequence raw=main_sequence M=2945.4 (m_up_sb 5938.2)
+sun step=147873 t=1633.36 shown=o_burn raw=o_burn M=2915.7 (m_up_sb 5938.2)
+sun step=151985 t=1670.59 shown=si_burn raw=si_burn M=2814.1 (m_up_sb 5938.2)
+sun step=152609 t=1676.07 shown=o_burn raw=o_burn M=2796.3 (m_up_sb 5938.2)
+sun step=152689 t=1676.77 shown=he_shell raw=he_shell M=2794.8 (m_up_sb 5938.2)
+sun step=153697 t=1685.47 shown=iron_core raw=iron_core M=2738.5 (m_up_sb 5938.2)
+sun step=160001 t=1735.68 shown=iron_core raw=iron_core
+sun step=169809 t=1797.30 shown=white_dwarf raw=white_dwarf M=2616.3 (m_up_sb 5938.2)
+SR-HEADLESS DONE steps=169809 sim_time=1797.300311 until=met
+sun shown (169809 steps, exit 0): [("collapsing", 65), ("main_sequence", 705), ("he_core", 135873), ("main_sequence", 146209), ("o_burn", 147873), ("si_burn", 151985), ("o_burn", 152609), ("he_shell", 152689), ("iron_core", 153697), ("white_dwarf", 169809)]
+ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 548 filtered out; finished in 2819.62s
+
+
+==== 2026-11-24T13:32:20-05:00 stages · plant stage-hold-one · a fresh scratch copy of the tree
+planted stage-hold-one: tests/plants/stage-hold-one.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-24T13:32:21-05:00 stages · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh stages physics
+-- stages · exit=101 · 2838.72 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-zr3gva8l/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-zr3gva8l/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 12.15s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 3 tests
+test stages::the_giant_preset_shows_its_stages_down_to_black_hole ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+giant step=17 t=0.15 shown=protostar raw=protostar M=19271.2 (m_up_sb 5938.2)
+giant step=737 t=3.79 shown=main_sequence raw=main_sequence M=19255.8 (m_up_sb 5938.2)
+giant step=1137 t=5.90 shown=he_core raw=he_core M=19241.3 (m_up_sb 5938.2)
+giant step=1473 t=7.57 shown=main_sequence raw=main_sequence M=19227.6 (m_up_sb 5938.2)
+giant step=3425 t=20.23 shown=he_core raw=he_core M=19050.1 (m_up_sb 5938.2)
+giant step=3505 t=20.92 shown=main_sequence raw=main_sequence M=19037.1 (m_up_sb 5938.2)
+giant step=4241 t=27.63 shown=he_core raw=he_core M=18883.4 (m_up_sb 5938.2)
+giant step=4401 t=28.99 shown=main_sequence raw=main_sequence M=18845.7 (m_up_sb 5938.2)
+giant step=4945 t=34.59 shown=he_core raw=he_core M=18668.1 (m_up_sb 5938.2)
+giant step=5073 t=35.72 shown=main_sequence raw=main_sequence M=18657.7 (m_up_sb 5938.2)
+giant step=5457 t=39.70 shown=he_core raw=he_core M=18511.0 (m_up_sb 5938.2)
+giant step=5633 t=41.25 shown=main_sequence raw=main_sequence M=18422.2 (m_up_sb 5938.2)
+giant step=6017 t=45.04 shown=he_core raw=he_core M=18162.1 (m_up_sb 5938.2)
+giant step=6209 t=46.81 shown=main_sequence raw=main_sequence M=18036.5 (m_up_sb 5938.2)
+giant step=6273 t=47.40 shown=he_core raw=he_core M=17996.0 (m_up_sb 5938.2)
+giant step=6849 t=52.24 shown=o_burn raw=o_burn M=17687.4 (m_up_sb 5938.2)
+giant step=7281 t=55.25 shown=si_burn raw=si_burn M=17521.4 (m_up_sb 5938.2)
+giant step=7473 t=56.45 shown=main_sequence raw=main_sequence M=17461.3 (m_up_sb 5938.2)
+giant step=8353 t=61.02 shown=core_collapse raw=core_collapse M=17177.5 (m_up_sb 5938.2)
+giant step=8354 t=61.03 shown=supernova raw=supernova M=17177.1 (m_up_sb 5938.2)
+giant step=8402 t=61.23 shown=black_hole raw=black_hole M=17157.2 (m_up_sb 5938.2)
+SR-HEADLESS DONE steps=8402 sim_time=61.229232 until=met
+giant shown (8402 steps, exit 0): [("protostar", 17), ("main_sequence", 737), ("he_core", 1137), ("main_sequence", 1473), ("he_core", 3425), ("main_sequence", 3505), ("he_core", 4241), ("main_sequence", 4401), ("he_core", 4945), ("main_sequence", 5073), ("he_core", 5457), ("main_sequence", 5633), ("he_core", 6017), ("main_sequence", 6209), ("he_core", 6273), ("o_burn", 6849), ("si_burn", 7281), ("main_sequence", 7473), ("core_collapse", 8353), ("supernova", 8354), ("black_hole", 8402)]
+
+thread 'stages::the_giant_preset_shows_its_stages_down_to_black_hole' (603988) panicked at crates/sr-engine/tests/gpu/stages.rs:195:5:
+giant: displayed (step, stage) without 3 identical raw results behind it: [(737, "main_sequence"), (1137, "he_core"), (1473, "main_sequence"), (3425, "he_core"), (3505, "main_sequence"), (4241, "he_core"), (4401, "main_sequence"), (4945, "he_core"), (5073, "main_sequence"), (5457, "he_core"), (5633, "main_sequence"), (6017, "he_core"), (6209, "main_sequence"), (6273, "he_core"), (6849, "o_burn"), (7281, "si_burn"), (7473, "main_sequence"), (8402, "black_hole")]; shown [("protostar", 17), ("main_sequence", 737), ("he_core", 1137), ("main_sequence", 1473), ("he_core", 3425), ("main_sequence", 3505), ("he_core", 4241), ("main_sequence", 4401), ("he_core", 4945), ("main_sequence", 5073), ("he_core", 5457), ("main_sequence", 5633), ("he_core", 6017), ("main_sequence", 6209), ("he_core", 6273), ("o_burn", 6849), ("si_burn", 7281), ("main_sequence", 7473), ("core_collapse", 8353), ("supernova", 8354), ("black_hole", 8402)]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test stages::the_massive_preset_shows_its_stages_down_to_neutron_star ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+massive step=17 t=0.17 shown=protostar raw=protostar M=9404.6 (m_up_sb 5938.2)
+massive step=689 t=4.12 shown=main_sequence raw=main_sequence M=9392.6 (m_up_sb 5938.2)
+massive step=11329 t=103.25 shown=he_core raw=he_core M=8748.9 (m_up_sb 5938.2)
+massive step=11489 t=104.87 shown=main_sequence raw=main_sequence M=8741.2 (m_up_sb 5938.2)
+massive step=11665 t=106.66 shown=he_core raw=he_core M=8732.0 (m_up_sb 5938.2)
+massive step=11841 t=108.43 shown=main_sequence raw=main_sequence M=8722.4 (m_up_sb 5938.2)
+massive step=12001 t=110.06 shown=he_core raw=he_core M=8714.2 (m_up_sb 5938.2)
+massive step=12193 t=111.99 shown=main_sequence raw=main_sequence M=8703.3 (m_up_sb 5938.2)
+massive step=12321 t=113.28 shown=he_core raw=he_core M=8696.2 (m_up_sb 5938.2)
+massive step=12561 t=115.68 shown=main_sequence raw=main_sequence M=8681.7 (m_up_sb 5938.2)
+massive step=12625 t=116.33 shown=he_core raw=he_core M=8678.4 (m_up_sb 5938.2)
+massive step=15073 t=139.45 shown=o_burn raw=o_burn M=8489.0 (m_up_sb 5938.2)
+massive step=16593 t=152.09 shown=si_burn raw=si_burn M=8132.1 (m_up_sb 5938.2)
+massive step=17073 t=155.82 shown=main_sequence raw=main_sequence M=7967.9 (m_up_sb 5938.2)
+massive step=18049 t=163.04 shown=iron_core raw=iron_core M=7560.5 (m_up_sb 5938.2)
+massive step=21585 t=185.39 shown=core_collapse raw=core_collapse M=5808.0 (m_up_sb 5938.2)
+massive step=21586 t=185.39 shown=supernova raw=supernova M=5807.6 (m_up_sb 5938.2)
+massive step=25538 t=205.45 shown=neutron_star raw=neutron_star M=4657.3 (m_up_sb 5938.2)
+SR-HEADLESS DONE steps=25538 sim_time=205.449682 until=met
+massive shown (25538 steps, exit 0): [("protostar", 17), ("main_sequence", 689), ("he_core", 11329), ("main_sequence", 11489), ("he_core", 11665), ("main_sequence", 11841), ("he_core", 12001), ("main_sequence", 12193), ("he_core", 12321), ("main_sequence", 12561), ("he_core", 12625), ("o_burn", 15073), ("si_burn", 16593), ("main_sequence", 17073), ("iron_core", 18049), ("core_collapse", 21585), ("supernova", 21586), ("neutron_star", 25538)]
+
+thread 'stages::the_massive_preset_shows_its_stages_down_to_neutron_star' (604120) panicked at crates/sr-engine/tests/gpu/stages.rs:195:5:
+massive: displayed (step, stage) without 3 identical raw results behind it: [(689, "main_sequence"), (11329, "he_core"), (11489, "main_sequence"), (11665, "he_core"), (11841, "main_sequence"), (12001, "he_core"), (12193, "main_sequence"), (12321, "he_core"), (12561, "main_sequence"), (12625, "he_core"), (15073, "o_burn"), (16593, "si_burn"), (17073, "main_sequence"), (18049, "iron_core"), (25538, "neutron_star")]; shown [("protostar", 17), ("main_sequence", 689), ("he_core", 11329), ("main_sequence", 11489), ("he_core", 11665), ("main_sequence", 11841), ("he_core", 12001), ("main_sequence", 12193), ("he_core", 12321), ("main_sequence", 12561), ("he_core", 12625), ("o_burn", 15073), ("si_burn", 16593), ("main_sequence", 17073), ("iron_core", 18049), ("core_collapse", 21585), ("supernova", 21586), ("neutron_star", 25538)]
+FAILED
+test stages::the_sun_like_preset_shows_its_stages_down_to_white_dwarf ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+sun step=17 t=0.42 shown=cloud raw=cloud M=3136.7 (m_up_sb 5938.2)
+sun step=33 t=0.80 shown=collapsing raw=collapsing M=3136.7 (m_up_sb 5938.2)
+sun step=289 t=4.40 shown=protostar raw=protostar M=3135.6 (m_up_sb 5938.2)
+sun step=577 t=7.56 shown=failed_star raw=failed_star M=3132.4 (m_up_sb 5938.2)
+sun step=641 t=8.43 shown=collapsing raw=collapsing M=3131.6 (m_up_sb 5938.2)
+sun step=673 t=8.84 shown=main_sequence raw=main_sequence M=3130.8 (m_up_sb 5938.2)
+sun step=32001 t=361.57 shown=main_sequence raw=main_sequence
+sun step=64001 t=729.50 shown=main_sequence raw=main_sequence
+sun step=96001 t=1092.76 shown=main_sequence raw=main_sequence
+sun step=128001 t=1438.61 shown=main_sequence raw=main_sequence
+sun step=135841 t=1517.36 shown=he_core raw=he_core M=3054.4 (m_up_sb 5938.2)
+sun step=146177 t=1617.60 shown=main_sequence raw=main_sequence M=2945.9 (m_up_sb 5938.2)
+sun step=147841 t=1633.07 shown=o_burn raw=o_burn M=2916.3 (m_up_sb 5938.2)
+sun step=151953 t=1670.31 shown=si_burn raw=si_burn M=2815.2 (m_up_sb 5938.2)
+sun step=152577 t=1675.79 shown=o_burn raw=o_burn M=2797.0 (m_up_sb 5938.2)
+sun step=152657 t=1676.49 shown=he_shell raw=he_shell M=2795.4 (m_up_sb 5938.2)
+sun step=153665 t=1685.20 shown=iron_core raw=iron_core M=2740.9 (m_up_sb 5938.2)
+sun step=160001 t=1735.68 shown=iron_core raw=iron_core
+sun step=169777 t=1797.11 shown=white_dwarf raw=white_dwarf M=2616.2 (m_up_sb 5938.2)
+SR-HEADLESS DONE steps=169777 sim_time=1797.106457 until=met
+sun shown (169777 steps, exit 0): [("cloud", 17), ("collapsing", 33), ("protostar", 289), ("failed_star", 577), ("collapsing", 641), ("main_sequence", 673), ("he_core", 135841), ("main_sequence", 146177), ("o_burn", 147841), ("si_burn", 151953), ("o_burn", 152577), ("he_shell", 152657), ("iron_core", 153665), ("white_dwarf", 169777)]
+
+thread 'stages::the_sun_like_preset_shows_its_stages_down_to_white_dwarf' (604524) panicked at crates/sr-engine/tests/gpu/stages.rs:195:5:
+sun: displayed (step, stage) without 3 identical raw results behind it: [(289, "protostar"), (577, "failed_star"), (641, "collapsing"), (673, "main_sequence"), (135841, "he_core"), (146177, "main_sequence"), (147841, "o_burn"), (151953, "si_burn"), (152577, "o_burn"), (152657, "he_shell"), (153665, "iron_core"), (169777, "white_dwarf")]; shown [("cloud", 17), ("collapsing", 33), ("protostar", 289), ("failed_star", 577), ("collapsing", 641), ("main_sequence", 673), ("he_core", 135841), ("main_sequence", 146177), ("o_burn", 147841), ("si_burn", 151953), ("o_burn", 152577), ("he_shell", 152657), ("iron_core", 153665), ("white_dwarf", 169777)]
+FAILED
+
+failures:
+
+failures:
+    stages::the_giant_preset_shows_its_stages_down_to_black_hole
+    stages::the_massive_preset_shows_its_stages_down_to_neutron_star
+    stages::the_sun_like_preset_shows_its_stages_down_to_white_dwarf
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 548 filtered out; finished in 2826.45s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-11-24T14:19:40-05:00 stages · plant stage-hold-long · a fresh scratch copy of the tree
+planted stage-hold-long: tests/plants/stage-hold-long.patch -> crates/sr-physics/src/observe/stages.rs
+== 2026-11-24T14:19:40-05:00 stages · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh stages physics
+-- stages · exit=101 · 2909.31 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-zr3gva8l/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-zr3gva8l/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 12.10s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 3 tests
+test stages::the_giant_preset_shows_its_stages_down_to_black_hole ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+giant step=2097 t=10.83 shown=main_sequence raw=main_sequence M=19193.8 (m_up_sb 5938.2)
+giant step=8353 t=61.02 shown=core_collapse raw=core_collapse M=17177.5 (m_up_sb 5938.2)
+giant step=8354 t=61.03 shown=supernova raw=supernova M=17177.1 (m_up_sb 5938.2)
+giant step=9026 t=63.45 shown=black_hole raw=black_hole M=16929.7 (m_up_sb 5938.2)
+SR-HEADLESS DONE steps=9026 sim_time=63.448097 until=met
+giant shown (9026 steps, exit 0): [("main_sequence", 2097), ("core_collapse", 8353), ("supernova", 8354), ("black_hole", 9026)]
+
+thread 'stages::the_giant_preset_shows_its_stages_down_to_black_hole' (606077) panicked at crates/sr-engine/tests/gpu/stages.rs:198:9:
+giant: protostar is missing, or comes before the stages ahead of it (searched from displayed #0); the run ended at step 9026 (exit 0); displayed stages with the step each first showed at: [("main_sequence", 2097), ("core_collapse", 8353), ("supernova", 8354), ("black_hole", 9026)]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test stages::the_massive_preset_shows_its_stages_down_to_neutron_star ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+massive step=1313 t=7.90 shown=main_sequence raw=main_sequence M=9371.5 (m_up_sb 5938.2)
+massive step=13249 t=122.49 shown=he_core raw=he_core M=8639.3 (m_up_sb 5938.2)
+massive step=15697 t=144.81 shown=o_burn raw=o_burn M=8365.3 (m_up_sb 5938.2)
+massive step=17697 t=160.49 shown=main_sequence raw=main_sequence M=7719.9 (m_up_sb 5938.2)
+massive step=18977 t=169.61 shown=iron_core raw=iron_core M=7090.8 (m_up_sb 5938.2)
+massive step=21585 t=185.39 shown=core_collapse raw=core_collapse M=5808.0 (m_up_sb 5938.2)
+massive step=21586 t=185.39 shown=supernova raw=supernova M=5807.6 (m_up_sb 5938.2)
+massive step=26162 t=208.54 shown=neutron_star raw=neutron_star M=3896.0 (m_up_sb 5938.2)
+SR-HEADLESS DONE steps=26162 sim_time=208.542981 until=met
+massive shown (26162 steps, exit 0): [("main_sequence", 1313), ("he_core", 13249), ("o_burn", 15697), ("main_sequence", 17697), ("iron_core", 18977), ("core_collapse", 21585), ("supernova", 21586), ("neutron_star", 26162)]
+
+thread 'stages::the_massive_preset_shows_its_stages_down_to_neutron_star' (606222) panicked at crates/sr-engine/tests/gpu/stages.rs:198:9:
+massive: protostar is missing, or comes before the stages ahead of it (searched from displayed #0); the run ended at step 26162 (exit 0); displayed stages with the step each first showed at: [("main_sequence", 1313), ("he_core", 13249), ("o_burn", 15697), ("main_sequence", 17697), ("iron_core", 18977), ("core_collapse", 21585), ("supernova", 21586), ("neutron_star", 26162)]
+FAILED
+test stages::the_sun_like_preset_shows_its_stages_down_to_white_dwarf ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+sun step=1297 t=16.36 shown=main_sequence raw=main_sequence M=3123.4 (m_up_sb 5938.2)
+sun step=32001 t=361.57 shown=main_sequence raw=main_sequence
+sun step=64001 t=729.50 shown=main_sequence raw=main_sequence
+sun step=96001 t=1092.76 shown=main_sequence raw=main_sequence
+sun step=128001 t=1438.61 shown=main_sequence raw=main_sequence
+sun step=136465 t=1523.52 shown=he_core raw=he_core M=3051.9 (m_up_sb 5938.2)
+sun step=146801 t=1623.43 shown=main_sequence raw=main_sequence M=2936.1 (m_up_sb 5938.2)
+sun step=148465 t=1638.81 shown=o_burn raw=o_burn M=2904.5 (m_up_sb 5938.2)
+sun step=153281 t=1681.91 shown=he_shell raw=he_shell M=2769.9 (m_up_sb 5938.2)
+sun step=154289 t=1690.46 shown=iron_core raw=iron_core M=2708.6 (m_up_sb 5938.2)
+sun step=160001 t=1735.68 shown=iron_core raw=iron_core
+sun step=170401 t=1801.37 shown=white_dwarf raw=white_dwarf M=2616.8 (m_up_sb 5938.2)
+SR-HEADLESS DONE steps=170401 sim_time=1801.374786 until=met
+sun shown (170401 steps, exit 0): [("main_sequence", 1297), ("he_core", 136465), ("main_sequence", 146801), ("o_burn", 148465), ("he_shell", 153281), ("iron_core", 154289), ("white_dwarf", 170401)]
+ok
+
+failures:
+
+failures:
+    stages::the_giant_preset_shows_its_stages_down_to_black_hole
+    stages::the_massive_preset_shows_its_stages_down_to_neutron_star
+
+test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 548 filtered out; finished in 2897.08s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

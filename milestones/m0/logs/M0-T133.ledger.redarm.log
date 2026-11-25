@@ -1,0 +1,170 @@
+==== 2026-11-24T20:02:50-05:00 ledger · clean: proven by M0-D204 2026-11-23T13:52:26-05:00 (a run of the scope; fingerprint 07b87fbd59f9) - not re-run
+==== 2026-11-24T20:01:42-05:00 ledger · plant ledger-no-escaped · a fresh scratch copy of the tree
+planted ledger-no-escaped: tests/plants/ledger-no-escaped.patch -> crates/sr-engine/src/ledger.rs
+== 2026-11-24T20:01:42-05:00 ledger · task M0-T133 · box laserax-ai :: bash tests/gpu.sh ledger physics
+-- ledger · exit=101 · 20.03 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-utfwn70p/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-utfwn70p/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 11.16s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 8 tests
+test ledger::a_hot_compact_remnant_radiating_into_vacuum_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=8.536507 until=none
+remnant: steps 1..1000, sim time 8.520, R₉₀ 3.005, M 1498.5, τ_dyn 0.1346, |W|₀ 2.3288e5; Δinvariant 1.0786e0 → 7.317e-8 |W| per τ_dyn (bound 1e-3); radiated 2.2230e5, floor_added -9.6242e0, escaped 1.2704e2, ΔW -4.4725e5
+ok
+test ledger::a_snapshot_from_before_the_hold_restores_with_the_held_terms_zero ... ok
+test ledger::bounce_500_steps_the_mass_and_the_momentum_hold ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.710919 until=none
+bounce: steps 1..500, mass drift 1.378e-8, momentum drift 1.064e-7 of Σm|u| = 3.050e3, energy drift 3.688e-6 (reported), escaped 0
+ok
+test ledger::gas_driven_against_a_held_block_books_held_and_the_momentum_holds ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=4.719017 until=none
+SR-LEDGER-HELD wall: held (6.3066e2, 1.1859e-2) = 2.496e-1 of Σm|u| 2.5269e3, escaped [-17.840828233206377,0.6932250174122186]; vacuum_reset 2.367e-2 × u_max 26.733 → bound 2.514e-4; mass drift 3.993e-4, momentum drift 4.798e-9 of Σm|u|
+
+thread 'ledger::gas_driven_against_a_held_block_books_held_and_the_momentum_holds' (1802001) panicked at crates/sr-engine/tests/gpu/ledger.rs:592:5:
+mass invariant drift 3.993e-4
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.709149 until=none
+leave: escaped mass 1.422567e1 of 1.003273e3 (1.418e-2), momentum escaped Array [Number(196.25871135273536), Number(0.0001033037055302331)], mass drift 1.418e-2, momentum drift 7.465e-8 of Σm|u| = 3.399e3, energy drift 2.726e-6 (reported), escaped energy -1.017243e2
+
+thread 'ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it' (1802037) panicked at crates/sr-engine/tests/gpu/ledger.rs:281:5:
+mass invariant drift 1.418e-2 (escaped 14.225672406769377)
+FAILED
+test ledger::leave_500_steps_without_gravity_the_momentum_holds_to_what_a_vacuum_reset_removes ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=16.827379 until=none
+leave without gravity: escaped mass 2.989493e2 of 7.182199e2, escaped x momentum 1.310388e3, vacuum_reset 1.835e-2 × u_max 6.858 → bound 8.256e-5; mass drift 4.162e-1, momentum drift 4.861e-9 of Σm|u| = 1.543e3
+
+thread 'ledger::leave_500_steps_without_gravity_the_momentum_holds_to_what_a_vacuum_reset_removes' (1802091) panicked at crates/sr-engine/tests/gpu/ledger.rs:313:5:
+mass invariant drift 4.162e-1
+FAILED
+test ledger::the_held_disk_writes_the_ledgers_held_into_summary_json ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=8.487118 until=none
+SR-LEDGER-HELD disk M 900: steps 1..1000, held (-3.7321e-2, -2.5761e-2) = 1.453e-3 of Σm|u| 3.1200e1; grid (3.8380e-2, 2.5493e-2); invariant drift 3.502e-5 of Σm|u| with held (band 1e-3), 1.477e-3 without; snapshot's held (0.0000e0, 0.0000e0) + spared (-3.7321e-2, -2.5761e-2)
+ok
+test ledger::the_terms_and_the_invariants_on_a_hand_made_summary ... 
+thread 'ledger::the_terms_and_the_invariants_on_a_hand_made_summary' (1802138) panicked at crates/sr-engine/tests/gpu/ledger.rs:451:5:
+assertion `left == right` failed
+  left: 118.00004032
+ right: 122.00004031999998
+FAILED
+
+failures:
+
+failures:
+    ledger::gas_driven_against_a_held_block_books_held_and_the_momentum_holds
+    ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it
+    ledger::leave_500_steps_without_gravity_the_momentum_holds_to_what_a_vacuum_reset_removes
+    ledger::the_terms_and_the_invariants_on_a_hand_made_summary
+
+test result: FAILED. 4 passed; 4 failed; 0 ignored; 0 measured; 543 filtered out; finished in 8.67s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-11-24T20:02:02-05:00 ledger · plant ledger-cell-grav-work · a fresh scratch copy of the tree
+==== 2026-11-24T20:02:03-05:00 ledger · plant grav-ring-one-sided · a fresh scratch copy of the tree
+planted grav-ring-one-sided: tests/plants/grav-ring-one-sided.patch -> crates/sr-engine/shaders/grav.wgsl
+== 2026-11-24T20:02:03-05:00 ledger · task M0-T133 · box laserax-ai :: bash tests/gpu.sh ledger physics
+-- ledger · exit=0 · 22.86 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-utfwn70p/arm3/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-utfwn70p/arm3/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 13.48s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 8 tests
+test ledger::a_hot_compact_remnant_radiating_into_vacuum_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=8.536443 until=none
+remnant: steps 1..1000, sim time 8.520, R₉₀ 3.005, M 1498.5, τ_dyn 0.1346, |W|₀ 2.3288e5; Δinvariant 1.0249e0 → 6.952e-8 |W| per τ_dyn (bound 1e-3); radiated 2.2230e5, floor_added -9.6242e0, escaped 1.2704e2, ΔW -4.4726e5
+ok
+test ledger::a_snapshot_from_before_the_hold_restores_with_the_held_terms_zero ... ok
+test ledger::bounce_500_steps_the_mass_and_the_momentum_hold ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.710919 until=none
+bounce: steps 1..500, mass drift 1.378e-8, momentum drift 1.064e-7 of Σm|u| = 3.050e3, energy drift 3.688e-6 (reported), escaped 0
+ok
+test ledger::gas_driven_against_a_held_block_books_held_and_the_momentum_holds ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=4.719017 until=none
+SR-LEDGER-HELD wall: held (6.3066e2, 1.1859e-2) = 2.496e-1 of Σm|u| 2.5269e3, escaped [-17.840828233206377,0.6932250174122186]; vacuum_reset 2.367e-2 × u_max 26.733 → bound 2.514e-4; mass drift 3.627e-10, momentum drift 4.798e-9 of Σm|u|
+ok
+test ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.698915 until=none
+leave: escaped mass 1.805130e1 of 1.017436e3 (1.774e-2), momentum escaped Array [Number(236.86479046161213), Number(-0.0936527090219039)], mass drift 1.605e-8, momentum drift 1.011e-7 of Σm|u| = 3.417e3, energy drift 2.620e-6 (reported), escaped energy -2.908020e2
+ok
+test ledger::leave_500_steps_without_gravity_the_momentum_holds_to_what_a_vacuum_reset_removes ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=16.827379 until=none
+leave without gravity: escaped mass 2.989493e2 of 1.017169e3, escaped x momentum 1.310388e3, vacuum_reset 1.835e-2 × u_max 6.858 → bound 8.256e-5; mass drift 1.863e-8, momentum drift 4.861e-9 of Σm|u| = 1.543e3
+ok
+test ledger::the_held_disk_writes_the_ledgers_held_into_summary_json ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=8.487118 until=none
+SR-LEDGER-HELD disk M 900: steps 1..1000, held (-3.7321e-2, -2.5761e-2) = 1.453e-3 of Σm|u| 3.1200e1; grid (3.8380e-2, 2.5493e-2); invariant drift 3.502e-5 of Σm|u| with held (band 1e-3), 1.477e-3 without; snapshot's held (0.0000e0, 0.0000e0) + spared (-3.7321e-2, -2.5761e-2)
+ok
+test ledger::the_terms_and_the_invariants_on_a_hand_made_summary ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 543 filtered out; finished in 9.15s
+
+
+==== 2026-11-24T20:02:26-05:00 ledger · plant ledger-no-held · a fresh scratch copy of the tree
+planted ledger-no-held: tests/plants/ledger-no-held.patch -> crates/sr-engine/src/ledger.rs
+== 2026-11-24T20:02:27-05:00 ledger · task M0-T133 · box laserax-ai :: bash tests/gpu.sh ledger physics
+-- ledger · exit=101 · 22.31 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-utfwn70p/arm4/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-utfwn70p/arm4/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 13.02s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 8 tests
+test ledger::a_hot_compact_remnant_radiating_into_vacuum_keeps_the_energy_invariant_within_g_cons ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=8.536507 until=none
+remnant: steps 1..1000, sim time 8.520, R₉₀ 3.005, M 1498.5, τ_dyn 0.1346, |W|₀ 2.3288e5; Δinvariant 1.0786e0 → 7.317e-8 |W| per τ_dyn (bound 1e-3); radiated 2.2230e5, floor_added -9.6242e0, escaped 1.2704e2, ΔW -4.4725e5
+ok
+test ledger::a_snapshot_from_before_the_hold_restores_with_the_held_terms_zero ... 
+thread 'ledger::a_snapshot_from_before_the_hold_restores_with_the_held_terms_zero' (1816834) panicked at crates/sr-engine/tests/gpu/ledger.rs:621:5:
+assertion `left == right` failed
+  left: [4.625, -8.25]
+ right: [5.625, -6.75]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test ledger::bounce_500_steps_the_mass_and_the_momentum_hold ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.710919 until=none
+bounce: steps 1..500, mass drift 1.378e-8, momentum drift 1.064e-7 of Σm|u| = 3.050e3, energy drift 3.688e-6 (reported), escaped 0
+ok
+test ledger::gas_driven_against_a_held_block_books_held_and_the_momentum_holds ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=4.719017 until=none
+SR-LEDGER-HELD wall: held (6.3066e2, 1.1859e-2) = 2.496e-1 of Σm|u| 2.5269e3, escaped [-17.840828233206377,0.6932250174122186]; vacuum_reset 2.367e-2 × u_max 26.733 → bound 2.514e-4; mass drift 3.627e-10, momentum drift 2.496e-1 of Σm|u|
+
+thread 'ledger::gas_driven_against_a_held_block_books_held_and_the_momentum_holds' (1817000) panicked at crates/sr-engine/tests/gpu/ledger.rs:593:5:
+momentum drift 2.496e-1 of Σm|u| against 2.514e-4
+FAILED
+test ledger::leave_500_steps_collapsing_with_mass_leaving_the_mass_holds_and_the_escaped_term_is_in_it ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=3.709149 until=none
+leave: escaped mass 1.422567e1 of 1.017499e3 (1.398e-2), momentum escaped Array [Number(196.25871135273536), Number(0.0001033037055302331)], mass drift 2.845e-8, momentum drift 7.465e-8 of Σm|u| = 3.399e3, energy drift 2.726e-6 (reported), escaped energy -1.017243e2
+ok
+test ledger::leave_500_steps_without_gravity_the_momentum_holds_to_what_a_vacuum_reset_removes ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=500 sim_time=16.827379 until=none
+leave without gravity: escaped mass 2.989493e2 of 1.017169e3, escaped x momentum 1.310388e3, vacuum_reset 1.835e-2 × u_max 6.858 → bound 8.256e-5; mass drift 1.863e-8, momentum drift 4.861e-9 of Σm|u| = 1.543e3
+ok
+test ledger::the_held_disk_writes_the_ledgers_held_into_summary_json ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=1000 sim_time=8.487118 until=none
+SR-LEDGER-HELD disk M 900: steps 1..1000, held (-3.7321e-2, -2.5761e-2) = 1.453e-3 of Σm|u| 3.1200e1; grid (3.8380e-2, 2.5493e-2); invariant drift 1.477e-3 of Σm|u| with held (band 1e-3), 2.930e-3 without; snapshot's held (0.0000e0, 0.0000e0) + spared (-3.7321e-2, -2.5761e-2)
+
+thread 'ledger::the_held_disk_writes_the_ledgers_held_into_summary_json' (1817476) panicked at crates/sr-engine/tests/gpu/ledger.rs:540:9:
+assertion `left == right` failed: the invariant, axis 0: grid + sinks + escaped + held
+  left: 0.03837967425178235
+ right: 0.00105858355354016
+FAILED
+test ledger::the_terms_and_the_invariants_on_a_hand_made_summary ... ok
+
+failures:
+
+failures:
+    ledger::a_snapshot_from_before_the_hold_restores_with_the_held_terms_zero
+    ledger::gas_driven_against_a_held_block_books_held_and_the_momentum_holds
+    ledger::the_held_disk_writes_the_ledgers_held_into_summary_json
+
+test result: FAILED. 5 passed; 3 failed; 0 ignored; 0 measured; 543 filtered out; finished in 9.12s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-11-24T20:02:49-05:00 ledger · plant held-core-gpu-whole-g · a fresh scratch copy of the tree
+==== 2026-11-24T20:02:50-05:00 ledger · plant held-wall-gpu-unbooked · a fresh scratch copy of the tree

@@ -1,0 +1,144 @@
+== 2026-11-23T17:25:40-05:00 squeeze · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh squeeze physics
+-- squeeze · exit=0 · 8283.29 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 5 tests
+test squeeze::the_graders_are_graded_on_hand_made_values ... graders: graded on hand-made values (calibration physics_hash 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402, Q_H 8700)
+ok
+test squeeze::the_main_sequences_run_sun_like_massive_giant ... sun: preset sun at 3136.7; calibration physics_hash 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402; Q_H 8700
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+sun step=17 t=0.42 shown=none M=3136.7 X_H,c=0.735
+sun step=65 t=1.54 shown=collapsing M=3136.7 X_H,c=0.735
+sun step=705 t=9.24 shown=main_sequence M=3130.3 X_H,c=0.731
+sun step=2001 t=24.6 X_H,c=0.728 M=3117.6 M_core=1271.2 τ_dyn=1.117 τ_KH=127.14 τ_nuc=3655.0 τ_KH/τ_dyn=113.8 τ_nuc/τ_KH=28.7
+sun step=4001 t=47.4 X_H,c=0.723 M=3124.6 M_core=1410.0 τ_dyn=0.980 τ_KH=168.70 τ_nuc=4938.1 τ_KH/τ_dyn=172.2 τ_nuc/τ_KH=29.3
+sun step=6001 t=69.7 X_H,c=0.717 M=3126.3 M_core=1459.8 τ_dyn=0.965 τ_KH=209.23 τ_nuc=6124.4 τ_KH/τ_dyn=216.8 τ_nuc/τ_KH=29.3
+sun step=8001 t=91.9 X_H,c=0.710 M=3126.5 M_core=1473.9 τ_dyn=0.957 τ_KH=201.34 τ_nuc=5849.4 τ_KH/τ_dyn=210.4 τ_nuc/τ_KH=29.1
+sun step=10001 t=114.0 X_H,c=0.702 M=3127.2 M_core=1472.5 τ_dyn=0.957 τ_KH=203.23 τ_nuc=5839.0 τ_KH/τ_dyn=212.3 τ_nuc/τ_KH=28.7
+sun step=12001 t=136.2 X_H,c=0.695 M=3127.5 M_core=1460.6 τ_dyn=0.964 τ_KH=198.22 τ_nuc=5619.3 τ_KH/τ_dyn=205.6 τ_nuc/τ_KH=28.3
+sun step=14001 t=158.5 X_H,c=0.687 M=3127.5 M_core=1448.1 τ_dyn=0.972 τ_KH=190.73 τ_nuc=5333.8 τ_KH/τ_dyn=196.3 τ_nuc/τ_KH=28.0
+sun step=16001 t=180.8 X_H,c=0.678 M=3128.0 M_core=1438.9 τ_dyn=0.972 τ_KH=187.88 τ_nuc=5181.2 τ_KH/τ_dyn=193.3 τ_nuc/τ_KH=27.6
+sun step=18001 t=203.2 X_H,c=0.670 M=3127.8 M_core=1429.2 τ_dyn=0.973 τ_KH=182.40 τ_nuc=4960.2 τ_KH/τ_dyn=187.5 τ_nuc/τ_KH=27.2
+sun step=20001 t=225.6 X_H,c=0.661 M=3127.6 M_core=1421.8 τ_dyn=0.976 τ_KH=177.09 τ_nuc=4747.6 τ_KH/τ_dyn=181.5 τ_nuc/τ_KH=26.8
+sun step=22001 t=248.1 X_H,c=0.652 M=3127.4 M_core=1412.4 τ_dyn=0.983 τ_KH=171.26 τ_nuc=4522.4 τ_KH/τ_dyn=174.3 τ_nuc/τ_KH=26.4
+sun step=24001 t=270.7 X_H,c=0.643 M=3127.2 M_core=1403.7 τ_dyn=0.989 τ_KH=164.75 τ_nuc=4285.5 τ_KH/τ_dyn=166.5 τ_nuc/τ_KH=26.0
+sun step=26001 t=293.4 X_H,c=0.633 M=3126.9 M_core=1399.5 τ_dyn=0.993 τ_KH=160.11 τ_nuc=4105.2 τ_KH/τ_dyn=161.2 τ_nuc/τ_KH=25.6
+sun step=28001 t=316.0 X_H,c=0.624 M=3126.5 M_core=1393.8 τ_dyn=0.998 τ_KH=155.63 τ_nuc=3927.1 τ_KH/τ_dyn=155.9 τ_nuc/τ_KH=25.2
+sun step=30001 t=338.8 X_H,c=0.614 M=3126.1 M_core=1390.5 τ_dyn=1.000 τ_KH=151.14 τ_nuc=3756.9 τ_KH/τ_dyn=151.2 τ_nuc/τ_KH=24.9
+sun step=32001 t=361.6 X_H,c=0.604 M=3125.7 M_core=1389.2 τ_dyn=1.000 τ_KH=147.34 τ_nuc=3604.9 τ_KH/τ_dyn=147.3 τ_nuc/τ_KH=24.5
+sun step=34001 t=384.4 X_H,c=0.594 M=3125.3 M_core=1387.7 τ_dyn=1.000 τ_KH=144.13 τ_nuc=3469.9 τ_KH/τ_dyn=144.1 τ_nuc/τ_KH=24.1
+sun step=36001 t=407.2 X_H,c=0.583 M=3124.8 M_core=1383.3 τ_dyn=1.013 τ_KH=139.98 τ_nuc=3313.0 τ_KH/τ_dyn=138.2 τ_nuc/τ_KH=23.7
+sun step=38001 t=430.1 X_H,c=0.572 M=3124.3 M_core=1381.4 τ_dyn=1.032 τ_KH=135.61 τ_nuc=3148.6 τ_KH/τ_dyn=131.4 τ_nuc/τ_KH=23.2
+sun step=40001 t=453.1 X_H,c=0.561 M=3123.8 M_core=1381.9 τ_dyn=1.044 τ_KH=132.35 τ_nuc=3019.1 τ_KH/τ_dyn=126.8 τ_nuc/τ_KH=22.8
+sun step=42001 t=476.0 X_H,c=0.550 M=3123.4 M_core=1382.3 τ_dyn=1.056 τ_KH=129.31 τ_nuc=2895.0 τ_KH/τ_dyn=122.4 τ_nuc/τ_KH=22.4
+sun step=44001 t=499.0 X_H,c=0.539 M=3122.9 M_core=1384.1 τ_dyn=1.057 τ_KH=126.17 τ_nuc=2773.3 τ_KH/τ_dyn=119.4 τ_nuc/τ_KH=22.0
+sun step=46001 t=522.0 X_H,c=0.527 M=3122.5 M_core=1385.2 τ_dyn=1.057 τ_KH=123.12 τ_nuc=2651.1 τ_KH/τ_dyn=116.5 τ_nuc/τ_KH=21.5
+sun step=48001 t=545.1 X_H,c=0.515 M=3121.9 M_core=1385.4 τ_dyn=1.057 τ_KH=119.59 τ_nuc=2522.9 τ_KH/τ_dyn=113.1 τ_nuc/τ_KH=21.1
+sun step=50001 t=568.1 X_H,c=0.503 M=3121.4 M_core=1387.5 τ_dyn=1.058 τ_KH=116.63 τ_nuc=2407.4 τ_KH/τ_dyn=110.3 τ_nuc/τ_KH=20.6
+sun step=52001 t=591.2 X_H,c=0.491 M=3120.9 M_core=1389.2 τ_dyn=1.064 τ_KH=113.44 τ_nuc=2289.7 τ_KH/τ_dyn=106.7 τ_nuc/τ_KH=20.2
+sun step=54001 t=614.3 X_H,c=0.481 M=3120.3 M_core=1393.4 τ_dyn=1.069 τ_KH=110.51 τ_nuc=2191.5 τ_KH/τ_dyn=103.4 τ_nuc/τ_KH=19.8
+sun step=56001 t=637.4 X_H,c=0.469 M=3119.7 M_core=1399.3 τ_dyn=1.072 τ_KH=107.79 τ_nuc=2087.7 τ_KH/τ_dyn=100.5 τ_nuc/τ_KH=19.4
+sun step=58001 t=660.4 X_H,c=0.460 M=3119.2 M_core=1404.5 τ_dyn=1.077 τ_KH=105.18 τ_nuc=2003.6 τ_KH/τ_dyn=97.7 τ_nuc/τ_KH=19.0
+sun step=60001 t=683.5 X_H,c=0.451 M=3118.6 M_core=1409.9 τ_dyn=1.082 τ_KH=102.37 τ_nuc=1919.2 τ_KH/τ_dyn=94.6 τ_nuc/τ_KH=18.7
+sun step=62001 t=706.5 X_H,c=0.443 M=3118.0 M_core=1416.3 τ_dyn=1.085 τ_KH=99.65 τ_nuc=1839.8 τ_KH/τ_dyn=91.8 τ_nuc/τ_KH=18.5
+sun step=64001 t=729.5 X_H,c=0.439 M=3117.4 M_core=1424.2 τ_dyn=1.085 τ_KH=97.46 τ_nuc=1787.2 τ_KH/τ_dyn=89.8 τ_nuc/τ_KH=18.3
+sun step=66001 t=752.4 X_H,c=0.436 M=3116.7 M_core=1431.4 τ_dyn=1.088 τ_KH=95.03 τ_nuc=1737.6 τ_KH/τ_dyn=87.3 τ_nuc/τ_KH=18.3
+sun step=68001 t=775.3 X_H,c=0.435 M=3116.1 M_core=1438.3 τ_dyn=1.090 τ_KH=92.87 τ_nuc=1699.1 τ_KH/τ_dyn=85.2 τ_nuc/τ_KH=18.3
+sun step=70001 t=798.2 X_H,c=0.427 M=3115.5 M_core=1444.8 τ_dyn=1.093 τ_KH=90.29 τ_nuc=1626.4 τ_KH/τ_dyn=82.6 τ_nuc/τ_KH=18.0
+sun step=72001 t=821.1 X_H,c=0.420 M=3114.9 M_core=1452.4 τ_dyn=1.098 τ_KH=87.58 τ_nuc=1553.4 τ_KH/τ_dyn=79.8 τ_nuc/τ_KH=17.7
+sun step=74001 t=843.9 X_H,c=0.404 M=3114.2 M_core=1459.7 τ_dyn=1.101 τ_KH=85.32 τ_nuc=1462.3 τ_KH/τ_dyn=77.5 τ_nuc/τ_KH=17.1
+sun step=76001 t=866.7 X_H,c=0.394 M=3113.5 M_core=1467.9 τ_dyn=1.101 τ_KH=82.79 τ_nuc=1388.7 τ_KH/τ_dyn=75.2 τ_nuc/τ_KH=16.8
+sun step=78001 t=889.5 X_H,c=0.384 M=3112.8 M_core=1475.0 τ_dyn=1.101 τ_KH=80.56 τ_nuc=1321.3 τ_KH/τ_dyn=73.2 τ_nuc/τ_KH=16.4
+sun step=80001 t=912.2 X_H,c=0.374 M=3112.1 M_core=1483.6 τ_dyn=1.101 τ_KH=78.05 τ_nuc=1249.2 τ_KH/τ_dyn=70.9 τ_nuc/τ_KH=16.0
+sun step=82001 t=934.9 X_H,c=0.362 M=3111.3 M_core=1491.6 τ_dyn=1.102 τ_KH=76.08 τ_nuc=1182.7 τ_KH/τ_dyn=69.1 τ_nuc/τ_KH=15.5
+sun step=84001 t=957.6 X_H,c=0.350 M=3110.4 M_core=1499.5 τ_dyn=1.102 τ_KH=73.53 τ_nuc=1108.2 τ_KH/τ_dyn=66.7 τ_nuc/τ_KH=15.1
+sun step=86001 t=980.3 X_H,c=0.338 M=3109.5 M_core=1510.0 τ_dyn=1.102 τ_KH=71.43 τ_nuc=1042.4 τ_KH/τ_dyn=64.8 τ_nuc/τ_KH=14.6
+sun step=88001 t=1002.9 X_H,c=0.326 M=3108.6 M_core=1521.0 τ_dyn=1.102 τ_KH=69.08 τ_nuc=976.0 τ_KH/τ_dyn=62.7 τ_nuc/τ_KH=14.1
+sun step=90001 t=1025.5 X_H,c=0.316 M=3107.9 M_core=1533.7 τ_dyn=1.103 τ_KH=66.90 τ_nuc=918.8 τ_KH/τ_dyn=60.7 τ_nuc/τ_KH=13.7
+sun step=92001 t=1047.9 X_H,c=0.309 M=3107.0 M_core=1543.8 τ_dyn=1.103 τ_KH=64.95 τ_nuc=874.8 τ_KH/τ_dyn=58.9 τ_nuc/τ_KH=13.5
+sun step=94001 t=1070.4 X_H,c=0.298 M=3106.1 M_core=1552.1 τ_dyn=1.103 τ_KH=62.84 τ_nuc=819.8 τ_KH/τ_dyn=57.0 τ_nuc/τ_KH=13.0
+sun step=96001 t=1092.8 X_H,c=0.287 M=3105.0 M_core=1562.9 τ_dyn=1.104 τ_KH=60.33 τ_nuc=761.3 τ_KH/τ_dyn=54.7 τ_nuc/τ_KH=12.6
+sun step=98001 t=1115.1 X_H,c=0.279 M=3103.8 M_core=1574.7 τ_dyn=1.111 τ_KH=58.26 τ_nuc=715.9 τ_KH/τ_dyn=52.4 τ_nuc/τ_KH=12.3
+sun step=100001 t=1137.4 X_H,c=0.269 M=3102.7 M_core=1586.3 τ_dyn=1.126 τ_KH=56.11 τ_nuc=667.1 τ_KH/τ_dyn=49.8 τ_nuc/τ_KH=11.9
+sun step=102001 t=1159.6 X_H,c=0.259 M=3101.6 M_core=1598.9 τ_dyn=1.130 τ_KH=54.13 τ_nuc=621.2 τ_KH/τ_dyn=47.9 τ_nuc/τ_KH=11.5
+sun step=104001 t=1181.7 X_H,c=0.249 M=3100.3 M_core=1609.7 τ_dyn=1.142 τ_KH=52.29 τ_nuc=577.4 τ_KH/τ_dyn=45.8 τ_nuc/τ_KH=11.0
+sun step=106001 t=1203.7 X_H,c=0.235 M=3098.8 M_core=1623.9 τ_dyn=1.156 τ_KH=50.08 τ_nuc=523.8 τ_KH/τ_dyn=43.3 τ_nuc/τ_KH=10.5
+sun step=108001 t=1225.8 X_H,c=0.221 M=3097.3 M_core=1639.6 τ_dyn=1.159 τ_KH=48.18 τ_nuc=476.4 τ_KH/τ_dyn=41.6 τ_nuc/τ_KH=9.9
+sun step=110001 t=1247.7 X_H,c=0.208 M=3095.6 M_core=1656.7 τ_dyn=1.160 τ_KH=46.21 τ_nuc=430.9 τ_KH/τ_dyn=39.8 τ_nuc/τ_KH=9.3
+sun step=112001 t=1269.5 X_H,c=0.196 M=3094.1 M_core=1675.8 τ_dyn=1.157 τ_KH=44.29 τ_nuc=390.6 τ_KH/τ_dyn=38.3 τ_nuc/τ_KH=8.8
+sun step=114001 t=1291.2 X_H,c=0.185 M=3092.2 M_core=1695.1 τ_dyn=1.149 τ_KH=42.50 τ_nuc=354.6 τ_KH/τ_dyn=37.0 τ_nuc/τ_KH=8.3
+sun step=116001 t=1312.7 X_H,c=0.175 M=3090.0 M_core=1716.6 τ_dyn=1.140 τ_KH=40.63 τ_nuc=320.7 τ_KH/τ_dyn=35.6 τ_nuc/τ_KH=7.9
+sun step=118001 t=1334.1 X_H,c=0.163 M=3087.7 M_core=1740.2 τ_dyn=1.118 τ_KH=38.92 τ_nuc=286.9 τ_KH/τ_dyn=34.8 τ_nuc/τ_KH=7.4
+sun step=120001 t=1355.3 X_H,c=0.163 M=3085.3 M_core=1765.8 τ_dyn=1.108 τ_KH=37.21 τ_nuc=274.5 τ_KH/τ_dyn=33.6 τ_nuc/τ_KH=7.4
+sun step=122001 t=1376.3 X_H,c=0.147 M=3082.5 M_core=1791.1 τ_dyn=1.108 τ_KH=35.63 τ_nuc=236.5 τ_KH/τ_dyn=32.1 τ_nuc/τ_KH=6.6
+sun step=124001 t=1397.3 X_H,c=0.131 M=3079.5 M_core=1818.8 τ_dyn=1.109 τ_KH=34.02 τ_nuc=201.9 τ_KH/τ_dyn=30.7 τ_nuc/τ_KH=5.9
+sun step=126001 t=1418.1 X_H,c=0.121 M=3076.3 M_core=1848.0 τ_dyn=1.088 τ_KH=32.51 τ_nuc=178.2 τ_KH/τ_dyn=29.9 τ_nuc/τ_KH=5.5
+sun step=128001 t=1438.6 X_H,c=0.111 M=3072.7 M_core=1880.1 τ_dyn=1.069 τ_KH=30.96 τ_nuc=154.2 τ_KH/τ_dyn=29.0 τ_nuc/τ_KH=5.0
+sun step=130001 t=1459.0 X_H,c=0.100 M=3068.5 M_core=1914.6 τ_dyn=1.052 τ_KH=29.55 τ_nuc=132.3 τ_KH/τ_dyn=28.1 τ_nuc/τ_KH=4.5
+sun step=132001 t=1479.2 X_H,c=0.087 M=3064.3 M_core=1949.3 τ_dyn=1.015 τ_KH=27.97 τ_nuc=109.0 τ_KH/τ_dyn=27.5 τ_nuc/τ_KH=3.9
+sun step=134001 t=1499.2 X_H,c=0.077 M=3059.5 M_core=1981.5 τ_dyn=1.016 τ_KH=26.38 τ_nuc=89.9 τ_KH/τ_dyn=26.0 τ_nuc/τ_KH=3.4
+sun step=135873 t=1517.67 shown=he_core M=3054.2 X_H,c=0.066
+SR-HEADLESS DONE steps=135873 sim_time=1517.671932 until=met
+sun: 135873 steps, exit 0, durations (t.u.) {"collapsing": 7.702014917507768, "main_sequence": 1508.4282600553706}
+massive: preset massive at 9404.6; calibration physics_hash 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402; Q_H 8700
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+massive step=17 t=0.17 shown=none M=9404.6 X_H,c=0.735
+massive step=33 t=0.30 shown=protostar M=9404.5 X_H,c=0.735
+massive step=721 t=4.31 shown=main_sequence M=9391.9 X_H,c=0.734
+massive step=11361 t=103.57 shown=he_core M=8747.3 X_H,c=0.235
+massive step=11521 t=105.20 shown=main_sequence M=8739.5 X_H,c=0.224
+massive step=11697 t=106.98 shown=he_core M=8730.2 X_H,c=0.214
+massive step=11873 t=108.76 shown=main_sequence M=8721.4 X_H,c=0.204
+massive step=12033 t=110.38 shown=he_core M=8712.5 X_H,c=0.196
+massive step=12225 t=112.31 shown=main_sequence M=8701.9 X_H,c=0.185
+massive step=12353 t=113.60 shown=he_core M=8694.4 X_H,c=0.178
+massive step=12593 t=116.00 shown=main_sequence M=8680.2 X_H,c=0.165
+massive step=12657 t=116.64 shown=he_core M=8675.8 X_H,c=0.162
+massive step=15105 t=139.73 shown=o_burn M=8482.6 X_H,c=0.058
+massive step=16625 t=152.34 shown=si_burn M=8123.0 X_H,c=0.033
+massive step=17105 t=156.06 shown=main_sequence M=7956.7 X_H,c=0.026
+massive step=18081 t=163.27 shown=iron_core M=7545.5 X_H,c=0.001
+massive step=21585 t=185.39 shown=core_collapse M=5808.0 X_H,c=0.121
+SR-HEADLESS DONE steps=21585 sim_time=185.385214 until=met
+massive: 21585 steps, exit 0, durations (t.u.) {"he_core": 30.83014683611691, "iron_core": 22.110507473815233, "main_sequence": 111.80287256836891, "o_burn": 12.609350418671966, "protostar": 4.012582567054778, "si_burn": 3.720186065416783}
+giant: preset giant at 19271.2; calibration physics_hash 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402; Q_H 8700
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+giant step=17 t=0.15 shown=none M=19271.2 X_H,c=0.735
+giant step=33 t=0.26 shown=protostar M=19271.1 X_H,c=0.735
+giant step=769 t=3.96 shown=main_sequence M=19254.5 X_H,c=0.733
+giant step=1169 t=6.07 shown=he_core M=19240.0 X_H,c=0.717
+giant step=1505 t=7.72 shown=main_sequence M=19226.2 X_H,c=0.678
+giant step=3457 t=20.52 shown=he_core M=19044.8 X_H,c=0.621
+giant step=3537 t=21.18 shown=main_sequence M=19031.9 X_H,c=0.604
+giant step=4273 t=27.91 shown=he_core M=18875.7 X_H,c=0.551
+giant step=4433 t=29.26 shown=main_sequence M=18837.7 X_H,c=0.521
+giant step=4977 t=34.88 shown=he_core M=18653.4 X_H,c=0.474
+giant step=5105 t=36.01 shown=main_sequence M=18655.0 X_H,c=0.452
+giant step=5489 t=39.98 shown=he_core M=18495.5 X_H,c=0.410
+giant step=5665 t=41.54 shown=main_sequence M=18404.1 X_H,c=0.382
+giant step=6049 t=45.34 shown=he_core M=18140.5 X_H,c=0.322
+giant step=6241 t=47.10 shown=main_sequence M=18016.1 X_H,c=0.297
+giant step=6305 t=47.69 shown=he_core M=17976.0 X_H,c=0.288
+giant step=6881 t=52.48 shown=o_burn M=17673.3 X_H,c=0.226
+giant step=7313 t=55.46 shown=si_burn M=17510.9 X_H,c=0.203
+giant step=7505 t=56.64 shown=main_sequence M=17451.9 X_H,c=0.193
+giant step=8353 t=61.02 shown=core_collapse M=17177.5 X_H,c=0.090
+SR-HEADLESS DONE steps=8353 sim_time=61.024234 until=met
+giant: 8353 steps, exit 0, durations (t.u.) {"he_core": 12.913513354491442, "main_sequence": 39.98863865574822, "o_burn": 2.978549312800169, "protostar": 3.6962862368673086, "si_burn": 1.184908363968134}
+main sequences (t.u.): Sun-like 1508.43, Massive 111.80, Giant 39.99
+main sequences: Sun-like 1508.43 > Massive 111.80 > Giant 39.99 t.u. (calibration physics_hash 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402, Q_H 8700)
+ok
+test squeeze::the_massive_stage_durations_run_h_he_c_ne_o_si ... massive: durations before the core collapse {"he_core": 30.83014683611691, "iron_core": 22.110507473815233, "main_sequence": 111.80287256836891, "o_burn": 12.609350418671966, "protostar": 4.012582567054778, "si_burn": 3.720186065416783}; not shown (parenthesised, §0.5 [M0-D169]): ["c_burn", "ne_burn"]
+massive: H > He > C > {Ne, O} > Si over {"he_core": 30.83014683611691, "iron_core": 22.110507473815233, "main_sequence": 111.80287256836891, "o_burn": 12.609350418671966, "protostar": 4.012582567054778, "si_burn": 3.720186065416783} (calibration physics_hash 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402, Q_H 8700)
+ok
+test squeeze::the_sun_like_main_sequence_keeps_tau_kh_over_tau_dyn_at_ten ... sun: τ_KH/τ_dyn over 67 readings of 67 (steps 2001 → 134001): worst 25.96 at step 134001 (t 1499.2, X_H,c 0.077)
+sun τ_KH/τ_dyn: 67 readings, all ≥ 10, worst 25.96 (calibration physics_hash 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402, Q_H 8700)
+ok
+test squeeze::the_sun_like_main_sequence_keeps_tau_nuc_over_tau_kh_at_ten ... sun: τ_nuc/τ_KH over 41 readings of 67 (steps 2001 → 82001): worst 15.55 at step 82001 (t 934.9, X_H,c 0.362)
+sun τ_nuc/τ_KH: 41 readings, all ≥ 10, worst 15.55 (calibration physics_hash 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402, Q_H 8700)
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 546 filtered out; finished in 8283.12s
+
+

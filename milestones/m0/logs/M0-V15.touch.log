@@ -1,0 +1,41 @@
+== 2026-11-23T17:24:59-05:00 touch · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh touch physics
+-- touch · exit=101 · 18365.23 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 2 tests
+test touch::hydrogen_painted_onto_the_sun_like_star_ends_it_a_neutron_star_or_a_black_hole_as_its_new_prediction_says ... paint sun preset of 3136.718 sb under touch_paint.json — the edit aims at 7422.8 sb (m_up 5938.2), the fate leaving WhiteDwarf for one of [Supernova, BlackHole]
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint the drop: step=16 M=3136.697 sb
+paint an edit landed: step=50574 M 3121.289 -> 5125.495 sb, x_h_c 1.000
+paint after the edit: step=50638 M=5125.486 sb, stage cloud
+paint step=64014 t=705.69 stage=main_sequence M=8245.4
+SR-HEADLESS DONE steps=118319 sim_time=1202.878730 until=met
+paint the readout at the drop (M 3136.697): Some(Sure(WhiteDwarf)); after the edit Some((50574, 5125.485932085896)): Some(Sure(WhiteDwarf)); 118319 steps, exit 0, summary ending [{"age_years":1038835968.6084274,"at_x_h":{"luminosity":39051.09475969076,"radius":220.738260352294,"sim_time":1000.7383950930088,"x_h_c":0.35},"ending":"neutron_star","id":2,"mass_sb":8245.561547728255,"mass_suns":12.531422195365478,"predicted_ending":["supernova"],"stage":"neutron_star","stages":[{"from_step":50555,"sim_time":574.5140135576949,"stage":"cloud"},{"from_step":50670,"sim_time":575.8372331298888,"stage":"collapsing"},{"from_step":51006,"sim_time":578.9033198389225,"stage":"main_sequence"},{"from_step":55470,"sim_time":614.9900359483436,"stage":"he_core"},{"from_step":55694,"sim_time":616.2677356265485,"stage":"main_sequence"},{"from_step":99326,"sim_time":1072.7181706503034,"stage":"he_core"},{"from_step":99406,"sim_time":1073.467647248879,"stage":"main_sequence"},{"from_step":99486,"sim_time":1074.2161339456216,"stage":"he_core"},{"from_step":107022,"sim_time":1139.8202738934197,"stage":"o_burn"},{"from_step":107070,"sim_time":1140.180451770313,"stage":"he_core"},{"from_step":107310,"sim_time":1141.960417880211,"stage":"o_burn"},{"from_step":107518,"sim_time":1143.4842017441988,"stage":"he_core"},{"from_step":107614,"sim_time":1144.1828872929327,"stage":"o_burn"},{"from_step":107998,"sim_time":1146.9383690627292,"stage":"he_core"},{"from_step":108046,"sim_time":1147.2767833932303,"stage":"o_burn"},{"from_step":108350,"sim_time":1149.411835801322,"stage":"he_core"},{"from_step":108398,"sim_time":1149.7467860146426,"stage":"o_burn"},{"from_step":109278,"sim_time":1155.7312900312245,"stage":"main_sequence"},{"from_step":109358,"sim_time":1156.2606759145856,"stage":"o_burn"},{"from_step":109726,"sim_time":1158.6691387915052,"stage":"main_sequence"},{"from_step":109822,"sim_time":1159.2932999255136,"stage":"si_burn"},{"from_step":110254,"sim_time":1162.034599301871,"stage":"main_sequence"},{"from_step":112078,"sim_time":1172.633875994943,"stage":"core_collapse"},{"from_step":112079,"sim_time":1172.6392186754383,"stage":"supernova"},{"from_step":116207,"sim_time":1192.8526509390213,"stage":"neutron_star"}]}]
+
+thread 'touch::hydrogen_painted_onto_the_sun_like_star_ends_it_a_neutron_star_or_a_black_hole_as_its_new_prediction_says' (493109) panicked at crates/sr-engine/tests/gpu/touch.rs:415:9:
+paint: the mass after the edit is 5125.5 sb, -30.9 % from the file's target 7422.8 (band 6 %): regenerate touch_paint.json
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says ... erase massive preset of 9404.567 sb under touch_erase.json — the edit aims at 2969.1 sb (m_up 5938.2), the fate leaving Supernova for one of [WhiteDwarf]
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+erase the drop: step=16 M=9404.555 sb
+erase an edit landed: step=26438 M 4423.617 -> 3864.597 sb, x_h_c 0.072
+erase after the edit: step=26502 M=3862.264 sb, stage neutron_star
+SR-HEADLESS DONE steps=28598 sim_time=217.786915 until=met
+erase the readout at the drop (M 9404.555): Some(Sure(Supernova)); after the edit Some((26438, 3862.2637764085084)): Some(Sure(WhiteDwarf)); 28598 steps, exit 0, summary ending [{"age_years":1017912666.2231,"at_x_h":{"luminosity":102071.41069598107,"radius":69.9340784565571,"sim_time":88.18862242018804,"x_h_c":0.35},"ending":"neutron_star","id":1,"mass_sb":3868.654493317008,"mass_suns":2.4133835427732944,"predicted_ending":["white_dwarf"],"stage":"neutron_star","stages":[{"from_step":3,"sim_time":0.03959271591156721,"stage":"protostar"},{"from_step":667,"sim_time":3.9905207217670977,"stage":"main_sequence"},{"from_step":12053,"sim_time":104.50990676181392,"stage":"he_core"},{"from_step":12213,"sim_time":106.13235302595422,"stage":"main_sequence"},{"from_step":12357,"sim_time":107.59438995970412,"stage":"he_core"},{"from_step":12581,"sim_time":109.86882869387046,"stage":"main_sequence"},{"from_step":12677,"sim_time":110.8429872286506,"stage":"he_core"},{"from_step":15941,"sim_time":141.98147547570989,"stage":"o_burn"},{"from_step":17525,"sim_time":155.0559438006021,"stage":"si_burn"},{"from_step":18101,"sim_time":159.5349518242292,"stage":"main_sequence"},{"from_step":18917,"sim_time":165.56792002776638,"stage":"iron_core"},{"from_step":23013,"sim_time":190.28263833373785,"stage":"core_collapse"},{"from_step":23014,"sim_time":190.28791019367057,"stage":"supernova"},{"from_step":26470,"sim_time":207.7335363812745,"stage":"neutron_star"}]}]
+
+thread 'touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says' (512376) panicked at crates/sr-engine/tests/gpu/touch.rs:415:9:
+erase: the mass after the edit is 3862.3 sb, 30.1 % from the file's target 2969.1 (band 6 %): regenerate touch_erase.json
+FAILED
+
+failures:
+
+failures:
+    touch::hydrogen_painted_onto_the_sun_like_star_ends_it_a_neutron_star_or_a_black_hole_as_its_new_prediction_says
+    touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 549 filtered out; finished in 18365.05s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

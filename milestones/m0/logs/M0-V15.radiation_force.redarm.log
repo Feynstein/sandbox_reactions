@@ -1,0 +1,339 @@
+==== 2026-11-24T07:47:41-05:00 radiation_force · clean: proven by M0-V15 2026-11-23T23:22:42-05:00 (a run of the scope; fingerprint eb8784617d2a) - not re-run
+==== 2026-11-24T07:46:49-05:00 radiation_force · plant radforce-zero · a fresh scratch copy of the tree
+planted radforce-zero: tests/plants/radforce-zero.patch -> crates/sr-physics/src/reference/hydro.rs, crates/sr-engine/shaders/hydro.wgsl
+== 2026-11-24T07:46:50-05:00 radiation_force · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh radforce physics
+-- radiation_force · exit=101 · 17.40 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-txmi1b2k/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-txmi1b2k/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 12.58s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 14 tests
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.191076 until=none
+SR-RADFORCE gpu block: 50 steps, sim time 0.1910760970786214, mass invariant 5000.000040320 → 5000.000279443 (4.78e-8), floor_added 2123445.20924106, 0 non-finite values in the final dump
+ok
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.191088 until=none
+SR-RADFORCE gpu block: 50 steps, sim time 0.1910883977543563, mass invariant 5000.000040320 → 5000.000282650 (4.85e-8), floor_added 2128699.000076432, 0 non-finite values in the final dump
+ok
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained 0.000000000e0, Σ Δt·f -9.089323299e-3, relative 1.00e0
+
+thread 'radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::jacobi' (550277) panicked at crates/sr-engine/tests/gpu/radforce.rs:173:17:
+gpu x, left: gained 0e0 against Σ Δt·f -9.089323298929136e-3 (1e0 > 1e-6)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained 0.000000000e0, Σ Δt·f -9.089323299e-3, relative 1.00e0
+
+thread 'radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::multigrid' (550282) panicked at crates/sr-engine/tests/gpu/radforce.rs:173:17:
+gpu x, left: gained 0e0 against Σ Δt·f -9.089323298929136e-3 (1e0 > 1e-6)
+FAILED
+test radforce::gpu_p4_reads_the_previous_steps_flux::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 0.000000000e0, the hand F's 1.161214220e-3 (1.00e0), P5's F after -1.070389430e-3 (1.00e0)
+
+thread 'radforce::gpu_p4_reads_the_previous_steps_flux::jacobi' (550287) panicked at crates/sr-engine/tests/gpu/radforce.rs:342:13:
+P4 must push with the F side.flux held at the step's start (1e0)
+FAILED
+test radforce::gpu_p4_reads_the_previous_steps_flux::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 0.000000000e0, the hand F's 1.161214220e-3 (1.00e0), P5's F after -1.070389430e-3 (1.00e0)
+
+thread 'radforce::gpu_p4_reads_the_previous_steps_flux::multigrid' (550292) panicked at crates/sr-engine/tests/gpu/radforce.rs:342:13:
+P4 must push with the F side.flux held at the step's start (1e0)
+FAILED
+test radforce::gpu_the_net_push_is_taken_back::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu net, pushed −x: gained 0.000000000e0, oracle -7.630467328e-4, relative 1.00e0
+
+thread 'radforce::gpu_the_net_push_is_taken_back::jacobi' (550297) panicked at crates/sr-engine/tests/gpu/radforce.rs:380:9:
+gpu pushed −x: gained 0e0 against the oracle's -7.630467328490423e-4 (1e0 > 1e-6)
+FAILED
+test radforce::gpu_the_net_push_is_taken_back::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu net, pushed −x: gained 0.000000000e0, oracle -7.630467328e-4, relative 1.00e0
+
+thread 'radforce::gpu_the_net_push_is_taken_back::multigrid' (550302) panicked at crates/sr-engine/tests/gpu/radforce.rs:380:9:
+gpu pushed −x: gained 0e0 against the oracle's -7.630467328490423e-4 (1e0 > 1e-6)
+FAILED
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu cap, x left: gained 0.000000000e0, Σ s·Δt·f -2.246058039e3 (1.00e0), uncapped Σ Δt·f -6.335e5
+
+thread 'radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::jacobi' (550307) panicked at crates/sr-engine/tests/gpu/radforce.rs:481:9:
+gpu: the momentum gained 0 against Σ s·Δt·f -2246.058039363751 (1e0 > 1e-5)
+FAILED
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu cap, x left: gained 0.000000000e0, Σ s·Δt·f -2.246058039e3 (1.00e0), uncapped Σ Δt·f -6.335e5
+
+thread 'radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::multigrid' (550312) panicked at crates/sr-engine/tests/gpu/radforce.rs:481:9:
+gpu: the momentum gained 0 against Σ s·Δt·f -2246.058039363751 (1e0 > 1e-5)
+FAILED
+test radforce::twin_a_dense_hot_block_stays_finite_and_keeps_its_mass ... SR-RADFORCE twin block: 50 steps to sim time 0.19112, E 5.8053e6, floor_added 4.6520e6, mass invariant 5000.000040920 → 5000.000040938 (3.73e-12)
+ok
+test radforce::twin_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-RADFORCE twin x, left: gained 0.000000000e0, Σ Δt·f -1.031326511e-2, relative 1.00e0
+
+thread 'radforce::twin_momentum_gained_is_the_force_impulse_and_e_is_unchanged' (550318) panicked at crates/sr-engine/tests/gpu/radforce.rs:173:17:
+twin x, left: gained 0e0 against Σ Δt·f -1.0313265107543323e-2 (1e0 > 1e-6)
+FAILED
+test radforce::twin_the_net_push_is_taken_back ... SR-RADFORCE twin net, pushed −x: gained 0.000000000e0, oracle -1.366491319e-3, relative 1.00e0
+
+thread 'radforce::twin_the_net_push_is_taken_back' (550319) panicked at crates/sr-engine/tests/gpu/radforce.rs:380:9:
+twin pushed −x: gained 0e0 against the oracle's -1.3664913194507012e-3 (1e0 > 1e-6)
+FAILED
+test radforce::twin_the_push_spends_no_more_than_the_heat_above_the_floor ... SR-RADFORCE twin cap, x left: gained 0.000000000e0, Σ s·Δt·f -1.537075686e3 (1.00e0), uncapped Σ Δt·f -1.676e6
+
+thread 'radforce::twin_the_push_spends_no_more_than_the_heat_above_the_floor' (550320) panicked at crates/sr-engine/tests/gpu/radforce.rs:481:9:
+twin: the momentum gained 0 against Σ s·Δt·f -1537.075685783625 (1e0 > 1e-9)
+FAILED
+
+failures:
+
+failures:
+    radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::jacobi
+    radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::multigrid
+    radforce::gpu_p4_reads_the_previous_steps_flux::jacobi
+    radforce::gpu_p4_reads_the_previous_steps_flux::multigrid
+    radforce::gpu_the_net_push_is_taken_back::jacobi
+    radforce::gpu_the_net_push_is_taken_back::multigrid
+    radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::jacobi
+    radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::multigrid
+    radforce::twin_momentum_gained_is_the_force_impulse_and_e_is_unchanged
+    radforce::twin_the_net_push_is_taken_back
+    radforce::twin_the_push_spends_no_more_than_the_heat_above_the_floor
+
+test result: FAILED. 3 passed; 11 failed; 0 ignored; 0 measured; 537 filtered out; finished in 4.72s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-11-24T07:47:07-05:00 radiation_force · plant push-uncapped · a fresh scratch copy of the tree
+planted push-uncapped: tests/plants/push-uncapped.patch -> crates/sr-physics/src/reference/hydro.rs, crates/sr-engine/shaders/hydro.wgsl
+== 2026-11-24T07:47:08-05:00 radiation_force · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh radforce physics
+-- radiation_force · exit=101 · 16.86 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-txmi1b2k/arm2/crates/sr-physics)
+warning: method `push_share` is never used
+   --> crates/sr-physics/src/reference/hydro.rs:392:8
+    |
+350 | impl Hydro {
+    | ---------- method in this implementation
+...
+392 |     fn push_share(&self, u: &[f64; COMPONENTS], d: [f64; 2]) -> f64 {
+    |        ^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-txmi1b2k/arm2/crates/sr-engine)
+warning: `sr-physics` (lib) generated 1 warning
+    Finished `release` profile [optimized] target(s) in 12.22s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 14 tests
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.191287 until=none
+SR-RADFORCE gpu block: 50 steps, sim time 0.19128676783293488, mass invariant 5000.000040320 → 5000.000054586 (2.85e-9), floor_added 2115528.477873674, 0 non-finite values in the final dump
+ok
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.191286 until=none
+SR-RADFORCE gpu block: 50 steps, sim time 0.1912859722506255, mass invariant 5000.000040320 → 4999.999808489 (4.64e-8), floor_added 2116478.6437665964, 0 non-finite values in the final dump
+ok
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained -9.089413277e-3, Σ Δt·f -9.089413039e-3, relative 2.62e-8
+SR-RADFORCE gpu x, right: gained 9.089413192e-3, Σ Δt·f 9.089413138e-3, relative 5.96e-9
+SR-RADFORCE gpu y, top: gained -6.719312529e-4, Σ Δt·f -6.719312752e-4, relative 3.31e-8
+SR-RADFORCE gpu y, bottom: gained 6.719312710e-4, Σ Δt·f 6.719312735e-4, relative 3.59e-9
+SR-RADFORCE gpu cells: worst |gained − Δt·f| 2.72e-11 of the largest Δt·f 1.30e-5; Σ, E, species 0e0 from the free step
+ok
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained -9.089413277e-3, Σ Δt·f -9.089413039e-3, relative 2.62e-8
+SR-RADFORCE gpu x, right: gained 9.089413192e-3, Σ Δt·f 9.089413138e-3, relative 5.96e-9
+SR-RADFORCE gpu y, top: gained -6.719312529e-4, Σ Δt·f -6.719312752e-4, relative 3.31e-8
+SR-RADFORCE gpu y, bottom: gained 6.719312710e-4, Σ Δt·f 6.719312735e-4, relative 3.59e-9
+SR-RADFORCE gpu cells: worst |gained − Δt·f| 2.72e-11 of the largest Δt·f 1.30e-5; Σ, E, species 0e0 from the free step
+ok
+test radforce::gpu_p4_reads_the_previous_steps_flux::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 1.161217807e-3, the hand F's 1.161217805e-3 (2.14e-9), P5's F after -1.070400062e-3 (2.08e0)
+SR-RADFORCE by-hand [0][1]: gained -1.161217860e-3, the hand F's -1.161217907e-3 (4.05e-8), P5's F after 1.070400062e-3 (2.08e0)
+SR-RADFORCE by-hand [1][0]: gained 8.450040619e-5, the hand F's 8.450040817e-5 (2.34e-8), P5's F after -8.387259818e-5 (2.01e0)
+SR-RADFORCE by-hand [1][1]: gained -8.450040621e-5, the hand F's -8.450040817e-5 (2.32e-8), P5's F after 8.387259818e-5 (2.01e0)
+ok
+test radforce::gpu_p4_reads_the_previous_steps_flux::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 1.161217807e-3, the hand F's 1.161217805e-3 (2.14e-9), P5's F after -1.070400062e-3 (2.08e0)
+SR-RADFORCE by-hand [0][1]: gained -1.161217860e-3, the hand F's -1.161217907e-3 (4.05e-8), P5's F after 1.070400062e-3 (2.08e0)
+SR-RADFORCE by-hand [1][0]: gained 8.450040619e-5, the hand F's 8.450040817e-5 (2.34e-8), P5's F after -8.387259818e-5 (2.01e0)
+SR-RADFORCE by-hand [1][1]: gained -8.450040621e-5, the hand F's -8.450040817e-5 (2.32e-8), P5's F after 8.387259818e-5 (2.01e0)
+ok
+test radforce::gpu_the_net_push_is_taken_back::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu net, pushed −x: gained -7.667409672e-4, oracle -7.667409733e-4, relative 7.86e-9
+SR-RADFORCE gpu net, pushed +x: gained 7.889536990e-4, oracle 7.889537335e-4, relative 4.37e-8
+SR-RADFORCE gpu net: N (5.806090e-4, 6.880240e-20), S 1.856163e-3; the grid's gain (-2.70e-11, -4.54e-12)
+ok
+test radforce::gpu_the_net_push_is_taken_back::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu net, pushed −x: gained -7.667409672e-4, oracle -7.667409733e-4, relative 7.86e-9
+SR-RADFORCE gpu net, pushed +x: gained 7.889536990e-4, oracle 7.889537335e-4, relative 4.37e-8
+SR-RADFORCE gpu net: N (5.806090e-4, 6.880240e-20), S 1.856163e-3; the grid's gain (-2.70e-11, -4.54e-12)
+ok
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu cap, x left: gained -6.334878550e5, Σ s·Δt·f -2.246058039e3 (2.81e2), uncapped Σ Δt·f -6.335e5
+
+thread 'radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::jacobi' (550560) panicked at crates/sr-engine/tests/gpu/radforce.rs:481:9:
+gpu: the momentum gained -633487.855032 against Σ s·Δt·f -2246.058039363751 (2.8104429446153154e2 > 1e-5)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu cap, x left: gained -6.334878550e5, Σ s·Δt·f -2.246058039e3 (2.81e2), uncapped Σ Δt·f -6.335e5
+
+thread 'radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::multigrid' (550565) panicked at crates/sr-engine/tests/gpu/radforce.rs:481:9:
+gpu: the momentum gained -633487.855032 against Σ s·Δt·f -2246.058039363751 (2.8104429446153154e2 > 1e-5)
+FAILED
+test radforce::twin_a_dense_hot_block_stays_finite_and_keeps_its_mass ... SR-RADFORCE twin block: 50 steps to sim time 0.19129, E 5.7647e6, floor_added 4.6211e6, mass invariant 5000.000040920 → 5000.000040938 (3.70e-12)
+ok
+test radforce::twin_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-RADFORCE twin x, left: gained -1.031335375e-2, Σ Δt·f -1.031335375e-2, relative 0.00e0
+SR-RADFORCE twin x, right: gained 1.031335375e-2, Σ Δt·f 1.031335375e-2, relative 0.00e0
+SR-RADFORCE twin y, top: gained -6.828775280e-4, Σ Δt·f -6.828775280e-4, relative 0.00e0
+SR-RADFORCE twin y, bottom: gained 6.828775280e-4, Σ Δt·f 6.828775280e-4, relative 0.00e0
+SR-RADFORCE twin cells: worst |gained − Δt·f| 6.78e-21 of the largest Δt·f 2.94e-5; Σ, E, species 0e0 from the free step
+ok
+test radforce::twin_the_net_push_is_taken_back ... SR-RADFORCE twin net, pushed −x: gained -1.366491319e-3, oracle -1.366491319e-3, relative 0.00e0
+SR-RADFORCE twin net, pushed +x: gained 1.406143466e-3, oracle 1.406143466e-3, relative 0.00e0
+SR-RADFORCE twin net: N (1.034782e-3, -7.238823e-20), S 3.239442e-3; the grid's gain (-6.30e-18, -5.82e-20)
+ok
+test radforce::twin_the_push_spends_no_more_than_the_heat_above_the_floor ... SR-RADFORCE twin cap, x left: gained -1.676237303e6, Σ s·Δt·f -1.537075686e3 (1.09e3), uncapped Σ Δt·f -1.676e6
+
+thread 'radforce::twin_the_push_spends_no_more_than_the_heat_above_the_floor' (550573) panicked at crates/sr-engine/tests/gpu/radforce.rs:481:9:
+twin: the momentum gained -1676237.3028790925 against Σ s·Δt·f -1537.075685783625 (1.0895366068714573e3 > 1e-9)
+FAILED
+
+failures:
+
+failures:
+    radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::jacobi
+    radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::multigrid
+    radforce::twin_the_push_spends_no_more_than_the_heat_above_the_floor
+
+test result: FAILED. 11 passed; 3 failed; 0 ignored; 0 measured; 537 filtered out; finished in 4.55s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-11-24T07:47:25-05:00 radiation_force · plant push-net-kept · a fresh scratch copy of the tree
+planted push-net-kept: tests/plants/push-net-kept.patch -> crates/sr-physics/src/reference/hydro.rs, crates/sr-engine/shaders/hydro.wgsl
+== 2026-11-24T07:47:25-05:00 radiation_force · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh radforce physics
+-- radiation_force · exit=101 · 15.55 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-txmi1b2k/arm3/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-txmi1b2k/arm3/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 12.51s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 14 tests
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.191578 until=none
+SR-RADFORCE gpu block: 50 steps, sim time 0.1915782759897411, mass invariant 5000.000040320 → 4999.999954670 (1.71e-8), floor_added 2122634.6976247034, 0 non-finite values in the final dump
+ok
+test radforce::gpu_a_dense_hot_block_stays_finite_and_keeps_its_mass::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-HEADLESS DONE steps=50 sim_time=0.191577 until=none
+SR-RADFORCE gpu block: 50 steps, sim time 0.19157732487656176, mass invariant 5000.000040320 → 4999.999959639 (1.61e-8), floor_added 2124131.151079852, 0 non-finite values in the final dump
+ok
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained -9.089413276e-3, Σ Δt·f -9.089413039e-3, relative 2.61e-8
+SR-RADFORCE gpu x, right: gained 9.089413193e-3, Σ Δt·f 9.089413138e-3, relative 6.06e-9
+SR-RADFORCE gpu y, top: gained -6.719312549e-4, Σ Δt·f -6.719312752e-4, relative 3.02e-8
+SR-RADFORCE gpu y, bottom: gained 6.719312691e-4, Σ Δt·f 6.719312735e-4, relative 6.53e-9
+SR-RADFORCE gpu cells: worst |gained − Δt·f| 2.72e-11 of the largest Δt·f 1.30e-5; Σ, E, species 0e0 from the free step
+ok
+test radforce::gpu_momentum_gained_is_the_force_impulse_and_e_is_unchanged::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu x, left: gained -9.089413276e-3, Σ Δt·f -9.089413039e-3, relative 2.61e-8
+SR-RADFORCE gpu x, right: gained 9.089413193e-3, Σ Δt·f 9.089413138e-3, relative 6.06e-9
+SR-RADFORCE gpu y, top: gained -6.719312549e-4, Σ Δt·f -6.719312752e-4, relative 3.02e-8
+SR-RADFORCE gpu y, bottom: gained 6.719312691e-4, Σ Δt·f 6.719312735e-4, relative 6.53e-9
+SR-RADFORCE gpu cells: worst |gained − Δt·f| 2.72e-11 of the largest Δt·f 1.30e-5; Σ, E, species 0e0 from the free step
+ok
+test radforce::gpu_p4_reads_the_previous_steps_flux::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 1.161217806e-3, the hand F's 1.161217805e-3 (1.34e-9), P5's F after -1.070400062e-3 (2.08e0)
+SR-RADFORCE by-hand [0][1]: gained -1.161217861e-3, the hand F's -1.161217907e-3 (3.97e-8), P5's F after 1.070400062e-3 (2.08e0)
+SR-RADFORCE by-hand [1][0]: gained 8.450040619e-5, the hand F's 8.450040817e-5 (2.34e-8), P5's F after -8.387259818e-5 (2.01e0)
+SR-RADFORCE by-hand [1][1]: gained -8.450040621e-5, the hand F's -8.450040817e-5 (2.32e-8), P5's F after 8.387259818e-5 (2.01e0)
+ok
+test radforce::gpu_p4_reads_the_previous_steps_flux::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE by-hand [0][0]: gained 1.161217806e-3, the hand F's 1.161217805e-3 (1.34e-9), P5's F after -1.070400062e-3 (2.08e0)
+SR-RADFORCE by-hand [0][1]: gained -1.161217861e-3, the hand F's -1.161217907e-3 (3.97e-8), P5's F after 1.070400062e-3 (2.08e0)
+SR-RADFORCE by-hand [1][0]: gained 8.450040619e-5, the hand F's 8.450040817e-5 (2.34e-8), P5's F after -8.387259818e-5 (2.01e0)
+SR-RADFORCE by-hand [1][1]: gained -8.450040621e-5, the hand F's -8.450040817e-5 (2.32e-8), P5's F after 8.387259818e-5 (2.01e0)
+ok
+test radforce::gpu_the_net_push_is_taken_back::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu net, pushed −x: gained -5.806089302e-4, oracle -7.667409733e-4, relative 2.43e-1
+
+thread 'radforce::gpu_the_net_push_is_taken_back::jacobi' (550822) panicked at crates/sr-engine/tests/gpu/radforce.rs:380:9:
+gpu pushed −x: gained -5.806089302353712e-4 against the oracle's -7.667409732683477e-4 (2.4275739724663586e-1 > 1e-6)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test radforce::gpu_the_net_push_is_taken_back::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu net, pushed −x: gained -5.806089302e-4, oracle -7.667409733e-4, relative 2.43e-1
+
+thread 'radforce::gpu_the_net_push_is_taken_back::multigrid' (550827) panicked at crates/sr-engine/tests/gpu/radforce.rs:380:9:
+gpu pushed −x: gained -5.806089302353712e-4 against the oracle's -7.667409732683477e-4 (2.4275739724663586e-1 > 1e-6)
+FAILED
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::jacobi ... SR-PRECOND Jacobi
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu cap, x left: gained -2.246057831e3, Σ s·Δt·f -2.246058039e3 (9.28e-8), uncapped Σ Δt·f -6.335e5
+SR-RADFORCE gpu cap, x right: gained 2.246057831e3, Σ s·Δt·f 2.246058039e3 (9.28e-8), uncapped Σ Δt·f 6.335e5
+SR-RADFORCE gpu cap: 408 cells capped below half the impulse; E's largest relative gap from the free step 0.00e0
+ok
+test radforce::gpu_the_push_spends_no_more_than_the_heat_above_the_floor::multigrid ... SR-PRECOND Multigrid
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-RADFORCE gpu cap, x left: gained -2.246057831e3, Σ s·Δt·f -2.246058039e3 (9.28e-8), uncapped Σ Δt·f -6.335e5
+SR-RADFORCE gpu cap, x right: gained 2.246057831e3, Σ s·Δt·f 2.246058039e3 (9.28e-8), uncapped Σ Δt·f 6.335e5
+SR-RADFORCE gpu cap: 408 cells capped below half the impulse; E's largest relative gap from the free step 0.00e0
+ok
+test radforce::twin_a_dense_hot_block_stays_finite_and_keeps_its_mass ... SR-RADFORCE twin block: 50 steps to sim time 0.19143, E 5.7583e6, floor_added 4.6260e6, mass invariant 5000.000040920 → 5000.000040938 (3.69e-12)
+ok
+test radforce::twin_momentum_gained_is_the_force_impulse_and_e_is_unchanged ... SR-RADFORCE twin x, left: gained -1.031335375e-2, Σ Δt·f -1.031335375e-2, relative 0.00e0
+SR-RADFORCE twin x, right: gained 1.031335375e-2, Σ Δt·f 1.031335375e-2, relative 0.00e0
+SR-RADFORCE twin y, top: gained -6.828775280e-4, Σ Δt·f -6.828775280e-4, relative 0.00e0
+SR-RADFORCE twin y, bottom: gained 6.828775280e-4, Σ Δt·f 6.828775280e-4, relative 0.00e0
+SR-RADFORCE twin cells: worst |gained − Δt·f| 6.78e-21 of the largest Δt·f 2.94e-5; Σ, E, species 0e0 from the free step
+ok
+test radforce::twin_the_net_push_is_taken_back ... SR-RADFORCE twin net, pushed −x: gained -1.034781526e-3, oracle -1.366491319e-3, relative 2.43e-1
+
+thread 'radforce::twin_the_net_push_is_taken_back' (550844) panicked at crates/sr-engine/tests/gpu/radforce.rs:380:9:
+twin pushed −x: gained -1.0347815262504864e-3 against the oracle's -1.3664913194507012e-3 (2.4274562778309833e-1 > 1e-6)
+FAILED
+test radforce::twin_the_push_spends_no_more_than_the_heat_above_the_floor ... SR-RADFORCE twin cap, x left: gained -1.537075686e3, Σ s·Δt·f -1.537075686e3 (0.00e0), uncapped Σ Δt·f -1.676e6
+SR-RADFORCE twin cap, x right: gained 1.537075686e3, Σ s·Δt·f 1.537075686e3 (0.00e0), uncapped Σ Δt·f 1.676e6
+SR-RADFORCE twin cap: 284 cells capped below half the impulse; E's largest relative gap from the free step 0.00e0
+ok
+
+failures:
+
+failures:
+    radforce::gpu_the_net_push_is_taken_back::jacobi
+    radforce::gpu_the_net_push_is_taken_back::multigrid
+    radforce::twin_the_net_push_is_taken_back
+
+test result: FAILED. 11 passed; 3 failed; 0 ignored; 0 measured; 537 filtered out; finished in 2.93s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

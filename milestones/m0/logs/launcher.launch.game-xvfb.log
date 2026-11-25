@@ -1,4 +1,4 @@
-# launcher | launch game-xvfb | 2026-11-23T14:11:32-0500
-# private X display :100, its X server pid 2721228
+# launcher | launch game-xvfb | 2026-11-24T19:53:59-0500
+# private X display :102, its X server pid 1694839
 $ build/target/release/sandbox-reactions --status-port 47811 --adapter llvmpipe
-SR-ERROR calibration out of date: it was measured on no named world (a file from before M0-D203), the default world is 800x800 (calibrate again on it: sandbox-reactions calibrate)
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe

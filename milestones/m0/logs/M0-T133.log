@@ -1,0 +1,6 @@
+# M0-T133 log — linux-pc, opened 2026-11-24T19:51:22-05:00
+2026-11-24 19:5x the lead: «yes stop it and do T133» — m0t133 step 7 stopped (verify.py 574951 TERM, touch test 620847/621055 TERM), GPUs idle; m0d203 closed on the lead's word «close the old tmux session»
+2026-11-24T19:52:06-05:00 Deliver 3: build/m0-t133/server/ (rsync), logs M0-T133.server.log + 125 M0-V15.* (no .part), loop_times +21 server lines merged (2656); assets/calibration.json 8096991d -> dfb6919b (server's, RTX 4090, 800x800)
+2026-11-24T20:01:41-05:00 re-read on linux-pc: --redarm ledger, --redarm stage_order (server GREEN plants)
+2026-11-24T20:14:15-05:00 plan edits: D210–D216 filed, flags V15 + T99b, register (Next, Open D, Awaiting lead); claim next
+2026-11-24T20:25:26-05:00 claim --changed capped at 580 s (exit 124): non-⏱ scopes finished exit 0 (boot, calibrate_bisect, calibrate_cold, calibrate_order, cold_core, dump, frames, heat_stiff, held_core, multi, plan_lint, readouts, scene, timing, twin, ui_banner, ui_inspect, ui_presets, ui_star); web 3/6 red again (M0-D216); ⏱ touch, endings, conservation, squeeze, fit unfinished — their tests TERM'd (orphans 2008443–2008565 mine, stopped); claim owed to the lead

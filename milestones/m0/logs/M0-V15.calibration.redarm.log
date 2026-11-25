@@ -1,0 +1,333 @@
+==== 2026-11-24T01:54:35-05:00 calibration · clean: proven by M0-V15 2026-11-23T23:22:42-05:00 (a run of the scope; fingerprint 94cac1a79560) - not re-run
+==== 2026-11-24T01:53:43-05:00 calibration · plant const-drift · a fresh scratch copy of the tree
+planted const-drift: tests/plants/const-drift.patch -> assets/physics.json
+== 2026-11-24T01:53:43-05:00 calibration · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh calibration
+-- calibration · exit=101 · 12.74 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-r_70nu_l/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-r_70nu_l/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 12.35s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 14 tests
+test calibration::a_calibration_from_another_world_is_refused_with_exit_6 ... ok
+test calibration::a_calibration_without_the_render_reserve_is_accepted_and_written_back_without_it ... ok
+test calibration::a_calibration_written_from_the_embedded_assets_is_accepted ... ok
+test calibration::a_mismatched_calibration_is_refused_with_exit_6 ... ok
+test calibration::a_reformatted_physics_json_keeps_its_hash_and_a_changed_constant_does_not ... ok
+test calibration::every_number_of_the_calibration_is_read_back_as_written ... ok
+test calibration::headless_runs_without_a_calibration_when_the_scene_names_no_preset ... SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference
+SR-HEADLESS DONE steps=1 sim_time=0.075718 until=none
+ok
+test calibration::sha256_fips_180_4_long_vectors_and_the_padding_edges ... ok
+test calibration::sha256_fips_180_4_short_vectors ... ok
+test calibration::the_binary_embeds_the_calibration_file_whenever_it_exists ... ok
+test calibration::the_calibration_the_binary_embeds_matches_the_assets ... 
+thread 'calibration::the_calibration_the_binary_embeds_matches_the_assets' (527632) panicked at crates/sr-engine/tests/gpu/calibration.rs:379:13:
+assertion `left == right` failed: calibration.json is out of date: change a constant, calibrate again
+  left: "8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402"
+ right: "e7f9a634063417b34ebc88ca83146eb1b042ecd496c58f39b9680acddb37e378"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibration::the_hash_is_over_the_canonical_bytes ... ok
+test calibration::the_order_of_the_ceilings_is_k9 ... ok
+test calibration::the_schema_is_parsed_and_every_refusal_names_its_key ... ok
+
+failures:
+
+failures:
+    calibration::the_calibration_the_binary_embeds_matches_the_assets
+
+test result: FAILED. 13 passed; 1 failed; 0 ignored; 0 measured; 537 filtered out; finished in 0.33s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-11-24T01:53:56-05:00 calibration · plant render-reserve-required · a fresh scratch copy of the tree
+planted render-reserve-required: tests/plants/render-reserve-required.patch -> crates/sr-physics/src/calibration.rs
+== 2026-11-24T01:53:57-05:00 calibration · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh calibration
+-- calibration · exit=101 · 12.34 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-r_70nu_l/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-r_70nu_l/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 12.22s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 14 tests
+test calibration::a_calibration_from_another_world_is_refused_with_exit_6 ... ok
+test calibration::a_calibration_without_the_render_reserve_is_accepted_and_written_back_without_it ... 
+thread 'calibration::a_calibration_without_the_render_reserve_is_accepted_and_written_back_without_it' (527852) panicked at crates/sr-engine/tests/gpu/calibration.rs:194:41:
+a calibration before item 7 is valid: Invalid { key: "render_reserve_ms", message: "missing" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibration::a_calibration_written_from_the_embedded_assets_is_accepted ... ok
+test calibration::a_mismatched_calibration_is_refused_with_exit_6 ... ok
+test calibration::a_reformatted_physics_json_keeps_its_hash_and_a_changed_constant_does_not ... ok
+test calibration::every_number_of_the_calibration_is_read_back_as_written ... 
+thread 'calibration::every_number_of_the_calibration_is_read_back_as_written' (527856) panicked at crates/sr-engine/tests/gpu/calibration.rs:223:41:
+assets/calibration.json is §2.11's: Invalid { key: "render_reserve_ms", message: "missing" }
+FAILED
+test calibration::headless_runs_without_a_calibration_when_the_scene_names_no_preset ... SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference
+SR-HEADLESS DONE steps=1 sim_time=0.075718 until=none
+ok
+test calibration::sha256_fips_180_4_long_vectors_and_the_padding_edges ... ok
+test calibration::sha256_fips_180_4_short_vectors ... ok
+test calibration::the_binary_embeds_the_calibration_file_whenever_it_exists ... ok
+test calibration::the_calibration_the_binary_embeds_matches_the_assets ... 
+thread 'calibration::the_calibration_the_binary_embeds_matches_the_assets' (527861) panicked at crates/sr-engine/tests/gpu/calibration.rs:378:49:
+assets/calibration.json is §2.11's: Invalid { key: "render_reserve_ms", message: "missing" }
+FAILED
+test calibration::the_hash_is_over_the_canonical_bytes ... ok
+test calibration::the_order_of_the_ceilings_is_k9 ... ok
+test calibration::the_schema_is_parsed_and_every_refusal_names_its_key ... ok
+
+failures:
+
+failures:
+    calibration::a_calibration_without_the_render_reserve_is_accepted_and_written_back_without_it
+    calibration::every_number_of_the_calibration_is_read_back_as_written
+    calibration::the_calibration_the_binary_embeds_matches_the_assets
+
+test result: FAILED. 11 passed; 3 failed; 0 ignored; 0 measured; 537 filtered out; finished in 0.06s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-11-24T01:54:09-05:00 calibration · plant calibration-lossy-parse · a fresh scratch copy of the tree
+planted calibration-lossy-parse: tests/plants/calibration-lossy-parse.patch -> crates/sr-physics/src/calibration.rs
+== 2026-11-24T01:54:10-05:00 calibration · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh calibration
+-- calibration · exit=101 · 12.44 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-r_70nu_l/arm3/crates/sr-physics)
+warning: variable does not need to be mutable
+   --> crates/sr-physics/src/calibration.rs:415:13
+    |
+415 |         let mut root: Value = serde_json::from_str(text).map_err(|e| CalibrationError::invalid("<json>", e.to_string()))?;
+    |             ----^^^^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `read_as_written` is never used
+   --> crates/sr-physics/src/calibration.rs:352:4
+    |
+352 | fn read_as_written(root: &mut Value, text: &str) -> Result<(), CalibrationError> {
+    |    ^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `number_literals` is never used
+   --> crates/sr-physics/src/calibration.rs:379:4
+    |
+379 | fn number_literals(text: &str) -> Vec<&str> {
+    |    ^^^^^^^^^^^^^^^
+
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-r_70nu_l/arm3/crates/sr-engine)
+warning: `sr-physics` (lib) generated 3 warnings (run `cargo fix --lib -p sr-physics` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 12.29s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 14 tests
+test calibration::a_calibration_from_another_world_is_refused_with_exit_6 ... ok
+test calibration::a_calibration_without_the_render_reserve_is_accepted_and_written_back_without_it ... ok
+test calibration::a_calibration_written_from_the_embedded_assets_is_accepted ... ok
+test calibration::a_mismatched_calibration_is_refused_with_exit_6 ... ok
+test calibration::a_reformatted_physics_json_keeps_its_hash_and_a_changed_constant_does_not ... ok
+test calibration::every_number_of_the_calibration_is_read_back_as_written ... 
+thread 'calibration::every_number_of_the_calibration_is_read_back_as_written' (528066) panicked at crates/sr-engine/tests/gpu/calibration.rs:232:5:
+assets/calibration.json written back byte for byte:
+{
+  "life_sun_sb": 1797.300310949795,
+  "m_bh_sb": 13664.923375543754,
+  "m_ch_sb": 3216.4199210979236,
+  "m_ign_sb": 2636.2983247717016,
+  "m_tov_sb": 4853.169981814195,
+  "m_up_sb": 5938.210284049939,
+  "max_gas_speed": 149.79526522330775,
+  "measured": {
+    "adapter": "NVIDIA GeForce RTX 4090",
+    "box": "laserax-ai-server",
+    "date": "2026-11-23T22:24:25Z",
+    "git": "255ec37-dirty",
+    "world": "800x800"
+  },
+  "ns_sigma_max_sb": 4853.169981814195,
+  "physics_hash": "8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402",
+  "preset_mass_sb": {
+    "giant": 19271.171385813293,
+    "massive": 9404.5671390663,
+    "sun": 3136.7178531263357
+  },
+  "stage_durations_sb": {
+    "collapsing": [
+      [
+        3136.7178531263357,
+        7.702014917507768
+      ]
+    ],
+    "core_collapse": [
+      [
+        9404.5671390663,
+        0.00534961326044936
+      ],
+      [
+        19271.171385813293,
+        0.004371308721601963
+      ]
+    ],
+    "he_core": [
+      [
+        3136.7178531263357,
+        100.23113703075774
+      ],
+      [
+        9404.5671390663,
+        30.830146836116853
+      ],
+      [
+        19271.171385813293,
+        12.913513354491435
+      ]
+    ],
+    "he_shell": [
+      [
+        3136.7178531263357,
+        8.697505711577833
+      ]
+    ],
+    "iron_core": [
+      [
+        3136.7178531263357,
+        111.83226163126528
+      ],
+      [
+        9404.5671390663,
+        22.110507473815233
+      ]
+    ],
+    "main_sequence": [
+      [
+        3136.7178531263357,
+        1523.885543360375
+      ],
+      [
+        9404.5671390663,
+        111.80287256836895
+      ],
+      [
+        19271.171385813293,
+        39.988638655748225
+      ]
+    ],
+    "o_burn": [
+      [
+        3136.7178531263357,
+        37.9285883679986
+      ],
+      [
+        9404.5671390663,
+        12.609350418671966
+      ],
+      [
+        19271.171385813293,
+        2.978549312800169
+      ]
+    ],
+    "protostar": [
+      [
+        9404.5671390663,
+        4.012582567054778
+      ],
+      [
+        19271.171385813293,
+        3.6962862368673086
+      ]
+    ],
+    "si_burn": [
+      [
+        3136.7178531263357,
+        5.481602493673563
+      ],
+      [
+        9404.5671390663,
+        3.720186065416783
+      ],
+      [
+        19271.171385813293,
+        1.184908363968134
+      ]
+    ],
+    "supernova": [
+      [
+        9404.5671390663,
+        20.21930231479928
+      ],
+      [
+        19271.171385813293,
+        0.3262467519380152
+      ]
+    ]
+  },
+  "t_eff_sun_sb": 12.045237430062404,
+  "top_rung": 180.0,
+  "version": 1
+}
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibration::headless_runs_without_a_calibration_when_the_scene_names_no_preset ... SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference
+SR-HEADLESS DONE steps=1 sim_time=0.075718 until=none
+ok
+test calibration::sha256_fips_180_4_long_vectors_and_the_padding_edges ... ok
+test calibration::sha256_fips_180_4_short_vectors ... ok
+test calibration::the_binary_embeds_the_calibration_file_whenever_it_exists ... ok
+test calibration::the_calibration_the_binary_embeds_matches_the_assets ... ok
+test calibration::the_hash_is_over_the_canonical_bytes ... ok
+test calibration::the_order_of_the_ceilings_is_k9 ... ok
+test calibration::the_schema_is_parsed_and_every_refusal_names_its_key ... ok
+
+failures:
+
+failures:
+    calibration::every_number_of_the_calibration_is_read_back_as_written
+
+test result: FAILED. 13 passed; 1 failed; 0 ignored; 0 measured; 537 filtered out; finished in 0.06s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-11-24T01:54:22-05:00 calibration · plant calibration-world-ignored · a fresh scratch copy of the tree
+planted calibration-world-ignored: tests/plants/calibration-world-ignored.patch -> crates/sr-physics/src/calibration.rs
+== 2026-11-24T01:54:23-05:00 calibration · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh calibration
+-- calibration · exit=101 · 12.74 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-r_70nu_l/arm4/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-r_70nu_l/arm4/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 12.33s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 14 tests
+test calibration::a_calibration_from_another_world_is_refused_with_exit_6 ... 
+thread 'calibration::a_calibration_from_another_world_is_refused_with_exit_6' (528289) panicked at crates/sr-engine/tests/gpu/calibration.rs:337:43:
+a calibration from another world is refused: Some(Calibration { physics_hash: "8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402", measured: Measured { date: "1970-01-01T00:00:00Z", git: "test", adapter: "test", machine: "test", world: Some("600x400") }, m_ch_sb: 3970.0, m_tov_sb: 6000.0, ns_sigma_max_sb: 3200.0, m_ign_sb: 270.0, m_up_sb: 26800.0, m_bh_sb: 83800.0, preset_mass_sb: PresetMasses { sun: 3351.0, massive: 50265.0, giant: 134040.0 }, t_eff_sun_sb: 0.3, life_sun_sb: 1200.0, top_rung: 1000.0, stage_durations_sb: {"main_sequence": [(3351.0, 900.0)]}, render_reserve_ms: Some(3.0), max_gas_speed: 20.0 })
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test calibration::a_calibration_without_the_render_reserve_is_accepted_and_written_back_without_it ... ok
+test calibration::a_calibration_written_from_the_embedded_assets_is_accepted ... ok
+test calibration::a_mismatched_calibration_is_refused_with_exit_6 ... ok
+test calibration::a_reformatted_physics_json_keeps_its_hash_and_a_changed_constant_does_not ... ok
+test calibration::every_number_of_the_calibration_is_read_back_as_written ... ok
+test calibration::headless_runs_without_a_calibration_when_the_scene_names_no_preset ... SR-ADAPTER name=cpu-reference backend=cpu driver=sr_physics::reference
+SR-HEADLESS DONE steps=1 sim_time=0.075718 until=none
+ok
+test calibration::sha256_fips_180_4_long_vectors_and_the_padding_edges ... ok
+test calibration::sha256_fips_180_4_short_vectors ... ok
+test calibration::the_binary_embeds_the_calibration_file_whenever_it_exists ... ok
+test calibration::the_calibration_the_binary_embeds_matches_the_assets ... ok
+test calibration::the_hash_is_over_the_canonical_bytes ... ok
+test calibration::the_order_of_the_ceilings_is_k9 ... ok
+test calibration::the_schema_is_parsed_and_every_refusal_names_its_key ... ok
+
+failures:
+
+failures:
+    calibration::a_calibration_from_another_world_is_refused_with_exit_6
+
+test result: FAILED. 13 passed; 1 failed; 0 ignored; 0 measured; 537 filtered out; finished in 0.34s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
