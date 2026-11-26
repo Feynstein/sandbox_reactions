@@ -1,0 +1,16 @@
+M0-D215 2026-11-26T14:45:01-05:00 redarm stage_order start
+redarm: refused - nothing run
+=== NO-GO: `stage_order` has no green run of the whole scope on these bytes on this box (laserax-ai) - never run, run red, a path or plant edited since, or another adapter; the red-arm runs the plants only: run `python3 tools/pb/verify.py stage_order --task M0-D215` first, then this call again (or `--redarm stage_order --with-clean` for a fresh clean arm) ===
+stage_order  2/0/0       23.30 s  GO
+logs: milestones/m0/logs/M0-D215.<scope>.log · record: loop_times.jsonl · tree a8b74842adf7+732e5d1ee254
+anchor: 1 path×scope entries moved by this run
+anchor: 457 paths checked · 501 skipped (3 classes) · 16 never checked · 12 stale · 0 unclassified · 0 owed · 485 covered of 986 visible
+verify: 2 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 23.30 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 0.11->0.41
+=== GO ===
+stage_order · clean: proven by M0-D215 2026-11-26T14:45:28-05:00 (a run of the scope; fingerprint c91917aadee5) - not re-run
+stage_order · plant failed-star-unsettled · RED (proven: 1 failed) · arm 1/3, 2 left
+stage_order · plant stage-steps-back · RED (proven: 2 failed) · arm 2/3, 1 left
+stage_order · plant main-sequence-light-window · RED (proven: 1 failed) · arm 3/3, 0 left
+redarm: 3 plants · 3 red · 0 green · 0 errors · scope stage_order · 101.98 s · 1 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D215.stage_order.redarm.log
+=== GO ===
+M0-D215 2026-11-26T14:47:54-05:00 claim --changed start

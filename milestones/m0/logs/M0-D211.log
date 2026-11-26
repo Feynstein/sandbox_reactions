@@ -1,0 +1,90 @@
+== 2026-11-26T14:01:20-05:00 verify.py stages --case giant (RTX 5090, linux-pc)
+stages    1/0/0      121.67 s  GO
+logs: milestones/m0/logs/M0-D211.<scope>.log · record: loop_times.jsonl · tree a8b74842adf7+82d6e9dd5d80
+verify: 1 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 121.67 s · mode case · PARTIAL, not the loop (--case giant) · jobs 8 · box laserax-ai · python 3.12.3 · load 12.35->8.98
+=== GO ===
+wall 121.97 s
+== 2026-11-26T14:03:27-05:00 verify.py stages --case massive (RTX 5090, linux-pc)
+stages    1/0/0      413.07 s  GO
+logs: milestones/m0/logs/M0-D211.<scope>.log · record: loop_times.jsonl · tree a8b74842adf7+82d6e9dd5d80
+verify: 1 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 413.07 s · mode case · PARTIAL, not the loop (--case massive) · jobs 8 · box laserax-ai · python 3.12.3 · load 8.42->1.0
+=== GO ===
+== 2026-11-26T14:11:05-05:00 bash tests/gpu.sh stages physics no_such_life (zero-match probe)
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 551 filtered out; finished in 0.00s
+
+== 2026-11-26T14:11:11-05:00 verify.py --redarm stages --case giant
+the calls:
+  python3 tools/pb/verify.py <scope>... --task <ID>
+  python3 tools/pb/verify.py --all --task <ID>
+  python3 tools/pb/verify.py <scope> --case <id> --task <ID>
+  python3 tools/pb/verify.py --changed [--base <commit>] --task <ID>
+  python3 tools/pb/verify.py --force <scope>... --task <ID>
+  python3 tools/pb/verify.py --redarm <scope> [--with-clean] --task <ID>
+  python3 tools/pb/verify.py --redarm --moved --task <ID>
+  python3 tools/pb/verify.py list
+  python3 tools/pb/verify.py report [--since YYYY-MM-DD] [--budget <s>]
+  python3 tools/pb/verify.py start [--fresh] --task <ID>
+  python3 tools/pb/verify.py touched [--task <ID>] [--path <glob>]
+  python3 tools/pb/verify.py selftest
+verify: wrong call - nothing run
+=== NO-GO: --redarm names its one scope itself: --redarm <scope> - the calls are listed above ===
+== 2026-11-26T14:11:29-05:00 claim: short scopes touching tests/gpu.sh: burn_cell burn_order neutrino sink nu_heat summary ledger preset_cloud observe_run stage_order multi edits edits_file sod edges collapse jeans sun_burn twin cpu_gpu heat_gauss heat_implicit heat_limiter heat_stiff heat_multigrid radiation_force grav_force grav_selfforce fft adapter state booking floors dt box latch scene dump calibration calibrate_cold cold_core held_core calibrate_bisect calibrate_order readouts views extents glow frames
+burn_cell         20/0/0       7.18 s  GO · step 1/49, 48 left
+burn_order        4/0/0        2.27 s  GO · step 2/49, 47 left
+neutrino          18/0/0       6.58 s  GO · step 3/49, 46 left
+sink              35/0/0      19.45 s  GO · step 4/49, 45 left
+nu_heat           15/0/0       9.79 s  GO · step 5/49, 44 left
+summary           7/0/0        7.18 s  GO · step 6/49, 43 left
+ledger            8/0/0       19.75 s  GO · step 7/49, 42 left
+preset_cloud      5/0/0       41.76 s  GO · step 8/49, 41 left
+observe_run       14/0/0     125.90 s  GO · step 9/49, 40 left
+stage_order       2/0/0       58.22 s  GO · step 10/49, 39 left
+multi             5/0/0       68.14 s  GO · step 11/49, 38 left
+edits             17/0/0      12.98 s  GO · step 12/49, 37 left
+edits_file        6/0/0        8.33 s  GO · step 13/49, 36 left
+sod               17/0/0       8.03 s  GO · step 14/49, 35 left
+edges             7/0/0       11.59 s  GO · step 15/49, 34 left
+collapse          6/0/0        2.12 s  GO · step 16/49, 33 left
+jeans             6/0/0        0.97 s  GO · step 17/49, 32 left
+sun_burn          4/0/0      113.33 s  GO · step 18/49, 31 left
+twin              6/0/0        1.82 s  GO · step 19/49, 30 left
+cpu_gpu           3/0/0        6.18 s  GO · step 20/49, 29 left
+heat_gauss        14/0/0       4.22 s  GO · step 21/49, 28 left
+heat_implicit     8/0/0        2.62 s  GO · step 22/49, 27 left
+heat_limiter      8/0/0        4.07 s  GO · step 23/49, 26 left
+heat_stiff        16/0/0       8.43 s  GO · step 24/49, 25 left
+heat_multigrid    4/0/0        4.32 s  GO · step 25/49, 24 left
+radiation_force   14/0/0       6.93 s  GO · step 26/49, 23 left
+grav_force        13/0/0       3.32 s  GO · step 27/49, 22 left
+grav_selfforce    7/0/0        1.97 s  GO · step 28/49, 21 left
+fft               8/0/0        4.52 s  GO · step 29/49, 20 left
+adapter           10/0/0       3.22 s  GO · step 30/49, 19 left
+state             12/0/0       6.27 s  GO · step 31/49, 18 left
+booking           4/0/0        3.67 s  GO · step 32/49, 17 left
+floors            12/0/0       7.08 s  GO · step 33/49, 16 left
+dt                8/0/0        6.22 s  GO · step 34/49, 15 left
+box               8/0/0       22.25 s  GO · step 35/49, 14 left
+latch             5/0/0        2.92 s  GO · step 36/49, 13 left
+scene             8/0/0        2.52 s  GO · step 37/49, 12 left
+dump              14/0/0      61.93 s  GO · step 38/49, 11 left
+calibration       14/0/0       0.41 s  GO · step 39/49, 10 left
+calibrate_cold    9/0/0        1.52 s  GO · step 40/49, 9 left
+cold_core         8/0/0       11.89 s  GO · step 41/49, 8 left
+held_core         27/0/0     171.91 s  GO · step 42/49, 7 left
+calibrate_bisect  20/0/0     102.51 s  GO · step 43/49, 6 left
+calibrate_order   13/0/0       0.21 s  GO · step 44/49, 5 left
+readouts          9/0/0        0.11 s  GO · step 45/49, 4 left
+views             16/0/0      40.74 s  GO · step 46/49, 3 left
+extents           7/0/0        4.92 s  GO · step 47/49, 2 left
+glow              7/0/0        2.52 s  GO · step 48/49, 1 left
+frames            6/0/0       14.89 s  GO · step 49/49, 0 left
+logs: milestones/m0/logs/M0-D211.<scope>.log · record: loop_times.jsonl · tree a8b74842adf7+8ebcda9d655b
+anchor: 250 path×scope entries moved by this run
+anchor: 456 paths checked · 500 skipped (3 classes) · 16 never checked · 13 stale · 0 unclassified · 0 owed · 485 covered of 985 visible
+verify: 514 passed, 0 failed, 0 skipped · 49/49 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 225.51 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 0.44->4.35
+=== GO ===
