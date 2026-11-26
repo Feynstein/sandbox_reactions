@@ -1,0 +1,2 @@
+# M0-V15-lpc-decoy | launch web | 2026-11-26T11:01:43-0500
+$ python3 -m http.server 47840 --bind 127.0.0.1 --directory web/dist

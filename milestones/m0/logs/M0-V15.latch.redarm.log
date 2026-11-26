@@ -1,0 +1,81 @@
+==== 2026-11-26T09:34:33-05:00 latch · clean: proven by M0-V15 2026-11-26T02:25:41-05:00 (a run of the scope; fingerprint f5a5afa4e44e) - not re-run
+==== 2026-11-26T09:34:19-05:00 latch · plant latch-off · a fresh scratch copy of the tree
+planted latch-off: tests/plants/latch-off.patch -> crates/sr-engine/shaders/latch.wgsl
+== 2026-11-26T09:34:20-05:00 latch · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh latch physics
+-- latch · exit=101 · 13.09 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-rcatodyo/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-rcatodyo/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 12.31s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 5 tests
+test latch::a_flag_set_at_step_k_of_a_40_step_frame_runs_exactly_k_steps_bit_identical_to_a_k_step_run ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'latch::a_flag_set_at_step_k_of_a_40_step_frame_runs_exactly_k_steps_bit_identical_to_a_k_step_run' (835601) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1280:26:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_bind_group, label = 'latch_check'
+    Number of bindings in bind group descriptor (6) does not match the number of bindings defined in the bind group layout (4)
+
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test latch::an_edit_flagged_on_the_step_the_latch_fires_refits_the_box_once_then_nothing_runs ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'latch::an_edit_flagged_on_the_step_the_latch_fires_refits_the_box_once_then_nothing_runs' (835607) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1280:26:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_bind_group, label = 'latch_check'
+    Number of bindings in bind group descriptor (6) does not match the number of bindings defined in the bind group layout (4)
+
+
+FAILED
+test latch::poll_never_waits_and_reports_each_frame_once_in_order ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'latch::poll_never_waits_and_reports_each_frame_once_in_order' (835612) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1280:26:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_bind_group, label = 'latch_check'
+    Number of bindings in bind group descriptor (6) does not match the number of bindings defined in the bind group layout (4)
+
+
+FAILED
+test latch::the_latch_re_arms_only_after_1_tu_without_a_set ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'latch::the_latch_re_arms_only_after_1_tu_without_a_set' (835617) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1280:26:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_bind_group, label = 'latch_check'
+    Number of bindings in bind group descriptor (6) does not match the number of bindings defined in the bind group layout (4)
+
+
+FAILED
+test latch::with_the_slow_down_off_the_frame_runs_all_40_steps_through_the_flag ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+
+thread 'latch::with_the_slow_down_off_the_frame_runs_all_40_steps_through_the_flag' (835622) panicked at /home/ybelanger/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wgpu-30.0.1/src/backend/wgpu_core.rs:1280:26:
+wgpu error: Validation Error
+
+Caused by:
+  In Device::create_bind_group, label = 'latch_check'
+    Number of bindings in bind group descriptor (6) does not match the number of bindings defined in the bind group layout (4)
+
+
+FAILED
+
+failures:
+
+failures:
+    latch::a_flag_set_at_step_k_of_a_40_step_frame_runs_exactly_k_steps_bit_identical_to_a_k_step_run
+    latch::an_edit_flagged_on_the_step_the_latch_fires_refits_the_box_once_then_nothing_runs
+    latch::poll_never_waits_and_reports_each_frame_once_in_order
+    latch::the_latch_re_arms_only_after_1_tu_without_a_set
+    latch::with_the_slow_down_off_the_frame_runs_all_40_steps_through_the_flag
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 546 filtered out; finished in 0.70s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

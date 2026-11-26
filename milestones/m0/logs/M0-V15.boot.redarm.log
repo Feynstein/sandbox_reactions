@@ -1,0 +1,25 @@
+==== 2026-11-26T09:41:53-05:00 boot · clean: proven by M0-V15 2026-11-26T02:25:41-05:00 (a run of the scope; fingerprint 0c9229f42bb8) - not re-run
+==== 2026-11-26T09:41:32-05:00 boot · plant scene-refuse · a fresh scratch copy of the tree
+planted scene-refuse: tests/plants/scene-refuse.patch -> crates/sr-engine/src/scene.rs
+== 2026-11-26T09:41:33-05:00 boot · task M0-V15 · box laserax-ai-server :: bash tests/smoke.sh headless-boot
+-- boot · exit=1 · 5.98 s
+headless-boot: exited 4 (log /tmp/pb-redarm-_1np1nz3/arm1/milestones/m0/logs/M0-V15.launch.headless-boot.log)
+headless-boot: pid 839149 not signalled - gone
+headless-boot: log /tmp/pb-redarm-_1np1nz3/arm1/milestones/m0/logs/M0-V15.launch.headless-boot.log
+services: 1, ready: 0, failures: 1
+FAIL headless-boot: exited 4 (log /tmp/pb-redarm-_1np1nz3/arm1/milestones/m0/logs/M0-V15.launch.headless-boot.log)
+=== NO-GO: launch.py smoke headless-boot did not end GO ===
+
+==== 2026-11-26T09:41:32-05:00 boot · plant git-dirty-mark-dropped · a fresh scratch copy of the tree
+planted git-dirty-mark-dropped: tests/plants/git-dirty-mark-dropped.patch -> crates/sr-engine/src/headless.rs
+== 2026-11-26T09:41:33-05:00 boot · task M0-V15 · box laserax-ai-server :: bash tests/smoke.sh headless-boot
+-- boot · exit=1 · 19.86 s
+headless-boot: ready - exit 0, 2.7s (log /tmp/pb-redarm-_1np1nz3/arm2/milestones/m0/logs/M0-V15.launch.headless-boot.log)
+headless-boot: pid 839334 not signalled - gone
+headless-boot: log /tmp/pb-redarm-_1np1nz3/arm2/milestones/m0/logs/M0-V15.launch.headless-boot.log
+services: 1, ready: 1, failures: 0
+summary.json: 13 keys of §2.12.2, steps = 200
+git revision: a clean tree -> e4183a0
+git revision: only assets/calibration.json rewritten and a log written -> e4183a0
+=== NO-GO: summary.json git is "e4183a0" with a source changed, expected "e4183a0-dirty" ===
+

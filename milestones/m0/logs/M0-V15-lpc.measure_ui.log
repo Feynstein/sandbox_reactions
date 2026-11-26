@@ -1,0 +1,28 @@
+== 2026-11-26T11:01:25-05:00 measure_ui[run] · task M0-V15-lpc · box laserax-ai :: bash tests/measure/check.sh {case}
+== 2026-11-26T11:01:29-05:00 measure_ui[refuse] · task M0-V15-lpc · box laserax-ai :: bash tests/measure/check.sh {case}
+-- measure_ui[run] · exit=0 · 5.43 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-UI p95_ms=7.336 frames=20 adapter=llvmpipe (LLVM 20.1.2, 256 bits)
+SR-UI render_reserve_ms=7.836 file=/tmp/tmp.i2FfMQFIS9/cal.json (the next build embeds it)
+measure-ui run: SR-UI p95_ms=7.336, the copy holds render_reserve_ms = p95 + 0.5, every other key and the real file unchanged
+=== GO ===
+
+-- measure_ui[refuse] · exit=1 · 6.58 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-ERROR app creation error: --measure-ui on llvmpipe (LLVM 20.1.2, 256 bits) (a software adapter) would write its cost as the real one's: name a file with --calibration, or run on the GPU the game is
+xvfb-run: error: problem while cleaning up temporary directory
+=== NO-GO: expected exit 3 for --measure-ui 5, got 5 ===
+
+== 2026-11-26T11:02:10-05:00 measure_ui[run] · task M0-V15-lpc · box laserax-ai :: bash tests/measure/check.sh {case}
+== 2026-11-26T11:02:10-05:00 measure_ui[refuse] · task M0-V15-lpc · box laserax-ai :: bash tests/measure/check.sh {case}
+-- measure_ui[run] · exit=0 · 4.17 s
+SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe
+SR-UI p95_ms=7.611 frames=20 adapter=llvmpipe (LLVM 20.1.2, 256 bits)
+SR-UI render_reserve_ms=8.111 file=/tmp/tmp.J9buPHmIvi/cal.json (the next build embeds it)
+measure-ui run: SR-UI p95_ms=7.611, the copy holds render_reserve_ms = p95 + 0.5, every other key and the real file unchanged
+=== GO ===
+
+-- measure_ui[refuse] · exit=0 · 7.18 s
+measure-ui refuse: a bad frame count, a missing one, --capture beside it, --calibration alone → exit 4; a file that is no calibration → exit 3, untouched; a software adapter without --calibration → exit 3, the real file untouched
+=== GO ===
+

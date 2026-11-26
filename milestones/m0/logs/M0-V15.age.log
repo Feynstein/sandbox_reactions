@@ -93,3 +93,92 @@ test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 548 filtered out
 
 error: test failed, to rerun pass `-p sr-engine --test gpu`
 
+== 2026-11-25T20:26:03-05:00 age · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh age physics
+-- age · exit=0 · 13791.50 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 3 tests
+test age::the_age_of_the_massive_star_never_falls_and_never_jumps_under_a_paint_and_an_erase ... graders graded on hand-made values
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+touch step=3200 t=20.65 stage=main_sequence id=1 M=9478.4 X_H,c=0.682 Σ_c=5.731 R=57.2 age=8.2150e5 yr
+touch step=6400 t=52.70 stage=main_sequence id=1 M=9104.2 X_H,c=0.533 Σ_c=7.647 R=52.5 age=3.4756e6 yr
+touch step=9600 t=87.88 stage=main_sequence id=1 M=11592.4 X_H,c=0.530 Σ_c=8.571 R=241.5 age=6.3973e6 yr
+touch step=12800 t=121.19 stage=main_sequence id=1 M=10212.8 X_H,c=0.363 Σ_c=12.436 R=243.3 age=8.8488e6 yr
+touch step=16003 t=151.07 stage=main_sequence id=1 M=7848.3 X_H,c=0.172 Σ_c=23.714 R=170.5 age=1.3564e7 yr
+touch step=19203 t=181.54 stage=o_burn id=1 M=7553.1 X_H,c=0.031 Σ_c=52.655 R=320.4 age=1.5427e7 yr
+touch step=22403 t=208.14 stage=iron_core id=1 M=6249.8 X_H,c=0.000 Σ_c=117.530 R=360.9 age=1.5760e7 yr
+touch step=25603 t=229.78 stage=iron_core id=1 M=4968.1 X_H,c=0.048 Σ_c=194.622 R=364.9 age=1.5760e7 yr
+touch step=28788 t=247.01 stage=supernova id=1 M=4217.1 X_H,c=0.067 Σ_c=660.053 R=315.6 age=1.5760e7 yr
+SR-HEADLESS DONE steps=30964 sim_time=258.174190 until=met
+touch: 30964 steps, exit 0, 1936 ticks with an age, summary objects [{"age_years":1018654534.0958524,"at_x_h":{"luminosity":98883.95406276442,"radius":229.92441609610867,"sim_time":123.26571918465196,"x_h_c":0.35},"ending":"neutron_star","id":1,"mass_sb":3500.397200212814,"mass_suns":1.7912611132196512,"predicted_ending":["white_dwarf"],"stage":"neutron_star","stages":[{"from_step":3,"sim_time":0.04054468497633934,"stage":"protostar"},{"from_step":668,"sim_time":3.9587284266017377,"stage":"main_sequence"},{"from_step":7108,"sim_time":59.9118479155004,"stage":"he_core"},{"from_step":7303,"sim_time":61.27337899664417,"stage":"main_sequence"},{"from_step":14147,"sim_time":133.14081558585167,"stage":"he_core"},{"from_step":14195,"sim_time":133.4651292716153,"stage":"main_sequence"},{"from_step":16419,"sim_time":155.18614511936903,"stage":"he_core"},{"from_step":18915,"sim_time":178.9351227497682,"stage":"o_burn"},{"from_step":20499,"sim_time":192.81592627242208,"stage":"si_burn"},{"from_step":21043,"sim_time":197.3740426627919,"stage":"main_sequence"},{"from_step":21251,"sim_time":199.0805118875578,"stage":"iron_core"},{"from_step":27587,"sim_time":240.7121303654276,"stage":"core_collapse"},{"from_step":27588,"sim_time":240.71764269378036,"stage":"supernova"},{"from_step":29012,"sim_time":248.14524253364652,"stage":"neutron_star"}]}]
+touch: the edits: Ok((0.09266775846481323, 0.34162089546600555))
+touch: the paint raised X_H,c by 0.093; the erase took 34.2 % of the mass
+touch: each stage's share of the age: protostar: 1.073e4 yr = 0.00 % (worst 1.5 × its visit's median, 1.5 × the stage's); main_sequence: 1.331e7 yr = 1.31 % (worst 7.2 × its visit's median, 6.9 × the stage's); he_core: 2.443e6 yr = 0.24 % (worst 8.4 × its visit's median, 39.5 × the stage's); o_burn: 2.234e0 yr = 0.00 % (worst 1.2 × its visit's median, 1.2 × the stage's); si_burn: 4.882e-2 yr = 0.00 % (worst 1.2 × its visit's median, 1.2 × the stage's); iron_core: 2.250e-3 yr = 0.00 % (worst 1.4 × its visit's median, 1.4 × the stage's); core_collapse: 0.000e0 yr = 0.00 % (worst 0.0 × its visit's median, 0.0 × the stage's); supernova: 1.658e-7 yr = 0.00 % (worst 0.0 × its visit's median, 1.1 × the stage's); neutron_star: 1.003e9 yr = 98.45 % (worst 0.0 × its visit's median, 1.0 × the stage's)
+ok
+test age::the_graders_refuse_a_falling_age_a_jump_and_a_clock_off_the_suns_life ... graders graded on hand-made values
+ok
+test age::the_sun_like_star_reaches_its_white_dwarf_reading_about_the_age_the_table_sums_to ... graders graded on hand-made values
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+sun step=3201 t=38.40 stage=main_sequence id=1 M=3123.2 X_H,c=0.725 Σ_c=9.006 R=14.6 age=8.4139e7 yr
+sun step=6401 t=74.19 stage=main_sequence id=1 M=3126.1 X_H,c=0.715 Σ_c=9.787 R=14.2 age=2.2063e8 yr
+sun step=9601 t=109.61 stage=main_sequence id=1 M=3127.2 X_H,c=0.704 Σ_c=9.873 R=14.2 age=3.7702e8 yr
+sun step=12801 t=145.10 stage=main_sequence id=1 M=3127.6 X_H,c=0.691 Σ_c=9.765 R=14.3 age=5.4697e8 yr
+sun step=16001 t=180.78 stage=main_sequence id=1 M=3127.9 X_H,c=0.678 Σ_c=9.675 R=14.4 age=7.2730e8 yr
+sun step=19201 t=216.63 stage=main_sequence id=1 M=3127.7 X_H,c=0.664 Σ_c=9.610 R=14.4 age=9.1751e8 yr
+sun step=22401 t=252.64 stage=main_sequence id=1 M=3127.4 X_H,c=0.650 Σ_c=9.564 R=14.5 age=1.1156e9 yr
+sun step=25601 t=288.83 stage=main_sequence id=1 M=3127.0 X_H,c=0.635 Σ_c=9.560 R=14.6 age=1.3186e9 yr
+sun step=28801 t=325.14 stage=main_sequence id=1 M=3126.3 X_H,c=0.620 Σ_c=9.577 R=14.6 age=1.5342e9 yr
+sun step=32001 t=361.58 stage=main_sequence id=1 M=3125.6 X_H,c=0.604 Σ_c=9.639 R=14.6 age=1.7548e9 yr
+sun step=35201 t=398.10 stage=main_sequence id=1 M=3124.9 X_H,c=0.587 Σ_c=9.721 R=14.6 age=1.9775e9 yr
+sun step=38401 t=434.74 stage=main_sequence id=1 M=3124.2 X_H,c=0.570 Σ_c=9.791 R=15.0 age=2.2144e9 yr
+sun step=41601 t=471.46 stage=main_sequence id=1 M=3123.4 X_H,c=0.553 Σ_c=9.918 R=15.1 age=2.4586e9 yr
+sun step=44801 t=508.25 stage=main_sequence id=1 M=3122.8 X_H,c=0.534 Σ_c=10.068 R=15.2 age=2.7329e9 yr
+sun step=48001 t=545.10 stage=main_sequence id=1 M=3121.9 X_H,c=0.517 Σ_c=10.252 R=15.2 age=2.9760e9 yr
+sun step=51201 t=582.02 stage=main_sequence id=1 M=3121.1 X_H,c=0.497 Σ_c=10.445 R=15.2 age=3.2459e9 yr
+sun step=54401 t=618.98 stage=main_sequence id=1 M=3120.1 X_H,c=0.478 Σ_c=10.632 R=15.3 age=3.5016e9 yr
+sun step=57601 t=655.98 stage=main_sequence id=1 M=3119.3 X_H,c=0.459 Σ_c=10.880 R=15.4 age=3.7713e9 yr
+sun step=60801 t=692.99 stage=main_sequence id=1 M=3118.3 X_H,c=0.441 Σ_c=11.162 R=15.5 age=4.0118e9 yr
+sun step=64001 t=729.95 stage=main_sequence id=1 M=3117.3 X_H,c=0.423 Σ_c=11.462 R=15.6 age=4.2534e9 yr
+sun step=67201 t=766.84 stage=main_sequence id=1 M=3116.3 X_H,c=0.411 Σ_c=11.845 R=15.6 age=4.4259e9 yr
+sun step=70401 t=803.62 stage=main_sequence id=1 M=3115.3 X_H,c=0.397 Σ_c=12.219 R=15.6 age=4.6199e9 yr
+sun step=73601 t=840.31 stage=main_sequence id=1 M=3114.2 X_H,c=0.387 Σ_c=12.598 R=15.6 age=4.7500e9 yr
+sun step=76801 t=876.83 stage=main_sequence id=1 M=3113.2 X_H,c=0.372 Σ_c=12.951 R=15.6 age=4.9578e9 yr
+sun step=80001 t=913.27 stage=main_sequence id=1 M=3112.0 X_H,c=0.358 Σ_c=13.453 R=15.6 age=5.1472e9 yr
+sun step=83201 t=949.67 stage=main_sequence id=1 M=3110.6 X_H,c=0.342 Σ_c=13.861 R=15.6 age=5.3651e9 yr
+sun step=86401 t=986.01 stage=main_sequence id=1 M=3109.3 X_H,c=0.326 Σ_c=14.364 R=15.6 age=5.5840e9 yr
+sun step=89601 t=1022.26 stage=main_sequence id=1 M=3108.0 X_H,c=0.310 Σ_c=14.851 R=15.6 age=5.8029e9 yr
+sun step=92801 t=1058.44 stage=main_sequence id=1 M=3106.6 X_H,c=0.295 Σ_c=15.318 R=15.6 age=6.0126e9 yr
+sun step=96001 t=1094.49 stage=main_sequence id=1 M=3104.9 X_H,c=0.280 Σ_c=15.790 R=15.6 age=6.2153e9 yr
+sun step=99201 t=1130.30 stage=main_sequence id=1 M=3103.1 X_H,c=0.264 Σ_c=16.481 R=15.8 age=6.4391e9 yr
+sun step=102401 t=1165.94 stage=main_sequence id=1 M=3101.1 X_H,c=0.241 Σ_c=17.353 R=15.9 age=6.7453e9 yr
+sun step=105601 t=1201.36 stage=main_sequence id=1 M=3099.1 X_H,c=0.220 Σ_c=18.201 R=16.0 age=7.0402e9 yr
+sun step=108801 t=1236.54 stage=main_sequence id=1 M=3096.7 X_H,c=0.202 Σ_c=19.242 R=15.9 age=7.2878e9 yr
+sun step=112001 t=1271.38 stage=main_sequence id=1 M=3094.0 X_H,c=0.193 Σ_c=20.299 R=15.8 age=7.4023e9 yr
+sun step=115201 t=1305.82 stage=main_sequence id=1 M=3091.1 X_H,c=0.182 Σ_c=21.380 R=15.7 age=7.5624e9 yr
+sun step=118401 t=1339.87 stage=main_sequence id=1 M=3087.5 X_H,c=0.165 Σ_c=22.839 R=15.6 age=7.7933e9 yr
+sun step=121601 t=1373.54 stage=main_sequence id=1 M=3083.3 X_H,c=0.147 Σ_c=24.577 R=15.6 age=8.0403e9 yr
+sun step=124801 t=1406.84 stage=main_sequence id=1 M=3078.4 X_H,c=0.131 Σ_c=26.519 R=15.5 age=8.2621e9 yr
+sun step=128001 t=1439.76 stage=main_sequence id=1 M=3072.3 X_H,c=0.112 Σ_c=29.171 R=15.2 age=8.5216e9 yr
+sun step=131201 t=1472.24 stage=main_sequence id=1 M=3065.0 X_H,c=0.095 Σ_c=31.968 R=14.8 age=8.7504e9 yr
+sun step=134401 t=1504.26 stage=main_sequence id=1 M=3057.1 X_H,c=0.080 Σ_c=35.068 R=14.7 age=8.9604e9 yr
+sun step=137601 t=1535.85 stage=he_core id=1 M=3045.5 X_H,c=0.060 Σ_c=38.407 R=15.5 age=9.1689e9 yr
+sun step=140801 t=1567.24 stage=he_core id=1 M=3021.0 X_H,c=0.038 Σ_c=42.962 R=17.2 age=9.2167e9 yr
+sun step=144001 t=1598.15 stage=he_core id=1 M=2977.9 X_H,c=0.022 Σ_c=48.860 R=17.4 age=9.2259e9 yr
+sun step=147201 t=1628.07 stage=he_core id=1 M=2924.1 X_H,c=0.012 Σ_c=54.714 R=18.4 age=9.2266e9 yr
+sun step=150401 t=1657.11 stage=o_burn id=1 M=2844.8 X_H,c=0.004 Σ_c=64.630 R=17.5 age=9.2267e9 yr
+sun step=153601 t=1685.29 stage=main_sequence id=1 M=2764.6 X_H,c=0.004 Σ_c=72.542 R=23.9 age=9.2825e9 yr
+sun step=156801 t=1712.23 stage=iron_core id=1 M=2595.0 X_H,c=0.000 Σ_c=107.891 R=8.9 age=9.3975e9 yr
+sun step=160001 t=1736.55 stage=iron_core id=1 M=2475.0 X_H,c=0.000 Σ_c=137.458 R=2.4 age=9.3975e9 yr
+sun step=163201 t=1757.65 stage=iron_core id=1 M=2485.6 X_H,c=0.028 Σ_c=246.158 R=2.0 age=9.3975e9 yr
+sun step=166401 t=1777.42 stage=iron_core id=1 M=2490.6 X_H,c=0.037 Σ_c=301.159 R=2.0 age=9.3975e9 yr
+sun step=169601 t=1796.71 stage=iron_core id=1 M=2493.3 X_H,c=0.027 Σ_c=316.209 R=2.0 age=9.3975e9 yr
+sun step=172801 t=1816.00 stage=iron_core id=1 M=2495.1 X_H,c=0.020 Σ_c=335.555 R=2.0 age=9.3975e9 yr
+SR-HEADLESS DONE steps=174321 sim_time=1826.986214 until=met
+sun: 174321 steps, exit 0; each stage's share of the age: collapsing: 1.000e6 yr = 0.01 % (worst 0.0 × its visit's median, 0.0 × the stage's); main_sequence: 9.275e9 yr = 89.11 % (worst 0.0 × its visit's median, 0.0 × the stage's); he_core: 1.200e8 yr = 1.15 % (worst 0.0 × its visit's median, 0.0 × the stage's); o_burn: 2.142e0 yr = 0.00 % (worst 0.0 × its visit's median, 0.0 × the stage's); si_burn: 4.872e-2 yr = 0.00 % (worst 0.0 × its visit's median, 0.0 × the stage's); he_shell: 1.500e6 yr = 0.01 % (worst 0.0 × its visit's median, 0.0 × the stage's); iron_core: 2.453e-3 yr = 0.00 % (worst 0.0 × its visit's median, 0.0 × the stage's); white_dwarf: 1.011e9 yr = 9.71 % (worst 0.0 × its visit's median, 0.0 × the stage's)
+sun: the white dwarf reads 1.0408e10 years (0.86 × 1.21e10)
+ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 548 filtered out; finished in 13791.33s
+
+

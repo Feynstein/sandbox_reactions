@@ -33,3 +33,38 @@ WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 5
 WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
 === NO-GO: 2 violation(s) ===
 
+==== 2026-11-26T02:25:46-05:00 plan_lint · clean: proven by M0-V15 2026-11-26T02:25:41-05:00 (a run of the scope; fingerprint fa111746ec47) - not re-run
+==== 2026-11-26T02:25:45-05:00 plan_lint · plant plan-bad-status · a fresh scratch copy of the tree
+planted plan-bad-status: {python} -S -c "import pathlib;p=pathlib.Path('milestones/m0/m0_implementation_plan.md');t=p.read_text(encoding='utf-8');assert '- Status: DONE' in t;p.write_text(t.replace('- Status: DONE','- Status: WIBBLE',1),encoding='utf-8')" -> exit 0
+== 2026-11-26T02:25:46-05:00 plan_lint · task M0-V15 · box laserax-ai-server :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=1 · 0.11 s
+lint: checks=964 failed=2 warnings=25 · blocks=465 · flow_rows=465 · verify_fences=0 · history=0 · flow=per-task · header=665/600 · pipeline=9/60 · ladder=6 rungs · refresh=1/5
+FAIL: M0-TI: 'WIBBLE (2026-10-08 09:10, started 08:51) · archived by M0-TB, 2026-10-08' is off §3.3's closed set - the statuses: TODO · IN PROGRESS (<stamp> | awaiting: <question>) · DONE (<date> ...) · BLOCKED (+ what unblocks it) | BLOCKED-D<n> · DEFERRED (wake: <condition>) · N/A (<reason>) (line 667)
+FAIL: Flow row M0-TI says 'DONE', block says None
+WARN: M0-TC14: DONE outside the current phase and 21 lines long - stub it (§2.6)
+WARN: M0-TM16: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-D162: DONE outside the current phase and 33 lines long - stub it (§2.6)
+WARN: M0-D163: DONE outside the current phase and 39 lines long - stub it (§2.6)
+WARN: M0-D165: DONE outside the current phase and 14 lines long - stub it (§2.6)
+WARN: M0-TM17: DONE outside the current phase and 18 lines long - stub it (§2.6)
+WARN: M0-R15: DONE outside the current phase and 11 lines long - stub it (§2.6)
+WARN: M0-D168: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D169: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D166: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D171: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D170: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D172: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D173: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D174: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D167: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-TM18: DONE outside the current phase and 9 lines long - stub it (§2.6)
+WARN: M0-T132: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D175: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D176: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+=== NO-GO: 2 violation(s) ===
+

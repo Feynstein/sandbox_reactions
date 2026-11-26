@@ -88,3 +88,48 @@ test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 549 filtered out
 
 error: test failed, to rerun pass `-p sr-engine --test gpu`
 
+==== 2026-11-26T05:02:02-05:00 touch · clean: proven by M0-V15 2026-11-26T02:25:41-05:00 (a run of the scope; fingerprint bcdfd3f30773) - not re-run
+==== 2026-11-26T02:59:15-05:00 touch · plant edit-ignored · a fresh scratch copy of the tree
+planted edit-ignored: tests/plants/edit-ignored.patch -> crates/sr-engine/shaders/edit.wgsl
+== 2026-11-26T02:59:15-05:00 touch · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh touch physics
+-- touch · exit=101 · 7366.58 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-rvkhnlqz/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-rvkhnlqz/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 12.43s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 2 tests
+test touch::hydrogen_painted_onto_the_sun_like_star_ends_it_a_neutron_star_or_a_black_hole_as_its_new_prediction_says ... paint sun preset of 3136.718 sb under touch_paint.json — the edit aims at 7815.4 sb (m_up 6252.3), the fate leaving WhiteDwarf for one of [Supernova, BlackHole]
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint the drop: step=16 M=3136.697 sb
+paint step=64004 t=729.98 stage=main_sequence M=3117.3
+paint step=128004 t=1439.79 stage=main_sequence M=3072.3
+SR-HEADLESS DONE steps=176900 sim_time=1843.385003 until=met
+paint the readout at the drop (M 3136.697): Some(Sure(WhiteDwarf)); after the edit None: None; 176900 steps, exit 0, summary ending [{"age_years":10533768935.582329,"at_x_h":{"luminosity":3974.658139009605,"radius":15.571189225263543,"sim_time":931.8762610144912,"x_h_c":0.35},"ending":"white_dwarf","id":1,"mass_sb":2699.291261616163,"mass_suns":0.11275126134265093,"predicted_ending":["failed_star","white_dwarf"],"stage":"white_dwarf","stages":[{"from_step":3,"sim_time":0.08901811204850674,"stage":"cloud"},{"from_step":26,"sim_time":0.6312288753688335,"stage":"collapsing"},{"from_step":280,"sim_time":4.314818311482668,"stage":"protostar"},{"from_step":571,"sim_time":7.484305824153125,"stage":"failed_star"},{"from_step":630,"sim_time":8.281440005637705,"stage":"collapsing"},{"from_step":665,"sim_time":8.742510545998812,"stage":"main_sequence"},{"from_step":136372,"sim_time":1523.7333996808156,"stage":"he_core"},{"from_step":147684,"sim_time":1632.5169289065525,"stage":"o_burn"},{"from_step":150932,"sim_time":1661.8287019971758,"stage":"si_burn"},{"from_step":151668,"sim_time":1668.333893822506,"stage":"main_sequence"},{"from_step":152052,"sim_time":1671.7018389794976,"stage":"si_burn"},{"from_step":152228,"sim_time":1673.2413942655548,"stage":"main_sequence"},{"from_step":154948,"sim_time":1696.9764468325302,"stage":"he_shell"},{"from_step":155124,"sim_time":1698.4713353728876,"stage":"main_sequence"},{"from_step":155284,"sim_time":1699.8225717451423,"stage":"he_shell"},{"from_step":156164,"sim_time":1707.1112686702982,"stage":"iron_core"},{"from_step":175588,"sim_time":1833.269794455264,"stage":"white_dwarf"}]}]
+
+thread 'touch::hydrogen_painted_onto_the_sun_like_star_ends_it_a_neutron_star_or_a_black_hole_as_its_new_prediction_says' (799762) panicked at crates/sr-engine/tests/gpu/touch.rs:415:9:
+paint: no edit ever landed: the mass never jumped (X_H,c never under 0.5, or P0 dropped the edits)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says ... erase massive preset of 9643.935 sb under touch_erase.json — the edit aims at 3126.2 sb (m_up 6252.3), the fate leaving Supernova for one of [WhiteDwarf]
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+erase the drop: step=16 M=9643.923 sb
+erase an edit landed: step=25534 M 4547.582 -> 3948.723 sb, x_h_c 0.082
+erase after the edit: step=25598 M=3945.726 sb, stage neutron_star
+SR-HEADLESS DONE steps=27422 sim_time=211.564767 until=met
+erase the readout at the drop (M 9643.923): Some(Sure(Supernova)); after the edit Some((25534, 3945.725638035685)): Some(Sure(WhiteDwarf)); 27422 steps, exit 0, summary ending [{"age_years":1014423926.6165,"at_x_h":{"luminosity":107887.21958288638,"radius":74.14099730828902,"sim_time":84.37769391573966,"x_h_c":0.35},"ending":"neutron_star","id":1,"mass_sb":3952.476307252422,"mass_suns":2.450486342372938,"predicted_ending":["white_dwarf"],"stage":"neutron_star","stages":[{"from_step":3,"sim_time":0.04054468497633934,"stage":"protostar"},{"from_step":668,"sim_time":3.9587284266017377,"stage":"main_sequence"},{"from_step":10925,"sim_time":98.79861862864344,"stage":"he_core"},{"from_step":11085,"sim_time":100.42680748645216,"stage":"main_sequence"},{"from_step":11261,"sim_time":102.21443460136652,"stage":"he_core"},{"from_step":11437,"sim_time":103.99789676070212,"stage":"main_sequence"},{"from_step":11597,"sim_time":105.61862430907786,"stage":"he_core"},{"from_step":11789,"sim_time":107.55232410412282,"stage":"main_sequence"},{"from_step":11933,"sim_time":109.00320741347969,"stage":"he_core"},{"from_step":12141,"sim_time":111.08653790690003,"stage":"main_sequence"},{"from_step":12237,"sim_time":112.04880567081273,"stage":"he_core"},{"from_step":14669,"sim_time":134.95052247773856,"stage":"o_burn"},{"from_step":16157,"sim_time":147.2197856446728,"stage":"si_burn"},{"from_step":16621,"sim_time":150.79187943413854,"stage":"main_sequence"},{"from_step":17565,"sim_time":157.71965100988746,"stage":"iron_core"},{"from_step":21405,"sim_time":181.3182529793121,"stage":"core_collapse"},{"from_step":21406,"sim_time":181.32339208666235,"stage":"supernova"},{"from_step":25438,"sim_time":201.5477753635496,"stage":"neutron_star"}]}]
+
+thread 'touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says' (804833) panicked at crates/sr-engine/tests/gpu/touch.rs:415:9:
+erase: the mass after the edit is 3945.7 sb, 26.2 % from the file's target 3126.2 (band 6 %): regenerate touch_erase.json
+FAILED
+
+failures:
+
+failures:
+    touch::hydrogen_painted_onto_the_sun_like_star_ends_it_a_neutron_star_or_a_black_hole_as_its_new_prediction_says
+    touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 549 filtered out; finished in 7354.02s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+

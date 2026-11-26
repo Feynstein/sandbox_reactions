@@ -39,3 +39,32 @@ test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 549 filtered out
 
 error: test failed, to rerun pass `-p sr-engine --test gpu`
 
+== 2026-11-25T20:25:42-05:00 touch · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh touch physics
+-- touch · exit=0 · 19839.96 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 2 tests
+test touch::hydrogen_painted_onto_the_sun_like_star_ends_it_a_neutron_star_or_a_black_hole_as_its_new_prediction_says ... paint sun preset of 3136.718 sb under touch_paint.json — the edit aims at 7815.4 sb (m_up 6252.3), the fate leaving WhiteDwarf for one of [Supernova, BlackHole]
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+paint the drop: step=16 M=3136.697 sb
+paint an edit landed: step=50560 M 3121.247 -> 3925.734 sb, x_h_c 0.508
+paint after the edit: step=50628 M=7443.342 sb, stage main_sequence
+paint step=64004 t=712.66 stage=main_sequence M=7442.7
+SR-HEADLESS DONE steps=108917 sim_time=1096.845068 until=met
+paint the readout at the drop (M 3136.697): Some(Sure(WhiteDwarf)); after the edit Some((50560, 7443.341740955599)): Some(Sure(Supernova)); 108917 steps, exit 0, summary ending [{"age_years":4358546140.080217,"at_x_h":{"luminosity":27713.047459721616,"radius":141.52997555874504,"sim_time":768.9058511750773,"x_h_c":0.35},"ending":"neutron_star","id":1,"mass_sb":7442.670811623335,"mass_suns":10.30088209662711,"predicted_ending":["supernova"],"stage":"neutron_star","stages":[{"from_step":3,"sim_time":0.08901811204850674,"stage":"cloud"},{"from_step":26,"sim_time":0.6312288753688335,"stage":"collapsing"},{"from_step":280,"sim_time":4.314818311482668,"stage":"protostar"},{"from_step":571,"sim_time":7.484305824153125,"stage":"failed_star"},{"from_step":630,"sim_time":8.281440005637705,"stage":"collapsing"},{"from_step":665,"sim_time":8.742510545998812,"stage":"main_sequence"},{"from_step":50756,"sim_time":576.5378180230036,"stage":"he_core"},{"from_step":50948,"sim_time":577.6469379463233,"stage":"main_sequence"},{"from_step":57908,"sim_time":644.1237141275778,"stage":"he_core"},{"from_step":59748,"sim_time":664.9966328255832,"stage":"main_sequence"},{"from_step":81348,"sim_time":894.7012434210628,"stage":"he_core"},{"from_step":84996,"sim_time":929.7095811571926,"stage":"o_burn"},{"from_step":88644,"sim_time":963.3596602976322,"stage":"si_burn"},{"from_step":90132,"sim_time":976.6630342733116,"stage":"main_sequence"},{"from_step":90516,"sim_time":980.0181198054923,"stage":"he_shell"},{"from_step":90580,"sim_time":980.572049333714,"stage":"main_sequence"},{"from_step":91380,"sim_time":987.4262635419144,"stage":"he_shell"},{"from_step":91492,"sim_time":988.374038318172,"stage":"main_sequence"},{"from_step":91780,"sim_time":990.7802754510194,"stage":"he_shell"},{"from_step":91988,"sim_time":992.5170896397904,"stage":"main_sequence"},{"from_step":92164,"sim_time":993.9848106354476,"stage":"he_shell"},{"from_step":92420,"sim_time":996.0945821693168,"stage":"main_sequence"},{"from_step":92708,"sim_time":998.4217221876606,"stage":"he_shell"},{"from_step":92756,"sim_time":998.8095901440828,"stage":"iron_core"},{"from_step":103028,"sim_time":1066.5517032118514,"stage":"core_collapse"},{"from_step":103029,"sim_time":1066.5572008364834,"stage":"supernova"},{"from_step":106885,"sim_time":1086.766504033003,"stage":"neutron_star"}]}]
+ok
+test touch::the_massive_star_erased_from_outside_in_ends_a_white_dwarf_as_its_new_prediction_says ... erase massive preset of 9643.935 sb under touch_erase.json — the edit aims at 3126.2 sb (m_up 6252.3), the fate leaving Supernova for one of [WhiteDwarf]
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+erase the drop: step=16 M=9643.923 sb
+erase an edit landed: step=7053 M 9120.859 -> 2977.121 sb, x_h_c 0.499
+erase after the edit: step=7117 M=2977.106 sb, stage main_sequence
+erase step=64013 t=695.50 stage=main_sequence M=2587.2
+erase step=128013 t=1285.51 stage=iron_core M=2528.2
+SR-HEADLESS DONE steps=131517 sim_time=1308.311877 until=met
+erase the readout at the drop (M 9643.923): Some(Sure(Supernova)); after the edit Some((7053, 2977.10593715962)): Some(Sure(WhiteDwarf)); 131517 steps, exit 0, summary ending [{"age_years":7133284631.782969,"at_x_h":{"luminosity":3058.0938501017436,"radius":12.308192433186097,"sim_time":421.7059779479168,"x_h_c":0.35},"ending":"white_dwarf","id":1,"mass_sb":2524.7940457528457,"mass_suns":0.04269130081559779,"predicted_ending":["failed_star","white_dwarf"],"stage":"white_dwarf","stages":[{"from_step":3,"sim_time":0.04054468497633934,"stage":"protostar"},{"from_step":668,"sim_time":3.9587284266017377,"stage":"main_sequence"},{"from_step":95869,"sim_time":1028.001976284664,"stage":"he_core"},{"from_step":106093,"sim_time":1126.6316406470723,"stage":"o_burn"},{"from_step":108893,"sim_time":1152.1340432339348,"stage":"si_burn"},{"from_step":109693,"sim_time":1159.1899775131606,"stage":"main_sequence"},{"from_step":109853,"sim_time":1160.583936310839,"stage":"he_shell"},{"from_step":110189,"sim_time":1163.505654443521,"stage":"si_burn"},{"from_step":110557,"sim_time":1166.70285459375,"stage":"main_sequence"},{"from_step":110765,"sim_time":1168.5042760116048,"stage":"he_shell"},{"from_step":111149,"sim_time":1171.8064520820044,"stage":"main_sequence"},{"from_step":111213,"sim_time":1172.354410263244,"stage":"he_shell"},{"from_step":112317,"sim_time":1181.7399224373512,"stage":"main_sequence"},{"from_step":112397,"sim_time":1182.4145438126288,"stage":"he_shell"},{"from_step":113149,"sim_time":1188.6927289958112,"stage":"iron_core"},{"from_step":130141,"sim_time":1298.310161801055,"stage":"white_dwarf"}]}]
+ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 549 filtered out; finished in 19839.80s
+
+

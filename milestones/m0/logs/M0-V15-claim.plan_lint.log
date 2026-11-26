@@ -1,0 +1,125 @@
+== 2026-11-26T11:27:48-05:00 plan_lint · task M0-V15-claim · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.11 s
+lint: checks=986 failed=0 warnings=27 · blocks=473 · flow_rows=473 · verify_fences=0 · history=0 · flow=per-task · header=673/600 · pipeline=9/60 · ladder=6 rungs · refresh=3/5
+WARN: M0-TC14: DONE outside the current phase and 21 lines long - stub it (§2.6)
+WARN: M0-TM16: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-D162: DONE outside the current phase and 33 lines long - stub it (§2.6)
+WARN: M0-D163: DONE outside the current phase and 39 lines long - stub it (§2.6)
+WARN: M0-D165: DONE outside the current phase and 14 lines long - stub it (§2.6)
+WARN: M0-TM17: DONE outside the current phase and 18 lines long - stub it (§2.6)
+WARN: M0-R15: DONE outside the current phase and 11 lines long - stub it (§2.6)
+WARN: M0-D168: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D169: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D166: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D171: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D170: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D172: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D173: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D174: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D167: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-TM18: DONE outside the current phase and 9 lines long - stub it (§2.6)
+WARN: M0-T132: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D175: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D176: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: a line in 4 blocks (M0-D222 · M0-D224 · M0-D225 · M0-D226): '- Done when: Verify 1 GO on the lead's run; the claim is its short scope...' - state it once in Rules and cite it
+WARN: `Deliver:` items no Verify step names (write `→ Verify <n>` or `none — <why>`): M0-D222 4 · M0-D223 1 · M0-D224 1 · M0-D225 1 · M0-D226 2 · M0-D227 1
+=== GO ===
+
+== 2026-11-26T11:28:46-05:00 plan_lint · task M0-V15-claim · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.11 s
+lint: checks=986 failed=0 warnings=26 · blocks=473 · flow_rows=473 · verify_fences=0 · history=0 · flow=per-task · header=673/600 · pipeline=9/60 · ladder=6 rungs · refresh=3/5
+WARN: M0-TC14: DONE outside the current phase and 21 lines long - stub it (§2.6)
+WARN: M0-TM16: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-D162: DONE outside the current phase and 33 lines long - stub it (§2.6)
+WARN: M0-D163: DONE outside the current phase and 39 lines long - stub it (§2.6)
+WARN: M0-D165: DONE outside the current phase and 14 lines long - stub it (§2.6)
+WARN: M0-TM17: DONE outside the current phase and 18 lines long - stub it (§2.6)
+WARN: M0-R15: DONE outside the current phase and 11 lines long - stub it (§2.6)
+WARN: M0-D168: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D169: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D166: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D171: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D170: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D172: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D173: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D174: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D167: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-TM18: DONE outside the current phase and 9 lines long - stub it (§2.6)
+WARN: M0-T132: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D175: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D176: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: a line in 4 blocks (M0-D222 · M0-D224 · M0-D225 · M0-D226): '- Done when: Verify 1 GO on the lead's run; the claim is its short scope...' - state it once in Rules and cite it
+=== GO ===
+
+== 2026-11-26T12:57:44-05:00 plan_lint · task M0-V15-claim · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.11 s
+lint: checks=986 failed=0 warnings=26 · blocks=473 · flow_rows=473 · verify_fences=0 · history=0 · flow=per-task · header=673/600 · pipeline=9/60 · ladder=6 rungs · refresh=3/5
+WARN: M0-TC14: DONE outside the current phase and 21 lines long - stub it (§2.6)
+WARN: M0-TM16: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-D162: DONE outside the current phase and 33 lines long - stub it (§2.6)
+WARN: M0-D163: DONE outside the current phase and 39 lines long - stub it (§2.6)
+WARN: M0-D165: DONE outside the current phase and 14 lines long - stub it (§2.6)
+WARN: M0-TM17: DONE outside the current phase and 18 lines long - stub it (§2.6)
+WARN: M0-R15: DONE outside the current phase and 11 lines long - stub it (§2.6)
+WARN: M0-D168: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D169: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D166: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D171: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D170: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D172: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D173: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D174: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D167: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-TM18: DONE outside the current phase and 9 lines long - stub it (§2.6)
+WARN: M0-T132: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D175: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D176: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: a line in 4 blocks (M0-D222 · M0-D224 · M0-D225 · M0-D226): '- Done when: Verify 1 GO on the lead's run; the claim is its short scope...' - state it once in Rules and cite it
+=== GO ===
+
+== 2026-11-26T13:04:45-05:00 plan_lint · task M0-V15-claim · box laserax-ai :: {python} tools/pb/plan.py lint --plan milestones/m0/m0_implementation_plan.md
+-- plan_lint · exit=0 · 0.24 s
+lint: checks=986 failed=0 warnings=26 · blocks=473 · flow_rows=473 · verify_fences=0 · history=0 · flow=per-task · header=673/600 · pipeline=9/60 · ladder=6 rungs · refresh=3/5
+WARN: M0-TC14: DONE outside the current phase and 21 lines long - stub it (§2.6)
+WARN: M0-TM16: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-D162: DONE outside the current phase and 33 lines long - stub it (§2.6)
+WARN: M0-D163: DONE outside the current phase and 39 lines long - stub it (§2.6)
+WARN: M0-D165: DONE outside the current phase and 14 lines long - stub it (§2.6)
+WARN: M0-TM17: DONE outside the current phase and 18 lines long - stub it (§2.6)
+WARN: M0-R15: DONE outside the current phase and 11 lines long - stub it (§2.6)
+WARN: M0-D168: DONE outside the current phase and 20 lines long - stub it (§2.6)
+WARN: M0-D169: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D166: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D171: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D170: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D172: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D173: DONE outside the current phase and 15 lines long - stub it (§2.6)
+WARN: M0-D174: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D167: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-TM18: DONE outside the current phase and 9 lines long - stub it (§2.6)
+WARN: M0-T132: DONE outside the current phase and 10 lines long - stub it (§2.6)
+WARN: M0-D175: DONE outside the current phase and 16 lines long - stub it (§2.6)
+WARN: M0-D176: DONE outside the current phase and 17 lines long - stub it (§2.6)
+WARN: M0-TJ1: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T101: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T111: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-T112: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: M0-TD: `Read:` names milestones/m0/reports/lives.md whole (677 lines > 500) - name a section or a line range
+WARN: a line in 4 blocks (M0-D222 · M0-D224 · M0-D225 · M0-D226): '- Done when: Verify 1 GO on the lead's run; the claim is its short scope...' - state it once in Rules and cite it
+=== GO ===
+

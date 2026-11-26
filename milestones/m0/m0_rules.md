@@ -407,3 +407,113 @@ the lead with the new evidence, never applies it. Started by M0-TB, 2026-10-08.
 ### Python
 - Python: a `.venv/` at the repo root when a task needs packages (R1); the playbook's tools need
   none.
+
+## Repo facts moved byte for byte from the plan by M0-TC15, 2026-11-26 (§11 (iv))
+
+### Product
+- Product: Sandbox Reactions — a falling-sand physics sandbox game; sandbox mode first, story mode
+  later (reports/bootstrap.md §3). Product language: English (UI strings, element names,
+  messages). Plans, reports and handoffs: English.
+
+### Repo
+- Repo: green field (2026-10-08) — PLAYBOOK.md v12.2 and the bootstrap's files, no code; the
+  bootstrap pushed as 9a07813 and 7acd1fc; remote `origin` =
+  git@github.com:Feynstein/sandbox_reactions.git, branch `main`.
+
+### Targets
+- Targets: desktop on linux-pc first — built and run on win-laptop too since M0-TJ3 (R5, R15); a tiny
+  web build kept alive from the first build lot — the site and its live deploy are `../tykun_games`'s (R20,
+  M0-TJ5); Steam later. The lead: "Ideally I would for it to run on a website, or to be able to sell it on steam."
+
+### Boxes
+- Boxes (R5): `linux-pc` — this PC, hostname laserax-ai, Ubuntu 24.04.5 LTS, kernel 7.0.0-38,
+  bash, 32 CPU threads, 188 GiB RAM; GPUs NVIDIA GeForce RTX 5090 32 GB and Quadro RTX 4000 8 GB
+  (driver 595.99.02) and an Intel UHD 770; OpenGL 4.6 (renderer: the Quadro), Vulkan ICDs present,
+  Vulkan loader dev 1.3.275; Wayland session with XWayland on DISPLAY=:1 — in play.
+  `win-laptop` — the lead's Windows laptop, hostname Laser2025-20, probed by M0-TE-win (2026-10-08): Windows 11
+  Pro build 26300, Intel Core Ultra 9 185H (16 cores / 22 threads), 31.5 GiB RAM (disk: Hazards); GPUs Intel
+  Arc Graphics (driver 32.0.101.6790) and NVIDIA GeForce RTX 4080 Laptop (32.0.15.8129); shells PowerShell 5.1 and
+  Git Bash 5.3.15 (the Bash tool — every toolkit call goes through it, as Hazards gives it, M0-D7) — in play
+  for every M0 block, the lot V's included, since M0-TJ3 (R5, R15; reports/win_laptop.md § Box, § Ruling).
+  `laserax-ai-server` — ybelanger@192.168.1.134 over SSH from linux-pc (key auth), repo `~/workspace/sandbox_reactions`, probed by
+  M0-D80 (2026-10-22): Ubuntu 24.04.5, kernel 7.0.0-38, 20 threads, 125 GiB; NVIDIA RTX 4090 24 GB and RTX 3060 12 GB (driver
+  595.99.02); Rust 1.99.0 user-level, off the PATH (tests/cargo.sh finds it); no GitHub key. The lead, 2026-10-22: «use the RTX 4090 to
+  run your tests there», «Push from here», «Iterate there, claim here»: an agent iterates GPU tests there (`SR_TEST_ADAPTER="RTX 4090"`,
+  the tree by `git push ybelanger@192.168.1.134:workspace/sandbox_reactions main` and `rsync -a --exclude .git --exclude build --exclude
+  .venv ./ ybelanger@192.168.1.134:workspace/sandbox_reactions/`); every GPU run of a block executed on laserax-ai, the claim included,
+  ran there from R18 (the lead, 2026-10-22; tasks/M0-D80.md § laserax-ai-server) until R21 moved them back to linux-pc's RTX 5090 (2026-11-15).
+
+### Toolchains on linux-pc
+- Toolchains on linux-pc (probed 2026-10-08, re-probed by M0-TP): present — g++/gcc 13.3.0, GNU
+  make 4.3, ninja 1.11.1, pkg-config 1.8.1, Python 3.12.3 (uv 0.12.3), Node 20.20.2 + npm 10.8.2,
+  git 2.43.0, jq, Xvfb + xvfb-run; Rust 1.99.0 stable (rustup 1.29.1, host target x86_64 only —
+  no wasm32 until M0-TH added `wasm32-unknown-unknown` and trunk 0.21.14 — a prebuilt release,
+  sha256-checked, in `~/.cargo/bin/trunk`, R3, 2026-10-08, logs/M0-TH.log) in `~/.cargo/bin`,
+  installed 2026-10-06, off the PATH (Hazards); Godot 4.7 stable on
+  the PATH (`~/.local/bin/godot` → `~/Applications/godot/`) with its 4.7 export templates (web,
+  Windows, Linux); dev libraries x11 1.8.7, xcursor, xrandr, xi, wayland-client 1.22.0, xkbcommon
+  1.6.0, vulkan 1.3.275, libudev 255, GL, EGL. Missing — clang, cmake, SDL2/SDL3 dev, ALSA dev,
+  glfw3 dev, vulkaninfo, emcc, wasm-pack. Installs follow the approved table (m0_contrat.md §1.2,
+  cleared by the lead at M0-TC, 2026-10-08) and R3. Also present (probed by M0-TC): clippy and
+  rustfmt in the Rust toolchain; Mesa's software Vulkan (lavapipe, `lvp_icd.json`) beside the
+  NVIDIA and Intel drivers; Chrome at /usr/bin/google-chrome.
+
+### Agent (the probe)
+- Agent (the probe, §B.3, 2026-10-08): Claude Code 2.1.292 (`AI_AGENT=claude-code_2-1-292_agent`,
+  `CLAUDECODE=1`). The switch plugin `pb-switch@pb` is installed on linux-pc
+  (`~/.claude/plugins/installed_plugins.json` lists it); `rung_record.py now` reads whether it is
+  current against this playbook's switch — v12.3's 12.3.1 once M0-TH-adopt-a swaps `tools/pb/switch.mjs`, the
+  project's 12.2.1 until then. Every rung of the 2026-10-08 ladder is in its `RUNGS` table; whether the table holds the
+  2026-10-11 ladder's new rungs (Fable 5.1, high · Opus 5.5, xhigh · Haiku 5.5, high) is read from `now` after that
+  swap (M0-TE-V12.3: NOT RUN before the swap).
+
+### Toolchains on win-laptop
+- Toolchains on win-laptop (M0-TE-win, 2026-10-08, logs/M0-TE-win.log): present — Python 3.13.14 as `python3` (Hazards:
+  the Store alias; `python` 3.12.10), Node 26.8.2 + npm 11.19.1 (the table says Node 20; kept, ≥ 20), git
+  2.55.0, Git Bash 5.3.15, Chrome 154.0.8037.98 at `C:\Program Files\Google\Chrome\Application\chrome.exe`,
+  Visual Studio 2026 Community with MSVC 14.44/14.51 and Windows SDKs; installed by M0-TE-win (R3) — rustc/cargo
+  1.99.0 (rustup update; was 1.97.1) with clippy, rustfmt and `wasm32-unknown-unknown`, trunk 0.21.14 (release
+  zip, sha256-checked) in `~/.cargo/bin`, and rsync 3.5.1 (outside the table — the lead's yes, GPL-3.0, a dev
+  tool) in `~/bin`; user variable for symlinks (Hazards). Missing — playwright-core (arrives with
+  web/package.json, M0-T15), the Vulkan SDK. `~/.cargo/bin` is on the PATH here (it is not on linux-pc).
+
+### Folders
+- Folders: `milestones/m0/` holds this plan, m0_rules.md, the contract (m0_contrat.md) and
+  logs/ reports/ tasks/ images/ (`.gitkeep` holds the empty ones); `tools/pb/` (the toolkit),
+  `docs/agent/testing.md`, `tests/toolchain/` (the one-file program) and `tests/plants/` (planted-bug
+  patches) arrived with M0-TH, 2026-10-08; no game source tree yet.
+
+### Run commands, harness scopes, launchers
+- Run commands, harness scopes, launchers: the harness is `tools/pb/verify.json` (three scopes,
+  M0-TH; its loop time is Rules' budget line); no app yet — `tools/pb/launch.json`
+  (contract §3.6) arrives with M0-T4 (`headless-boot`), M0-T5 (`game`, `game-xvfb`, `game-offscreen`) and
+  M0-T15 (`web`), the double-click launchers start.sh and start.bat (§8, M0-TJ3) with M0-T6; cargo builds into `build/target/` (contract §6.5 as
+  amended by M0-TG, the lead's yes, 2026-10-08). Run commands for the toolchain: `~/.cargo/bin/cargo`,
+  `~/.cargo/bin/trunk` (off the PATH — Hazards); builds go under the git-ignored `build/`.
+
+### Hazards: the five linux-pc and agent entries of 2026-10-08
+- 2026-10-08 · Claude Code's auto mode refused the bootstrap agent (a) extracting the playbook's
+  tools to a scratch folder and running them ("Code from External") and (b) writing AGENTS.md,
+  CLAUDE.md and GEMINI.md from §C ("Instruction Poisoning"). Root cause: its classifier reads
+  code and auto-loaded instruction files taken from PLAYBOOK.md as external content. Effect:
+  M0-TH's extraction (§B.4), and any later write of the instruction files or the switch's hook,
+  may be refused too — a refusal goes to the lead as a question (approve it, or run the line
+  themselves), never around it.
+- 2026-10-08 · linux-pc drives its display from the Quadro RTX 4000 (glxinfo: "OpenGL renderer
+  string: Quadro RTX 4000/PCIe/SSE2"); the RTX 5090 and an Intel UHD 770 are present too. Root
+  cause: three GPUs, the display on the Quadro. Effect: a graphics API's default adapter may not be
+  the 5090 — adapter choice is explicit (contract §6), and every GPU test and performance number
+  names the adapter it ran on.
+- 2026-10-08 · The desktop session is Wayland (`XDG_SESSION_TYPE=wayland`, XWayland on `:1`). Effect:
+  windowing behaves differently under Wayland and X11; headless checks use offscreen rendering or
+  a private Xvfb display (R4), never the lead's desktop.
+- 2026-10-08 · The root filesystem is 82% full (165 GB free of 937 GB). Effect: build caches (a
+  compiler's target folder, a web toolchain, shader caches) can take tens of GB — keep them in
+  known, git-ignored folders; scratch copies go through `tools/pb/scratch_copy.sh` (§11).
+- 2026-10-08 · git keeps no empty folder: `.gitkeep` files, committed in 9a07813, hold
+  `milestones/m0/{logs,tasks,images}/`, so a fresh clone (win-laptop) has them for the plan lint.
+- 2026-10-08 · Rust is installed user-level but off the PATH: `~/.cargo/bin` holds rustc and cargo
+  1.99.0 (rustup, 2026-10-06) and no shell rc file sources `~/.cargo/env` (probed by M0-TP). Root
+  cause: the rustup install's PATH line is absent. Effect: a scope, a launcher or an agent calling
+  `cargo` bare fails "not found" — call `~/.cargo/bin/cargo` or source `~/.cargo/env` first; a
+  PATH edit in the lead's shell files is the lead's.

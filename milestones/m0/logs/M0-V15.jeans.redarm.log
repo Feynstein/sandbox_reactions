@@ -1,0 +1,99 @@
+==== 2026-11-26T09:23:43-05:00 jeans · clean: proven by M0-V15 2026-11-26T02:25:41-05:00 (a run of the scope; fingerprint 8030da982eab) - not re-run
+==== 2026-11-26T09:23:13-05:00 jeans · plant no-pressure-flux · a fresh scratch copy of the tree
+planted no-pressure-flux: tests/plants/no-pressure-flux.patch -> crates/sr-engine/shaders/hydro.wgsl
+== 2026-11-26T09:23:13-05:00 jeans · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh jeans physics
+-- jeans · exit=101 · 14.95 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-7lpv30iu/arm1/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-7lpv30iu/arm1/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 12.37s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 6 tests
+test jeans::at_a_hundred_times_the_sigma_there_is_one_object_and_no_secondary_peak ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-JEANS end: step 129, t = 3.0092, Σ_max 116.876: 1 object(s) of mass 3351.6 (at most 1 in any summary); largest secondary peak 0.7263 of Σ_max at the end, 1.0000 in any summary
+
+thread 'jeans::at_a_hundred_times_the_sigma_there_is_one_object_and_no_secondary_peak' (824105) panicked at crates/sr-engine/tests/gpu/jeans.rs:463:5:
+a secondary peak at 0.7263 of the central Σ (> 0.1) at step 129
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test jeans::the_collapse_reaches_a_hundred_times_the_central_sigma ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-JEANS step     0 t   0.0000: Σmax    1.014, J 0.1286 at (63, 63), 0 object(s) of mass -0.0, secondary peak 0.9987 of Σmax
+SR-JEANS step    73 t   2.3149: Σmax    6.873, J 5.8645 at (65, 41), 1 object(s) of mass 3351.6, secondary peak 1.0000 of Σmax
+SR-JEANS step   117 t   2.9085: Σmax   55.699, J 43.6479 at (73, 63), 1 object(s) of mass 3351.6, secondary peak 0.8793 of Σmax
+SR-JEANS step   129 t   3.0092: Σmax  116.876, J 104.1216 at (70, 63), 1 object(s) of mass 3351.6, secondary peak 0.7263 of Σmax
+SR-JEANS reach: Σ_max 116.876 at the end (largest 116.876) after 129 steps, t = 3.0092 (start 0.9998, target 100.0); 27 summaries
+ok
+test jeans::the_jeans_number_never_rises_a_hundredth_above_its_start ... SR-JEANS adiabat: J at the start 0.1286, worst 104.1216 (×809.3758, bound ×1.01) at step 129, cell (70, 63), Σ_max then 116.876
+
+thread 'jeans::the_jeans_number_never_rises_a_hundredth_above_its_start' (824112) panicked at crates/sr-engine/tests/gpu/jeans.rs:487:5:
+J = 104.1216 = ×809.376 its start 0.1286 at step 129 (t = 3.0092) in cell (70, 63): the collapse lost entropy
+FAILED
+test jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary ... SR-JEANS J: worst 104.1216 (bound 0.25) at step 129, t = 3.0092, cell (70, 63), Σ_max then 116.876; over 27 summaries
+
+thread 'jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary' (824113) panicked at crates/sr-engine/tests/gpu/jeans.rs:438:5:
+J = 104.1216 > 0.25 at step 129 (t = 3.0092) in cell (70, 63), Σ_max 116.876
+FAILED
+test jeans::the_jeans_number_the_peak_finder_and_the_object_count_see_what_they_must ... SR-JEANS checks: J(1, 2) = 0.25, peaks and objects counted on synthetic planes (NOT PROVEN on the star)
+ok
+test jeans::the_scene_is_the_disk_cloud_at_five_hundredths_of_w_with_a_deterministic_one_percent_ripple ... SR-JEANS scene: central Σ 0.9998, W -264177.50, U_th 13208.96, U_th/|W| 0.050000
+SR-JEANS ripple: worst |Σ'/Σ − (1 + 0.01(cos 3θ + cos 5θ))| = 5.77e-8, mass 3351.648 → 3351.648
+ok
+
+failures:
+
+failures:
+    jeans::at_a_hundred_times_the_sigma_there_is_one_object_and_no_secondary_peak
+    jeans::the_jeans_number_never_rises_a_hundredth_above_its_start
+    jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary
+
+test result: FAILED. 3 passed; 3 failed; 0 ignored; 0 measured; 545 filtered out; finished in 2.50s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
+==== 2026-11-26T09:23:28-05:00 jeans · plant face-work-heat-pays · a fresh scratch copy of the tree
+planted face-work-heat-pays: tests/plants/face-work-heat-pays.patch -> crates/sr-engine/shaders/hydro.wgsl
+== 2026-11-26T09:23:29-05:00 jeans · task M0-V15 · box laserax-ai-server :: bash tests/gpu.sh jeans physics
+-- jeans · exit=101 · 14.60 s
+   Compiling sr-physics v0.0.0 (/tmp/pb-redarm-7lpv30iu/arm2/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/pb-redarm-7lpv30iu/arm2/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 12.37s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 6 tests
+test jeans::at_a_hundred_times_the_sigma_there_is_one_object_and_no_secondary_peak ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-JEANS end: step 161, t = 3.1713, Σ_max 108.615: 1 object(s) of mass 3351.5 (at most 1 in any summary); largest secondary peak 0.0000 of Σ_max at the end, 1.0000 in any summary
+ok
+test jeans::the_collapse_reaches_a_hundred_times_the_central_sigma ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+SR-JEANS step     0 t   0.0000: Σmax    1.014, J 0.1286 at (63, 63), 0 object(s) of mass -0.0, secondary peak 0.9987 of Σmax
+SR-JEANS step    73 t   2.1927: Σmax    2.518, J 0.2466 at (98, 61), 1 object(s) of mass 3351.6, secondary peak 0.9588 of Σmax
+SR-JEANS step   153 t   3.1245: Σmax   54.573, J 0.7820 at (84, 62), 1 object(s) of mass 3351.5, secondary peak 0.0000 of Σmax
+SR-JEANS step   161 t   3.1713: Σmax  108.615, J 0.9831 at (82, 63), 1 object(s) of mass 3351.5, secondary peak 0.0000 of Σmax
+SR-JEANS reach: Σ_max 108.615 at the end (largest 108.615) after 161 steps, t = 3.1713 (start 0.9998, target 100.0); 25 summaries
+ok
+test jeans::the_jeans_number_never_rises_a_hundredth_above_its_start ... SR-JEANS adiabat: J at the start 0.1286, worst 0.9831 (×7.6418, bound ×1.01) at step 161, cell (82, 63), Σ_max then 108.615
+
+thread 'jeans::the_jeans_number_never_rises_a_hundredth_above_its_start' (824319) panicked at crates/sr-engine/tests/gpu/jeans.rs:487:5:
+J = 0.9831 = ×7.642 its start 0.1286 at step 161 (t = 3.1713) in cell (82, 63): the collapse lost entropy
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary ... SR-JEANS J: worst 0.9831 (bound 0.25) at step 161, t = 3.1713, cell (82, 63), Σ_max then 108.615; over 25 summaries
+
+thread 'jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary' (824320) panicked at crates/sr-engine/tests/gpu/jeans.rs:438:5:
+J = 0.9831 > 0.25 at step 161 (t = 3.1713) in cell (82, 63), Σ_max 108.615
+FAILED
+test jeans::the_jeans_number_the_peak_finder_and_the_object_count_see_what_they_must ... SR-JEANS checks: J(1, 2) = 0.25, peaks and objects counted on synthetic planes (NOT PROVEN on the star)
+ok
+test jeans::the_scene_is_the_disk_cloud_at_five_hundredths_of_w_with_a_deterministic_one_percent_ripple ... SR-JEANS scene: central Σ 0.9998, W -264177.50, U_th 13208.96, U_th/|W| 0.050000
+SR-JEANS ripple: worst |Σ'/Σ − (1 + 0.01(cos 3θ + cos 5θ))| = 5.77e-8, mass 3351.648 → 3351.648
+ok
+
+failures:
+
+failures:
+    jeans::the_jeans_number_never_rises_a_hundredth_above_its_start
+    jeans::the_jeans_number_stays_within_a_quarter_everywhere_in_every_summary
+
+test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 545 filtered out; finished in 2.12s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+
