@@ -1,6 +1,6 @@
 --- a/crates/sr-engine/shaders/hydro.wgsl
 +++ b/crates/sr-engine/shaders/hydro.wgsl
-@@ -1097,6 +1097,23 @@
+@@ -1147,6 +1147,23 @@
      write_next(cell, u);
  }
  
@@ -24,7 +24,7 @@
  // P4's second dispatch when the step runs P2, after the mid pass (§1.4.2 [M0-D183], [M0-D192]): Σ_src at the half step
  // over the box into `mid_out`'s plane MID_SRC — the mid pass's ½(Σⁿ + Σⁿ⁺¹) where it is at least Σ_vac, else 0 (a held
  // cell's is its own Σ, the mid pass keeping it; a cell left empty is below Σ_vac) — the source P2's half-step chains solve
-@@ -1106,8 +1123,15 @@
+@@ -1156,8 +1173,15 @@
      if (id.x >= abox.w || id.y >= abox.h) {
          return;
      }
@@ -44,7 +44,7 @@
  
 --- a/crates/sr-engine/src/step/hydro.rs
 +++ b/crates/sr-engine/src/step/hydro.rs
-@@ -254,9 +254,19 @@
+@@ -357,9 +357,19 @@
          let group = device.create_bind_group(&wgpu::BindGroupDescriptor {
              label: Some("P4 hydro_mid"),
              layout: &pipeline.get_bind_group_layout(0),
@@ -65,4 +65,4 @@
 +        let eos_group = eos.bind_group(device, &pipeline);
          [pass, Dispatch { label: "hydro_mid", pipeline, bind_groups: vec![group, eos_group], size: tiles() }]
      });
-     mid.into_iter().flatten().chain([
+     let dispatches = mid.into_iter().flatten().chain([

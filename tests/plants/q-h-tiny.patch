@@ -1,3 +1,12 @@
+q-h-tiny (scope `squeeze`, M0-T98b; re-cut by M0-D217): Q_H ÷ 100 — physics.json's q_h 8700 → 87 — with
+assets/calibration.json's physics_hash rewritten to the planted assets' so G-CAL stays green and the red is the
+squeeze's (no main sequence), never `calibration out of date` (exit 6).
+The calibration hunk carries no context a recalibration rewrites: none before the physics_hash line (the
+ns_sigma_max_sb line above it changes at every recalibration), one after ("preset_mass_sb": {). It keeps applying
+across recalibrations as long as physics_hash does not move.
+Re-cut both hunks whenever assets/physics.json, elements.json or reactions.json change (physics_hash moves): the
+`-` hash is the clean assets' `sr_physics::calibration::physics_hash_of`, the `+` hash the same with q_h 87
+(computed in a scratch crate; 8e2de6e4… → 02a1e635…, re-measured by M0-D217 on 2026-11-27).
 --- a/assets/physics.json
 +++ b/assets/physics.json
 @@ -5,7 +5,7 @@
@@ -11,12 +20,7 @@
    "a_c_alpha": 1e-3,
 --- a/assets/calibration.json
 +++ b/assets/calibration.json
-@@ -13,7 +13,7 @@
-     "git": "255ec37-dirty"
-   },
-   "ns_sigma_max_sb": 4853.169981814195,
+@@ -17,2 +17,2 @@
 -  "physics_hash": "8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402",
 +  "physics_hash": "02a1e635d87aa4c27b69eb13e7c00aa1e46fa411f6f61bd2f1ae68402a4fad6e",
    "preset_mass_sb": {
-     "giant": 18578.60539133799,
-     "massive": 9810.393781245308,

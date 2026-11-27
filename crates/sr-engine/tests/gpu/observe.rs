@@ -397,7 +397,7 @@ fn until_is_checked_before_a_device_is_touched() {
 /// its final dump byte for byte; a snapshot of another step beside the dump, none beside it, and `--continue` without
 /// `--load-dump` are exit 4. The life ran to `stage:main_sequence` (step 1,616) until §0.5 [M0-D141] showed main_sequence
 /// three frames after the ignition (672 → 704 on the RTX 4090), ahead of the cut; it now runs to sim time 20 (step 1,623),
-/// main_sequence shown from 704 on.
+/// main_sequence shown from 704 on. A cut where the `ignited` flag cannot be re-derived: [`CONTINUE_DARK`] (M0-D224).
 const CONTINUE_UNTIL: &str = "sim_time:20";
 const CONTINUE_EVERY: u64 = 256;
 const CONTINUE_CUT: u64 = 768;
@@ -480,6 +480,45 @@ fn a_life_cut_at_a_dump_and_continued_writes_the_unbroken_lifes_summary() {
     let (code, lines) = run_captured(&["--scene", "preset:sun", "--until", "ending", "--continue"].map(String::from));
     assert_eq!(code, 4, "{lines:?}");
     assert!(lines.iter().any(|l| l.contains("--continue needs --load-dump")), "{lines:?}");
+}
+
+/// M0-D224 — the unbroken life's dump [`CONTINUE_DARK`], continued, writes the unbroken life's summary.json (wall_s aside),
+/// events.jsonl and final dump: the restored `ignited` flag is the only thing that keeps main_sequence shown there. At
+/// [`CONTINUE_CUT`] the flag is re-derived two frames on (L_H 0.54 L at step 816 on the RTX 5090, the light window), inside
+/// the display hold, so a snapshot that lost it reads the same; between 464 and 640 the Sun-like after its flash is dark
+/// (L_H 0, X_H,c 0.993 of its most: neither §0.5 [M0-D53]'s light nor [M0-D78]'s burnt fuel) and lights again at 672 — nine
+/// frames on from 512, past the hold, so a lost flag would show the rows' unignited stage (tasks/M0-D224.md). Asserted
+/// first, so the case cannot go blind quietly: the ignition fired before the cut and the cut's object reads neither rule.
+const CONTINUE_DARK: u64 = 2 * CONTINUE_EVERY;
+
+#[test]
+fn a_life_continued_where_its_flag_cannot_be_re_derived_writes_the_unbroken_lifes_summary() {
+    let Continued { dir, steps } = continued_life();
+    let whole = dir.join("whole");
+    let snapshot: Value = serde_json::from_str(&text(&whole.join("dumps"), &format!("s_{CONTINUE_DARK}.observers.json"))).unwrap();
+    let watch = &snapshot["watch"];
+    let real = |v: &Value| v.as_str().and_then(|s| s.parse::<f64>().ok()).unwrap_or_else(|| panic!("not an exact f64: {v}"));
+    let lit = watch["events"].as_array().expect("events").iter().any(|e| e["kind"] == "ignition" && e["step"].as_u64().is_some_and(|s| s < CONTINUE_DARK));
+    assert!(lit, "the life ignited before the cut {CONTINUE_DARK}: {}", watch["events"]);
+    for o in watch["tracker"]["objects"].as_array().expect("objects") {
+        let s = watch["stages"].as_array().expect("stages").iter().find(|s| s["id"] == o["id"]).expect("the object's stages");
+        let (x_h, x_h_max, l_h, l) = (real(&o["x_c"][0]), real(&s["x_h_max"]), real(&o["l_group"][0]), real(&o["luminosity"]));
+        let light = l > 0.0 && (0.5 * l..=2.0 * l).contains(&l_h);
+        let fuel = x_h_max >= 1e-3 && x_h <= 0.9 * x_h_max && l_h > 0.0;
+        assert!(!light && !fuel, "the cut {CONTINUE_DARK} no longer holds the flag alone (L_H {l_h}, L {l}, X_H,c {x_h} of {x_h_max}): move it");
+    }
+
+    let on = dir.join("dark");
+    let life = continue_args(2000);
+    let from = whole.join("dumps").join(format!("s_{CONTINUE_DARK}.bin")).display().to_string();
+    let args: Vec<&str> = life.iter().map(String::as_str).chain(["--load-dump", &from, "--continue"]).collect();
+    let (code, lines) = sun_life(&on, &args);
+    assert_eq!(code, 0, "{lines:?}");
+    let but_wall = |d: &Path| text(d, "summary.json").lines().filter(|l| !l.trim_start().starts_with("\"wall_s\"")).map(String::from).collect::<Vec<_>>();
+    assert_eq!(but_wall(&on), but_wall(&whole), "summary.json, wall_s aside, continued from {CONTINUE_DARK}");
+    assert_eq!(text(&on, "events.jsonl"), text(&whole, "events.jsonl"));
+    let last = format!("dumps/s_{steps}.bin");
+    assert!(std::fs::read(on.join(&last)).unwrap() == std::fs::read(whole.join(&last)).unwrap(), "the final dump, byte for byte");
 }
 
 /// M0-D103 — summary.json's four readouts (§2.12.2): a short life of the Sun-like preset at its calibrated mass, as headless

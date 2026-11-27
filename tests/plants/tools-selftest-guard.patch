@@ -1,0 +1,11 @@
+--- a/tools/pb/verify.py
++++ b/tools/pb/verify.py
+@@ -920,7 +920,7 @@
+                         except OSError as exc:
+                             note = f"not started: {exc}"
+                         else:
+-                            GUARD.hold(proc.pid, sr.log, part, label)    # its group stopped if this run dies (M0-D220)
++                            pass                                             # PLANT: the guard never holds the group
+                 if proc is not None:
+                     try:
+                         rc = wait_beating(proc, float(spec.get("timeout_s", 900)), sr, label, part, t0)

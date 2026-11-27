@@ -1,6 +1,6 @@
 --- a/crates/sr-physics/src/observe/stages.rs
 +++ b/crates/sr-physics/src/observe/stages.rs
-@@ -335,7 +335,7 @@
+@@ -338,7 +338,7 @@
          shown,
          Some(Stage::IronCore | Stage::CoreCollapse | Stage::Supernova | Stage::NeutronStar | Stage::BlackHole)
      );
@@ -8,4 +8,4 @@
 +    if burning && past_iron && false {
          return true;
      }
-     let rank = |s: Stage| match s {
+     if let (Some(r), Some(q)) = (ladder_rank(stage), shown.and_then(ladder_rank)) {

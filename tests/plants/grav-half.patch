@@ -1,6 +1,6 @@
 --- a/crates/sr-physics/src/reference/hydro.rs
 +++ b/crates/sr-physics/src/reference/hydro.rs
-@@ -616,7 +616,7 @@
+@@ -714,7 +714,7 @@
              gravity.map(|f| {
                  let x = (gi % pw).clamp(GHOSTS, GHOSTS + w - 1) - GHOSTS;
                  let y = (gi / pw).clamp(GHOSTS, GHOSTS + h - 1) - GHOSTS;
@@ -8,15 +8,33 @@
 +                [0.5 * f.gx[y * w + x], 0.5 * f.gy[y * w + x]]
              })
          };
-
+ 
+@@ -899,7 +899,7 @@
+                 // booked, not taken; no work crosses a still face (§1.4.2 [M0-TG2]).
+                 if let Some((src, f, pull, gas, gas_pull)) = &mid_field {
+                     let m = mids[i];
+-                    let mut kick = [dt * src[i] * f.gx[i], dt * src[i] * f.gy[i]];
++                    let mut kick = [dt * src[i] * 0.5 * f.gx[i], dt * src[i] * 0.5 * f.gy[i]];
+                     // [M0-D194] The net kick on the gas's own field — a free cell's g_mid, a held cell's g_pull_mid (its spared
+                     // kick) —, so the held core's and the sinks' pulls, booked elsewhere, cancel out of it; and the densest free
+                     // cell (the lowest index on a tie).
 --- a/crates/sr-engine/shaders/hydro.wgsl
 +++ b/crates/sr-engine/shaders/hydro.wgsl
-@@ -267,7 +267,7 @@
+@@ -385,7 +385,7 @@
          return vec2<f32>(0.0, 0.0);
      }
      let cell = u32(clamp(y, 0, i32(dims.height) - 1)) * dims.width + u32(clamp(x, 0, i32(dims.width) - 1));
 -    return vec2<f32>(grav[cell], grav[dims.cells + cell]);
 +    return 0.5 * vec2<f32>(grav[cell], grav[dims.cells + cell]);
  }
-
- // φ at (x, y), a ghost's its edge cell's (so no work is done across the world's edge); read only when the step runs P2.
+ 
+ // φ_mid at (x, y), the half step's (§1.4.2 [M0-D183]), a ghost's its edge cell's (so no work is done across the world's
+@@ -407,7 +407,7 @@
+ fn mid_kick_at(x: i32, y: i32) -> vec3<f32> {
+     let cell = u32(y) * dims.width + u32(x);
+     let n = dims.cells;
+-    return vec3<f32>(grav[MID_G * n + cell], grav[(MID_G + 1u) * n + cell], grav[MID_SRC * n + cell]);
++    return vec3<f32>(0.5 * grav[MID_G * n + cell], 0.5 * grav[(MID_G + 1u) * n + cell], grav[MID_SRC * n + cell]);
+ }
+ 
+ // Gravity's source at one face over the step (the header comment), for the face's low cell (−x or −y) and its high cell

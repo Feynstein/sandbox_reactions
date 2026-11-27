@@ -1,0 +1,12 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.36s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test endings::a_cloud_at_m_ign_over_1_25_fails_to_light ... ign_under sun cloud of 2109.039 sb (m_ign 2636.3, m_up 6252.3, m_bh 13715.2) — expected FailedStar then failed_star
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ign_under the drop: step=17 M=2109.037 sb

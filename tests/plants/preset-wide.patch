@@ -1,11 +1,11 @@
 --- a/crates/sr-engine/src/scene.rs
 +++ b/crates/sr-engine/src/scene.rs
-@@ -582,7 +582,7 @@
- /// §2.10's cloud of mass `mass` (sandbox units): a = 40 √(M/M₀) cells, capped at [`MAX_RADIUS`], and Σc = 3M/(2π a²)
- /// (§2.1) — 1 at M₀ and growing once the cap holds the radius.
- pub fn cloud_shape(mass: f64) -> CloudShape {
--    let a = (SUN_RADIUS * (mass / UNIT_MASS).sqrt()).min(MAX_RADIUS);
-+    let a = 3.0 * (SUN_RADIUS * (mass / UNIT_MASS).sqrt()).min(MAX_RADIUS);
-     CloudShape { a, sigma_c: 3.0 * mass / (2.0 * std::f64::consts::PI * a * a) }
- }
- 
+@@ -289,7 +289,7 @@
+             return Err(format!("unknown preset {name:?} (known: {})", PRESETS.join(", ")));
+         }
+-        let (x, y) = (f64::from(world.width) / 2.0, f64::from(world.height) / 2.0);
++        let (x, y) = (300.0, 200.0);
+         Ok(Scene {
+             world,
+             edge: EdgeMode::Leave,
+             slowdown: true,

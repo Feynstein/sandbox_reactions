@@ -1,7 +1,7 @@
 --- a/crates/sr-engine/shaders/hydro.wgsl
 +++ b/crates/sr-engine/shaders/hydro.wgsl
-@@ -1241,7 +1241,8 @@
-         mom -= length(p) * vec2<f32>(push_net[0], push_net[1]) / push_net[2];
+@@ -1631,7 +1631,8 @@
+         mom -= vec2<f32>(push_net[4], push_net[5]);
      }
      var stopped = vec2<f32>(0.0, 0.0);
 -    let gas = get_next(0u, cell) >= eos.sigma_vac;

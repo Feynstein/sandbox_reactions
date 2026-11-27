@@ -1,0 +1,6 @@
+plan_lint  982/0/0      0.06 s  GO
+logs: milestones/m0/logs/M0-D217.<scope>.log · record: loop_times.jsonl · tree ce363f02c7fa+06c920015df0
+anchor: 1 path×scope entries moved by this run
+anchor: 457 paths checked · 503 skipped (3 classes) · 16 never checked · 12 stale · 0 unclassified · 0 owed · 485 covered of 988 visible
+verify: 982 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 0.07 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 8.05->8.05
+=== GO ===

@@ -1,4 +1,4 @@
-# launcher | launch game-xvfb | 2026-11-26T11:01:43-0500
-# private X display :104, its X server pid 2796394
+# launcher | launch game-xvfb | 2026-11-27T12:13:36-0500
+# private X display :101, its X server pid 2105912
 $ build/target/release/sandbox-reactions --status-port 47811 --adapter llvmpipe
 SR-ADAPTER name=llvmpipe (LLVM 20.1.2, 256 bits) backend=Vulkan driver=llvmpipe

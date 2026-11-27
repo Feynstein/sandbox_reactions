@@ -109,6 +109,9 @@ TR_LOOPS = 3                                             # the TR line reads the
 LOCK = threading.Lock()
 PART = [0]                                               # part-file counter (under LOCK)
 SAY = threading.Lock()                                   # one live console line at a time, whole (M0-D27)
+SPAWN = threading.Lock()                                 # a command's start and its hold by the guard, as one (M0-D220)
+STOPPING = [None]                                        # the signal's name once TERM, INT or HUP stops this run (M0-D220)
+GUARD_GRACE_S = 4.0                                      # the guard: SIGINT, this long for a teardown, then SIGKILL (M0-D220)
 HOME = str(Path.home())
 
 
@@ -687,6 +690,145 @@ def live_sigint():
             signal.signal(signal.SIGINT, signal.default_int_handler)
 
 
+GUARD_SRC = r'''import os, signal, sys, time
+signal.signal(signal.SIGINT, signal.SIG_IGN)
+signal.signal(signal.SIGHUP, signal.SIG_IGN)
+grace, held = float(sys.argv[1]), {}
+for line in sys.stdin.buffer:           # "+<pgid>\t<log>\t<part>\t<label>" held · "-<pgid>" ended · "!" stop now
+    op, rest = line[:1], line[1:].decode("utf-8", "replace").rstrip("\n").split("\t")
+    try:
+        if op == b"+" and len(rest) == 4:
+            held[int(rest[0])] = rest[1:]
+        elif op == b"-":
+            held.pop(int(rest[0]), None)
+        elif op == b"!":
+            break
+    except ValueError:
+        pass
+
+def alive(g):
+    try:
+        os.killpg(g, 0)
+    except ProcessLookupError:
+        return False
+    except OSError:
+        return True
+    return True
+
+for sig, wait in ((signal.SIGINT, grace), (signal.SIGKILL, 2.0)):
+    for g in [g for g in held if alive(g)]:
+        try:
+            os.killpg(g, sig)
+        except OSError:
+            pass
+    end = time.monotonic() + wait
+    while time.monotonic() < end and any(alive(g) for g in held):
+        time.sleep(0.05)
+for log, part, label in held.values():
+    try:
+        with open(log, "a", encoding="utf-8") as fh:
+            fh.write("-- %s · exit=stopped (the run ended mid-command; the guard stopped its group) · its output "
+                     "kept in %s\n\n" % (label, os.path.basename(part)))
+    except (OSError, ValueError):
+        pass
+'''
+
+
+class Guard:
+    """The commands' keeper when this run ends however it ends (POSIX; M0-D220). Each command runs in its own
+    session (new_group), so a capper's TERM or KILL to verify.py reaches none of them: they ran on under PID 1,
+    writing into part files nobody joined. One helper process per verify.py process, in a session of its own (a
+    capper's signal to verify.py's group never reaches it), reads the groups a run holds on a pipe; at the pipe's
+    end - verify.py exited, crashed, or was killed, KILL included - or at `!` (stop_on_signals) it sends each group
+    still held SIGINT, waits GUARD_GRACE_S, sends SIGKILL, and notes the stop in the scope's log; the part file
+    stays under its name. A command that ended is dropped first, so no late signal reaches a finished scope.
+    Not PR_SET_PDEATHSIG: Linux only, it reaches the direct child (bash) and not cargo or the gpu binary under it,
+    and it fires when the spawning THREAD ends - a pool thread here. Not the capper's group: only GNU `timeout`
+    without --foreground signals one, a `kill -9 <pid>` does not, and one group for every command would lose
+    stop_tree's one-command stop. Windows: none (CREATE_NEW_PROCESS_GROUP, no job object) - owed (R15)."""
+
+    def __init__(self):
+        self.pid, self.proc, self.fd, self.warned = None, None, None, False
+
+    def up(self):
+        if os.name == "nt":
+            return False
+        if self.pid == os.getpid() and self.proc is not None and self.proc.poll() is None:
+            return True
+        r, w = os.pipe()
+        try:
+            self.proc = subprocess.Popen([sys.executable, "-I", "-S", "-c", GUARD_SRC, str(GUARD_GRACE_S)], stdin=r,
+                                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, cwd=os.sep,
+                                         start_new_session=True)
+        except OSError as exc:
+            os.close(w)
+            if not self.warned:
+                self.warned = True
+                print(f"verify: WARN no guard ({exc}) - a run killed mid-command leaves that command running",
+                      file=sys.stderr)
+            return False
+        finally:
+            os.close(r)
+        if self.fd is not None and self.pid == os.getpid():
+            with contextlib.suppress(OSError):
+                os.close(self.fd)
+        self.fd, self.pid = w, os.getpid()
+        return True
+
+    def send(self, text):
+        if self.fd is not None and self.pid == os.getpid():
+            with contextlib.suppress(OSError):                 # one line under PIPE_BUF: written whole
+                os.write(self.fd, text.encode("utf-8", "replace"))
+
+    def hold(self, pgid, log, part, label):
+        if self.up():
+            fields = [str(pgid), os.path.abspath(log), os.path.abspath(part), str(label)]
+            self.send("+" + "\t".join(re.sub(r"[\t\r\n]", " ", f) for f in fields) + "\n")
+
+    def drop(self, pgid):
+        self.send(f"-{pgid}\n")
+
+    def stop_now(self, wait):
+        """Every group still held stopped now; returns once the guard is done (at most `wait` s)."""
+        if self.proc is None or self.pid != os.getpid():
+            return
+        self.send("!\n")
+        with contextlib.suppress(subprocess.TimeoutExpired, OSError):
+            self.proc.wait(timeout=wait)
+
+
+GUARD = Guard()
+
+
+def stop_on_signals():
+    """The CLI's TERM, INT and HUP (HUP unless the run was handed it ignored: `nohup`) stop the run's commands
+    before it exits 128+signal, with a NO-GO line (POSIX; M0-D220). Without it TERM ended verify.py at once and
+    left its commands to the guard, and INT (Ctrl-C) raised in the main thread while the pool waited on its
+    commands, which Ctrl-C never reaches (their own sessions). No command starts once a stop began (STOPPING,
+    under SPAWN). A second signal ends this process at once; the guard still stops the rest. Called from
+    `__main__` only, so the selftest's in-process runs keep its own handlers."""
+    if os.name == "nt":
+        return
+
+    def stop(signum, _frame):
+        name = signal.Signals(signum).name
+        signal.signal(signum, signal.SIG_DFL)
+        STOPPING[0] = name
+        SPAWN.acquire(timeout=1)                              # a start under way is held by the guard first; none after
+        GUARD.stop_now(GUARD_GRACE_S + 3)
+        with contextlib.suppress(Exception):
+            sys.stdout.flush()
+        with contextlib.suppress(OSError):
+            os.write(1, f"=== NO-GO: stopped by {name} - its commands stopped, their part files kept ===\n".encode())
+        LOCK.acquire(timeout=1)                               # no log line cut in half by the exit
+        os._exit(128 + signum)
+
+    for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
+        if sig == signal.SIGHUP and signal.getsignal(sig) is signal.SIG_IGN:
+            continue
+        signal.signal(sig, stop)
+
+
 class ScopeRun:
     """One scope's tally in a run; its verdict is derived from the counts, never stated."""
 
@@ -750,6 +892,8 @@ def run_command(sr, label, cmd, case, root, man, env, task, box):
     command ends. -> (exit code or None, output, seconds, why it did not run or None, timed out)."""
     spec = sr.spec
     with LOCK:
+        if STOPPING[0]:                                     # a stop began: nothing written, nothing started (M0-D220)
+            return None, "", 0.0, f"NOT RUN (the run was stopped by {STOPPING[0]})", False
         PART[0] += 1
         part = Path(f"{sr.log}.{os.getpid()}.{PART[0]}.part")
         with open(sr.log, "a", encoding="utf-8") as fh:
@@ -765,18 +909,35 @@ def run_command(sr, label, cmd, case, root, man, env, task, box):
             note = f"not started: {exc}"
         else:
             with open(part, "wb") as fh:
-                try:
-                    proc = subprocess.Popen(argv, cwd=str(Path(root) / spec.get("cwd", ".")), env=env,
-                                            stdin=subprocess.DEVNULL, stdout=fh, stderr=subprocess.STDOUT,
-                                            **new_group())
-                except OSError as exc:
-                    note = f"not started: {exc}"
-                else:
+                proc = None
+                with SPAWN:
+                    if STOPPING[0]:
+                        note = f"NOT RUN (the run was stopped by {STOPPING[0]})"
+                    else:
+                        try:
+                            proc = subprocess.Popen(argv, cwd=str(Path(root) / spec.get("cwd", ".")), env=env,
+                                                    stdin=subprocess.DEVNULL, stdout=fh, stderr=subprocess.STDOUT,
+                                                    **new_group())
+                        except OSError as exc:
+                            note = f"not started: {exc}"
+                        else:
+                            GUARD.hold(proc.pid, sr.log, part, label)    # its group stopped if this run dies (M0-D220)
+                if proc is not None:
                     try:
                         rc = wait_beating(proc, float(spec.get("timeout_s", 900)), sr, label, part, t0)
                     except subprocess.TimeoutExpired:
                         timed_out = True
                         stop_tree(proc)
+                    finally:
+                        if not STOPPING[0]:
+                            GUARD.drop(proc.pid)
+            if STOPPING[0]:                                         # the guard owns the stop: part kept, log noted
+                if proc is None:                                    # refused at its start: no output to keep
+                    with contextlib.suppress(OSError):
+                        part.unlink()
+                    with LOCK, open(sr.log, "a", encoding="utf-8") as fh:
+                        fh.write(f"-- {label} · exit={note} · 0.00 s\n\n")
+                return None, "", time.monotonic() - t0, f"stopped by {STOPPING[0]}", False
             with contextlib.suppress(OSError):
                 out = part.read_bytes().decode("utf-8", "replace").replace("\r\n", "\n")
             with contextlib.suppress(OSError):
@@ -3219,6 +3380,54 @@ def selftest():
                       ok and time.monotonic() - t0 < 10 and gone(int((tmp / "sleep.pid").read_text())), detail)
             finally:
                 signal.signal(signal.SIGINT, was)
+            if os.name != "nt":                             # the run ends however it ends; its commands end with it (M0-D220)
+                for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGKILL):
+                    scope, pidf = f"stop_{sig.name.lower()}", tmp / "sleep.pid"
+                    pidf.unlink(missing_ok=True)
+                    (tmp / "ran.marker").unlink(missing_ok=True)
+                    (tmp / "stop.json").write_text(json.dumps({**base_top, "scopes": {     # one running, one queued after it
+                        scope: {"cmd": f"{py} sleep 60", "timeout_s": 120},
+                        "stop_queued": {"cmd": f"{py} marker", "exclusive": True}}}),
+                        encoding="utf-8")
+                    vp = subprocess.Popen([sys.executable, str(Path(__file__).resolve()), "--manifest",
+                                           str(tmp / "stop.json"), "--root", str(tmp), "--no-progress", "--task", "T9",
+                                           "-j", "1", scope, "stop_queued"], stdout=subprocess.PIPE,
+                                          stderr=subprocess.STDOUT, cwd=str(tmp))
+                    child, end = None, time.monotonic() + 30
+                    while child is None and time.monotonic() < end and vp.poll() is None:
+                        with contextlib.suppress(OSError, ValueError):
+                            child = int(pidf.read_text())
+                        time.sleep(0.05)
+                    vp.send_signal(sig)
+                    try:
+                        vout = vp.communicate(timeout=30)[0].decode("utf-8", "replace")
+                    except subprocess.TimeoutExpired:
+                        vp.kill()
+                        vout = "verify.py still running 30 s after the signal"
+                    end = time.monotonic() + 5
+                    while child and not gone(child) and time.monotonic() < end:
+                        time.sleep(0.05)
+                    ended = bool(child) and gone(child)
+                    if child and not ended:                     # never leave a planted run's sleeper behind
+                        with contextlib.suppress(OSError):
+                            os.killpg(child, signal.SIGKILL)
+                    kept = list(logs.glob(f"T9.{scope}.log.{vp.pid}.*.part"))
+                    log_ = (logs / f"T9.{scope}.log").read_text(encoding="utf-8") if (logs / f"T9.{scope}.log").exists() else ""
+                    said = (sig == signal.SIGKILL or f"=== NO-GO: stopped by {sig.name}" in vout)
+                    qlog = logs / "T9.stop_queued.log"
+                    qtext = qlog.read_text(encoding="utf-8") if qlog.exists() else ""
+                    queued_ok = (not (tmp / "ran.marker").exists() and not list(logs.glob("T9.stop_queued.log.*.part"))
+                                 and (not qtext or qtext.rstrip().endswith("0.00 s") and "NOT RUN (the run was stopped by" in qtext))
+                    qlog.unlink(missing_ok=True)
+                    check(f"a run stopped by {sig.name} mid-command: its command's group gone within 5 s, the part file "
+                          f"kept under its name, the log noting it, exit {128 + sig.value}; the queued scope never "
+                          f"started, no part left, its log (if any) NOT RUN (M0-D220)",
+                          ended and len(kept) == 1 and "exit=stopped" in log_ and said and queued_ok
+                          and vp.returncode in (128 + sig.value, -sig.value),
+                          f"child {child} ended={ended} parts={kept} queued={queued_ok} {qtext[-120:]!r} "
+                          f"rc={vp.returncode} out={vout[-200:]!r}")
+                    for k in kept:
+                        k.unlink()
             rc, out = run_({"later": clean["later"]}, "--all")
             plant_("nothing but placeholders: zero passed in total", rc == 1 and "zero passed in total" in out, out[-300:])
 
@@ -5202,4 +5411,5 @@ def main(argv=None):
 
 
 if __name__ == "__main__":
+    stop_on_signals()
     sys.exit(main())

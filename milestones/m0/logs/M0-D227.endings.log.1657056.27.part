@@ -1,0 +1,7 @@
+    Finished `release` profile [optimized] target(s) in 0.09s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test endings::the_sun_like_preset_ends_a_white_dwarf_as_predicted ... sun sun cloud of 3136.718 sb (m_ign 2636.3, m_up 6252.3, m_bh 13715.2) — expected WhiteDwarf then white_dwarf
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+sun the drop: step=17 M=3136.714 sb

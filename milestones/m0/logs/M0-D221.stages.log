@@ -1,0 +1,9 @@
+== 2026-11-27T08:52:52-05:00 stages[sun] · task M0-D221 · box laserax-ai :: bash tests/gpu.sh stages physics the_sun_like
+== 2026-11-27T08:52:52-05:00 stages[massive] · task M0-D221 · box laserax-ai :: bash tests/gpu.sh stages physics the_massive
+== 2026-11-27T08:52:52-05:00 stages[giant] · task M0-D221 · box laserax-ai :: bash tests/gpu.sh stages physics the_giant
+-- stages[sun] · exit=stopped (the run ended mid-command; the guard stopped its group) · its output kept in M0-D221.stages.log.840975.2.part
+
+-- stages[massive] · exit=stopped (the run ended mid-command; the guard stopped its group) · its output kept in M0-D221.stages.log.840975.3.part
+
+-- stages[giant] · exit=stopped (the run ended mid-command; the guard stopped its group) · its output kept in M0-D221.stages.log.840975.4.part
+

@@ -1,0 +1,3 @@
+== 2026-11-27T08:32:50-05:00 endings · task M0-D220 · box laserax-ai :: bash tests/gpu.sh endings physics
+-- endings · exit=stopped (the run ended mid-command; the guard stopped its group) · its output kept in M0-D220.endings.log.675391.4.part
+

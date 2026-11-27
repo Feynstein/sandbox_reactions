@@ -1,0 +1,64 @@
+# M0-D220 log — 2026-11-27T08:23:48-05:00 on laserax-ai
+## selftest iteration 2026-11-27T08:26:51-05:00
+selftest: checks=384 · failed=0 · plants=164/164 red
+=== GO ===
+## tools_selftest 2026-11-27T08:27:33-05:00
+tools_selftest  10/0/0      36.22 s  GO
+logs: milestones/m0/logs/M0-D220.<scope>.log · record: loop_times.jsonl · tree ce363f02c7fa+f2df5c76915c
+anchor: 2 path×scope entries moved by this run
+anchor: 456 paths checked · 503 skipped (3 classes) · 17 never checked · 13 stale · 0 unclassified · 0 owed · 486 covered of 989 visible
+verify: 10 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 25.11 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 11.14->13.88
+=== GO ===
+## --redarm tools_selftest 2026-11-27T08:28:03-05:00
+tools_selftest · clean: proven by M0-D220 2026-11-27T08:27:58-05:00 (a run of the scope; fingerprint 095e61097c06) - not re-run
+tools_selftest · plant tools-selftest-scratch · RED (proven: tools_selftest[scratch_copy]: 1 failed; tools_selftest[scratch_copy]: its own verdict NO-GO: 3 check(s) failed) · arm 1/8, 7 left
+tools_selftest · plant tools-selftest-box-list (case verify) · RED (proven: tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 1 check(s) failed) · arm 2/8, 6 left
+tools_selftest · plant tools-selftest-arms-at-once (case verify) · RED (proven: tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 3 check(s) failed) · arm 3/8, 5 left
+tools_selftest · plant tools-selftest-launch-records (case launch) · RED (proven: tools_selftest[launch]: 1 failed; tools_selftest[launch]: its own verdict NO-GO: 2 failure(s)) · arm 4/8, 4 left
+tools_selftest · plant tools-selftest-sigint (case verify) · RED (proven: tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 1 check(s) failed) · arm 5/8, 3 left
+tools_selftest · plant redarm-runs-clean (case verify) · RED (proven: tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 1 check(s) failed) · arm 6/8, 2 left
+tools_selftest · plant redarm-stale-record (case verify) · RED (proven: tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 7 check(s) failed) · arm 7/8, 1 left
+tools_selftest · plant guard (case verify) · RED (proven: tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 3 check(s) failed) · arm 8/8, 0 left
+redarm: 8 plants · 8 red · 0 green · 0 errors · scope tools_selftest · 64.17 s · 8 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D220.tools_selftest.redarm.log
+=== GO ===
+## Verify 1 — timeout -s TERM 60 conservation 2026-11-27T08:29:15-05:00
+=== NO-GO: stopped by SIGTERM - its commands stopped, their part files kept ===
+exit=124
+-- TERM, 5 s after:
+    PID    PPID ELAPSED COMMAND
+ 659941  577012      65 /bin/bash -c source /home/ybelanger/.claude/shell-snapshots/snapshot-bash-1795784958940-2akhtj.sh 2>/dev/null || true && \builtin shopt -u extglob 2>/dev/null || true && { \builtin unalias -- 'which'; \builtin unset -f -- 'which'; } >/dev/null 2>&1 || true && { \builtin unalias -- 'unsetenv'; \builtin unset -f -- 'unsetenv'; } >/dev/null 2>&1 || true && eval 'ps -eo pid,args | grep -E "emit.py sleep|sys.stdin.buffer" | grep -v grep | wc -l; nvidia-smi --query-gpu=name,utilization.gpu,memory.used --format=csv,noheader | head -1; L=milestones/m0/logs/M0-D220.log; for SIG in TERM KILL; do echo "## Verify 1 — timeout -s $SIG 60 conservation $(date -Iseconds)" >> $L; ( timeout -s $SIG 60 python3 tools/pb/verify.py conservation --task M0-D220 --no-progress; echo "exit=$?" ) >> $L 2>&1; sleep 5; echo "-- $SIG, 5 s after:" >> $L; for p in $(pgrep -f "tests/gpu.sh|cargo test|deps/gpu-"); do [ "$(readlink /proc/$p/cwd 2>/dev/null)" != "${PWD}" ] && [[ "$(readlink /proc/$p/cwd 2>/dev/null)" != ${PWD}/* ]] && continue; ps -o pid,ppid,etimes,args -p $p; done >> $L 2>&1; echo "-- end $SIG" >> $L; done; sed -n '"'"'/Verify 1/,$p'"'"' $L | grep -v "^\s*$" | tail -20' < /dev/null && pwd -P >| /tmp/claude-7c0d-cwd
+-- end TERM
+## Verify 1 — timeout -s KILL 60 conservation 2026-11-27T08:30:20-05:00
+/bin/bash: line 1: 662825 Killed                  timeout -s $SIG 60 python3 tools/pb/verify.py conservation --task M0-D220 --no-progress
+exit=137
+-- KILL, 5 s after:
+    PID    PPID ELAPSED COMMAND
+ 659941  577012     130 /bin/bash -c source /home/ybelanger/.claude/shell-snapshots/snapshot-bash-1795784958940-2akhtj.sh 2>/dev/null || true && \builtin shopt -u extglob 2>/dev/null || true && { \builtin unalias -- 'which'; \builtin unset -f -- 'which'; } >/dev/null 2>&1 || true && { \builtin unalias -- 'unsetenv'; \builtin unset -f -- 'unsetenv'; } >/dev/null 2>&1 || true && eval 'ps -eo pid,args | grep -E "emit.py sleep|sys.stdin.buffer" | grep -v grep | wc -l; nvidia-smi --query-gpu=name,utilization.gpu,memory.used --format=csv,noheader | head -1; L=milestones/m0/logs/M0-D220.log; for SIG in TERM KILL; do echo "## Verify 1 — timeout -s $SIG 60 conservation $(date -Iseconds)" >> $L; ( timeout -s $SIG 60 python3 tools/pb/verify.py conservation --task M0-D220 --no-progress; echo "exit=$?" ) >> $L 2>&1; sleep 5; echo "-- $SIG, 5 s after:" >> $L; for p in $(pgrep -f "tests/gpu.sh|cargo test|deps/gpu-"); do [ "$(readlink /proc/$p/cwd 2>/dev/null)" != "${PWD}" ] && [[ "$(readlink /proc/$p/cwd 2>/dev/null)" != ${PWD}/* ]] && continue; ps -o pid,ppid,etimes,args -p $p; done >> $L 2>&1; echo "-- end $SIG" >> $L; done; sed -n '"'"'/Verify 1/,$p'"'"' $L | grep -v "^\s*$" | tail -20' < /dev/null && pwd -P >| /tmp/claude-7c0d-cwd
+-- end KILL
+## claim --changed (cap 590 s) 2026-11-27T08:32:50-05:00
+=== NO-GO: stopped by SIGTERM - its commands stopped, their part files kept ===
+exit=124
+## selftest after the refused-start fix 2026-11-27T08:43:44-05:00
+FAILED:
+  a run stopped by SIGTERM mid-command: its command's group gone within 5 s, the part file kept under its name, the log noting it, exit 143; the queued scope never started, no part left, its log (if any) NOT RUN (M0-D220): child 722001 ended=True parts=[PosixPath('/tmp/pb-verify-nwu296vz/logs/T9.stop_sigterm.log.721941.1.part')] queued=False '== 2026-11-27T08:43:47-05:00 stop_queued · task T9 · box SELFBOX :: {python} -S {emit} marker\n' rc=143 out='=== NO-GO: stopped by SIGTERM - its commands stopped, their part files kept ===\n'
+  a run stopped by SIGINT mid-command: its command's group gone within 5 s, the part file kept under its name, the log noting it, exit 130; the queued scope never started, no part left, its log (if any) NOT RUN (M0-D220): child 722133 ended=True parts=[PosixPath('/tmp/pb-verify-nwu296vz/logs/T9.stop_sigint.log.722017.1.part')] queued=False '== 2026-11-27T08:43:48-05:00 stop_queued · task T9 · box SELFBOX :: {python} -S {emit} marker\n' rc=130 out='=== NO-GO: stopped by SIGINT - its commands stopped, their part files kept ===\n'
+  a run stopped by SIGKILL mid-command: its command's group gone within 5 s, the part file kept under its name, the log noting it, exit 137; the queued scope never started, no part left, its log (if any) NOT RUN (M0-D220): child 722261 ended=True parts=[PosixPath('/tmp/pb-verify-nwu296vz/logs/T9.stop_sigkill.log.722181.1.part')] queued=False '' rc=-9 out=''
+selftest: checks=384 · failed=3 · plants=164/164 red
+=== NO-GO: 3 check(s) failed ===
+## selftest after the entry check 2026-11-27T08:44:59-05:00
+selftest: checks=384 · failed=0 · plants=164/164 red
+=== GO ===
+## tools_selftest + --redarm on final bytes 2026-11-27T08:45:27-05:00
+verify: 10 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 19.36 s · mode scope · jobs 8 · box laserax-ai · python 3.12.3 · load 51.67->41.27
+=== GO ===
+tools_selftest · plant guard (case verify) · RED (proven: tools_selftest[verify]: 1 failed; tools_selftest[verify]: its own verdict NO-GO: 3 check(s) failed) · arm 8/8, 0 left
+redarm: 8 plants · 8 red · 0 green · 0 errors · scope tools_selftest · 50.34 s · 8 arm(s) at a time · box laserax-ai · log milestones/m0/logs/M0-D220.tools_selftest.redarm.log
+=== GO ===
+## Verify 1 (final bytes) — timeout -s TERM 60 conservation 2026-11-27T08:46:45-05:00
+=== NO-GO: stopped by SIGTERM - its commands stopped, their part files kept ===
+exit=124
+-- TERM: 0 left 5 s after; GPU 0 %, 133 MiB
+## Verify 1 (final bytes) — timeout -s KILL 60 conservation 2026-11-27T08:47:51-05:00
+/bin/bash: line 1: 784176 Killed                  timeout -s $SIG 60 python3 tools/pb/verify.py conservation --task M0-D220 --no-progress
+exit=137
+-- KILL: 0 left 5 s after; GPU 0 %, 101 MiB

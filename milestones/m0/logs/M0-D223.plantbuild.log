@@ -1,0 +1,83 @@
+dest=/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/34674e6d-9abe-4498-bd4d-3e2afcfd25af/scratchpad/tree · files=18708 · size=313M · linked=none · excluded=13
+=== GO ===
+== three plants together (mid-predictor-sigma, escaped-potential-unbooked, held-wall-gpu-elastic): bash tests/gpu.sh collapse physics
+   Compiling sr-physics v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/34674e6d-9abe-4498-bd4d-3e2afcfd25af/scratchpad/tree/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/34674e6d-9abe-4498-bd4d-3e2afcfd25af/scratchpad/tree/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 12.71s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 6 tests
+test collapse::gpu_half_mass_radius_at_0_8_of_the_free_fall_time ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-COLL gpu: t = 2.53483 (0.80158 t_ff), r50/r50(0) = 0.52849, homologous 0.52561, error +0.549 % (76 steps in the run; SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA)
+ok
+test collapse::gpu_half_mass_radius_at_half_the_free_fall_time ... SR-COLL gpu: t = 1.60896 (0.50880 t_ff), r50/r50(0) = 0.83064, homologous 0.83063, error +0.000 % (76 steps in the run; SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA)
+ok
+test collapse::the_oracle_gives_the_contracts_numbers ... ok
+test collapse::the_scene_is_a_cold_maclaurin_disk_with_only_the_cold_pressure_off ... SR-COLL scene: 5024 cells, mass 3351.648 (2πΣc a²/3 = 3351.032), t_ff 3.1623
+ok
+test collapse::twin_half_mass_radius_at_0_8_of_the_free_fall_time ... SR-COLL twin: t = 2.52982 (0.80000 t_ff), r50/r50(0) = 0.52969, homologous 0.52796, error +0.327 % (77 steps in the run)
+ok
+test collapse::twin_half_mass_radius_at_half_the_free_fall_time ... SR-COLL twin: t = 1.58114 (0.50000 t_ff), r50/r50(0) = 0.83709, homologous 0.83681, error +0.033 % (77 steps in the run)
+ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 545 filtered out; finished in 1.97s
+
+== planted (three): bash tests/gpu.sh held_core physics gpu_a_free_cell_stops_at_a_held_wall_as_the_twins
+   Compiling sr-physics v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/34674e6d-9abe-4498-bd4d-3e2afcfd25af/scratchpad/tree/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/34674e6d-9abe-4498-bd4d-3e2afcfd25af/scratchpad/tree/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 12.79s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test held_core::gpu_a_free_cell_stops_at_a_held_wall_as_the_twins ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HELD-STICKY-GPU into the wall [0.76812106, 0.76812106, -0.76812106, 0.83996695, 0.83996695, -0.83996695, 0.83996695, 0.83996695, -0.83996695, 0.76812106, 0.76812106, -0.76812106]; away [0.76812106, 0.83996695, 0.83996695, 0.76812106]; held GPU [1.2802644968032837, 0.0], twin [4.4964394485332955, -3.3306690738754696e-16] (off 7.153e-1); drift [3.725290298461914e-9, 6.20881716410319e-10]; free E off the twin's by 1.003e-7
+
+thread 'held_core::gpu_a_free_cell_stops_at_a_held_wall_as_the_twins' (1255016) panicked at crates/sr-engine/tests/gpu/held_core.rs:1108:5:
+a free cell's momentum into the held block after the step: [0.76812106, 0.76812106, -0.76812106, 0.83996695, 0.83996695, -0.83996695, 0.83996695, 0.83996695, -0.83996695, 0.76812106, 0.76812106, -0.76812106]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    held_core::gpu_a_free_cell_stops_at_a_held_wall_as_the_twins
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 550 filtered out; finished in 0.31s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+== held-wall-gpu-elastic alone: bash tests/gpu.sh held_core physics gpu_a_free_cell_stops_at_a_held_wall_as_the_twins
+   Compiling sr-physics v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/34674e6d-9abe-4498-bd4d-3e2afcfd25af/scratchpad/tree/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/34674e6d-9abe-4498-bd4d-3e2afcfd25af/scratchpad/tree/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 10.48s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test held_core::gpu_a_free_cell_stops_at_a_held_wall_as_the_twins ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HELD-STICKY-GPU into the wall [0.76812106, 0.76812106, -0.76812106, 0.83996695, 0.83996695, -0.83996695, 0.83996695, 0.83996695, -0.83996695, 0.76812106, 0.76812106, -0.76812106]; away [0.76812106, 0.83996695, 0.83996695, 0.76812106]; held GPU [1.2802644968032837, 0.0], twin [4.4964394485332955, -3.3306690738754696e-16] (off 7.153e-1); drift [3.725290298461914e-9, 6.20881716410319e-10]; free E off the twin's by 1.003e-7
+
+thread 'held_core::gpu_a_free_cell_stops_at_a_held_wall_as_the_twins' (1255370) panicked at crates/sr-engine/tests/gpu/held_core.rs:1108:5:
+a free cell's momentum into the held block after the step: [0.76812106, 0.76812106, -0.76812106, 0.83996695, 0.83996695, -0.83996695, 0.83996695, 0.83996695, -0.83996695, 0.76812106, 0.76812106, -0.76812106]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+
+failures:
+
+failures:
+    held_core::gpu_a_free_cell_stops_at_a_held_wall_as_the_twins
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 550 filtered out; finished in 0.32s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+== clean (no plant): same case
+   Compiling sr-physics v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/34674e6d-9abe-4498-bd4d-3e2afcfd25af/scratchpad/tree/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/34674e6d-9abe-4498-bd4d-3e2afcfd25af/scratchpad/tree/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 10.31s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test held_core::gpu_a_free_cell_stops_at_a_held_wall_as_the_twins ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+SR-HELD-STICKY-GPU into the wall [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]; away [0.76812106, 0.83996695, 0.83996695, 0.76812106]; held GPU [4.496440529823303, 0.0], twin [4.4964394485332955, -3.3306690738754696e-16] (off 2.405e-7); drift [3.725290298461914e-9, 6.20881716410319e-10]; free E off the twin's by 1.003e-7
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 550 filtered out; finished in 0.32s
+

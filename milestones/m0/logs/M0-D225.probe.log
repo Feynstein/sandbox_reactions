@@ -1,0 +1,77 @@
+dest=/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/643befcf-53ec-4d99-bd8b-69a553d26f4a/scratchpad/d225 · files=18719 · size=313M · linked=none · excluded=13
+=== GO ===
+==== 2026-11-27T11:05:51-05:00 plant preset-wide (300, 200) · fit::the_giant · RTX 5090 · scratch /tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/643befcf-53ec-4d99-bd8b-69a553d26f4a/scratchpad/d225 · cap 590 s
+   Compiling sr-physics v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/643befcf-53ec-4d99-bd8b-69a553d26f4a/scratchpad/d225/crates/sr-physics)
+error: couldn't read `/tmp/pb-redarm-saohl5fb/arm8/crates/sr-physics/../../assets/calibration.json`: No such file or directory (os error 2)
+ --> /home/ybelanger/.cache/sandbox-reactions/redarm-target/release/build/sr-physics-8538dc49d531cf76/out/embedded_calibration.rs:1:6
+  |
+1 | Some(include_str!("/tmp/pb-redarm-saohl5fb/arm8/crates/sr-physics/../../assets/calibration.json"))
+  |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: could not compile `sr-physics` (lib) due to 1 previous error
+exit 101
+==== 2026-11-27T11:06:42-05:00 retry (the first ran the cargo binary past cargo.sh's wrapper: no touch, a stale build-script output) · plant preset-wide (300, 200) · fit::the_giant · RTX 5090 · cap 590 s
+   Compiling sr-physics v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/643befcf-53ec-4d99-bd8b-69a553d26f4a/scratchpad/d225/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/tmp/claude-1000/-home-ybelanger-private-sandbox-reactions/643befcf-53ec-4d99-bd8b-69a553d26f4a/scratchpad/d225/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 10.46s
+     Running tests/gpu/main.rs (/home/ybelanger/.cache/sandbox-reactions/redarm-target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test fit::the_giant_life_keeps_its_bound_gas_16_cells_from_the_edge ... giant: preset giant at 18963.9; calibration physics_hash 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402; checkpoint every 100 steps
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+giant step=113 t=0.75 mass=18963.9 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 95.5/95.5/96.5/104.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=209 t=1.23 mass=18963.8 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 88.5/88.5/90.5/103.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=305 t=1.68 mass=18963.8 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 82.5/82.5/85.5/102.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=401 t=2.13 mass=18963.8 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 77.5/77.5/80.5/102.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=513 t=2.68 mass=18963.7 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 70.5/70.5/75.5/101.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=609 t=3.16 mass=18963.7 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 64.5/64.5/70.5/101.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=705 t=3.64 mass=18963.5 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 58.5/58.5/66.5/102.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=801 t=4.14 mass=18963.2 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 53.5/53.5/62.5/103.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=913 t=4.73 mass=18962.4 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 46.5/46.5/58.5/104.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=1009 t=5.23 mass=18961.3 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 41.5/41.5/55.5/106.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=1105 t=5.74 mass=18959.8 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 37.5/37.5/52.5/108.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=1201 t=6.25 mass=18957.7 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 36.5/36.5/50.5/109.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=1313 t=6.81 mass=18954.6 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 42.5/42.5/47.5/111.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=1409 t=7.27 mass=18951.3 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 42.5/42.5/45.5/113.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=1505 t=7.74 mass=18947.1 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 41.5/41.5/42.5/113.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=1601 t=8.22 mass=18942.0 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 38.5/38.5/39.5/113.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=1713 t=8.78 mass=18934.8 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 33.5/33.5/36.5/113.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=1809 t=9.28 mass=18927.3 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 27.5/27.5/33.5/113.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=1905 t=9.79 mass=18918.4 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 20.5/20.5/31.5/112.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=2001 t=10.32 mass=18908.3 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 14.5/14.5/28.5/110.5; densest in the band 7.331e-3 at cell (300, 15)
+giant step=2113 t=10.95 mass=18894.8 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 6.5/6.5/25.5/102.5; densest in the band 7.949e-3 at cell (299, 15)
+giant step=2209 t=11.50 mass=18882.0 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 0.5/0.5/23.5/96.5; densest in the band 8.427e-3 at cell (299, 15)
+giant step=2305 t=12.06 mass=18868.0 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 0.5/0.5/21.5/90.5; densest in the band 8.842e-3 at cell (299, 15)
+giant step=2401 t=12.63 mass=18852.9 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 0.5/0.5/20.5/84.5; densest in the band 9.179e-3 at cell (300, 15)
+giant step=2513 t=13.30 mass=18834.2 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 0.5/0.5/19.5/78.5; densest in the band 9.452e-3 at cell (300, 15)
+giant step=2609 t=13.88 mass=18817.4 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 0.5/0.5/18.5/74.5; densest in the band 9.582e-3 at cell (299, 15)
+giant step=2705 t=14.48 mass=18800.0 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 0.5/0.5/18.5/70.5; densest in the band 9.624e-3 at cell (299, 15)
+giant step=2801 t=15.08 mass=18782.2 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 0.5/0.5/18.5/71.5; densest in the band 9.574e-3 at cell (299, 15)
+giant step=2913 t=15.79 mass=18761.0 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 0.5/0.5/20.5/70.5; densest in the band 9.397e-3 at cell (300, 15)
+giant step=3009 t=16.41 mass=18742.6 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 0.5/0.5/22.5/71.5; densest in the band 9.152e-3 at cell (300, 15)
+giant step=3105 t=17.03 mass=18724.3 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 0.5/0.5/26.5/74.5; densest in the band 8.832e-3 at cell (300, 15)
+giant step=3201 t=17.66 mass=18706.3 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 0.5/0.5/33.5/77.5; densest in the band 8.450e-3 at cell (299, 15)
+giant step=3313 t=18.40 mass=18685.6 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 0.5/0.5/28.5/79.5; densest in the band 7.940e-3 at cell (299, 15)
+giant step=3409 t=19.05 mass=18668.2 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 0.5/0.5/23.5/84.5; densest in the band 7.459e-3 at cell (300, 15)
+giant step=3505 t=19.70 mass=18651.3 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 0.5/0.5/19.5/87.5; densest in the band 6.913e-3 at cell (316, 15)
+giant step=3601 t=20.36 mass=18634.7 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 0.5/0.5/14.5/91.5; densest in the band 1.834e-2 at cell (302, 15)
+
+thread 'fit::the_giant_life_keeps_its_bound_gas_16_cells_from_the_edge' (1522364) panicked at crates/sr-engine/tests/gpu/fit.rs:252:17:
+cut: bound gas at Σ ≥ 1e-2 14.5 cells from an edge (≤ 16): step=3601 t=20.36 mass=18634.7 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 0.5/0.5/14.5/91.5; densest in the band 1.834e-2 at cell (302, 15)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+giant: 3601 steps, exit -1, 36 checkpoints
+giant: closest bound gas over 36 checkpoints, steps 113 → 3601: Σ≥1e-4 0.5 cells (step 2209, t 11.5); Σ≥1e-3 0.5 cells (step 2209, t 11.5); Σ≥1e-2 14.5 cells (step 3601, t 20.4); Σ≥1e-1 70.5 cells (step 2705, t 14.5) (calibration physics_hash 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402)
+
+thread 'fit::the_giant_life_keeps_its_bound_gas_16_cells_from_the_edge' (1522364) panicked at crates/sr-engine/tests/gpu/fit.rs:312:5:
+giant: G-FIT broke: Some("cut: bound gas at Σ ≥ 1e-2 14.5 cells from an edge (≤ 16): step=3601 t=20.36 mass=18634.7 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 0.5/0.5/14.5/91.5; densest in the band 1.834e-2 at cell (302, 15)")
+FAILED
+
+failures:
+
+failures:
+    fit::the_giant_life_keeps_its_bound_gas_16_cells_from_the_edge
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 551 filtered out; finished in 64.88s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+exit 101

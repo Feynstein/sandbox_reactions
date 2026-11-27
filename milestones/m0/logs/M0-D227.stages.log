@@ -1,0 +1,24 @@
+== 2026-11-27T11:50:20-05:00 stages[sun] · task M0-D227 · box laserax-ai :: bash tests/gpu.sh stages physics the_sun_like
+== 2026-11-27T11:50:21-05:00 stages[massive] · task M0-D227 · box laserax-ai :: bash tests/gpu.sh stages physics the_massive
+== 2026-11-27T11:50:23-05:00 stages[giant] · task M0-D227 · box laserax-ai :: bash tests/gpu.sh stages physics the_giant
+-- stages[giant] · exit=0 · 628.34 s
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test stages::the_giant_preset_shows_its_stages_down_to_black_hole ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+giant step=33 t=0.26 shown=protostar raw=protostar M=18963.9 (m_up_sb 6252.3)
+giant step=769 t=3.97 shown=main_sequence raw=main_sequence M=18947.4 (m_up_sb 6252.3)
+giant step=1169 t=6.08 shown=he_core raw=he_core M=18933.0 (m_up_sb 6252.3)
+giant step=6961 t=53.36 shown=o_burn raw=o_burn M=17383.3 (m_up_sb 6252.3)
+giant step=7409 t=56.45 shown=si_burn raw=si_burn M=17228.0 (m_up_sb 6252.3)
+giant step=8481 t=62.21 shown=core_collapse raw=core_collapse M=16868.8 (m_up_sb 6252.3)
+giant step=8482 t=62.22 shown=supernova raw=supernova M=16868.4 (m_up_sb 6252.3)
+giant step=8562 t=62.55 shown=black_hole raw=black_hole M=16836.2 (m_up_sb 6252.3)
+SR-HEADLESS DONE steps=8562 sim_time=62.548524 until=met
+giant shown (8562 steps, exit 0): [("protostar", 33), ("main_sequence", 769), ("he_core", 1169), ("o_burn", 6961), ("si_burn", 7409), ("core_collapse", 8481), ("supernova", 8482), ("black_hole", 8562)]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 551 filtered out; finished in 628.11s
+
+

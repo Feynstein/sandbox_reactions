@@ -318,7 +318,10 @@ pub fn ignites(o: &Object, h: &History) -> Option<Ignition> {
 /// still reads them, only the shown one stays. Once iron_core or a stage after it (core_collapse, supernova, neutron_star,
 /// black_hole) is shown, no burning stage — main_sequence, h_shell, he_core, he_shell, c/ne/o/si_burn — shows again (§0.5
 /// [M0-D201]; the lead, «Tracker, narrow (Recommended)»): a touched core's mixed-in hydrogen reads main_sequence's row while it
-/// collapses, and the age clock, which follows the shown stage, re-earned main_sequence's years there.
+/// collapses, and the age clock, which follows the shown stage, re-earned main_sequence's years there. Below iron_core the
+/// burning stages climb a ladder ([`ladder_rank`]): one never shows once a later one is shown (§0.5 [M0-D227]; the lead, «Whole
+/// ladder (Recommended)», «Beside the cores (Recommended)») — he_shell, a centre that burns nothing, may show after any of
+/// them and itself holds the stages below it; white_dwarf and planetary_nebula leave the ladder free, as before.
 pub fn steps_back(stage: Stage, shown: Option<Stage>, ignited: bool) -> bool {
     let burning = matches!(
         stage,
@@ -338,6 +341,11 @@ pub fn steps_back(stage: Stage, shown: Option<Stage>, ignited: bool) -> bool {
     if burning && past_iron {
         return true;
     }
+    if let (Some(r), Some(q)) = (ladder_rank(stage), shown.and_then(ladder_rank)) {
+        if stage != Stage::HeShell && r < q {
+            return true;
+        }
+    }
     let rank = |s: Stage| match s {
         Stage::Cloud => Some(0),
         Stage::Collapsing => Some(1),
@@ -350,6 +358,22 @@ pub fn steps_back(stage: Stage, shown: Option<Stage>, ignited: bool) -> bool {
         Some(Stage::FailedStar) => r == 0,
         Some(s) => rank(s).is_some_and(|q| r < q),
         None => false,
+    }
+}
+
+/// A burning stage's place on the ladder below iron_core, in nature's order (§0.5 [M0-D227]): main_sequence 0, h_shell 1,
+/// he_core 2, he_shell 3, c_burn 4, ne_burn 5, o_burn 6, si_burn 7; none for any other stage. [`steps_back`] reads it.
+pub fn ladder_rank(stage: Stage) -> Option<u8> {
+    match stage {
+        Stage::MainSequence => Some(0),
+        Stage::HShell => Some(1),
+        Stage::HeCore => Some(2),
+        Stage::HeShell => Some(3),
+        Stage::CBurn => Some(4),
+        Stage::NeBurn => Some(5),
+        Stage::OBurn => Some(6),
+        Stage::SiBurn => Some(7),
+        _ => None,
     }
 }
 
@@ -962,7 +986,7 @@ mod tests {
                 assert_eq!(steps_back(s, Some(shown), true), early || burning.contains(&s), "{s:?} after {shown:?}");
             }
         }
-        for shown in burning.into_iter().chain([Stage::WhiteDwarf, Stage::PlanetaryNebula]) {
+        for shown in [Stage::WhiteDwarf, Stage::PlanetaryNebula] {
             for s in burning {
                 assert!(!steps_back(s, Some(shown), true), "{s:?} after {shown:?}");
             }
@@ -982,6 +1006,67 @@ mod tests {
         assert_eq!(shown_after(&mut t, &iron, 3.0, 3), Some(Stage::IronCore));
         assert_eq!(shown_after(&mut t, &mixed, 6.0, 10), Some(Stage::IronCore), "main_sequence's row past iron_core");
         assert_eq!(t.stage(1).unwrap().raw, Stage::MainSequence);
+    }
+
+    #[test]
+    fn the_burning_ladder_never_steps_down() {
+        // §0.5 [M0-D227] (the lead, «Whole ladder (Recommended)», «Beside the cores (Recommended)»): below iron_core a burning
+        // stage never shows once a later one is shown — main_sequence, h_shell, he_core, he_shell, c, ne, o, si_burn — save
+        // he_shell, which may follow any of them and holds the stages below it.
+        let ladder = [
+            Stage::MainSequence,
+            Stage::HShell,
+            Stage::HeCore,
+            Stage::HeShell,
+            Stage::CBurn,
+            Stage::NeBurn,
+            Stage::OBurn,
+            Stage::SiBurn,
+        ];
+        for (q, shown) in ladder.into_iter().enumerate() {
+            for (r, s) in ladder.into_iter().enumerate() {
+                let down = r < q && s != Stage::HeShell;
+                assert_eq!(steps_back(s, Some(shown), true), down, "{s:?} after {shown:?}");
+            }
+        }
+        assert!(ladder.into_iter().enumerate().all(|(i, s)| ladder_rank(s) == Some(i as u8)), "the ladder in nature's order");
+        assert_eq!(stage_order().into_iter().filter(|s| ladder_rank(*s).is_some()).count(), ladder.len(), "only the burning stages");
+        // Through the tracker, the lives of reports/v15.md § The lives (RTX 4090): the Massive's main_sequence ↔ he_core
+        // returns, its si_burn → main_sequence before iron_core, the Sun-like's he_shell after si_burn, the erased Massive's
+        // he_shell ↔ si_burn. Each row held 10 frames, past the 3-frame hold.
+        let mut lit = cloud();
+        lit.l_group = [10.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+        lit.l_nuc = 10.0;
+        let mut he_core = lit.clone();
+        he_core.l_group[1] = 5.0;
+        he_core.x_c[X_H] = 0.7;
+        he_core.x_c[X_HE] = 0.3;
+        let mut o_burn = burning([0.0, 0.0, 0.0, 0.0, 5.0, 0.0, 0.0]);
+        o_burn.x_c[FUEL_O] = 0.1;
+        let mut si_burn = burning([0.0, 0.0, 0.0, 0.0, 0.0, 5.0, 0.0]);
+        si_burn.x_c[FUEL_SI] = 0.1;
+        let he_shell = burning([0.0; 7]);
+        let mut t = StageTracker::new(M_CH);
+        assert_eq!(shown_after(&mut t, &lit, 0.0, 10), Some(Stage::MainSequence));
+        // An oxygen flash of two frames before the first he_core shows nothing: he_core is not swallowed.
+        assert_eq!(shown_after(&mut t, &o_burn, 10.0, 2), Some(Stage::MainSequence));
+        assert_eq!(shown_after(&mut t, &he_core, 12.0, 10), Some(Stage::HeCore));
+        assert_eq!(shown_after(&mut t, &lit, 22.0, 10), Some(Stage::HeCore), "main_sequence's row after he_core");
+        assert_eq!(t.stage(1).unwrap().raw, Stage::MainSequence);
+        assert_eq!(shown_after(&mut t, &o_burn, 32.0, 10), Some(Stage::OBurn));
+        assert_eq!(shown_after(&mut t, &he_core, 42.0, 10), Some(Stage::OBurn), "he_core's row after o_burn");
+        assert_eq!(shown_after(&mut t, &si_burn, 52.0, 10), Some(Stage::SiBurn));
+        assert_eq!(shown_after(&mut t, &o_burn, 62.0, 10), Some(Stage::SiBurn), "o_burn's row after si_burn");
+        assert_eq!(shown_after(&mut t, &lit, 72.0, 10), Some(Stage::SiBurn), "main_sequence's row after si_burn");
+        assert_eq!(t.stage(1).unwrap().raw, Stage::MainSequence);
+        assert_eq!(shown_after(&mut t, &he_shell, 82.0, 10), Some(Stage::HeShell), "he_shell after si_burn: beside the cores");
+        assert_eq!(shown_after(&mut t, &he_core, 92.0, 10), Some(Stage::HeShell), "he_core's row after he_shell");
+        assert_eq!(shown_after(&mut t, &lit, 102.0, 10), Some(Stage::HeShell), "main_sequence's row after he_shell");
+        assert_eq!(shown_after(&mut t, &si_burn, 112.0, 10), Some(Stage::SiBurn), "si_burn after he_shell");
+        let mut iron = cloud();
+        with_x(&mut iron, X_FE, 0.6);
+        assert_eq!(shown_after(&mut t, &iron, 122.0, 10), Some(Stage::IronCore));
+        assert_eq!(shown_after(&mut t, &he_shell, 132.0, 10), Some(Stage::IronCore), "he_shell past iron_core (§0.5 [M0-D201])");
     }
 
     #[test]

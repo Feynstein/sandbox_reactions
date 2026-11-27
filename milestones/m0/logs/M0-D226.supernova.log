@@ -1,0 +1,8 @@
+2026-11-27T11:18:21-05:00 M0-D226 gpu.sh conservation physics the_supernova_in_a_leave_world_keeps_the_momentum (linux-pc, RTX 5090, cap 580 s)
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test conservation::the_supernova_in_a_leave_world_keeps_the_momentum_invariant ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+wall 5 s
+CAPPED at 580 s (group 1574274 stopped)

@@ -1475,8 +1475,10 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     the kick against K ≤ 3.4 × 10⁻⁴ — the commit's ≤ 4 × 10⁻⁵, the other passes ≤ 3 × 10⁻⁴; with T taken back the window moves
     (−1.9 × 10⁻⁴, −2.3 × 10⁻⁴) and the life to step 24,500 (past the collapse) reads 2.81 × 10⁻⁷ of the running peak at worst;
     summed in `hydro_push_sum`'s one workgroup alone the step cost 2.2 × at the collapse, in `hydro_net`'s tiles the window ran
-    37.7 s against the base's 41.3 s — declared by M0-D212 (§9), the lead's word owed: the take-back the lead ruled at M0-D194
-    («Take-back, densest cell (Recommended)») carrying the update's whole net instead of K.
+    37.7 s against the base's 41.3 s — declared by M0-D212 (§9): the take-back the lead ruled at M0-D194
+    («Take-back, densest cell (Recommended)») carrying the update's whole net instead of K; [M0-D226] the lead at M0-V15,
+    2026-11-26: «Keep, and bound it (Recommended)» — the whole net's take-back stays, and what it gave back (`taken_back`,
+    [M0-D214]) is printed over G-CONS's two lives and bounded from their measured numbers (M0-D226).
   - [M0-D214] §0.5 [M0-D69]'s leave momentum band as what reds plant `grav-ring-one-sided` in the ledger (tasks/M0-D69.md:
     «the ledger stays red under that plant»), and §2.12.2's
     `"ledger": {"start", "end"}` · **summary.json's `ledger` also carries `taken_back`: the momentum P4's commit gave back from
@@ -1491,6 +1493,35 @@ access date; "my arithmetic" and "opinion" keep the research reports' meaning.
     measured on linux-pc's RTX 5090, 2026-11-25 (tasks/M0-D214.md) — the lead at M0-D214, 2026-11-25: «Expose take-back
     (Recommended)», then, the continued life's summary read apart, «Carry it in the dump (Rec.)» — carried in the dump's
     observers' snapshot, beside it, which the dump's own `Resume` would have changed in another scope's test.
+  - [M0-D225] §5.2 G-FIT's «Plant `preset-wide`: preset radii × 3» · **Plant `preset-wide`: the preset dropped at the 600 × 400
+    world's centre (300, 200) — `Scene::preset_mass` (scene.rs) — 200 cells from the 800 × 800 world's top edge** — the same class
+    of bug (a preset that does not fit the world: where it is dropped, not its size); radii × 3 keeps the mass, so Σc falls 9× and the
+    cloud collapses before it reaches out: green three times on the RTX 4090 (Giant 88.5 cells, clean 109.5; M0-V15 F5). The
+    clean Giant's Σ ≥ 10⁻² bound gas reaches 213 cells from its centre by step 3,713 and 295 by 12,706, past the 184 the drop
+    leaves; planted, its fit case cuts on its own sentence at step 3,601 (t 20.4): 14.5 cells from the edge, cell (302, 15), 65 s,
+    the bar (16 cells, Σ ≥ 10⁻²) and fit.rs untouched · measured on linux-pc's RTX 5090, 2026-11-27 (logs/M0-D225.probe.log) —
+    declared by M0-D225 (§9).
+  - [M0-D226] §5.1 G-CONS's «a supernova (leave; the Massive preset from its iron core)» · **the Massive preset at calibration's
+    mass in a leave world from the cloud, through its burning stages and its supernova to its neutron star (crates/sr-engine/tests/
+    gpu/conservation.rs `supernova()`, a checkpoint each 500 steps)** — a superset: the ledger reads the iron core's steps and the
+    ones before them; M0-V14's iron-core dump (made on the physics before M0-D163) no longer gives a supernova on the tree — loaded
+    in leave it collapses at step 817 and ends neutron_star at step 2,951 with no `supernova` event (tasks/M0-T106.md, linux-pc's
+    RTX 5090, 2026-11-23); re-made on today's physics it would restore the shorter life. Since [M0-D226] both lives' momentum cases
+    also print `taken_back` ([M0-D214]) at the life's end and along the |Δp| trail, over the running peak Σm|u|, with what its
+    f32 sum resolves — a missing number red; not graded until the lead's bound (M0-D226's split) · declared by M0-D226 (§9).
+  - [M0-D227] §1.9.3's display hold as [M0-D134] and [M0-D201] read it (the burning stages free to show in any order before
+    iron_core) · **below iron_core the burning stages are a ladder in nature's order — main_sequence, h_shell, he_core,
+    he_shell, c_burn, ne_burn, o_burn, si_burn — and one is not shown once a later one is shown; he_shell, a centre that burns
+    nothing, may follow any of them and holds those below it; white_dwarf, planetary_nebula and the early three leave the
+    ladder free as before; read off the shown stage (the snapshot unchanged); the raw stage still reads every row, and the age
+    clock and `stage_durations_sb`, which read the shown stage (§1.10.4, §2.11), follow it** — amended in place in §1.9.3 ·
+    measured by M0-V15 on laserax-ai-server's RTX 4090, 2026-11-26 (reports/v15.md § The lives, F7): every heavy life showed
+    main_sequence again after si_burn (the Giant at 7,601, the Massive at 16,625, bh_under at 14,481) and flipped main_sequence ↔
+    he_core 4–6 times (ign_over on 2026-11-23: 16), under a green G-STAGES; replayed on those lists (M0-D227, synthetic), the
+    Giant shows he_core from step 1,169 at X_H,c 0.717 — its main sequence 41.2 → 2.0 t.u. — the Massive's 107.0 → 94.4, its
+    si_burn 3.6 → 10.5 t.u. against o_burn's 12.3, and the Sun-like's he_shell after si_burn stays — the lead at M0-V15,
+    2026-11-26: «File a D (Recommended)»; at M0-D227, 2026-11-27: «Whole ladder (Recommended)», «Beside the cores
+    (Recommended)».
 - **0.6 Arithmetic corrections:** none.
 - **0.7 Words.** *cell* — one square of the ~~600 × 400~~ [M0-D203] 800 × 800 world (§2.8); *step* — one pass sequence P0–P9
   (§1.3.2); *rung* — a speed setting (§1.8); *object* — a connected body of gas (§1.9.2); *star* —
@@ -1797,7 +1828,10 @@ envelope mass (outside 2 R_core, R_core the radius where the group of the domina
 produces 90 % of its power); sink mass.
 
 **1.9.3 Stages** — evaluated per object each summary; the first matching row wins; a stage other
-than core collapse and supernova is displayed after 3 consecutive identical results. Labels (§4.6)
+than core collapse and supernova is displayed after 3 consecutive identical results. [M0-D227] Below iron_core the burning
+stages are a ladder — main_sequence, h_shell, he_core, he_shell, c_burn, ne_burn, o_burn, si_burn — and one is not displayed
+once a later one is: he_shell (a centre that burns nothing) may follow any of them and holds those below it; the raw stage
+still reads every row (§0.5 [M0-D227], with [M0-D134]'s and [M0-D201]'s holds). Labels (§4.6)
 follow the stage; "Supergiant" replaces "Red giant" for objects with M ≥ M_up (calibration).
 
 | Stage id | Matches when | Fuel of φ (§1.10.4) |
@@ -2821,7 +2855,7 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   `held_core`. Plant `held-wall-pressure-only`: a held wall's flux is §2.8's bounce flux, Π alone (the M 900 disk ran
   to KE 5 × 10⁶ on it, M0-R11).
 - **G-CONS · conservation.** A whole Sun-like life (bounce) and a supernova (leave; the Massive
-  preset from its iron core): the mass invariant of §2.9 constant to 10⁻⁶ relative; momentum (grid
+  preset ~~from its iron core~~ [M0-D226] from the cloud, through its iron core — §0.5 [M0-D226]): the mass invariant of §2.9 constant to 10⁻⁶ relative; momentum (grid
   + sinks + escaped + held [M0-TG2]) to ~~10⁻⁶ of Σm|u|~~ [M0-D186] 10⁻⁵ of the running peak Σm|u| (§0.5 [M0-D186]); the energy invariant drifting ≤ 10⁻³ |W| per τ_dyn (SM-O10).
   Mass and momentum *by construction* ([M0-D195] mass with P4's f32 rounding given back, §0.5 [M0-D195]; [M0-D212] momentum
   with P4's whole update taken back, §0.5 [M0-D212]); energy *UNVERIFIED* — source-term gravity conserves it only
@@ -2885,7 +2919,7 @@ over 10 minutes on the Quadro (§6.4). A row's scripted edits come from an edits
   `edit-ignored`: P0 drops edits on non-vacuum cells.
 - **G-FIT · every life fits the world.** Through each preset's life no bound gas
   (½|u|² + ε_th + φ < 0) denser than Σ = 10⁻² comes within 16 cells of an edge of the default world
-  ([M0-D203] 800 × 800, §2.8) (D5's squeezed ladder); a fainter bound halo may [M0-T99a]. *UNVERIFIED* (a tuning target). Scope `fit` ⏱. Plant `preset-wide`: preset radii × 3.
+  ([M0-D203] 800 × 800, §2.8) (D5's squeezed ladder); a fainter bound halo may [M0-T99a]. *UNVERIFIED* (a tuning target). Scope `fit` ⏱. Plant `preset-wide`: ~~preset radii × 3~~ [M0-D225] the preset dropped at the 600 × 400 world's centre (300, 200).
 - **G-MULTI · several clouds allowed** (B15: "Allowed, one promised"). Two Sun-like presets
   240 cells apart, 20 τ_dyn: two objects with stable ids, no non-finite value, both readouts filled.
   *By construction*. Scope `multi`. Plant `one-object`: the tracker joins blocks across empty

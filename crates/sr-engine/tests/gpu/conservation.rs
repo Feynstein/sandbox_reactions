@@ -1,8 +1,14 @@
 //! M0-T106 — conservation over whole lives (contract §5.1's G-CONS; §0.4, §2.9): the ledger's three invariants, read along two
 //! whole lives — the Sun-like preset in a world whose edges bounce, to its white dwarf, and a supernova in a world whose edges
-//! leave, the Massive preset from its iron-core dump to its neutron star:
+//! leave, the Massive preset from the cloud through its supernova to its neutron star (§0.5 [M0-D226]: a superset of §5.1's «from its
+//! iron core» — M0-V14's iron-core dump no longer gives a supernova on the tree since M0-D163's physics, tasks/M0-T106.md):
 //! - mass: grid + sinks + escaped + erased + vacuum_reset − painted − preset_dropped constant to 10⁻⁶ relative to its start;
-//! - momentum: grid + sinks + escaped + held constant to 10⁻⁵ of the running peak Σm|u| (§0.5 [M0-D186]: f32's floor with every route booked);
+//! - momentum: grid + sinks + escaped + held constant to 10⁻⁵ of the running peak Σm|u| (§0.5 [M0-D186]: f32's floor with every route booked)
+//!   — *by construction* since §0.5 [M0-D212]: the densest free cell takes back P4's whole net each step, so no force error moves it.
+//!   What the commit gave back, `taken_back` (§0.5 [M0-D214]: |·| summed in f32 over the run's steps), is where one shows: each momentum
+//!   case prints it at the life's end (summary.json) and at the checkpoints of its |Δp| trail (the observers' snapshots), over the
+//!   running peak Σm|u|, with what an f32 sum of that many steps resolves; a missing number is red. Its bound is the lead's, set from
+//!   these two lives' numbers (M0-D226, the lead at M0-V15: «Keep, and bound it (Recommended)») — printed, not graded, until then;
 //! - energy: the invariant of §2.9 drifting at most 10⁻³ |W| per τ_dyn (`UNVERIFIED`: source-term gravity conserves it only
 //!   approximately; a red here is a D for a conservative gravity formulation, never a looser bound, §0.4).
 //!
@@ -117,6 +123,9 @@ struct Point {
     scale: f64,
     /// The largest τ_dyn of the heaviest object since the previous point (NaN if the readout showed none).
     tau_dyn: f64,
+    /// [M0-D226] The snapshot's `taken_back` (§0.5 [M0-D214]): |·| of the momentum P4's commit gave back, summed in f32 over the
+    /// run's steps to this checkpoint; NaN when the snapshot holds none (a GPU life always writes it: the case refuses NaN).
+    taken_back: f64,
 }
 
 /// A life as read along its way.
@@ -130,6 +139,8 @@ struct Life {
     /// Every shown stage the heaviest object had (ticks).
     stages: BTreeSet<String>,
     steps: u64,
+    /// [M0-D226] summary.json's `ledger.taken_back` at the life's end; NaN when it holds none.
+    taken_back_end: f64,
 }
 
 /// Σm|u| of a checkpoint's dump: the grid's Σ|σu| and the sinks' M|v|.
@@ -184,6 +195,7 @@ fn run_life(id: &'static str, scene: Scene, extra: &[&str], every: u64, max_step
             rec: rec_from(&snapshot["ledger"]["last"]),
             scale: momentum_scale(&dump),
             tau_dyn: window_tau.get(),
+            taken_back: taken_back_of(&snapshot),
         });
         // The next window opens with the readout the checkpoint stands on.
         window_tau.set(last_tau.get());
@@ -195,7 +207,16 @@ fn run_life(id: &'static str, scene: Scene, extra: &[&str], every: u64, max_step
     let summary: Value = serde_json::from_str(&text).expect("summary.json parses");
     let _ = std::fs::remove_dir_all(&out);
     let start = start.into_inner().unwrap_or_else(|| panic!("{id}: no checkpoint was saved in {} steps (every {every})", last_step.get()));
-    Life { id, start, points: points.into_inner(), code, summary, stages: stages.into_inner(), steps: last_step.get() }
+    let taken_back_end = summary["ledger"]["taken_back"].as_f64().unwrap_or(f64::NAN);
+    Life { id, start, points: points.into_inner(), code, summary, stages: stages.into_inner(), steps: last_step.get(), taken_back_end }
+}
+
+/// [M0-D226] An observers' snapshot's `taken_back` (an exact string, §0.5 [M0-D214]); NaN when it holds none or it does not read.
+fn taken_back_of(snapshot: &Value) -> f64 {
+    if snapshot.get("taken_back").is_none() {
+        return f64::NAN;
+    }
+    read_exact(&snapshot["taken_back"], "taken_back").unwrap_or(f64::NAN)
 }
 
 // ---- the grader, on plain records ----
@@ -208,6 +229,53 @@ fn mass_drift(start: &Rec, p: &Rec) -> f64 {
 /// The momentum invariant's drift from the start (the vector's length) over `scale`.
 fn momentum_drift(start: &Rec, p: &Rec, scale: f64) -> f64 {
     ((p.momentum[0] - start.momentum[0]).powi(2) + (p.momentum[1] - start.momentum[1]).powi(2)).sqrt() / scale
+}
+
+/// [M0-D226] What an f32 running sum `sum` of `steps` non-negative terms resolves (the shader's `push_net` word 7): ulp(sum), so a
+/// step whose term is under ½ ulp adds nothing once the sum has grown there, and the worst rounding the sum can hold, `steps` × ½ ulp
+/// (each addition rounds by at most ½ ulp of a partial sum, none larger than the end's) — (ulp, worst rounding).
+fn f32_sum_resolution(sum: f64, steps: u64) -> (f64, f64) {
+    let s = sum as f32;
+    let ulp = f64::from(f32::from_bits(s.to_bits() + 1)) - f64::from(s);
+    (ulp, steps as f64 * ulp / 2.0)
+}
+
+/// [M0-D226] The take-back's lines for a life: at the end (summary.json) and at the checkpoints the |Δp| trail reads (the snapshots),
+/// each over the running peak Σm|u| there, and what the f32 sum resolves. Err when a number is missing: the case is red.
+fn taken_back_lines(l: &Life, trail_at: &[usize]) -> Result<(String, String), String> {
+    let mut peaks = Vec::with_capacity(l.points.len());
+    let mut peak = 0.0f64;
+    for p in &l.points {
+        peak = peak.max(p.scale);
+        peaks.push(peak);
+    }
+    if let Some(p) = l.points.iter().find(|p| !p.taken_back.is_finite()) {
+        return Err(format!("no taken_back in the observers' snapshot at step {}", p.rec.step));
+    }
+    if !l.taken_back_end.is_finite() {
+        return Err(format!("no ledger.taken_back in summary.json ({})", l.summary["ledger"]["taken_back"]));
+    }
+    let trail: Vec<String> = trail_at
+        .iter()
+        .map(|&i| format!("{}: {:.3e} = {:.2e} of the peak", l.points[i].rec.step, l.points[i].taken_back, l.points[i].taken_back / peaks[i]))
+        .collect();
+    let peak = peaks.last().copied().unwrap_or(f64::NAN);
+    let (ulp, rounding) = f32_sum_resolution(l.taken_back_end, l.steps);
+    let mean = l.taken_back_end / l.steps.max(1) as f64;
+    let end = format!(
+        "taken back over the life {:.6e} = {:.3e} of the running peak Σm|u| {peak:.4e} ({} steps; not graded — its bound is the lead's, M0-D226); \
+         an f32 sum of {} steps: ulp {ulp:.3e}, so a step's take-back under {:.3e} ({:.2e} of the mean step's {mean:.3e}) adds nothing at the end, \
+         and the sum's rounding is at most {rounding:.3e} = {:.2e} of it ({:.2e} of the peak)",
+        l.taken_back_end,
+        l.taken_back_end / peak,
+        l.steps,
+        l.steps,
+        ulp / 2.0,
+        ulp / 2.0 / mean,
+        rounding / l.taken_back_end,
+        rounding / peak,
+    );
+    Ok((end, trail.join(" · ")))
 }
 
 /// The energy invariant's drift between two records in |W| per τ_dyn: |Δ| / (|W| × Δt / τ_dyn), |W| the smaller of the two records'.
@@ -374,7 +442,8 @@ fn sun() -> &'static Life {
 
 /// The Massive preset at calibration's mass in a leave world, its whole life to the supernova and the neutron star; a checkpoint each
 /// 500 steps. The contract names the supernova "from its iron core" (a dump saves the steps before it); M0-V14's dump no longer gives one
-/// on today's tree (see the module doc), so the life starts from the cloud and the ledger covers the burning stages too.
+/// on today's tree (loaded in leave it collapses at step 817 and ends neutron_star at 2,951 with no `supernova` event, tasks/M0-T106.md),
+/// so the life starts from the cloud and the ledger covers the burning stages too — a superset, declared at §0.5 [M0-D226].
 fn supernova() -> &'static Life {
     SUPERNOVA.get_or_init(|| {
         let cal = calibration::resolve(calibration::EMBEDDED, true).unwrap().expect("a calibration");
@@ -419,9 +488,22 @@ fn momentum_case(l: &Life) {
         last.scale,
     );
     println!("{}: the whole life's momentum terms — {}", l.id, momentum_table(&l.start, &last.rec));
-    let trail: Vec<String> = l.points.iter().step_by((l.points.len() / 12).max(1)).map(|p| format!("{}: {:.2e} (Σm|u| {:.2e})", p.rec.step, momentum_drift(&l.start, &p.rec, 1.0), p.scale)).collect();
+    let trail_at: Vec<usize> = (0..l.points.len()).step_by((l.points.len() / 12).max(1)).collect();
+    let trail: Vec<String> = trail_at.iter().map(|&i| &l.points[i]).map(|p| format!("{}: {:.2e} (Σm|u| {:.2e})", p.rec.step, momentum_drift(&l.start, &p.rec, 1.0), p.scale)).collect();
     println!("{}: |Δp| along the life — {}", l.id, trail.join(" · "));
-    assert!(d <= MOMENTUM_BAND, "{}: momentum invariant drift {d:.3e} of Σm|u| at step {at}, over {MOMENTUM_BAND:.0e}", l.id);
+    // [M0-D226] The take-back holds the invariant by construction (§0.5 [M0-D212]); what it gave back is where a force error shows.
+    let taken = taken_back_lines(l, &trail_at);
+    match &taken {
+        Ok((end, along)) => {
+            println!("{}: {end}", l.id);
+            println!("{}: taken back along the life — {along}", l.id);
+        }
+        Err(e) => println!("{}: {e}", l.id),
+    }
+    assert!(d <= MOMENTUM_BAND, "{}: momentum invariant drift {d:.3e} of Σm|u| at step {at}, over {MOMENTUM_BAND:.0e} (by construction since §0.5 [M0-D212])", l.id);
+    if let Err(e) = taken {
+        panic!("{}: {e}", l.id);
+    }
 }
 
 fn energy_case(l: &Life) {
@@ -489,11 +571,11 @@ fn rec(step: u64, t: f64, mass: f64, momentum: [f64; 2], energy: f64, w: f64) ->
 }
 
 fn point(r: Rec, scale: f64, tau_dyn: f64) -> Point {
-    Point { rec: r, scale, tau_dyn }
+    Point { rec: r, scale, tau_dyn, taken_back: 0.0 }
 }
 
 fn life_of(start: Rec, points: Vec<Point>) -> Life {
-    Life { id: "hand-made", start, points, code: 0, summary: serde_json::json!({}), stages: BTreeSet::new(), steps: 0 }
+    Life { id: "hand-made", start, points, code: 0, summary: serde_json::json!({}), stages: BTreeSet::new(), steps: 0, taken_back_end: 0.0 }
 }
 
 /// A record in the snapshot's form: every f64 a string, the terms as the life's checkpoints write them.
@@ -569,6 +651,23 @@ fn grader_is_graded() {
     assert_eq!(r.mass, 10.0 + 1.0 + 2.0 + 0.25 + 0.125 - 0.5 - 3.0, "grid + sinks + escaped + erased + vacuum_reset − painted − preset_dropped");
     assert_eq!(r.momentum, [1.0 + 0.5 + 0.125 + 4.0, 2.0 + 0.25 + 0.0625 + 8.0], "grid + sinks + escaped + held");
     assert_eq!((r.step, r.t, r.w), (7, 1.5, 4.0), "the record's own step, time and W");
+    // [M0-D226] The take-back: read from the snapshot exactly, a missing one NaN; over the running peak at each checkpoint and at the
+    // end; a missing number anywhere refused; f32's ulp at 1.0 is 2⁻²³ and N steps round by at most N × 2⁻²⁴.
+    assert_eq!(taken_back_of(&serde_json::json!({"taken_back": "0.5"})), 0.5);
+    assert!(taken_back_of(&serde_json::json!({})).is_nan() && taken_back_of(&serde_json::json!({"taken_back": "x"})).is_nan());
+    assert_eq!(f32_sum_resolution(1.0, 1000), (2f64.powi(-23), 1000.0 * 2f64.powi(-24)));
+    assert_eq!(f32_sum_resolution(3.0, 1).0, 2f64.powi(-22));
+    let mut tb = life_of(start.clone(), vec![point(rec(2, 1.0, 1000.0, [0.0; 2], 0.0, -5.0), 10.0, 1.0), point(rec(3, 2.0, 1000.0, [0.0; 2], 0.0, -5.0), 4.0, 1.0)]);
+    tb.points[0].taken_back = 0.01;
+    tb.points[1].taken_back = 0.03;
+    (tb.taken_back_end, tb.steps) = (0.05, 100);
+    let (end, along) = taken_back_lines(&tb, &[0, 1]).expect("the take-back read");
+    assert!(end.contains("5.000e-3 of the running peak") && along.contains("2: 1.000e-2 = 1.00e-3 of the peak") && along.contains("3: 3.000e-2 = 3.00e-3 of the peak"), "{end} | {along}");
+    tb.points[1].taken_back = f64::NAN;
+    assert!(taken_back_lines(&tb, &[0]).is_err(), "a checkpoint without the take-back accepted");
+    tb.points[1].taken_back = 0.03;
+    tb.taken_back_end = f64::NAN;
+    assert!(taken_back_lines(&tb, &[0]).is_err(), "a summary without the take-back accepted");
     // The ending: unmet, unheld and the wrong one are each refused.
     let met = |ending: Value, met: bool| serde_json::json!({"until": {"met": met, "object": 3}, "objects": [{"id": 3, "ending": ending}]});
     assert_eq!(ending_of(&met("white_dwarf".into(), true), 0).as_deref(), Ok("white_dwarf"));

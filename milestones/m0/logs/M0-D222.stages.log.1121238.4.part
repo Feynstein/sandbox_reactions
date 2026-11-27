@@ -1,0 +1,28 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.50s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test stages::the_giant_preset_shows_its_stages_down_to_black_hole ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+giant step=33 t=0.26 shown=protostar raw=protostar M=18963.9 (m_up_sb 6252.3)
+giant step=769 t=3.97 shown=main_sequence raw=main_sequence M=18947.4 (m_up_sb 6252.3)
+giant step=1169 t=6.08 shown=he_core raw=he_core M=18933.0 (m_up_sb 6252.3)
+giant step=1505 t=7.75 shown=main_sequence raw=main_sequence M=18919.0 (m_up_sb 6252.3)
+giant step=3441 t=20.44 shown=he_core raw=he_core M=18740.5 (m_up_sb 6252.3)
+giant step=3521 t=21.10 shown=main_sequence raw=main_sequence M=18727.6 (m_up_sb 6252.3)
+giant step=4273 t=27.97 shown=he_core raw=he_core M=18571.9 (m_up_sb 6252.3)
+giant step=4433 t=29.32 shown=main_sequence raw=main_sequence M=18534.7 (m_up_sb 6252.3)
+giant step=4977 t=34.96 shown=he_core raw=he_core M=18351.7 (m_up_sb 6252.3)
+giant step=5105 t=36.09 shown=main_sequence raw=main_sequence M=18361.4 (m_up_sb 6252.3)
+giant step=5489 t=40.08 shown=he_core raw=he_core M=18212.7 (m_up_sb 6252.3)
+giant step=5665 t=41.64 shown=main_sequence raw=main_sequence M=18125.4 (m_up_sb 6252.3)
+giant step=6033 t=45.32 shown=he_core raw=he_core M=17882.4 (m_up_sb 6252.3)
+giant step=6193 t=46.79 shown=main_sequence raw=main_sequence M=17781.9 (m_up_sb 6252.3)
+giant step=6385 t=48.57 shown=he_core raw=he_core M=17665.3 (m_up_sb 6252.3)
+giant step=6961 t=53.36 shown=o_burn raw=o_burn M=17383.3 (m_up_sb 6252.3)
+giant step=7409 t=56.45 shown=si_burn raw=si_burn M=17228.0 (m_up_sb 6252.3)
+giant step=7601 t=57.64 shown=main_sequence raw=main_sequence M=17174.0 (m_up_sb 6252.3)

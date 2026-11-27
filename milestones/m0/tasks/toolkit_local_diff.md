@@ -222,3 +222,32 @@ the swapped switch's `RUNGS` holds all seven rungs of the 2026-10-11 ladder.
    waited on in silence »); `PB_HEARTBEAT_S` saved and popped. The annex's §A.2 says nothing of live lines.
    Measured on linux-pc: selftest checks=381 · plants 164/164 red, GO; on a pty (`script`) `--redarm ending` said its lone
    arm's start and a heartbeat each 0.5 s (`PB_HEARTBEAT_S=0.5`) while cargo rebuilt (logs/M0-D179.pty.log).
+14. **verify.py — a run's commands end with the run, however it ends (local, M0-D220, 2026-11-27; filed by M0-V15).** Each
+   command runs in a session of its own (`new_group`, for stop_tree's one-command stop), so a capper's TERM or KILL to
+   verify.py reached none of them: eight `tests/gpu.sh` groups of M0-D219's and M0-D214's capped claims ran on under PID 1,
+   the RTX 5090 at 99 %, writing into part files nobody joined. Now a guard — one helper process per verify.py process, in
+   a session of its own, so a capper's signal to verify.py's group never reaches it — reads on a pipe the groups the run
+   holds (`+<pgid>\t<log>\t<part>\t<label>`, `-<pgid>` once the command ended, so no late signal reaches a finished
+   scope); at the pipe's end (verify.py exited, crashed or was killed, KILL included) or at `!` it sends each group still
+   held SIGINT, waits `GUARD_GRACE_S` (4 s) for a teardown, sends SIGKILL, and notes `exit=stopped … its output kept in
+   <part>` in the scope's log; the part file stays under its name. And the CLI's TERM, INT and HUP (HUP unless handed it
+   ignored, `nohup`) stop the run at once: no command starts after (`STOPPING` under `SPAWN`, the start and the hold as
+   one), the guard stops the groups, then `=== NO-GO: stopped by SIG<X> - its commands stopped, their part files kept ===`
+   and exit 128+signal — before, INT (Ctrl-C) raised in the main thread while the pool waited on commands Ctrl-C never
+   reaches. Why a guard: PR_SET_PDEATHSIG is Linux only, reaches the direct child (bash) and not cargo or the gpu binary
+   under it, and fires when the spawning thread ends (a pool thread); the capper's group is signalled only by GNU
+   `timeout` without `--foreground`, never by `kill -9 <pid>`. Hunks: `SPAWN`, `STOPPING`, `GUARD_GRACE_S` beside `SAY`;
+   `GUARD_SRC`, `Guard`, `GUARD`, `stop_on_signals` after `live_sigint`; `run_command`'s start under `SPAWN` with
+   `GUARD.hold`, `GUARD.drop` after the wait, the early return under `STOPPING` (a start refused there removes its
+   empty part and logs `exit=NOT RUN (the run was stopped by SIG<X>)`); the `STOPPING` check under `LOCK` before a
+   command's header; the handler's `LOCK` before `os._exit`; `stop_on_signals()` in `__main__` only
+   (the selftest's in-process runs keep their handlers). Selftest: three checks after « a run handed SIGINT ignored … » — a
+   real verify.py on a `sleep 60` scope stopped by TERM, INT, KILL mid-command: the child gone within 5 s, one part file
+   kept, `exit=stopped` in the log, the NO-GO line (not KILL), exit 128+signal, a queued `exclusive` scope never
+   started (no part, its log if any NOT RUN); POSIX only. verify.json's plant `guard`
+   (case `verify`: the hold dropped from `run_command`, tests/plants/tools-selftest-guard.patch). Windows: no guard and no
+   signal stop (`CREATE_NEW_PROCESS_GROUP`, no job object) — a killed run there still leaves its commands; a job object
+   with KILL_ON_JOB_CLOSE is the route, not built; the three checks are skipped and the plant reads green there (R15,
+   owed). The annex's §A.2 says nothing of a run's end. Measured on linux-pc: selftest checks=384 · plants 164/164 red,
+   GO; `--redarm tools_selftest` 8/8 RED, GO; `timeout -s TERM|KILL 60 verify.py conservation` with `gpu-…` live on the
+   RTX 5090: nothing of the run left 5 s after (logs/M0-D220.log).

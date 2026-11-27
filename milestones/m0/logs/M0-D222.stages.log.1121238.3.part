@@ -1,0 +1,12 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.50s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test stages::the_massive_preset_shows_its_stages_down_to_neutron_star ... SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+massive step=33 t=0.30 shown=protostar raw=protostar M=9643.9 (m_up_sb 6252.3)
+massive step=721 t=4.27 shown=main_sequence raw=main_sequence M=9631.2 (m_up_sb 6252.3)

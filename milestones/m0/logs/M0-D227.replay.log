@@ -1,0 +1,104 @@
+== M0-V15.stages.log giant (21 entries)
+  A: 8: protostar@33 → main_sequence@769 → he_core@1169 → o_burn@6881 → si_burn@7313 → core_collapse@8353 → supernova@8354 → black_hole@8434
+  B: 8: protostar@33 → main_sequence@769 → he_core@1169 → o_burn@6881 → si_burn@7313 → core_collapse@8353 → supernova@8354 → black_hole@8434
+  C: 8: protostar@33 → main_sequence@769 → he_core@1169 → o_burn@6881 → si_burn@7313 → core_collapse@8353 → supernova@8354 → black_hole@8434
+== M0-V15.stages.log massive (18 entries)
+  A: 9: protostar@33 → main_sequence@721 → he_core@11361 → o_burn@15105 → si_burn@16625 → iron_core@18081 → core_collapse@21585 → supernova@21586 → neutron_star@25570
+  B: 9: protostar@33 → main_sequence@721 → he_core@11361 → o_burn@15105 → si_burn@16625 → iron_core@18081 → core_collapse@21585 → supernova@21586 → neutron_star@25570
+  C: 9: protostar@33 → main_sequence@721 → he_core@11361 → o_burn@15105 → si_burn@16625 → iron_core@18081 → core_collapse@21585 → supernova@21586 → neutron_star@25570
+== M0-V15.stages.log giant (21 entries)
+  A: 8: protostar@33 → main_sequence@785 → he_core@1169 → o_burn@6961 → si_burn@7409 → core_collapse@8481 → supernova@8482 → black_hole@8562
+  B: 8: protostar@33 → main_sequence@785 → he_core@1169 → o_burn@6961 → si_burn@7409 → core_collapse@8481 → supernova@8482 → black_hole@8562
+  C: 8: protostar@33 → main_sequence@785 → he_core@1169 → o_burn@6961 → si_burn@7409 → core_collapse@8481 → supernova@8482 → black_hole@8562
+== M0-V15.stages.log massive (18 entries)
+  A: 9: protostar@33 → main_sequence@721 → he_core@10913 → o_burn@14673 → si_burn@16161 → iron_core@17569 → core_collapse@21409 → supernova@21410 → neutron_star@25442
+  B: 9: protostar@33 → main_sequence@721 → he_core@10913 → o_burn@14673 → si_burn@16161 → iron_core@17569 → core_collapse@21409 → supernova@21410 → neutron_star@25442
+  C: 9: protostar@33 → main_sequence@721 → he_core@10913 → o_burn@14673 → si_burn@16161 → iron_core@17569 → core_collapse@21409 → supernova@21410 → neutron_star@25442
+== M0-V15.endings.log bh_under (22 entries)
+  A: 9: protostar@33 → main_sequence@721 → he_core@8513 → o_burn@12817 → si_burn@14113 → iron_core@15601 → core_collapse@18209 → supernova@18210 → neutron_star@22274
+  B: 9: protostar@33 → main_sequence@721 → he_core@8513 → o_burn@12817 → si_burn@14113 → iron_core@15601 → core_collapse@18209 → supernova@18210 → neutron_star@22274
+  C: 9: protostar@33 → main_sequence@721 → he_core@8513 → o_burn@12817 → si_burn@14113 → iron_core@15601 → core_collapse@18209 → supernova@18210 → neutron_star@22274
+== M0-V15.endings.log bh_under (1 entries)
+  A: 1: cloud@24290
+  B: 1: cloud@24290
+  C: 1: cloud@24290
+== M0-V15.endings.log bh_over (21 entries)
+  A: 8: protostar@33 → main_sequence@769 → he_core@1169 → o_burn@7585 → si_burn@8129 → core_collapse@9473 → supernova@9474 → black_hole@9538
+  B: 8: protostar@33 → main_sequence@769 → he_core@1169 → o_burn@7585 → si_burn@8129 → core_collapse@9473 → supernova@9474 → black_hole@9538
+  C: 8: protostar@33 → main_sequence@769 → he_core@1169 → o_burn@7585 → si_burn@8129 → core_collapse@9473 → supernova@9474 → black_hole@9538
+== M0-V15.endings.log ign_under (4 entries)
+  A: 4: collapsing@65 → failed_star@513 → collapsing@641 → failed_star@753
+  B: 4: collapsing@65 → failed_star@513 → collapsing@641 → failed_star@753
+  C: 4: collapsing@65 → failed_star@513 → collapsing@641 → failed_star@753
+== M0-V15.endings.log ign_over (40 entries)
+  A: 8: collapsing@65 → main_sequence@705 → he_core@110737 → o_burn@118065 → si_burn@122673 → he_shell@123537 → iron_core@125713 → white_dwarf@138305
+  B: 7: collapsing@65 → main_sequence@705 → he_core@110737 → o_burn@118065 → si_burn@122673 → iron_core@125713 → white_dwarf@138305
+  C: 8: collapsing@65 → main_sequence@705 → he_core@110737 → o_burn@118065 → si_burn@122673 → he_shell@123537 → iron_core@125713 → white_dwarf@138305
+== M0-V15.endings.log up_under (10 entries)
+  A: 9: cloud@33 → collapsing@97 → main_sequence@449 → he_core@33905 → o_burn@40449 → si_burn@43681 → he_shell@44433 → iron_core@44977 → white_dwarf@57025
+  B: 8: cloud@33 → collapsing@97 → main_sequence@449 → he_core@33905 → o_burn@40449 → si_burn@43681 → iron_core@44977 → white_dwarf@57025
+  C: 9: cloud@33 → collapsing@97 → main_sequence@449 → he_core@33905 → o_burn@40449 → si_burn@43681 → he_shell@44433 → iron_core@44977 → white_dwarf@57025
+== M0-V15.endings.log up_over (14 entries)
+  A: 11: protostar@33 → main_sequence@689 → he_core@16689 → o_burn@20481 → si_burn@22161 → iron_core@23521 → core_collapse@30097 → supernova@30098 → neutron_star@30770 → core_collapse@30914 → neutron_star@30956
+  B: 11: protostar@33 → main_sequence@689 → he_core@16689 → o_burn@20481 → si_burn@22161 → iron_core@23521 → core_collapse@30097 → supernova@30098 → neutron_star@30770 → core_collapse@30914 → neutron_star@30956
+  C: 11: protostar@33 → main_sequence@689 → he_core@16689 → o_burn@20481 → si_burn@22161 → iron_core@23521 → core_collapse@30097 → supernova@30098 → neutron_star@30770 → core_collapse@30914 → neutron_star@30956
+== M0-V15.endings.log giant (21 entries)
+  A: 8: protostar@33 → main_sequence@769 → he_core@1169 → o_burn@6881 → si_burn@7313 → core_collapse@8353 → supernova@8354 → black_hole@8434
+  B: 8: protostar@33 → main_sequence@769 → he_core@1169 → o_burn@6881 → si_burn@7313 → core_collapse@8353 → supernova@8354 → black_hole@8434
+  C: 8: protostar@33 → main_sequence@769 → he_core@1169 → o_burn@6881 → si_burn@7313 → core_collapse@8353 → supernova@8354 → black_hole@8434
+== M0-V15.endings.log massive (18 entries)
+  A: 9: protostar@33 → main_sequence@721 → he_core@11361 → o_burn@15105 → si_burn@16625 → iron_core@18081 → core_collapse@21585 → supernova@21586 → neutron_star@25570
+  B: 9: protostar@33 → main_sequence@721 → he_core@11361 → o_burn@15105 → si_burn@16625 → iron_core@18081 → core_collapse@21585 → supernova@21586 → neutron_star@25570
+  C: 9: protostar@33 → main_sequence@721 → he_core@11361 → o_burn@15105 → si_burn@16625 → iron_core@18081 → core_collapse@21585 → supernova@21586 → neutron_star@25570
+== M0-V15.endings.log sun (10 entries)
+  A: 8: collapsing@65 → main_sequence@705 → he_core@135873 → o_burn@147873 → si_burn@151985 → he_shell@152689 → iron_core@153697 → white_dwarf@169809
+  B: 7: collapsing@65 → main_sequence@705 → he_core@135873 → o_burn@147873 → si_burn@151985 → iron_core@153697 → white_dwarf@169809
+  C: 8: collapsing@65 → main_sequence@705 → he_core@135873 → o_burn@147873 → si_burn@151985 → he_shell@152689 → iron_core@153697 → white_dwarf@169809
+== M0-V15.endings.log bh_under (22 entries)
+  A: 9: protostar@33 → main_sequence@721 → he_core@8481 → o_burn@12769 → si_burn@14049 → iron_core@15713 → core_collapse@18129 → supernova@18130 → neutron_star@22242
+  B: 9: protostar@33 → main_sequence@721 → he_core@8481 → o_burn@12769 → si_burn@14049 → iron_core@15713 → core_collapse@18129 → supernova@18130 → neutron_star@22242
+  C: 9: protostar@33 → main_sequence@721 → he_core@8481 → o_burn@12769 → si_burn@14049 → iron_core@15713 → core_collapse@18129 → supernova@18130 → neutron_star@22242
+== M0-V15.endings.log bh_under (1 entries)
+  A: 1: cloud@24290
+  B: 1: cloud@24290
+  C: 1: cloud@24290
+== M0-V15.endings.log bh_over (21 entries)
+  A: 8: protostar@33 → main_sequence@769 → he_core@1169 → o_burn@7553 → si_burn@8113 → core_collapse@9409 → supernova@9410 → black_hole@9490
+  B: 8: protostar@33 → main_sequence@769 → he_core@1169 → o_burn@7553 → si_burn@8113 → core_collapse@9409 → supernova@9410 → black_hole@9490
+  C: 8: protostar@33 → main_sequence@769 → he_core@1169 → o_burn@7553 → si_burn@8113 → core_collapse@9409 → supernova@9410 → black_hole@9490
+== M0-V15.endings.log ign_under (4 entries)
+  A: 4: collapsing@65 → failed_star@513 → collapsing@641 → failed_star@753
+  B: 4: collapsing@65 → failed_star@513 → collapsing@641 → failed_star@753
+  C: 4: collapsing@65 → failed_star@513 → collapsing@641 → failed_star@753
+== M0-V15.endings.log ign_over (19 entries)
+  A: 7: collapsing@65 → main_sequence@705 → he_core@108337 → o_burn@118465 → si_burn@123809 → he_shell@124977 → iron_core@127425
+  B: 6: collapsing@65 → main_sequence@705 → he_core@108337 → o_burn@118465 → si_burn@123809 → iron_core@127425
+  C: 7: collapsing@65 → main_sequence@705 → he_core@108337 → o_burn@118465 → si_burn@123809 → he_shell@124977 → iron_core@127425
+== M0-V15.touch.log paint (25 entries)
+  A: 9: cloud@50555 → collapsing@50670 → main_sequence@51006 → he_core@55470 → o_burn@107022 → si_burn@109822 → core_collapse@112078 → supernova@112079 → neutron_star@116207
+  B: 9: cloud@50555 → collapsing@50670 → main_sequence@51006 → he_core@55470 → o_burn@107022 → si_burn@109822 → core_collapse@112078 → supernova@112079 → neutron_star@116207
+  C: 9: cloud@50555 → collapsing@50670 → main_sequence@51006 → he_core@55470 → o_burn@107022 → si_burn@109822 → core_collapse@112078 → supernova@112079 → neutron_star@116207
+== M0-V15.touch.log erase (14 entries)
+  A: 9: protostar@3 → main_sequence@667 → he_core@12053 → o_burn@15941 → si_burn@17525 → iron_core@18917 → core_collapse@23013 → supernova@23014 → neutron_star@26470
+  B: 9: protostar@3 → main_sequence@667 → he_core@12053 → o_burn@15941 → si_burn@17525 → iron_core@18917 → core_collapse@23013 → supernova@23014 → neutron_star@26470
+  C: 9: protostar@3 → main_sequence@667 → he_core@12053 → o_burn@15941 → si_burn@17525 → iron_core@18917 → core_collapse@23013 → supernova@23014 → neutron_star@26470
+== M0-V15.touch.log paint (27 entries)
+  A: 14: cloud@3 → collapsing@26 → protostar@280 → failed_star@571 → collapsing@630 → main_sequence@665 → he_core@50756 → o_burn@84996 → si_burn@88644 → he_shell@90516 → iron_core@92756 → core_collapse@103028 → supernova@103029 → neutron_star@106885
+  B: 13: cloud@3 → collapsing@26 → protostar@280 → failed_star@571 → collapsing@630 → main_sequence@665 → he_core@50756 → o_burn@84996 → si_burn@88644 → iron_core@92756 → core_collapse@103028 → supernova@103029 → neutron_star@106885
+  C: 14: cloud@3 → collapsing@26 → protostar@280 → failed_star@571 → collapsing@630 → main_sequence@665 → he_core@50756 → o_burn@84996 → si_burn@88644 → he_shell@90516 → iron_core@92756 → core_collapse@103028 → supernova@103029 → neutron_star@106885
+== M0-V15.touch.log erase (16 entries)
+  A: 10: protostar@3 → main_sequence@668 → he_core@95869 → o_burn@106093 → si_burn@108893 → he_shell@109853 → si_burn@110189 → he_shell@110765 → iron_core@113149 → white_dwarf@130141
+  B: 7: protostar@3 → main_sequence@668 → he_core@95869 → o_burn@106093 → si_burn@108893 → iron_core@113149 → white_dwarf@130141
+  C: 10: protostar@3 → main_sequence@668 → he_core@95869 → o_burn@106093 → si_burn@108893 → he_shell@109853 → si_burn@110189 → he_shell@110765 → iron_core@113149 → white_dwarf@130141
+== M0-V15.age.log touch: (21 entries)
+  A: 8: protostar@3 → main_sequence@667 → he_core@10751 → o_burn@18505 → si_burn@20217 → core_collapse@22329 → supernova@22330 → neutron_star@26506
+  B: 8: protostar@3 → main_sequence@667 → he_core@10751 → o_burn@18505 → si_burn@20217 → core_collapse@22329 → supernova@22330 → neutron_star@26506
+  C: 8: protostar@3 → main_sequence@667 → he_core@10751 → o_burn@18505 → si_burn@20217 → core_collapse@22329 → supernova@22330 → neutron_star@26506
+== M0-V15.age.log touch: (2 entries)
+  A: 2: cloud@27690 → collapsing@28394
+  B: 2: cloud@27690 → collapsing@28394
+  C: 2: cloud@27690 → collapsing@28394
+== M0-V15.age.log touch: (14 entries)
+  A: 9: protostar@3 → main_sequence@668 → he_core@7108 → o_burn@18915 → si_burn@20499 → iron_core@21251 → core_collapse@27587 → supernova@27588 → neutron_star@29012
+  B: 9: protostar@3 → main_sequence@668 → he_core@7108 → o_burn@18915 → si_burn@20499 → iron_core@21251 → core_collapse@27587 → supernova@27588 → neutron_star@29012
+  C: 9: protostar@3 → main_sequence@668 → he_core@7108 → o_burn@18915 → si_burn@20499 → iron_core@21251 → core_collapse@27587 → supernova@27588 → neutron_star@29012

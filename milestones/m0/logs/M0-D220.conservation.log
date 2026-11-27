@@ -1,0 +1,15 @@
+== 2026-11-27T08:29:15-05:00 conservation · task M0-D220 · box laserax-ai :: bash tests/gpu.sh conservation physics
+-- conservation · exit=stopped (the run ended mid-command; the guard stopped its group) · its output kept in M0-D220.conservation.log.659954.1.part
+
+== 2026-11-27T08:30:20-05:00 conservation · task M0-D220 · box laserax-ai :: bash tests/gpu.sh conservation physics
+-- conservation · exit=stopped (the run ended mid-command; the guard stopped its group) · its output kept in M0-D220.conservation.log.662826.1.part
+
+== 2026-11-27T08:32:50-05:00 conservation · task M0-D220 · box laserax-ai :: bash tests/gpu.sh conservation physics
+-- conservation · exit=stopped (the run ended mid-command; the guard stopped its group) · its output kept in M0-D220.conservation.log.675391.5.part
+
+== 2026-11-27T08:46:46-05:00 conservation · task M0-D220 · box laserax-ai :: bash tests/gpu.sh conservation physics
+-- conservation · exit=stopped (the run ended mid-command; the guard stopped its group) · its output kept in M0-D220.conservation.log.773109.1.part
+
+== 2026-11-27T08:47:51-05:00 conservation · task M0-D220 · box laserax-ai :: bash tests/gpu.sh conservation physics
+-- conservation · exit=stopped (the run ended mid-command; the guard stopped its group) · its output kept in M0-D220.conservation.log.784177.1.part
+

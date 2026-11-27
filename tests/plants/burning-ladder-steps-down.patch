@@ -1,0 +1,11 @@
+--- a/crates/sr-physics/src/observe/stages.rs
++++ b/crates/sr-physics/src/observe/stages.rs
+@@ -342,7 +342,7 @@
+         return true;
+     }
+     if let (Some(r), Some(q)) = (ladder_rank(stage), shown.and_then(ladder_rank)) {
+-        if stage != Stage::HeShell && r < q {
++        if stage != Stage::HeShell && r < q && false {
+             return true;
+         }
+     }

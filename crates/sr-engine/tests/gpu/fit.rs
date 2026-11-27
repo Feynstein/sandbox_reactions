@@ -1,10 +1,12 @@
 //! M0-T99b — every life fits the world (contract §5.2's G-FIT, as §0.5 [M0-T99a] words it): through each preset's life, at the
-//! calibration M0-V14's run wrote (`calibration::resolve`, refused when stale — G-CAL), **no bound gas denser than Σ = 10⁻² comes
+//! installed calibration (`calibration::resolve`, refused when stale or measured on another world — G-CAL; the 800 × 800 file
+//! M0-V15's run wrote, 59b7bb46…, at M0-T99b's re-run, 2026-11-27), **no bound gas denser than Σ = 10⁻² comes
 //! within 16 cells of an edge of the default world**; a fainter bound halo may. Bound is the contract's own, ½|u|² + ε_th + φ < 0.
 //!
 //! The life is run once through `run_scene_captured` to its ending (`--until ending`), the preset built at calibration's mass
 //! exactly as `squeeze.rs` and `preset:<name>` build it (never a disk: lives.md § The rerun, M0-D158 — the Giant's fit is chaotic,
-//! so the plain preset is graded, on the adapter named), the world and the edge mode the scene's own (the default world, 600 × 400).
+//! so the plain preset is graded, on the adapter named), the world and the edge mode the scene's own (the default world, 800 × 800 —
+//! M0-R16's ruling, M0-D203; the preset dropped at its centre, 400 cells from each edge).
 //! Each [`Progress::checkpoint_every`] steps the run saves a checkpoint — a dump, which moves nothing the life computes (M0-D77) —
 //! and the dump is read here:
 //! - **φ** is the §1.4.2 kernel's solve over the dump's Σ (vacuum, Σ < σ_vac, no source), G = 1, by the CPU reference

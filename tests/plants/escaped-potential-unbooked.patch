@@ -1,6 +1,6 @@
 --- a/crates/sr-engine/shaders/hydro.wgsl
 +++ b/crates/sr-engine/shaders/hydro.wgsl
-@@ -1160,9 +1160,6 @@
+@@ -1219,9 +1219,6 @@
      // [M0-D182] The mass that crosses takes its potential energy with it: W = ½Σmφ rises by δm·|φ| when δm leaves the edge
      // cell, so the energy booked `escaped` is the gas's plus δm·φ_mid there — the same φ_mid the face work reads, a ghost's
      // its edge cell's (§2.8, §2.9 [M0-D182]). With P2 off there is no φ and nothing more to book.
@@ -9,4 +9,4 @@
 -    }
  }
  
- // [M0-D184] A compensated sum: `hi` the running f32 sums of (push x, push y, |push|), `lo` what their roundings lost.
+ // [M0-D212] T's three words over a run of cells (`settle_fixed`'s units: 2⁻⁸, 2⁻²⁸, 2⁻⁴⁸) and the densest free cell,

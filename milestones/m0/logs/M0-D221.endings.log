@@ -1,0 +1,31 @@
+== 2026-11-27T08:52:18-05:00 endings[ign_under] · task M0-D221 · box laserax-ai :: bash tests/gpu.sh endings physics a_cloud_at_m_ign_over_1_25
+-- endings[ign_under] · exit=0 · 21.56 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test endings::a_cloud_at_m_ign_over_1_25_fails_to_light ... ign_under sun cloud of 2109.039 sb (m_ign 2636.3, m_up 6252.3, m_bh 13715.2) — expected FailedStar then failed_star
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+ign_under the drop: step=17 M=2109.037 sb
+SR-HEADLESS DONE steps=2241 sim_time=31.424961 until=met
+ign_under the readout at the drop (M 2109.037): Some(Sure(FailedStar)); 2241 steps, exit 0, summary ending [{"age_years":2249891838.1443043,"ending":"failed_star","id":1,"mass_sb":2100.65726118139,"mass_suns":0.0029487281823126323,"predicted_ending":["failed_star"],"stage":"failed_star","stages":[{"from_step":65,"sim_time":1.647938759997487,"stage":"collapsing"},{"from_step":513,"sim_time":7.403959256596863,"stage":"failed_star"},{"from_step":641,"sim_time":9.305397166870534,"stage":"collapsing"},{"from_step":753,"sim_time":10.836942492984235,"stage":"failed_star"}]}]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 550 filtered out; finished in 21.23s
+
+
+== 2026-11-27T08:52:52-05:00 endings[ign_over] · task M0-D221 · box laserax-ai :: bash tests/gpu.sh endings physics a_cloud_at_m_ign_times_1_25
+== 2026-11-27T08:52:52-05:00 endings[ign_under] · task M0-D221 · box laserax-ai :: bash tests/gpu.sh endings physics a_cloud_at_m_ign_over_1_25
+== 2026-11-27T08:52:52-05:00 endings[up_under] · task M0-D221 · box laserax-ai :: bash tests/gpu.sh endings physics a_cloud_at_m_up_over_1_25
+== 2026-11-27T08:52:52-05:00 endings[up_over] · task M0-D221 · box laserax-ai :: bash tests/gpu.sh endings physics a_cloud_at_m_up_times_1_25
+== 2026-11-27T08:52:52-05:00 endings[bh_under] · task M0-D221 · box laserax-ai :: bash tests/gpu.sh endings physics a_cloud_at_m_bh_over_1_25
+-- endings[ign_under] · exit=stopped (the run ended mid-command; the guard stopped its group) · its output kept in M0-D221.endings.log.840975.6.part
+
+-- endings[ign_over] · exit=stopped (the run ended mid-command; the guard stopped its group) · its output kept in M0-D221.endings.log.840975.5.part
+
+-- endings[up_under] · exit=stopped (the run ended mid-command; the guard stopped its group) · its output kept in M0-D221.endings.log.840975.7.part
+
+-- endings[up_over] · exit=stopped (the run ended mid-command; the guard stopped its group) · its output kept in M0-D221.endings.log.840975.8.part
+
+-- endings[bh_under] · exit=stopped (the run ended mid-command; the guard stopped its group) · its output kept in M0-D221.endings.log.840975.9.part
+

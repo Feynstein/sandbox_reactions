@@ -1,0 +1,34 @@
+plant applied
+   Compiling sr-physics v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-physics)
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 13.53s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test squeeze::the_sun_like_main_sequence_keeps_tau_kh_over_tau_dyn_at_ten ... sun: preset sun at 3136.7; calibration physics_hash 02a1e635d87aa4c27b69eb13e7c00aa1e46fa411f6f61bd2f1ae68402a4fad6e; Q_H 87
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+sun step=17 t=0.42 shown=none M=3136.7 X_H,c=0.735
+sun step=65 t=1.54 shown=collapsing M=3136.7 X_H,c=0.735
+sun step=545 t=7.17 shown=failed_star M=3133.1 X_H,c=0.732
+
+thread 'squeeze::the_sun_like_main_sequence_keeps_tau_kh_over_tau_dyn_at_ten' (591473) panicked at crates/sr-engine/tests/gpu/squeeze.rs:271:13:
+cut: failed_star shown at step 545 (t 7.17) before any main_sequence
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+sun: 545 steps, exit -1, durations (t.u.) {"collapsing": 5.623642049729824}
+
+thread 'squeeze::the_sun_like_main_sequence_keeps_tau_kh_over_tau_dyn_at_ten' (591473) panicked at crates/sr-engine/tests/gpu/squeeze.rs:341:5:
+sun: the run was cut: Some("cut: failed_star shown at step 545 (t 7.17) before any main_sequence")
+FAILED
+
+failures:
+
+failures:
+    squeeze::the_sun_like_main_sequence_keeps_tau_kh_over_tau_dyn_at_ten
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 550 filtered out; finished in 6.32s
+
+error: test failed, to rerun pass `-p sr-engine --test gpu`
+exit=101
+plant reversed
+assets/physics.json: OK
+assets/calibration.json: OK
