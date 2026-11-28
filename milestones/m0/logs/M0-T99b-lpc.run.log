@@ -1,0 +1,9 @@
+=== M0-T99b linux-pc run start on laserax-ai (TASK=M0-T99b-lpc, START=1, SR_TEST_ADAPTER=RTX 5090) · 2026-11-27T19:26:58-0500
+NVIDIA GeForce RTX 5090, 0 %, 101 MiB
+Quadro RTX 4000, 98 %, 1996 MiB
+59b7bb4608640634746dce5118e8e694dada5dfa317a8d127f2295167c25fbbf  assets/calibration.json
+49c2c894710c6de38fe0d657d666b4e54e638bcd9710b48c5d77086d315989d1  crates/sr-engine/tests/gpu/fit.rs
+7f50d1c8b8dbc836c3a66dfc399c1ba12cf1e3ca830489a94ba9dad117b343bb  tests/plants/preset-wide.patch
+6f468e83be480b521b221b3baa666e16d1e6224e3de3b0545c6d8d33ef3e3be8  tests/gpu.sh
+d8a5a0260d093e4c6bd0b24dc116c5cce4e6a2052c758c83a7e86c09dc5a4712  milestones/m0/logs/.baseline/M0-T99b-lpc.json
+=== step 1 verify_fit start · 2026-11-27T19:26:58-0500

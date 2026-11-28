@@ -1,0 +1,23 @@
+=== M0-T99b server run start on laserax-ai-server (TASK=M0-T99b-r2, START=1, SR_TEST_ADAPTER=RTX 4090) · 2026-11-27T12:40:38-0500
+NVIDIA GeForce RTX 3060, 0 %, 12 MiB
+NVIDIA GeForce RTX 4090, 0 %, 17 MiB
+59b7bb4608640634746dce5118e8e694dada5dfa317a8d127f2295167c25fbbf  assets/calibration.json
+49c2c894710c6de38fe0d657d666b4e54e638bcd9710b48c5d77086d315989d1  crates/sr-engine/tests/gpu/fit.rs
+7f50d1c8b8dbc836c3a66dfc399c1ba12cf1e3ca830489a94ba9dad117b343bb  tests/plants/preset-wide.patch
+6f468e83be480b521b221b3baa666e16d1e6224e3de3b0545c6d8d33ef3e3be8  tests/gpu.sh
+f7ed9f6531f117aadfc84aa36271acd56e70e03077a06c2ebad542482e7b802d  milestones/m0/logs/.baseline/M0-T99b-r2.json
+=== step 1 verify_fit start · 2026-11-27T12:40:38-0500
+fit       3/0/0     3881.34 s  GO
+logs: milestones/m0/logs/M0-T99b-r2.<scope>.log · record: loop_times.jsonl · tree 255ec370c6a7+167e45c6bec4
+anchor: 3 path×scope entries moved by this run
+anchor: 466 paths checked · 512 skipped (3 classes) · 14 never checked · 7 stale · 0 unclassified · 0 owed · 487 covered of 999 visible
+verify: 3 passed, 0 failed, 0 skipped · 1/1 scopes GO · 0 skipped · 0 owed · 0 NOT RUN · 0 not impacted · 3881.34 s · mode scope · jobs 8 · box laserax-ai-server · python 3.12.3 · load 0.01->0.93
+=== GO ===
+=== step 1 verify_fit end exit=0 · 2026-11-27T13:45:20-0500
+=== step 2 redarm_fit start · 2026-11-27T13:45:20-0500
+fit · clean: proven by M0-T99b-r2 2026-11-27T13:45:20-05:00 (a run of the scope; fingerprint 86b7dce9b8a2) - not re-run
+fit · plant preset-wide · RED (proven: 1 failed)
+redarm: 1 plants · 1 red · 0 green · 0 errors · scope fit · 2740.59 s · 1 arm(s) at a time · box laserax-ai-server · log milestones/m0/logs/M0-T99b-r2.fit.redarm.log
+=== GO ===
+=== step 2 redarm_fit end exit=0 · 2026-11-27T14:31:01-0500
+=== step 3 claim start · 2026-11-27T14:31:01-0500

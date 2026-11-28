@@ -1,0 +1,23 @@
+   Compiling sr-engine v0.0.0 (/home/ybelanger/private/sandbox_reactions/crates/sr-engine)
+    Finished `release` profile [optimized] target(s) in 8.00s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 3 tests
+test fit::the_giant_life_keeps_its_bound_gas_16_cells_from_the_edge ... giant: preset giant at 18963.9; calibration physics_hash 8e2de6e4ab6eb78757c35d2686bf6ac59be47a568a2f5bede1f7008953886402; checkpoint every 100 steps
+SR-ADAPTER name=NVIDIA GeForce RTX 5090 backend=Vulkan driver=NVIDIA
+giant step=113 t=0.75 mass=18963.9 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 295.5/295.5/296.5/304.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=209 t=1.23 mass=18963.8 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 288.5/288.5/290.5/303.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=305 t=1.68 mass=18963.8 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 282.5/282.5/285.5/302.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=401 t=2.13 mass=18963.8 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 277.5/277.5/280.5/302.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=513 t=2.68 mass=18963.7 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 270.5/270.5/275.5/301.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=609 t=3.16 mass=18963.7 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 264.5/264.5/270.5/301.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=705 t=3.64 mass=18963.7 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 258.5/258.5/266.5/302.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=801 t=4.14 mass=18963.6 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 253.5/253.5/262.5/303.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=913 t=4.73 mass=18963.6 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 246.5/246.5/258.5/304.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=1009 t=5.23 mass=18963.5 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 241.5/241.5/255.5/306.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=1105 t=5.75 mass=18963.5 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 237.5/237.5/252.5/308.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=1201 t=6.25 mass=18963.4 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 235.5/235.5/250.5/309.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=1313 t=6.81 mass=18963.3 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 241.5/241.5/247.5/311.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=1409 t=7.28 mass=18963.2 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 242.5/242.5/245.5/313.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=1505 t=7.75 mass=18963.2 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 240.5/240.5/242.5/313.5; densest in the band 0.000e0 at cell (0, 0)
+giant step=1601 t=8.22 mass=18963.1 sinks=0 nearest bound gas (cells) at Σ≥1e-4/1e-3/1e-2/1e-1: 238.5/238.5/239.5/313.5; densest in the band 0.000e0 at cell (0, 0)

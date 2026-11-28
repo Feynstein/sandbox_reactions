@@ -1,0 +1,73 @@
+== 2026-11-27T14:31:10-05:00 stages[sun] · task M0-T99b-r2 · box laserax-ai-server :: bash tests/gpu.sh stages physics the_sun_like
+== 2026-11-27T14:31:10-05:00 stages[massive] · task M0-T99b-r2 · box laserax-ai-server :: bash tests/gpu.sh stages physics the_massive
+== 2026-11-27T14:31:13-05:00 stages[giant] · task M0-T99b-r2 · box laserax-ai-server :: bash tests/gpu.sh stages physics the_giant
+-- stages[giant] · exit=0 · 1028.77 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test stages::the_giant_preset_shows_its_stages_down_to_black_hole ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+giant step=33 t=0.26 shown=protostar raw=protostar M=18963.9 (m_up_sb 6252.3)
+giant step=785 t=4.06 shown=main_sequence raw=main_sequence M=18946.7 (m_up_sb 6252.3)
+giant step=1169 t=6.08 shown=he_core raw=he_core M=18933.0 (m_up_sb 6252.3)
+giant step=6961 t=53.36 shown=o_burn raw=o_burn M=17383.7 (m_up_sb 6252.3)
+giant step=7409 t=56.45 shown=si_burn raw=si_burn M=17228.6 (m_up_sb 6252.3)
+giant step=8481 t=62.21 shown=core_collapse raw=core_collapse M=16869.4 (m_up_sb 6252.3)
+giant step=8482 t=62.21 shown=supernova raw=supernova M=16869.0 (m_up_sb 6252.3)
+giant step=8562 t=62.54 shown=black_hole raw=black_hole M=16836.8 (m_up_sb 6252.3)
+SR-HEADLESS DONE steps=8562 sim_time=62.544859 until=met
+giant shown (8562 steps, exit 0): [("protostar", 33), ("main_sequence", 785), ("he_core", 1169), ("o_burn", 6961), ("si_burn", 7409), ("core_collapse", 8481), ("supernova", 8482), ("black_hole", 8562)]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 551 filtered out; finished in 1028.61s
+
+
+-- stages[massive] · exit=0 · 3584.65 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test stages::the_massive_preset_shows_its_stages_down_to_neutron_star ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+massive step=33 t=0.30 shown=protostar raw=protostar M=9643.9 (m_up_sb 6252.3)
+massive step=721 t=4.27 shown=main_sequence raw=main_sequence M=9631.2 (m_up_sb 6252.3)
+massive step=10913 t=98.68 shown=he_core raw=he_core M=8985.4 (m_up_sb 6252.3)
+massive step=14673 t=134.99 shown=o_burn raw=o_burn M=8706.1 (m_up_sb 6252.3)
+massive step=16161 t=147.25 shown=si_burn raw=si_burn M=8332.3 (m_up_sb 6252.3)
+massive step=17569 t=157.75 shown=iron_core raw=iron_core M=7758.5 (m_up_sb 6252.3)
+massive step=21409 t=181.34 shown=core_collapse raw=core_collapse M=5812.1 (m_up_sb 6252.3)
+massive step=21410 t=181.34 shown=supernova raw=supernova M=5811.7 (m_up_sb 6252.3)
+massive step=25442 t=201.57 shown=neutron_star raw=neutron_star M=4591.4 (m_up_sb 6252.3)
+SR-HEADLESS DONE steps=25442 sim_time=201.568350 until=met
+massive shown (25442 steps, exit 0): [("protostar", 33), ("main_sequence", 721), ("he_core", 10913), ("o_burn", 14673), ("si_burn", 16161), ("iron_core", 17569), ("core_collapse", 21409), ("supernova", 21410), ("neutron_star", 25442)]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 551 filtered out; finished in 3584.52s
+
+
+-- stages[sun] · exit=0 · 11404.31 s
+    Blocking waiting for file lock on build directory
+    Finished `release` profile [optimized] target(s) in 0.16s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test stages::the_sun_like_preset_shows_its_stages_down_to_white_dwarf ... SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+sun step=65 t=1.54 shown=collapsing raw=collapsing M=3136.7 (m_up_sb 6252.3)
+sun step=705 t=9.24 shown=main_sequence raw=main_sequence M=3130.3 (m_up_sb 6252.3)
+sun step=32001 t=361.58 shown=main_sequence raw=main_sequence
+sun step=64001 t=729.95 shown=main_sequence raw=main_sequence
+sun step=96001 t=1094.49 shown=main_sequence raw=main_sequence
+sun step=128001 t=1439.76 shown=main_sequence raw=main_sequence
+sun step=136369 t=1523.70 shown=he_core raw=he_core M=3051.0 (m_up_sb 6252.3)
+sun step=147777 t=1633.37 shown=o_burn raw=o_burn M=2916.8 (m_up_sb 6252.3)
+sun step=150945 t=1661.94 shown=si_burn raw=si_burn M=2827.8 (m_up_sb 6252.3)
+sun step=154945 t=1696.95 shown=he_shell raw=he_shell M=2707.2 (m_up_sb 6252.3)
+sun step=156177 t=1707.21 shown=iron_core raw=iron_core M=2645.1 (m_up_sb 6252.3)
+sun step=160001 t=1736.55 shown=iron_core raw=iron_core
+sun step=172945 t=1816.88 shown=white_dwarf raw=white_dwarf M=2495.1 (m_up_sb 6252.3)
+SR-HEADLESS DONE steps=172945 sim_time=1816.878778 until=met
+sun shown (172945 steps, exit 0): [("collapsing", 65), ("main_sequence", 705), ("he_core", 136369), ("o_burn", 147777), ("si_burn", 150945), ("he_shell", 154945), ("iron_core", 156177), ("white_dwarf", 172945)]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 551 filtered out; finished in 11404.00s
+
+

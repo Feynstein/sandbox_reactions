@@ -1,0 +1,131 @@
+== 2026-11-27T14:31:23-05:00 endings[ign_under] · task M0-T99b-r2 · box laserax-ai-server :: bash tests/gpu.sh endings physics a_cloud_at_m_ign_over_1_25
+== 2026-11-27T14:31:37-05:00 endings[ign_over] · task M0-T99b-r2 · box laserax-ai-server :: bash tests/gpu.sh endings physics a_cloud_at_m_ign_times_1_25
+== 2026-11-27T14:31:58-05:00 endings[up_under] · task M0-T99b-r2 · box laserax-ai-server :: bash tests/gpu.sh endings physics a_cloud_at_m_up_over_1_25
+-- endings[ign_under] · exit=0 · 107.02 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test endings::a_cloud_at_m_ign_over_1_25_fails_to_light ... ign_under sun cloud of 2109.039 sb (m_ign 2636.3, m_up 6252.3, m_bh 13715.2) — expected FailedStar then failed_star
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+ign_under the drop: step=17 M=2109.037 sb
+SR-HEADLESS DONE steps=2241 sim_time=31.430060 until=met
+ign_under the readout at the drop (M 2109.037): Some(Sure(FailedStar)); 2241 steps, exit 0, summary ending [{"age_years":2250017372.2204742,"ending":"failed_star","id":1,"mass_sb":2100.661357335048,"mass_suns":0.002948811741735074,"predicted_ending":["failed_star"],"stage":"failed_star","stages":[{"from_step":65,"sim_time":1.647938143461943,"stage":"collapsing"},{"from_step":513,"sim_time":7.408054505474865,"stage":"failed_star"},{"from_step":641,"sim_time":9.310137521475554,"stage":"collapsing"},{"from_step":753,"sim_time":10.84143662918359,"stage":"failed_star"}]}]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 551 filtered out; finished in 106.85s
+
+
+== 2026-11-27T14:33:10-05:00 endings[up_over] · task M0-T99b-r2 · box laserax-ai-server :: bash tests/gpu.sh endings physics a_cloud_at_m_up_times_1_25
+== 2026-11-27T14:33:19-05:00 endings[bh_under] · task M0-T99b-r2 · box laserax-ai-server :: bash tests/gpu.sh endings physics a_cloud_at_m_bh_over_1_25
+== 2026-11-27T14:37:36-05:00 endings[bh_over] · task M0-T99b-r2 · box laserax-ai-server :: bash tests/gpu.sh endings physics a_cloud_at_m_bh_times_1_25
+== 2026-11-27T14:48:21-05:00 endings[sun] · task M0-T99b-r2 · box laserax-ai-server :: bash tests/gpu.sh endings physics the_sun_like
+== 2026-11-27T15:30:55-05:00 endings[massive] · task M0-T99b-r2 · box laserax-ai-server :: bash tests/gpu.sh endings physics the_massive
+-- endings[bh_under] · exit=0 · 3683.62 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test endings::a_cloud_at_m_bh_over_1_25_ends_a_neutron_star ... bh_under sun cloud of 10972.155 sb (m_ign 2636.3, m_up 6252.3, m_bh 13715.2) — expected Supernova then neutron_star
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+bh_under the drop: step=17 M=10972.146 sb
+SR-HEADLESS DONE steps=24354 sim_time=180.859561 until=met
+bh_under the readout at the drop (M 10972.146): Some(Sure(Supernova)); 24354 steps, exit 0, summary ending [{"age_years":1013077598.2161586,"at_x_h":{"luminosity":133134.37841094847,"radius":86.63067171905223,"sim_time":68.30022864975035,"x_h_c":0.35},"ending":"neutron_star","id":1,"mass_sb":4362.372519833967,"mass_suns":3.160886179065828,"predicted_ending":["white_dwarf"],"stage":"neutron_star","stages":[{"from_step":33,"sim_time":0.29074704740196466,"stage":"protostar"},{"from_step":721,"sim_time":4.159711559768766,"stage":"main_sequence"},{"from_step":8481,"sim_time":72.7039183806628,"stage":"he_core"},{"from_step":12769,"sim_time":114.29072214476764,"stage":"o_burn"},{"from_step":14049,"sim_time":124.51359271071853,"stage":"si_burn"},{"from_step":15713,"sim_time":136.31957958033308,"stage":"iron_core"},{"from_step":18129,"sim_time":150.61499944375828,"stage":"core_collapse"},{"from_step":18130,"sim_time":150.6202540216036,"stage":"supernova"},{"from_step":22242,"sim_time":170.8105951170437,"stage":"neutron_star"}]},{"age_years":29321.432719007134,"ending":null,"id":2,"mass_sb":506.882042221725,"mass_suns":3.138339324955689e-12,"predicted_ending":["failed_star"],"stage":"cloud","stages":[{"from_step":24290,"sim_time":180.56634697318077,"stage":"cloud"}]}]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 551 filtered out; finished in 3683.46s
+
+
+== 2026-11-27T15:34:43-05:00 endings[giant] · task M0-T99b-r2 · box laserax-ai-server :: bash tests/gpu.sh endings physics the_giant
+-- endings[up_over] · exit=0 · 4197.68 s
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test endings::a_cloud_at_m_up_times_1_25_ends_a_neutron_star ... up_over sun cloud of 7815.394 sb (m_ign 2636.3, m_up 6252.3, m_bh 13715.2) — expected Supernova then neutron_star
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+up_over the drop: step=17 M=7815.385 sb
+SR-HEADLESS DONE steps=31442 sim_time=265.098049 until=met
+up_over the readout at the drop (M 7815.385): Some(Sure(Supernova)); 31442 steps, exit 0, summary ending [{"age_years":1030776505.4213086,"at_x_h":{"luminosity":72083.30954696625,"radius":52.421612627412706,"sim_time":119.2763421968557,"x_h_c":0.35},"ending":"neutron_star","id":1,"mass_sb":3469.7555378284305,"mass_suns":1.7510872127393269,"predicted_ending":["white_dwarf"],"stage":"neutron_star","stages":[{"from_step":33,"sim_time":0.31003703735768795,"stage":"protostar"},{"from_step":721,"sim_time":4.4883180893957615,"stage":"main_sequence"},{"from_step":15345,"sim_time":147.08036479214206,"stage":"he_core"},{"from_step":19105,"sim_time":183.46118090255183,"stage":"o_burn"},{"from_step":20785,"sim_time":198.0109449052252,"stage":"si_burn"},{"from_step":22097,"sim_time":208.56530318269503,"stage":"iron_core"},{"from_step":27969,"sim_time":247.3680075011216,"stage":"core_collapse"},{"from_step":27970,"sim_time":247.37338189594448,"stage":"supernova"},{"from_step":29426,"sim_time":255.0590686649084,"stage":"neutron_star"}]}]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 551 filtered out; finished in 4197.52s
+
+
+-- endings[bh_over] · exit=0 · 5567.03 s
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test endings::a_cloud_at_m_bh_times_1_25_ends_a_black_hole ... bh_over sun cloud of 17143.992 sb (m_ign 2636.3, m_up 6252.3, m_bh 13715.2) — expected BlackHole then black_hole
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+bh_over the drop: step=17 M=17143.956 sb
+SR-HEADLESS DONE steps=25474 sim_time=127.391126 until=met
+bh_over the readout at the drop (M 17143.956): Some(Sure(BlackHole)); 25474 steps, exit 0, summary ending [{"age_years":5615948693.503743,"at_x_h":{"luminosity":419550.23866202706,"radius":201.03209280000624,"sim_time":47.66188787575811,"x_h_c":0.35},"ending":"black_hole","id":1,"mass_sb":8578.110701574013,"mass_suns":12.6565582478194,"predicted_ending":["supernova"],"stage":"black_hole","stages":[{"from_step":33,"sim_time":0.26810505241155624,"stage":"protostar"},{"from_step":769,"sim_time":4.034222456626594,"stage":"main_sequence"},{"from_step":1169,"sim_time":6.183460549451411,"stage":"he_core"},{"from_step":7553,"sim_time":59.839320885483176,"stage":"o_burn"},{"from_step":8113,"sim_time":63.748616208322346,"stage":"si_burn"},{"from_step":9409,"sim_time":70.89908869750798,"stage":"core_collapse"},{"from_step":9410,"sim_time":70.90366148622707,"stage":"supernova"},{"from_step":9490,"sim_time":71.25408748211339,"stage":"black_hole"}]}]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 551 filtered out; finished in 5566.89s
+
+
+-- endings[massive] · exit=0 · 4132.39 s
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test endings::the_massive_preset_ends_a_supernova_then_a_neutron_star_as_predicted ... massive massive cloud of 9643.935 sb (m_ign 2636.3, m_up 6252.3, m_bh 13715.2) — expected Supernova then neutron_star
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+massive the drop: step=17 M=9643.918 sb
+SR-HEADLESS DONE steps=27426 sim_time=211.584998 until=met
+massive the readout at the drop (M 9643.918): Some(Sure(Supernova)); 27426 steps, exit 0, summary ending [{"age_years":1013362778.9336004,"at_x_h":{"luminosity":107919.93537802392,"radius":74.18342673993534,"sim_time":84.41814692039043,"x_h_c":0.35},"ending":"neutron_star","id":1,"mass_sb":3952.5190097326417,"mass_suns":2.4505546451478173,"predicted_ending":["white_dwarf"],"stage":"neutron_star","stages":[{"from_step":33,"sim_time":0.29930500499904156,"stage":"protostar"},{"from_step":721,"sim_time":4.271116316318512,"stage":"main_sequence"},{"from_step":10913,"sim_time":98.6775118401274,"stage":"he_core"},{"from_step":14673,"sim_time":134.98534780181944,"stage":"o_burn"},{"from_step":16161,"sim_time":147.2510591475293,"stage":"si_burn"},{"from_step":17569,"sim_time":157.74823188129812,"stage":"iron_core"},{"from_step":21409,"sim_time":181.3388234996237,"stage":"core_collapse"},{"from_step":21410,"sim_time":181.3439737353474,"stage":"supernova"},{"from_step":25442,"sim_time":201.5683495835401,"stage":"neutron_star"}]}]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 551 filtered out; finished in 4132.18s
+
+
+-- endings[giant] · exit=0 · 5973.46 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test endings::the_giant_preset_ends_a_black_hole_as_predicted ... giant giant cloud of 18963.870 sb (m_ign 2636.3, m_up 6252.3, m_bh 13715.2) — expected BlackHole then black_hole
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+giant the drop: step=17 M=18963.850 sb
+SR-HEADLESS DONE steps=25474 sim_time=117.333196 until=met
+giant the readout at the drop (M 18963.850): Some(Sure(BlackHole)); 25474 steps, exit 0, summary ending [{"age_years":5481069097.973372,"at_x_h":{"luminosity":297584.6797776186,"radius":215.29390673931985,"sim_time":43.91516378847882,"x_h_c":0.35},"ending":"black_hole","id":1,"mass_sb":10049.486449457703,"mass_suns":15.923550086894794,"predicted_ending":["supernova"],"stage":"black_hole","stages":[{"from_step":33,"sim_time":0.26378854271024466,"stage":"protostar"},{"from_step":785,"sim_time":4.055967564694583,"stage":"main_sequence"},{"from_step":1169,"sim_time":6.08394574560225,"stage":"he_core"},{"from_step":6961,"sim_time":53.35904284985736,"stage":"o_burn"},{"from_step":7409,"sim_time":56.45452546328306,"stage":"si_burn"},{"from_step":8481,"sim_time":62.20915399165824,"stage":"core_collapse"},{"from_step":8482,"sim_time":62.21353780478239,"stage":"supernova"},{"from_step":8562,"sim_time":62.54485904611647,"stage":"black_hole"}]}]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 551 filtered out; finished in 5973.28s
+
+
+-- endings[up_under] · exit=0 · 10759.66 s
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test endings::a_cloud_at_m_up_over_1_25_ends_a_white_dwarf ... up_under sun cloud of 5001.852 sb (m_ign 2636.3, m_up 6252.3, m_bh 13715.2) — expected WhiteDwarf then white_dwarf
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+up_under the drop: step=17 M=5001.848 sb
+SR-HEADLESS DONE steps=63665 sim_time=557.727412 until=met
+up_under the readout at the drop (M 5001.848): Some(Sure(WhiteDwarf)); 63665 steps, exit 0, summary ending [{"age_years":1255209540.8007908,"at_x_h":{"luminosity":26677.23497514262,"radius":26.892752856566005,"sim_time":236.74617714062333,"x_h_c":0.35},"ending":"white_dwarf","id":1,"mass_sb":2969.7699661254883,"mass_suns":0.45166847996147713,"predicted_ending":["white_dwarf"],"stage":"white_dwarf","stages":[{"from_step":33,"sim_time":0.4744601137936115,"stage":"cloud"},{"from_step":97,"sim_time":1.2238302724435923,"stage":"collapsing"},{"from_step":289,"sim_time":3.1893320083618164,"stage":"main_sequence"},{"from_step":31249,"sim_time":331.40760489180684,"stage":"he_core"},{"from_step":35985,"sim_time":376.7613685466349,"stage":"o_burn"},{"from_step":38609,"sim_time":401.16775975190103,"stage":"si_burn"},{"from_step":39425,"sim_time":408.50498261488974,"stage":"he_shell"},{"from_step":40449,"sim_time":417.3877563076094,"stage":"iron_core"},{"from_step":61761,"sim_time":547.6617124341428,"stage":"white_dwarf"}]}]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 551 filtered out; finished in 10759.49s
+
+
+-- endings[sun] · exit=0 · 11306.60 s
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running tests/gpu/main.rs (build/target/release/deps/gpu-2b2e5ebd221682e6)
+
+running 1 test
+test endings::the_sun_like_preset_ends_a_white_dwarf_as_predicted ... sun sun cloud of 3136.718 sb (m_ign 2636.3, m_up 6252.3, m_bh 13715.2) — expected WhiteDwarf then white_dwarf
+SR-ADAPTER name=NVIDIA GeForce RTX 4090 backend=Vulkan driver=NVIDIA
+sun the drop: step=17 M=3136.714 sb
+sun step=64001 t=729.95 stage=main_sequence
+sun step=128001 t=1439.76 stage=main_sequence
+SR-HEADLESS DONE steps=174321 sim_time=1826.986214 until=met
+sun the readout at the drop (M 3136.714): Some(Sure(WhiteDwarf)); 174321 steps, exit 0, summary ending [{"age_years":10238922670.199158,"at_x_h":{"luminosity":3972.24500362778,"radius":15.57125254855023,"sim_time":932.0241121919826,"x_h_c":0.35},"ending":"white_dwarf","id":1,"mass_sb":2492.698121487163,"mass_suns":0.035448190676289876,"predicted_ending":["failed_star","white_dwarf"],"stage":"white_dwarf","stages":[{"from_step":65,"sim_time":1.5416553635150194,"stage":"collapsing"},{"from_step":705,"sim_time":9.243574555031955,"stage":"main_sequence"},{"from_step":136369,"sim_time":1523.7038320079446,"stage":"he_core"},{"from_step":147777,"sim_time":1633.3699023062363,"stage":"o_burn"},{"from_step":150945,"sim_time":1661.944495790638,"stage":"si_burn"},{"from_step":154945,"sim_time":1696.9475200800223,"stage":"he_shell"},{"from_step":156177,"sim_time":1707.213005210273,"stage":"iron_core"},{"from_step":172945,"sim_time":1816.878777997568,"stage":"white_dwarf"}]}]
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 551 filtered out; finished in 11306.40s
+
+
